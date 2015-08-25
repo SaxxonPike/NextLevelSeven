@@ -11,7 +11,7 @@ namespace NextLevelSeven.Test
     {
         static public int ExecutionIterations(Action action, long timeLimit)
         {
-            int iterations = 0;
+            var iterations = 0;
             var sw = new Stopwatch();
             sw.Start();
             while (sw.ElapsedMilliseconds < timeLimit)

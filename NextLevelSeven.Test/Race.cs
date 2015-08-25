@@ -14,7 +14,7 @@ namespace NextLevelSeven.Test
         {
             Debug.WriteLine("Racing NL7...");
 
-            long nl7Time = Measure.ExecutionTime(nl7Action, 100);
+            var nl7Time = Measure.ExecutionTime(nl7Action, 100);
             long otherTime;
 
             try
@@ -35,7 +35,7 @@ namespace NextLevelSeven.Test
         {
             Debug.WriteLine("Racing NL7...");
 
-            long nl7Time = Measure.ExecutionTime(nl7Action, data, 100);
+            var nl7Time = Measure.ExecutionTime(nl7Action, data, 100);
             long otherTime;
 
             try
