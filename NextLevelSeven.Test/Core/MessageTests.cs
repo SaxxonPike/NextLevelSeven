@@ -7,7 +7,7 @@ using NextLevelSeven.Core;
 namespace NextLevelSeven.Test.Core
 {
     [TestClass]
-    public class MessageFixture
+    public class MessageTests
     {
 
         [TestInitialize]

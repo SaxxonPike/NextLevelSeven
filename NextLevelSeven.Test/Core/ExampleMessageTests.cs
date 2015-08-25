@@ -6,7 +6,7 @@ using NextLevelSeven.Core;
 namespace NextLevelSeven.Test.Core
 {
     [TestClass]
-    public class ExampleMessageFixture
+    public class ExampleMessageTests
     {
         [TestInitialize]
         public void MessageExtensions_HasProperSampleData()

@@ -6,7 +6,7 @@ using NextLevelSeven.Core;
 namespace NextLevelSeven.Test.Core
 {
     [TestClass]
-    public class ElementExtensionsFixture
+    public class ElementExtensionsTests
     {
         [TestMethod]
         public void ElementExtensions_CanInsertElementAfter()

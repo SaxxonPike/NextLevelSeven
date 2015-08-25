@@ -6,7 +6,7 @@ using NextLevelSeven.Core;
 namespace NextLevelSeven.Test.Core
 {
     [TestClass]
-    public class MessageExtensionsFixture
+    public class MessageExtensionsTests
     {
         [TestMethod]
         public void MessageExtensions_CanFilterPid_FromMessage()
