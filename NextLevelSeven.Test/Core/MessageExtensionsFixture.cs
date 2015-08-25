@@ -1,0 +1,35 @@
+﻿using System;
+using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NextLevelSeven.Core;
+
+namespace NextLevelSeven.Test.Core
+{
+    [TestClass]
+    public class MessageExtensionsFixture
+    {
+        [TestMethod]
+        public void MessageExtensions_CanFilterPid_FromMessage()
+        {
+            var message = new Message(ExampleMessages.MultiplePid);
+            Assert.IsTrue(message.ExcludeSegments("PID").Any(), "Only PIDs are to be filtered.");
+            Assert.IsTrue(message.ExcludeSegments("PID").All(s => s.Type != "PID"), "PIDs were not completely filtered.");
+        }
+
+        [TestMethod]
+        public void MessageExtensions_CanGetObrSplitsWithoutExtras()
+        {
+            var message = new Message(ExampleMessages.MultipleObr);
+            var splits = message.SplitSegments("OBR");
+            Assert.AreEqual(message["OBR"].Count(), splits.Count(), "OBR split count doesn't match number of OBR segments.");
+        }
+
+        [TestMethod]
+        public void MessageExtensions_CanGetObrSplitsWithExtras()
+        {
+            var message = new Message(ExampleMessages.MultipleObr);
+            var splits = message.SplitSegments("OBR", true);
+            Assert.AreEqual(message["OBR"].Count() + 1, splits.Count(), "OBR split count (with extras) doesn't match number of OBR segments + 1.");
+        }
+    }
+}
