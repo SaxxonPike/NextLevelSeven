@@ -89,18 +89,20 @@ namespace NextLevelSeven.Codecs
 
         static public DateTimeOffset? ConvertToDateTime(string input)
         {
-            int length = input.Length;
-
-            if (length < 4)
+            if (input == null)
             {
                 return null;
+            }
+
+            int length = input.Length;
+            if (length < 4)
+            {
+                throw new ArgumentException("Unable to parse date.");
             }
 
             var year = int.Parse(input.Substring(0, 4));
             var month = (length >= 6) ? int.Parse(input.Substring(4, 2)) : 1;
             var day = (length >= 8) ? int.Parse(input.Substring(6, 2)) : 1;
-            var hour = (length >= 10) ? int.Parse(input.Substring(8, 2)) : 1;
-            var minute = (length >= 12) ? int.Parse(input.Substring(10, 2)) : 1;
             var timeZoneLength = 0;
             TimeSpan? timeZone = null;
 
@@ -116,15 +118,15 @@ namespace NextLevelSeven.Codecs
                 }
             }
 
-            var second = (length >= 14 + timeZoneLength) ? decimal.Parse(input.Substring(12, length - (12 + timeZoneLength))) : 0;
-            var secondValue = (int)Math.Round(second);
-            var millisecond = (int)(second - secondValue);
+            var time = (length >= 10 + timeZoneLength)
+                ? (ConvertToTime(input.Substring(8, input.Length - timeZoneLength - 8)) ?? TimeSpan.Zero)
+                : TimeSpan.Zero;
 
             if (timeZone.HasValue)
             {
-                return new DateTimeOffset(year, month, day, hour, minute, secondValue, millisecond, timeZone.Value);
+                return new DateTimeOffset(year, month, day, time.Hours, time.Minutes, time.Seconds, time.Milliseconds, timeZone.Value);
             }
-            return new DateTime(year, month, day, hour, minute, secondValue, millisecond);
+            return new DateTime(year, month, day, time.Hours, time.Minutes, time.Seconds, time.Milliseconds);
         }
 
         static public decimal? ConvertToDecimal(string input)
@@ -166,12 +168,19 @@ namespace NextLevelSeven.Codecs
 
         static public TimeSpan? ConvertToTime(string input)
         {
-            var dto = ConvertToDateTime(input);
-            if (dto.HasValue)
+            if (input == null)
             {
-                return dto.Value.TimeOfDay;
+                return null;
             }
-            return null;
+
+            var length = input.Length;
+            var hour = (length >= 2) ? int.Parse(input.Substring(0, 2)) : 0;
+            var minute = (length >= 4) ? int.Parse(input.Substring(2, 2)) : 0;
+            var second = (length >= 6) ? decimal.Parse(input.Substring(4)) : 0;
+            var secondValue = (int)Math.Round(second);
+            var millisecond = (int)(second - secondValue);
+
+            return new TimeSpan(0, hour, minute, secondValue, millisecond);
         }
 
         public DateTime? Date
