@@ -23,7 +23,7 @@ namespace NextLevelSeven.Core
         /// <param name="message">Message data to interpret.</param>
         public Message(string message)
         {
-            _message = new Cursors.Message(message ?? @"MSH|^~\&|");
+            _message = new Cursors.Message(message);
         }
 
         /// <summary>

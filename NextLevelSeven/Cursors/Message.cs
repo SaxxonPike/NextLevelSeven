@@ -12,6 +12,10 @@ namespace NextLevelSeven.Cursors
         public Message(string message)
             : base(message)
         {
+            if (message == null)
+            {
+                throw new ArgumentNullException(@"message");
+            }
             _encodingConfiguration = new EncodingConfiguration(this);
             KeyGuid = new Guid();
         }
