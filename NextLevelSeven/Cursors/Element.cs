@@ -16,7 +16,7 @@ namespace NextLevelSeven.Cursors
         {
             Index = 0;
             ParentIndex = 0;
-            _descendantDivider = new StringDivider(value, Delimiter);
+            _descendantDivider = GetDescendantDividerRoot(value);
         }
 
         protected Element(Element ancestor, int parentIndex, int externalIndex)
@@ -121,6 +121,11 @@ namespace NextLevelSeven.Cursors
         virtual protected IStringDivider GetDescendantDivider(Element ancestor, int index)
         {
             return new StringSubDivider(ancestor.DescendantDivider, Delimiter, index);
+        }
+
+        IStringDivider GetDescendantDividerRoot(string value)
+        {
+            return new StringDivider(value, Delimiter);
         }
 
         public int Index
