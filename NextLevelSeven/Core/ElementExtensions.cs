@@ -9,6 +9,19 @@ namespace NextLevelSeven.Core
     static public class ElementExtensions
     {
         /// <summary>
+        /// Add an element as a descendant.
+        /// </summary>
+        /// <param name="target">Element to add to.</param>
+        /// <param name="elementToAdd">Element to be added.</param>
+        /// <returns>The newly added element.</returns>
+        static public IElement Add(this IElement target, IElement elementToAdd)
+        {
+            var addedElement = target[target.DescendantCount + 1];
+            addedElement.Values = target.Values.Concat(elementToAdd.Values).ToArray();
+            return addedElement;
+        }
+
+        /// <summary>
         /// Insert element data after the specified descendant element.
         /// </summary>
         /// <param name="target">Element to add to.</param>

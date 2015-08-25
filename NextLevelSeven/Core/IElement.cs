@@ -38,6 +38,11 @@ namespace NextLevelSeven.Core
         void Delete();
 
         /// <summary>
+        /// Delimiter used to separate descendants.
+        /// </summary>
+        char Delimiter { get; }
+
+        /// <summary>
         /// Get the number of descendant elements.
         /// </summary>
         int DescendantCount { get; }

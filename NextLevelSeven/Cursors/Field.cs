@@ -25,7 +25,7 @@ namespace NextLevelSeven.Cursors
             return new Field(Value, EncodingConfiguration);
         }
 
-        protected override char Delimiter
+        public override char Delimiter
         {
             get { return EncodingConfiguration.RepetitionDelimiter; }
         }

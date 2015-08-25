@@ -36,6 +36,25 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
+        /// Determines whether this object is equivalent to another object.
+        /// </summary>
+        /// <param name="obj">Object to compare to.</param>
+        /// <returns>True, if objects are considered to be equivalent.</returns>
+        public override bool Equals(object obj)
+        {
+            return _message.Equals(obj);
+        }
+
+        /// <summary>
+        /// Get this message's hash code.
+        /// </summary>
+        /// <returns>Hash code for the message.</returns>
+        public override int GetHashCode()
+        {
+            return _message.GetHashCode();
+        }
+
+        /// <summary>
         /// Internal message cursor.
         /// </summary>
         private readonly Cursors.Message _message;
@@ -57,7 +76,7 @@ namespace NextLevelSeven.Core
         /// <returns>Segment that was found at the index.</returns>
         public ISegment this[int index]
         {
-            get { return _message[index] as ISegment; }
+            get { return _message.GetSegment(index); }
         }
 
         /// <summary>
@@ -129,6 +148,11 @@ namespace NextLevelSeven.Core
         public void Delete()
         {
             throw new ElementException(@"The root element of a message cannot be deleted.");
+        }
+
+        public char Delimiter
+        {
+            get { return _message.Delimiter; }
         }
 
         /// <summary>
@@ -334,6 +358,15 @@ namespace NextLevelSeven.Core
         {
             get { return Codec.ConvertToDateTime(Msh[7].Value); }
             set { Msh[7].Value = Codec.ConvertFromDateTime(value); }
+        }
+
+        /// <summary>
+        /// Get the string representation of the message.
+        /// </summary>
+        /// <returns>Message as a string.</returns>
+        public override string ToString()
+        {
+            return _message.ToString();
         }
 
         /// <summary>

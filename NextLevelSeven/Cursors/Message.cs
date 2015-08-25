@@ -17,7 +17,24 @@ namespace NextLevelSeven.Cursors
                 throw new ArgumentNullException(@"message");
             }
             _encodingConfiguration = new MessageEncodingConfiguration(this);
-            KeyGuid = new Guid();
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+            return obj.ToString() == ToString();
+        }
+
+        public override int GetHashCode()
+        {
+            return ToString().GetHashCode();
         }
 
         public override IElement CloneDetached()
@@ -25,7 +42,7 @@ namespace NextLevelSeven.Cursors
             return new Message(Value);
         }
 
-        protected override char Delimiter
+        public override char Delimiter
         {
             get { return '\n'; }
         }
@@ -51,10 +68,17 @@ namespace NextLevelSeven.Cursors
             get { return KeyGuid.ToString(); }
         }
 
+        private Guid _keyGuid;
         Guid KeyGuid
         {
-            get;
-            set;
+            get
+            {
+                if (_keyGuid == Guid.Empty)
+                {
+                    _keyGuid = Guid.NewGuid();
+                }
+                return _keyGuid;
+            }
         }
 
         public IEnumerable<ISegment> Segments

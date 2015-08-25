@@ -68,7 +68,7 @@ namespace NextLevelSeven.Cursors
             // TODO: actually delete
         }
 
-        abstract protected char Delimiter { get; }
+        abstract public char Delimiter { get; }
 
         virtual public int DescendantCount
         {
@@ -84,7 +84,9 @@ namespace NextLevelSeven.Cursors
                 if (_descendantDivider == null && !_descendantDividerInitialized)
                 {
                     _descendantDividerInitialized = true;
-                    _descendantDivider = GetDescendantDivider(Ancestor, ParentIndex);
+                    _descendantDivider = (Ancestor == null)
+                        ? GetDescendantDividerRoot(string.Empty)
+                        : GetDescendantDivider(Ancestor, ParentIndex);
                 }
                 return _descendantDivider;
             }
@@ -186,6 +188,11 @@ namespace NextLevelSeven.Cursors
         {
             get
             {
+                if (DescendantDivider == null)
+                {
+                    return null;
+                }
+
                 var value = DescendantDivider.Value;
                 if (string.Equals("\"\"", value, StringComparison.Ordinal))
                 {

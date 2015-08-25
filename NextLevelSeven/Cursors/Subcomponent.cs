@@ -25,7 +25,7 @@ namespace NextLevelSeven.Cursors
             return new Subcomponent(Value, EncodingConfiguration);
         }
 
-        protected override char Delimiter
+        public override char Delimiter
         {
             get { return '\0'; }
         }

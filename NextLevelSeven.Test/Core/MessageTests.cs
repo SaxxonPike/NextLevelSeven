@@ -94,7 +94,7 @@ namespace NextLevelSeven.Test.Core
         }
 
         [TestMethod]
-        public void Message_HasAllUniqueKeys()
+        public void Message_HasUniqueDescendantKeys()
         {
             var message = new Message(ExampleMessages.Standard);
             var keys = message.Segments.Select(s => s.Key).ToList();
@@ -108,12 +108,28 @@ namespace NextLevelSeven.Test.Core
         }
 
         [TestMethod]
+        public void Message_HasUniqueKeys()
+        {
+            var message1 = new Message(ExampleMessages.Standard);
+            var message2 = new Message(ExampleMessages.Standard);
+            Assert.AreNotEqual(message1.Key, message2.Key);
+        }
+
+        [TestMethod]
         public void Message_CanBeCloned()
         {
             var message = new Message(ExampleMessages.Standard);
             var clone = message.Clone();
             Assert.AreNotSame(message, clone, "Cloned message is the same referenced object.");
             Assert.AreEqual(message.Value, clone.Value, "Cloned message has different contents.");
+        }
+
+        [TestMethod]
+        public void Message_WithIdentivalValueToAnotherMessage_IsEquivalent()
+        {
+            var message1 = new Message(ExampleMessages.Standard);
+            var message2 = new Message(ExampleMessages.Standard);
+            Assert.AreEqual(message1, message2);
         }
     }
 }

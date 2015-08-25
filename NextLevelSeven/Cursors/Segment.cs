@@ -22,18 +22,35 @@ namespace NextLevelSeven.Cursors
 
         public override IElement CloneDetached()
         {
+            return CloneDetachedSegment();
+        }
+
+        ISegment ISegment.CloneDetached()
+        {
+            return CloneDetachedSegment();
+        }
+
+        ISegment CloneDetachedSegment()
+        {
             return new Segment(Value, EncodingConfiguration);
         }
 
-        protected override char Delimiter
+        public override char Delimiter
         {
             get
             {
-                if (DescendantDivider == null)
+                if (Ancestor != null && DescendantDivider == null)
                 {
                     return Ancestor.DescendantDivider.Value[3];
                 }
-                return Value[3];
+
+                var value = Value;
+                if (value != null && value.Length > 3)
+                {
+                    return value[3];                    
+                }
+
+                return '|';
             }
         }
 

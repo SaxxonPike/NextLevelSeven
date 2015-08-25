@@ -9,6 +9,13 @@ namespace NextLevelSeven.Core
     public interface IMessage : IElement
     {
         /// <summary>
+        /// Get a descendant segment at the specified index. Indices match the HL7 specification, and are not necessarily zero-based.
+        /// </summary>
+        /// <param name="index">Index to query.</param>
+        /// <returns>Element that was found at the index.</returns>
+        new ISegment this[int index] { get; }
+
+        /// <summary>
         /// Get segments of a specific segment type.
         /// </summary>
         /// <param name="segmentType">The 3-character segment type to query for.</param>
