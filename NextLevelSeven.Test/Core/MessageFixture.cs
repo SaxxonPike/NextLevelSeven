@@ -26,10 +26,12 @@ namespace NextLevelSeven.Test.Core
         }
 
         [TestMethod]
-        public void Message_CanInitializeNullMessage()
+        public void Message_WillNotInitializeNullMessage()
         {
-            var message = new Message(null);
-            Assert.IsNotNull(message, "Could not initialize null message.");
+            It.Throws<ArgumentNullException>(() =>
+            {
+                var message = new Message(null);
+            });
         }
 
         [TestMethod]
@@ -95,7 +97,7 @@ namespace NextLevelSeven.Test.Core
         public void Message_HasAllUniqueKeys()
         {
             var message = new Message(ExampleMessages.Standard);
-            var keys = message.Segments.Select(s => s.Key);
+            var keys = message.Segments.Select(s => s.Key).ToList();
             var distinctKeys = keys.Distinct();
 
             foreach (var key in keys)
@@ -103,6 +105,15 @@ namespace NextLevelSeven.Test.Core
                 Debug.WriteLine(key);
             }
             Assert.AreEqual(distinctKeys.Count(), message.Segments.Count(), "Segments don't have entirely unique keys.");
+        }
+
+        [TestMethod]
+        public void Message_CanBeCloned()
+        {
+            var message = new Message(ExampleMessages.Standard);
+            var clone = message.Clone();
+            Assert.AreNotSame(message, clone, "Cloned message is the same referenced object.");
+            Assert.AreEqual(message.Value, clone.Value, "Cloned message has different contents.");
         }
     }
 }

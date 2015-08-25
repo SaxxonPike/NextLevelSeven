@@ -89,10 +89,19 @@ namespace NextLevelSeven.Core
         /// <summary>
         /// Create a deep clone of the message.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Clone of the message.</returns>
         public IMessage Clone()
         {
             return new Message(Value);
+        }
+
+        /// <summary>
+        /// Create a deep clone of the message. Because a message is at the top of the heirarchy, this is identical to calling Clone().
+        /// </summary>
+        /// <returns>Clone of the message.</returns>
+        public IElement CloneDetached()
+        {
+            return Clone();
         }
 
         /// <summary>

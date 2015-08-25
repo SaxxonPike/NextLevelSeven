@@ -17,6 +17,7 @@ namespace NextLevelSeven.Cursors
             Index = 0;
             ParentIndex = 0;
             _descendantDivider = GetDescendantDividerRoot(value);
+            Ancestor = null;
         }
 
         protected Element(Element ancestor, int parentIndex, int externalIndex)
@@ -59,6 +60,8 @@ namespace NextLevelSeven.Cursors
         {
             get { return new Codec(this); }
         }
+
+        public abstract IElement CloneDetached();
 
         public void Delete()
         {

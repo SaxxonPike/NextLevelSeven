@@ -16,8 +16,13 @@ namespace NextLevelSeven.Cursors
             {
                 throw new ArgumentNullException(@"message");
             }
-            _encodingConfiguration = new EncodingConfiguration(this);
+            _encodingConfiguration = new MessageEncodingConfiguration(this);
             KeyGuid = new Guid();
+        }
+
+        public override IElement CloneDetached()
+        {
+            return new Message(Value);
         }
 
         protected override char Delimiter

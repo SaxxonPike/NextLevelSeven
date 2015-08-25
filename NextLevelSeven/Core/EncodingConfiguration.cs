@@ -6,37 +6,66 @@ using System.Threading.Tasks;
 
 namespace NextLevelSeven.Core
 {
-    sealed internal class EncodingConfiguration
+    internal class EncodingConfiguration
     {
-        public EncodingConfiguration(IElement messageElement)
+        /// <summary>
+        /// Create a default encoding configuration.
+        /// </summary>
+        public EncodingConfiguration()
         {
-            Message = messageElement;
+            Initialize();
         }
 
-        public char ComponentDelimiter
+        /// <summary>
+        /// Clone an existing encoding configuration.
+        /// </summary>
+        /// <param name="other">Source configuration to pull values from.</param>
+        public EncodingConfiguration(EncodingConfiguration other)
         {
-            get { return Message.Value[4]; }
+            InitializeFrom(other);
         }
 
-        public char EscapeDelimiter
+        /// <summary>
+        /// Get the delimiter character used to split components.
+        /// </summary>
+        virtual public char ComponentDelimiter { get; protected set; }
+
+        /// <summary>
+        /// Get the escape character used to mark encoded sequences.
+        /// </summary>
+        virtual public char EscapeDelimiter { get; protected set; }
+
+        /// <summary>
+        /// Get the repetition character used to separate multiple data in the same field.
+        /// </summary>
+        virtual public char RepetitionDelimiter { get; protected set; }
+
+        /// <summary>
+        /// Get the delimiter character used to split subcomponents.
+        /// </summary>
+        virtual public char SubcomponentDelimiter { get; protected set; }
+
+        /// <summary>
+        /// Initialize defaults.
+        /// </summary>
+        virtual protected void Initialize()
         {
-            get { return Message.Value[6]; }
+            ComponentDelimiter = '^';
+            EscapeDelimiter = '\\';
+            RepetitionDelimiter = '~';
+            SubcomponentDelimiter = '&';
         }
 
-        IElement Message
+        /// <summary>
+        /// Clone defaults from another configuration.
+        /// </summary>
+        /// <param name="other">Source configuration.</param>
+        protected void InitializeFrom(EncodingConfiguration other)
         {
-            get;
-            set;
-        }
-
-        public char RepetitionDelimiter
-        {
-            get { return Message.Value[5]; }
-        }
-
-        public char SubcomponentDelimiter
-        {
-            get { return Message.Value[7]; }
+            ComponentDelimiter = other.ComponentDelimiter;
+            EscapeDelimiter = other.EscapeDelimiter;
+            RepetitionDelimiter = other.RepetitionDelimiter;
+            SubcomponentDelimiter = other.SubcomponentDelimiter;            
         }
     }
 }

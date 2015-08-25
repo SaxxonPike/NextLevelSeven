@@ -15,6 +15,11 @@ namespace NextLevelSeven.Cursors
         {
         }
 
+        public override IElement CloneDetached()
+        {
+            return new Field(Value, EncodingConfiguration);
+        }
+
         protected override char Delimiter
         {
             get { return '\0'; }

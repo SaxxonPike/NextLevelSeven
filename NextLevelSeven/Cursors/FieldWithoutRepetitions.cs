@@ -14,6 +14,17 @@ namespace NextLevelSeven.Cursors
         {
         }
 
+        private FieldWithoutRepetitions(string value, EncodingConfiguration config)
+            : base(value)
+        {
+            _encodingConfigurationOverride = new EncodingConfiguration(config);
+        }
+
+        public override IElement CloneDetached()
+        {
+            return new FieldWithoutRepetitions(Value, EncodingConfiguration);
+        }
+
         protected override char Delimiter
         {
             get { return '\0'; }
@@ -27,9 +38,10 @@ namespace NextLevelSeven.Cursors
             }
         }
 
+        private readonly EncodingConfiguration _encodingConfigurationOverride;
         public override EncodingConfiguration EncodingConfiguration
         {
-            get { return Ancestor.EncodingConfiguration; }
+            get { return _encodingConfigurationOverride ?? Ancestor.EncodingConfiguration; }
         }
 
         public override IElement GetDescendant(int index)

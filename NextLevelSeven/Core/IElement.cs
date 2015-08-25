@@ -27,6 +27,12 @@ namespace NextLevelSeven.Core
         ICodec As { get; }
 
         /// <summary>
+        /// Create a detached clone of the element with no ancestors.
+        /// </summary>
+        /// <returns></returns>
+        IElement CloneDetached();
+
+        /// <summary>
         /// Delete the element from its ancestor. This cannot be performed on the root element (message).
         /// </summary>
         void Delete();

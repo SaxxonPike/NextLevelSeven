@@ -53,6 +53,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="It.cs" />
     <Compile Include="Core\ElementExtensionsFixture.cs" />
     <Compile Include="Core\ExampleMessageFixture.cs" />
     <Compile Include="Core\ExampleMessages.cs" />

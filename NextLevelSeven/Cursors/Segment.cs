@@ -14,6 +14,17 @@ namespace NextLevelSeven.Cursors
         {
         }
 
+        private Segment(string value, EncodingConfiguration config)
+            : base(value)
+        {
+            _encodingConfigurationOverride = new EncodingConfiguration(config);
+        }
+
+        public override IElement CloneDetached()
+        {
+            return new Segment(Value, EncodingConfiguration);
+        }
+
         protected override char Delimiter
         {
             get
@@ -38,9 +49,10 @@ namespace NextLevelSeven.Cursors
             }
         }
 
+        private readonly EncodingConfiguration _encodingConfigurationOverride;
         public override EncodingConfiguration EncodingConfiguration
         {
-            get { return Ancestor.EncodingConfiguration; }
+            get { return _encodingConfigurationOverride ?? Ancestor.EncodingConfiguration; }
         }
 
         public override IElement GetDescendant(int index)

@@ -14,6 +14,16 @@ namespace NextLevelSeven.Cursors
         {
         }
 
+        private Component(string value)
+            : base(value)
+        {
+        }
+
+        public override IElement CloneDetached()
+        {
+            return new Component(Value);
+        }
+
         protected override char Delimiter
         {
             get { return EncodingConfiguration.SubcomponentDelimiter; }
