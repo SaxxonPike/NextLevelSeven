@@ -1,2 +1,3 @@
 # NextLevelSeven
-A fast HL7 message parsing and manipulation class library in C#
+
+A class library for parsing and manipulating HL7 messages, designed to be fast and easy to use.
