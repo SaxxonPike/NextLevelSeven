@@ -35,8 +35,22 @@ namespace NextLevelSeven.Cursors.Dividers
                 {
                     List<StringDivision> divisions;
                     var paddedString = GetPaddedString(Value, index, Delimiter, out divisions);
-                    var d = divisions[index];
-                    Initialize(GetSplicedString(paddedString, d.Offset, d.Length, value), Delimiter);
+                    if (index >= divisions.Count)
+                    {
+                        if (index > 0)
+                        {
+                            Initialize(paddedString + Delimiter + value, Delimiter);
+                        }
+                        else
+                        {
+                            Initialize(value, Delimiter);
+                        }
+                    }
+                    else
+                    {
+                        var d = divisions[index];
+                        Initialize(GetSplicedString(paddedString, d.Offset, d.Length, value), Delimiter);                        
+                    }
                 }
             }
         }
@@ -81,6 +95,12 @@ namespace NextLevelSeven.Cursors.Dividers
                 var divisions = new List<StringDivision>();
                 var length = 0;
                 var offset = 0;
+
+                if (s == null)
+                {
+                    s = string.Empty;
+                }
+
                 var inputLength = s.Length;
 
                 if (delimiter == '\0')
@@ -89,26 +109,23 @@ namespace NextLevelSeven.Cursors.Dividers
                     return divisions;
                 }
 
-                if (s != null)
+                for (var index = 0; index < inputLength; index++)
                 {
-                    for (var index = 0; index < inputLength; index++)
-                    {
-                        if (s[index] == delimiter)
-                        {
-                            divisions.Add(new StringDivision(offset, length));
-                            length = 0;
-                            offset = index + 1;
-                        }
-                        else
-                        {
-                            length++;
-                        }
-                    }
-
-                    if (length > 0)
+                    if (s[index] == delimiter)
                     {
                         divisions.Add(new StringDivision(offset, length));
+                        length = 0;
+                        offset = index + 1;
                     }
+                    else
+                    {
+                        length++;
+                    }
+                }
+
+                if (length > 0)
+                {
+                    divisions.Add(new StringDivision(offset, length));
                 }
 
                 return divisions;
@@ -126,11 +143,16 @@ namespace NextLevelSeven.Cursors.Dividers
                     return s;
                 }
 
+                if (s == null)
+                {
+                    s = string.Empty;
+                }
+
                 var divisionCount = divisions.Count;
                 var stringLength = s.Length;
                 var builder = new StringBuilder(s);
 
-                while (index >= divisionCount)
+                while (index > divisionCount)
                 {
                     divisions.Add(new StringDivision(stringLength + 1, 0));
                     divisionCount++;

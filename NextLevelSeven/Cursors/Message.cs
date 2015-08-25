@@ -16,6 +16,7 @@ namespace NextLevelSeven.Cursors
             {
                 throw new ArgumentNullException(@"message");
             }
+
             _encodingConfiguration = new MessageEncodingConfiguration(this);
         }
 
@@ -44,7 +45,7 @@ namespace NextLevelSeven.Cursors
 
         public override char Delimiter
         {
-            get { return '\n'; }
+            get { return '\xD'; }
         }
 
         private readonly EncodingConfiguration _encodingConfiguration;

@@ -23,7 +23,7 @@ namespace NextLevelSeven.Core
         /// <param name="message">Message data to interpret.</param>
         public Message(string message)
         {
-            _message = new Cursors.Message(message);
+            _message = new Cursors.Message(SanitizeLineEndings(message));
         }
 
         /// <summary>
@@ -42,7 +42,15 @@ namespace NextLevelSeven.Core
         /// <returns>True, if objects are considered to be equivalent.</returns>
         public override bool Equals(object obj)
         {
-            return _message.Equals(obj);
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+            return SanitizeLineEndings(obj.ToString()) == ToString();
         }
 
         /// <summary>
@@ -51,7 +59,7 @@ namespace NextLevelSeven.Core
         /// <returns>Hash code for the message.</returns>
         public override int GetHashCode()
         {
-            return _message.GetHashCode();
+            return ToString().GetHashCode();
         }
 
         /// <summary>
@@ -314,6 +322,20 @@ namespace NextLevelSeven.Core
         {
             get { return Msh[6].Value; }
             set { Msh[6].Value = value; }
+        }
+
+        /// <summary>
+        /// Change all system line endings to HL7 line endings.
+        /// </summary>
+        /// <param name="message">String to transform.</param>
+        /// <returns>Sanitized string.</returns>
+        string SanitizeLineEndings(string message)
+        {
+            if (message == null)
+            {
+                return null;
+            }
+            return message.Replace(Environment.NewLine, "\xD");
         }
 
         /// <summary>

@@ -8,8 +8,8 @@ namespace NextLevelSeven.Test.Core
     [TestClass]
     public class ExampleMessageTests
     {
-        [TestInitialize]
-        public void MessageExtensions_HasProperSampleData()
+        [TestMethod]
+        public void ExampleMessage_HasProperSampleData()
         {
             var obrMessage = new Message(ExampleMessages.MultipleObr);
             Assert.IsTrue(obrMessage["OBR"].Count() > 1, "Sample multiple OBR data is bad: needs multiple OBR segments.");

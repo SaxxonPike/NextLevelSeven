@@ -48,8 +48,22 @@ namespace NextLevelSeven.Cursors.Dividers
                 {
                     List<StringDivision> divisions;
                     var paddedString = StringDivider.GetPaddedString(Value, index, Delimiter, out divisions);
-                    var d = divisions[index];
-                    Value = StringDivider.GetSplicedString(paddedString, d.Offset, d.Length, value);
+                    if (index >= divisions.Count)
+                    {
+                        if (index > 0)
+                        {
+                            Value = Value + Delimiter + value;
+                        }
+                        else
+                        {
+                            Value = value;
+                        }
+                    }
+                    else
+                    {
+                        var d = divisions[index];
+                        Value = StringDivider.GetSplicedString(paddedString, d.Offset, d.Length, value);
+                    }
                 }
             }
         }

@@ -42,6 +42,11 @@ namespace NextLevelSeven.Streaming
                 }
             }
 
+            if (lines.Count == 0)
+            {
+                return null;
+            }
+
             return Interpret(string.Join("\xD", lines));
         }
 

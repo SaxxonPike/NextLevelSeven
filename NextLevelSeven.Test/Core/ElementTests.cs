@@ -55,9 +55,10 @@ namespace NextLevelSeven.Test.Core
         [TestMethod]
         public void Element_CanGetDescendants()
         {
-            var segment = new Message(ExampleMessages.Standard)[2];
-            var test = segment[2];
-            Assert.AreEqual(test.Value, @"20130528073829");
+            var message = new Message(ExampleMessages.Standard);
+            var segment = message[2];
+            var field = segment[2];
+            Assert.AreEqual(@"20130528073829", field.Value);
         }
 
     }

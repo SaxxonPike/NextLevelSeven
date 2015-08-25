@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
@@ -130,6 +131,13 @@ namespace NextLevelSeven.Test.Core
             var message1 = new Message(ExampleMessages.Standard);
             var message2 = new Message(ExampleMessages.Standard);
             Assert.AreEqual(message1, message2);
+        }
+
+        [TestMethod]
+        public void Message_WhenCreatedUsingString_IsEquivalentToTheString()
+        {
+            var message = new Message(ExampleMessages.Standard);
+            Assert.AreEqual(message, ExampleMessages.Standard);
         }
     }
 }
