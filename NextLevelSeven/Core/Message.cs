@@ -45,9 +45,19 @@ namespace NextLevelSeven.Core
         /// </summary>
         /// <param name="index">Index to query.</param>
         /// <returns>Element that was found at the index.</returns>
-        public IElement this[int index]
+        IElement IElement.this[int index]
         {
             get { return _message[index]; }
+        }
+
+        /// <summary>
+        /// Get a descendant segment at the specified index. Indices match the HL7 specification, and are not necessarily zero-based.
+        /// </summary>
+        /// <param name="index">Index to query.</param>
+        /// <returns>Segment that was found at the index.</returns>
+        public ISegment this[int index]
+        {
+            get { return _message[index] as ISegment; }
         }
 
         /// <summary>
