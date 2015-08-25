@@ -53,12 +53,13 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Core\ElementTests.cs" />
     <Compile Include="It.cs" />
-    <Compile Include="Core\ElementExtensionsFixture.cs" />
-    <Compile Include="Core\ExampleMessageFixture.cs" />
+    <Compile Include="Core\ElementExtensionsTests.cs" />
+    <Compile Include="Core\ExampleMessageTests.cs" />
     <Compile Include="Core\ExampleMessages.cs" />
-    <Compile Include="Core\MessageExtensionsFixture.cs" />
-    <Compile Include="Core\MessageFixture.cs" />
+    <Compile Include="Core\MessageExtensionsTests.cs" />
+    <Compile Include="Core\MessageTests.cs" />
     <Compile Include="Measure.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Race.cs" />
