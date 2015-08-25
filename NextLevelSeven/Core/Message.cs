@@ -341,6 +341,13 @@ namespace NextLevelSeven.Core
         /// <returns>True if the message can be parsed, false otherwise.</returns>
         public bool Validate()
         {
+            var value = Value;
+
+            if (value == null)
+            {
+                return false;
+            }
+
             if (!Value.StartsWith("MSH"))
             {
                 return false;
