@@ -13,6 +13,7 @@ namespace NextLevelSeven.Cursors
             : base(message)
         {
             _encodingConfiguration = new EncodingConfiguration(this);
+            KeyGuid = new Guid();
         }
 
         protected override char Delimiter
@@ -34,6 +35,17 @@ namespace NextLevelSeven.Cursors
         public ISegment GetSegment(int index)
         {
             return new Segment(this, index - 1, index);
+        }
+
+        public override string Key
+        {
+            get { return KeyGuid.ToString(); }
+        }
+
+        Guid KeyGuid
+        {
+            get;
+            set;
         }
 
         public IEnumerable<ISegment> Segments
