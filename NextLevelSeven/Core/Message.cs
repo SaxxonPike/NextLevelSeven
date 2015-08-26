@@ -23,6 +23,18 @@ namespace NextLevelSeven.Core
         /// <param name="message">Message data to interpret.</param>
         public Message(string message)
         {
+            if (message == null)
+            {
+                throw new ArgumentNullException(@"message", "Message data must not be null.");
+            }
+            if (!message.StartsWith("MSH"))
+            {
+                throw new ArgumentException("Message data must start with 'MSH'.");
+            }
+            if (message.Length < 9)
+            {
+                throw new ArgumentException("Message length is too short to read any of the encoding characters.");
+            }
             _message = new Cursors.Message(SanitizeLineEndings(message));
         }
 
@@ -307,23 +319,13 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Get or set the message Receiving Application from MSH-5.
+        /// Get the receiving application and facility.
         /// </summary>
-        public string ReceivingApplication
+        public IIdentity Receiver
         {
-            get { return Msh[5].Value; }
-            set { Msh[5].Value = value; }
+            get { return new IdentityProxy(Msh, 5, 6); }
         }
-
-        /// <summary>
-        /// Get or set the message Receiving Facility from MSH-6.
-        /// </summary>
-        public string ReceivingFacility
-        {
-            get { return Msh[6].Value; }
-            set { Msh[6].Value = value; }
-        }
-
+        
         /// <summary>
         /// Change all system line endings to HL7 line endings.
         /// </summary>
@@ -356,21 +358,11 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Get or set the message Sending Application from MSH-3.
+        /// Get the sending application and facility.
         /// </summary>
-        public string SendingApplication
+        public IIdentity Sender
         {
-            get { return Msh[3].Value; }
-            set { Msh[3].Value = value; }
-        }
-
-        /// <summary>
-        /// Get or set the message Sending Facility from MSH-4.
-        /// </summary>
-        public string SendingFacility
-        {
-            get { return Msh[4].Value; }
-            set { Msh[4].Value = value; }
+            get { return new IdentityProxy(Msh, 3, 4); }
         }
 
         /// <summary>
@@ -392,7 +384,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Get or set the message Trigger Event from MSH-7-2.
+        /// Get or set the message Trigger Event from MSH-9-2.
         /// </summary>
         public string TriggerEvent
         {
@@ -401,7 +393,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Get or set the message Trigger Event from MSH-7-1.
+        /// Get or set the message Trigger Event from MSH-9-1.
         /// </summary>
         public string Type
         {

@@ -48,6 +48,9 @@
     <Compile Include="Codecs\IndexedCodecEnumerator.cs" />
     <Compile Include="Core\ElementException.cs" />
     <Compile Include="Core\ElementExtensions.cs" />
+    <Compile Include="Core\Identity.cs" />
+    <Compile Include="Core\IdentityProxy.cs" />
+    <Compile Include="Core\IIdentity.cs" />
     <Compile Include="Core\ISegment.cs" />
     <Compile Include="Core\MessageEncodingConfiguration.cs" />
     <Compile Include="Core\MessageExtensions.cs" />
@@ -76,6 +79,7 @@
     <Compile Include="Cursors\Subcomponent.cs" />
     <Compile Include="Cursors\Dividers\ProxyStringDivider.cs" />
     <Compile Include="Core\Escaping.cs" />
+    <Compile Include="MessageGeneration\MessageGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Streaming\HL7StreamException.cs" />
     <Compile Include="Streaming\HL7StreamReader.cs" />
@@ -90,14 +94,15 @@
     <Compile Include="Streaming\StreamWrapperBase.cs" />
     <Compile Include="Utility\EmptyEnumerable.cs" />
     <Compile Include="Utility\EmptyEnumerator.cs" />
-    <Compile Include="Web\AckMessageGenerator.cs" />
+    <Compile Include="MessageGeneration\AckMessageGenerator.cs" />
     <Compile Include="Web\BackgroundMessageReceiver.cs" />
     <Compile Include="Web\BackgroundMessageSender.cs" />
+    <Compile Include="Web\BackgroundTransportBase.cs" />
     <Compile Include="Web\MessageQueue.cs" />
     <Compile Include="Web\MessageReceiverConfiguration.cs" />
     <Compile Include="Web\MessageSenderConfiguration.cs" />
     <Compile Include="Web\MessageSenderException.cs" />
-    <Compile Include="Web\MessageTransportConfiguration.cs" />
+    <Compile Include="Web\MessageTransportConfigurationBase.cs" />
     <Compile Include="Web\QueuedMessage.cs" />
   </ItemGroup>
   <ItemGroup />

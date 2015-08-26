@@ -63,9 +63,12 @@
     <Compile Include="Measure.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Race.cs" />
+    <Compile Include="Randomized.cs" />
     <Compile Include="Streaming\StreamReaderTests.cs" />
     <Compile Include="Streaming\TextReaderTests.cs" />
+    <Compile Include="Web\MessageReceiverMock.cs" />
     <Compile Include="Web\MessageReceiverTests.cs" />
+    <Compile Include="Web\MessageSenderMock.cs" />
     <Compile Include="Web\MessageSenderTests.cs" />
     <Compile Include="Web\MessageTransportTests.cs" />
   </ItemGroup>

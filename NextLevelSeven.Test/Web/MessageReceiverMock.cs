@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NextLevelSeven.Web
+namespace NextLevelSeven.Test.Web
 {
-    internal class MessageTransportConfiguration
+    class MessageReceiverMock
     {
-        public int Port;
     }
 }

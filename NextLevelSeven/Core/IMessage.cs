@@ -68,14 +68,9 @@ namespace NextLevelSeven.Core
         string ProcessingId { get; set; }
 
         /// <summary>
-        /// Get or set the receiving application code.
+        /// Get the receiving application and facility information.
         /// </summary>
-        string ReceivingApplication { get; set; }
-
-        /// <summary>
-        /// Get or set the receiving facility code.
-        /// </summary>
-        string ReceivingFacility { get; set; }
+        IIdentity Receiver { get; }
 
         /// <summary>
         /// Get or set the security code.
@@ -88,14 +83,9 @@ namespace NextLevelSeven.Core
         IEnumerable<ISegment> Segments { get; }
 
         /// <summary>
-        /// Get or set the sending application code.
+        /// Get the sending application and facility information.
         /// </summary>
-        string SendingApplication { get; set; }
-
-        /// <summary>
-        /// Get or set the sending facility code.
-        /// </summary>
-        string SendingFacility { get; set; }
+        IIdentity Sender { get; }
 
         /// <summary>
         /// Get or set the date/time of the message.

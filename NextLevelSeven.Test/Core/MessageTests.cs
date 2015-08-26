@@ -20,18 +20,29 @@ namespace NextLevelSeven.Test.Core
         }
 
         [TestMethod]
-        public void Message_CanInitializeEmptyMessage()
-        {
-            var message = new Message(string.Empty);
-            Assert.IsNotNull(message, "Could not initialize empty message.");
-        }
-
-        [TestMethod]
-        public void Message_WillNotInitializeNullMessage()
+        public void Message_ThrowsOnNullData()
         {
             It.Throws<ArgumentNullException>(() =>
             {
                 var message = new Message(null);
+            });
+        }
+
+        [TestMethod]
+        public void Message_ThrowsOnEmptyData()
+        {
+            It.Throws<ArgumentException>(() =>
+            {
+                var message = new Message(string.Empty);
+            });            
+        }
+
+        [TestMethod]
+        public void Message_ThrowsOnShortData()
+        {
+            It.Throws<ArgumentException>(() =>
+            {
+                var message = new Message("MSH|123");
             });
         }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -7,6 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using NextLevelSeven.Core;
+using NextLevelSeven.MessageGeneration;
 using NextLevelSeven.Streaming;
 
 namespace NextLevelSeven.Web
@@ -14,19 +16,41 @@ namespace NextLevelSeven.Web
     /// <summary>
     /// A threaded HTTP listener queue for HL7v2 messages.
     /// </summary>
-    public class BackgroundMessageReceiver : MessageQueue, IDisposable
+    public class BackgroundMessageReceiver : BackgroundTransportBase, IDisposable
     {
         /// <summary>
-        /// Create a receiver and begin listening on the specified port for HL7v2 over HTTP requests.
+        /// Create a receiver and begin listening on the specified port for HL7v2 over HTTP requests. Facility and Application fields are automatically populated.
         /// </summary>
-        /// <param name="port">Port number to listen on.</param>
+        /// <param name="port"></param>
         public BackgroundMessageReceiver(int port)
         {
             var config = new MessageReceiverConfiguration();
             config.Port = port;
+            config.OwnFacility = Environment.UserDomainName;
+            config.OwnApplication = Process.GetCurrentProcess().ProcessName;
+            Initialize(config);
+        }
 
+        /// <summary>
+        /// Create a receiver and begin listening on the specified port for HL7v2 over HTTP requests.
+        /// </summary>
+        /// <param name="port">Port number to listen on.</param>
+        /// <param name="facility">Receiving facility.</param>
+        /// <param name="application">Receiving application.</param>
+        public BackgroundMessageReceiver(int port, string facility, string application)
+        {
+            var config = new MessageReceiverConfiguration();
+            config.Port = port;
+            config.OwnFacility = facility;
+            config.OwnApplication = application;
+            Initialize(config);
+        }
+
+        void Initialize(MessageReceiverConfiguration config)
+        {
             Thread = new Thread(BackgroundMessageThreadMain);
             Thread.Start(config);
+            WaitToBeReady();
         }
 
         /// <summary>
@@ -52,6 +76,7 @@ namespace NextLevelSeven.Web
                     Ready = false;
                     var httpRequest = context.Request;
                     var httpResponse = context.Response;
+                    string failureReason = string.Empty;
 
                     IMessage request = null;
 
@@ -61,7 +86,24 @@ namespace NextLevelSeven.Web
                         mem.Position = 0;
                         while (true)
                         {
-                            var message = ReadMessageStream(mem);
+                            IMessage message;
+
+                            try
+                            {
+                                message = ReadMessageStream(mem);
+                            }
+                            catch (Exception ex)
+                            {
+                                if (ex is ArgumentException || ex is ElementException)
+                                {
+                                    failureReason = ex.Message;
+                                    request = null;
+                                    innerQueue.Clear();
+                                    break;
+                                }
+                                throw;
+                            }
+
                             if (request == null)
                             {
                                 request = message;
@@ -79,11 +121,11 @@ namespace NextLevelSeven.Web
                     IMessage responseMessage;
                     if (request != null)
                     {
-                        responseMessage = AckMessageGenerator.GenerateSuccess(request);
+                        responseMessage = AckMessageGenerator.GenerateSuccess(request, null, config.OwnFacility, config.OwnApplication);
                     }
                     else
                     {
-                        responseMessage = AckMessageGenerator.GenerateReject(new Message());
+                        responseMessage = AckMessageGenerator.GenerateReject(new Message(), failureReason, config.OwnFacility, config.OwnApplication);
                     }
 
                     httpResponse.ContentType = "x-application/hl7-v2+er7";
@@ -119,15 +161,6 @@ namespace NextLevelSeven.Web
         }
 
         /// <summary>
-        /// If true, the thread was aborted.
-        /// </summary>
-        bool Aborted
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
         /// Internally used listener object.
         /// </summary>
         HttpListener Listener
@@ -146,24 +179,6 @@ namespace NextLevelSeven.Web
             var reader = new HL7StreamReader(source);
             var message = reader.Read();
             return message;
-        }
-
-        /// <summary>
-        /// If true, the receiver is ready to process further requests. If false, the receiver is busy processing requests.
-        /// </summary>
-        public bool Ready
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// Thread the receiver's main method is running on.
-        /// </summary>
-        Thread Thread
-        {
-            get;
-            set;
         }
 
         /// <summary>

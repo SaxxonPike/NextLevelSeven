@@ -60,9 +60,9 @@ namespace NextLevelSeven.Cursors
             {
                 if (string.Equals(Type, "MSH", StringComparison.Ordinal))
                 {
-                    return DescendantDivider.Count + 1;
+                    return DescendantDivider.Count;
                 }
-                return DescendantDivider.Count;
+                return DescendantDivider.Count - 1;
             }
         }
 
@@ -92,7 +92,7 @@ namespace NextLevelSeven.Cursors
                 {
                     var descendant = new Field(this, index - 1, index);
                     return descendant;
-                }                
+                }
             }
             return new Field(this, index, index);
         }

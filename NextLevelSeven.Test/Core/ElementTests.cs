@@ -9,6 +9,16 @@ namespace NextLevelSeven.Test.Core
     public class ElementTests
     {
         [TestMethod]
+        public void Element_CanAddElementsAtEnd()
+        {
+            var segment = new Message(ExampleMessages.Standard)[2];
+            var fieldCount = segment.DescendantCount;
+            segment[fieldCount + 1].Value = "test";
+            Assert.AreEqual(fieldCount + 1, segment.DescendantCount,
+                @"Number of elements after appending at the end is incorrect.");
+        }
+
+        [TestMethod]
         public void Element_CanBeCloned()
         {
             var segment = new Message(ExampleMessages.Standard)[2];

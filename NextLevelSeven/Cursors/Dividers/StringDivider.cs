@@ -123,11 +123,7 @@ namespace NextLevelSeven.Cursors.Dividers
                     }
                 }
 
-                if (length > 0)
-                {
-                    divisions.Add(new StringDivision(offset, length));
-                }
-
+                divisions.Add(new StringDivision(offset, length));
                 return divisions;
             }
         }
@@ -152,7 +148,7 @@ namespace NextLevelSeven.Cursors.Dividers
                 var stringLength = s.Length;
                 var builder = new StringBuilder(s);
 
-                while (index > divisionCount)
+                while (divisionCount <= index)
                 {
                     divisions.Add(new StringDivision(stringLength + 1, 0));
                     divisionCount++;
@@ -174,7 +170,7 @@ namespace NextLevelSeven.Cursors.Dividers
                     builder.Append(s.Substring(0, offset));
                 }
                 builder.Append(replacement);
-                if (offset + length < s.Length)
+                if (s != null && (offset + length < s.Length))
                 {
                     builder.Append(s.Substring(offset + length));
                 }

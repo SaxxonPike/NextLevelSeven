@@ -11,7 +11,6 @@ namespace NextLevelSeven.Test.Web
         [TestMethod]
         public void MessageSender_CanSendMessages()
         {
-            //MessageSender.Send(new Message(ExampleMessages.Standard), new Uri(@"http://www.ahml.com.au/mtehome/RqilDi/ref231P/slaybr.CGI"));
         }
     }
 }

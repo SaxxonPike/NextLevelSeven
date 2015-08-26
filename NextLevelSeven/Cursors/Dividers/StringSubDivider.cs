@@ -52,7 +52,7 @@ namespace NextLevelSeven.Cursors.Dividers
                     {
                         if (index > 0)
                         {
-                            Value = Value + Delimiter + value;
+                            Value = paddedString + value;
                         }
                         else
                         {
