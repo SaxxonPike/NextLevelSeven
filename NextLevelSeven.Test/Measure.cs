@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace NextLevelSeven.Test
@@ -65,6 +67,23 @@ namespace NextLevelSeven.Test
                     iterations--;
                 }
             });
+        }
+
+        static public long WaitTime(Func<bool> condition, long timeout, string message)
+        {
+            var sw = new Stopwatch();
+            while (!condition())
+            {
+                if (sw.ElapsedMilliseconds > timeout)
+                {
+                    sw.Stop();
+                    Assert.Fail(message);
+                }
+                Thread.Sleep(1);
+            }
+            sw.Stop();
+            Debug.WriteLine("Executed in {0}ms", sw.ElapsedMilliseconds);
+            return sw.ElapsedMilliseconds;
         }
     }
 }

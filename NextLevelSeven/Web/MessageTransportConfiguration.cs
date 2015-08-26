@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace NextLevelSeven.Web
 {
-    internal class MessageReceiverConfiguration : MessageTransportConfiguration
+    internal class MessageTransportConfiguration
     {
+        public int Port;
     }
 }

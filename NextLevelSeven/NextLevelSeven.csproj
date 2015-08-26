@@ -92,9 +92,13 @@
     <Compile Include="Utility\EmptyEnumerator.cs" />
     <Compile Include="Web\AckMessageGenerator.cs" />
     <Compile Include="Web\BackgroundMessageReceiver.cs" />
+    <Compile Include="Web\BackgroundMessageSender.cs" />
+    <Compile Include="Web\MessageQueue.cs" />
     <Compile Include="Web\MessageReceiverConfiguration.cs" />
-    <Compile Include="Web\MessageSender.cs" />
+    <Compile Include="Web\MessageSenderConfiguration.cs" />
     <Compile Include="Web\MessageSenderException.cs" />
+    <Compile Include="Web\MessageTransportConfiguration.cs" />
+    <Compile Include="Web\QueuedMessage.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

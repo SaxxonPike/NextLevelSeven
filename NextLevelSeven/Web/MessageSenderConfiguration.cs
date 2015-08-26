@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Text;
 using System.Threading.Tasks;
-using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Web
 {
-    static public class MessageSender
+    internal class MessageSenderConfiguration : MessageTransportConfiguration
     {
+        public string Address;
     }
 }

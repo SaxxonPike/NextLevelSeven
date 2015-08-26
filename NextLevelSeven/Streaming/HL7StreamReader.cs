@@ -26,9 +26,14 @@ namespace NextLevelSeven.Streaming
 
         virtual protected IMessage Process(Stream stream)
         {
-            int length = (int)(stream.Length - stream.Position);
-            byte[] buffer = new byte[length];
-            int offset = 0;
+            var length = (int)(stream.Length - stream.Position);
+            var buffer = new byte[length];
+            var offset = 0;
+
+            if (length <= 0)
+            {
+                return null;
+            }
 
             while (offset < length)
             {

@@ -7,8 +7,14 @@ using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Web
 {
-    static public class AckMessageGenerator
+    static internal class AckMessageGenerator
     {
+        /// <summary>
+        /// Generate an HL7v2 ACK message.
+        /// </summary>
+        /// <param name="message">Message to acknowledge.</param>
+        /// <param name="code">Response code.</param>
+        /// <returns>A complete ACK message.</returns>
         static IMessage Generate(IMessage message, string code)
         {
             var sourceMsh = message["MSH"].First();
@@ -28,16 +34,31 @@ namespace NextLevelSeven.Web
             return result;
         }
 
+        /// <summary>
+        /// Generate an HL7v2 ACK indicating an error.
+        /// </summary>
+        /// <param name="message">Message to acknowledge.</param>
+        /// <returns>Complete HL7 ACK message.</returns>
         static public IMessage GenerateError(IMessage message)
         {
             return Generate(message, "AE");
         }
 
+        /// <summary>
+        /// Generate an HL7v2 ACK indicating a rejection. Mainly used to tell the sender the data is invalid.
+        /// </summary>
+        /// <param name="message">Message to acknowledge.</param>
+        /// <returns>Complete HL7 ACK message.</returns>
         static public IMessage GenerateReject(IMessage message)
         {
             return Generate(message, "AR");
         }
-        
+
+        /// <summary>
+        /// Generate an HL7v2 ACK indicating a successful transfer.
+        /// </summary>
+        /// <param name="message">Message to acknowledge.</param>
+        /// <returns>Complete HL7 ACK message.</returns>
         static public IMessage GenerateSuccess(IMessage message)
         {
             return Generate(message, "AA");
