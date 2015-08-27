@@ -48,7 +48,7 @@ namespace NextLevelSeven.Diagnostics
                 cultureName = "en";
             }
 
-            switch (cultureName)
+            switch (cultureName.Substring(0, 2))
             {
                 case "en":
                     _language = new English();
