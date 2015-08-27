@@ -14,6 +14,8 @@ namespace NextLevelSeven.Web
     /// </summary>
     abstract public class BackgroundTransportBase : MessageQueue
     {
+        public static readonly string Hl7ContentType = "x-application/hl7-v2+er7";
+
         /// <summary>
         /// If true, the thread was aborted.
         /// </summary>

@@ -30,6 +30,21 @@ namespace NextLevelSeven.Web
         }
 
         /// <summary>
+        /// Event that is invoked whenever a message is accepted as valid by the receiver.
+        /// </summary>
+        public event MessageTransportEventHandler MessageAccepted;
+
+        /// <summary>
+        /// Event that is invoked whenever a message is rejected by the receiver.
+        /// </summary>
+        public event MessageTransportEventHandler MessageRejected;
+
+        /// <summary>
+        /// Event that is invoked whenever a message is sent.
+        /// </summary>
+        public event MessageTransportEventHandler MessageSent;
+
+        /// <summary>
         /// Main method for the sender. This runs on a separate thread.
         /// </summary>
         /// <param name="configObject">Sender configuration.</param>
@@ -49,12 +64,16 @@ namespace NextLevelSeven.Web
                         var message = Messages.Dequeue();
                         var request = WebRequest.Create(config.Address);
                         request.Method = "POST";
-                        request.ContentType = "x-application/hl7-v2+er7";
+                        request.ContentType = Hl7ContentType;
 
                         using (var requestStream = request.GetRequestStream())
                         using (var messageStream = new MemoryStream(Encoding.UTF8.GetBytes(message.Contents.ToString())))
                         {
                             messageStream.CopyTo(requestStream);
+                            if (MessageSent != null)
+                            {
+                                MessageSent(this, new MessageTransportEventArgs(message.Contents.ToString(), null));
+                            }
                         }
 
                         var response = request.GetResponse();
@@ -71,6 +90,22 @@ namespace NextLevelSeven.Web
                                 var responseMsa = responseMessage["MSA"].FirstOrDefault();
                                 if (responseMsa != null)
                                 {
+                                    switch (responseMsa[1].Value)
+                                    {
+                                        case "AA":
+                                            if (MessageAccepted != null)
+                                            {
+                                                MessageAccepted(this, new MessageTransportEventArgs(message.Contents.ToString(), responseMessage.ToString()));
+                                            }
+                                            break;
+                                        case "AR":
+                                        case "AE":
+                                            if (MessageRejected != null)
+                                            {
+                                                MessageRejected(this, new MessageTransportEventArgs(message.Contents.ToString(), responseMessage.ToString()));
+                                            }
+                                            break;
+                                    }
                                     if (responseMsa[1].Value != "AA")
                                     {
                                         Retry(message);

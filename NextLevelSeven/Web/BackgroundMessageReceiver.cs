@@ -46,6 +46,25 @@ namespace NextLevelSeven.Web
             Initialize(config);
         }
 
+        /// <summary>
+        /// Event that is invoked whenever a message is accepted as valid.
+        /// </summary>
+        public event MessageTransportEventHandler MessageAccepted;
+
+        /// <summary>
+        /// Event that is invoked whenever a message is received.
+        /// </summary>
+        public event MessageTransportEventHandler MessageReceived;
+
+        /// <summary>
+        /// Event that is invoked whenever a message is rejected.
+        /// </summary>
+        public event MessageTransportEventHandler MessageRejected;
+
+        /// <summary>
+        /// Initialize the reader with the specified config.
+        /// </summary>
+        /// <param name="config">Config to initialize with.</param>
         void Initialize(MessageReceiverConfiguration config)
         {
             Thread = new Thread(BackgroundMessageThreadMain);
@@ -77,6 +96,7 @@ namespace NextLevelSeven.Web
                     var httpRequest = context.Request;
                     var httpResponse = context.Response;
                     string failureReason = string.Empty;
+                    var messageRawData = new byte[0];
 
                     IMessage request = null;
 
@@ -91,6 +111,10 @@ namespace NextLevelSeven.Web
                             try
                             {
                                 message = ReadMessageStream(mem);
+                                if (MessageReceived != null)
+                                {
+                                    MessageReceived(this, new MessageTransportEventArgs(null, message.ToString()));
+                                }
                             }
                             catch (Exception ex)
                             {
@@ -98,6 +122,7 @@ namespace NextLevelSeven.Web
                                 {
                                     failureReason = ex.Message;
                                     request = null;
+                                    messageRawData = mem.ToArray();
                                     innerQueue.Clear();
                                     break;
                                 }
@@ -122,13 +147,21 @@ namespace NextLevelSeven.Web
                     if (request != null)
                     {
                         responseMessage = AckMessageGenerator.GenerateSuccess(request, null, config.OwnFacility, config.OwnApplication);
+                        if (MessageAccepted != null)
+                        {
+                            MessageAccepted(this, new MessageTransportEventArgs(responseMessage.ToString(), request.ToString()));
+                        }
                     }
                     else
                     {
                         responseMessage = AckMessageGenerator.GenerateReject(new Message(), failureReason, config.OwnFacility, config.OwnApplication);
+                        if (MessageRejected != null)
+                        {
+                            MessageRejected(this, new MessageTransportEventArgs(responseMessage.ToString(), Encoding.UTF8.GetString(messageRawData)));
+                        }
                     }
 
-                    httpResponse.ContentType = "x-application/hl7-v2+er7";
+                    httpResponse.ContentType = Hl7ContentType;
                     using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(responseMessage.ToString())))
                     {
                         mem.CopyTo(httpResponse.OutputStream);

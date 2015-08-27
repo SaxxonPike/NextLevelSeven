@@ -46,19 +46,17 @@ namespace NextLevelSeven.Cursors.Dividers
                     var paddedString = StringDivider.GetPaddedString(Value, index, Delimiter, out divisions);
                     if (index >= divisions.Count)
                     {
-                        if (index > 0)
-                        {
-                            Value = String.Join(paddedString, value);
-                        }
-                        else
-                        {
-                            Value = value;
-                        }
+                        Value = (index > 0) ? String.Join(paddedString, value) : value;
                     }
                     else
                     {
                         var d = divisions[index];
                         Value = StringDivider.GetSplicedString(paddedString, d.Offset, d.Length, value);
+                    }
+
+                    if (ValueChanged != null)
+                    {
+                        ValueChanged(this, EventArgs.Empty);
                     }
                 }
             }
