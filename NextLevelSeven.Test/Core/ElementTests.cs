@@ -81,5 +81,34 @@ namespace NextLevelSeven.Test.Core
             Assert.AreEqual(@"20130528073829", field.Value);
         }
 
+        [TestMethod]
+        public void Element_WillHaveValuesInterpretedAsNull()
+        {
+            var message = new Message();
+            message[1][3].Value = "\"\"";
+            Assert.AreEqual(message[1][3].Value, null, @"Value of two double quotes was not interpreted as null.");
+            Assert.IsTrue(message[1][3].Exists, @"Explicitly set null value must appear to exist.");
+        }
+
+        [TestMethod]
+        public void Element_WillConsiderNonPresentValuesToNotExist()
+        {
+            var message = new Message();
+            Assert.IsFalse(message[2].Exists, @"Nonexistant segment is marked as existing.");
+        }
+
+        [TestMethod]
+        public void Element_WithNoDescendants_ShouldNotClaimToHaveDescendants()
+        {
+            var message = new Message();
+            Assert.IsFalse(message[1][3].HasDescendants, @"Element claims to have descendants when it should not.");
+        }
+
+        [TestMethod]
+        public void Element_WithDescendants_ShouldClaimToHaveDescendants()
+        {
+            var message = new Message();
+            Assert.IsTrue(message[1].HasDescendants, @"Segment claims to not have descendants when it should.");
+        }
     }
 }

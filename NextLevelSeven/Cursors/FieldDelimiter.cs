@@ -40,6 +40,14 @@ namespace NextLevelSeven.Cursors
             return new ProxyStringDivider(() => Value, v => Value = v);
         }
 
+        public override bool HasDescendants
+        {
+            get
+            {
+                return false;
+            }
+        }
+
         public override string ToString()
         {
             return Value;

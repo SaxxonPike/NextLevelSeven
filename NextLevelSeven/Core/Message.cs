@@ -271,6 +271,14 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
+        /// If true, the element has descendants (not necessarily direct ones.)
+        /// </summary>
+        public bool HasDescendants
+        {
+            get { return _message.HasDescendants; }
+        }
+
+        /// <summary>
         /// Returns zero.
         /// </summary>
         public int Index

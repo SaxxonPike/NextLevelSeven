@@ -133,6 +133,29 @@ namespace NextLevelSeven.Cursors
             return new StringDivider(value, Delimiter);
         }
 
+        virtual public bool HasDescendants
+        {
+            get
+            {
+                if (!Exists)
+                {
+                    return false;
+                }
+
+                if (DescendantCount == 0)
+                {
+                    return false;
+                }
+
+                if (Delimiter == '\0')
+                {
+                    return false;
+                }
+
+                return (DescendantCount > 1) || DescendantElements.Any(d => d.HasDescendants);
+            }
+        }
+
         public int Index
         {
             get;

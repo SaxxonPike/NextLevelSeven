@@ -63,6 +63,11 @@ namespace NextLevelSeven.Core
         bool Exists { get; }
 
         /// <summary>
+        /// If true, the element has descendants (not necessarily direct ones.)
+        /// </summary>
+        bool HasDescendants { get; }
+
+        /// <summary>
         /// Index of the element.
         /// </summary>
         int Index { get; }
