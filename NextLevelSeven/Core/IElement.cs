@@ -63,9 +63,9 @@ namespace NextLevelSeven.Core
         bool Exists { get; }
 
         /// <summary>
-        /// If true, the element has descendants (not necessarily direct ones.)
+        /// If true, the element has meaningful descendants (not necessarily direct ones.)
         /// </summary>
-        bool HasDescendants { get; }
+        bool HasSignificantDescendants { get; }
 
         /// <summary>
         /// Index of the element.

@@ -40,7 +40,7 @@ namespace NextLevelSeven.Cursors
             return new ProxyStringDivider(() => Ancestor.DescendantDivider[1], v => Ancestor.DescendantDivider[1] = v);
         }
 
-        public override bool HasDescendants
+        public override bool HasSignificantDescendants
         {
             get
             {

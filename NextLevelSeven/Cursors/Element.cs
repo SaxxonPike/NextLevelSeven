@@ -133,7 +133,7 @@ namespace NextLevelSeven.Cursors
             return new StringDivider(value, Delimiter);
         }
 
-        virtual public bool HasDescendants
+        virtual public bool HasSignificantDescendants
         {
             get
             {
@@ -152,7 +152,7 @@ namespace NextLevelSeven.Cursors
                     return false;
                 }
 
-                return (DescendantCount > 1) || DescendantElements.Any(d => d.HasDescendants);
+                return (DescendantCount > 1) || DescendantElements.Any(d => d.HasSignificantDescendants);
             }
         }
 

@@ -98,17 +98,17 @@ namespace NextLevelSeven.Test.Core
         }
 
         [TestMethod]
-        public void Element_WithNoDescendants_ShouldNotClaimToHaveDescendants()
+        public void Element_WithNoSignificantDescendants_ShouldNotClaimToHaveSignificantDescendants()
         {
             var message = new Message();
-            Assert.IsFalse(message[1][3].HasDescendants, @"Element claims to have descendants when it should not.");
+            Assert.IsFalse(message[1][3].HasSignificantDescendants, @"Element claims to have descendants when it should not.");
         }
 
         [TestMethod]
-        public void Element_WithDescendants_ShouldClaimToHaveDescendants()
+        public void Element_WithSignificantDescendants_ShouldClaimToHaveSignificantDescendants()
         {
             var message = new Message();
-            Assert.IsTrue(message[1].HasDescendants, @"Segment claims to not have descendants when it should.");
+            Assert.IsTrue(message[1].HasSignificantDescendants, @"Segment claims to not have descendants when it should.");
         }
     }
 }

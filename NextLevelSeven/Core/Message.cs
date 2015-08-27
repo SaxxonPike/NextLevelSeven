@@ -271,11 +271,11 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// If true, the element has descendants (not necessarily direct ones.)
+        /// If true, the element has meaningful descendants (not necessarily direct ones.)
         /// </summary>
-        public bool HasDescendants
+        public bool HasSignificantDescendants
         {
-            get { return _message.HasDescendants; }
+            get { return _message.HasSignificantDescendants; }
         }
 
         /// <summary>
