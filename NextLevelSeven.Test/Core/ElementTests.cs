@@ -127,11 +127,9 @@ namespace NextLevelSeven.Test.Core
         [TestMethod]
         public void Element_WillPointToCorrectValue_WhenAncestorChanges()
         {
-            var message = new Message();
+            var message = new Message(String.Format(@"MSH|^~\&|{0}|{1}", Randomized.String(), Randomized.String()));
             var msh3 = message[1][3];
             var msh4 = message[1][4];
-            var oldMsh3Value = msh3.Value;
-            var oldMsh4Value = msh4.Value;
             var newMsh3Value = Randomized.String();
             var newMsh4Value = Randomized.String();
 
