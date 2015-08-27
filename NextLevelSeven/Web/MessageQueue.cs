@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NextLevelSeven.Core;
+using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Web
 {
@@ -76,7 +77,7 @@ namespace NextLevelSeven.Web
             }
             else
             {
-                throw new MessageSenderException(@"Exceeded retries for message.");
+                throw new ElementException(ErrorMessages.Get(ErrorCode.ExceededRetriesForMessage));
             }
         }
     }

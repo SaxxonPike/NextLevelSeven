@@ -54,6 +54,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Core\ElementTests.cs" />
+    <Compile Include="Diagnostics\ErrorMessageTests.cs" />
     <Compile Include="It.cs" />
     <Compile Include="Core\ElementExtensionsTests.cs" />
     <Compile Include="Core\ExampleMessageTests.cs" />

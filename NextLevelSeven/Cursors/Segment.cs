@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NextLevelSeven.Core;
+using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Cursors
 {
@@ -74,6 +75,11 @@ namespace NextLevelSeven.Cursors
 
         public override IElement GetDescendant(int index)
         {
+            if (index < 0)
+            {
+                throw new ArgumentException(ErrorMessages.Get(ErrorCode.FieldIndexMustBeZeroOrGreater));
+            }
+
             if (string.Equals(Type, "MSH", StringComparison.Ordinal))
             {
                 if (index == 1)

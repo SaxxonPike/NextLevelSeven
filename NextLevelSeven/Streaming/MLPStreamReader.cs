@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NextLevelSeven.Core;
+using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Streaming
 {
@@ -19,11 +20,11 @@ namespace NextLevelSeven.Streaming
             int vtByte = BaseStream.ReadByte();
             if (vtByte == -1)
             {
-                throw new EndOfStreamException();
+                throw new EndOfStreamException(ErrorMessages.Get(ErrorCode.ReachedEndOfMlpStream));
             }
             if (vtByte != 0x0B)
             {
-                throw new MLPStreamException(@"Header byte is incorrect.");
+                throw new MLPStreamException(ErrorMessages.Get(ErrorCode.HeaderByteIsIncorrect));
             }
 
             using (var mem = new MemoryStream())
@@ -35,7 +36,7 @@ namespace NextLevelSeven.Streaming
                         var buffer = BaseStream.ReadByte();
                         if (buffer == -1)
                         {
-                            throw new EndOfStreamException();
+                            throw new EndOfStreamException(ErrorMessages.Get(ErrorCode.MlpDataEndedPrematurely));
                         }
 
                         if (buffer == 0x1C)
@@ -47,7 +48,7 @@ namespace NextLevelSeven.Streaming
                             }
                             if (buffer == -1)
                             {
-                                throw new EndOfStreamException();
+                                throw new EndOfStreamException(ErrorMessages.Get(ErrorCode.MlpDataEndedPrematurely));
                             }
                         }
                         mem.WriteByte((byte)buffer);

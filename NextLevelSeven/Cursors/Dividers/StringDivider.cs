@@ -83,6 +83,11 @@ namespace NextLevelSeven.Cursors.Dividers
             set { Initialize(value, Delimiter); }
         }
 
+        public void Delete(int index)
+        {
+            throw new NotImplementedException();
+        }
+
         public IStringDivider Divide(int index, char delimiter)
         {
             return new StringSubDivider(this, delimiter, index);
@@ -212,22 +217,6 @@ namespace NextLevelSeven.Cursors.Dividers
         {
             get;
             private set;
-        }
-
-
-        public void Delete(int index)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void InsertAfter(int index, string value = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void InsertBefore(int index, string value = null)
-        {
-            throw new NotImplementedException();
         }
     }
 }

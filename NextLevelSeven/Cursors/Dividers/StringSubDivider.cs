@@ -79,6 +79,11 @@ namespace NextLevelSeven.Cursors.Dividers
             get { return Divisions.Count; }
         }
 
+        public void Delete(int index)
+        {
+            throw new NotImplementedException();
+        }
+
         public char Delimiter
         {
             get;
@@ -141,21 +146,6 @@ namespace NextLevelSeven.Cursors.Dividers
         public override string ToString()
         {
             return Value;
-        }
-
-        public void Delete(int index)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void InsertAfter(int index, string value = null)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void InsertBefore(int index, string value = null)
-        {
-            throw new NotImplementedException();
         }
     }
 }

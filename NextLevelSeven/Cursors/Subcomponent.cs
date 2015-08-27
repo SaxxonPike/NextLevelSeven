@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NextLevelSeven.Core;
+using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Cursors
 {
@@ -43,7 +44,7 @@ namespace NextLevelSeven.Cursors
 
         public override IElement GetDescendant(int index)
         {
-            return null;
+            throw new ElementException(ErrorMessages.Get(ErrorCode.SubcomponentCannotHaveDescendants));
         }
     }
 }

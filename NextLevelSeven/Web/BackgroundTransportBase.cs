@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Web
 {
@@ -50,7 +51,7 @@ namespace NextLevelSeven.Web
                 Thread.Sleep(1);
                 if (sw.ElapsedMilliseconds > timeoutMilliseconds)
                 {
-                    throw new TimeoutException("Timed out waiting for transport to become ready.");
+                    throw new TimeoutException(ErrorMessages.Get(ErrorCode.TimedOutWaitingForTransportToBecomeReady));
                 }
             }
         }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NextLevelSeven.Core;
+using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Cursors
 {
@@ -38,6 +39,10 @@ namespace NextLevelSeven.Cursors
 
         public override IElement GetDescendant(int index)
         {
+            if (index < 1)
+            {
+                throw new ArgumentException(ErrorMessages.Get(ErrorCode.ComponentIndexMustBeGreaterThanZero));
+            }
             return new Component(this, index - 1, index);
         }
     }

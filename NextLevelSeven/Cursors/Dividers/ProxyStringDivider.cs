@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NextLevelSeven.Core;
+using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Cursors.Dividers
 {
@@ -96,17 +97,17 @@ namespace NextLevelSeven.Cursors.Dividers
 
         public void Delete(int index)
         {
-            throw new InvalidOperationException(@"Sub elements cannot be modified.");
+            throw new InvalidOperationException(ErrorMessages.Get(ErrorCode.DescendantElementsCannotBeModified));
         }
 
         public void InsertAfter(int index, string value = null)
         {
-            throw new InvalidOperationException(@"Sub elements cannot be modified.");
+            throw new InvalidOperationException(ErrorMessages.Get(ErrorCode.DescendantElementsCannotBeModified));
         }
 
         public void InsertBefore(int index, string value = null)
         {
-            throw new InvalidOperationException(@"Sub elements cannot be modified.");
+            throw new InvalidOperationException(ErrorMessages.Get(ErrorCode.DescendantElementsCannotBeModified));
         }
     }
 }

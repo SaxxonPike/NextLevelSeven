@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NextLevelSeven.Codecs;
+using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Core
 {
@@ -25,15 +26,15 @@ namespace NextLevelSeven.Core
         {
             if (message == null)
             {
-                throw new ArgumentNullException(@"message", "Message data must not be null.");
+                throw new ArgumentNullException(@"message", ErrorMessages.Get(ErrorCode.MessageDataMustNotBeNull));
             }
             if (!message.StartsWith("MSH"))
             {
-                throw new ArgumentException("Message data must start with 'MSH'.");
+                throw new ArgumentException(ErrorMessages.Get(ErrorCode.MessageDataMustStartWithMsh));
             }
             if (message.Length < 9)
             {
-                throw new ArgumentException("Message length is too short to read any of the encoding characters.");
+                throw new ArgumentException(ErrorMessages.Get(ErrorCode.MessageDataIsTooShort));
             }
             _message = new Cursors.Message(SanitizeLineEndings(message));
         }
@@ -167,7 +168,7 @@ namespace NextLevelSeven.Core
         /// </summary>
         public void Delete()
         {
-            throw new ElementException(@"The root element of a message cannot be deleted.");
+            throw new ElementException(ErrorMessages.Get(ErrorCode.RootElementCannotBeDeleted));
         }
 
         public char Delimiter
@@ -196,7 +197,7 @@ namespace NextLevelSeven.Core
         /// </summary>
         public void Erase()
         {
-            throw new ElementException(@"The root element of a message cannot be erased.");
+            throw new ElementException(ErrorMessages.Get(ErrorCode.RootElementCannotBeErased));
         }
 
         /// <summary>

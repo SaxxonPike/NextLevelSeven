@@ -9,13 +9,23 @@ namespace NextLevelSeven.Test.Core
     public class ElementTests
     {
         [TestMethod]
-        public void Element_CanAddElementsAtEnd()
+        public void Element_CanAddDescendantsAtEnd()
         {
             var segment = new Message(ExampleMessages.Standard)[2];
             var fieldCount = segment.DescendantCount;
             segment[fieldCount + 1].Value = "test";
             Assert.AreEqual(fieldCount + 1, segment.DescendantCount,
                 @"Number of elements after appending at the end is incorrect.");
+        }
+
+        [TestMethod]
+        public void Element_CanAddDescendantsBeyondEnd()
+        {
+            var segment = new Message(ExampleMessages.Standard)[2];
+            var fieldCount = segment.DescendantCount;
+            segment[fieldCount + 2].Value = "test";
+            Assert.AreEqual(fieldCount + 2, segment.DescendantCount,
+                @"Number of elements after appending at the end is incorrect.");            
         }
 
         [TestMethod]

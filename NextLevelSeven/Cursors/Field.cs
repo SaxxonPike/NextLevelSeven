@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NextLevelSeven.Core;
+using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Cursors
 {
@@ -38,7 +39,11 @@ namespace NextLevelSeven.Cursors
 
         public override IElement GetDescendant(int index)
         {
-            if (index <= 0)
+            if (index < 0)
+            {
+                throw new ArgumentException(ErrorMessages.Get(ErrorCode.RepetitionIndexMustBeZeroOrGreater));
+            }
+            if (index == 0)
             {
                 return new Repetition(new FieldWithoutRepetitions(Ancestor, ParentIndex, Index), 0, 0);
             }

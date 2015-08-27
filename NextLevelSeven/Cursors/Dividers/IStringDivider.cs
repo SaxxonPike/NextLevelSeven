@@ -16,8 +16,6 @@ namespace NextLevelSeven.Cursors.Dividers
         IStringDivider Divide(int index, char delimiter);
         IReadOnlyList<StringDivision> Divisions { get; }
         int Index { get; set; }
-        void InsertAfter(int index, string value = null);
-        void InsertBefore(int index, string value = null);
         string Value { get; set; }
         int Version { get; }
     }

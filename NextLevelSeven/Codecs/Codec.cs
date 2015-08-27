@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NextLevelSeven.Core;
+using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Codecs
 {
@@ -97,7 +98,7 @@ namespace NextLevelSeven.Codecs
             int length = input.Length;
             if (length < 4)
             {
-                throw new ArgumentException("Unable to parse date.");
+                throw new ArgumentException(ErrorMessages.Get(ErrorCode.UnableToParseDate));
             }
 
             var year = int.Parse(input.Substring(0, 4));
