@@ -8,6 +8,9 @@ using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Cursors
 {
+    /// <summary>
+    /// Represents a repetition-level element in an HL7 message.
+    /// </summary>
     sealed internal class Repetition : Element
     {
         public Repetition(Element ancestor, int parentIndex, int externalIndex)

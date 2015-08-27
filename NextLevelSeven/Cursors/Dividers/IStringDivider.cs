@@ -7,6 +7,9 @@ using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Cursors.Dividers
 {
+    /// <summary>
+    /// Common interface for string dividers.
+    /// </summary>
     internal interface IStringDivider : IEnumerable<string>
     {
         event EventHandler ValueChanged;

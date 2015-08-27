@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace NextLevelSeven.Core
 {
+    /// <summary>
+    /// Common interface for the second depth level of an HL7 message, which contains segment type information.
+    /// </summary>
     public interface ISegment : IElement
     {
         /// <summary>

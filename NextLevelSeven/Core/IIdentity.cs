@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace NextLevelSeven.Core
 {
+    /// <summary>
+    /// Interface that provides Application and Facility information.
+    /// </summary>
     public interface IIdentity
     {
         /// <summary>

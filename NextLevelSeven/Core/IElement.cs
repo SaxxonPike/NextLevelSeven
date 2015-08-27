@@ -7,6 +7,9 @@ using NextLevelSeven.Codecs;
 
 namespace NextLevelSeven.Core
 {
+    /// <summary>
+    /// Common interface that represents any one of the HL7v2 message constructs that holds data.
+    /// </summary>
     public interface IElement : IEnumerable<IElement>
     {
         /// <summary>

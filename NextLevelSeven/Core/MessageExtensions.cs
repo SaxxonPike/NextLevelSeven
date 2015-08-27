@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace NextLevelSeven.Core
 {
+    /// <summary>
+    /// Extends the functionality of top-level HL7 message elements.
+    /// </summary>
     static public class MessageExtensions
     {
         /// <summary>

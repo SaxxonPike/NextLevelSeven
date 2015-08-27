@@ -7,6 +7,9 @@ using NextLevelSeven.Transformation;
 
 namespace NextLevelSeven.Core
 {
+    /// <summary>
+    /// Extensions for generic element functionality.
+    /// </summary>
     static public class ElementExtensions
     {
         /// <summary>

@@ -8,6 +8,9 @@ namespace NextLevelSeven.Diagnostics
 {
     static public partial class ErrorMessages
     {
+        /// <summary>
+        /// German language translation.
+        /// </summary>
         class Deutsch : ErrorMessageLanguage
         {
             public override string GetMessage(ErrorCode code)

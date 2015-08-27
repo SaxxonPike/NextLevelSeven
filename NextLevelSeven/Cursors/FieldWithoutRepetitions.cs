@@ -7,6 +7,9 @@ using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Cursors
 {
+    /// <summary>
+    /// Represents a field that does not use a repetition delimiter (repeats are considered part of the value.)
+    /// </summary>
     sealed internal class FieldWithoutRepetitions : Element
     {
         public FieldWithoutRepetitions(Element ancestor, int parentIndex, int externalIndex)

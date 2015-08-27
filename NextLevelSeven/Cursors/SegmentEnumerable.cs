@@ -7,6 +7,9 @@ using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Cursors
 {
+    /// <summary>
+    /// Enumerable interface for segment descendants.
+    /// </summary>
     internal class SegmentEnumerable : IEnumerable<ISegment>
     {
         public SegmentEnumerable(Message message)

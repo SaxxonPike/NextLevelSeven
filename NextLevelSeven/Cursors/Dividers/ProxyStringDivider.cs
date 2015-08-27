@@ -8,6 +8,9 @@ using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Cursors.Dividers
 {
+    /// <summary>
+    /// A string divider that passes its value through rather than doing any splitting.
+    /// </summary>
     sealed internal class ProxyStringDivider : IStringDivider
     {
         public event EventHandler ValueChanged;

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace NextLevelSeven.Core
 {
+    /// <summary>
+    /// Represents an exception that would be raised for HL7 element specific errors.
+    /// </summary>
     public class ElementException : Exception
     {
         private const string DefaultMessage = @"An error occurred while performing this operation on an element.";

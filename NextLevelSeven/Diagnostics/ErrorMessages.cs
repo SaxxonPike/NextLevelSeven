@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace NextLevelSeven.Diagnostics
 {
+    /// <summary>
+    /// Contains error message processing logic for multiple languages.
+    /// </summary>
     static public partial class ErrorMessages
     {
         abstract private class ErrorMessageLanguage

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace NextLevelSeven.Core
 {
+    /// <summary>
+    /// Common interface for the highest level element in an HL7 message: the message itself.
+    /// </summary>
     public interface IMessage : IElement
     {
         /// <summary>

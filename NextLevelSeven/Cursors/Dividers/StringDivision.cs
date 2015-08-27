@@ -7,6 +7,9 @@ using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Cursors.Dividers
 {
+    /// <summary>
+    /// Contains information about a delimited piece of a string.
+    /// </summary>
     sealed internal class StringDivision
     {
         public StringDivision(int offset, int length)
@@ -15,7 +18,14 @@ namespace NextLevelSeven.Cursors.Dividers
             Length = length;
         }
 
+        /// <summary>
+        /// Index the value starts.
+        /// </summary>
         public readonly int Offset;
+        
+        /// <summary>
+        /// Length of the value.
+        /// </summary>
         public readonly int Length;
     }
 }

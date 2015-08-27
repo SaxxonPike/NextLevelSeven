@@ -11,6 +11,9 @@ using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Cursors
 {
+    /// <summary>
+    /// Represents a generic HL7 message element, which may contain other elements.
+    /// </summary>
     abstract internal class Element : IElement, IEquatable<string>
     {
         public event EventHandler ValueChanged;

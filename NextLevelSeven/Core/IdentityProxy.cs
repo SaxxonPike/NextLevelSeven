@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace NextLevelSeven.Core
 {
+    /// <summary>
+    /// Allows for the use of Identity via an element's data.
+    /// </summary>
     sealed internal class IdentityProxy : IIdentity
     {
         /// <summary>

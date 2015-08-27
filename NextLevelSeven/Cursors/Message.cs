@@ -8,6 +8,9 @@ using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Cursors
 {
+    /// <summary>
+    /// Represents the highest level of an HL7 message.
+    /// </summary>
     sealed internal class Message : Element
     {
         public Message(string message)

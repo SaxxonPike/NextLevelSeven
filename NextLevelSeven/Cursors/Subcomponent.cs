@@ -8,6 +8,9 @@ using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Cursors
 {
+    /// <summary>
+    /// Represents a subcomponent-level element in an HL7 message.
+    /// </summary>
     sealed internal class Subcomponent : Element
     {
         public Subcomponent(Element ancestor, int index, int externalIndex)

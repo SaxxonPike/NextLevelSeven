@@ -8,7 +8,7 @@ using NextLevelSeven.Core;
 namespace NextLevelSeven.Cursors.Dividers
 {
     /// <summary>
-    /// A class which handles getting and setting delimited substrings within a string.
+    /// A root-level splitter which handles getting and setting delimited substrings within a string.
     /// </summary>
     sealed internal class StringDivider : IStringDivider
     {

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace NextLevelSeven.Core
 {
+    /// <summary>
+    /// An encoding configuration that gets its values from an HL7 message.
+    /// </summary>
     sealed internal class MessageEncodingConfiguration : EncodingConfiguration
     {
         /// <summary>

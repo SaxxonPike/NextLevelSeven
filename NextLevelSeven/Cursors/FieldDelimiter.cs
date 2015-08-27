@@ -8,6 +8,9 @@ using NextLevelSeven.Cursors.Dividers;
 
 namespace NextLevelSeven.Cursors
 {
+    /// <summary>
+    /// Represents the special MSH-1 field, which contains the field delimiter for the rest of the segment.
+    /// </summary>
     sealed internal class FieldDelimiter : Element
     {
         public FieldDelimiter(Element ancestor)

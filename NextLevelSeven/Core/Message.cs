@@ -8,6 +8,9 @@ using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Core
 {
+    /// <summary>
+    /// Represents a textual HL7v2 message.
+    /// </summary>
     public class Message : IMessage
     {
         public event EventHandler ValueChanged;

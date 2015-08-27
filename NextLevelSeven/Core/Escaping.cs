@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace NextLevelSeven.Core
 {
+    /// <summary>
+    /// Provides methods for escaping and unescaping HL7 strings.
+    /// </summary>
     static internal class Escaping
     {
         /// <summary>

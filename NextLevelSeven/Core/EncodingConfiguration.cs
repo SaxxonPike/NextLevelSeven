@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace NextLevelSeven.Core
 {
+    /// <summary>
+    /// Provides information about the characters used to encode an HL7 message.
+    /// </summary>
     internal class EncodingConfiguration
     {
         /// <summary>

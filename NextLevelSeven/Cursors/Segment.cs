@@ -8,6 +8,9 @@ using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Cursors
 {
+    /// <summary>
+    /// Represents a segment-level element in an HL7 message.
+    /// </summary>
     sealed internal class Segment : Element, ISegment
     {
         public Segment(Element ancestor, int parentIndex, int externalIndex)

@@ -8,6 +8,9 @@ using NextLevelSeven.Cursors.Dividers;
 
 namespace NextLevelSeven.Cursors
 {
+    /// <summary>
+    /// Represents the special field at MSH-2, which contains encoding characters for a message.
+    /// </summary>
     sealed internal class EncodingField : Element
     {
         public EncodingField(Element ancestor)

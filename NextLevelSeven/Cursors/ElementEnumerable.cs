@@ -7,6 +7,9 @@ using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Cursors
 {
+    /// <summary>
+    /// Enumerable interface for element descendants.
+    /// </summary>
     sealed internal class ElementEnumerable : IEnumerable<IElement>
     {
         public ElementEnumerable(Element element)

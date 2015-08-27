@@ -9,19 +9,34 @@ using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Codecs
 {
+    /// <summary>
+    /// Provides HL7 value conversion.
+    /// </summary>
     internal class Codec : ICodec
     {
+        /// <summary>
+        /// Create a codec that references the specified element's data.
+        /// </summary>
+        /// <param name="baseElement">Element to reference.</param>
         public Codec(IElement baseElement)
         {
             BaseElement = baseElement;
         }
 
+        /// <summary>
+        /// Referenced element.
+        /// </summary>
         IElement BaseElement
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Convert from date to HL7 date.
+        /// </summary>
+        /// <param name="input">Date to convert.</param>
+        /// <returns>Converted date.</returns>
         static public string ConvertFromDate(DateTime? input)
         {
             if (!input.HasValue)
@@ -32,6 +47,11 @@ namespace NextLevelSeven.Codecs
             return input.Value.ToString("yyyyMMdd");
         }
 
+        /// <summary>
+        /// Convert from date/time to HL7 date/time.
+        /// </summary>
+        /// <param name="input">Date/time to convert.</param>
+        /// <returns>Converted date/time.</returns>
         static public string ConvertFromDateTime(DateTimeOffset? input)
         {
             if (!input.HasValue)
@@ -45,6 +65,11 @@ namespace NextLevelSeven.Codecs
             return time.ToString("yyyyMMddHHmmss") + offset.ToString((offset < TimeSpan.Zero ? "\\-" : "\\+") + "hhmm");
         }
 
+        /// <summary>
+        /// Convert from decimal value to HL7 number.
+        /// </summary>
+        /// <param name="input">Decimal value to convert.</param>
+        /// <returns>Converted decimal value.</returns>
         static public string ConvertFromDecimal(decimal? input)
         {
             if (!input.HasValue)
@@ -54,6 +79,11 @@ namespace NextLevelSeven.Codecs
             return input.Value.ToString(CultureInfo.InvariantCulture);
         }
 
+        /// <summary>
+        /// Convert from integer value to HL7 integer.
+        /// </summary>
+        /// <param name="input">Integer value to convert.</param>
+        /// <returns>Converted integer value.</returns>
         static public string ConvertFromInt(int? input)
         {
             if (!input.HasValue)
@@ -63,11 +93,21 @@ namespace NextLevelSeven.Codecs
             return input.Value.ToString(CultureInfo.InvariantCulture);
         }
 
+        /// <summary>
+        /// Convert from standard string to HL7 string.
+        /// </summary>
+        /// <param name="input">String value to convert.</param>
+        /// <returns>Converted string.</returns>
         static public string ConvertFromString(string input)
         {
             return input;
         }
 
+        /// <summary>
+        /// Convert from time to HL7 time.
+        /// </summary>
+        /// <param name="input">Time to convert.</param>
+        /// <returns>Converted time.</returns>
         static public string ConvertFromTime(TimeSpan? input)
         {
             if (!input.HasValue)
@@ -78,6 +118,11 @@ namespace NextLevelSeven.Codecs
             return input.Value.ToString("HHmmss");
         }
 
+        /// <summary>
+        /// Convert from HL7 date to .NET date.
+        /// </summary>
+        /// <param name="input">Date to convert.</param>
+        /// <returns>Converted date.</returns>
         static public DateTime? ConvertToDate(string input)
         {
             var dto = ConvertToDateTime(input);
@@ -88,6 +133,11 @@ namespace NextLevelSeven.Codecs
             return null;
         }
 
+        /// <summary>
+        /// Convert from HL7 date/time to .NET date/time.
+        /// </summary>
+        /// <param name="input">Date/time to convert.</param>
+        /// <returns>Converted date/time.</returns>
         static public DateTimeOffset? ConvertToDateTime(string input)
         {
             if (input == null)
@@ -130,6 +180,11 @@ namespace NextLevelSeven.Codecs
             return new DateTime(year, month, day, time.Hours, time.Minutes, time.Seconds, time.Milliseconds);
         }
 
+        /// <summary>
+        /// Convert HL7 number to decimal value.
+        /// </summary>
+        /// <param name="input">Number to convert.</param>
+        /// <returns>Converted number.</returns>
         static public decimal? ConvertToDecimal(string input)
         {
             if (string.IsNullOrWhiteSpace(input))
@@ -146,6 +201,11 @@ namespace NextLevelSeven.Codecs
             return output;
         }
 
+        /// <summary>
+        /// Convert HL7 integer to standard integer.
+        /// </summary>
+        /// <param name="input">Integer to convert.</param>
+        /// <returns>Converted integer.</returns>
         static public int? ConvertToInt(string input)
         {
             if (string.IsNullOrWhiteSpace(input))
@@ -162,11 +222,21 @@ namespace NextLevelSeven.Codecs
             return output;
         }
 
+        /// <summary>
+        /// Convert HL7 string to standard string.
+        /// </summary>
+        /// <param name="input">String to convert.</param>
+        /// <returns>Converted string.</returns>
         static public string ConvertToString(string input)
         {
             return input;
         }
 
+        /// <summary>
+        /// Convert HL7 time to .NET time.
+        /// </summary>
+        /// <param name="input">Time to convert.</param>
+        /// <returns>Converted time.</returns>
         static public TimeSpan? ConvertToTime(string input)
         {
             if (input == null)
@@ -184,81 +254,123 @@ namespace NextLevelSeven.Codecs
             return new TimeSpan(0, hour, minute, secondValue, millisecond);
         }
 
+        /// <summary>
+        /// Get or set the element's value as a date.
+        /// </summary>
         public DateTime? Date
         {
             get { return ConvertToDate(BaseElement.Value); }
             set { BaseElement.Value = ConvertFromDate(value); }
         }
 
+        /// <summary>
+        /// Get the element's values as dates.
+        /// </summary>
         public IIndexedCodec<DateTime?> Dates
         {
             get { return new IndexedCodec<DateTime?>(BaseElement, ConvertToDate, ConvertFromDate); }
         }
 
+        /// <summary>
+        /// Get or set the element's value as a date/time.
+        /// </summary>
         public DateTimeOffset? DateTime
         {
             get { return ConvertToDateTime(BaseElement.Value); }
             set { BaseElement.Value = ConvertFromDateTime(value); }
         }
 
+        /// <summary>
+        /// Get the element's values as date/times.
+        /// </summary>
         public IIndexedCodec<DateTimeOffset?> DateTimes
         {
             get { return new IndexedCodec<DateTimeOffset?>(BaseElement, ConvertToDateTime, ConvertFromDateTime); }
         }
 
+        /// <summary>
+        /// Get or set the element's value as a decimal.
+        /// </summary>
         public decimal? Decimal
         {
             get { return ConvertToDecimal(BaseElement.Value); }
             set { BaseElement.Value = ConvertFromDecimal(value); }
         }
 
+        /// <summary>
+        /// Get the element's values as decimals.
+        /// </summary>
         public IIndexedCodec<decimal?> Decimals
         {
             get { return new IndexedCodec<decimal?>(BaseElement, ConvertToDecimal, ConvertFromDecimal); }
         }
 
         // TODO: escape and format
+        /// <summary>
+        /// Get or set the element's value as formatted text.
+        /// </summary>
         public string FormattedText
         {
             get { return BaseElement.Value; }
             set { BaseElement.Value = value; }
         }
 
+        /// <summary>
+        /// Get or set the element's value as an integer.
+        /// </summary>
         public int? Int
         {
             get { return ConvertToInt(BaseElement.Value); }
             set { BaseElement.Value = ConvertFromInt(value); }
         }
 
+        /// <summary>
+        /// Get the element's values as integers.
+        /// </summary>
         public IIndexedCodec<int?> Ints
         {
             get { return new IndexedCodec<int?>(BaseElement, ConvertToInt, ConvertFromInt); }
         }
 
+        /// <summary>
+        /// Get or set the element's value as a string.
+        /// </summary>
         public string String
         {
             get { return ConvertToString(BaseElement.Value); }
             set { BaseElement.Value = ConvertFromString(value); }
         }
 
+        /// <summary>
+        /// Get the element's values as strings.
+        /// </summary>
         public IIndexedCodec<string> Strings
         {
             get { return new IndexedCodec<string>(BaseElement, ConvertToString, ConvertFromString); }
         }
 
         // Todo: escape and format
+        /// <summary>
+        /// Get or set the element's value as a text field.
+        /// </summary>
         public string TextField
         {
             get { return BaseElement.Value; }
             set { BaseElement.Value = value; }
         }
 
+        /// <summary>
+        /// Get or set the element's value as a time.
+        /// </summary>
         public TimeSpan? Time
         {
             get { return ConvertToTime(BaseElement.Value); }
             set { BaseElement.Value = ConvertFromTime(value); }
         }
 
+        /// <summary>
+        /// Get the element's values as times.
+        /// </summary>
         public IIndexedCodec<TimeSpan?> Times
         {
             get { return new IndexedCodec<TimeSpan?>(BaseElement, ConvertToTime, ConvertFromTime); }
