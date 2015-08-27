@@ -13,6 +13,8 @@ namespace NextLevelSeven.Cursors
 {
     abstract internal class Element : IElement, IEquatable<string>
     {
+        public event EventHandler ValueChanged;
+
         protected Element(string value)
         {
             Index = 0;
@@ -100,10 +102,6 @@ namespace NextLevelSeven.Cursors
                         : GetDescendantDivider(Ancestor, ParentIndex);
                 }
                 return _descendantDivider;
-            }
-            private set
-            {
-                _descendantDivider = value;
             }
         }
 
@@ -243,6 +241,11 @@ namespace NextLevelSeven.Cursors
             set
             {
                 DescendantDivider.Value = value;
+
+                if (ValueChanged != null)
+                {
+                    ValueChanged(this, EventArgs.Empty);
+                }
             }
         }
 

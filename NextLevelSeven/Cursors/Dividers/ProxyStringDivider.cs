@@ -10,6 +10,8 @@ namespace NextLevelSeven.Cursors.Dividers
 {
     sealed internal class ProxyStringDivider : IStringDivider
     {
+        public event EventHandler ValueChanged;
+
         public ProxyStringDivider()
         {
             string proxyString = null;
@@ -108,7 +110,14 @@ namespace NextLevelSeven.Cursors.Dividers
         public string BaseValue
         {
             get { return GetValue(); }
-            set { SetValue(value); }
+            set
+            {
+                if (ValueChanged != null)
+                {
+                    ValueChanged(this, EventArgs.Empty);
+                }
+                SetValue(value);
+            }
         }
     }
 }

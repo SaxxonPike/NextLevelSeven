@@ -10,6 +10,11 @@ namespace NextLevelSeven.Core
     public interface IElement : IEnumerable<IElement>
     {
         /// <summary>
+        /// Event that is triggered whenever either this element's value
+        /// </summary>
+        event EventHandler ValueChanged;
+
+        /// <summary>
         /// Get a descendant element at the specified index. Indices match the HL7 specification, and are not necessarily zero-based.
         /// </summary>
         /// <param name="index">Index to query.</param>

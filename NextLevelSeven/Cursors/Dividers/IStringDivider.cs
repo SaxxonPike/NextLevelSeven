@@ -9,6 +9,8 @@ namespace NextLevelSeven.Cursors.Dividers
 {
     internal interface IStringDivider : IEnumerable<string>
     {
+        event EventHandler ValueChanged;
+
         string this[int index] { get; set; }
         string BaseValue { get; }
         int Count { get; }

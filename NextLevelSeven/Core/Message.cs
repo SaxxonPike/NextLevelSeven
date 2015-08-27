@@ -10,6 +10,8 @@ namespace NextLevelSeven.Core
 {
     public class Message : IMessage
     {
+        public event EventHandler ValueChanged;
+
         /// <summary>
         /// Create a message with a default MSH segment.
         /// </summary>
@@ -442,6 +444,10 @@ namespace NextLevelSeven.Core
             set
             {
                 _message.Value = value;
+                if (ValueChanged != null)
+                {
+                    ValueChanged(this, EventArgs.Empty);
+                }
             }
         }
 

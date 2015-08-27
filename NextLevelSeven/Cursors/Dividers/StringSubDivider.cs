@@ -9,6 +9,8 @@ namespace NextLevelSeven.Cursors.Dividers
 {
     sealed internal class StringSubDivider : IStringDivider
     {
+        public event EventHandler ValueChanged;
+
         public StringSubDivider(IStringDivider baseDivider, char delimiter, int parentIndex)
         {
             BaseDivider = baseDivider;

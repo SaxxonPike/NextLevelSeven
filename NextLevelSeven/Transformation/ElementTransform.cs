@@ -13,6 +13,8 @@ namespace NextLevelSeven.Transformation
     /// </summary>
     abstract public class ElementTransform : IElement
     {
+        public event EventHandler ValueChanged;
+
         /// <summary>
         /// Create a transform.
         /// </summary>
@@ -162,7 +164,15 @@ namespace NextLevelSeven.Transformation
         virtual public string Value
         {
             get { return BaseElement.Value; }
-            set { BaseElement.Value = value; }
+            set
+            {
+                BaseElement.Value = value;
+
+                if (ValueChanged != null)
+                {
+                    ValueChanged(this, EventArgs.Empty);
+                }
+            }
         }
 
         /// <summary>

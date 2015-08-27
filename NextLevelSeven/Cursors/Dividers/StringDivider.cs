@@ -12,6 +12,8 @@ namespace NextLevelSeven.Cursors.Dividers
     /// </summary>
     sealed internal class StringDivider : IStringDivider
     {
+        public event EventHandler ValueChanged;
+
         public StringDivider(string s, char delimiter)
         {
             Initialize(s, delimiter);
@@ -213,10 +215,18 @@ namespace NextLevelSeven.Cursors.Dividers
 
         void Initialize(string s, char delimiter)
         {
-            _divisions = null;
-            _value = s;
-            Delimiter = delimiter;
-            Version++;                
+            lock (this)
+            {
+                _divisions = null;
+                _value = s;
+                Delimiter = delimiter;
+                Version++;                
+            }
+
+            if (ValueChanged != null)
+            {
+                ValueChanged(this, EventArgs.Empty);
+            }
         }
 
         public IEnumerator<string> GetEnumerator()
