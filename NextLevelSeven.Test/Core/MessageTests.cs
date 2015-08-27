@@ -10,13 +10,22 @@ namespace NextLevelSeven.Test.Core
     [TestClass]
     public class MessageTests
     {
-
         [TestInitialize]
         public void Message_Initialization()
         {
             var message = new Message(ExampleMessages.Standard);
             Assert.IsNotNull(message, "Message was not initialized.");
             Debug.WriteLine(message.Type);
+        }
+
+        [TestMethod]
+        public void Message_ReturnsBasicMessage()
+        {
+            var message = new Message();
+            Assert.AreEqual(1, message.DescendantCount, @"Default message should not contain multiple segments.");
+            Assert.AreEqual("MSH", message[1].Type, @"Default message should create an MSH segment.");
+            Assert.AreEqual(@"^~\&", message[1][2].Value, @"Default message should use standard HL7 encoding characters.");
+            Assert.AreEqual("|", message[1][1].Value, @"Default message should use standard HL7 field delimiter character.");
         }
 
         [TestMethod]
@@ -149,6 +158,14 @@ namespace NextLevelSeven.Test.Core
         {
             var message = new Message(ExampleMessages.Standard);
             Assert.AreEqual(message, ExampleMessages.Standard);
+        }
+
+        [TestMethod]
+        public void Message_WithOnlyOneSegment_WillClaimToHaveSignificantDescendants()
+        {
+            var message = new Message();
+            Assert.IsTrue(message.HasSignificantDescendants,
+                @"Message should claim to have significant descendants if any segments do.");
         }
     }
 }

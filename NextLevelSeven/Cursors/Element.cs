@@ -10,7 +10,7 @@ using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Cursors
 {
-    abstract internal class Element : IElement
+    abstract internal class Element : IElement, IEquatable<string>
     {
         protected Element(string value)
         {
@@ -40,9 +40,19 @@ namespace NextLevelSeven.Cursors
             return obj.ToString() == ToString();
         }
 
+        public bool Equals(string other)
+        {
+            return ToString() == other;
+        }
+
         public override int GetHashCode()
         {
             return ToString().GetHashCode();
+        }
+
+        static public implicit operator string(Element element)
+        {
+            return element.ToString();
         }
 
         public IElement this[int index]

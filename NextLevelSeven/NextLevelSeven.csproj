@@ -96,6 +96,8 @@
     <Compile Include="Streaming\MLPStreamReader.cs" />
     <Compile Include="Streaming\MLPStreamWriter.cs" />
     <Compile Include="Streaming\StreamWrapperBase.cs" />
+    <Compile Include="Transformation\ElementTransform.cs" />
+    <Compile Include="Transformation\IElementTransformFactory.cs" />
     <Compile Include="Utility\EmptyEnumerable.cs" />
     <Compile Include="Utility\EmptyEnumerator.cs" />
     <Compile Include="MessageGeneration\AckMessageGenerator.cs" />

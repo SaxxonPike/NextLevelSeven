@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NextLevelSeven.Transformation;
 
 namespace NextLevelSeven.Core
 {
@@ -165,6 +166,50 @@ namespace NextLevelSeven.Core
         static public void MoveToIndex(this IElement target, int targetIndex)
         {
             
+        }
+
+        /// <summary>
+        /// Apply a transformation for each element.
+        /// </summary>
+        /// <param name="element">Element to transform.</param>
+        /// <param name="transform">A transform to clone.</param>
+        /// <returns>Transformed element.</returns>
+        static public ElementTransform Transform(this IElement element, ElementTransform transform)
+        {
+            return transform.CloneTransform(element);
+        }
+
+        /// <summary>
+        /// Apply a transformation for each element.
+        /// </summary>
+        /// <param name="element">Element to transform.</param>
+        /// <param name="transformFactory">Factory that generates a transform for this element.</param>
+        /// <returns>Transformed element.</returns>
+        static public ElementTransform Transform(this IElement element, IElementTransformFactory transformFactory)
+        {
+            return transformFactory.CreateTransform(element);
+        }
+
+        /// <summary>
+        /// Apply a transformation for each element.
+        /// </summary>
+        /// <param name="elements">Elements to transform.</param>
+        /// <param name="transform">A transform to clone.</param>
+        /// <returns>Transformed elements.</returns>
+        static public IEnumerable<ElementTransform> TransformAll(this IEnumerable<IElement> elements, ElementTransform transform)
+        {
+            return elements.Select(transform.CloneTransform);
+        }
+
+        /// <summary>
+        /// Apply a transformation for each element.
+        /// </summary>
+        /// <param name="elements">Elements to transform.</param>
+        /// <param name="transformFactory">Factory that generates a transform for these elements.</param>
+        /// <returns>Transformed elements.</returns>
+        static public IEnumerable<ElementTransform> TransformAll(this IEnumerable<IElement> elements, IElementTransformFactory transformFactory)
+        {
+            return elements.Select(transformFactory.CreateTransform);
         }
     }
 }

@@ -67,6 +67,9 @@
     <Compile Include="Randomized.cs" />
     <Compile Include="Streaming\StreamReaderTests.cs" />
     <Compile Include="Streaming\TextReaderTests.cs" />
+    <Compile Include="Transformation\ElementTransformTests.cs" />
+    <Compile Include="Transformation\TestNameElementTransform.cs" />
+    <Compile Include="Transformation\TestNameElementTransformFactory.cs" />
     <Compile Include="Web\MessageReceiverMock.cs" />
     <Compile Include="Web\MessageReceiverTests.cs" />
     <Compile Include="Web\MessageSenderMock.cs" />
