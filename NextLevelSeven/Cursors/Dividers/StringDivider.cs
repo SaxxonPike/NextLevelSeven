@@ -7,6 +7,9 @@ using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Cursors.Dividers
 {
+    /// <summary>
+    /// A class which handles getting and setting delimited substrings within a string.
+    /// </summary>
     sealed internal class StringDivider : IStringDivider
     {
         public StringDivider(string s, char delimiter)
@@ -14,6 +17,11 @@ namespace NextLevelSeven.Cursors.Dividers
             Initialize(s, delimiter);
         }
 
+        /// <summary>
+        /// Get or set the substring at the specified index.
+        /// </summary>
+        /// <param name="index">Index of the string to get.</param>
+        /// <returns>Substring.</returns>
         public string this[int index]
         {
             get
@@ -39,7 +47,7 @@ namespace NextLevelSeven.Cursors.Dividers
                     {
                         if (index > 0)
                         {
-                            Initialize(paddedString + Delimiter + value, Delimiter);
+                            Initialize(string.Join(paddedString, Delimiter, value), Delimiter);
                         }
                         else
                         {
@@ -69,10 +77,6 @@ namespace NextLevelSeven.Cursors.Dividers
                 }
                 return _divisions;
             }
-            private set
-            {
-
-            }
         }
 
         private string _value;
@@ -95,26 +99,41 @@ namespace NextLevelSeven.Cursors.Dividers
 
         static public List<StringDivision> GetDivisions(string s, char delimiter)
         {
+            if (s == null)
+            {
+                return new List<StringDivision>();
+            }
+            return GetDivisions(s, delimiter, new StringDivision(0, s.Length));
+        }
+
+        static public List<StringDivision> GetDivisions(string s, char delimiter, StringDivision parent)
+        {
             unchecked
             {
                 var divisions = new List<StringDivision>();
                 var length = 0;
-                var offset = 0;
 
                 if (s == null)
                 {
                     s = string.Empty;
                 }
 
-                var inputLength = s.Length;
+                if (parent == null)
+                {
+                    parent = new StringDivision(0, s.Length);
+                }
+
+                var offset = parent.Offset;
+                var inputLength = parent.Length;
 
                 if (delimiter == '\0')
                 {
-                    divisions.Add(new StringDivision(0, inputLength));
+                    divisions.Add(new StringDivision(offset, inputLength));
                     return divisions;
                 }
 
-                for (var index = 0; index < inputLength; index++)
+                var endIndex = parent.Offset + parent.Length;
+                for (var index = parent.Offset; index < endIndex; index++)
                 {
                     if (s[index] == delimiter)
                     {
@@ -152,13 +171,16 @@ namespace NextLevelSeven.Cursors.Dividers
                 var divisionCount = divisions.Count;
                 var stringLength = s.Length;
                 var builder = new StringBuilder(s);
+                var divisionsToAdd = (index - divisionCount) + 1;
 
-                while (divisionCount <= index)
+                if (divisionsToAdd > 0)
                 {
-                    divisions.Add(new StringDivision(stringLength + 1, 0));
-                    divisionCount++;
-                    stringLength++;
-                    builder.Append(delimiter);
+                    for (var i = 0; i < divisionsToAdd; i++)
+                    {
+                        divisions.Add(new StringDivision(stringLength + 1, 0));
+                        stringLength++;
+                    }
+                    builder.Append(new string(delimiter, divisionsToAdd));
                 }
 
                 return builder.ToString();
@@ -217,6 +239,28 @@ namespace NextLevelSeven.Cursors.Dividers
         {
             get;
             private set;
+        }
+
+        public StringDivision GetSubDivision(int index)
+        {
+            if (index < 0)
+            {
+                return null;
+            }
+
+            var d = Divisions;
+            if (index >= d.Count)
+            {
+                return new StringDivision(_value.Length, 0);
+            }
+
+            return d[index];
+        }
+
+
+        public string BaseValue
+        {
+            get { return _value; }
         }
     }
 }

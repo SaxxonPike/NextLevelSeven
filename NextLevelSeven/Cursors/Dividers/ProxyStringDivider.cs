@@ -100,14 +100,15 @@ namespace NextLevelSeven.Cursors.Dividers
             throw new InvalidOperationException(ErrorMessages.Get(ErrorCode.DescendantElementsCannotBeModified));
         }
 
-        public void InsertAfter(int index, string value = null)
+        public StringDivision GetSubDivision(int index)
         {
-            throw new InvalidOperationException(ErrorMessages.Get(ErrorCode.DescendantElementsCannotBeModified));
+            return new StringDivision(0, Value.Length);
         }
 
-        public void InsertBefore(int index, string value = null)
+        public string BaseValue
         {
-            throw new InvalidOperationException(ErrorMessages.Get(ErrorCode.DescendantElementsCannotBeModified));
+            get { return GetValue(); }
+            set { SetValue(value); }
         }
     }
 }

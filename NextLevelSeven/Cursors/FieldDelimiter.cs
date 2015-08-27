@@ -60,7 +60,7 @@ namespace NextLevelSeven.Cursors
                 var value = Ancestor.DescendantDivider.Value;
                 if (value != null && value.Length > 3)
                 {
-                    return value.Substring(3, 1);
+                    return new string(value[3], 1);
                 }
                 return null;
             }

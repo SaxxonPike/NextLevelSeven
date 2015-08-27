@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -16,27 +17,39 @@ namespace NextLevelSeven.Test.Streaming
             var messageCount = 0;
             var byteCount = 0;
             var targetPath = Path.Combine(Environment.CurrentDirectory, @"TestMessages");
+            var messages = new List<byte[]>();
 
             if (Directory.Exists(targetPath))
             {
+                Debug.WriteLine("Loading...");
                 foreach (var file in Directory.GetFiles(targetPath))
                 {
-                    using (var mem = new MemoryStream(File.ReadAllBytes(file)))
+                    messages.Add(File.ReadAllBytes(file));
+                    Debug.WriteLine(file);
+                }
+
+                Debug.WriteLine("Converting...");
+                Measure.ExecutionTime(() =>
+                {
+                    foreach (var rawMessage in messages)
                     {
-                        fileCount++;
-                        byteCount += (int)mem.Length;
-                        var reader = new HL7TextReader(mem);
-                        while (true)
+                        using (var mem = new MemoryStream(rawMessage))
                         {
-                            var message = reader.Read();
-                            if (message == null)
+                            fileCount++;
+                            byteCount += (int)mem.Length;
+                            var reader = new HL7TextReader(mem);
+                            while (true)
                             {
-                                break;
+                                var message = reader.Read();
+                                if (message == null)
+                                {
+                                    break;
+                                }
+                                messageCount++;
                             }
-                            messageCount++;
                         }
                     }
-                }
+                });
             }
 
             Debug.WriteLine("Messages parsed: {0}. Files read: {1}. Bytes read: {2}", messageCount, fileCount, byteCount);

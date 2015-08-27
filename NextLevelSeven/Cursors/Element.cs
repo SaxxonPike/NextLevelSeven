@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -178,7 +179,7 @@ namespace NextLevelSeven.Cursors
             {
                 if (Ancestor != null)
                 {
-                    return Ancestor.Key + "." + Index;
+                    return String.Join(Ancestor.Key, ".", Index.ToString(CultureInfo.InvariantCulture));
                 }
                 return Index.ToString();
             }
@@ -227,10 +228,16 @@ namespace NextLevelSeven.Cursors
                 }
 
                 var value = DescendantDivider.Value;
+                if (string.IsNullOrEmpty(value))
+                {
+                    return null;
+                }
+
                 if (string.Equals("\"\"", value, StringComparison.Ordinal))
                 {
                     return null;
                 }
+
                 return value;
             }
             set

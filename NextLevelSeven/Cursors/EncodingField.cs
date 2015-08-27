@@ -59,7 +59,11 @@ namespace NextLevelSeven.Cursors
             set
             {
                 var s = Ancestor.DescendantDivider.Value;
-                Ancestor.DescendantDivider.Value = s.Substring(0, 3) + value + s.Substring(4);
+                var builder = new StringBuilder();
+                builder.Append(s.Substring(0, 3));
+                builder.Append(value);
+                builder.Append(s.Substring(4));
+                Ancestor.DescendantDivider.Value = builder.ToString();
             }
         }    
     }

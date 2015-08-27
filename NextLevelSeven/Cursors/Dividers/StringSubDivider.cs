@@ -27,12 +27,6 @@ namespace NextLevelSeven.Cursors.Dividers
         {
             get
             {
-                var currentValue = Value;
-                if (currentValue == null)
-                {
-                    return null;
-                }
-
                 var splits = Divisions;
                 if (index >= splits.Count || index < 0)
                 {
@@ -40,7 +34,7 @@ namespace NextLevelSeven.Cursors.Dividers
                 }
 
                 var split = splits[index];
-                return currentValue.Substring(split.Offset, split.Length);
+                return BaseValue.Substring(split.Offset, split.Length);
             }
             set
             {
@@ -52,7 +46,7 @@ namespace NextLevelSeven.Cursors.Dividers
                     {
                         if (index > 0)
                         {
-                            Value = paddedString + value;
+                            Value = String.Join(paddedString, value);
                         }
                         else
                         {
@@ -72,6 +66,11 @@ namespace NextLevelSeven.Cursors.Dividers
         {
             get;
             set;
+        }
+
+        public string BaseValue
+        {
+            get { return BaseDivider.BaseValue; }
         }
 
         public int Count
@@ -117,12 +116,20 @@ namespace NextLevelSeven.Cursors.Dividers
         void Update()
         {
             Version = BaseDivider.Version;
-            _divisions = StringDivider.GetDivisions(Value, Delimiter);            
+            _divisions = StringDivider.GetDivisions(BaseValue, Delimiter, BaseDivider.GetSubDivision(Index));
         }
 
         public string Value
         {
-            get { return BaseDivider[Index]; }
+            get 
+            {
+                var d = BaseDivider.GetSubDivision(Index);
+                if (d == null)
+                {
+                    return null;
+                }
+                return BaseValue.Substring(d.Offset, d.Length);
+            }
             set { BaseDivider[Index] = value; }
         }
 
@@ -146,6 +153,22 @@ namespace NextLevelSeven.Cursors.Dividers
         public override string ToString()
         {
             return Value;
+        }
+
+        public StringDivision GetSubDivision(int index)
+        {
+            if (index < 0)
+            {
+                return null;
+            }
+
+            var d = Divisions;
+            if (index >= d.Count)
+            {
+                return null;
+            }
+
+            return d[index];
         }
     }
 }

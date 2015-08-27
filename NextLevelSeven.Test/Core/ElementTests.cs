@@ -110,5 +110,34 @@ namespace NextLevelSeven.Test.Core
             var message = new Message();
             Assert.IsTrue(message[1].HasSignificantDescendants, @"Segment claims to not have descendants when it should.");
         }
+
+        [TestMethod]
+        public void Element_WillPointToCorrectValue_WhenOtherValuesChange()
+        {
+            var message = new Message();
+            var msh3 = message[1][3];
+            var msh4 = message[1][4];
+            var expected = Randomized.String().Substring(0, 5);
+
+            msh4.Value = expected;
+            msh3.Value = Randomized.String();
+            Assert.AreEqual(msh4.Value, expected);
+        }
+
+        [TestMethod]
+        public void Element_WillPointToCorrectValue_WhenAncestorChanges()
+        {
+            var message = new Message();
+            var msh3 = message[1][3];
+            var msh4 = message[1][4];
+            var oldMsh3Value = msh3.Value;
+            var oldMsh4Value = msh4.Value;
+            var newMsh3Value = Randomized.String();
+            var newMsh4Value = Randomized.String();
+
+            message.Value = String.Format(@"MSH|^~\&|{0}|{1}", newMsh3Value, newMsh4Value);
+            Assert.AreEqual(newMsh3Value, msh3.Value, @"MSH-3 was not the expected value after changing MSH.");
+            Assert.AreEqual(newMsh4Value, msh4.Value, @"MSH-4 was not the expected value after changing MSH.");
+        }
     }
 }
