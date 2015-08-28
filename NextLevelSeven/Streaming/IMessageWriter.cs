@@ -11,5 +11,6 @@ namespace NextLevelSeven.Streaming
     public interface IMessageWriter
     {
         void Write(IMessage message);
+        void WriteAll(IEnumerable<IMessage> messages);
     }
 }

@@ -31,15 +31,15 @@ namespace NextLevelSeven.Core
         {
             if (message == null)
             {
-                throw new ArgumentNullException(@"message", ErrorMessages.Get(ErrorCode.MessageDataMustNotBeNull));
+                throw new MessageException(ErrorMessages.Get(ErrorCode.MessageDataMustNotBeNull));
             }
             if (!message.StartsWith("MSH"))
             {
-                throw new ArgumentException(ErrorMessages.Get(ErrorCode.MessageDataMustStartWithMsh));
+                throw new MessageException(ErrorMessages.Get(ErrorCode.MessageDataMustStartWithMsh));
             }
             if (message.Length < 9)
             {
-                throw new ArgumentException(ErrorMessages.Get(ErrorCode.MessageDataIsTooShort));
+                throw new MessageException(ErrorMessages.Get(ErrorCode.MessageDataIsTooShort));
             }
             _message = new Cursors.Message(SanitizeLineEndings(message));
         }

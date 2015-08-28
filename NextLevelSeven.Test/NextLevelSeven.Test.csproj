@@ -66,8 +66,10 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Race.cs" />
     <Compile Include="Randomized.cs" />
-    <Compile Include="Streaming\StreamReaderTests.cs" />
-    <Compile Include="Streaming\TextReaderTests.cs" />
+    <Compile Include="Streaming\Hl7StreamReaderTests.cs" />
+    <Compile Include="Streaming\Hl7TextReaderTests.cs" />
+    <Compile Include="Streaming\MlpStreamReaderTests.cs" />
+    <Compile Include="Streaming\MlpStreamWriterTests.cs" />
     <Compile Include="Transformation\ElementTransformTests.cs" />
     <Compile Include="Transformation\TestNameElementTransform.cs" />
     <Compile Include="Transformation\TestNameElementTransformFactory.cs" />

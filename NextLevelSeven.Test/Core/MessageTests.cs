@@ -31,28 +31,19 @@ namespace NextLevelSeven.Test.Core
         [TestMethod]
         public void Message_ThrowsOnNullData()
         {
-            It.Throws<ArgumentNullException>(() =>
-            {
-                var message = new Message(null);
-            });
+            It.Throws<MessageException>(() => { var message = new Message(null); });
         }
 
         [TestMethod]
         public void Message_ThrowsOnEmptyData()
         {
-            It.Throws<ArgumentException>(() =>
-            {
-                var message = new Message(string.Empty);
-            });            
+            It.Throws<MessageException>(() => { var message = new Message(string.Empty); });            
         }
 
         [TestMethod]
         public void Message_ThrowsOnShortData()
         {
-            It.Throws<ArgumentException>(() =>
-            {
-                var message = new Message("MSH|123");
-            });
+            It.Throws<MessageException>(() => { var message = new Message("MSH|123"); });
         }
 
         [TestMethod]

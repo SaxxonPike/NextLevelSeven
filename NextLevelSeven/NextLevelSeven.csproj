@@ -53,6 +53,7 @@
     <Compile Include="Core\IIdentity.cs" />
     <Compile Include="Core\ISegment.cs" />
     <Compile Include="Core\MessageEncodingConfiguration.cs" />
+    <Compile Include="Core\MessageException.cs" />
     <Compile Include="Core\MessageExtensions.cs" />
     <Compile Include="Cursors\Component.cs" />
     <Compile Include="Cursors\Element.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Streaming\MLPStreamException.cs" />
     <Compile Include="Streaming\MLPStreamReader.cs" />
     <Compile Include="Streaming\MLPStreamWriter.cs" />
+    <Compile Include="Streaming\StreamReaderExtensions.cs" />
     <Compile Include="Streaming\StreamWrapperBase.cs" />
     <Compile Include="Transformation\ElementTransform.cs" />
     <Compile Include="Transformation\IElementTransformFactory.cs" />

@@ -20,7 +20,7 @@ namespace NextLevelSeven.Streaming
             int vtByte = BaseStream.ReadByte();
             if (vtByte == -1)
             {
-                throw new EndOfStreamException(ErrorMessages.Get(ErrorCode.ReachedEndOfMlpStream));
+                return null;
             }
             if (vtByte != 0x0B)
             {
@@ -36,7 +36,7 @@ namespace NextLevelSeven.Streaming
                         var buffer = BaseStream.ReadByte();
                         if (buffer == -1)
                         {
-                            throw new EndOfStreamException(ErrorMessages.Get(ErrorCode.MlpDataEndedPrematurely));
+                            throw new MLPStreamException(ErrorMessages.Get(ErrorCode.MlpDataEndedPrematurely));
                         }
 
                         if (buffer == 0x1C)
@@ -48,7 +48,7 @@ namespace NextLevelSeven.Streaming
                             }
                             if (buffer == -1)
                             {
-                                throw new EndOfStreamException(ErrorMessages.Get(ErrorCode.MlpDataEndedPrematurely));
+                                throw new MLPStreamException(ErrorMessages.Get(ErrorCode.MlpDataEndedPrematurely));
                             }
                         }
                         mem.WriteByte((byte)buffer);
@@ -56,6 +56,24 @@ namespace NextLevelSeven.Streaming
                 }
 
                 return Decode(mem.ToArray());
+            }
+        }
+
+        /// <summary>
+        /// Read all messages in the stream. If empty, there were no more messages.
+        /// </summary>
+        /// <returns>Messages that were read.</returns>
+        public override IEnumerable<IMessage> ReadAll()
+        {
+            var messages = new List<IMessage>();
+            while (true)
+            {
+                var message = Read();
+                if (message == null)
+                {
+                    return messages;
+                }
+                messages.Add(message);
             }
         }
     }

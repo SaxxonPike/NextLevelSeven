@@ -2,16 +2,51 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Streaming;
 
 namespace NextLevelSeven.Test.Streaming
 {
     [TestClass]
-    public class TextReaderTests
+    public class Hl7TextReaderTests
     {
         [TestMethod]
-        public void Utility_TestAllMessagesInBin()
+        public void HL7TextReader_CanReadAllMessagesInAStream()
+        {
+            var messageData = Encoding.UTF8.GetBytes(ExampleMessages.MultipleMessagesSeparatedByLines);
+            using (var messageStream = new MemoryStream(messageData))
+            {
+                var reader = new HL7TextReader(messageStream);
+                var messages = reader.ReadAll().ToArray();
+                Assert.AreEqual(3, messages.Length);
+                Assert.AreEqual("MSH|^~\\&|1", messages[0].Value, @"Message 1 was not read properly.");
+                Assert.AreEqual("MSH|^~\\&|2", messages[1].Value, @"Message 2 was not read properly.");
+                Assert.AreEqual("MSH|^~\\&|3", messages[2].Value, @"Message 3 was not read properly.");
+            }
+        }
+
+        [TestMethod]
+        public void HL7TextReader_CanReadMessagesOneByOneInAStream()
+        {
+            var messageData = Encoding.UTF8.GetBytes(ExampleMessages.MultipleMessagesSeparatedByLines);
+            using (var messageStream = new MemoryStream(messageData))
+            {
+                var reader = new HL7TextReader(messageStream);
+                var message1 = reader.Read();
+                var message2 = reader.Read();
+                var message3 = reader.Read();
+                var message4 = reader.Read();
+                Assert.IsNotNull(message1, "Message 1 was null.");
+                Assert.IsNotNull(message2, "Message 2 was null.");
+                Assert.IsNotNull(message3, "Message 3 was null.");
+                Assert.IsNull(message4, "A message was found, but not expected.");
+            }
+        }
+
+        [TestMethod]
+        public void HL7TextReader_CanTestAllMessagesInBin()
         {
             var fileCount = 0;
             var messageCount = 0;

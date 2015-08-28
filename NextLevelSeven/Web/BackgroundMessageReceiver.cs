@@ -118,7 +118,7 @@ namespace NextLevelSeven.Web
                             }
                             catch (Exception ex)
                             {
-                                if (ex is ArgumentException || ex is ElementException)
+                                if (ex is MessageException || ex is ElementException)
                                 {
                                     failureReason = ex.Message;
                                     request = null;

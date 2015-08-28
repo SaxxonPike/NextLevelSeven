@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
 
@@ -10,6 +12,14 @@ namespace NextLevelSeven.Test.Core
         private const int MediumIndex = 1000;
         private const int HighIndex = 1000000;
 
+        void AssertInconclusiveIfSlow(long tolerance, long measured)
+        {
+            if (measured > tolerance)
+            {
+                Assert.Inconclusive("Test was slow. Measured: {0}ms. Tolerance: {1}ms.", measured, tolerance);
+            }
+        }
+
         [TestMethod]
         public void Element_Timely_AddsHighIndexSegment()
         {
@@ -20,7 +30,6 @@ namespace NextLevelSeven.Test.Core
                 message[HighIndex].Value = testString;
             });
             Assert.AreEqual(message[HighIndex], testString);
-            Assert.IsTrue(time < 1000);
         }
 
         [TestMethod]
@@ -33,7 +42,7 @@ namespace NextLevelSeven.Test.Core
                 message[1][HighIndex].Value = testString;
             });
             Assert.AreEqual(message[1][HighIndex], testString);
-            Assert.IsTrue(time < 1000);
+            AssertInconclusiveIfSlow(1000, time);
         }
 
         [TestMethod]
@@ -46,7 +55,7 @@ namespace NextLevelSeven.Test.Core
                 message[2][HighIndex].Value = testString;
             });
             Assert.AreEqual(testString, message[2][HighIndex].Value);
-            Assert.IsTrue(time < 1000);
+            AssertInconclusiveIfSlow(1000, time);
         }
 
         [TestMethod]
@@ -59,7 +68,7 @@ namespace NextLevelSeven.Test.Core
                 message[HighIndex][HighIndex].Value = testString;
             });
             Assert.AreEqual(testString, message[HighIndex][HighIndex].Value);
-            Assert.IsTrue(time < 2000);
+            AssertInconclusiveIfSlow(2000, time);
         }
 
         [TestMethod]
@@ -74,8 +83,8 @@ namespace NextLevelSeven.Test.Core
                     message[i].Value = testString;
                 }
             });
-            Assert.IsTrue(time < 1000);
             Assert.AreEqual(message[MediumIndex].Value, testString);
+            AssertInconclusiveIfSlow(1000, time);
         }
 
         [TestMethod]
@@ -90,7 +99,7 @@ namespace NextLevelSeven.Test.Core
                     msh[i].Value = "test";                    
                 }
             });
-            Assert.IsTrue(time < 1000);
+            AssertInconclusiveIfSlow(1000, time);
         }
 
         [TestMethod]
@@ -105,7 +114,7 @@ namespace NextLevelSeven.Test.Core
                 field = message[1][HighIndex].Value;
             });
             Assert.AreEqual(value, field);
-            Assert.IsTrue(time < 1000);
+            AssertInconclusiveIfSlow(1000, time);
         }
 
         [TestMethod]
@@ -119,7 +128,7 @@ namespace NextLevelSeven.Test.Core
                 field = message[1][3].Value;
             });
             Assert.AreEqual(null, field);
-            Assert.IsTrue(time < 500);
+            AssertInconclusiveIfSlow(500, time);
         }
 
         [TestMethod]
@@ -131,7 +140,7 @@ namespace NextLevelSeven.Test.Core
             {
                 message[1][3].Value = "test2";
             });
-            Assert.IsTrue(time < 1000);
+            AssertInconclusiveIfSlow(500, time);
         }
 
     }

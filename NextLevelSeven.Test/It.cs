@@ -9,7 +9,7 @@ namespace NextLevelSeven.Test
 {
     static public class It
     {
-        static public void Throws<TException>(Action action)
+        static public void Throws<TException>(Action action, string message = null)
         {
             try
             {
@@ -22,6 +22,15 @@ namespace NextLevelSeven.Test
                     return;
                 }
                 throw;
+            }
+
+            if (message != null)
+            {
+                Assert.Fail(message);
+            }
+            else
+            {
+                Assert.Fail(String.Format("Expected exception {0} was not thrown.", typeof(TException).Name));
             }
         }
     }

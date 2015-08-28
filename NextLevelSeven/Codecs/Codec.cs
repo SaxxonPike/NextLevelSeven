@@ -140,7 +140,7 @@ namespace NextLevelSeven.Codecs
         /// <returns>Converted date/time.</returns>
         static public DateTimeOffset? ConvertToDateTime(string input)
         {
-            if (input == null)
+            if (string.IsNullOrEmpty(input))
             {
                 return null;
             }

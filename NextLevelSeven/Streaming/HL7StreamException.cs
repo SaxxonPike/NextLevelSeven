@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace NextLevelSeven.Streaming
 {
+    /// <summary>
+    /// Represents an exception that would be raised for HL7 streaming errors.
+    /// </summary>
     public class HL7StreamException : Exception
     {
         private const string DefaultMessage = @"An error occurred while processing an HL7 stream.";

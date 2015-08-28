@@ -22,6 +22,15 @@ IN1|1|MO|||MEDICARE A   B|MEDICARE A   B|MUTUAL OF OMAHA^BOX 1602-MEDICARE  DEPT
 PID|1|SSD0201941|SA0062046||1^&&&1J1234567&&&99SFC^^201407152100^201407171142^RTN||19231214|M||C|^Some Rd.^Somewhere^IL^68763|||||M||SA0003176321|000-00-0000
 OBR|1|542354^PCM|5432543^LA01|1048^CULTURE WOUND^LA01^1048^CULTURE WOUND^LA01|1||201409081255|||305518||||201409081506|144&Wound^^^^^CON&CONTAINER|74423^FRASER*^NIKKAYA^M|(260)434-6214^9,4346496&&&&&&&&NOTE^NOTE^&&&&&&&&NOTE|||||201409111054||MIC|F||1^^^201409081255^^1|74423^FRASER*^NIKKAYA^M|||||||||||^^^^1";
 
+        public static readonly string MultipleMessagesAsMlp =
+            String.Format("{0}{1}1{2}{0}{1}2{2}{0}{1}3{2}", "\xB", "MSH|^~\\&|", "\x1C\xD");
+
+        public static readonly string MultipleMessagesWithMultipleLinesAsMlp =
+            String.Format("{0}{1}1{2}{0}{1}2{2}{0}{1}3{2}", "\xB", "MSH|^~\\&|\xDPID|1234", "\x1C\xD");
+
+        public static readonly string MultipleMessagesSeparatedByLines =
+            String.Format("{0}1{1}{1}{1}{1}{0}2{1}{1}{0}3", "MSH|^~\\&|", "\r\n");
+
         public static readonly string MultipleObr =
             @"MSH|^~\&|SENDER|DEV|RECEIVER|SYSTEM|201003150118||ORU^R01|5101|P|2.3|||NE|NE|
 PID|1|0034157|002993817||LASTNAME^FIRSTNAME||19520101|M|||1234 MAIN^^DEARBORN HEIGHT^MI^48127||||||||

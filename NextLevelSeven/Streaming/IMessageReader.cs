@@ -11,5 +11,6 @@ namespace NextLevelSeven.Streaming
     public interface IMessageReader
     {
         IMessage Read();
+        IEnumerable<IMessage> ReadAll();
     }
 }
