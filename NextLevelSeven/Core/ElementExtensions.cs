@@ -21,7 +21,7 @@ namespace NextLevelSeven.Core
         static public IElement Add(this IElement target, IElement elementToAdd)
         {
             var addedElement = target[target.DescendantCount + 1];
-            addedElement.Values = target.Values.Concat(elementToAdd.Values).ToArray();
+            addedElement.Values = target.Values.Concat(new[]{elementToAdd.ToString()}).ToArray();
             return addedElement;
         }
 
