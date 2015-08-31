@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Transformation;
 
 namespace NextLevelSeven.Core
@@ -45,7 +46,7 @@ namespace NextLevelSeven.Core
         {
             if (target.AncestorElement == null)
             {
-                return;
+                throw new ElementException(ErrorCode.AncestorDoesNotExist);
             }
 
             var index = target.Index;
@@ -79,7 +80,7 @@ namespace NextLevelSeven.Core
         {
             if (target.AncestorElement == null)
             {
-                return;
+                throw new ElementException(ErrorCode.AncestorDoesNotExist);
             }
 
             var index = target.Index;
@@ -113,7 +114,7 @@ namespace NextLevelSeven.Core
         {
             if (target.AncestorElement == null)
             {
-                return;
+                throw new ElementException(ErrorCode.AncestorDoesNotExist);
             }
 
             var index = target.Index - 1;
@@ -147,7 +148,7 @@ namespace NextLevelSeven.Core
         {
             if (target.AncestorElement == null)
             {
-                return;
+                throw new ElementException(ErrorCode.AncestorDoesNotExist);
             }
 
             var index = target.Index - 1;
@@ -162,13 +163,55 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Move element within its ancestor.
+        /// Move element within its ancestor. Returns the new element reference.
         /// </summary>
         /// <param name="target">Element to move.</param>
         /// <param name="targetIndex">Target index.</param>
-        static public void MoveToIndex(this IElement target, int targetIndex)
+        /// <returns>Element in its new place.</returns>
+        static public IElement MoveToIndex(this IElement target, int targetIndex)
         {
-            
+            var ancestor = target.AncestorElement;
+            if (ancestor == null)
+            {
+                throw new ElementException(ErrorCode.AncestorDoesNotExist);
+            }
+
+            if (targetIndex < 0)
+            {
+                throw new ElementException(ErrorCode.ElementIndexMustBeZeroOrGreater);
+            }
+
+            if (targetIndex == target.Index)
+            {
+                return target;
+            }
+
+            if (ancestor is ISegment)
+            {
+                if (target.Index < 1)
+                {
+                    throw new ElementException(ErrorCode.SegmentTypeCannotBeMoved);
+                }
+
+                if (target.Index <= 2 && (ancestor as ISegment).Type == "MSH")
+                {
+                    throw new ElementException(ErrorCode.EncodingElementCannotBeMoved);
+                }
+            }
+
+            var values = new List<string>(ancestor.Values);
+            var index = targetIndex - 1;
+            var replacedValue = (target.Index > values.Count) ? target.Value : values[target.Index - 1];
+
+            while (values.Count < targetIndex)
+            {
+                values.Add(null);
+            }
+
+            values.RemoveAt(target.Index - 1);
+            values.Insert(index, replacedValue);
+            ancestor.Values = values.ToArray();
+            return ancestor[targetIndex];
         }
 
         /// <summary>

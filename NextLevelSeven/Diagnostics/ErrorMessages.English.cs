@@ -17,12 +17,18 @@ namespace NextLevelSeven.Diagnostics
             {
                 switch (code)
                 {
+                    case ErrorCode.AncestorDoesNotExist:
+                        return "Ancestor does not exist.";
                     case ErrorCode.ComponentIndexMustBeGreaterThanZero:
                         return "Component index must be greater than zero.";
                     case ErrorCode.DescendantElementsCannotBeModified:
                         return "Descendant elements cannot be modified.";
                     case ErrorCode.DoNotTranslateThisMessageForTestingPurposes:
                         return "This message is not to be translated to any other language for testing purposes.";
+                    case ErrorCode.ElementIndexMustBeZeroOrGreater:
+                        return "Element index must be zero or greater.";
+                    case ErrorCode.EncodingElementCannotBeMoved:
+                        return "Encoding element cannot be moved.";
                     case ErrorCode.ExceededRetriesForMessage:
                         return "Exceeded retries for message.";
                     case ErrorCode.FieldIndexMustBeZeroOrGreater:
@@ -49,6 +55,8 @@ namespace NextLevelSeven.Diagnostics
                         return "Root element cannot be erased.";
                     case ErrorCode.SegmentIndexMustBeGreaterThanZero:
                         return "Segment index must be greater than zero.";
+                    case ErrorCode.SegmentTypeCannotBeMoved:
+                        return "Segment type cannot be moved.";
                     case ErrorCode.SubcomponentCannotHaveDescendants:
                         return "Subcomponent cannot have descendants.";
                     case ErrorCode.SubcomponentIndexMustBeGreaterThanZero:

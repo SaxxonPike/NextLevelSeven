@@ -31,15 +31,15 @@ namespace NextLevelSeven.Core
         {
             if (message == null)
             {
-                throw new MessageException(ErrorMessages.Get(ErrorCode.MessageDataMustNotBeNull));
+                throw new MessageException(ErrorCode.MessageDataMustNotBeNull);
             }
             if (!message.StartsWith("MSH"))
             {
-                throw new MessageException(ErrorMessages.Get(ErrorCode.MessageDataMustStartWithMsh));
+                throw new MessageException(ErrorCode.MessageDataMustStartWithMsh);
             }
             if (message.Length < 9)
             {
-                throw new MessageException(ErrorMessages.Get(ErrorCode.MessageDataIsTooShort));
+                throw new MessageException(ErrorCode.MessageDataIsTooShort);
             }
             _message = new Cursors.Message(SanitizeLineEndings(message));
         }
@@ -173,7 +173,7 @@ namespace NextLevelSeven.Core
         /// </summary>
         public void Delete()
         {
-            throw new ElementException(ErrorMessages.Get(ErrorCode.RootElementCannotBeDeleted));
+            throw new ElementException(ErrorCode.RootElementCannotBeDeleted);
         }
 
         public char Delimiter
@@ -202,7 +202,7 @@ namespace NextLevelSeven.Core
         /// </summary>
         public void Erase()
         {
-            throw new ElementException(ErrorMessages.Get(ErrorCode.RootElementCannotBeErased));
+            throw new ElementException(ErrorCode.RootElementCannotBeErased);
         }
 
         /// <summary>

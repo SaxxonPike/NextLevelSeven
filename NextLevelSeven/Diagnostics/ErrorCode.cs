@@ -36,5 +36,9 @@ namespace NextLevelSeven.Diagnostics
         /* 0018 */ MlpDataEndedPrematurely,
         /* 0019 */ InvalidMlpCharacter,
         /* 0020 */ DoNotTranslateThisMessageForTestingPurposes,
+        /* 0021 */ AncestorDoesNotExist,
+        /* 0022 */ ElementIndexMustBeZeroOrGreater,
+        /* 0023 */ EncodingElementCannotBeMoved,
+        /* 0024 */ SegmentTypeCannotBeMoved,
     }
 }

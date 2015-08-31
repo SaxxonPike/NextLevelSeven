@@ -24,7 +24,7 @@ namespace NextLevelSeven.Streaming
             }
             if (vtByte != 0x0B)
             {
-                throw new MLPStreamException(ErrorMessages.Get(ErrorCode.HeaderByteIsIncorrect));
+                throw new MLPStreamException(ErrorCode.HeaderByteIsIncorrect);
             }
 
             using (var mem = new MemoryStream())
@@ -36,7 +36,7 @@ namespace NextLevelSeven.Streaming
                         var buffer = BaseStream.ReadByte();
                         if (buffer == -1)
                         {
-                            throw new MLPStreamException(ErrorMessages.Get(ErrorCode.MlpDataEndedPrematurely));
+                            throw new MLPStreamException(ErrorCode.MlpDataEndedPrematurely);
                         }
 
                         if (buffer == 0x1C)
@@ -48,7 +48,7 @@ namespace NextLevelSeven.Streaming
                             }
                             if (buffer == -1)
                             {
-                                throw new MLPStreamException(ErrorMessages.Get(ErrorCode.MlpDataEndedPrematurely));
+                                throw new MLPStreamException(ErrorCode.MlpDataEndedPrematurely);
                             }
                         }
                         mem.WriteByte((byte)buffer);

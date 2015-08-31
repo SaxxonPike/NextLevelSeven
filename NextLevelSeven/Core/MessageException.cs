@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Core
 {
@@ -11,32 +12,10 @@ namespace NextLevelSeven.Core
     /// </summary>
     public class MessageException : Exception
     {
-        private const string DefaultMessage = @"An error occurred while performing this operation on a message.";
-
         /// <summary>
-        /// Create a generic element exception.
+        /// Create an element exception.
         /// </summary>
-        public MessageException()
-            : base(DefaultMessage)
-        {
-        }
-
-        /// <summary>
-        /// Create a message exception with the specified string.
-        /// </summary>
-        /// <param name="message">Exception message.</param>
-        public MessageException(string message)
-            : base(message)
-        {
-        }
-
-        /// <summary>
-        /// Create a message exception with the specified string and inner exception that caused the exception.
-        /// </summary>
-        /// <param name="message">Exception message.</param>
-        /// <param name="innerException">Inner exception that caused the message exception.</param>
-        public MessageException(string message, Exception innerException)
-            : base(message, innerException)
+        public MessageException(ErrorCode code) : base(ErrorMessages.Get(code))
         {
         }
     }

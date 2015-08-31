@@ -47,7 +47,7 @@ namespace NextLevelSeven.Cursors
 
         public override IElement GetDescendant(int index)
         {
-            throw new ElementException(ErrorMessages.Get(ErrorCode.SubcomponentCannotHaveDescendants));
+            throw new ElementException(ErrorCode.SubcomponentCannotHaveDescendants);
         }
 
         public override bool HasSignificantDescendants

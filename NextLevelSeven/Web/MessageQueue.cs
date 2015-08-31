@@ -77,7 +77,7 @@ namespace NextLevelSeven.Web
             }
             else
             {
-                throw new ElementException(ErrorMessages.Get(ErrorCode.ExceededRetriesForMessage));
+                throw new ElementException(ErrorCode.ExceededRetriesForMessage);
             }
         }
     }
