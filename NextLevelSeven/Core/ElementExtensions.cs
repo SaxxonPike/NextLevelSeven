@@ -14,16 +14,69 @@ namespace NextLevelSeven.Core
     static public class ElementExtensions
     {
         /// <summary>
+        /// Add a string as a descendant.
+        /// </summary>
+        /// <param name="target">Element to add to.</param>
+        /// <param name="elementToAdd">String to be added.</param>
+        /// <returns>The newly added element.</returns>
+        static public void Add(this IElement target, string elementToAdd)
+        {
+            target.Value = string.Join(new string(target.Delimiter, 1), target.Value, elementToAdd);
+        }
+
+        /// <summary>
         /// Add an element as a descendant.
         /// </summary>
         /// <param name="target">Element to add to.</param>
         /// <param name="elementToAdd">Element to be added.</param>
         /// <returns>The newly added element.</returns>
-        static public IElement Add(this IElement target, IElement elementToAdd)
+        static public void Add(this IElement target, IElement elementToAdd)
         {
-            var addedElement = target[target.DescendantCount + 1];
-            addedElement.Values = target.Values.Concat(new[]{elementToAdd.ToString()}).ToArray();
-            return addedElement;
+            target.Value = string.Join(new string(target.Delimiter, 1), target.Value, elementToAdd.ToString());
+        }
+
+        /// <summary>
+        /// Add a string as a descendant and get the descendant element.
+        /// </summary>
+        /// <param name="target">Element to add to.</param>
+        /// <param name="elementToAdd">String to be added.</param>
+        /// <returns>The newly added element.</returns>
+        static public IElement AddAndRetrieve(this IElement target, string elementToAdd)
+        {
+            Add(target, elementToAdd);
+            return target[target.DescendantCount + 1];
+        }
+        
+        /// <summary>
+        /// Add an element as a descendant and get the descendant element.
+        /// </summary>
+        /// <param name="target">Element to add to.</param>
+        /// <param name="elementToAdd">Element to be added.</param>
+        /// <returns>The newly added element.</returns>
+        static public IElement AddAndRetrieve(this IElement target, IElement elementToAdd)
+        {
+            Add(target, elementToAdd);
+            return target[target.DescendantCount + 1];
+        }
+
+        /// <summary>
+        /// Add elements as descendants.
+        /// </summary>
+        /// <param name="target">Element to add to.</param>
+        /// <param name="elementsToAdd">Elements to be added.</param>
+        static public void AddRange(this IElement target, IEnumerable<string> elementsToAdd)
+        {
+            target.Value = string.Join(new string(target.Delimiter, 1), (new[]{target.Value}).Concat(elementsToAdd));
+        }
+
+        /// <summary>
+        /// Add elements as descendants.
+        /// </summary>
+        /// <param name="target">Element to add to.</param>
+        /// <param name="elementsToAdd">Elements to be added.</param>
+        static public void AddRange(this IElement target, IEnumerable<IElement> elementsToAdd)
+        {
+            target.Value = string.Join(new string(target.Delimiter, 1), (new[] { target.Value }).Concat(elementsToAdd.Select(e => e.ToString())));
         }
 
         /// <summary>

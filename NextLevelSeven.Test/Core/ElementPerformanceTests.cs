@@ -132,6 +132,21 @@ namespace NextLevelSeven.Test.Core
         }
 
         [TestMethod]
+        public void Element_Timely_ReadsTwoFieldsInLargeMessage()
+        {
+            var message = new Message();
+            string field = null;
+            message[1][HighIndex].Value = Randomized.String();
+            var time = Measure.ExecutionTime(() =>
+            {
+                field = message[1][HighIndex - 1].Value;
+                field = message[1][3].Value;
+            });
+            Assert.AreEqual(null, field);
+            AssertInconclusiveIfSlow(500, time);
+        }
+
+        [TestMethod]
         public void Element_Timely_ModifiesFirstFieldInLargeMessage()
         {
             var message = new Message();
@@ -139,6 +154,28 @@ namespace NextLevelSeven.Test.Core
             var time = Measure.ExecutionTime(() =>
             {
                 message[1][3].Value = "test2";
+            });
+            AssertInconclusiveIfSlow(500, time);
+        }
+
+        [TestMethod]
+        public void Element_Timely_SplitsSegmentsInLargeMessage()
+        {
+            var message = new Message();
+            for (var i = 0; i < 100; i++)
+            {
+                message.Add("OBR|" + Randomized.String());
+                for (var j = 0; j < 10; j++)
+                {
+                    message.Add("OBX|" + Randomized.String());
+                    message.Add("OBX|" + Randomized.String());
+                    message.Add("NTE|" + Randomized.String());
+                }
+            }
+            var time = Measure.ExecutionTime(() =>
+            {
+                var segments = message.SplitSegments("OBR");
+                Assert.IsNotNull(segments);
             });
             AssertInconclusiveIfSlow(500, time);
         }

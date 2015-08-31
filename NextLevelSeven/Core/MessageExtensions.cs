@@ -67,19 +67,25 @@ namespace NextLevelSeven.Core
             var result = new List<IEnumerable<ISegment>>();
             var currentSegments = new List<ISegment>();
             var skipSegmentGroup = !includeExtras;
+            var index = 1;
 
-            foreach (var segment in message.Segments)
+            foreach (var segment in message.Value.Split(message.Delimiter))
             {
-                if (segment.Type == segmentType)
+                if (segment.Length > 3)
                 {
-                    if (currentSegments.Count > 0 && !skipSegmentGroup)
+                    var thisSegmentType = segment.Substring(0, 3);
+                    if (thisSegmentType == segmentType)
                     {
-                        result.Add(currentSegments);
+                        if (currentSegments.Count > 0 && !skipSegmentGroup)
+                        {
+                            result.Add(currentSegments);
+                        }
+                        currentSegments = new List<ISegment>();
+                        skipSegmentGroup = false;
                     }
-                    currentSegments = new List<ISegment>();
-                    skipSegmentGroup = false;
+                    currentSegments.Add(message[index]);
                 }
-                currentSegments.Add(segment);
+                index++;
             }
 
             if (currentSegments.Count > 0)

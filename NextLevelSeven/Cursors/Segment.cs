@@ -24,6 +24,8 @@ namespace NextLevelSeven.Cursors
             _encodingConfigurationOverride = new EncodingConfiguration(config);
         }
 
+        private readonly Dictionary<int, IElement> _cache = new Dictionary<int, IElement>();
+
         public override IElement CloneDetached()
         {
             return CloneDetachedSegment();
@@ -78,6 +80,11 @@ namespace NextLevelSeven.Cursors
 
         public override IElement GetDescendant(int index)
         {
+            if (_cache.ContainsKey(index))
+            {
+                return _cache[index];
+            }
+
             if (index < 0)
             {
                 throw new ArgumentException(ErrorMessages.Get(ErrorCode.FieldIndexMustBeZeroOrGreater));
@@ -88,22 +95,28 @@ namespace NextLevelSeven.Cursors
                 if (index == 1)
                 {
                     var descendant = new FieldDelimiter(this);
+                    _cache[index] = descendant;
                     return descendant;
                 }
 
                 if (index == 2)
                 {
                     var descendant = new EncodingField(this);
+                    _cache[index] = descendant;
                     return descendant;
                 }
 
                 if (index > 2)
                 {
                     var descendant = new Field(this, index - 1, index);
+                    _cache[index] = descendant;
                     return descendant;
                 }
             }
-            return new Field(this, index, index);
+
+            var result = new Field(this, index, index);
+            _cache[index] = result;
+            return result;
         }
 
         public override string Key

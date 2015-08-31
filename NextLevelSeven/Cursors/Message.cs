@@ -42,6 +42,8 @@ namespace NextLevelSeven.Cursors
             return ToString().GetHashCode();
         }
 
+        private readonly Dictionary<int, IElement> _cache = new Dictionary<int, IElement>();
+
         public override IElement CloneDetached()
         {
             return new Message(Value);
@@ -65,11 +67,19 @@ namespace NextLevelSeven.Cursors
 
         public ISegment GetSegment(int index)
         {
+            if (_cache.ContainsKey(index))
+            {
+                return _cache[index] as ISegment;
+            }
+
             if (index < 1)
             {
                 throw new ArgumentException(ErrorMessages.Get(ErrorCode.SegmentIndexMustBeGreaterThanZero));
             }
-            return new Segment(this, index - 1, index);
+
+            var result = new Segment(this, index - 1, index);
+            _cache[index] = result;
+            return result;
         }
 
         public override string Key

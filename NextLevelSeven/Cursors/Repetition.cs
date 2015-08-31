@@ -24,6 +24,8 @@ namespace NextLevelSeven.Cursors
             _encodingConfigurationOverride = new EncodingConfiguration(config);
         }
 
+        private readonly Dictionary<int, IElement> _cache = new Dictionary<int, IElement>();
+
         public override IElement CloneDetached()
         {
             return new Repetition(Value, EncodingConfiguration);
@@ -42,11 +44,19 @@ namespace NextLevelSeven.Cursors
 
         public override IElement GetDescendant(int index)
         {
+            if (_cache.ContainsKey(index))
+            {
+                return _cache[index];
+            }
+
             if (index < 1)
             {
                 throw new ArgumentException(ErrorMessages.Get(ErrorCode.ComponentIndexMustBeGreaterThanZero));
             }
-            return new Component(this, index - 1, index);
+
+            var result = new Component(this, index - 1, index);
+            _cache[index] = result;
+            return result;
         }
     }
 }

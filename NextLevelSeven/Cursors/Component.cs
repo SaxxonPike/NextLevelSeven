@@ -23,6 +23,8 @@ namespace NextLevelSeven.Cursors
         {
         }
 
+        private readonly Dictionary<int, IElement> _cache = new Dictionary<int, IElement>();
+
         public override IElement CloneDetached()
         {
             return new Component(Value);
@@ -40,11 +42,19 @@ namespace NextLevelSeven.Cursors
 
         public override IElement GetDescendant(int index)
         {
+            if (_cache.ContainsKey(index))
+            {
+                return _cache[index];
+            }
+
             if (index < 1)
             {
                 throw new ArgumentException(ErrorMessages.Get(ErrorCode.SubcomponentIndexMustBeGreaterThanZero));
             }
-            return new Subcomponent(this, index - 1, index);
+
+            var result = new Subcomponent(this, index - 1, index);
+            _cache[index] = result;
+            return result;
         }
     }
 }

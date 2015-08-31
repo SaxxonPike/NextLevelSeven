@@ -24,6 +24,8 @@ namespace NextLevelSeven.Cursors
             _encodingConfigurationOverride = new EncodingConfiguration(config);
         }
 
+        private readonly Dictionary<int, IElement> _cache = new Dictionary<int, IElement>();
+
         public override IElement CloneDetached()
         {
             return new Field(Value, EncodingConfiguration);
@@ -42,15 +44,26 @@ namespace NextLevelSeven.Cursors
 
         public override IElement GetDescendant(int index)
         {
+            if (_cache.ContainsKey(index))
+            {
+                return _cache[index];
+            }
+
             if (index < 0)
             {
                 throw new ArgumentException(ErrorMessages.Get(ErrorCode.RepetitionIndexMustBeZeroOrGreater));
             }
+
             if (index == 0)
             {
-                return new Repetition(new FieldWithoutRepetitions(Ancestor, ParentIndex, Index), 0, 0);
+                var descendant = new Repetition(new FieldWithoutRepetitions(Ancestor, ParentIndex, Index), 0, 0);
+                _cache[index] = descendant;
+                return descendant;
             }
-            return new Repetition(this, index - 1, index);
+
+            var result = new Repetition(this, index - 1, index);
+            _cache[index] = result;
+            return result;
         }
     }
 }
