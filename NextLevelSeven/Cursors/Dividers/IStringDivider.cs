@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Cursors.Dividers
 {
@@ -15,9 +11,8 @@ namespace NextLevelSeven.Cursors.Dividers
         event EventHandler ValueChanged;
 
         string this[int index] { get; set; }
-        string BaseValue { get; }
+        char[] BaseValue { get; }
         int Count { get; }
-        void Delete(int index);
         char Delimiter { get; }
         IStringDivider Divide(int index, char delimiter);
         IReadOnlyList<StringDivision> Divisions { get; }

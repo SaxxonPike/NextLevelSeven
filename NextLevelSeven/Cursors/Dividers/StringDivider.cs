@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
-using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Cursors.Dividers
 {
@@ -12,8 +10,16 @@ namespace NextLevelSeven.Cursors.Dividers
     /// </summary>
     sealed internal class StringDivider : IStringDivider
     {
+        /// <summary>
+        /// This event is raised whenever the value is changed.
+        /// </summary>
         public event EventHandler ValueChanged;
 
+        /// <summary>
+        /// Create a divider for a specified string.
+        /// </summary>
+        /// <param name="s">String to divide.</param>
+        /// <param name="delimiter">Delimiter to search for.</param>
         public StringDivider(string s, char delimiter)
         {
             Initialize(s, delimiter);
@@ -22,7 +28,7 @@ namespace NextLevelSeven.Cursors.Dividers
         /// <summary>
         /// Get or set the substring at the specified index.
         /// </summary>
-        /// <param name="index">Index of the string to get.</param>
+        /// <param name="index">Index of the string to get or set.</param>
         /// <returns>Substring.</returns>
         public string this[int index]
         {
@@ -32,194 +38,146 @@ namespace NextLevelSeven.Cursors.Dividers
                 {
                     return null;
                 }
-                if (Value == null)
+                if (BaseValue == null)
                 {
                     return null;
                 }
                 var d = Divisions[index];
-                return Value.Substring(d.Offset, d.Length);
+                return new string(BaseValue, d.Offset, d.Length);
             }
             set
             {
-                if (index >= 0)
+                if (index < 0)
                 {
-                    List<StringDivision> divisions;
-                    var paddedString = GetPaddedString(Value, index, Delimiter, out divisions);
-                    if (index >= divisions.Count)
-                    {
-                        if (index > 0)
-                        {
-                            Initialize(string.Join(paddedString, Delimiter, value), Delimiter);
-                        }
-                        else
-                        {
-                            Initialize(value, Delimiter);
-                        }
-                    }
-                    else
-                    {
-                        var d = divisions[index];
-                        Initialize(GetSplicedString(paddedString, d.Offset, d.Length, value), Delimiter);                        
-                    }
+                    return;
+                }
+
+                List<StringDivision> divisions;
+                var paddedString = StringDividerOperations.GetPaddedString(Value, index, Delimiter, out divisions);
+                if (index >= divisions.Count)
+                {
+                    Initialize((index >= divisions.Count)
+                        ? string.Join(paddedString, DelimiterString, value)
+                        : value,
+                        Delimiter);
+                }
+                else
+                {
+                    var d = divisions[index];
+                    Initialize(StringDividerOperations.GetSplicedString(paddedString, d.Offset, d.Length, value), Delimiter);                        
                 }
             }
         }
 
+        /// <summary>
+        /// String that is operated upon, as a character array.
+        /// </summary>
+        public char[] BaseValue
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Get the number of divisions.
+        /// </summary>
         public int Count { get { return Divisions.Count; } }
+
+        /// <summary>
+        /// Get the delimiter character.
+        /// </summary>
         public char Delimiter { get; private set; }
 
-        private IReadOnlyList<StringDivision> _divisions;
-        public IReadOnlyList<StringDivision> Divisions
-        {
-            get
-            {
-                if (_divisions == null)
-                {
-                    _divisions = GetDivisions(_value, Delimiter);
-                }
-                return _divisions;
-            }
-        }
+        /// <summary>
+        /// [PERF] Get the delimiter character as a string.
+        /// </summary>
+        private string DelimiterString { get; set; }
 
-        private string _value;
-
-        public string Value
-        {
-            get { return _value; }
-            set { Initialize(value, Delimiter); }
-        }
-
-        public void Delete(int index)
-        {
-            throw new NotImplementedException();
-        }
-
+        /// <summary>
+        /// Create a subdivision.
+        /// </summary>
+        /// <param name="index">Index of the subdivider in the parent divider.</param>
+        /// <param name="delimiter">Delimiter to be used by the subdivider.</param>
+        /// <returns></returns>
         public IStringDivider Divide(int index, char delimiter)
         {
             return new StringSubDivider(this, delimiter, index);
         }
 
-        static public List<StringDivision> GetDivisions(string s, char delimiter)
+        /// <summary>
+        /// [PERF] Cached divisions list.
+        /// </summary>
+        private IReadOnlyList<StringDivision> _divisions;
+
+        /// <summary>
+        /// Get the division offsets in the string.
+        /// </summary>
+        public IReadOnlyList<StringDivision> Divisions
         {
-            if (s == null)
+            get
             {
-                return new List<StringDivision>();
-            }
-            return GetDivisions(s, delimiter, new StringDivision(0, s.Length));
-        }
-
-        static public List<StringDivision> GetDivisions(string s, char delimiter, StringDivision parent)
-        {
-            unchecked
-            {
-                var divisions = new List<StringDivision>();
-                var length = 0;
-
-                if (s == null)
-                {
-                    s = string.Empty;
-                }
-
-                if (parent == null)
-                {
-                    parent = new StringDivision(0, s.Length);
-                }
-
-                var offset = parent.Offset;
-                var inputLength = parent.Length;
-
-                if (delimiter == '\0')
-                {
-                    divisions.Add(new StringDivision(offset, inputLength));
-                    return divisions;
-                }
-
-                var endIndex = parent.Offset + parent.Length;
-                for (var index = parent.Offset; index < endIndex; index++)
-                {
-                    if (s[index] == delimiter)
-                    {
-                        divisions.Add(new StringDivision(offset, length));
-                        length = 0;
-                        offset = index + 1;
-                    }
-                    else
-                    {
-                        length++;
-                    }
-                }
-
-                divisions.Add(new StringDivision(offset, length));
-                return divisions;
+                return _divisions ?? StringDividerOperations.GetDivisions(BaseValue, Delimiter);
             }
         }
 
-        static public string GetPaddedString(string s, int index, char delimiter, out List<StringDivision> divisions)
+        /// <summary>
+        /// Get an enumerator for divided strings.
+        /// </summary>
+        /// <returns>Enumerator.</returns>
+        public IEnumerator<string> GetEnumerator()
         {
-            unchecked
-            {
-                divisions = GetDivisions(s, delimiter);
-
-                if (delimiter == '\0')
-                {
-                    return s;
-                }
-
-                if (s == null)
-                {
-                    s = string.Empty;
-                }
-
-                var divisionCount = divisions.Count;
-                var stringLength = s.Length;
-                var builder = new StringBuilder(s);
-                var divisionsToAdd = (index - divisionCount) + 1;
-
-                if (divisionsToAdd > 0)
-                {
-                    for (var i = 0; i < divisionsToAdd; i++)
-                    {
-                        divisions.Add(new StringDivision(stringLength + 1, 0));
-                        stringLength++;
-                    }
-                    builder.Append(new string(delimiter, divisionsToAdd));
-                }
-
-                return builder.ToString();
-            }
+            return new StringDividerEnumerator(this);
         }
 
-        static public string GetSplicedString(string s, int offset, int length, string replacement)
+        /// <summary>
+        /// Get an enumerator for divided strings.
+        /// </summary>
+        /// <returns>Enumerator.</returns>
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
-            unchecked
-            {
-                var builder = new StringBuilder();
-                if (offset > 0)
-                {
-                    builder.Append(s.Substring(0, offset));
-                }
-                builder.Append(replacement);
-                if (s != null && (offset + length < s.Length))
-                {
-                    builder.Append(s.Substring(offset + length));
-                }
-                return builder.ToString();
-            }
+            return new StringDividerEnumerator(this);
         }
 
+        /// <summary>
+        /// Get the subdivision in which this division's item at the specified index resides.
+        /// </summary>
+        /// <param name="index">Index of the item to get.</param>
+        /// <returns>Subdivision location.</returns>
+        public StringDivision GetSubDivision(int index)
+        {
+            if (index < 0)
+            {
+                return null;
+            }
+
+            var d = Divisions;
+            return (index >= d.Count)
+                ? new StringDivision(BaseValue.Length, 0)
+                : d[index];
+        }
+
+        /// <summary>
+        /// Index inside the parent. This will always be zero for a StringDivider because it is a root divider.
+        /// </summary>
         public int Index
         {
             get { return 0; }
             set { }
         }
 
+        /// <summary>
+        /// Initialize this divider's value with the specified string and delimiter.
+        /// </summary>
+        /// <param name="s">String to set the value to.</param>
+        /// <param name="delimiter">Delimiter to search for.</param>
         void Initialize(string s, char delimiter)
         {
             lock (this)
             {
                 _divisions = null;
-                _value = s;
+                BaseValue = s.ToCharArray();
                 Delimiter = delimiter;
+                DelimiterString = new string(Delimiter, 1);
                 Version++;                
             }
 
@@ -229,48 +187,31 @@ namespace NextLevelSeven.Cursors.Dividers
             }
         }
 
-        public IEnumerator<string> GetEnumerator()
-        {
-            var value = Value;
-            return Divisions.Select(d => value.Substring(d.Offset, d.Length)).GetEnumerator();
-        }
-
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
+        /// <summary>
+        /// Get the internal value as a string.
+        /// </summary>
+        /// <returns>Value as a string.</returns>
         public override string ToString()
         {
             return Value;
         }
 
+        /// <summary>
+        /// Calculated value of all divisions separated by delimiters.
+        /// </summary>
+        public string Value
+        {
+            get { return new string(BaseValue); }
+            set { Initialize(value, Delimiter); }
+        }
+
+        /// <summary>
+        /// Version number of the value. Each time the value is changed, this increments to incidate it has changed.
+        /// </summary>
         public int Version
         {
             get;
             private set;
-        }
-
-        public StringDivision GetSubDivision(int index)
-        {
-            if (index < 0)
-            {
-                return null;
-            }
-
-            var d = Divisions;
-            if (index >= d.Count)
-            {
-                return new StringDivision(_value.Length, 0);
-            }
-
-            return d[index];
-        }
-
-
-        public string BaseValue
-        {
-            get { return _value; }
         }
     }
 }

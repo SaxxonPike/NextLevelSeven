@@ -139,5 +139,21 @@ namespace NextLevelSeven.Test.Core
             Assert.AreEqual(newMsh3Value, msh3.Value, @"MSH-3 was not the expected value after changing MSH.");
             Assert.AreEqual(newMsh4Value, msh4.Value, @"MSH-4 was not the expected value after changing MSH.");
         }
+
+        [TestMethod]
+        public void Element_ValuesReturnsProperlySplitData()
+        {
+            var message = new Message(ExampleMessages.Standard);
+            var segmentStrings = message.Value.Split('\xD');
+            var segments = message.Values;
+
+            Assert.AreEqual(segmentStrings.Length, segments.Length,
+                @"Splitting main value and calling Values returns different element counts.");
+
+            for (var i = 0; i < segments.Length; i++)
+            {
+                Assert.AreEqual(segments[i], segmentStrings[i], @"Values are not equal.");
+            }
+        }
     }
 }

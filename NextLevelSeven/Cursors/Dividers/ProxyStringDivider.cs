@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NextLevelSeven.Core;
-using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Cursors.Dividers
 {
@@ -100,26 +96,21 @@ namespace NextLevelSeven.Cursors.Dividers
             return GetEnumerator();
         }
 
-        public void Delete(int index)
-        {
-            throw new InvalidOperationException(ErrorMessages.Get(ErrorCode.DescendantElementsCannotBeModified));
-        }
-
         public StringDivision GetSubDivision(int index)
         {
             return new StringDivision(0, Value.Length);
         }
 
-        public string BaseValue
+        public char[] BaseValue
         {
-            get { return GetValue(); }
+            get { return GetValue().ToCharArray(); }
             set
             {
                 if (ValueChanged != null)
                 {
                     ValueChanged(this, EventArgs.Empty);
                 }
-                SetValue(value);
+                SetValue(new String(value));
             }
         }
     }
