@@ -29,7 +29,7 @@ namespace NextLevelSeven.Test.Core
             {
                 message[HighIndex].Value = testString;
             });
-            Assert.AreEqual(message[HighIndex], testString);
+            Assert.AreEqual(testString, message[HighIndex].Value);
         }
 
         [TestMethod]
