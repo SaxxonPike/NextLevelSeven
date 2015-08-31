@@ -103,7 +103,6 @@
     <Compile Include="Utility\EmptyEnumerable.cs" />
     <Compile Include="Utility\EmptyEnumerator.cs" />
     <Compile Include="MessageGeneration\AckMessageGenerator.cs" />
-    <Compile Include="Utility\StringOps.cs" />
     <Compile Include="Web\BackgroundMessageReceiver.cs" />
     <Compile Include="Web\BackgroundMessageSender.cs" />
     <Compile Include="Web\BackgroundTransportBase.cs" />

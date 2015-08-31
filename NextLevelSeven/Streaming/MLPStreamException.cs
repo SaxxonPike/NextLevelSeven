@@ -7,6 +7,9 @@ using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Streaming
 {
+    /// <summary>
+    /// Represents an exception that would be raised when an MLP-specific error occurs.
+    /// </summary>
     public class MLPStreamException : Exception
     {
         /// <summary>

@@ -9,12 +9,23 @@ using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Streaming
 {
+    /// <summary>
+    /// An HL7StreamReader that pulls messages from the MLP format.
+    /// </summary>
     public class MLPStreamReader : HL7StreamReader
     {
+        /// <summary>
+        /// Create an MLP stream reader that uses a stream as a data source.
+        /// </summary>
+        /// <param name="baseStream">Stream to get messages from.</param>
         public MLPStreamReader(Stream baseStream) : base(baseStream)
         {
         }
 
+        /// <summary>
+        /// Read one MLP-encoded message. Returns null if no messages are available.
+        /// </summary>
+        /// <returns>Message that was read.</returns>
         public override IMessage Read()
         {
             int vtByte = BaseStream.ReadByte();
