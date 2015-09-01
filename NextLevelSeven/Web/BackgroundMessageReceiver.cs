@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -24,10 +25,12 @@ namespace NextLevelSeven.Web
         /// <param name="port"></param>
         public BackgroundMessageReceiver(int port)
         {
-            var config = new MessageReceiverConfiguration();
-            config.Port = port;
-            config.OwnFacility = Environment.UserDomainName;
-            config.OwnApplication = Process.GetCurrentProcess().ProcessName;
+            var config = new MessageReceiverConfiguration
+            {
+                Port = port,
+                OwnFacility = Environment.UserDomainName,
+                OwnApplication = Process.GetCurrentProcess().ProcessName,
+            };
             Initialize(config);
         }
 
@@ -39,10 +42,12 @@ namespace NextLevelSeven.Web
         /// <param name="application">Receiving application.</param>
         public BackgroundMessageReceiver(int port, string facility, string application)
         {
-            var config = new MessageReceiverConfiguration();
-            config.Port = port;
-            config.OwnFacility = facility;
-            config.OwnApplication = application;
+            var config = new MessageReceiverConfiguration
+            {
+                Port = port,
+                OwnFacility = facility,
+                OwnApplication = application,
+            };
             Initialize(config);
         }
 
@@ -95,7 +100,7 @@ namespace NextLevelSeven.Web
                     Ready = false;
                     var httpRequest = context.Request;
                     var httpResponse = context.Response;
-                    string failureReason = string.Empty;
+                    var failureReason = string.Empty;
                     var messageRawData = new byte[0];
 
                     IMessage request = null;
@@ -118,15 +123,16 @@ namespace NextLevelSeven.Web
                             }
                             catch (Exception ex)
                             {
-                                if (ex is MessageException || ex is ElementException)
+                                if (!(ex is MessageException || ex is ElementException))
                                 {
-                                    failureReason = ex.Message;
-                                    request = null;
-                                    messageRawData = mem.ToArray();
-                                    innerQueue.Clear();
-                                    break;
+                                    throw;
                                 }
-                                throw;
+
+                                failureReason = ex.Message;
+                                request = null;
+                                messageRawData = mem.ToArray();
+                                innerQueue.Clear();
+                                break;
                             }
 
                             if (request == null)
@@ -219,18 +225,20 @@ namespace NextLevelSeven.Web
         /// </summary>
         public void Dispose()
         {
-            if (Thread != null)
+            if (Thread == null)
             {
-                Ready = false;
-                Disposed = true;
-                if (Listener != null)
-                {
-                    var listener = Listener;
-                    Listener = null;
-                    listener.Close();                    
-                }
-                Thread = null;
+                return;
             }
+
+            Ready = false;
+            Disposed = true;
+            if (Listener != null)
+            {
+                var listener = Listener;
+                Listener = null;
+                listener.Close();
+            }
+            Thread = null;
         }
 
         /// <summary>

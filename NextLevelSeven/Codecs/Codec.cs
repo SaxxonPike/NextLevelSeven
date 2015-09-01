@@ -62,7 +62,8 @@ namespace NextLevelSeven.Codecs
             var offset = input.Value.Offset;
             var time = input.Value;
 
-            return time.ToString("yyyyMMddHHmmss") + offset.ToString((offset < TimeSpan.Zero ? "\\-" : "\\+") + "hhmm");
+            return time.ToString("yyyyMMddHHmmss") +
+                offset.ToString((offset < TimeSpan.Zero ? "\\-" : "\\+") + "hhmm");
         }
 
         /// <summary>
@@ -72,11 +73,9 @@ namespace NextLevelSeven.Codecs
         /// <returns>Converted decimal value.</returns>
         static public string ConvertFromDecimal(decimal? input)
         {
-            if (!input.HasValue)
-            {
-                return null;
-            }
-            return input.Value.ToString(CultureInfo.InvariantCulture);
+            return (input.HasValue)
+                ? input.Value.ToString(CultureInfo.InvariantCulture)
+                : null;
         }
 
         /// <summary>
@@ -86,11 +85,9 @@ namespace NextLevelSeven.Codecs
         /// <returns>Converted integer value.</returns>
         static public string ConvertFromInt(int? input)
         {
-            if (!input.HasValue)
-            {
-                return null;
-            }
-            return input.Value.ToString(CultureInfo.InvariantCulture);
+            return (input.HasValue)
+                ? input.Value.ToString(CultureInfo.InvariantCulture)
+                : null;
         }
 
         /// <summary>
@@ -145,7 +142,7 @@ namespace NextLevelSeven.Codecs
                 return null;
             }
 
-            int length = input.Length;
+            var length = input.Length;
             if (length < 4)
             {
                 throw new ArgumentException(ErrorMessages.Get(ErrorCode.UnableToParseDate));
@@ -163,8 +160,8 @@ namespace NextLevelSeven.Codecs
                 if (timeZoneIndicator == '+' || timeZoneIndicator == '-')
                 {
                     timeZoneLength = 5;
-                    int timezoneHours = int.Parse(input.Substring(length - 5, 3));
-                    int timezoneMinutes = int.Parse(input.Substring(length - 2, 2));
+                    var timezoneHours = int.Parse(input.Substring(length - 5, 3));
+                    var timezoneMinutes = int.Parse(input.Substring(length - 2, 2));
                     timeZone = new TimeSpan(timezoneHours, timezoneMinutes, 0);
                 }
             }
@@ -173,11 +170,9 @@ namespace NextLevelSeven.Codecs
                 ? (ConvertToTime(input.Substring(8, input.Length - timeZoneLength - 8)) ?? TimeSpan.Zero)
                 : TimeSpan.Zero;
 
-            if (timeZone.HasValue)
-            {
-                return new DateTimeOffset(year, month, day, time.Hours, time.Minutes, time.Seconds, time.Milliseconds, timeZone.Value);
-            }
-            return new DateTime(year, month, day, time.Hours, time.Minutes, time.Seconds, time.Milliseconds);
+            return (timeZone.HasValue)
+                ? new DateTimeOffset(year, month, day, time.Hours, time.Minutes, time.Seconds, time.Milliseconds, timeZone.Value)
+                : new DateTime(year, month, day, time.Hours, time.Minutes, time.Seconds, time.Milliseconds);
         }
 
         /// <summary>
