@@ -149,17 +149,7 @@ namespace NextLevelSeven.Cursors
         {
             get
             {
-                if (!Exists)
-                {
-                    return false;
-                }
-
-                if (DescendantCount == 0)
-                {
-                    return false;
-                }
-
-                if (Delimiter == '\0')
+                if (!Exists || DescendantCount == 0 || Delimiter == '\0')
                 {
                     return false;
                 }
@@ -264,14 +254,9 @@ namespace NextLevelSeven.Cursors
             }
             set
             {
-                if (DescendantDivider.Delimiter != '\0')
-                {
-                    DescendantDivider.Value = string.Join(new string(DescendantDivider.Delimiter, 1), value);
-                }
-                else
-                {
-                    DescendantDivider.Value = string.Join(string.Empty, value);
-                }
+                DescendantDivider.Value = (DescendantDivider.Delimiter != '\0')
+                    ? string.Join(new string(DescendantDivider.Delimiter, 1), value)
+                    : string.Join(string.Empty, value);
             }
         }
 
