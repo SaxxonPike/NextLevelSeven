@@ -36,6 +36,11 @@ namespace NextLevelSeven.Cursors.Dividers
             }
         }
 
+        public char[] BaseValue
+        {
+            get { return ValueChars; }
+        }
+
         public int Count
         {
             get { return 1; }
@@ -101,7 +106,7 @@ namespace NextLevelSeven.Cursors.Dividers
             return new StringDivision(0, Value.Length);
         }
 
-        public char[] BaseValue
+        public char[] ValueChars
         {
             get { return GetValue().ToCharArray(); }
             set

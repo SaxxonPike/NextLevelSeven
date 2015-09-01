@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
+using NextLevelSeven.MessageGeneration;
 
 namespace NextLevelSeven.Test.Core
 {
@@ -178,6 +180,30 @@ namespace NextLevelSeven.Test.Core
                 Assert.IsNotNull(segments);
             });
             AssertInconclusiveIfSlow(500, time);
+        }
+
+        [TestMethod]
+        public void Element_Timely_ProcessesManySmallMessages()
+        {
+            var messagesParsedInOneSecond = Measure.ExecutionIterations(() =>
+            {
+                var message = new Message(ExampleMessages.A04);
+                var dataField = message["IN1"].First()[7][0][1];
+                Assert.AreEqual("MUTUAL OF OMAHA", dataField.Value, @"Parsing IN1-7-1 failed.");
+            }, 1000);
+            Assert.IsTrue(messagesParsedInOneSecond > 10000, @"Small message parsing is too slow.");
+        }
+
+        [TestMethod]
+        public void Element_Timely_ProcessesManyLargeMessages()
+        {
+            var messagesParsedInOneSecond = Measure.ExecutionIterations(() =>
+            {
+                var message = new Message(ExampleMessages.MultipleObr);
+                var dataField = message["OBR"].First(s => s[1].Value == "4")[16][0][2];
+                Assert.AreEqual("OLSTAD", dataField.Value, @"Parsing OBR4-16-2 failed.");
+            }, 1000);
+            Assert.IsTrue(messagesParsedInOneSecond > 1000, @"Large message parsing is too slow.");
         }
 
     }

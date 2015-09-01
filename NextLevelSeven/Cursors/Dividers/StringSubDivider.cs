@@ -25,7 +25,6 @@ namespace NextLevelSeven.Cursors.Dividers
             BaseDivider = baseDivider;
             Index = parentIndex;
             Delimiter = delimiter;
-            DelimiterString = new string(delimiter, 1);
         }
 
         /// <summary>
@@ -39,7 +38,6 @@ namespace NextLevelSeven.Cursors.Dividers
             BaseDivider = baseDivider;
             Index = parentIndex;
             Delimiter = baseDivider.Value[baseDividerOffset];
-            DelimiterString = new string(Delimiter, 1);
         }
 
         /// <summary>
@@ -68,15 +66,17 @@ namespace NextLevelSeven.Cursors.Dividers
                 }
 
                 List<StringDivision> divisions;
-                var paddedString = StringDividerOperations.GetPaddedString(Value, index, Delimiter, out divisions);
+                var paddedString = StringDividerOperations.GetPaddedString(ValueChars, index, Delimiter, out divisions);
                 if (index >= divisions.Count)
                 {
-                    Value = (index > 0) ? string.Join(paddedString, value) : value;
+                    ValueChars = (index > 0)
+                        ? StringDividerOperations.JoinChars(paddedString, StringDividerOperations.GetChars(value))
+                        : value.ToCharArray();
                 }
                 else
                 {
                     var d = divisions[index];
-                    Value = StringDividerOperations.GetSplicedString(paddedString, d.Offset, d.Length, value);
+                    ValueChars = StringDividerOperations.GetSplicedString(paddedString, d.Offset, d.Length, StringDividerOperations.GetChars(value));
                 }
 
                 if (ValueChanged != null)
@@ -119,11 +119,6 @@ namespace NextLevelSeven.Cursors.Dividers
             get;
             private set;
         }
-
-        /// <summary>
-        /// [PERF] Get the delimiter character as a string.
-        /// </summary>
-        private string DelimiterString { get; set; }
 
         /// <summary>
         /// Create a subdivision.
@@ -183,12 +178,12 @@ namespace NextLevelSeven.Cursors.Dividers
         {
             if (index < 0)
             {
-                return null;
+                return StringDivision.Invalid;
             }
 
             var d = Divisions;
             return (index >= d.Count)
-                ? null
+                ? StringDivision.Invalid
                 : d[index];
         }
 
@@ -227,11 +222,26 @@ namespace NextLevelSeven.Cursors.Dividers
             get
             {
                 var d = BaseDivider.GetSubDivision(Index);
-                return (d == null)
+                return (!d.Valid)
                     ? null
                     : new string(BaseValue, d.Offset, d.Length);
             }
             set { BaseDivider[Index] = value; }
+        }
+
+        /// <summary>
+        /// Calculated value of all divisions separated by delimiters, as characters.
+        /// </summary>
+        public char[] ValueChars
+        {
+            get
+            {
+                var d = BaseDivider.GetSubDivision(Index);
+                return (!d.Valid)
+                    ? null
+                    : StringDividerOperations.CharSubstring(BaseValue, d.Offset, d.Length);
+            }
+            set { BaseDivider[Index] = new string(value); }
         }
 
         public int Version

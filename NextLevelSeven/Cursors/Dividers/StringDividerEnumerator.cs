@@ -29,7 +29,7 @@ namespace NextLevelSeven.Cursors.Dividers
             get
             {
                 var division = Divider.Divisions[Index];
-                return new string(Divider.BaseValue, division.Offset, division.Length);
+                return new string(Divider.ValueChars, division.Offset, division.Length);
             }
         }
 

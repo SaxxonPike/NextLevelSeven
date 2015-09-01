@@ -22,7 +22,8 @@ namespace NextLevelSeven.Cursors.Dividers
         /// <param name="delimiter">Delimiter to search for.</param>
         public StringDivider(string s, char delimiter)
         {
-            Initialize(s, delimiter);
+            Delimiter = delimiter;
+            ValueChars = StringDividerOperations.GetChars(s);
         }
 
         /// <summary>
@@ -38,12 +39,12 @@ namespace NextLevelSeven.Cursors.Dividers
                 {
                     return null;
                 }
-                if (BaseValue == null)
+                if (ValueChars == null)
                 {
                     return null;
                 }
                 var d = Divisions[index];
-                return new string(BaseValue, d.Offset, d.Length);
+                return new string(ValueChars, d.Offset, d.Length);
             }
             set
             {
@@ -53,18 +54,17 @@ namespace NextLevelSeven.Cursors.Dividers
                 }
 
                 List<StringDivision> divisions;
-                var paddedString = StringDividerOperations.GetPaddedString(Value, index, Delimiter, out divisions);
+                var paddedString = StringDividerOperations.GetPaddedString(ValueChars, index, Delimiter, out divisions);
                 if (index >= divisions.Count)
                 {
                     Initialize((index >= divisions.Count)
-                        ? string.Join(paddedString, DelimiterString, value)
-                        : value,
-                        Delimiter);
+                        ? StringDividerOperations.JoinCharsWithDelimiter(Delimiter, paddedString, StringDividerOperations.GetChars(value))
+                        : StringDividerOperations.GetChars(value));
                 }
                 else
                 {
                     var d = divisions[index];
-                    Initialize(StringDividerOperations.GetSplicedString(paddedString, d.Offset, d.Length, value), Delimiter);                        
+                    Initialize(StringDividerOperations.GetSplicedString(paddedString, d.Offset, d.Length, StringDividerOperations.GetChars(value)));                        
                 }
             }
         }
@@ -72,11 +72,7 @@ namespace NextLevelSeven.Cursors.Dividers
         /// <summary>
         /// String that is operated upon, as a character array.
         /// </summary>
-        public char[] BaseValue
-        {
-            get;
-            private set;
-        }
+        public char[] BaseValue { get { return ValueChars; } }
 
         /// <summary>
         /// Get the number of divisions.
@@ -87,11 +83,6 @@ namespace NextLevelSeven.Cursors.Dividers
         /// Get the delimiter character.
         /// </summary>
         public char Delimiter { get; private set; }
-
-        /// <summary>
-        /// [PERF] Get the delimiter character as a string.
-        /// </summary>
-        private string DelimiterString { get; set; }
 
         /// <summary>
         /// Create a subdivision.
@@ -116,7 +107,11 @@ namespace NextLevelSeven.Cursors.Dividers
         {
             get
             {
-                return _divisions ?? StringDividerOperations.GetDivisions(BaseValue, Delimiter);
+                if (_divisions == null)
+                {
+                    _divisions = StringDividerOperations.GetDivisions(ValueChars, Delimiter);
+                }
+                return _divisions;
             }
         }
 
@@ -147,12 +142,12 @@ namespace NextLevelSeven.Cursors.Dividers
         {
             if (index < 0)
             {
-                return null;
+                return StringDivision.Invalid;
             }
 
             var d = Divisions;
             return (index >= d.Count)
-                ? new StringDivision(BaseValue.Length, 0)
+                ? new StringDivision(ValueChars.Length, 0)
                 : d[index];
         }
 
@@ -166,26 +161,25 @@ namespace NextLevelSeven.Cursors.Dividers
         }
 
         /// <summary>
-        /// Initialize this divider's value with the specified string and delimiter.
+        /// Initialize the divider's value with the specified characters.
         /// </summary>
-        /// <param name="s">String to set the value to.</param>
-        /// <param name="delimiter">Delimiter to search for.</param>
-        void Initialize(string s, char delimiter)
+        /// <param name="s">Characters to set the value to.</param>
+        void Initialize(char[] s)
         {
-            lock (this)
+            lock (SyncRoot)
             {
                 _divisions = null;
-                BaseValue = s.ToCharArray();
-                Delimiter = delimiter;
-                DelimiterString = new string(Delimiter, 1);
-                Version++;                
+                _valueChars = s;
+                Version++;
             }
 
             if (ValueChanged != null)
             {
                 ValueChanged(this, EventArgs.Empty);
-            }
+            }            
         }
+
+        public readonly object SyncRoot = new object();
 
         /// <summary>
         /// Get the internal value as a string.
@@ -201,9 +195,21 @@ namespace NextLevelSeven.Cursors.Dividers
         /// </summary>
         public string Value
         {
-            get { return new string(BaseValue); }
-            set { Initialize(value, Delimiter); }
+            get { return new string(ValueChars); }
+            set { ValueChars = StringDividerOperations.GetChars(value); }
         }
+
+        private char[] _valueChars;
+
+        /// <summary>
+        /// Calculated value of all divisions separated by delimiters, as chars.
+        /// </summary>
+        public char[] ValueChars
+        {
+            get { return _valueChars; }
+            set { Initialize(value); }
+        }
+
 
         /// <summary>
         /// Version number of the value. Each time the value is changed, this increments to incidate it has changed.

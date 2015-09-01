@@ -19,6 +19,7 @@ namespace NextLevelSeven.Cursors.Dividers
         StringDivision GetSubDivision(int index);
         int Index { get; set; }
         string Value { get; set; }
+        char[] ValueChars { get; set; }
         int Version { get; }
     }
 }

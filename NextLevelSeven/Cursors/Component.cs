@@ -11,7 +11,7 @@ namespace NextLevelSeven.Cursors
     /// <summary>
     /// Represents a component level element of an HL7 message.
     /// </summary>
-    internal class Component : Element
+    sealed internal class Component : Element
     {
         public Component(Element ancestor, int parentIndex, int externalIndex)
             : base(ancestor, parentIndex, externalIndex)

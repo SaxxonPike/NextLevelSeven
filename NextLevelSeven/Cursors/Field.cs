@@ -11,7 +11,7 @@ namespace NextLevelSeven.Cursors
     /// <summary>
     /// Represents a field-level element in an HL7 message.
     /// </summary>
-    internal class Field : Element
+    sealed internal class Field : Element
     {
         public Field(Element ancestor, int parentIndex, int externalIndex)
             : base(ancestor, parentIndex, externalIndex)
