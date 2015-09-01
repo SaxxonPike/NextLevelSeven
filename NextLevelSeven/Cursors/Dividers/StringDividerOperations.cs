@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace NextLevelSeven.Cursors.Dividers
 {
@@ -16,7 +14,6 @@ namespace NextLevelSeven.Cursors.Dividers
         /// <param name="s">Characters.</param>
         /// <param name="offset">Offset to start.</param>
         /// <returns>Extracted characters.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static public char[] CharSubstring(char[] s, int offset)
         {
             return CharSubstring(s, offset, s.Length - offset);
@@ -29,7 +26,6 @@ namespace NextLevelSeven.Cursors.Dividers
         /// <param name="offset">Offset to start.</param>
         /// <param name="length">Length of characters.</param>
         /// <returns>Extracted characters.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static public char[] CharSubstring(char[] s, int offset, int length)
         {
             var result = new char[length];
@@ -42,7 +38,6 @@ namespace NextLevelSeven.Cursors.Dividers
         /// </summary>
         /// <param name="s">Source.</param>
         /// <returns>Copied characters.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static public char[] CopyChars(char[] s)
         {
             var length = s.Length;
@@ -67,7 +62,6 @@ namespace NextLevelSeven.Cursors.Dividers
         /// <param name="s">Characters to parse.</param>
         /// <param name="delimiter">Delimiter to search for.</param>
         /// <returns>Divisions.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static public List<StringDivision> GetDivisions(char[] s, char delimiter)
         {
             return (s == null)
@@ -82,7 +76,6 @@ namespace NextLevelSeven.Cursors.Dividers
         /// <param name="delimiter">Delimiter to search for.</param>
         /// <param name="parent">Bounds within which to search.</param>
         /// <returns>Divisions within the bounds specified.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static public List<StringDivision> GetDivisions(char[] s, char delimiter, StringDivision parent)
         {
             unchecked
@@ -132,7 +125,6 @@ namespace NextLevelSeven.Cursors.Dividers
         /// <param name="delimiter">Delimiter to pad with.</param>
         /// <param name="divisions">Output of the divisions list.</param>
         /// <returns>String that has been padded as necessary.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static public char[] GetPaddedString(char[] s, int index, char delimiter, out List<StringDivision> divisions)
         {
             unchecked
@@ -184,7 +176,6 @@ namespace NextLevelSeven.Cursors.Dividers
         /// <param name="length">Length in characters to replace.</param>
         /// <param name="replacement">String to replace with.</param>
         /// <returns></returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static public char[] GetSplicedString(char[] s, int offset, int length, char[] replacement)
         {
             unchecked
@@ -224,7 +215,6 @@ namespace NextLevelSeven.Cursors.Dividers
         /// </summary>
         /// <param name="characters">Character arrays to join.</param>
         /// <returns>Joined character arrays.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static public char[] JoinChars(params char[][] characters)
         {
             var totalLength = 0;
@@ -253,7 +243,6 @@ namespace NextLevelSeven.Cursors.Dividers
         /// <param name="delimiter">Delimiter to use.</param>
         /// <param name="characters">Character arrays to join.</param>
         /// <returns>Joined character arrays.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         static public char[] JoinCharsWithDelimiter(char delimiter, params char[][] characters)
         {
             var totalLength = 0;

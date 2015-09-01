@@ -80,37 +80,43 @@ namespace NextLevelSeven.Web
                         using (var responseStream = response.GetResponseStream())
                         using (var messageStream = new MemoryStream())
                         {
-                            if (responseStream != null)
+                            if (responseStream == null)
                             {
-                                responseStream.CopyTo(messageStream);
-                                messageStream.Position = 0;
+                                break;
+                            }
 
-                                var messageReader = new HL7StreamReader(messageStream);
-                                var responseMessage = messageReader.Read();
-                                var responseMsa = responseMessage["MSA"].FirstOrDefault();
-                                if (responseMsa != null)
-                                {
-                                    switch (responseMsa[1].Value)
+                            responseStream.CopyTo(messageStream);
+                            messageStream.Position = 0;
+
+                            var messageReader = new HL7StreamReader(messageStream);
+                            var responseMessage = messageReader.Read();
+                            var responseMsa = responseMessage["MSA"].FirstOrDefault();
+
+                            if (responseMsa == null)
+                            {
+                                break;
+                            }
+
+                            switch (responseMsa[1].Value)
+                            {
+                                case "AA":
+                                    if (MessageAccepted != null)
                                     {
-                                        case "AA":
-                                            if (MessageAccepted != null)
-                                            {
-                                                MessageAccepted(this, new MessageTransportEventArgs(message.Contents.ToString(), responseMessage.ToString()));
-                                            }
-                                            break;
-                                        case "AR":
-                                        case "AE":
-                                            if (MessageRejected != null)
-                                            {
-                                                MessageRejected(this, new MessageTransportEventArgs(message.Contents.ToString(), responseMessage.ToString()));
-                                            }
-                                            break;
+                                        MessageAccepted(this, new MessageTransportEventArgs(message.Contents, responseMessage));
                                     }
-                                    if (responseMsa[1].Value != "AA")
+                                    break;
+                                case "AR":
+                                case "AE":
+                                    if (MessageRejected != null)
                                     {
-                                        Retry(message);
+                                        MessageRejected(this, new MessageTransportEventArgs(message.Contents, responseMessage));
                                     }
-                                }
+                                    break;
+                            }
+
+                            if (responseMsa[1].Value != "AA")
+                            {
+                                Retry(message);
                             }
                         }
                     }

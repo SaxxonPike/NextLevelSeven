@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Web
 {
@@ -20,6 +21,12 @@ namespace NextLevelSeven.Web
         {
             SentMessage = sentMessage;
             ReceivedMessage = receivedMessage;
+        }
+
+        public MessageTransportEventArgs(IMessage sentMessage, IMessage receivedMessage)
+        {
+            SentMessage = sentMessage.ToString();
+            ReceivedMessage = receivedMessage.ToString();
         }
 
         /// <summary>
