@@ -103,5 +103,13 @@ namespace NextLevelSeven.Cursors.Dividers
                 SetValue(new String(value));
             }
         }
+
+        public void Delete(int index)
+        {
+        }
+
+        public void Delete(StringDivision division)
+        {
+        }
     }
 }

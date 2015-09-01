@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextLevelSeven", "NextLevelSeven\NextLevelSeven.csproj", "{EC7FC595-07F4-467F-A51A-25CFA9711310}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextLevelSeven.Test", "NextLevelSeven.Test\NextLevelSeven.Test.csproj", "{93328B56-4FEA-4AC2-B9A5-66547B0C7CC7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{9ECA6C16-85D9-4D67-95DD-90A91D8CC55D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{83F1BAF6-66DA-40C1-8384-19FE227C194D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,5 +28,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{EC7FC595-07F4-467F-A51A-25CFA9711310} = {9ECA6C16-85D9-4D67-95DD-90A91D8CC55D}
+		{93328B56-4FEA-4AC2-B9A5-66547B0C7CC7} = {83F1BAF6-66DA-40C1-8384-19FE227C194D}
 	EndGlobalSection
 EndGlobal

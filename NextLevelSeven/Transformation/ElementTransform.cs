@@ -178,24 +178,6 @@ namespace NextLevelSeven.Transformation
         }
 
         /// <summary>
-        ///     Returns an enumerator that iterates through the collection.
-        /// </summary>
-        /// <returns>An enumerator that can be used to iterate through the collection.</returns>
-        public virtual IEnumerator<IElement> GetEnumerator()
-        {
-            return DescendantElements.GetEnumerator();
-        }
-
-        /// <summary>
-        ///     Returns an enumerator that iterates through the collection.
-        /// </summary>
-        /// <returns>An enumerator that can be used to iterate through the collection.</returns>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        /// <summary>
         ///     Create a clone of this element transform to be used with another element.
         /// </summary>
         /// <returns>Cloned transform.</returns>

@@ -7,7 +7,7 @@ namespace NextLevelSeven.Cursors.Dividers
     /// <summary>
     ///     A splitter which handles getting and setting delimited substrings within a parent string divider.
     /// </summary>
-    internal sealed class StringSubDivider : IStringDivider
+    internal sealed class StringSubDivider : StringDividerBase
     {
         /// <summary>
         ///     [PERF] Cached divisions list.
@@ -46,16 +46,11 @@ namespace NextLevelSeven.Cursors.Dividers
         private IStringDivider BaseDivider { get; set; }
 
         /// <summary>
-        ///     This event is raised whenever the value is changed. This event does not propagate to the parent string divider.
-        /// </summary>
-        public event EventHandler ValueChanged;
-
-        /// <summary>
         ///     Get or set the substring at the specified index.
         /// </summary>
         /// <param name="index">Index of the string to get or set.</param>
         /// <returns>Substring.</returns>
-        public string this[int index]
+        override public string this[int index]
         {
             get
             {
@@ -90,17 +85,14 @@ namespace NextLevelSeven.Cursors.Dividers
                         StringDividerOperations.GetChars(value));
                 }
 
-                if (ValueChanged != null)
-                {
-                    ValueChanged(this, EventArgs.Empty);
-                }
+                RaiseValueChanged();
             }
         }
 
         /// <summary>
         ///     String that is operated upon, as a character array. This points to the parent divider's BaseValue.
         /// </summary>
-        public char[] BaseValue
+        override public char[] BaseValue
         {
             get { return BaseDivider.BaseValue; }
         }
@@ -108,31 +100,24 @@ namespace NextLevelSeven.Cursors.Dividers
         /// <summary>
         ///     Get the number of divisions.
         /// </summary>
-        public int Count
+        override public int Count
         {
             get { return Divisions.Count; }
         }
 
         /// <summary>
-        ///     Get the delimiter character.
+        /// Delete a division of text.
         /// </summary>
-        public char Delimiter { get; private set; }
-
-        /// <summary>
-        ///     Create a subdivision.
-        /// </summary>
-        /// <param name="index">Index of the subdivider in the parent divider.</param>
-        /// <param name="delimiter">Delimiter to be used by the subdivider.</param>
-        /// <returns>String subdivider.</returns>
-        public IStringDivider Divide(int index, char delimiter)
+        /// <param name="division"></param>
+        override public void Delete(StringDivision division)
         {
-            return new StringSubDivider(this, delimiter, index);
+            BaseDivider.Delete(division);
         }
 
         /// <summary>
         ///     Get the division offsets in the string.
         /// </summary>
-        public IReadOnlyList<StringDivision> Divisions
+        override public IReadOnlyList<StringDivision> Divisions
         {
             get
             {
@@ -145,50 +130,9 @@ namespace NextLevelSeven.Cursors.Dividers
         }
 
         /// <summary>
-        ///     Get an enumerator for divided strings.
-        /// </summary>
-        /// <returns>Enumerator.</returns>
-        public IEnumerator<string> GetEnumerator()
-        {
-            return new StringDividerEnumerator(this);
-        }
-
-        /// <summary>
-        ///     Get an enumerator for divided strings.
-        /// </summary>
-        /// <returns>Enumerator.</returns>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return new StringDividerEnumerator(this);
-        }
-
-        /// <summary>
-        ///     Get the subdivision in which this division's item at the specified index resides.
-        /// </summary>
-        /// <param name="index">Index of the item to get.</param>
-        /// <returns>Subdivision location.</returns>
-        public StringDivision GetSubDivision(int index)
-        {
-            if (index < 0)
-            {
-                return StringDivision.Invalid;
-            }
-
-            var d = Divisions;
-            return (index >= d.Count)
-                ? StringDivision.Invalid
-                : d[index];
-        }
-
-        /// <summary>
-        ///     Index inside the parent. This will always be zero for a StringDivider because it is a root divider.
-        /// </summary>
-        public int Index { get; set; }
-
-        /// <summary>
         ///     Calculated value of all divisions separated by delimiters.
         /// </summary>
-        public string Value
+        override public string Value
         {
             get
             {
@@ -203,7 +147,7 @@ namespace NextLevelSeven.Cursors.Dividers
         /// <summary>
         ///     Calculated value of all divisions separated by delimiters, as characters.
         /// </summary>
-        public char[] ValueChars
+        override public char[] ValueChars
         {
             get
             {
@@ -214,8 +158,6 @@ namespace NextLevelSeven.Cursors.Dividers
             }
             set { BaseDivider[Index] = new string(value); }
         }
-
-        public int Version { get; private set; }
 
         /// <summary>
         ///     Get the internal value as a string.

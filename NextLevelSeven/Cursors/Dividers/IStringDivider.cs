@@ -18,6 +18,8 @@ namespace NextLevelSeven.Cursors.Dividers
         char[] ValueChars { get; set; }
         int Version { get; }
         event EventHandler ValueChanged;
+        void Delete(int index);
+        void Delete(StringDivision division);
         IStringDivider Divide(int index, char delimiter);
         StringDivision GetSubDivision(int index);
     }

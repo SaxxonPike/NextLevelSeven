@@ -6,6 +6,7 @@ using System.Linq;
 using NextLevelSeven.Codecs;
 using NextLevelSeven.Core;
 using NextLevelSeven.Cursors.Dividers;
+using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Cursors
 {
@@ -72,7 +73,11 @@ namespace NextLevelSeven.Cursors
 
         public void Delete()
         {
-            // TODO: actually delete
+            if (Ancestor == null)
+            {
+                throw new ElementException(ErrorCode.AncestorDoesNotExist);
+            }
+            Ancestor.DescendantDivider.Delete(ParentIndex);
         }
 
         public abstract char Delimiter { get; }
@@ -197,16 +202,6 @@ namespace NextLevelSeven.Cursors
                     ? string.Join(new string(DescendantDivider.Delimiter, 1), value)
                     : string.Join(string.Empty, value);
             }
-        }
-
-        public IEnumerator<IElement> GetEnumerator()
-        {
-            return new ElementEnumerator<IElement>(DescendantDivider, GetDescendant);
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return new ElementEnumerator<IElement>(DescendantDivider, GetDescendant);
         }
 
         public bool Equals(string other)

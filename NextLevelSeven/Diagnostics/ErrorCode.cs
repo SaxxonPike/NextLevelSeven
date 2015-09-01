@@ -59,5 +59,7 @@
         EncodingElementCannotBeMoved,
         /* 0024 */
         SegmentTypeCannotBeMoved,
+        /* 0025 */
+        ElementsMustShareDirectAncestors,
     }
 }

@@ -21,6 +21,8 @@
                         return "This message is not to be translated to any other language for testing purposes.";
                     case ErrorCode.ElementIndexMustBeZeroOrGreater:
                         return "Element index must be zero or greater.";
+                    case ErrorCode.ElementsMustShareDirectAncestors:
+                        return "Elements must all share a direct ancestor.";
                     case ErrorCode.EncodingElementCannotBeMoved:
                         return "Encoding element cannot be moved.";
                     case ErrorCode.ExceededRetriesForMessage:

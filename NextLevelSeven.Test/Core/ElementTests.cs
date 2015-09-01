@@ -155,5 +155,68 @@ namespace NextLevelSeven.Test.Core
                 Assert.AreEqual(segments[i], segmentStrings[i], @"Values are not equal.");
             }
         }
+
+        [TestMethod]
+        public void Element_CanDeleteComponent()
+        {
+            var message = new Message("MSH|^~\\&|\rTST|123^456~789^012");
+            var component = message[2][1][2];
+            component.Delete(1);
+            Assert.AreEqual("MSH|^~\\&|\rTST|123^456~012", message.Value, @"Message was modified unexpectedly.");
+        }
+
+        [TestMethod]
+        public void Element_CanDeleteDescendants()
+        {
+            var message = new Message("MSH|^~\\&|1|2|3|4|5");
+            var segment = message[1];
+            segment.DescendantElements.Skip(2).Where(i => i.As.Int%2 == 0).Delete();
+            Assert.AreEqual("MSH|^~\\&|1|3|5", message.Value, @"Message was modified unexpectedly.");
+        }
+
+        [TestMethod]
+        public void Element_CanDeleteField()
+        {
+            var message = new Message(ExampleMessages.Standard);
+            var segment = message[1];
+            var field3 = segment[3].Value;
+            var field5 = segment[5].Value;
+            var field6 = segment[6].Value;
+            segment.Delete(4);
+            Assert.AreEqual(field3, segment[3].Value, @"Expected segment[3] to remain the same after delete.");
+            Assert.AreEqual(field5, segment[4].Value, @"Expected segment[5] to become segment[4].");
+            Assert.AreEqual(field6, segment[5].Value, @"Expected segment[6] to become segment[5].");
+        }
+
+        [TestMethod]
+        public void Element_CanDeleteRepetition()
+        {
+            var message = new Message("MSH|^~\\&|\rTST|123~456|789~012");
+            var field = message[2][1];
+            field.Delete(1);
+            Assert.AreEqual("MSH|^~\\&|\rTST|456|789~012", message.Value, @"Message was modified unexpectedly.");
+        }
+
+        [TestMethod]
+        public void Element_CanDeleteSegment()
+        {
+            var message = new Message(ExampleMessages.Standard);
+            var segment1 = message[1].Value;
+            var segment3 = message[3].Value;
+            var segment4 = message[4].Value;
+            message.Delete(2);
+            Assert.AreEqual(segment1, message[1].Value, @"Expected message[1] to remain the same after delete.");
+            Assert.AreEqual(segment3, message[2].Value, @"Expected message[3] to become message[2].");
+            Assert.AreEqual(segment4, message[3].Value, @"Expected message[4] to become message[3].");
+        }
+
+        [TestMethod]
+        public void Element_CanDeleteSubcomponent()
+        {
+            var message = new Message("MSH|^~\\&|\rTST|123^456&ABC~789^012");
+            var component = message[2][1][1][2];
+            component.Delete(1);
+            Assert.AreEqual("MSH|^~\\&|\rTST|123^ABC~789^012", message.Value, @"Message was modified unexpectedly.");
+        }
     }
 }

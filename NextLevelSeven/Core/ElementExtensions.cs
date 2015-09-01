@@ -33,30 +33,6 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        ///     Add a string as a descendant and get the descendant element.
-        /// </summary>
-        /// <param name="target">Element to add to.</param>
-        /// <param name="elementToAdd">String to be added.</param>
-        /// <returns>The newly added element.</returns>
-        public static IElement AddAndRetrieve(this IElement target, string elementToAdd)
-        {
-            Add(target, elementToAdd);
-            return target[target.DescendantCount + 1];
-        }
-
-        /// <summary>
-        ///     Add an element as a descendant and get the descendant element.
-        /// </summary>
-        /// <param name="target">Element to add to.</param>
-        /// <param name="elementToAdd">Element to be added.</param>
-        /// <returns>The newly added element.</returns>
-        public static IElement AddAndRetrieve(this IElement target, IElement elementToAdd)
-        {
-            Add(target, elementToAdd);
-            return target[target.DescendantCount + 1];
-        }
-
-        /// <summary>
         ///     Add elements as descendants.
         /// </summary>
         /// <param name="target">Element to add to.</param>
@@ -75,6 +51,45 @@ namespace NextLevelSeven.Core
         {
             target.Value = string.Join(new string(target.Delimiter, 1),
                 (new[] {target.Value}).Concat(elementsToAdd.Select(e => e.ToString())));
+        }
+
+        /// <summary>
+        ///     Delete a descendant element.
+        /// </summary>
+        /// <param name="target">Element to delete from.</param>
+        /// <param name="index">Index of descendant to delete.</param>
+        public static void Delete(this IElement target, int index)
+        {
+            if (index >= 1 && index <= target.DescendantCount)
+            {
+                target[index].Delete();
+            }
+        }
+
+        /// <summary>
+        ///     Delete elements in the enumerable. All elements must share a direct ancestor.
+        /// </summary>
+        /// <param name="targets">Elements to delete.</param>
+        public static void Delete(this IEnumerable<IElement> targets)
+        {
+            var elements = targets.ToList();
+            if (elements.Count <= 0)
+            {
+                return;
+            }
+
+            var ancestor = elements.First().AncestorElement;
+            if (elements.Any(e => e.AncestorElement != ancestor))
+            {
+                throw new ElementException(ErrorCode.ElementsMustShareDirectAncestors);
+            }
+
+            // delete them in reverse order so that the parent isn't removed out
+            // from under the values we're deleting.
+            foreach (var element in elements.Select(e => e.Index).Distinct().OrderByDescending(i => i))
+            {
+                ancestor.Delete(element);
+            }
         }
 
         /// <summary>

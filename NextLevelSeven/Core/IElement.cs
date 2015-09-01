@@ -7,7 +7,7 @@ namespace NextLevelSeven.Core
     /// <summary>
     ///     Common interface that represents any one of the HL7v2 message constructs that holds data.
     /// </summary>
-    public interface IElement : IEnumerable<IElement>
+    public interface IElement
     {
         /// <summary>
         ///     Get a descendant element at the specified index. Indices match the HL7 specification, and are not necessarily

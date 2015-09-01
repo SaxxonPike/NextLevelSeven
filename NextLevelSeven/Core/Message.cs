@@ -241,7 +241,7 @@ namespace NextLevelSeven.Core
         public IElement GetField(string segmentName, int field = -1, int repetition = -1, int component = -1,
             int subcomponent = -1)
         {
-            var segment = _message.FirstOrDefault(s => s.Value != null && s.Value.StartsWith(segmentName));
+            var segment = _message.DescendantElements.FirstOrDefault(s => s.Value != null && s.Value.StartsWith(segmentName));
             if (field < 0 || segment == null)
             {
                 return segment;
@@ -422,24 +422,6 @@ namespace NextLevelSeven.Core
         {
             get { return Msh[12].Value; }
             set { Msh[12].Value = value; }
-        }
-
-        /// <summary>
-        ///     Get an element enumerator.
-        /// </summary>
-        /// <returns>Typed IEnumerator.</returns>
-        public IEnumerator<IElement> GetEnumerator()
-        {
-            return _message.GetEnumerator();
-        }
-
-        /// <summary>
-        ///     Get an element enumerator.
-        /// </summary>
-        /// <returns>Generic IEnumerator.</returns>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return _message.GetEnumerator();
         }
 
         /// <summary>
