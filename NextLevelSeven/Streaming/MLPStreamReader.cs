@@ -1,29 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NextLevelSeven.Core;
 using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Streaming
 {
     /// <summary>
-    /// An HL7StreamReader that pulls messages from the MLP format.
+    ///     A reader that pulls messages from the MLP format.
     /// </summary>
-    public class MLPStreamReader : HL7StreamReader
+    public class MlpStreamReader : MessageStreamReader
     {
         /// <summary>
-        /// Create an MLP stream reader that uses a stream as a data source.
+        ///     Create an MLP stream reader that uses a stream as a data source.
         /// </summary>
         /// <param name="baseStream">Stream to get messages from.</param>
-        public MLPStreamReader(Stream baseStream) : base(baseStream)
+        public MlpStreamReader(Stream baseStream) : base(baseStream)
         {
         }
 
         /// <summary>
-        /// Read one MLP-encoded message. Returns null if no messages are available.
+        ///     Read one MLP-encoded message. Returns null if no messages are available.
         /// </summary>
         /// <returns>Message that was read.</returns>
         public override IMessage Read()
@@ -35,7 +31,7 @@ namespace NextLevelSeven.Streaming
             }
             if (vtByte != 0x0B)
             {
-                throw new MLPStreamException(ErrorCode.HeaderByteIsIncorrect);
+                throw new MlpStreamException(ErrorCode.HeaderByteIsIncorrect);
             }
 
             using (var mem = new MemoryStream())
@@ -47,7 +43,7 @@ namespace NextLevelSeven.Streaming
                         var buffer = BaseStream.ReadByte();
                         if (buffer == -1)
                         {
-                            throw new MLPStreamException(ErrorCode.MlpDataEndedPrematurely);
+                            throw new MlpStreamException(ErrorCode.MlpDataEndedPrematurely);
                         }
 
                         if (buffer == 0x1C)
@@ -59,10 +55,10 @@ namespace NextLevelSeven.Streaming
                             }
                             if (buffer == -1)
                             {
-                                throw new MLPStreamException(ErrorCode.MlpDataEndedPrematurely);
+                                throw new MlpStreamException(ErrorCode.MlpDataEndedPrematurely);
                             }
                         }
-                        mem.WriteByte((byte)buffer);
+                        mem.WriteByte((byte) buffer);
                     }
                 }
 
@@ -71,7 +67,7 @@ namespace NextLevelSeven.Streaming
         }
 
         /// <summary>
-        /// Read all messages in the stream. If empty, there were no more messages.
+        ///     Read all messages in the stream. If empty, there were no more messages.
         /// </summary>
         /// <returns>Messages that were read.</returns>
         public override IEnumerable<IMessage> ReadAll()

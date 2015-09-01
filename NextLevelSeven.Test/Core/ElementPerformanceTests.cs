@@ -32,6 +32,7 @@ namespace NextLevelSeven.Test.Core
                 message[HighIndex].Value = testString;
             });
             Assert.AreEqual(testString, message[HighIndex].Value);
+            AssertInconclusiveIfSlow(1000, time);
         }
 
         [TestMethod]

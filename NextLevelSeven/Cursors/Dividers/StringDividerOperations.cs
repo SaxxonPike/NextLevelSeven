@@ -4,29 +4,29 @@ using System.Collections.Generic;
 namespace NextLevelSeven.Cursors.Dividers
 {
     /// <summary>
-    /// Common string and char[] splitting operations used by StringDivider and StringSubDivider classes.
+    ///     Common string and char[] splitting operations used by StringDivider and StringSubDivider classes.
     /// </summary>
-    static internal class StringDividerOperations
+    internal static class StringDividerOperations
     {
         /// <summary>
-        /// Get a subset of a character array.
+        ///     Get a subset of a character array.
         /// </summary>
         /// <param name="s">Characters.</param>
         /// <param name="offset">Offset to start.</param>
         /// <returns>Extracted characters.</returns>
-        static public char[] CharSubstring(char[] s, int offset)
+        public static char[] CharSubstring(char[] s, int offset)
         {
             return CharSubstring(s, offset, s.Length - offset);
         }
 
         /// <summary>
-        /// Get a subset of a character array.
+        ///     Get a subset of a character array.
         /// </summary>
         /// <param name="s">Characters.</param>
         /// <param name="offset">Offset to start.</param>
         /// <param name="length">Length of characters.</param>
         /// <returns>Extracted characters.</returns>
-        static public char[] CharSubstring(char[] s, int offset, int length)
+        public static char[] CharSubstring(char[] s, int offset, int length)
         {
             var result = new char[length];
             Array.Copy(s, offset, result, 0, length);
@@ -34,11 +34,11 @@ namespace NextLevelSeven.Cursors.Dividers
         }
 
         /// <summary>
-        /// Copy characters to a new array.
+        ///     Copy characters to a new array.
         /// </summary>
         /// <param name="s">Source.</param>
         /// <returns>Copied characters.</returns>
-        static public char[] CopyChars(char[] s)
+        public static char[] CopyChars(char[] s)
         {
             var length = s.Length;
             var result = new char[length];
@@ -47,22 +47,22 @@ namespace NextLevelSeven.Cursors.Dividers
         }
 
         /// <summary>
-        /// Attempts to convert a string to characters, or returns null if not possible.
+        ///     Attempts to convert a string to characters, or returns null if not possible.
         /// </summary>
         /// <param name="s">String to convert.</param>
         /// <returns>Converted characters.</returns>
-        static public char[] GetChars(string s)
+        public static char[] GetChars(string s)
         {
             return (s == null) ? null : s.ToCharArray();
         }
 
         /// <summary>
-        /// Get divisions without bounds.
+        ///     Get divisions without bounds.
         /// </summary>
         /// <param name="s">Characters to parse.</param>
         /// <param name="delimiter">Delimiter to search for.</param>
         /// <returns>Divisions.</returns>
-        static public List<StringDivision> GetDivisions(char[] s, char delimiter)
+        public static List<StringDivision> GetDivisions(char[] s, char delimiter)
         {
             return (s == null)
                 ? new List<StringDivision>()
@@ -70,13 +70,13 @@ namespace NextLevelSeven.Cursors.Dividers
         }
 
         /// <summary>
-        /// Get divisions within the specified division bounds.
+        ///     Get divisions within the specified division bounds.
         /// </summary>
         /// <param name="s">Characters to parse.</param>
         /// <param name="delimiter">Delimiter to search for.</param>
         /// <param name="parent">Bounds within which to search.</param>
         /// <returns>Divisions within the bounds specified.</returns>
-        static public List<StringDivision> GetDivisions(char[] s, char delimiter, StringDivision parent)
+        public static List<StringDivision> GetDivisions(char[] s, char delimiter, StringDivision parent)
         {
             unchecked
             {
@@ -118,14 +118,14 @@ namespace NextLevelSeven.Cursors.Dividers
         }
 
         /// <summary>
-        /// Get a string, with the appropriate number of delimiters and divisions to be addressed up to the index.
+        ///     Get a string, with the appropriate number of delimiters and divisions to be addressed up to the index.
         /// </summary>
         /// <param name="s">String to pad.</param>
         /// <param name="index">Index to pad to.</param>
         /// <param name="delimiter">Delimiter to pad with.</param>
         /// <param name="divisions">Output of the divisions list.</param>
         /// <returns>String that has been padded as necessary.</returns>
-        static public char[] GetPaddedString(char[] s, int index, char delimiter, out List<StringDivision> divisions)
+        public static char[] GetPaddedString(char[] s, int index, char delimiter, out List<StringDivision> divisions)
         {
             unchecked
             {
@@ -136,7 +136,7 @@ namespace NextLevelSeven.Cursors.Dividers
 
                 if (delimiter == '\0')
                 {
-                    divisions = new List<StringDivision> { new StringDivision(0, s.Length) };
+                    divisions = new List<StringDivision> {new StringDivision(0, s.Length)};
                     return s;
                 }
 
@@ -169,14 +169,14 @@ namespace NextLevelSeven.Cursors.Dividers
         }
 
         /// <summary>
-        /// Get the resulting string that has part of itself replaced with another string.
+        ///     Get the resulting string that has part of itself replaced with another string.
         /// </summary>
         /// <param name="s">String to replace within.</param>
         /// <param name="offset">Offset to start the replace.</param>
         /// <param name="length">Length in characters to replace.</param>
         /// <param name="replacement">String to replace with.</param>
         /// <returns></returns>
-        static public char[] GetSplicedString(char[] s, int offset, int length, char[] replacement)
+        public static char[] GetSplicedString(char[] s, int offset, int length, char[] replacement)
         {
             unchecked
             {
@@ -211,11 +211,11 @@ namespace NextLevelSeven.Cursors.Dividers
         }
 
         /// <summary>
-        /// Join together character arrays to form a single character array.
+        ///     Join together character arrays to form a single character array.
         /// </summary>
         /// <param name="characters">Character arrays to join.</param>
         /// <returns>Joined character arrays.</returns>
-        static public char[] JoinChars(params char[][] characters)
+        public static char[] JoinChars(params char[][] characters)
         {
             var totalLength = 0;
             var count = characters.Length;
@@ -238,12 +238,12 @@ namespace NextLevelSeven.Cursors.Dividers
         }
 
         /// <summary>
-        /// Join together character arrays to form a single character array, with delimiters.
+        ///     Join together character arrays to form a single character array, with delimiters.
         /// </summary>
         /// <param name="delimiter">Delimiter to use.</param>
         /// <param name="characters">Character arrays to join.</param>
         /// <returns>Joined character arrays.</returns>
-        static public char[] JoinCharsWithDelimiter(char delimiter, params char[][] characters)
+        public static char[] JoinCharsWithDelimiter(char delimiter, params char[][] characters)
         {
             var totalLength = 0;
             var count = characters.Length;
@@ -269,7 +269,7 @@ namespace NextLevelSeven.Cursors.Dividers
                 }
             }
 
-            return result;            
+            return result;
         }
     }
 }

@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NextLevelSeven.Core
+﻿namespace NextLevelSeven.Core
 {
     /// <summary>
-    /// Provides information about the characters used to encode an HL7 message.
+    ///     Provides information about the characters used to encode an HL7 message.
     /// </summary>
     internal class EncodingConfiguration
     {
         /// <summary>
-        /// Create a default encoding configuration.
+        ///     Create a default encoding configuration.
         /// </summary>
         public EncodingConfiguration()
         {
@@ -20,7 +14,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Clone an existing encoding configuration.
+        ///     Clone an existing encoding configuration.
         /// </summary>
         /// <param name="other">Source configuration to pull values from.</param>
         public EncodingConfiguration(EncodingConfiguration other)
@@ -29,29 +23,29 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Get the delimiter character used to split components.
+        ///     Get the delimiter character used to split components.
         /// </summary>
-        virtual public char ComponentDelimiter { get; protected set; }
+        public virtual char ComponentDelimiter { get; protected set; }
 
         /// <summary>
-        /// Get the escape character used to mark encoded sequences.
+        ///     Get the escape character used to mark encoded sequences.
         /// </summary>
-        virtual public char EscapeDelimiter { get; protected set; }
+        public virtual char EscapeDelimiter { get; protected set; }
 
         /// <summary>
-        /// Get the repetition character used to separate multiple data in the same field.
+        ///     Get the repetition character used to separate multiple data in the same field.
         /// </summary>
-        virtual public char RepetitionDelimiter { get; protected set; }
+        public virtual char RepetitionDelimiter { get; protected set; }
 
         /// <summary>
-        /// Get the delimiter character used to split subcomponents.
+        ///     Get the delimiter character used to split subcomponents.
         /// </summary>
-        virtual public char SubcomponentDelimiter { get; protected set; }
+        public virtual char SubcomponentDelimiter { get; protected set; }
 
         /// <summary>
-        /// Initialize defaults.
+        ///     Initialize defaults.
         /// </summary>
-        virtual protected void Initialize()
+        protected virtual void Initialize()
         {
             ComponentDelimiter = '^';
             EscapeDelimiter = '\\';
@@ -60,7 +54,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Clone defaults from another configuration.
+        ///     Clone defaults from another configuration.
         /// </summary>
         /// <param name="other">Source configuration.</param>
         protected void InitializeFrom(EncodingConfiguration other)
@@ -68,7 +62,7 @@ namespace NextLevelSeven.Core
             ComponentDelimiter = other.ComponentDelimiter;
             EscapeDelimiter = other.EscapeDelimiter;
             RepetitionDelimiter = other.RepetitionDelimiter;
-            SubcomponentDelimiter = other.SubcomponentDelimiter;            
+            SubcomponentDelimiter = other.SubcomponentDelimiter;
         }
     }
 }

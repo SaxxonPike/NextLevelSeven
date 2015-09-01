@@ -1,18 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NextLevelSeven.Core;
 using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Cursors
 {
     /// <summary>
-    /// Represents a segment-level element in an HL7 message.
+    ///     Represents a segment-level element in an HL7 message.
     /// </summary>
-    sealed internal class Segment : Element, ISegment
+    internal sealed class Segment : Element, ISegment
     {
+        private readonly Dictionary<int, IElement> _cache = new Dictionary<int, IElement>();
+        private readonly EncodingConfiguration _encodingConfigurationOverride;
+
         public Segment(Element ancestor, int parentIndex, int externalIndex)
             : base(ancestor, parentIndex, externalIndex)
         {
@@ -24,7 +25,10 @@ namespace NextLevelSeven.Cursors
             _encodingConfigurationOverride = new EncodingConfiguration(config);
         }
 
-        private readonly Dictionary<int, IElement> _cache = new Dictionary<int, IElement>();
+        public override EncodingConfiguration EncodingConfiguration
+        {
+            get { return _encodingConfigurationOverride ?? Ancestor.EncodingConfiguration; }
+        }
 
         public override IElement CloneDetached()
         {
@@ -34,11 +38,6 @@ namespace NextLevelSeven.Cursors
         ISegment ISegment.CloneDetached()
         {
             return CloneDetachedSegment();
-        }
-
-        ISegment CloneDetachedSegment()
-        {
-            return new Segment(Value, EncodingConfiguration);
         }
 
         public override char Delimiter
@@ -53,7 +52,7 @@ namespace NextLevelSeven.Cursors
                 var value = Value;
                 if (value != null && value.Length > 3)
                 {
-                    return value[3];                    
+                    return value[3];
                 }
 
                 return '|';
@@ -72,10 +71,28 @@ namespace NextLevelSeven.Cursors
             }
         }
 
-        private readonly EncodingConfiguration _encodingConfigurationOverride;
-        public override EncodingConfiguration EncodingConfiguration
+        public override string Key
         {
-            get { return _encodingConfigurationOverride ?? Ancestor.EncodingConfiguration; }
+            get
+            {
+                var index = ((Message) Ancestor).Segments
+                    .Where(s => s.Type == Type)
+                    .Select(e => e.Index)
+                    .ToList()
+                    .IndexOf(Index) + 1;
+                return Type + index;
+            }
+        }
+
+        public string Type
+        {
+            get { return DescendantDivider[0]; }
+            set { DescendantDivider[0] = value; }
+        }
+
+        private ISegment CloneDetachedSegment()
+        {
+            return new Segment(Value, EncodingConfiguration);
         }
 
         public override IElement GetDescendant(int index)
@@ -117,25 +134,6 @@ namespace NextLevelSeven.Cursors
             var result = new Field(this, index, index);
             _cache[index] = result;
             return result;
-        }
-
-        public override string Key
-        {
-            get
-            {
-                var index = ((Message)Ancestor).Segments
-                    .Where(s => s.Type == Type)
-                    .Select(e => e.Index)
-                    .ToList()
-                    .IndexOf(Index) + 1;
-                return Type + index;
-            }
-        }
-
-        public string Type
-        {
-            get { return DescendantDivider[0]; }
-            set { DescendantDivider[0] = value; }
         }
     }
 }

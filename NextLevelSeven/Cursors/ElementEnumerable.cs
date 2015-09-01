@@ -1,34 +1,28 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Cursors
 {
     /// <summary>
-    /// Enumerable interface for element descendants.
+    ///     Enumerable interface for element descendants.
     /// </summary>
-    sealed internal class ElementEnumerable : IEnumerable<IElement>
+    internal sealed class ElementEnumerable : IEnumerable<IElement>
     {
         public ElementEnumerable(Element element)
         {
             Element = element;
         }
 
-        Element Element
-        {
-            get;
-            set;
-        }
+        private Element Element { get; set; }
 
         public IEnumerator<IElement> GetEnumerator()
         {
             return new ElementEnumerator<IElement>(Element.DescendantDivider, Element.GetDescendant);
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }

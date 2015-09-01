@@ -24,14 +24,7 @@ namespace NextLevelSeven.Test
                 throw;
             }
 
-            if (message != null)
-            {
-                Assert.Fail(message);
-            }
-            else
-            {
-                Assert.Fail(String.Format("Expected exception {0} was not thrown.", typeof(TException).Name));
-            }
+            Assert.Fail(message ?? String.Format("Expected exception {0} was not thrown.", typeof(TException).Name));
         }
     }
 }

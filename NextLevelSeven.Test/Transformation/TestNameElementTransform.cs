@@ -13,19 +13,19 @@ namespace NextLevelSeven.Test.Transformation
         public TestNameElementTransform(IElement element, string readValue)
             : base(element)
         {
-            ReadValue = readValue;
+            _readValue = readValue;
         }
 
-        private readonly string ReadValue;
+        private readonly string _readValue;
 
         public override ElementTransform CloneTransform(IElement element)
         {
-            return new TestNameElementTransform(element, ReadValue);
+            return new TestNameElementTransform(element, _readValue);
         }
 
         public override string Value
         {
-            get { return ReadValue; }
+            get { return _readValue; }
             set { base.Value = value; }
         }
     }

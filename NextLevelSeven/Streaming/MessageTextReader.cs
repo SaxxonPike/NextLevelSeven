@@ -1,29 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Streaming
 {
     /// <summary>
-    /// An HL7StreamReader that reads textual HL7 messages, separated by blank lines.
+    ///     A reader that reads textual HL7 messages, separated by blank lines.
     /// </summary>
-    public class HL7TextReader : HL7StreamReader
+    public class MessageTextReader : MessageStreamReader
     {
         /// <summary>
-        /// Create a textual HL7 message reader using the specified stream as a source.
+        ///     Create a textual HL7 message reader using the specified stream as a source.
         /// </summary>
         /// <param name="baseStream">Stream to use as a source.</param>
-        public HL7TextReader(Stream baseStream) : base(baseStream)
+        public MessageTextReader(Stream baseStream) : base(baseStream)
         {
             Reader = new StreamReader(baseStream);
         }
 
         /// <summary>
-        /// Read one textual HL7 message from the stream.
+        ///     TextReader used to perform operations on the base stream.
+        /// </summary>
+        protected TextReader Reader { get; private set; }
+
+        /// <summary>
+        ///     Read one textual HL7 message from the stream.
         /// </summary>
         /// <returns>Message that was read, or null if there are no more messages.</returns>
         public override IMessage Read()
@@ -62,16 +63,7 @@ namespace NextLevelSeven.Streaming
         }
 
         /// <summary>
-        /// TextReader used to perform operations on the base stream.
-        /// </summary>
-        protected TextReader Reader
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// Read all messages in the stream. If empty, there were no more messages.
+        ///     Read all messages in the stream. If empty, there were no more messages.
         /// </summary>
         /// <returns>Messages that were read.</returns>
         public override IEnumerable<IMessage> ReadAll()

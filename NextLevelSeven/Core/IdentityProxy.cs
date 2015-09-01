@@ -1,18 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NextLevelSeven.Core
+﻿namespace NextLevelSeven.Core
 {
     /// <summary>
-    /// Allows for the use of Identity via an element's data.
+    ///     Allows for the use of Identity via an element's data.
     /// </summary>
-    sealed internal class IdentityProxy : IIdentity
+    internal sealed class IdentityProxy : IIdentity
     {
         /// <summary>
-        /// Create an Identity reference via HL7 element.
+        ///     Create an Identity reference via HL7 element.
         /// </summary>
         /// <param name="element">Element to reference.</param>
         /// <param name="applicationIndex">Index of the application data.</param>
@@ -25,22 +19,22 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Get the application data index.
+        ///     Get the application data index.
         /// </summary>
-        int ApplicationIndex { get; set; }
+        private int ApplicationIndex { get; set; }
 
         /// <summary>
-        /// Get the referenced element.
+        ///     Get the referenced element.
         /// </summary>
-        IElement Element { get; set; }
+        private IElement Element { get; set; }
 
         /// <summary>
-        /// Get the facility data index.
+        ///     Get the facility data index.
         /// </summary>
-        int FacilityIndex { get; set; }
+        private int FacilityIndex { get; set; }
 
         /// <summary>
-        /// Get or set the application name.
+        ///     Get or set the application name.
         /// </summary>
         public string Application
         {
@@ -49,7 +43,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Get or set the facility name.
+        ///     Get or set the facility name.
         /// </summary>
         public string Facility
         {

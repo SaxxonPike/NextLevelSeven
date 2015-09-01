@@ -1,26 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NextLevelSeven.Core;
+﻿using NextLevelSeven.Core;
 using NextLevelSeven.Cursors.Dividers;
 
 namespace NextLevelSeven.Cursors
 {
     /// <summary>
-    /// Represents the special MSH-1 field, which contains the field delimiter for the rest of the segment.
+    ///     Represents the special MSH-1 field, which contains the field delimiter for the rest of the segment.
     /// </summary>
-    sealed internal class FieldDelimiter : Element
+    internal sealed class FieldDelimiter : Element
     {
         public FieldDelimiter(Element ancestor)
             : base(ancestor, 0, 1)
         {
-        }
-
-        public override IElement CloneDetached()
-        {
-            return new Field(Value, EncodingConfiguration);
         }
 
         public override char Delimiter
@@ -33,27 +23,9 @@ namespace NextLevelSeven.Cursors
             get { return Ancestor.EncodingConfiguration; }
         }
 
-        public override IElement GetDescendant(int index)
-        {
-            return new FieldDelimiter(this);
-        }
-
-        protected override IStringDivider GetDescendantDivider(Element ancestor, int index)
-        {
-            return new ProxyStringDivider(() => Value, v => Value = v);
-        }
-
         public override bool HasSignificantDescendants
         {
-            get
-            {
-                return false;
-            }
-        }
-
-        public override string ToString()
-        {
-            return Value;
+            get { return false; }
         }
 
         public override string Value
@@ -73,9 +45,30 @@ namespace NextLevelSeven.Cursors
                 var s = Ancestor.DescendantDivider.Value;
                 if (s != null && s.Length >= 3)
                 {
-                    Ancestor.DescendantDivider.Value = string.Join(s.Substring(0, 3), value, (s.Length > 3 ? s.Substring(4) : string.Empty));
+                    Ancestor.DescendantDivider.Value = string.Join(s.Substring(0, 3), value,
+                        (s.Length > 3 ? s.Substring(4) : string.Empty));
                 }
             }
+        }
+
+        public override IElement CloneDetached()
+        {
+            return new Field(Value, EncodingConfiguration);
+        }
+
+        public override IElement GetDescendant(int index)
+        {
+            return new FieldDelimiter(this);
+        }
+
+        protected override IStringDivider GetDescendantDivider(Element ancestor, int index)
+        {
+            return new ProxyStringDivider(() => Value, v => Value = v);
+        }
+
+        public override string ToString()
+        {
+            return Value;
         }
     }
 }

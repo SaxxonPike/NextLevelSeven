@@ -1,20 +1,18 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Codecs
 {
     /// <summary>
-    /// A wrapper around Codec to allow for indexing an element's descendants.
+    ///     A wrapper around Codec to allow for indexing an element's descendants.
     /// </summary>
     /// <typeparam name="TDecoded">Type of the decoded value.</typeparam>
-    sealed internal class IndexedCodec<TDecoded> : IIndexedCodec<TDecoded>
+    internal sealed class IndexedCodec<TDecoded> : IIndexedCodec<TDecoded>
     {
         /// <summary>
-        /// Create a codec indexer.
+        ///     Create a codec indexer.
         /// </summary>
         /// <param name="baseElement">Element to reference.</param>
         /// <param name="decoder">Decoding function from HL7.</param>
@@ -27,34 +25,22 @@ namespace NextLevelSeven.Codecs
         }
 
         /// <summary>
-        /// Referenced element.
+        ///     Referenced element.
         /// </summary>
-        IElement BaseElement
-        {
-            get;
-            set;
-        }
+        private IElement BaseElement { get; set; }
 
         /// <summary>
-        /// Decoding function from HL7.
+        ///     Decoding function from HL7.
         /// </summary>
-        Func<string, TDecoded> Decoder
-        {
-            get;
-            set;
-        }
+        private Func<string, TDecoded> Decoder { get; set; }
 
         /// <summary>
-        /// Encoding function to HL7.
+        ///     Encoding function to HL7.
         /// </summary>
-        Func<TDecoded, string> Encoder
-        {
-            get;
-            set;
-        }
+        private Func<TDecoded, string> Encoder { get; set; }
 
         /// <summary>
-        /// Get or set the element descendant's value as the codec indexer's type.
+        ///     Get or set the element descendant's value as the codec indexer's type.
         /// </summary>
         /// <param name="index">Index to reference.</param>
         /// <returns>Element descendant's value.</returns>
@@ -65,7 +51,7 @@ namespace NextLevelSeven.Codecs
         }
 
         /// <summary>
-        /// Get .NET standard generic enumerator.
+        ///     Get .NET standard generic enumerator.
         /// </summary>
         /// <returns>Enumerator.</returns>
         public IEnumerator<TDecoded> GetEnumerator()
@@ -74,18 +60,18 @@ namespace NextLevelSeven.Codecs
         }
 
         /// <summary>
-        /// Get .NET standard object enumerator.
+        ///     Get .NET standard object enumerator.
         /// </summary>
         /// <returns>Enumerator.</returns>
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
 
         /// <summary>
-        /// Allow for enumeration of a codec indexer's values.
+        ///     Allow for enumeration of a codec indexer's values.
         /// </summary>
-        sealed private class IndexedCodecEnumerator : IEnumerator<TDecoded>
+        private sealed class IndexedCodecEnumerator : IEnumerator<TDecoded>
         {
             public IndexedCodecEnumerator(IIndexedCodec<TDecoded> indexedCodec, int count)
             {
@@ -95,21 +81,22 @@ namespace NextLevelSeven.Codecs
             }
 
             /// <summary>
-            /// Parent codec indexer.
+            ///     Parent codec indexer.
             /// </summary>
-            IIndexedCodec<TDecoded> IndexedCodec { get; set; }
+            private IIndexedCodec<TDecoded> IndexedCodec { get; set; }
 
             /// <summary>
-            /// Number of items.
+            ///     Number of items.
             /// </summary>
-            int Count
-            {
-                get;
-                set;
-            }
+            private int Count { get; set; }
 
             /// <summary>
-            /// Currently selected item.
+            ///     Currently selected index.
+            /// </summary>
+            private int Index { get; set; }
+
+            /// <summary>
+            ///     Currently selected item.
             /// </summary>
             public TDecoded Current
             {
@@ -117,31 +104,22 @@ namespace NextLevelSeven.Codecs
             }
 
             /// <summary>
-            /// Unused- required by interface.
+            ///     Unused- required by interface.
             /// </summary>
             public void Dispose()
             {
             }
 
             /// <summary>
-            /// Currently selected item (for old IEnumerator.)
+            ///     Currently selected item (for old IEnumerator.)
             /// </summary>
-            object System.Collections.IEnumerator.Current
+            object IEnumerator.Current
             {
                 get { return IndexedCodec[Index]; }
             }
 
             /// <summary>
-            /// Currently selected index.
-            /// </summary>
-            int Index
-            {
-                get;
-                set;
-            }
-
-            /// <summary>
-            /// Move to the next index in the collection.
+            ///     Move to the next index in the collection.
             /// </summary>
             /// <returns>True if there are more elements, false if not.</returns>
             public bool MoveNext()
@@ -155,7 +133,7 @@ namespace NextLevelSeven.Codecs
             }
 
             /// <summary>
-            /// Reset the index.
+            ///     Reset the index.
             /// </summary>
             public void Reset()
             {

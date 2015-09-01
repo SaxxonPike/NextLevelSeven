@@ -1,18 +1,15 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NextLevelSeven.Cursors.Dividers
 {
     /// <summary>
-    /// An enumerator for implementations of IStringDivider.
+    ///     An enumerator for implementations of IStringDivider.
     /// </summary>
-    sealed internal class StringDividerEnumerator : IEnumerator<string>
+    internal sealed class StringDividerEnumerator : IEnumerator<string>
     {
         /// <summary>
-        /// Create an enumerator for the specified IStringDivider.
+        ///     Create an enumerator for the specified IStringDivider.
         /// </summary>
         /// <param name="divider">Divider to enumerate over.</param>
         public StringDividerEnumerator(IStringDivider divider)
@@ -22,7 +19,17 @@ namespace NextLevelSeven.Cursors.Dividers
         }
 
         /// <summary>
-        /// Currently selected item.
+        ///     Referenced string divider.
+        /// </summary>
+        private IStringDivider Divider { get; set; }
+
+        /// <summary>
+        ///     Currently selected index.
+        /// </summary>
+        private int Index { get; set; }
+
+        /// <summary>
+        ///     Currently selected item.
         /// </summary>
         public string Current
         {
@@ -34,40 +41,22 @@ namespace NextLevelSeven.Cursors.Dividers
         }
 
         /// <summary>
-        /// Does nothing.
+        ///     Does nothing.
         /// </summary>
         public void Dispose()
         {
         }
 
         /// <summary>
-        /// Referenced string divider.
+        ///     Currently selected item.
         /// </summary>
-        IStringDivider Divider
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Currently selected index.
-        /// </summary>
-        int Index
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Currently selected item.
-        /// </summary>
-        object System.Collections.IEnumerator.Current
+        object IEnumerator.Current
         {
             get { return Current; }
         }
 
         /// <summary>
-        /// Move to the next item. Returns true if successful, and false if there are no further items.
+        ///     Move to the next item. Returns true if successful, and false if there are no further items.
         /// </summary>
         /// <returns></returns>
         public bool MoveNext()
@@ -81,7 +70,7 @@ namespace NextLevelSeven.Cursors.Dividers
         }
 
         /// <summary>
-        /// Reset the enumerator to the beginning.
+        ///     Reset the enumerator to the beginning.
         /// </summary>
         public void Reset()
         {

@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NextLevelSeven.Core;
 
 namespace NextLevelSeven.MessageGeneration
 {
     /// <summary>
-    /// An ACK message generator for HL7v2 messages, used as responses to requests. This is a static class.
+    ///     An ACK message generator for HL7v2 messages, used as responses to requests. This is a static class.
     /// </summary>
-    static public class AckMessageGenerator
+    public static class AckMessageGenerator
     {
         /// <summary>
-        /// Generate an HL7v2 ACK message.
+        ///     Generate an HL7v2 ACK message.
         /// </summary>
         /// <param name="message">Message to acknowledge.</param>
         /// <param name="code">Response code.</param>
@@ -21,7 +18,8 @@ namespace NextLevelSeven.MessageGeneration
         /// <param name="facility">Facility name for MSH-3.</param>
         /// <param name="application">Application name for MSH-4.</param>
         /// <returns>A complete ACK message.</returns>
-        static IMessage Generate(IMessage message, string code, string reason = null, string facility = null, string application = null)
+        private static IMessage Generate(IMessage message, string code, string reason = null, string facility = null,
+            string application = null)
         {
             var sourceMsh = message["MSH"].First();
             var result = new Message(sourceMsh.Value);
@@ -47,40 +45,43 @@ namespace NextLevelSeven.MessageGeneration
         }
 
         /// <summary>
-        /// Generate an HL7v2 ACK indicating an error.
+        ///     Generate an HL7v2 ACK indicating an error.
         /// </summary>
         /// <param name="message">Message to acknowledge.</param>
         /// <param name="reason">MSA-3 text field string.</param>
         /// <param name="facility">Facility name for MSH-3.</param>
         /// <param name="application">Application name for MSH-4.</param>
         /// <returns>Complete HL7 ACK message.</returns>
-        static public IMessage GenerateError(IMessage message, string reason = null, string facility = null, string application = null)
+        public static IMessage GenerateError(IMessage message, string reason = null, string facility = null,
+            string application = null)
         {
             return Generate(message, "AE", reason, facility, application);
         }
 
         /// <summary>
-        /// Generate an HL7v2 ACK indicating a rejection. Mainly used to tell the sender the data is invalid.
+        ///     Generate an HL7v2 ACK indicating a rejection. Mainly used to tell the sender the data is invalid.
         /// </summary>
         /// <param name="message">Message to acknowledge.</param>
         /// <param name="reason">MSA-3 text field string.</param>
         /// <param name="facility">Facility name for MSH-3.</param>
         /// <param name="application">Application name for MSH-4.</param>
         /// <returns>Complete HL7 ACK message.</returns>
-        static public IMessage GenerateReject(IMessage message, string reason = null, string facility = null, string application = null)
+        public static IMessage GenerateReject(IMessage message, string reason = null, string facility = null,
+            string application = null)
         {
             return Generate(message, "AR", reason, facility, application);
         }
 
         /// <summary>
-        /// Generate an HL7v2 ACK indicating a successful transfer.
+        ///     Generate an HL7v2 ACK indicating a successful transfer.
         /// </summary>
         /// <param name="message">Message to acknowledge.</param>
         /// <param name="reason">MSA-3 text field string.</param>
         /// <param name="facility">Facility name for MSH-3.</param>
         /// <param name="application">Application name for MSH-4.</param>
         /// <returns>Complete HL7 ACK message.</returns>
-        static public IMessage GenerateSuccess(IMessage message, string reason = null, string facility = null, string application = null)
+        public static IMessage GenerateSuccess(IMessage message, string reason = null, string facility = null,
+            string application = null)
         {
             return Generate(message, "AA", reason, facility, application);
         }

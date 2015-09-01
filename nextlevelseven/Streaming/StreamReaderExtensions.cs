@@ -1,23 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Streaming
 {
     /// <summary>
-    /// Extensions to HL7 stream readers.
+    ///     Extensions to HL7 stream readers.
     /// </summary>
-    static public class StreamReaderExtensions
+    public static class StreamReaderExtensions
     {
         /// <summary>
-        /// Read a message, skipping any ElementException and MessageException raised.
+        ///     Read a message, skipping any ElementException and MessageException raised.
         /// </summary>
         /// <param name="reader">Reader to read with.</param>
         /// <returns>Message that was read, or null if none were found.</returns>
-        static public IMessage ReadAndSkipMessageErrors(this HL7StreamReader reader)
+        public static IMessage ReadAndSkipMessageErrors(this MessageStreamReader reader)
         {
             try
             {
@@ -34,11 +31,11 @@ namespace NextLevelSeven.Streaming
         }
 
         /// <summary>
-        /// Read all messages, skipping any ElementException and MessageException raised.
+        ///     Read all messages, skipping any ElementException and MessageException raised.
         /// </summary>
         /// <param name="reader">Reader to read with.</param>
         /// <returns>Messages that were read.</returns>
-        static public IEnumerable<IMessage> ReadAllAndSkipMessageErrors(this HL7StreamReader reader)
+        public static IEnumerable<IMessage> ReadAllAndSkipMessageErrors(this MessageStreamReader reader)
         {
             var messages = new List<IMessage>();
 
@@ -61,9 +58,9 @@ namespace NextLevelSeven.Streaming
                     }
                     else
                     {
-                        throw;                        
+                        throw;
                     }
-                }                
+                }
             }
         }
     }

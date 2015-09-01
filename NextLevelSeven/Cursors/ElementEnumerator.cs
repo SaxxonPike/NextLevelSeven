@@ -1,18 +1,16 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NextLevelSeven.Core;
 using NextLevelSeven.Cursors.Dividers;
 
 namespace NextLevelSeven.Cursors
 {
     /// <summary>
-    /// Enumerator for element descendants.
+    ///     Enumerator for element descendants.
     /// </summary>
     /// <typeparam name="T">Type of descendants.</typeparam>
-    sealed internal class ElementEnumerator<T> : IEnumerator<T> where T : IElement
+    internal sealed class ElementEnumerator<T> : IEnumerator<T> where T : IElement
     {
         public ElementEnumerator(IStringDivider descendantDivider, Func<int, T> descendantFactory)
         {
@@ -26,6 +24,12 @@ namespace NextLevelSeven.Cursors
             get { return Factory(Index); }
         }
 
+        private IStringDivider Divider { get; set; }
+
+        private Func<int, T> Factory { get; set; }
+
+        private int Index { get; set; }
+
         T IEnumerator<T>.Current
         {
             get { return Factory(Index); }
@@ -35,27 +39,9 @@ namespace NextLevelSeven.Cursors
         {
         }
 
-        IStringDivider Divider
-        {
-            get;
-            set;
-        }
-
-        object System.Collections.IEnumerator.Current
+        object IEnumerator.Current
         {
             get { return Factory(Index); }
-        }
-
-        Func<int, T> Factory
-        {
-            get;
-            set;
-        }
-
-        int Index
-        {
-            get;
-            set;
         }
 
         public bool MoveNext()

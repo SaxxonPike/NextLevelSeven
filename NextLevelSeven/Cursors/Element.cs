@@ -1,22 +1,21 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NextLevelSeven.Core;
 using NextLevelSeven.Codecs;
+using NextLevelSeven.Core;
 using NextLevelSeven.Cursors.Dividers;
-using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Cursors
 {
     /// <summary>
-    /// Represents a generic HL7 message element, which may contain other elements.
+    ///     Represents a generic HL7 message element, which may contain other elements.
     /// </summary>
-    abstract internal class Element : IElement, IEquatable<string>
+    internal abstract class Element : IElement, IEquatable<string>
     {
-        public event EventHandler ValueChanged;
+        private IStringDivider _descendantDivider;
+        private bool _descendantDividerInitialized;
 
         protected Element(string value)
         {
@@ -33,66 +32,8 @@ namespace NextLevelSeven.Cursors
             Ancestor = ancestor;
         }
 
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
-            return obj.ToString() == ToString();
-        }
-
-        public bool Equals(string other)
-        {
-            return ToString() == other;
-        }
-
-        public override int GetHashCode()
-        {
-            return ToString().GetHashCode();
-        }
-
-        static public implicit operator string(Element element)
-        {
-            return element.ToString();
-        }
-
-        public IElement this[int index]
-        {
-            get { return GetDescendant(index); }
-        }
-
         protected Element Ancestor { get; private set; }
 
-        public IElement AncestorElement {
-            get { return Ancestor; }
-        }
-
-        public ICodec As
-        {
-            get { return new Codec(this); }
-        }
-
-        public abstract IElement CloneDetached();
-
-        public void Delete()
-        {
-            // TODO: actually delete
-        }
-
-        abstract public char Delimiter { get; }
-
-        virtual public int DescendantCount
-        {
-            get { return DescendantDivider.Count; }
-        }
-
-        private IStringDivider _descendantDivider;
-        private bool _descendantDividerInitialized;
         public IStringDivider DescendantDivider
         {
             get
@@ -108,12 +49,43 @@ namespace NextLevelSeven.Cursors
             }
         }
 
+        public abstract EncodingConfiguration EncodingConfiguration { get; }
+        protected int ParentIndex { get; set; }
+        public event EventHandler ValueChanged;
+
+        public IElement this[int index]
+        {
+            get { return GetDescendant(index); }
+        }
+
+        public IElement AncestorElement
+        {
+            get { return Ancestor; }
+        }
+
+        public ICodec As
+        {
+            get { return new Codec(this); }
+        }
+
+        public abstract IElement CloneDetached();
+
+        public void Delete()
+        {
+            // TODO: actually delete
+        }
+
+        public abstract char Delimiter { get; }
+
+        public virtual int DescendantCount
+        {
+            get { return DescendantDivider.Count; }
+        }
+
         public IEnumerable<IElement> DescendantElements
         {
             get { return new ElementEnumerable(this); }
         }
-
-        abstract public EncodingConfiguration EncodingConfiguration { get; }
 
         public void Erase()
         {
@@ -133,19 +105,7 @@ namespace NextLevelSeven.Cursors
             }
         }
 
-        public abstract IElement GetDescendant(int index);
-
-        virtual protected IStringDivider GetDescendantDivider(Element ancestor, int index)
-        {
-            return new StringSubDivider(ancestor.DescendantDivider, Delimiter, index);
-        }
-
-        IStringDivider GetDescendantDividerRoot(string value)
-        {
-            return new StringDivider(value, Delimiter);
-        }
-
-        virtual public bool HasSignificantDescendants
+        public virtual bool HasSignificantDescendants
         {
             get
             {
@@ -158,21 +118,15 @@ namespace NextLevelSeven.Cursors
             }
         }
 
-        public int Index
-        {
-            get;
-            set;
-        }
+        public int Index { get; set; }
 
-        virtual public string Key
+        public virtual string Key
         {
             get
             {
-                if (Ancestor != null)
-                {
-                    return String.Join(Ancestor.Key, ".", Index.ToString(CultureInfo.InvariantCulture));
-                }
-                return Index.ToString();
+                return (Ancestor != null)
+                    ? String.Join(Ancestor.Key, ".", Index.ToString(CultureInfo.InvariantCulture))
+                    : Index.ToString(CultureInfo.InvariantCulture);
             }
         }
 
@@ -185,11 +139,9 @@ namespace NextLevelSeven.Cursors
                     return new Core.Message(Ancestor as Message);
                 }
 
-                if (Ancestor != null)
-                {
-                    return Ancestor.Message;
-                }
-                return null;
+                return (Ancestor != null)
+                    ? Ancestor.Message
+                    : null;
             }
         }
 
@@ -198,18 +150,7 @@ namespace NextLevelSeven.Cursors
             Value = null;
         }
 
-        protected int ParentIndex
-        {
-            get;
-            set;
-        }
-
-        public override string ToString()
-        {
-            return DescendantDivider.Value;
-        }
-
-        virtual public string Value
+        public virtual string Value
         {
             get
             {
@@ -246,11 +187,9 @@ namespace NextLevelSeven.Cursors
         {
             get
             {
-                if (DescendantCount > 1)
-                {
-                    return DescendantDivider.Value.Split(DescendantDivider.Delimiter);
-                }
-                return new[] { DescendantDivider.Value };
+                return (DescendantCount > 1)
+                    ? DescendantDivider.Value.Split(DescendantDivider.Delimiter)
+                    : new[] {DescendantDivider.Value};
             }
             set
             {
@@ -265,9 +204,54 @@ namespace NextLevelSeven.Cursors
             return new ElementEnumerator<IElement>(DescendantDivider, GetDescendant);
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return new ElementEnumerator<IElement>(DescendantDivider, GetDescendant);
+        }
+
+        public bool Equals(string other)
+        {
+            return ToString() == other;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+            return obj.ToString() == ToString();
+        }
+
+        public override int GetHashCode()
+        {
+            return ToString().GetHashCode();
+        }
+
+        public static implicit operator string(Element element)
+        {
+            return element.ToString();
+        }
+
+        public abstract IElement GetDescendant(int index);
+
+        protected virtual IStringDivider GetDescendantDivider(Element ancestor, int index)
+        {
+            return new StringSubDivider(ancestor.DescendantDivider, Delimiter, index);
+        }
+
+        private IStringDivider GetDescendantDividerRoot(string value)
+        {
+            return new StringDivider(value, Delimiter);
+        }
+
+        public override string ToString()
+        {
+            return DescendantDivider.Value;
         }
     }
 }

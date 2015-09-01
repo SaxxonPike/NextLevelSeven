@@ -1,22 +1,24 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NextLevelSeven.Codecs;
 using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Core
 {
     /// <summary>
-    /// Represents a textual HL7v2 message.
+    ///     Represents a textual HL7v2 message.
     /// </summary>
     public class Message : IMessage
     {
-        public event EventHandler ValueChanged;
+        /// <summary>
+        ///     Internal message cursor.
+        /// </summary>
+        private readonly Cursors.Message _message;
 
         /// <summary>
-        /// Create a message with a default MSH segment.
+        ///     Create a message with a default MSH segment.
         /// </summary>
         public Message()
         {
@@ -24,7 +26,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Create a message using an HL7 data string.
+        ///     Create a message using an HL7 data string.
         /// </summary>
         /// <param name="message">Message data to interpret.</param>
         public Message(string message)
@@ -45,7 +47,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Create a message cursor wrapper.
+        ///     Create a message cursor wrapper.
         /// </summary>
         /// <param name="internalMessage">Internal message to wrap.</param>
         internal Message(Cursors.Message internalMessage)
@@ -54,39 +56,18 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Determines whether this object is equivalent to another object.
+        ///     Get the first MSH segment.
         /// </summary>
-        /// <param name="obj">Object to compare to.</param>
-        /// <returns>True, if objects are considered to be equivalent.</returns>
-        public override bool Equals(object obj)
+        private IElement Msh
         {
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
-            return SanitizeLineEndings(obj.ToString()) == ToString();
+            get { return this["MSH"].First(); }
         }
 
-        /// <summary>
-        /// Get this message's hash code.
-        /// </summary>
-        /// <returns>Hash code for the message.</returns>
-        public override int GetHashCode()
-        {
-            return ToString().GetHashCode();
-        }
+        public event EventHandler ValueChanged;
 
         /// <summary>
-        /// Internal message cursor.
-        /// </summary>
-        private readonly Cursors.Message _message;
-
-        /// <summary>
-        /// Get a descendant element at the specified index. Indices match the HL7 specification, and are not necessarily zero-based.
+        ///     Get a descendant element at the specified index. Indices match the HL7 specification, and are not necessarily
+        ///     zero-based.
         /// </summary>
         /// <param name="index">Index to query.</param>
         /// <returns>Element that was found at the index.</returns>
@@ -96,7 +77,8 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Get a descendant segment at the specified index. Indices match the HL7 specification, and are not necessarily zero-based.
+        ///     Get a descendant segment at the specified index. Indices match the HL7 specification, and are not necessarily
+        ///     zero-based.
         /// </summary>
         /// <param name="index">Index to query.</param>
         /// <returns>Segment that was found at the index.</returns>
@@ -106,7 +88,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Get segments of a specific segment type.
+        ///     Get segments of a specific segment type.
         /// </summary>
         /// <param name="segmentType">The 3-character segment type to query for.</param>
         /// <returns>Segments that match the query.</returns>
@@ -116,7 +98,8 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Get segments of a type that matches one of the specified segment types. They are returned in the order they are found in the message.
+        ///     Get segments of a type that matches one of the specified segment types. They are returned in the order they are
+        ///     found in the message.
         /// </summary>
         /// <param name="segmentTypes">The 3-character segment types to query for.</param>
         /// <returns>Segments that match the query.</returns>
@@ -126,7 +109,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Get conversion options for non-string datatypes, such as numeric and dates.
+        ///     Get conversion options for non-string datatypes, such as numeric and dates.
         /// </summary>
         public ICodec As
         {
@@ -134,7 +117,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Always returns null. A message is the highest level in the heirarchy.
+        ///     Always returns null. A message is the highest level in the heirarchy.
         /// </summary>
         public IElement AncestorElement
         {
@@ -142,7 +125,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Create a deep clone of the message.
+        ///     Create a deep clone of the message.
         /// </summary>
         /// <returns>Clone of the message.</returns>
         public IMessage Clone()
@@ -151,7 +134,8 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Create a deep clone of the message. Because a message is at the top of the heirarchy, this is identical to calling Clone().
+        ///     Create a deep clone of the message. Because a message is at the top of the heirarchy, this is identical to calling
+        ///     Clone().
         /// </summary>
         /// <returns>Clone of the message.</returns>
         public IElement CloneDetached()
@@ -160,7 +144,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Get or set the message Control ID from MSH-10.
+        ///     Get or set the message Control ID from MSH-10.
         /// </summary>
         public string ControlId
         {
@@ -169,7 +153,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Throws an exception. A message is at the highest level and cannot be deleted from an ancestor.
+        ///     Throws an exception. A message is at the highest level and cannot be deleted from an ancestor.
         /// </summary>
         public void Delete()
         {
@@ -182,7 +166,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Get the number of descendant elements.
+        ///     Get the number of descendant elements.
         /// </summary>
         public int DescendantCount
         {
@@ -190,7 +174,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Get all descendant elements.
+        ///     Get all descendant elements.
         /// </summary>
         public IEnumerable<IElement> DescendantElements
         {
@@ -198,7 +182,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Throws an exception. A message is at the highest level and cannot be erased from an ancestor.
+        ///     Throws an exception. A message is at the highest level and cannot be erased from an ancestor.
         /// </summary>
         public void Erase()
         {
@@ -206,7 +190,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Always returns true. A message has no ancestors, and will therefore never be 'non-existant'.
+        ///     Always returns true. A message has no ancestors, and will therefore never be 'non-existant'.
         /// </summary>
         public bool Exists
         {
@@ -214,7 +198,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Get data from a specific place in the message. Depth is determined by how many indices are specified.
+        ///     Get data from a specific place in the message. Depth is determined by how many indices are specified.
         /// </summary>
         /// <param name="segment">Segment index.</param>
         /// <param name="field">Field index.</param>
@@ -222,7 +206,8 @@ namespace NextLevelSeven.Core
         /// <param name="component">Component index.</param>
         /// <param name="subcomponent">Subcomponent index.</param>
         /// <returns>The first occurrence of the specified element.</returns>
-        public IElement GetField(int segment, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
+        public IElement GetField(int segment, int field = -1, int repetition = -1, int component = -1,
+            int subcomponent = -1)
         {
             var segmentElement = _message[segment];
             if (field < 0)
@@ -245,7 +230,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Get data from a specific place in the message. Depth is determined by how many indices are specified.
+        ///     Get data from a specific place in the message. Depth is determined by how many indices are specified.
         /// </summary>
         /// <param name="segmentName">Segment name.</param>
         /// <param name="field">Field index.</param>
@@ -253,7 +238,8 @@ namespace NextLevelSeven.Core
         /// <param name="component">Component index.</param>
         /// <param name="subcomponent">Subcomponent index.</param>
         /// <returns>The first occurrence of the specified element.</returns>
-        public IElement GetField(string segmentName, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
+        public IElement GetField(string segmentName, int field = -1, int repetition = -1, int component = -1,
+            int subcomponent = -1)
         {
             var segment = _message.FirstOrDefault(s => s.Value != null && s.Value.StartsWith(segmentName));
             if (field < 0 || segment == null)
@@ -276,7 +262,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// If true, the element has meaningful descendants (not necessarily direct ones.)
+        ///     If true, the element has meaningful descendants (not necessarily direct ones.)
         /// </summary>
         public bool HasSignificantDescendants
         {
@@ -284,7 +270,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Returns zero.
+        ///     Returns zero.
         /// </summary>
         public int Index
         {
@@ -292,7 +278,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Returns a unique identifier for the message.
+        ///     Returns a unique identifier for the message.
         /// </summary>
         public string Key
         {
@@ -300,7 +286,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Get the root message for this element.
+        ///     Get the root message for this element.
         /// </summary>
         IMessage IElement.Message
         {
@@ -308,15 +294,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Get the first MSH segment.
-        /// </summary>
-        IElement Msh
-        {
-            get { return this["MSH"].First(); }
-        }
-
-        /// <summary>
-        /// Set the message data to null.
+        ///     Set the message data to null.
         /// </summary>
         public void Nullify()
         {
@@ -324,7 +302,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Get or set the message Processing ID from MSH-11.
+        ///     Get or set the message Processing ID from MSH-11.
         /// </summary>
         public string ProcessingId
         {
@@ -333,29 +311,15 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Get the receiving application and facility.
+        ///     Get the receiving application and facility.
         /// </summary>
         public IIdentity Receiver
         {
             get { return new IdentityProxy(Msh, 5, 6); }
         }
-        
-        /// <summary>
-        /// Change all system line endings to HL7 line endings.
-        /// </summary>
-        /// <param name="message">String to transform.</param>
-        /// <returns>Sanitized string.</returns>
-        string SanitizeLineEndings(string message)
-        {
-            if (message == null)
-            {
-                return null;
-            }
-            return message.Replace(Environment.NewLine, "\xD");
-        }
 
         /// <summary>
-        /// Get or set the message Security from MSH-8.
+        ///     Get or set the message Security from MSH-8.
         /// </summary>
         public string Security
         {
@@ -364,7 +328,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Get all segments in the message.
+        ///     Get all segments in the message.
         /// </summary>
         public IEnumerable<ISegment> Segments
         {
@@ -372,7 +336,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Get the sending application and facility.
+        ///     Get the sending application and facility.
         /// </summary>
         public IIdentity Sender
         {
@@ -380,7 +344,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Get or set the message Time from MSH-7.
+        ///     Get or set the message Time from MSH-7.
         /// </summary>
         public DateTimeOffset? Time
         {
@@ -389,16 +353,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Get the string representation of the message.
-        /// </summary>
-        /// <returns>Message as a string.</returns>
-        public override string ToString()
-        {
-            return _message.ToString();
-        }
-
-        /// <summary>
-        /// Get or set the message Trigger Event from MSH-9-2.
+        ///     Get or set the message Trigger Event from MSH-9-2.
         /// </summary>
         public string TriggerEvent
         {
@@ -407,7 +362,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Get or set the message Trigger Event from MSH-9-1.
+        ///     Get or set the message Trigger Event from MSH-9-1.
         /// </summary>
         public string Type
         {
@@ -416,7 +371,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Check for validity of the message. Returns true if the message can reasonably be parsed.
+        ///     Check for validity of the message. Returns true if the message can reasonably be parsed.
         /// </summary>
         /// <returns>True if the message can be parsed, false otherwise.</returns>
         public bool Validate()
@@ -436,14 +391,11 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Get or set the element data. When setting new data, descendents will automatically be repopulated.
+        ///     Get or set the element data. When setting new data, descendents will automatically be repopulated.
         /// </summary>
         public string Value
         {
-            get
-            {
-                return _message.Value;
-            }
+            get { return _message.Value; }
             set
             {
                 _message.Value = value;
@@ -455,22 +407,16 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Get or set the element data. Delimiters are automatically inserted.
+        ///     Get or set the element data. Delimiters are automatically inserted.
         /// </summary>
         public string[] Values
         {
-            get
-            {
-                return _message.Values;
-            }
-            set
-            {
-                _message.Values = value;
-            }
+            get { return _message.Values; }
+            set { _message.Values = value; }
         }
 
         /// <summary>
-        /// Get or set the message Version from MSH-12.
+        ///     Get or set the message Version from MSH-12.
         /// </summary>
         public string Version
         {
@@ -479,7 +425,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Get an element enumerator.
+        ///     Get an element enumerator.
         /// </summary>
         /// <returns>Typed IEnumerator.</returns>
         public IEnumerator<IElement> GetEnumerator()
@@ -488,12 +434,62 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Get an element enumerator.
+        ///     Get an element enumerator.
         /// </summary>
         /// <returns>Generic IEnumerator.</returns>
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return _message.GetEnumerator();
+        }
+
+        /// <summary>
+        ///     Determines whether this object is equivalent to another object.
+        /// </summary>
+        /// <param name="obj">Object to compare to.</param>
+        /// <returns>True, if objects are considered to be equivalent.</returns>
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(this, obj))
+            {
+                return true;
+            }
+            if (ReferenceEquals(null, obj))
+            {
+                return false;
+            }
+            return SanitizeLineEndings(obj.ToString()) == ToString();
+        }
+
+        /// <summary>
+        ///     Get this message's hash code.
+        /// </summary>
+        /// <returns>Hash code for the message.</returns>
+        public override int GetHashCode()
+        {
+            return ToString().GetHashCode();
+        }
+
+        /// <summary>
+        ///     Change all system line endings to HL7 line endings.
+        /// </summary>
+        /// <param name="message">String to transform.</param>
+        /// <returns>Sanitized string.</returns>
+        private string SanitizeLineEndings(string message)
+        {
+            if (message == null)
+            {
+                return null;
+            }
+            return message.Replace(Environment.NewLine, "\xD");
+        }
+
+        /// <summary>
+        ///     Get the string representation of the message.
+        /// </summary>
+        /// <returns>Message as a string.</returns>
+        public override string ToString()
+        {
+            return _message.ToString();
         }
     }
 }

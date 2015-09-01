@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NextLevelSeven.Core;
 using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Cursors
 {
     /// <summary>
-    /// Represents a field-level element in an HL7 message.
+    ///     Represents a field-level element in an HL7 message.
     /// </summary>
-    sealed internal class Field : Element
+    internal sealed class Field : Element
     {
+        private readonly Dictionary<int, IElement> _cache = new Dictionary<int, IElement>();
+        private readonly EncodingConfiguration _encodingConfigurationOverride;
+
         public Field(Element ancestor, int parentIndex, int externalIndex)
             : base(ancestor, parentIndex, externalIndex)
         {
@@ -24,22 +24,19 @@ namespace NextLevelSeven.Cursors
             _encodingConfigurationOverride = new EncodingConfiguration(config);
         }
 
-        private readonly Dictionary<int, IElement> _cache = new Dictionary<int, IElement>();
-
-        public override IElement CloneDetached()
-        {
-            return new Field(Value, EncodingConfiguration);
-        }
-
         public override char Delimiter
         {
             get { return EncodingConfiguration.RepetitionDelimiter; }
         }
 
-        private readonly EncodingConfiguration _encodingConfigurationOverride;
         public override EncodingConfiguration EncodingConfiguration
         {
             get { return _encodingConfigurationOverride ?? Ancestor.EncodingConfiguration; }
+        }
+
+        public override IElement CloneDetached()
+        {
+            return new Field(Value, EncodingConfiguration);
         }
 
         public override IElement GetDescendant(int index)

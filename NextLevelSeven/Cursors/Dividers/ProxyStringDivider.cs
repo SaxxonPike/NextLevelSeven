@@ -1,16 +1,15 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace NextLevelSeven.Cursors.Dividers
 {
     /// <summary>
-    /// A string divider that passes its value through rather than doing any splitting.
+    ///     A string divider that passes its value through rather than doing any splitting.
     /// </summary>
-    sealed internal class ProxyStringDivider : IStringDivider
+    internal sealed class ProxyStringDivider : IStringDivider
     {
-        public event EventHandler ValueChanged;
-
         public ProxyStringDivider()
         {
             string proxyString = null;
@@ -24,16 +23,14 @@ namespace NextLevelSeven.Cursors.Dividers
             SetValue = setValue;
         }
 
+        private Func<string> GetValue { get; set; }
+        private Action<string> SetValue { get; set; }
+        public event EventHandler ValueChanged;
+
         public string this[int index]
         {
-            get
-            {
-                return Value;
-            }
-            set
-            {
-                Value = value;
-            }
+            get { return Value; }
+            set { Value = value; }
         }
 
         public char[] BaseValue
@@ -61,22 +58,10 @@ namespace NextLevelSeven.Cursors.Dividers
             get { return new List<StringDivision>(new[] {new StringDivision(0, Value.Length)}); }
         }
 
-        Func<string> GetValue
-        {
-            get;
-            set;
-        }
-
         public int Index
         {
             get { return 0; }
             set { }
-        }
-
-        Action<string> SetValue
-        {
-            get;
-            set;
         }
 
         public string Value
@@ -96,7 +81,7 @@ namespace NextLevelSeven.Cursors.Dividers
             return value.AsEnumerable().GetEnumerator();
         }
 
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }

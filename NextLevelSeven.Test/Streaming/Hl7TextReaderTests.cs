@@ -18,7 +18,7 @@ namespace NextLevelSeven.Test.Streaming
             var messageData = Encoding.UTF8.GetBytes(ExampleMessages.MultipleMessagesSeparatedByLines);
             using (var messageStream = new MemoryStream(messageData))
             {
-                var reader = new HL7TextReader(messageStream);
+                var reader = new MessageTextReader(messageStream);
                 var messages = reader.ReadAll().ToArray();
                 Assert.AreEqual(3, messages.Length);
                 Assert.AreEqual("MSH|^~\\&|1", messages[0].Value, @"Message 1 was not read properly.");
@@ -33,7 +33,7 @@ namespace NextLevelSeven.Test.Streaming
             var messageData = Encoding.UTF8.GetBytes(ExampleMessages.MultipleMessagesSeparatedByLines);
             using (var messageStream = new MemoryStream(messageData))
             {
-                var reader = new HL7TextReader(messageStream);
+                var reader = new MessageTextReader(messageStream);
                 var message1 = reader.Read();
                 var message2 = reader.Read();
                 var message3 = reader.Read();
@@ -72,7 +72,7 @@ namespace NextLevelSeven.Test.Streaming
                         {
                             fileCount++;
                             byteCount += (int)mem.Length;
-                            var reader = new HL7TextReader(mem);
+                            var reader = new MessageTextReader(mem);
                             while (true)
                             {
                                 var message = reader.Read();

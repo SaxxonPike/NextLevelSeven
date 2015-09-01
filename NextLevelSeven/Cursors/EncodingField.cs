@@ -1,26 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using NextLevelSeven.Core;
 using NextLevelSeven.Cursors.Dividers;
 
 namespace NextLevelSeven.Cursors
 {
     /// <summary>
-    /// Represents the special field at MSH-2, which contains encoding characters for a message.
+    ///     Represents the special field at MSH-2, which contains encoding characters for a message.
     /// </summary>
-    sealed internal class EncodingField : Element
+    internal sealed class EncodingField : Element
     {
         public EncodingField(Element ancestor)
             : base(ancestor, 1, 2)
         {
-        }
-
-        public override IElement CloneDetached()
-        {
-            return new Field(Value, EncodingConfiguration);
         }
 
         public override char Delimiter
@@ -33,27 +24,9 @@ namespace NextLevelSeven.Cursors
             get { return Ancestor.EncodingConfiguration; }
         }
 
-        public override IElement GetDescendant(int index)
-        {
-            return new EncodingField(this);
-        }
-
-        protected override IStringDivider GetDescendantDivider(Element ancestor, int index)
-        {
-            return new ProxyStringDivider(() => Ancestor.DescendantDivider[1], v => Ancestor.DescendantDivider[1] = v);
-        }
-
         public override bool HasSignificantDescendants
         {
-            get
-            {
-                return false;
-            }
-        }
-
-        public override string ToString()
-        {
-            return Value;
+            get { return false; }
         }
 
         public override string Value
@@ -68,6 +41,26 @@ namespace NextLevelSeven.Cursors
                 builder.Append(s.Substring(4));
                 Ancestor.DescendantDivider.Value = builder.ToString();
             }
-        }    
+        }
+
+        public override IElement CloneDetached()
+        {
+            return new Field(Value, EncodingConfiguration);
+        }
+
+        public override IElement GetDescendant(int index)
+        {
+            return new EncodingField(this);
+        }
+
+        protected override IStringDivider GetDescendantDivider(Element ancestor, int index)
+        {
+            return new ProxyStringDivider(() => Ancestor.DescendantDivider[1], v => Ancestor.DescendantDivider[1] = v);
+        }
+
+        public override string ToString()
+        {
+            return Value;
+        }
     }
 }

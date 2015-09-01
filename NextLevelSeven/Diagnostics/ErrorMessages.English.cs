@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NextLevelSeven.Diagnostics
+﻿namespace NextLevelSeven.Diagnostics
 {
-    static public partial class ErrorMessages
+    public static partial class ErrorMessages
     {
         /// <summary>
-        /// English language translation.
+        ///     English language translation.
         /// </summary>
-        class English : ErrorMessageLanguage
+        private class English : ErrorMessageLanguage
         {
             public override string GetMessage(ErrorCode code)
             {

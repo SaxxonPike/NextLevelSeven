@@ -1,18 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NextLevelSeven.Core;
 using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Cursors
 {
     /// <summary>
-    /// Represents a component level element of an HL7 message.
+    ///     Represents a component level element of an HL7 message.
     /// </summary>
-    sealed internal class Component : Element
+    internal sealed class Component : Element
     {
+        private readonly Dictionary<int, IElement> _cache = new Dictionary<int, IElement>();
+
         public Component(Element ancestor, int parentIndex, int externalIndex)
             : base(ancestor, parentIndex, externalIndex)
         {
@@ -23,13 +22,6 @@ namespace NextLevelSeven.Cursors
         {
         }
 
-        private readonly Dictionary<int, IElement> _cache = new Dictionary<int, IElement>();
-
-        public override IElement CloneDetached()
-        {
-            return new Component(Value);
-        }
-
         public override char Delimiter
         {
             get { return EncodingConfiguration.SubcomponentDelimiter; }
@@ -38,6 +30,11 @@ namespace NextLevelSeven.Cursors
         public override EncodingConfiguration EncodingConfiguration
         {
             get { return Ancestor.EncodingConfiguration; }
+        }
+
+        public override IElement CloneDetached()
+        {
+            return new Component(Value);
         }
 
         public override IElement GetDescendant(int index)

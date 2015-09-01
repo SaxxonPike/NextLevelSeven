@@ -12,14 +12,14 @@ namespace NextLevelSeven.Test.Transformation
     {
         public TestNameElementTransformFactory(string readString)
         {
-            ReadString = readString;
+            _readString = readString;
         }
 
-        private readonly string ReadString;
+        private readonly string _readString;
 
         public ElementTransform CreateTransform(IElement element)
         {
-            return new TestNameElementTransform(element, ReadString);
+            return new TestNameElementTransform(element, _readString);
         }
     }
 }
