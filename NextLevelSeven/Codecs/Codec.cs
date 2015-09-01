@@ -12,7 +12,7 @@ namespace NextLevelSeven.Codecs
     /// <summary>
     /// Provides HL7 value conversion.
     /// </summary>
-    internal class Codec : ICodec
+    sealed internal class Codec : ICodec
     {
         /// <summary>
         /// Create a codec that references the specified element's data.

@@ -20,7 +20,7 @@ namespace NextLevelSeven.Utility
         /// <summary>
         /// Get the immutable empty collection enumerator.
         /// </summary>
-        private static readonly EmptyEnumerator<T> Enumerator = new EmptyEnumerator<T>();
+        private static readonly EmptyEnumerator Enumerator = new EmptyEnumerator();
 
         /// <summary>
         /// Get an enumerator for the empty collection.
@@ -38,6 +38,51 @@ namespace NextLevelSeven.Utility
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return Enumerator;
+        }
+
+        /// <summary>
+        /// An enumerator for the EmptyEnumerable.
+        /// </summary>
+        sealed internal class EmptyEnumerator: IEnumerator<T>
+        {
+            /// <summary>
+            /// Returns null.
+            /// </summary>
+            public T Current
+            {
+                get { return null; }
+            }
+
+            /// <summary>
+            /// Does nothing.
+            /// </summary>
+            public void Dispose()
+            {
+            }
+
+            /// <summary>
+            /// Returns null.
+            /// </summary>
+            object System.Collections.IEnumerator.Current
+            {
+                get { return null; }
+            }
+
+            /// <summary>
+            /// Returns false, since the collection is empty.
+            /// </summary>
+            /// <returns></returns>
+            public bool MoveNext()
+            {
+                return false;
+            }
+
+            /// <summary>
+            /// Does nothing.
+            /// </summary>
+            public void Reset()
+            {
+            }
         }
     }
 }

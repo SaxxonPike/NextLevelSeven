@@ -11,7 +11,7 @@ namespace NextLevelSeven.Codecs
     /// A wrapper around Codec to allow for indexing an element's descendants.
     /// </summary>
     /// <typeparam name="TDecoded">Type of the decoded value.</typeparam>
-    internal class IndexedCodec<TDecoded> : IIndexedCodec<TDecoded>
+    sealed internal class IndexedCodec<TDecoded> : IIndexedCodec<TDecoded>
     {
         /// <summary>
         /// Create a codec indexer.
@@ -70,7 +70,7 @@ namespace NextLevelSeven.Codecs
         /// <returns>Enumerator.</returns>
         public IEnumerator<TDecoded> GetEnumerator()
         {
-            return new IndexedCodecEnumerator<TDecoded>(this, BaseElement.DescendantCount);
+            return new IndexedCodecEnumerator(this, BaseElement.DescendantCount);
         }
 
         /// <summary>
@@ -80,6 +80,87 @@ namespace NextLevelSeven.Codecs
         System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
+        }
+
+        /// <summary>
+        /// Allow for enumeration of a codec indexer's values.
+        /// </summary>
+        sealed private class IndexedCodecEnumerator : IEnumerator<TDecoded>
+        {
+            public IndexedCodecEnumerator(IIndexedCodec<TDecoded> indexedCodec, int count)
+            {
+                IndexedCodec = indexedCodec;
+                Count = count;
+                Reset();
+            }
+
+            /// <summary>
+            /// Parent codec indexer.
+            /// </summary>
+            IIndexedCodec<TDecoded> IndexedCodec { get; set; }
+
+            /// <summary>
+            /// Number of items.
+            /// </summary>
+            int Count
+            {
+                get;
+                set;
+            }
+
+            /// <summary>
+            /// Currently selected item.
+            /// </summary>
+            public TDecoded Current
+            {
+                get { return IndexedCodec[Index]; }
+            }
+
+            /// <summary>
+            /// Unused- required by interface.
+            /// </summary>
+            public void Dispose()
+            {
+            }
+
+            /// <summary>
+            /// Currently selected item (for old IEnumerator.)
+            /// </summary>
+            object System.Collections.IEnumerator.Current
+            {
+                get { return IndexedCodec[Index]; }
+            }
+
+            /// <summary>
+            /// Currently selected index.
+            /// </summary>
+            int Index
+            {
+                get;
+                set;
+            }
+
+            /// <summary>
+            /// Move to the next index in the collection.
+            /// </summary>
+            /// <returns>True if there are more elements, false if not.</returns>
+            public bool MoveNext()
+            {
+                if (Index >= Count - 1)
+                {
+                    return false;
+                }
+                Index++;
+                return true;
+            }
+
+            /// <summary>
+            /// Reset the index.
+            /// </summary>
+            public void Reset()
+            {
+                Index = -1;
+            }
         }
     }
 }

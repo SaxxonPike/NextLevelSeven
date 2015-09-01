@@ -9,7 +9,7 @@ namespace NextLevelSeven.Diagnostics
     /// <summary>
     /// An enumeration of possible error messages.
     /// </summary>
-    public enum ErrorCode : int
+    public enum ErrorCode
     {
         // NOTE: Do not change error code numbers once they have been added.
         // It is okay to add new ones, but once a number has been assigned, it
