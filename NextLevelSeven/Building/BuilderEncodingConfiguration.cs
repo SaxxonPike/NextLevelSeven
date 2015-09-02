@@ -2,6 +2,9 @@
 
 namespace NextLevelSeven.Building
 {
+    /// <summary>
+    ///     An encoding configuration wrapper that redirects character properties from a MessageBuilder.
+    /// </summary>
     internal sealed class BuilderEncodingConfiguration : ProxyEncodingConfiguration
     {
         /// <summary>

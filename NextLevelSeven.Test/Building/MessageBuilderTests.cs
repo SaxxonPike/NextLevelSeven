@@ -18,12 +18,10 @@ namespace NextLevelSeven.Test.Building
                 .Field(
                     segmentIndex: 1,
                     fieldIndex: 3,
-                    repetition: 1,
                     value: field3)
                 .Field(
                     segmentIndex: 1,
                     fieldIndex: 5,
-                    repetition: 1,
                     value: field5);
             Assert.AreEqual(string.Format("MSH|^~\\&|{0}||{1}", field3, field5), builder.ToString(),
                 @"Unexpected result.");
@@ -37,8 +35,8 @@ namespace NextLevelSeven.Test.Building
             var field5 = Randomized.String();
 
             builder
-                .Field(1, 5, 1, field5)
-                .Field(1, 3, 1, field3);
+                .Field(1, 5, field5)
+                .Field(1, 3, field3);
             Assert.AreEqual(string.Format("MSH|^~\\&|{0}||{1}", field3, field5), builder.ToString(),
                 @"Unexpected result.");
         }
@@ -64,12 +62,12 @@ namespace NextLevelSeven.Test.Building
             var repetition2 = Randomized.String();
 
             builder
-                .Field(
+                .FieldRepetition(
                     segmentIndex: 1,
                     fieldIndex: 3,
                     repetition: 1,
                     value: repetition1)
-                .Field(
+                .FieldRepetition(
                     segmentIndex: 1,
                     fieldIndex: 3,
                     repetition: 2,
@@ -86,12 +84,12 @@ namespace NextLevelSeven.Test.Building
             var repetition2 = Randomized.String();
 
             builder
-                .Field(
+                .FieldRepetition(
                     segmentIndex: 1,
                     fieldIndex: 3,
                     repetition: 2,
                     value: repetition2)
-                .Field(
+                .FieldRepetition(
                     segmentIndex: 1,
                     fieldIndex: 3,
                     repetition: 1,

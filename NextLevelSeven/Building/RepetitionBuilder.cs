@@ -6,18 +6,35 @@ using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building
 {
+    /// <summary>
+    ///     Represents an HL7 field repetition.
+    /// </summary>
     public sealed class RepetitionBuilder
     {
+        /// <summary>
+        ///     Descendant builders.
+        /// </summary>
         private readonly Dictionary<int, ComponentBuilder> _componentBuilders = new Dictionary<int, ComponentBuilder>();
-        private readonly EncodingConfiguration _encodingConfiguration;
-        private readonly bool _split;
 
-        internal RepetitionBuilder(EncodingConfiguration encodingConfiguration, bool split)
+        /// <summary>
+        ///     Message's encoding configuration.
+        /// </summary>
+        private readonly EncodingConfiguration _encodingConfiguration;
+
+        /// <summary>
+        ///     Create a repetition builder using the specified encoding configuration.
+        /// </summary>
+        /// <param name="encodingConfiguration">Message's encoding configuration.</param>
+        internal RepetitionBuilder(EncodingConfiguration encodingConfiguration)
         {
             _encodingConfiguration = encodingConfiguration;
-            _split = split;
         }
 
+        /// <summary>
+        ///     Get a descendant component builder.
+        /// </summary>
+        /// <param name="index">Index within the field repetition to get the builder from.</param>
+        /// <returns>Component builder for the specified index.</returns>
         public ComponentBuilder this[int index]
         {
             get
@@ -30,11 +47,17 @@ namespace NextLevelSeven.Building
             }
         }
 
+        /// <summary>
+        ///     Get the number of components in this field repetition, including components with no content.
+        /// </summary>
         public int Count
         {
             get { return _componentBuilders.Max(kv => kv.Key); }
         }
 
+        /// <summary>
+        ///     Get or set component content within this field repetition.
+        /// </summary>
         public IEnumerableIndexable<int, string> Values
         {
             get
@@ -46,12 +69,23 @@ namespace NextLevelSeven.Building
             }
         }
 
+        /// <summary>
+        ///     Set a component's content.
+        /// </summary>
+        /// <param name="componentIndex">Component index.</param>
+        /// <param name="value">New value.</param>
+        /// <returns>This RepetitionBuilder, for chaining purposes.</returns>
         public RepetitionBuilder Component(int componentIndex, string value)
         {
             this[componentIndex].Component(value);
             return this;
         }
 
+        /// <summary>
+        ///     Replace all component values within this field repetition.
+        /// </summary>
+        /// <param name="components">Values to replace with.</param>
+        /// <returns>This RepetitionBuilder, for chaining purposes.</returns>
         public RepetitionBuilder Components(params string[] components)
         {
             _componentBuilders.Clear();
@@ -63,6 +97,12 @@ namespace NextLevelSeven.Building
             return this;
         }
 
+        /// <summary>
+        ///     Set a sequence of components within this field repetition, beginning at the specified start index.
+        /// </summary>
+        /// <param name="startIndex">Component index to begin replacing at.</param>
+        /// <param name="components">Values to replace with.</param>
+        /// <returns>This RepetitionBuilder, for chaining purposes.</returns>
         public RepetitionBuilder Components(int startIndex, params string[] components)
         {
             var index = startIndex;
@@ -73,24 +113,48 @@ namespace NextLevelSeven.Building
             return this;
         }
 
+        /// <summary>
+        ///     Set a subcomponent's content.
+        /// </summary>
+        /// <param name="componentIndex">Component index.</param>
+        /// <param name="subcomponentIndex">Subcomponent index.</param>
+        /// <param name="value">New value.</param>
+        /// <returns>This RepetitionBuilder, for chaining purposes.</returns>
         public RepetitionBuilder Subcomponent(int componentIndex, int subcomponentIndex, string value)
         {
             this[componentIndex].Subcomponent(subcomponentIndex, value);
             return this;
         }
 
+        /// <summary>
+        ///     Replace all subcomponents within a component.
+        /// </summary>
+        /// <param name="componentIndex">Component index.</param>
+        /// <param name="subcomponents">Subcomponent index.</param>
+        /// <returns>This RepetitionBuilder, for chaining purposes.</returns>
         public RepetitionBuilder Subcomponents(int componentIndex, params string[] subcomponents)
         {
             this[componentIndex].Subcomponents(subcomponents);
             return this;
         }
 
+        /// <summary>
+        ///     Set a sequence of subcomponents within a component, beginning at the specified start index.
+        /// </summary>
+        /// <param name="componentIndex">Component index.</param>
+        /// <param name="startIndex">Subcomponent index to begin replacing at.</param>
+        /// <param name="subcomponents">Values to replace with.</param>
+        /// <returns>This RepetitionBuilder, for chaining purposes.</returns>
         public RepetitionBuilder Subcomponents(int componentIndex, int startIndex, params string[] subcomponents)
         {
             this[componentIndex].Subcomponents(startIndex, subcomponents);
             return this;
         }
 
+        /// <summary>
+        ///     Copy the contents of this builder to a string.
+        /// </summary>
+        /// <returns>Converted field repetition.</returns>
         public override string ToString()
         {
             var index = 1;
