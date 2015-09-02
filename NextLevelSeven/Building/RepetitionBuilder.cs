@@ -6,7 +6,7 @@ using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building
 {
-    public sealed class RepetitionBuilder : BuilderBase
+    public sealed class RepetitionBuilder
     {
         private readonly Dictionary<int, ComponentBuilder> _componentBuilders = new Dictionary<int, ComponentBuilder>();
         private readonly EncodingConfiguration _encodingConfiguration;

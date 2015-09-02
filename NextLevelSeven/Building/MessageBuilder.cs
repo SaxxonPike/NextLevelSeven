@@ -6,7 +6,7 @@ using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building
 {
-    public sealed class MessageBuilder : BuilderBase
+    public sealed class MessageBuilder
     {
         private readonly EncodingConfiguration _encodingConfiguration;
         private readonly Dictionary<int, SegmentBuilder> _segmentBuilders = new Dictionary<int, SegmentBuilder>();

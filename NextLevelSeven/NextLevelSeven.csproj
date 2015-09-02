@@ -43,7 +43,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Building\BuilderBase.cs" />
     <Compile Include="Building\BuilderException.cs" />
     <Compile Include="Building\BuilderOperations.cs" />
     <Compile Include="Building\ComponentBuilder.cs" />

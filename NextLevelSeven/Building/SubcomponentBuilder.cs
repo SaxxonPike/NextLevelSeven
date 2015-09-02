@@ -1,6 +1,6 @@
 ﻿namespace NextLevelSeven.Building
 {
-    public sealed class SubcomponentBuilder : BuilderBase
+    public sealed class SubcomponentBuilder
     {
         private string _value;
 

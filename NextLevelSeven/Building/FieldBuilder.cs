@@ -6,7 +6,7 @@ using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building
 {
-    public sealed class FieldBuilder : BuilderBase
+    public sealed class FieldBuilder
     {
         private readonly EncodingConfiguration _encodingConfiguration;
 
