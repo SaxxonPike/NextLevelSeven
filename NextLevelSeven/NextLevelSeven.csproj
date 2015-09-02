@@ -43,6 +43,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Building\BuilderBase.cs" />
+    <Compile Include="Building\BuilderException.cs" />
+    <Compile Include="Building\BuilderOperations.cs" />
+    <Compile Include="Building\ComponentBuilder.cs" />
+    <Compile Include="Building\FieldBuilder.cs" />
+    <Compile Include="Building\MessageBuilder.cs" />
+    <Compile Include="Building\RepetitionBuilder.cs" />
+    <Compile Include="Building\SegmentBuilder.cs" />
+    <Compile Include="Building\SubcomponentBuilder.cs" />
     <Compile Include="Codecs\Codec.cs" />
     <Compile Include="Codecs\IndexedCodec.cs" />
     <Compile Include="Core\ElementException.cs" />
@@ -54,6 +63,8 @@
     <Compile Include="Core\MessageEncodingConfiguration.cs" />
     <Compile Include="Core\MessageException.cs" />
     <Compile Include="Core\MessageExtensions.cs" />
+    <Compile Include="Core\ProxyEncodingConfiguration.cs" />
+    <Compile Include="Building\BuilderEncodingConfiguration.cs" />
     <Compile Include="Cursors\Component.cs" />
     <Compile Include="Cursors\Dividers\StringDividerBase.cs" />
     <Compile Include="Cursors\Dividers\StringDividerEnumerator.cs" />
@@ -104,6 +115,10 @@
     <Compile Include="Transformation\IElementTransformFactory.cs" />
     <Compile Include="Utility\EmptyEnumerable.cs" />
     <Compile Include="MessageGeneration\AckMessageGenerator.cs" />
+    <Compile Include="Utility\IEnumerableIndexable.cs" />
+    <Compile Include="Utility\IIndexable.cs" />
+    <Compile Include="Utility\IReadOnlyIndexable.cs" />
+    <Compile Include="Utility\WrapperEnumerable.cs" />
     <Compile Include="Web\BackgroundMessageReceiver.cs" />
     <Compile Include="Web\BackgroundMessageSender.cs" />
     <Compile Include="Web\BackgroundTransportBase.cs" />

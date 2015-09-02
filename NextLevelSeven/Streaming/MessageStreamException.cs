@@ -6,6 +6,7 @@ namespace NextLevelSeven.Streaming
     /// <summary>
     ///     Represents an exception that would be raised for HL7 streaming errors.
     /// </summary>
+    [Serializable]
     public class MessageStreamException : Exception
     {
         /// <summary>

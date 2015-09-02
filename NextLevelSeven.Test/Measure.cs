@@ -37,6 +37,7 @@ namespace NextLevelSeven.Test
 
         static public long ExecutionTime(Action action, int iterations)
         {
+            Debug.WriteLine("Measuring {0} iterations.", iterations);
             return ExecutionTime(() =>
             {
                 while (iterations > 0)
@@ -59,6 +60,7 @@ namespace NextLevelSeven.Test
 
         static public long ExecutionTime(Action<string> action, string data, int iterations)
         {
+            Debug.WriteLine("Measuring {0} iterations.", iterations);
             return ExecutionTime(() =>
             {
                 while (iterations > 0)

@@ -6,6 +6,7 @@ namespace NextLevelSeven.Core
     /// <summary>
     ///     Represents an exception that would be raised for HL7 message-level errors.
     /// </summary>
+    [Serializable]
     public class MessageException : Exception
     {
         /// <summary>

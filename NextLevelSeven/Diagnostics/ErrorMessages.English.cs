@@ -49,6 +49,8 @@
                         return "Root element cannot be deleted.";
                     case ErrorCode.RootElementCannotBeErased:
                         return "Root element cannot be erased.";
+                    case ErrorCode.SegmentBuilderHasInvalidSegmentType:
+                        return "Segment builder has invalid segment type. Field 0 must have a three-letter code.";
                     case ErrorCode.SegmentIndexMustBeGreaterThanZero:
                         return "Segment index must be greater than zero.";
                     case ErrorCode.SegmentTypeCannotBeMoved:

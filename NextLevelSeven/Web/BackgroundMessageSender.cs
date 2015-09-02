@@ -38,11 +38,24 @@ namespace NextLevelSeven.Web
         /// </summary>
         public void Dispose()
         {
-            if (Thread != null)
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        ///     Clean up native resources.
+        /// </summary>
+        /// <param name="disposeAll">If true, clean up managed resources also.</param>
+        protected virtual void Dispose(bool disposeAll)
+        {
+            if (disposeAll)
             {
-                Ready = false;
+                if (Thread != null)
+                {
+                    Ready = false;
+                    Thread = null;
+                }
                 Disposed = true;
-                Thread = null;
             }
         }
 

@@ -53,6 +53,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="AssertIterations.cs" />
+    <Compile Include="AssertTime.cs" />
+    <Compile Include="Building\MessageBuilderPerformanceTests.cs" />
+    <Compile Include="Building\MessageBuilderTests.cs" />
     <Compile Include="Core\ElementPerformanceTests.cs" />
     <Compile Include="Core\ElementTests.cs" />
     <Compile Include="Diagnostics\ErrorMessageTests.cs" />

@@ -61,5 +61,7 @@
         SegmentTypeCannotBeMoved,
         /* 0025 */
         ElementsMustShareDirectAncestors,
+        /* 0026 */
+        SegmentBuilderHasInvalidSegmentType,
     }
 }

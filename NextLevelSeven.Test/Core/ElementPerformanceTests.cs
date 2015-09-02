@@ -14,14 +14,6 @@ namespace NextLevelSeven.Test.Core
         private const int MediumIndex = 1000;
         private const int HighIndex = 1000000;
 
-        void AssertInconclusiveIfSlow(long tolerance, long measured)
-        {
-            if (measured > tolerance)
-            {
-                Assert.Inconclusive("Test was slow. Measured: {0}ms. Tolerance: {1}ms.", measured, tolerance);
-            }
-        }
-
         [TestMethod]
         public void Element_Timely_AddsHighIndexSegment()
         {
@@ -32,7 +24,7 @@ namespace NextLevelSeven.Test.Core
                 message[HighIndex].Value = testString;
             });
             Assert.AreEqual(testString, message[HighIndex].Value);
-            AssertInconclusiveIfSlow(1000, time);
+            AssertTime.IsWithin(1000, time);
         }
 
         [TestMethod]
@@ -45,7 +37,7 @@ namespace NextLevelSeven.Test.Core
                 message[1][HighIndex].Value = testString;
             });
             Assert.AreEqual(message[1][HighIndex], testString);
-            AssertInconclusiveIfSlow(1000, time);
+            AssertTime.IsWithin(1000, time);
         }
 
         [TestMethod]
@@ -58,7 +50,7 @@ namespace NextLevelSeven.Test.Core
                 message[2][HighIndex].Value = testString;
             });
             Assert.AreEqual(testString, message[2][HighIndex].Value);
-            AssertInconclusiveIfSlow(1000, time);
+            AssertTime.IsWithin(1000, time);
         }
 
         [TestMethod]
@@ -71,7 +63,7 @@ namespace NextLevelSeven.Test.Core
                 message[HighIndex][HighIndex].Value = testString;
             });
             Assert.AreEqual(testString, message[HighIndex][HighIndex].Value);
-            AssertInconclusiveIfSlow(2000, time);
+            AssertTime.IsWithin(2000, time);
         }
 
         [TestMethod]
@@ -87,7 +79,7 @@ namespace NextLevelSeven.Test.Core
                 }
             });
             Assert.AreEqual(message[MediumIndex].Value, testString);
-            AssertInconclusiveIfSlow(1000, time);
+            AssertTime.IsWithin(1000, time);
         }
 
         [TestMethod]
@@ -102,7 +94,7 @@ namespace NextLevelSeven.Test.Core
                     msh[i].Value = "test";                    
                 }
             });
-            AssertInconclusiveIfSlow(1000, time);
+            AssertTime.IsWithin(1000, time);
         }
 
         [TestMethod]
@@ -117,7 +109,7 @@ namespace NextLevelSeven.Test.Core
                 field = message[1][HighIndex].Value;
             });
             Assert.AreEqual(value, field);
-            AssertInconclusiveIfSlow(1000, time);
+            AssertTime.IsWithin(1000, time);
         }
 
         [TestMethod]
@@ -131,7 +123,7 @@ namespace NextLevelSeven.Test.Core
                 field = message[1][3].Value;
             });
             Assert.AreEqual(null, field);
-            AssertInconclusiveIfSlow(500, time);
+            AssertTime.IsWithin(500, time);
         }
 
         [TestMethod]
@@ -146,7 +138,7 @@ namespace NextLevelSeven.Test.Core
                 field = message[1][3].Value;
             });
             Assert.AreEqual(null, field);
-            AssertInconclusiveIfSlow(500, time);
+            AssertTime.IsWithin(500, time);
         }
 
         [TestMethod]
@@ -158,7 +150,7 @@ namespace NextLevelSeven.Test.Core
             {
                 message[1][3].Value = "test2";
             });
-            AssertInconclusiveIfSlow(500, time);
+            AssertTime.IsWithin(500, time);
         }
 
         [TestMethod]
@@ -180,32 +172,31 @@ namespace NextLevelSeven.Test.Core
                 var segments = message.SplitSegments("OBR");
                 Assert.IsNotNull(segments);
             });
-            AssertInconclusiveIfSlow(500, time);
+            AssertTime.IsWithin(500, time);
         }
 
         [TestMethod]
         public void Element_Timely_ProcessesManySmallMessages()
         {
-            var messagesParsedInOneSecond = Measure.ExecutionIterations(() =>
+            var time = Measure.ExecutionTime(() =>
             {
                 var message = new Message(ExampleMessages.A04);
                 var dataField = message["IN1"].First()[7][0][1];
                 Assert.AreEqual("MUTUAL OF OMAHA", dataField.Value, @"Parsing IN1-7-1 failed.");
-            }, 500);
-            Assert.IsTrue(messagesParsedInOneSecond > 5000, @"Small message parsing is too slow.");
+            }, 10000);
+            AssertTime.IsWithin(1000, time);
         }
 
         [TestMethod]
         public void Element_Timely_ProcessesManyLargeMessages()
         {
-            var messagesParsedInOneSecond = Measure.ExecutionIterations(() =>
+            var time = Measure.ExecutionTime(() =>
             {
                 var message = new Message(ExampleMessages.MultipleObr);
                 var dataField = message["OBR"].First(s => s[1].Value == "4")[16][0][2];
                 Assert.AreEqual("OLSTAD", dataField.Value, @"Parsing OBR4-16-2 failed.");
-            }, 500);
-            Assert.IsTrue(messagesParsedInOneSecond > 1000, @"Large message parsing is too slow.");
+            }, 1000);
+            AssertTime.IsWithin(1000, time);
         }
-
     }
 }

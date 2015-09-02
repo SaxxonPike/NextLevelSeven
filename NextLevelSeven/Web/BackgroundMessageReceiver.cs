@@ -64,20 +64,33 @@ namespace NextLevelSeven.Web
         /// </summary>
         public void Dispose()
         {
-            if (Thread == null)
-            {
-                return;
-            }
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
 
-            Ready = false;
-            Disposed = true;
-            if (Listener != null)
+        /// <summary>
+        ///     Clean up native resources.
+        /// </summary>
+        /// <param name="disposeAll">If true, clean up managed resources also.</param>
+        protected virtual void Dispose(bool disposeAll)
+        {
+            if (disposeAll)
             {
-                var listener = Listener;
-                Listener = null;
-                listener.Close();
+                if (Thread == null)
+                {
+                    return;
+                }
+
+                Ready = false;
+                Disposed = true;
+                if (Listener != null)
+                {
+                    var listener = Listener;
+                    Listener = null;
+                    listener.Close();
+                }
+                Thread = null;
             }
-            Thread = null;
         }
 
         /// <summary>
