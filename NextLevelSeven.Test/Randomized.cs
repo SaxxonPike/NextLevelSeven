@@ -20,6 +20,11 @@ namespace NextLevelSeven.Test
             return Rng.Next(maxExclusiveValue);
         }
 
+        static public int Number(int minInclusiveValue, int maxExclusiveValue)
+        {
+            return Rng.Next(minInclusiveValue, maxExclusiveValue);
+        }
+
         static public string String()
         {
             return Guid.NewGuid().ToString();
