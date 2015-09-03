@@ -81,6 +81,7 @@ namespace NextLevelSeven.Core
                                         continue;
                                     }
                                     break;
+                                case 'X': // locally defined hex codes
                                 case 'Z': // locally defined escape
                                     var zEscapeIndex = index + 1;
                                     var zEscapeLength = 1;
