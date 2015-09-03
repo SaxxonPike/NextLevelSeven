@@ -44,9 +44,9 @@ namespace NextLevelSeven.Cursors
         {
             get
             {
-                if (Ancestor != null && DescendantDivider == null)
+                if (Ancestor != null)
                 {
-                    return Ancestor.DescendantDivider.Value[3];
+                    return EncodingConfiguration.FieldDelimiter;
                 }
 
                 var value = Value;

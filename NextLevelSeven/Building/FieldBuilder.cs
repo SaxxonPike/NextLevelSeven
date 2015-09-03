@@ -9,13 +9,8 @@ namespace NextLevelSeven.Building
     /// <summary>
     ///     Represents an HL7 field.
     /// </summary>
-    public sealed class FieldBuilder
+    public sealed class FieldBuilder : BuilderBase
     {
-        /// <summary>
-        ///     Message's encoding configuration.
-        /// </summary>
-        private readonly EncodingConfiguration _encodingConfiguration;
-
         /// <summary>
         ///     Descendant builders.
         /// </summary>
@@ -27,8 +22,8 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="encodingConfiguration">Message's encoding configuration.</param>
         internal FieldBuilder(EncodingConfiguration encodingConfiguration)
+            : base(encodingConfiguration)
         {
-            _encodingConfiguration = encodingConfiguration;
         }
 
         /// <summary>
@@ -42,7 +37,7 @@ namespace NextLevelSeven.Building
             {
                 if (!_repetitionBuilders.ContainsKey(index))
                 {
-                    _repetitionBuilders[index] = new RepetitionBuilder(_encodingConfiguration);
+                    _repetitionBuilders[index] = new RepetitionBuilder(EncodingConfiguration);
                 }
                 return _repetitionBuilders[index];
             }
@@ -119,7 +114,7 @@ namespace NextLevelSeven.Building
             var index = 1;
 
             value = value ?? string.Empty;
-            foreach (var repetition in value.Split(_encodingConfiguration.RepetitionDelimiter))
+            foreach (var repetition in value.Split(EncodingConfiguration.RepetitionDelimiter))
             {
                 FieldRepetition(index++, repetition);
             }
@@ -234,7 +229,7 @@ namespace NextLevelSeven.Building
             {
                 while (index < repetition.Key)
                 {
-                    result.Append(_encodingConfiguration.RepetitionDelimiter);
+                    result.Append(EncodingConfiguration.RepetitionDelimiter);
                     index++;
                 }
 

@@ -1,4 +1,5 @@
-﻿using NextLevelSeven.Core;
+﻿using System;
+using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Building
 {
@@ -11,8 +12,9 @@ namespace NextLevelSeven.Building
         ///     Create an encoding configuration from a message or segment.
         /// </summary>
         /// <param name="builder">Message builder to pull the characters from.</param>
-        public BuilderEncodingConfiguration(MessageBuilder builder)
+        public BuilderEncodingConfiguration(BuilderBase builder)
             : base(
+                () => builder.FieldDelimiter,
                 () => builder.EscapeDelimiter, () => builder.RepetitionDelimiter, () => builder.ComponentDelimiter,
                 () => builder.SubcomponentDelimiter)
         {

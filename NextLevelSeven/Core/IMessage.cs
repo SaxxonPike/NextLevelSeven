@@ -37,6 +37,13 @@ namespace NextLevelSeven.Core
         string ControlId { get; set; }
 
         /// <summary>
+        /// Get an escaped version of the string, using encoding characters from this message.
+        /// </summary>
+        /// <param name="data">Data to escape.</param>
+        /// <returns>Escaped data.</returns>
+        string Escape(string data);
+
+        /// <summary>
         ///     Get or set the message processing ID.
         /// </summary>
         string ProcessingId { get; set; }
@@ -75,6 +82,13 @@ namespace NextLevelSeven.Core
         ///     Get or set the 3-character message type.
         /// </summary>
         string Type { get; set; }
+
+        /// <summary>
+        /// Get a string that has been unescaped from HL7.
+        /// </summary>
+        /// <param name="data">Data to unescape.</param>
+        /// <returns>Unescaped string.</returns>
+        string UnEscape(string data);
 
         /// <summary>
         ///     Get the HL7 version number. If it does not exist, returns null.

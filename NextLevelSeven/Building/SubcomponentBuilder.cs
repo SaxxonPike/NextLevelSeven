@@ -1,6 +1,8 @@
-﻿namespace NextLevelSeven.Building
+﻿using NextLevelSeven.Core;
+
+namespace NextLevelSeven.Building
 {
-    public sealed class SubcomponentBuilder
+    public sealed class SubcomponentBuilder : BuilderBase
     {
         /// <summary>
         ///     Internal subcomponent value.
@@ -10,7 +12,8 @@
         /// <summary>
         ///     Create a subcomponent builder.
         /// </summary>
-        internal SubcomponentBuilder()
+        internal SubcomponentBuilder(EncodingConfiguration encodingConfiguration)
+            : base(encodingConfiguration)
         {
         }
 

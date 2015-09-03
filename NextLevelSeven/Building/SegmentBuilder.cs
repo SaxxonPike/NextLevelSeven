@@ -9,13 +9,8 @@ namespace NextLevelSeven.Building
     /// <summary>
     ///     Represents an HL7 segment.
     /// </summary>
-    public sealed class SegmentBuilder
+    public sealed class SegmentBuilder : BuilderBase
     {
-        /// <summary>
-        ///     Message's encoding configuration.
-        /// </summary>
-        private readonly EncodingConfiguration _encodingConfiguration;
-
         /// <summary>
         ///     Descendant builders.
         /// </summary>
@@ -26,8 +21,8 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="encodingConfiguration">Message's encoding configuration.</param>
         internal SegmentBuilder(EncodingConfiguration encodingConfiguration)
+            : base(encodingConfiguration)
         {
-            _encodingConfiguration = encodingConfiguration;
             FieldDelimiter = '|';
         }
 
@@ -42,7 +37,7 @@ namespace NextLevelSeven.Building
             {
                 if (!_fieldBuilders.ContainsKey(index))
                 {
-                    _fieldBuilders[index] = new FieldBuilder(_encodingConfiguration);
+                    _fieldBuilders[index] = new FieldBuilder(EncodingConfiguration);
                 }
                 return _fieldBuilders[index];
             }
@@ -55,11 +50,6 @@ namespace NextLevelSeven.Building
         {
             get { return (_fieldBuilders.Count > 0) ? _fieldBuilders.Max(kv => kv.Key) + 1 : 0; }
         }
-
-        /// <summary>
-        ///     Get or set the character used to separate fields in this segment.
-        /// </summary>
-        public char FieldDelimiter { get; set; }
 
         /// <summary>
         ///     Get or set the three-letter type field of this segment.

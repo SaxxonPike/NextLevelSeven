@@ -8,13 +8,8 @@ namespace NextLevelSeven.Building
     /// <summary>
     ///     Represents an HL7 message as discrete parts, which can be quickly modified and exported.
     /// </summary>
-    public sealed class MessageBuilder
+    public sealed class MessageBuilder : BuilderBase
     {
-        /// <summary>
-        ///     Encoding configuration for this message.
-        /// </summary>
-        private readonly EncodingConfiguration _encodingConfiguration;
-
         /// <summary>
         ///     Descendant segments.
         /// </summary>
@@ -29,7 +24,6 @@ namespace NextLevelSeven.Building
             EscapeDelimiter = '\\';
             RepetitionDelimiter = '~';
             SubcomponentDelimiter = '&';
-            _encodingConfiguration = new BuilderEncodingConfiguration(this);
             Fields(1, "MSH", new string('|', 1),
                 new string(new[] {ComponentDelimiter, RepetitionDelimiter, EscapeDelimiter, SubcomponentDelimiter}));
         }
@@ -40,7 +34,6 @@ namespace NextLevelSeven.Building
         /// <param name="baseMessage">Content to initialize with.</param>
         public MessageBuilder(string baseMessage)
         {
-            _encodingConfiguration = new BuilderEncodingConfiguration(this);
             Message(baseMessage);
         }
 
@@ -50,7 +43,6 @@ namespace NextLevelSeven.Building
         /// <param name="message">Message to copy content from.</param>
         public MessageBuilder(IMessage message)
         {
-            _encodingConfiguration = new BuilderEncodingConfiguration(this);
             Message(message.ToString());
         }
 
@@ -65,16 +57,11 @@ namespace NextLevelSeven.Building
             {
                 if (!_segmentBuilders.ContainsKey(index))
                 {
-                    _segmentBuilders[index] = new SegmentBuilder(_encodingConfiguration);
+                    _segmentBuilders[index] = new SegmentBuilder(EncodingConfiguration);
                 }
                 return _segmentBuilders[index];
             }
         }
-
-        /// <summary>
-        ///     Get or set the character used to separate component-level content.
-        /// </summary>
-        public char ComponentDelimiter { get; set; }
 
         /// <summary>
         ///     Get the number of segments in the message.
@@ -83,21 +70,6 @@ namespace NextLevelSeven.Building
         {
             get { return _segmentBuilders.Max(kv => kv.Key); }
         }
-
-        /// <summary>
-        ///     Get or set the character used to signify escape sequences.
-        /// </summary>
-        public char EscapeDelimiter { get; set; }
-
-        /// <summary>
-        ///     Get or set the character used to separate field repetition content.
-        /// </summary>
-        public char RepetitionDelimiter { get; set; }
-
-        /// <summary>
-        ///     Get or set the character used to separate subcomponent-level content.
-        /// </summary>
-        public char SubcomponentDelimiter { get; set; }
 
         /// <summary>
         ///     Get or set segment content within this message.

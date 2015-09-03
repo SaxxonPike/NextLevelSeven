@@ -33,6 +33,11 @@
         public virtual char EscapeDelimiter { get; protected set; }
 
         /// <summary>
+        /// Get the escape character used to separate fields.
+        /// </summary>
+        public virtual char FieldDelimiter { get; protected set; }
+
+        /// <summary>
         ///     Get the repetition character used to separate multiple data in the same field.
         /// </summary>
         public virtual char RepetitionDelimiter { get; protected set; }
@@ -49,6 +54,7 @@
         {
             ComponentDelimiter = '^';
             EscapeDelimiter = '\\';
+            FieldDelimiter = '|';
             RepetitionDelimiter = '~';
             SubcomponentDelimiter = '&';
         }
@@ -61,6 +67,7 @@
         {
             ComponentDelimiter = other.ComponentDelimiter;
             EscapeDelimiter = other.EscapeDelimiter;
+            FieldDelimiter = other.FieldDelimiter;
             RepetitionDelimiter = other.RepetitionDelimiter;
             SubcomponentDelimiter = other.SubcomponentDelimiter;
         }

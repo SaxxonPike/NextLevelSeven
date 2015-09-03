@@ -9,13 +9,8 @@ namespace NextLevelSeven.Building
     /// <summary>
     ///     Represents an HL7 component.
     /// </summary>
-    public sealed class ComponentBuilder
+    public sealed class ComponentBuilder : BuilderBase
     {
-        /// <summary>
-        ///     Message's encoding configuration.
-        /// </summary>
-        private readonly EncodingConfiguration _encodingConfiguration;
-
         /// <summary>
         ///     Descendant builders.
         /// </summary>
@@ -26,9 +21,8 @@ namespace NextLevelSeven.Building
         ///     Create a component builder using the specified encoding configuration.
         /// </summary>
         /// <param name="encodingConfiguration">Message's encoding configuration.</param>
-        internal ComponentBuilder(EncodingConfiguration encodingConfiguration)
+        internal ComponentBuilder(EncodingConfiguration encodingConfiguration) : base(encodingConfiguration)
         {
-            _encodingConfiguration = encodingConfiguration;
         }
 
         /// <summary>
@@ -42,7 +36,7 @@ namespace NextLevelSeven.Building
             {
                 if (!_subcomponentBuilders.ContainsKey(index))
                 {
-                    _subcomponentBuilders[index] = new SubcomponentBuilder();
+                    _subcomponentBuilders[index] = new SubcomponentBuilder(EncodingConfiguration);
                 }
                 return _subcomponentBuilders[index];
             }
@@ -81,7 +75,7 @@ namespace NextLevelSeven.Building
             var index = 1;
 
             value = value ?? string.Empty;
-            foreach (var subcomponent in value.Split(_encodingConfiguration.SubcomponentDelimiter))
+            foreach (var subcomponent in value.Split(EncodingConfiguration.SubcomponentDelimiter))
             {
                 Subcomponent(index++, subcomponent);
             }
@@ -146,7 +140,7 @@ namespace NextLevelSeven.Building
             {
                 while (index < subcomponent.Key)
                 {
-                    result.Append(_encodingConfiguration.SubcomponentDelimiter);
+                    result.Append(EncodingConfiguration.SubcomponentDelimiter);
                     index++;
                 }
 

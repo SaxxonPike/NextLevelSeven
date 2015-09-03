@@ -473,5 +473,25 @@ namespace NextLevelSeven.Core
         {
             return _message.ToString();
         }
+
+        /// <summary>
+        /// Get an escaped version of the string, using encoding characters from this message.
+        /// </summary>
+        /// <param name="data">Data to escape.</param>
+        /// <returns>Escaped data.</returns>
+        public string Escape(string data)
+        {
+            return _message.Escape(data);
+        }
+
+        /// <summary>
+        /// Get a string that has been unescaped from HL7.
+        /// </summary>
+        /// <param name="data">Data to unescape.</param>
+        /// <returns>Unescaped string.</returns>
+        public string UnEscape(string data)
+        {
+            return _message.UnEscape(data);
+        }
     }
 }

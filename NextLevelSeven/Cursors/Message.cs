@@ -36,6 +36,11 @@ namespace NextLevelSeven.Cursors
             get { return _encodingConfiguration; }
         }
 
+        public string Escape(string data)
+        {
+            return _encodingConfiguration.Escape(data);
+        }
+
         public override string Key
         {
             get { return KeyGuid.ToString(); }
@@ -56,6 +61,11 @@ namespace NextLevelSeven.Cursors
         public IEnumerable<ISegment> Segments
         {
             get { return new SegmentEnumerable(this); }
+        }
+
+        public string UnEscape(string data)
+        {
+            return _encodingConfiguration.UnEscape(data);
         }
 
         public override bool Equals(object obj)

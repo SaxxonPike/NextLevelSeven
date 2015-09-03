@@ -9,7 +9,7 @@ namespace NextLevelSeven.Building
     /// <summary>
     ///     Represents an HL7 field repetition.
     /// </summary>
-    public sealed class RepetitionBuilder
+    public sealed class RepetitionBuilder : BuilderBase
     {
         /// <summary>
         ///     Descendant builders.
@@ -17,17 +17,12 @@ namespace NextLevelSeven.Building
         private readonly Dictionary<int, ComponentBuilder> _componentBuilders = new Dictionary<int, ComponentBuilder>();
 
         /// <summary>
-        ///     Message's encoding configuration.
-        /// </summary>
-        private readonly EncodingConfiguration _encodingConfiguration;
-
-        /// <summary>
         ///     Create a repetition builder using the specified encoding configuration.
         /// </summary>
         /// <param name="encodingConfiguration">Message's encoding configuration.</param>
         internal RepetitionBuilder(EncodingConfiguration encodingConfiguration)
+            : base(encodingConfiguration)
         {
-            _encodingConfiguration = encodingConfiguration;
         }
 
         /// <summary>
@@ -41,7 +36,7 @@ namespace NextLevelSeven.Building
             {
                 if (!_componentBuilders.ContainsKey(index))
                 {
-                    _componentBuilders[index] = new ComponentBuilder(_encodingConfiguration);
+                    _componentBuilders[index] = new ComponentBuilder(EncodingConfiguration);
                 }
                 return _componentBuilders[index];
             }
@@ -164,7 +159,7 @@ namespace NextLevelSeven.Building
             {
                 while (index < component.Key)
                 {
-                    result.Append(_encodingConfiguration.ComponentDelimiter);
+                    result.Append(EncodingConfiguration.ComponentDelimiter);
                     index++;
                 }
 

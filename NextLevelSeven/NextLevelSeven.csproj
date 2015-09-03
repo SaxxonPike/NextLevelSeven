@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Building\BuilderBase.cs" />
+    <Compile Include="Building\BuilderBaseExtensions.cs" />
     <Compile Include="Building\BuilderException.cs" />
     <Compile Include="Building\ComponentBuilder.cs" />
     <Compile Include="Building\FieldBuilder.cs" />
@@ -54,6 +56,7 @@
     <Compile Include="Codecs\IndexedCodec.cs" />
     <Compile Include="Core\ElementException.cs" />
     <Compile Include="Core\ElementExtensions.cs" />
+    <Compile Include="Core\EncodingConfigurationExtensions.cs" />
     <Compile Include="Core\Identity.cs" />
     <Compile Include="Core\IdentityProxy.cs" />
     <Compile Include="Core\IIdentity.cs" />
@@ -90,7 +93,6 @@
     <Compile Include="Cursors\SegmentEnumerable.cs" />
     <Compile Include="Cursors\Subcomponent.cs" />
     <Compile Include="Cursors\Dividers\ProxyStringDivider.cs" />
-    <Compile Include="Core\Escaping.cs" />
     <Compile Include="Diagnostics\ErrorMessages.cs" />
     <Compile Include="Diagnostics\ErrorMessages.Deutsch.cs" />
     <Compile Include="Diagnostics\ErrorMessages.English.cs" />
