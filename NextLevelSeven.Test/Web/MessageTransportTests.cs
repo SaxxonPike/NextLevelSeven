@@ -22,7 +22,9 @@ namespace NextLevelSeven.Test.Web
             Measure.ExecutionTime(() =>
             {
                 receiver = new BackgroundMessageReceiver(TestPort);
+                receiver.Start();
                 sender = new BackgroundMessageSender("http://localhost:" + TestPort + "/");
+                sender.Start();
             });
 
             Assert.AreEqual(0, receiver.Count, "Receiver queue is not empty.");

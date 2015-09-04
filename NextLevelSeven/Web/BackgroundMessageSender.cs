@@ -26,8 +26,6 @@ namespace NextLevelSeven.Web
             };
 
             Configuration = config;
-            Task = new Task(BackgroundMessageThreadMain);
-            Task.Start();
         }
 
         private readonly MessageSenderConfiguration Configuration;
@@ -77,6 +75,48 @@ namespace NextLevelSeven.Web
         ///     Event that is invoked whenever a message is sent.
         /// </summary>
         public event MessageTransportEventHandler MessageSent;
+
+        public override void Start()
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(GetType().Name);
+            }
+
+            if (Running)
+            {
+                return;
+            }
+
+            Task = new Task(BackgroundMessageThreadMain);
+            Task.ContinueWith(BackgroundMessageThreadExceptionHandler);
+            Task.Start();
+            base.Start();
+        }
+
+        public override void Stop()
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(GetType().Name);
+            }
+
+            if (!Running)
+            {
+                return;
+            }
+
+            base.Stop();
+            Ready = false;
+            Task = null;
+        }
+
+        /// <summary>
+        ///     Exception handler for the sender.
+        /// </summary>
+        private void BackgroundMessageThreadExceptionHandler(Task task)
+        {
+        }
 
         /// <summary>
         ///     Main method for the sender. This runs on a separate thread.

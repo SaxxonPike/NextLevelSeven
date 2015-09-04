@@ -65,7 +65,7 @@ namespace NextLevelSeven.Web
 
             while (!Ready)
             {
-                Thread.Sleep(1);
+                Thread.Sleep(100);
                 if (sw.ElapsedMilliseconds > timeoutMilliseconds)
                 {
                     throw new TimeoutException(ErrorMessages.Get(ErrorCode.TimedOutWaitingForTransportToBecomeReady));
