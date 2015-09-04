@@ -61,6 +61,8 @@
                         return "Subcomponent index must be greater than zero.";
                     case ErrorCode.TimedOutWaitingForTransportToBecomeReady:
                         return "Timed out waiting for transport to become ready.";
+                    case ErrorCode.TransportNotStarted:
+                        return "The transport is not running.";
                     case ErrorCode.UnableToParseDate:
                         return "Unable to parse date.";
                     case ErrorCode.Unspecified:

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using NextLevelSeven.Streaming;
 
 namespace NextLevelSeven.Web
@@ -24,9 +25,12 @@ namespace NextLevelSeven.Web
                 Address = address,
             };
 
-            Thread = new Thread(BackgroundMessageThreadMain);
-            Thread.Start(config);
+            Configuration = config;
+            Task = new Task(BackgroundMessageThreadMain);
+            Task.Start();
         }
+
+        private readonly MessageSenderConfiguration Configuration;
 
         /// <summary>
         ///     If true, Dispose() has been called on this sender.
@@ -50,10 +54,10 @@ namespace NextLevelSeven.Web
         {
             if (disposeAll)
             {
-                if (Thread != null)
+                if (Task != null)
                 {
                     Ready = false;
-                    Thread = null;
+                    Task = null;
                 }
                 Disposed = true;
             }
@@ -77,14 +81,13 @@ namespace NextLevelSeven.Web
         /// <summary>
         ///     Main method for the sender. This runs on a separate thread.
         /// </summary>
-        /// <param name="configObject">Sender configuration.</param>
-        private void BackgroundMessageThreadMain(object configObject)
+        private void BackgroundMessageThreadMain()
         {
-            var config = (MessageSenderConfiguration) configObject;
+            var config = Configuration;
 
             try
             {
-                while (!Disposed && !Aborted)
+                while (!Disposed && !Aborted && Running)
                 {
                     Ready = true;
                     Thread.Sleep(500);

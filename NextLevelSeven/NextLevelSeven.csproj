@@ -129,6 +129,7 @@
     <Compile Include="Web\MessageTransportConfigurationBase.cs" />
     <Compile Include="Web\MessageTransportEventArgs.cs" />
     <Compile Include="Web\MessageTransportEventHandler.cs" />
+    <Compile Include="Web\MessageTransportException.cs" />
     <Compile Include="Web\QueuedMessage.cs" />
   </ItemGroup>
   <ItemGroup />

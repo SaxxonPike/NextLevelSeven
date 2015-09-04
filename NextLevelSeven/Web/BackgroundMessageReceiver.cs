@@ -5,6 +5,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using NextLevelSeven.Core;
 using NextLevelSeven.MessageGeneration;
 using NextLevelSeven.Streaming;
@@ -29,7 +30,7 @@ namespace NextLevelSeven.Web
                 OwnFacility = Environment.UserDomainName,
                 OwnApplication = Process.GetCurrentProcess().ProcessName,
             };
-            Initialize(config);
+            Configuration = config;
         }
 
         /// <summary>
@@ -46,13 +47,15 @@ namespace NextLevelSeven.Web
                 OwnFacility = facility,
                 OwnApplication = application,
             };
-            Initialize(config);
+            Configuration = config;
         }
 
         /// <summary>
         ///     Internally used listener object.
         /// </summary>
         private HttpListener Listener { get; set; }
+
+        public readonly MessageReceiverConfiguration Configuration;
 
         /// <summary>
         ///     If true, Dispose() has been called on this receiver.
@@ -74,22 +77,15 @@ namespace NextLevelSeven.Web
         /// <param name="disposeAll">If true, clean up managed resources also.</param>
         protected virtual void Dispose(bool disposeAll)
         {
+            if (Disposed)
+            {
+                return;
+            }
+
             if (disposeAll)
             {
-                if (Thread == null)
-                {
-                    return;
-                }
-
-                Ready = false;
+                Stop();
                 Disposed = true;
-                if (Listener != null)
-                {
-                    var listener = Listener;
-                    Listener = null;
-                    listener.Close();
-                }
-                Thread = null;
             }
         }
 
@@ -109,23 +105,64 @@ namespace NextLevelSeven.Web
         public event MessageTransportEventHandler MessageRejected;
 
         /// <summary>
-        ///     Initialize the reader with the specified config.
+        ///     Begin processing messages.
         /// </summary>
-        /// <param name="config">Config to initialize with.</param>
-        private void Initialize(MessageReceiverConfiguration config)
+        public override void Start()
         {
-            Thread = new Thread(BackgroundMessageThreadMain);
-            Thread.Start(config);
-            WaitToBeReady();
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(GetType().Name);
+            }
+
+            if (Running)
+            {
+                return;
+            }
+
+            Task = new Task(BackgroundMessageThreadMain);
+            Task.ContinueWith(BackgroundMessageThreadExceptionHandler);
+            Task.Start();
+            base.Start();
+        }
+
+        /// <summary>
+        ///     Stop processing messages.
+        /// </summary>
+        public override void Stop()
+        {
+            if (Disposed)
+            {
+                throw new ObjectDisposedException(GetType().Name);
+            }
+
+            if (!Running)
+            {
+                return;
+            }
+
+            base.Stop();
+            Ready = false;
+            Task = null;
+        }
+
+        /// <summary>
+        /// Exception handler for the receiver.
+        /// </summary>
+        /// <param name="task"></param>
+        private void BackgroundMessageThreadExceptionHandler(Task task)
+        {
+            if (task.Exception != null)
+            {
+                throw task.Exception;
+            }
         }
 
         /// <summary>
         ///     Main method for the receiver. This runs on a separate thread.
         /// </summary>
-        /// <param name="configObject">Receiver configuration.</param>
-        private void BackgroundMessageThreadMain(object configObject)
+        private void BackgroundMessageThreadMain()
         {
-            var config = (MessageReceiverConfiguration) configObject;
+            var config = Configuration;
             var listener = new HttpListener();
             Listener = listener;
             var innerQueue = new List<IMessage>();

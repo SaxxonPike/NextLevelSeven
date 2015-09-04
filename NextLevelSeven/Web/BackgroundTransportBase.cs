@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
 using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Web
@@ -18,14 +19,35 @@ namespace NextLevelSeven.Web
         protected bool Aborted { get; set; }
 
         /// <summary>
-        ///     If true, the sender is ready to process further requests. If false, the sender is busy processing requests.
+        ///     If true, the transport is ready to process further requests. If false, the transport is busy processing requests.
         /// </summary>
         public bool Ready { get; protected set; }
 
         /// <summary>
+        ///     If true, transport is active. If false, the transport is not processing requests.
+        /// </summary>
+        public bool Running { get; protected set; }
+
+        /// <summary>
+        ///     Start processing messages on the transport.
+        /// </summary>
+        virtual public void Start()
+        {
+            Running = true;
+        }
+
+        /// <summary>
+        ///     Stop processing messages on the transport.
+        /// </summary>
+        virtual public void Stop()
+        {
+            Running = false;
+        }
+
+        /// <summary>
         ///     Thread the main method is running on.
         /// </summary>
-        protected Thread Thread { get; set; }
+        protected Task Task { get; set; }
 
         /// <summary>
         ///     Wait for the transport to become ready. An exception is thrown if this is not done before the timeout specified.
@@ -33,6 +55,11 @@ namespace NextLevelSeven.Web
         /// <param name="timeoutMilliseconds">Timeout of the wait in milliseconds.</param>
         public void WaitToBeReady(int timeoutMilliseconds = 10000)
         {
+            if (!Running)
+            {
+                throw new MessageTransportException(ErrorCode.TransportNotStarted);
+            }
+
             var sw = new Stopwatch();
             sw.Start();
 

@@ -26,7 +26,8 @@ namespace NextLevelSeven.Test.Web
         {
             using (var receiver = new BackgroundMessageReceiver(TransportPort))
             {
-                Measure.WaitTime(() => receiver.Ready, 10000, @"Mock receiver timed out.");
+                receiver.Start();
+                receiver.WaitToBeReady();
 
                 var request = WebRequest.Create("http://localhost:" + TransportPort + "/");
                 request.ContentType = type;

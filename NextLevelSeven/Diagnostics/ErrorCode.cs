@@ -63,5 +63,7 @@
         ElementsMustShareDirectAncestors,
         /* 0026 */
         SegmentBuilderHasInvalidSegmentType,
+        /* 0027 */
+        TransportNotStarted,
     }
 }
