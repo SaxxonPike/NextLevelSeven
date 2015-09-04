@@ -12,7 +12,7 @@ namespace NextLevelSeven.Web
     /// <summary>
     ///     A threaded HTTP sender queue for HL7v2.
     /// </summary>
-    public class BackgroundMessageSender : BackgroundTransportBase, IDisposable
+    public class BackgroundMessageSender : BackgroundTransportBase
     {
         /// <summary>
         ///     Create a sender, which will monitor the queue and perform POSTs to the target address with messages in it.
@@ -28,38 +28,10 @@ namespace NextLevelSeven.Web
             Configuration = config;
         }
 
+        /// <summary>
+        ///     Sender configuration.
+        /// </summary>
         private readonly MessageSenderConfiguration Configuration;
-
-        /// <summary>
-        ///     If true, Dispose() has been called on this sender.
-        /// </summary>
-        public bool Disposed { get; private set; }
-
-        /// <summary>
-        ///     Stop sending and clean up.
-        /// </summary>
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
-        ///     Clean up native resources.
-        /// </summary>
-        /// <param name="disposeAll">If true, clean up managed resources also.</param>
-        protected virtual void Dispose(bool disposeAll)
-        {
-            if (disposeAll)
-            {
-                if (Task != null)
-                {
-                    Ready = false;
-                    Task = null;
-                }
-                Disposed = true;
-            }
-        }
 
         /// <summary>
         ///     Event that is invoked whenever a message is accepted as valid by the receiver.
@@ -76,61 +48,18 @@ namespace NextLevelSeven.Web
         /// </summary>
         public event MessageTransportEventHandler MessageSent;
 
-        public override void Start()
-        {
-            if (Disposed)
-            {
-                throw new ObjectDisposedException(GetType().Name);
-            }
-
-            if (Running)
-            {
-                return;
-            }
-
-            Task = new Task(BackgroundMessageThreadMain);
-            Task.ContinueWith(BackgroundMessageThreadExceptionHandler);
-            Task.Start();
-            base.Start();
-        }
-
-        public override void Stop()
-        {
-            if (Disposed)
-            {
-                throw new ObjectDisposedException(GetType().Name);
-            }
-
-            if (!Running)
-            {
-                return;
-            }
-
-            base.Stop();
-            Ready = false;
-            Task = null;
-        }
-
-        /// <summary>
-        ///     Exception handler for the sender.
-        /// </summary>
-        private void BackgroundMessageThreadExceptionHandler(Task task)
-        {
-        }
-
         /// <summary>
         ///     Main method for the sender. This runs on a separate thread.
         /// </summary>
-        private void BackgroundMessageThreadMain()
+        override protected void BackgroundMessageThreadMain()
         {
             var config = Configuration;
-
             try
             {
                 while (!Disposed && !Aborted && Running)
                 {
+                    Thread.Sleep(1);
                     Ready = true;
-                    Thread.Sleep(500);
                     while (Count > 0)
                     {
                         Ready = false;
@@ -198,7 +127,7 @@ namespace NextLevelSeven.Web
                     }
                 }
             }
-            catch (ThreadAbortException)
+            catch (OperationCanceledException)
             {
                 Aborted = true;
             }

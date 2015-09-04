@@ -14,8 +14,6 @@ namespace NextLevelSeven.Test.Web
 {
     static public class MessageSenderMock
     {
-        private const int TransportPort = 49999;
-
         /// <summary>
         /// Build a receiver, send raw HL7 data to it, and return the response.
         /// </summary>
@@ -24,11 +22,12 @@ namespace NextLevelSeven.Test.Web
         /// <returns>Response from the receiver.</returns>
         static public string SendData(string data, string type = "x-application/hl7-v2+er7")
         {
-            using (var receiver = new BackgroundMessageReceiver(TransportPort))
+            var port = Randomized.Number(50000, 64000);
+            using (var receiver = new BackgroundMessageReceiver(port))
             {
                 receiver.Start();
 
-                var request = WebRequest.Create("http://localhost:" + TransportPort + "/");
+                var request = WebRequest.Create("http://localhost:" + port + "/");
                 request.ContentType = type;
                 request.Method = "POST";
 

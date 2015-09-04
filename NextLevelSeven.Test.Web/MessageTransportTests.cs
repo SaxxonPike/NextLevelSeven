@@ -10,22 +10,25 @@ namespace NextLevelSeven.Test.Web
     [TestClass]
     public class MessageTransportTests
     {
-        private const int TestPort = 49998;
-
         [TestMethod]
         public void MessageTransport_CanSendAndReceiveMessages()
         {
+            var port = Randomized.Number(50000, 64000);
             BackgroundMessageReceiver receiver = null;
             BackgroundMessageSender sender = null;
 
             Debug.WriteLine("Building sender and receiver...");
             Measure.ExecutionTime(() =>
             {
-                receiver = new BackgroundMessageReceiver(TestPort);
-                receiver.Start();
-                sender = new BackgroundMessageSender("http://localhost:" + TestPort + "/");
-                sender.Start();
+                receiver = new BackgroundMessageReceiver(port);
+                sender = new BackgroundMessageSender("http://localhost:" + port + "/");
             });
+
+            Debug.WriteLine("Spinning up receiver...");
+            Measure.ExecutionTime(receiver.Start);
+
+            Debug.WriteLine("Spinning up sender...");
+            Measure.ExecutionTime(sender.Start);
 
             Assert.AreEqual(0, receiver.Count, "Receiver queue is not empty.");
             Assert.AreEqual(0, sender.Count, "Sender queue is not empty.");
@@ -45,6 +48,8 @@ namespace NextLevelSeven.Test.Web
             Assert.AreEqual(0, sender.Count, "Sender queue is not empty after transmission.");
 
             Debug.WriteLine("Tearing down...");
+            receiver.Stop();
+            sender.Stop();
             receiver.Dispose();
             sender.Dispose();
         }

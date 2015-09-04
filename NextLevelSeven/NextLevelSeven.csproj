@@ -119,18 +119,6 @@
     <Compile Include="Utility\IIndexable.cs" />
     <Compile Include="Utility\IReadOnlyIndexable.cs" />
     <Compile Include="Utility\WrapperEnumerable.cs" />
-    <Compile Include="Web\BackgroundMessageReceiver.cs" />
-    <Compile Include="Web\BackgroundMessageSender.cs" />
-    <Compile Include="Web\BackgroundTransportBase.cs" />
-    <Compile Include="Web\MessageQueue.cs" />
-    <Compile Include="Web\MessageReceiverConfiguration.cs" />
-    <Compile Include="Web\MessageSenderConfiguration.cs" />
-    <Compile Include="Web\MessageSenderException.cs" />
-    <Compile Include="Web\MessageTransportConfigurationBase.cs" />
-    <Compile Include="Web\MessageTransportEventArgs.cs" />
-    <Compile Include="Web\MessageTransportEventHandler.cs" />
-    <Compile Include="Web\MessageTransportException.cs" />
-    <Compile Include="Web\QueuedMessage.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
