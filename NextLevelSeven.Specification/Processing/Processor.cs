@@ -13,7 +13,7 @@ namespace NextLevelSeven.Specification.Processing
 
         public event ProcessorEventHandler OnMessageUnhandled;
 
-        private readonly Dictionary<string, Dictionary<string, HashSet<ProcessorEventHandler>>> Handlers =
+        private readonly Dictionary<string, Dictionary<string, HashSet<ProcessorEventHandler>>> _handlers =
             new Dictionary<string, Dictionary<string, HashSet<ProcessorEventHandler>>>();
 
         public readonly object SyncRoot = new object();
@@ -29,8 +29,8 @@ namespace NextLevelSeven.Specification.Processing
                 messageTriggerEvent = EmptyKey;
             }
             var messageTypeNonGenericHandlers = GetNonGenericHandlers(messageType, messageTriggerEvent);
-            var messageTypeGenericHandlers = (Handlers[messageType].ContainsKey(EmptyKey))
-                ? Handlers[messageType][EmptyKey]
+            var messageTypeGenericHandlers = (_handlers[messageType].ContainsKey(EmptyKey))
+                ? _handlers[messageType][EmptyKey]
                 : Enumerable.Empty<ProcessorEventHandler>();
 
             return messageTypeNonGenericHandlers.Concat(messageTypeGenericHandlers);
@@ -46,11 +46,11 @@ namespace NextLevelSeven.Specification.Processing
             {
                 messageTriggerEvent = EmptyKey;
             }
-            if (!Handlers.ContainsKey(messageType))
+            if (!_handlers.ContainsKey(messageType))
             {
-                Handlers[messageType] = new Dictionary<string, HashSet<ProcessorEventHandler>>();
+                _handlers[messageType] = new Dictionary<string, HashSet<ProcessorEventHandler>>();
             }
-            var messageTypeHandlers = Handlers[messageType];
+            var messageTypeHandlers = _handlers[messageType];
 
             if (!messageTypeHandlers.ContainsKey(messageTriggerEvent))
             {
@@ -90,7 +90,7 @@ namespace NextLevelSeven.Specification.Processing
             // do not use GetNonGenericHandlers as it can modify the collections
             lock (SyncRoot)
             {
-                foreach (var mth in Handlers)
+                foreach (var mth in _handlers)
                 {
                     foreach (var mteh in mth.Value)
                     {
