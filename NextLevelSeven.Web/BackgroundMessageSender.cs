@@ -95,6 +95,11 @@ namespace NextLevelSeven.Web
                             var responseMessage = messageReader.Read();
                             var responseMsa = responseMessage["MSA"].FirstOrDefault();
 
+                            if (config.ResponseMessageRouter != null)
+                            {
+                                config.ResponseMessageRouter.Route(responseMessage);
+                            }
+
                             if (responseMsa == null)
                             {
                                 break;
