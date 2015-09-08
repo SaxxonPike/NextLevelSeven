@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NextLevelSeven.Routing;
 
 namespace NextLevelSeven.Core
 {
@@ -50,6 +51,17 @@ namespace NextLevelSeven.Core
         public static IEnumerable<ISegment> OnlySegments(this IMessage message, IEnumerable<string> segmentTypes)
         {
             return message.Segments.Where(s => !segmentTypes.Contains(s.Type));
+        }
+
+        /// <summary>
+        /// Send the message to a router.
+        /// </summary>
+        /// <param name="message">Message to route.</param>
+        /// <param name="router">Router to route the message through.</param>
+        /// <returns>If true, the router has successfully routed the message.</returns>
+        public static bool RouteTo(this IMessage message, IRouter router)
+        {
+            return router.Route(message);
         }
 
         /// <summary>
