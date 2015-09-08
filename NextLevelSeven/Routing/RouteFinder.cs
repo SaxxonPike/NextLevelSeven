@@ -20,7 +20,7 @@ namespace NextLevelSeven.Routing
         {
             foreach (var router in routers)
             {
-                Routes.Add(router);
+                Routers.Add(router);
             }
         }
 
@@ -32,14 +32,14 @@ namespace NextLevelSeven.Routing
         {
             foreach (var router in routers)
             {
-                Routes.Add(router);
+                Routers.Add(router);
             }            
         }
 
         /// <summary>
         /// List of routes to go through.
         /// </summary>
-        public readonly IList<IRouter> Routes = new List<IRouter>();
+        public readonly IList<IRouter> Routers = new List<IRouter>();
 
         /// <summary>
         /// Go through the list of routes, returning true when one is successful. If no routes succeed, returns false.
@@ -48,7 +48,7 @@ namespace NextLevelSeven.Routing
         /// <returns>True if route succeeds. False otherwise.</returns>
         public bool Route(IMessage message)
         {
-            return Routes.Any(r => r.Route(message));
+            return Routers.Any(r => r.Route(message));
         }
     }
 }
