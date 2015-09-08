@@ -104,7 +104,6 @@
     <Compile Include="Routing\IRouter.cs" />
     <Compile Include="Routing\ListenerRouter.cs" />
     <Compile Include="Routing\RouteFinder.cs" />
-    <Compile Include="Routing\UnconditionalMethodRouter.cs" />
     <Compile Include="Routing\ConditionalRouter.cs" />
     <Compile Include="Streaming\MessageStreamException.cs" />
     <Compile Include="Streaming\MessageStreamReader.cs" />
