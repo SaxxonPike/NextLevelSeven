@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Building;
+using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Test.Building
 {
@@ -232,6 +233,31 @@ namespace NextLevelSeven.Test.Building
                 .Subcomponents(1, 3, 1, 1, 1, subcomponent1, subcomponent2);
             Assert.AreEqual(string.Format("MSH|^~\\&|{0}&{1}", subcomponent1, subcomponent2), builder.ToString(),
                 @"Unexpected result.");
+        }
+
+        [TestMethod]
+        public void MessageBuilder_ConvertsToMessage()
+        {
+            var builder = new MessageBuilder(ExampleMessages.Standard);
+            var beforeMessageString = builder.ToString();
+            var message = builder.ToMessage();
+            Assert.AreEqual(beforeMessageString, message.ToString(), "Conversion from builder to message failed.");
+        }
+
+        [TestMethod]
+        public void MessageBuilder_ConvertsFromMessage()
+        {
+            var message = new Message(ExampleMessages.Standard);
+            var beforeBuilderString = message.ToString();
+            var afterBuilder = new MessageBuilder(message);
+            Assert.AreEqual(beforeBuilderString, afterBuilder.ToString(), "Conversion from message to builder failed.");
+        }
+
+        [TestMethod]
+        public void MessageBuilder_ConvertsMshCorrectly()
+        {
+            var builder = new MessageBuilder(ExampleMessages.MshOnly);
+            Assert.AreEqual(ExampleMessages.MshOnly, builder.ToString());
         }
 
     }

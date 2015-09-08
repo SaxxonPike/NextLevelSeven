@@ -19,6 +19,13 @@ namespace NextLevelSeven.Test.Core
         }
 
         [TestMethod]
+        public void Message_ConvertsMshCorrectly()
+        {
+            var message = new Message(ExampleMessages.MshOnly);
+            Assert.AreEqual(ExampleMessages.MshOnly, message.ToString(), "MSH conversion back to string did not match.");
+        }
+
+        [TestMethod]
         public void Message_ReturnsBasicMessage()
         {
             var message = new Message();

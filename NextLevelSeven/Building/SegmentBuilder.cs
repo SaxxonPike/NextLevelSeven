@@ -139,14 +139,7 @@ namespace NextLevelSeven.Building
         public SegmentBuilder Fields(params string[] fields)
         {
             _fieldBuilders.Clear();
-            var index = 0;
-
-            foreach (var field in fields)
-            {
-                Field(index++, field);
-            }
-
-            return this;
+            return Fields(0, fields);
         }
 
         /// <summary>
@@ -157,11 +150,11 @@ namespace NextLevelSeven.Building
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
         public SegmentBuilder Fields(int startIndex, params string[] fields)
         {
-            var index = startIndex;
             foreach (var field in fields)
             {
-                Field(index++, field);
+                Field(startIndex++, field);
             }
+
             return this;
         }
 
@@ -212,8 +205,15 @@ namespace NextLevelSeven.Building
         {
             if (value.Length > 3)
             {
-                FieldDelimiter = value[3];
-                return Fields(value.Split(FieldDelimiter));
+                var values = value.Split(FieldDelimiter);
+                if (value.Substring(0, 3) == "MSH")
+                {
+                    FieldDelimiter = value[3];
+                    var valueList = values.ToList();
+                    valueList.Insert(1, new string(FieldDelimiter, 1));
+                    values = valueList.ToArray();
+                }
+                return Fields(values.ToArray());
             }
 
             return this;
