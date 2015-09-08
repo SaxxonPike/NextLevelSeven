@@ -12,19 +12,25 @@ using NextLevelSeven.Web;
 
 namespace NextLevelSeven.Test.Web
 {
-    static public class MessageSenderMock
+    public static class MessageSenderMock
     {
+        private readonly static MessageTransportEventHandler BlankHandler = (sender, e) => { };
+
         /// <summary>
         /// Build a receiver, send raw HL7 data to it, and return the response.
         /// </summary>
         /// <param name="data">Data to send.</param>
         /// <param name="type">MIME type, defaults to HL7-ER7.</param>
+        /// <param name="receivedHandler">Event handler for when a message is received.</param>
         /// <returns>Response from the receiver.</returns>
-        static public string SendData(string data, string type = "x-application/hl7-v2+er7")
+        static public string SendData(string data, string type = "x-application/hl7-v2+er7", MessageTransportEventHandler receivedHandler = null)
         {
+            receivedHandler = receivedHandler ?? BlankHandler;
+
             var port = Randomized.Number(50000, 64000);
             using (var receiver = new BackgroundMessageReceiver(port))
             {
+                receiver.MessageReceived += receivedHandler;
                 receiver.Start();
 
                 var request = WebRequest.Create("http://localhost:" + port + "/");
@@ -62,20 +68,22 @@ namespace NextLevelSeven.Test.Web
         /// Build a receiver, send a message to it, and return the response.
         /// </summary>
         /// <param name="message">Message to send.</param>
+        /// <param name="receivedHandler">Event handler for when a message is received.</param>
         /// <returns>Response from the receiver.</returns>
-        static public string SendMessage(IMessage message)
+        static public string SendMessage(IMessage message, MessageTransportEventHandler receivedHandler = null)
         {
-            return SendData(message.ToString());
+            return SendData(message.ToString(), receivedHandler: receivedHandler);
         }
 
         /// <summary>
         /// Build a receiver, send plain text to it, and return the response.
         /// </summary>
         /// <param name="text">Text to send.</param>
+        /// <param name="receivedHandler">Event handler for when a message is received.</param>
         /// <returns>Response from the receiver.</returns>
-        static public string SendPlain(string text)
+        static public string SendPlain(string text, MessageTransportEventHandler receivedHandler = null)
         {
-            return SendData(text, "text/plain");
+            return SendData(text, "text/plain", receivedHandler);
         }
     }
 }

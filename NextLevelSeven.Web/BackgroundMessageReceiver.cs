@@ -78,7 +78,7 @@ namespace NextLevelSeven.Web
         /// <summary>
         ///     Main method for the receiver. This runs on a separate thread.
         /// </summary>
-        override protected void BackgroundMessageThreadMain()
+        override protected async void BackgroundMessageThreadMain()
         {
             var config = Configuration;
             var listener = new HttpListener();
@@ -94,7 +94,7 @@ namespace NextLevelSeven.Web
                 {
                     Thread.Sleep(1);
                     Ready = true;
-                    var context = listener.GetContext();
+                    var context = await listener.GetContextAsync();
                     Ready = false;
                     var httpRequest = context.Request;
                     var httpResponse = context.Response;
@@ -114,7 +114,7 @@ namespace NextLevelSeven.Web
                             try
                             {
                                 message = ReadMessageStream(mem);
-                                if (MessageReceived != null)
+                                if (message != null && MessageReceived != null)
                                 {
                                     MessageReceived(this, new MessageTransportEventArgs(null, message.ToString()));
                                 }
