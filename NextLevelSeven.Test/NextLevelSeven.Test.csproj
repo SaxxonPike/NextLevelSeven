@@ -72,6 +72,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Race.cs" />
     <Compile Include="Randomized.cs" />
+    <Compile Include="Routing\ConditionalMethodRouterTests.cs" />
+    <Compile Include="Routing\ConditionalRouterTests.cs" />
+    <Compile Include="Routing\ListenerRouterTests.cs" />
+    <Compile Include="Routing\NullRouter.cs" />
+    <Compile Include="Routing\NullRouterTests.cs" />
+    <Compile Include="Routing\RouteFinderTests.cs" />
+    <Compile Include="Routing\UnconditionalMethodRouterTests.cs" />
     <Compile Include="Streaming\Hl7StreamReaderTests.cs" />
     <Compile Include="Streaming\Hl7TextReaderTests.cs" />
     <Compile Include="Streaming\MlpStreamReaderTests.cs" />

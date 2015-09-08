@@ -13,6 +13,30 @@ namespace NextLevelSeven.Routing
     sealed public class RouteFinder : IRouter
     {
         /// <summary>
+        /// Create a route finder with the specified routes initially in the list.
+        /// </summary>
+        /// <param name="routers">Routers to put in the list.</param>
+        public RouteFinder(params IRouter[] routers)
+        {
+            foreach (var router in routers)
+            {
+                Routes.Add(router);
+            }
+        }
+
+        /// <summary>
+        /// Create a route finder with the specified routes initially in the list.
+        /// </summary>
+        /// <param name="routers">Routers to put in the list.</param>
+        public RouteFinder(IEnumerable<IRouter> routers)
+        {
+            foreach (var router in routers)
+            {
+                Routes.Add(router);
+            }            
+        }
+
+        /// <summary>
         /// List of routes to go through.
         /// </summary>
         public readonly IList<IRouter> Routes = new List<IRouter>();

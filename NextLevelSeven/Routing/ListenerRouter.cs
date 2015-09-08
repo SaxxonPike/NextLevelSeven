@@ -12,7 +12,12 @@ namespace NextLevelSeven.Routing
     /// </summary>
     public class ListenerRouter : IRouter
     {
-        public ListenerRouter(Action<IMessage> action, IRouter targetRouter)
+        /// <summary>
+        /// Create a listener router that calls a method on all messages and then unconditionally passes them through.
+        /// </summary>
+        /// <param name="action"></param>
+        /// <param name="targetRouter"></param>
+        public ListenerRouter(Action<IMessage> action, IRouter targetRouter = null)
         {
             Action = action;
             TargetRouter = targetRouter;
@@ -26,7 +31,7 @@ namespace NextLevelSeven.Routing
         /// <summary>
         /// Router to route messages to when the condition is met.
         /// </summary>
-        public readonly IRouter TargetRouter;
+        public IRouter TargetRouter;
 
         /// <summary>
         /// Route a message through the listener and to the target router.
@@ -36,7 +41,7 @@ namespace NextLevelSeven.Routing
         public bool Route(IMessage message)
         {
             Action(message);
-            return TargetRouter.Route(message);
+            return TargetRouter == null || TargetRouter.Route(message);
         }
     }
 }
