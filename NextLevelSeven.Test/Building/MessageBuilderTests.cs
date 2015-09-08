@@ -260,5 +260,17 @@ namespace NextLevelSeven.Test.Building
             Assert.AreEqual(ExampleMessages.MshOnly, builder.ToString());
         }
 
+        [TestMethod]
+        public void MessageBuilder_UsesReasonableMemory_WhenParsingLargeMessages()
+        {
+            var before = GC.GetTotalMemory(true);
+            var message = new MessageBuilder();
+            message.Field(1000000, 1000000, Randomized.String());
+            var messageString = message.ToString();
+            var usage = GC.GetTotalMemory(false) - before;
+            var overhead = usage - (messageString.Length << 1);
+            var usePerCharacter = (overhead / (messageString.Length << 1));
+            Assert.IsTrue(usePerCharacter < 10);
+        }
     }
 }

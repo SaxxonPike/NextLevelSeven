@@ -165,5 +165,18 @@ namespace NextLevelSeven.Test.Core
             Assert.IsTrue(message.HasSignificantDescendants,
                 @"Message should claim to have significant descendants if any segments do.");
         }
+
+        [TestMethod]
+        public void Message_UsesReasonableMemory_WhenParsingLargeMessages()
+        {
+            var before = GC.GetTotalMemory(true);
+            var message = new Message();
+            message[1000000][1000000].Value = Randomized.String();
+            var messageString = message.ToString();
+            var usage = GC.GetTotalMemory(false) - before;
+            var overhead = usage - (messageString.Length << 1);
+            var usePerCharacter = (overhead / (messageString.Length << 1));
+            Assert.IsTrue(usePerCharacter < 20);
+        }
     }
 }
