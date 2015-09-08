@@ -32,6 +32,17 @@ namespace NextLevelSeven.Test.Routing
         }
 
         [TestMethod]
+        public void ListenerRouter_PassesCorrectData()
+        {
+            IMessage routedData = null;
+            var message = new Message(ExampleMessages.Standard);
+            var router = new ListenerRouter(m => routedData = m);
+            Assert.IsNull(routedData, "Test initialized incorrectly.");
+            message.RouteTo(router);
+            Assert.AreEqual(message.ToString(), routedData.ToString());
+        }
+
+        [TestMethod]
         public void ListenerRouter_ReturnsSuccessIfNoTargetRouter()
         {
             var routed = false;

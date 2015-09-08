@@ -17,7 +17,7 @@ namespace NextLevelSeven.Routing
         /// </summary>
         /// <param name="condition">Condition that must be met for messages to be routed.</param>
         /// <param name="targetRouter">Router to route messages to when they meet the condition.</param>
-        public ConditionalRouter(Func<IMessage, bool> condition, IRouter targetRouter)
+        public ConditionalRouter(Func<IMessage, bool> condition, IRouter targetRouter = null)
         {
             TargetRouter = targetRouter;
             Condition = condition;
@@ -31,7 +31,7 @@ namespace NextLevelSeven.Routing
         /// <summary>
         /// Router to route messages to when the condition is met.
         /// </summary>
-        public readonly IRouter TargetRouter;
+        public IRouter TargetRouter;
 
         /// <summary>
         /// If the condition is met, route the message and return true. Returns false otherwise.
@@ -42,7 +42,7 @@ namespace NextLevelSeven.Routing
         {
             if (Condition(message))
             {
-                return TargetRouter.Route(message);
+                return TargetRouter == null || TargetRouter.Route(message);
             }
             return false;
         }

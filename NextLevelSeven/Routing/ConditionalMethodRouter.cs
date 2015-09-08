@@ -42,7 +42,10 @@ namespace NextLevelSeven.Routing
         {
             if (Condition(message))
             {
-                Action(message);
+                if (Action != null)
+                {
+                    Action(message);                    
+                }
                 return true;                
             }
             return false;

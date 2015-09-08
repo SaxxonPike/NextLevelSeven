@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Test.Routing
 {
@@ -31,6 +32,15 @@ namespace NextLevelSeven.Test.Routing
             Assert.IsFalse(route.Routed, "Route should not be considered routed initially.");
             route.Route(null);
             Assert.IsFalse(route.Routed, "Route should not be considered routed when initialized False.");
+        }
+
+        [TestMethod]
+        public void NullRouter_RetainsLastMessage()
+        {
+            var message = new Message(ExampleMessages.Standard);
+            var router = new NullRouter(true);
+            router.Route(message);
+            Assert.AreEqual(message.ToString(), router.LastMessage.ToString(), "Message mismatch.");
         }
     }
 }

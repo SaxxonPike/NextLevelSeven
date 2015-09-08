@@ -17,12 +17,15 @@ namespace NextLevelSeven.Test.Routing
 
         public bool Route(IMessage message)
         {
+            LastMessage = message;
             Routed = Routed || Success;
             Checked = true;
             return Success;
         }
 
         public bool Checked { get; private set; }
+
+        public IMessage LastMessage { get; private set; }
 
         public bool Routed { get; private set; }
 
