@@ -20,7 +20,7 @@ namespace NextLevelSeven.Test.Building
                     builder.Segment(i + 2, testString);
                 }
                 Assert.AreEqual(expectedString, builder.ToString());
-            }, 1000);
+            }, 3000);
             AssertTime.IsWithin(500, time);
         }
 
@@ -37,7 +37,7 @@ namespace NextLevelSeven.Test.Building
                     builder.Segment(i + 2, testString);
                 }
                 Assert.AreEqual(expectedString, builder.ToString());
-            }, 100);
+            }, 300);
             AssertTime.IsWithin(500, time);
         }
 

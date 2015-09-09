@@ -169,5 +169,25 @@ namespace NextLevelSeven.Test.Building
             Assert.AreEqual(string.Format("MSH|^~\\&|{0}&{1}", subcomponent1, subcomponent2), builder.ToString(),
                 @"Unexpected result.");
         }
+
+        [TestMethod]
+        public void SegmentBuilder_ChangesEncodingCharactersIfMessageChanges()
+        {
+            var messageBuilder = new MessageBuilder();
+            var builder = messageBuilder[1];
+            Assert.AreEqual(builder.FieldDelimiter, '|');
+            messageBuilder.FieldDelimiter = ':';
+            Assert.AreEqual(builder.FieldDelimiter, ':');
+        }
+
+        [TestMethod]
+        public void SegmentBuilder_ChangesEncodingCharactersIfMshSegmentChanges()
+        {
+            var messageBuilder = new MessageBuilder();
+            var builder = messageBuilder[1];
+            Assert.AreEqual(builder.FieldDelimiter, '|');
+            builder.Field(1, ":");
+            Assert.AreEqual(builder.FieldDelimiter, ':');
+        }
     }
 }

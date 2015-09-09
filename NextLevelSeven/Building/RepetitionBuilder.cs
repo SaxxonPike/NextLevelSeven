@@ -9,7 +9,7 @@ namespace NextLevelSeven.Building
     /// <summary>
     ///     Represents an HL7 field repetition.
     /// </summary>
-    public class RepetitionBuilder : BuilderBaseDescendant
+    sealed public class RepetitionBuilder : BuilderBaseDescendant
     {
         /// <summary>
         ///     Descendant builders.
@@ -30,7 +30,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="index">Index within the field repetition to get the builder from.</param>
         /// <returns>Component builder for the specified index.</returns>
-        virtual public ComponentBuilder this[int index]
+        public ComponentBuilder this[int index]
         {
             get
             {
@@ -45,7 +45,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get the number of components in this field repetition, including components with no content.
         /// </summary>
-        virtual public int Count
+        public int Count
         {
             get { return _componentBuilders.Max(kv => kv.Key); }
         }
@@ -53,7 +53,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set component content within this field repetition.
         /// </summary>
-        virtual public IEnumerableIndexable<int, string> Values
+        public IEnumerableIndexable<int, string> Values
         {
             get
             {
@@ -62,6 +62,35 @@ namespace NextLevelSeven.Building
                     () => Count,
                     1);
             }
+        }
+
+        /// <summary>
+        /// Get or set the field repetition string.
+        /// </summary>
+        public string Value
+        {
+            get
+            {
+                var index = 1;
+                var result = new StringBuilder();
+
+                foreach (var component in _componentBuilders.OrderBy(i => i.Key))
+                {
+                    while (index < component.Key)
+                    {
+                        result.Append(EncodingConfiguration.ComponentDelimiter);
+                        index++;
+                    }
+
+                    if (component.Key > 0)
+                    {
+                        result.Append(component.Value);
+                    }
+                }
+
+                return result.ToString();
+            }
+            set { FieldRepetition(value); }
         }
 
         /// <summary>
@@ -170,24 +199,7 @@ namespace NextLevelSeven.Building
         /// <returns>Converted field repetition.</returns>
         public override string ToString()
         {
-            var index = 1;
-            var result = new StringBuilder();
-
-            foreach (var component in _componentBuilders.OrderBy(i => i.Key))
-            {
-                while (index < component.Key)
-                {
-                    result.Append(EncodingConfiguration.ComponentDelimiter);
-                    index++;
-                }
-
-                if (component.Key > 0)
-                {
-                    result.Append(component.Value);
-                }
-            }
-
-            return result.ToString();
+            return Value;
         }
     }
 }

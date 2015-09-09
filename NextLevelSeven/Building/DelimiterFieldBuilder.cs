@@ -87,7 +87,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         /// Get or set the field type value.
         /// </summary>
-        public string Value
+        override public string Value
         {
             get { return new string(FieldDelimiter, 1); }
             set

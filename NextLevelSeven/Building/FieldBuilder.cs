@@ -66,6 +66,35 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
+        /// Get or set the field string.
+        /// </summary>
+        virtual public string Value
+        {
+            get
+            {
+                var index = 1;
+                var result = new StringBuilder();
+
+                foreach (var repetition in _repetitionBuilders.OrderBy(i => i.Key))
+                {
+                    while (index < repetition.Key)
+                    {
+                        result.Append(EncodingConfiguration.RepetitionDelimiter);
+                        index++;
+                    }
+
+                    if (repetition.Key > 0)
+                    {
+                        result.Append(repetition.Value);
+                    }
+                }
+
+                return result.ToString();
+            }
+            set { Field(value); }
+        }
+
+        /// <summary>
         ///     Set a component's content.
         /// </summary>
         /// <param name="repetition">Field repetition index.</param>
@@ -222,24 +251,7 @@ namespace NextLevelSeven.Building
         /// <returns>Converted field.</returns>
         public override string ToString()
         {
-            var index = 1;
-            var result = new StringBuilder();
-
-            foreach (var repetition in _repetitionBuilders.OrderBy(i => i.Key))
-            {
-                while (index < repetition.Key)
-                {
-                    result.Append(EncodingConfiguration.RepetitionDelimiter);
-                    index++;
-                }
-
-                if (repetition.Key > 0)
-                {
-                    result.Append(repetition.Value);
-                }
-            }
-
-            return result.ToString();
+            return Value;
         }
     }
 }

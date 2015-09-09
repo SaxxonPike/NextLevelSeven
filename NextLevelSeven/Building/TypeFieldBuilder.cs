@@ -81,7 +81,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         /// Get or set the field type value.
         /// </summary>
-        public string Value
+        override public string Value
         {
             get { return _value; }
             set

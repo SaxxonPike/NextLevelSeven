@@ -87,6 +87,20 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
+        /// Get or set the message string.
+        /// </summary>
+        public string Value
+        {
+            get
+            {
+                var result = string.Join("\xD",
+                    _segmentBuilders.OrderBy(i => i.Key).Select(i => i.Value.ToString()));
+                return result;                
+            }
+            set { Message(value); }
+        }
+
+        /// <summary>
         ///     Set a component's content.
         /// </summary>
         /// <param name="segmentIndex">Segment index.</param>
@@ -345,9 +359,7 @@ namespace NextLevelSeven.Building
         /// <returns>Converted message.</returns>
         public override string ToString()
         {
-            var result = string.Join("\xD",
-                _segmentBuilders.OrderBy(i => i.Key).Select(i => i.Value.ToString()));
-            return result;
+            return Value;
         }
     }
 }

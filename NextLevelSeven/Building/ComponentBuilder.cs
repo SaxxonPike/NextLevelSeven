@@ -66,6 +66,35 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
+        /// Get or set the component string.
+        /// </summary>
+        public string Value
+        {
+            get
+            {
+                var index = 1;
+                var result = new StringBuilder();
+
+                foreach (var subcomponent in _subcomponentBuilders.OrderBy(i => i.Key))
+                {
+                    while (index < subcomponent.Key)
+                    {
+                        result.Append(EncodingConfiguration.SubcomponentDelimiter);
+                        index++;
+                    }
+
+                    if (subcomponent.Key > 0)
+                    {
+                        result.Append(subcomponent.Value);
+                    }
+                }
+
+                return result.ToString();
+            }
+            set { Component(value); }
+        }
+
+        /// <summary>
         ///     Set this component's content.
         /// </summary>
         /// <param name="value">New value.</param>
@@ -134,24 +163,7 @@ namespace NextLevelSeven.Building
         /// <returns>Converted component.</returns>
         public override string ToString()
         {
-            var index = 1;
-            var result = new StringBuilder();
-
-            foreach (var subcomponent in _subcomponentBuilders.OrderBy(i => i.Key))
-            {
-                while (index < subcomponent.Key)
-                {
-                    result.Append(EncodingConfiguration.SubcomponentDelimiter);
-                    index++;
-                }
-
-                if (subcomponent.Key > 0)
-                {
-                    result.Append(subcomponent.Value);
-                }
-            }
-
-            return result.ToString();
+            return Value;
         }
     }
 }

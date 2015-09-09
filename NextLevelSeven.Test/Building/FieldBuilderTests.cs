@@ -129,5 +129,23 @@ namespace NextLevelSeven.Test.Building
             Assert.AreEqual(string.Format("{0}&{1}", subcomponent1, subcomponent2), builder.ToString(),
                 @"Unexpected result.");
         }
+
+        [TestMethod]
+        public void FieldBuilder_ChangesEncodingCharactersIfMessageChanges()
+        {
+            var messageBuilder = new MessageBuilder();
+            var builder = messageBuilder[1][3];
+            Assert.AreEqual(builder.FieldDelimiter, '|');
+            messageBuilder.FieldDelimiter = ':';
+            Assert.AreEqual(builder.FieldDelimiter, ':');
+        }
+
+        [TestMethod]
+        public void FieldBuilder_ChangesEncodingCharactersIfSelfChanges()
+        {
+            var builder = new MessageBuilder()[1][2];
+            builder.Field("$~\\&");
+            Assert.AreEqual(builder.ComponentDelimiter, '$');
+        }
     }
 }

@@ -349,8 +349,20 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_CanNotChangeTypeFromMsh()
         {
+            // NOTE: by design.
+            // (change this test if the design changes.)
             var builder = new MessageBuilder();
             It.Throws<BuilderException>(() => builder.Field(1, 0, "PID"));
+        }
+
+        [TestMethod]
+        public void MessageBuilder_CanNotChangeTypeToMsh()
+        {
+            // NOTE: by design.
+            // (change this test if the design changes.)
+            var builder = new MessageBuilder();
+            builder.Field(2, 0, "PID");
+            It.Throws<BuilderException>(() => builder.Field(2, 0, "MSH"));
         }
 
         [TestMethod]
@@ -376,7 +388,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_CanSetMsh2Escape()
         {
-            // note: changing escape code does not affect anything but MSH-2 for design reasons.
+            // NOTE: changing escape code does not affect anything but MSH-2 for design reasons.
             // (change this message if the functionality is ever added and this test updated.)
             var id1 = Randomized.String();
             var id2 = Randomized.String();

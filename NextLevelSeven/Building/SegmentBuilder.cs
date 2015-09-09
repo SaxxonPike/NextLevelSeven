@@ -98,6 +98,51 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
+        /// Get or set the segment string.
+        /// </summary>
+        public string Value
+        {
+            get
+            {
+                var index = 0;
+                var result = new StringBuilder();
+
+                if (_fieldBuilders.Count <= 0)
+                {
+                    return string.Empty;
+                }
+
+                var typeIsMsh = (_fieldBuilders.ContainsKey(0) && _fieldBuilders[0].ToString() == "MSH");
+
+                foreach (var field in _fieldBuilders.OrderBy(i => i.Key))
+                {
+                    if (field.Key < 0)
+                    {
+                        continue;
+                    }
+
+                    while (index < field.Key)
+                    {
+                        result.Append(FieldDelimiter);
+                        index++;
+                    }
+
+                    if (typeIsMsh && index == 1)
+                    {
+                        index++;
+                    }
+                    else
+                    {
+                        result.Append(field.Value);
+                    }
+                }
+
+                return result.ToString();
+            }
+            set { Segment(value); }
+        }
+
+        /// <summary>
         ///     Set a component's content.
         /// </summary>
         /// <param name="fieldIndex">Field index.</param>
@@ -329,40 +374,7 @@ namespace NextLevelSeven.Building
         /// <returns>Converted segment.</returns>
         public override string ToString()
         {
-            var index = 0;
-            var result = new StringBuilder();
-
-            if (_fieldBuilders.Count <= 0)
-            {
-                return string.Empty;
-            }
-
-            var typeIsMsh = (_fieldBuilders.ContainsKey(0) && _fieldBuilders[0].ToString() == "MSH");
-
-            foreach (var field in _fieldBuilders.OrderBy(i => i.Key))
-            {
-                if (field.Key < 0)
-                {
-                    continue;
-                }
-
-                while (index < field.Key)
-                {
-                    result.Append(FieldDelimiter);
-                    index++;
-                }
-
-                if (typeIsMsh && index == 1)
-                {
-                    index++;
-                }
-                else
-                {
-                    result.Append(field.Value);
-                }
-            }
-
-            return result.ToString();
+            return Value;
         }
     }
 }

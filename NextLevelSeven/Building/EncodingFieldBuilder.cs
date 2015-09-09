@@ -131,7 +131,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set this fixed field's value.
         /// </summary>
-        public string Value
+        override public string Value
         {
             get
             {

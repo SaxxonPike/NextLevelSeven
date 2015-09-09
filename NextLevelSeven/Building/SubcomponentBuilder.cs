@@ -35,7 +35,17 @@ namespace NextLevelSeven.Building
         /// <returns>Converted subcomponent.</returns>
         public override string ToString()
         {
-            return _value ?? string.Empty;
+            return Value;
         }
+
+        /// <summary>
+        /// Get or set the component string.
+        /// </summary>
+        public string Value
+        {
+            get { return _value ?? string.Empty; }
+            set { Subcomponent(value); }
+        }
+
     }
 }
