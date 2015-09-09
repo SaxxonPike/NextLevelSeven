@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using NextLevelSeven.Streaming;
 
 namespace NextLevelSeven.Web
@@ -25,13 +24,13 @@ namespace NextLevelSeven.Web
                 Address = address,
             };
 
-            Configuration = config;
+            _configuration = config;
         }
 
         /// <summary>
         ///     Sender configuration.
         /// </summary>
-        private readonly MessageSenderConfiguration Configuration;
+        private readonly MessageSenderConfiguration _configuration;
 
         /// <summary>
         ///     Event that is invoked whenever a message is accepted as valid by the receiver.
@@ -53,7 +52,7 @@ namespace NextLevelSeven.Web
         /// </summary>
         override protected void BackgroundMessageThreadMain()
         {
-            var config = Configuration;
+            var config = _configuration;
             try
             {
                 while (!Disposed && !Aborted && Running)

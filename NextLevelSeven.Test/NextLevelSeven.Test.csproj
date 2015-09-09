@@ -71,6 +71,7 @@
     <Compile Include="MessageGeneration\AckMessageGeneratorTests.cs" />
     <Compile Include="MessageGeneration\MessageGeneratorPerformanceTests.cs" />
     <Compile Include="MessageGeneration\MessageGeneratorTests.cs" />
+    <Compile Include="NullMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Race.cs" />
     <Compile Include="Randomized.cs" />

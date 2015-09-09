@@ -50,7 +50,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="MessageReceiverMock.cs" />
     <Compile Include="MessageReceiverTests.cs" />
     <Compile Include="MessageSenderMock.cs" />
     <Compile Include="MessageSenderTests.cs" />

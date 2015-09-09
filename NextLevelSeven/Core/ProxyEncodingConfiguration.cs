@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NextLevelSeven.Core
 {
@@ -14,6 +10,7 @@ namespace NextLevelSeven.Core
         /// <summary>
         ///     Create an encoding configuration from a message or segment.
         /// </summary>
+        /// <param name="field">Function to get the field delimiter character.</param>
         /// <param name="escape">Function to get the escape character.</param>
         /// <param name="repetition">Function to get the repetition character.</param>
         /// <param name="component">Function to get the component separator character.</param>

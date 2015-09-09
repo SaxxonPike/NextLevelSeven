@@ -69,7 +69,7 @@ namespace NextLevelSeven.Test.Core
             field.Value = "2013";
             Assert.AreEqual(new DateTime(2013, 01, 01, 00, 00, 00), field.As.DateTime, "Month didn't default to one.");
             field.Value = "201";
-            It.Throws<ArgumentException>(() => { var dt = field.As.DateTime; }, "Conversion must fail with too short of a year.");
+            It.Throws<ArgumentException>(() => Assert.IsNotNull(field.As.DateTime), "Conversion must fail with too short of a year.");
             field.Value = "";
             Assert.IsNull(field.As.DateTime, "Empty or null input values must return null.");
         }

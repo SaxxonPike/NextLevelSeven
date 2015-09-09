@@ -7,6 +7,6 @@ namespace NextLevelSeven.Web
         /// <summary>
         /// If not null, this router will be used to process received messages. Unprocessed messages will still appear in the queue.
         /// </summary>
-        public IRouter ReceivedMessageRouter;
+        public IRouter ReceivedMessageRouter = null;
     }
 }

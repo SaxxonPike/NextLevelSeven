@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace NextLevelSeven.Utility
 {
-    public interface IEnumerableIndexable<TIndex, TItem> : IEnumerable<TItem>, IIndexable<TIndex, TItem>
+    public interface IEnumerableIndexable<in TIndex, TItem> : IEnumerable<TItem>, IIndexable<TIndex, TItem>
     {
     }
 }

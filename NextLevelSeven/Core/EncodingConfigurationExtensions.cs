@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace NextLevelSeven.Core
 {
@@ -20,9 +17,6 @@ namespace NextLevelSeven.Core
             var fieldDelimiter = config.FieldDelimiter;
             var repetitionDelimiter = config.RepetitionDelimiter;
             var subcomponentDelimiter = config.SubcomponentDelimiter;
-
-            var normalTextEscapeCode = WrapCode("N", escapeDelimiter);
-            var highlightTextEscapeCode = WrapCode("H", escapeDelimiter);
 
             var data = s.ToCharArray();
             var length = data.Length;
@@ -138,64 +132,9 @@ namespace NextLevelSeven.Core
             return output.ToString();
         }
 
-        static string LookAhead(char[] data, int index, int length)
-        {
-            if (index >= data.Length)
-            {
-                return string.Empty;
-            }
-
-            if (index < 0)
-            {
-                length += index;
-                index = 0;
-            }
-
-            if (length <= 0)
-            {
-                return string.Empty;
-            }
-
-            if (index + length >= data.Length)
-            {
-                length -= (data.Length - (index + length));
-            }
-
-            if (length <= 0)
-            {
-                return string.Empty;
-            }
-
-            return new string(data, index, length);
-        }
-
         static public string UnEscape(this EncodingConfiguration config, string s)
         {
-            if (s == null)
-            {
-                return null;
-            }
-
-            var componentDelimiter = config.ComponentDelimiter;
-            var escapeDelimiter = config.EscapeDelimiter;
-            var fieldDelimiter = config.FieldDelimiter;
-            var repetitionDelimiter = config.RepetitionDelimiter;
-            var subcomponentDelimiter = config.SubcomponentDelimiter;
-            var data = s.ToCharArray();
-            var length = data.Length;
-            var output = new StringBuilder();
-
-            for (var index = 0; index < length; index++)
-            {
-                var c = data[index];
-            }
-
-            return output.ToString();            
-        }
-
-        static string WrapCode(string code, char escapeDelimiter)
-        {
-            return string.Concat(escapeDelimiter, code, escapeDelimiter);
+            throw new NotImplementedException();
         }
     }
 }

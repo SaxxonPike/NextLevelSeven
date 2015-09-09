@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Routing
@@ -39,7 +36,8 @@ namespace NextLevelSeven.Routing
         /// <summary>
         /// List of routers to broadcast messages to.
         /// </summary>
-        public readonly IList<IRouter> Routers = new List<IRouter>();
+        public IList<IRouter> Routers { get { return _routers; } }
+        private readonly List<IRouter> _routers = new List<IRouter>();
 
         /// <summary>
         /// Route a message to all other routers in the list.
@@ -48,12 +46,7 @@ namespace NextLevelSeven.Routing
         /// <returns>True, if any of the routes are successful.</returns>
         public bool Route(IMessage message)
         {
-            var success = false;
-            foreach (var router in Routers)
-            {
-                success |= router.Route(message);
-            }
-            return success;
+            return Routers.Aggregate(false, (current, router) => current | router.Route(message));
         }
     }
 }

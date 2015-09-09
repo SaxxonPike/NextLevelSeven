@@ -10,7 +10,7 @@
         /// </summary>
         public EncodingConfiguration()
         {
-            Initialize();
+            InitializeCtor();
         }
 
         /// <summary>
@@ -57,6 +57,14 @@
             FieldDelimiter = '|';
             RepetitionDelimiter = '~';
             SubcomponentDelimiter = '&';
+        }
+
+        /// <summary>
+        ///     Initialize defaults (to be called from constructor.)
+        /// </summary>
+        private void InitializeCtor()
+        {
+            Initialize();
         }
 
         /// <summary>

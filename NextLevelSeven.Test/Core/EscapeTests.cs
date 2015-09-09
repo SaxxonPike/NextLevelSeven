@@ -13,12 +13,6 @@ namespace NextLevelSeven.Test.Core
             Assert.AreEqual(expected, message.Escape(test));
         }
 
-        static void Test_UnEscape(string expected, string test)
-        {
-            var message = new Message();
-            Assert.AreEqual(expected, message.UnEscape(test));
-        }
-
         static void Test_SingleDelimiterEscape(string delimiter, string escapeCode)
         {
             var leftString = Randomized.String();
@@ -27,17 +21,6 @@ namespace NextLevelSeven.Test.Core
             var test = String.Format("{0}{3}{1}{3}{2}", leftString, middleString, rightString, delimiter);
             var expected = string.Format("{0}{3}{1}{3}{2}", leftString, middleString, rightString, escapeCode);
             Test_Escape(expected, test);
-        }
-
-        static void Test_SingleDelimiterUnEscape(string delimiter, string escapeCode)
-        {
-            var message = new Message();
-            var leftString = Randomized.String();
-            var middleString = Randomized.String();
-            var rightString = Randomized.String();
-            var test = String.Format("{0}{3}{1}{3}{2}", leftString, middleString, rightString, escapeCode);
-            var expected = string.Format("{0}{3}{1}{3}{2}", leftString, middleString, rightString, delimiter);
-            Test_UnEscape(expected, test);
         }
 
         [TestMethod]

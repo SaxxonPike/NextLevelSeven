@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using NextLevelSeven.Codecs;
@@ -53,6 +52,23 @@ namespace NextLevelSeven.Core
         internal Message(Cursors.Message internalMessage)
         {
             _message = internalMessage;
+        }
+
+        /// <summary>
+        ///     Create a message with a default MSH segment.
+        /// </summary>
+        static public Message Create()
+        {
+            return new Message();
+        }
+
+        /// <summary>
+        ///     Create a message using an HL7 data string.
+        /// </summary>
+        /// <param name="message">Message data to interpret.</param>
+        static public Message Create(string message)
+        {
+            return new Message(message);
         }
 
         /// <summary>

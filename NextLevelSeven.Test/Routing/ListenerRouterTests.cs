@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
 using NextLevelSeven.Routing;
 
@@ -36,9 +35,10 @@ namespace NextLevelSeven.Test.Routing
         {
             IMessage routedData = null;
             var message = new Message(ExampleMessages.Standard);
-            var router = new ListenerRouter(m => routedData = m);
+            var router = new ListenerRouter(m => { routedData = m; });
             Assert.IsNull(routedData, "Test initialized incorrectly.");
             message.RouteTo(router);
+            Assert.IsNotNull(routedData);
             Assert.AreEqual(message.ToString(), routedData.ToString());
         }
 

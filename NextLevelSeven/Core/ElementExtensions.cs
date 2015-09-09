@@ -79,7 +79,7 @@ namespace NextLevelSeven.Core
             }
 
             var ancestor = elements.First().AncestorElement;
-            if (elements.Any(e => e.AncestorElement != ancestor))
+            if (elements.Any(e => e == null || !ReferenceEquals(e.AncestorElement, ancestor)))
             {
                 throw new ElementException(ErrorCode.ElementsMustShareDirectAncestors);
             }

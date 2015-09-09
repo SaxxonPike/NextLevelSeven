@@ -69,8 +69,7 @@ namespace NextLevelSeven.Building
             {
                 return new WrapperEnumerable<string>(index => this[index].ToString(),
                     (index, data) => Field(index, data),
-                    () => Count,
-                    0);
+                    () => Count);
             }
         }
 

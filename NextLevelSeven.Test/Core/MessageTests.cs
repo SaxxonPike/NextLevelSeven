@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
@@ -36,21 +35,33 @@ namespace NextLevelSeven.Test.Core
         }
 
         [TestMethod]
+        public void Message_EmptyConstructorMatchesStaticEmptyConstructor()
+        {
+            Assert.AreEqual(new Message().ToString(), Message.Create().ToString());
+        }
+
+        [TestMethod]
+        public void Message_StringConstructorMatchesStaticStringConstructor()
+        {
+            Assert.AreEqual(new Message(ExampleMessages.Standard).ToString(), Message.Create(ExampleMessages.Standard).ToString());
+        }
+
+        [TestMethod]
         public void Message_ThrowsOnNullData()
         {
-            It.Throws<MessageException>(() => { var message = new Message(null); });
+            It.Throws<MessageException>(() => Message.Create(null));
         }
 
         [TestMethod]
         public void Message_ThrowsOnEmptyData()
         {
-            It.Throws<MessageException>(() => { var message = new Message(string.Empty); });            
+            It.Throws<MessageException>(() => Message.Create(string.Empty));
         }
 
         [TestMethod]
         public void Message_ThrowsOnShortData()
         {
-            It.Throws<MessageException>(() => { var message = new Message("MSH|123"); });
+            It.Throws<MessageException>(() => Message.Create("MSH|123"));
         }
 
         [TestMethod]

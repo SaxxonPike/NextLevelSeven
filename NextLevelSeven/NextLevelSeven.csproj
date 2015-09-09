@@ -44,7 +44,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Building\BuilderBase.cs" />
-    <Compile Include="Building\BuilderBaseExtensions.cs" />
     <Compile Include="Building\BuilderException.cs" />
     <Compile Include="Building\ComponentBuilder.cs" />
     <Compile Include="Building\FieldBuilder.cs" />
@@ -119,11 +118,9 @@
     <Compile Include="Streaming\StreamWrapperBase.cs" />
     <Compile Include="Transformation\ElementTransform.cs" />
     <Compile Include="Transformation\IElementTransformFactory.cs" />
-    <Compile Include="Utility\CapsKeyDictionary.cs" />
     <Compile Include="MessageGeneration\AckMessageGenerator.cs" />
     <Compile Include="Utility\IEnumerableIndexable.cs" />
     <Compile Include="Utility\IIndexable.cs" />
-    <Compile Include="Utility\IReadOnlyIndexable.cs" />
     <Compile Include="Utility\WrapperEnumerable.cs" />
   </ItemGroup>
   <ItemGroup />

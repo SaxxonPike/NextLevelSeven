@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NextLevelSeven.Core;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.MessageGeneration;
 
 namespace NextLevelSeven.Test.MessageGeneration
