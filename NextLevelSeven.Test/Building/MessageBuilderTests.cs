@@ -272,5 +272,47 @@ namespace NextLevelSeven.Test.Building
             var usePerCharacter = (overhead / (messageString.Length << 1));
             Assert.IsTrue(usePerCharacter < 10);
         }
+
+        [TestMethod]
+        public void MessageBuilder_HasProperDefaultFieldDelimiter()
+        {
+            var builder = new MessageBuilder();
+            Assert.AreEqual('|', builder.FieldDelimiter);
+        }
+
+        [TestMethod]
+        public void MessageBuilder_HasProperDefaultComponentDelimiter()
+        {
+            var builder = new MessageBuilder();
+            Assert.AreEqual('^', builder.ComponentDelimiter);
+        }
+
+        [TestMethod]
+        public void MessageBuilder_HasProperDefaultSubcomponentDelimiter()
+        {
+            var builder = new MessageBuilder();
+            Assert.AreEqual('&', builder.SubcomponentDelimiter);
+        }
+
+        [TestMethod]
+        public void MessageBuilder_HasProperDefaultEscapeDelimiter()
+        {
+            var builder = new MessageBuilder();
+            Assert.AreEqual('\\', builder.EscapeDelimiter);
+        }
+
+        [TestMethod]
+        public void MessageBuilder_HasProperDefaultRepetitionDelimiter()
+        {
+            var builder = new MessageBuilder();
+            Assert.AreEqual('~', builder.RepetitionDelimiter);
+        }
+
+        [TestMethod]
+        public void MessageBuilder_ContainsSegmentBuilders()
+        {
+            var builder = new MessageBuilder();
+            Assert.IsInstanceOfType(builder[1], typeof(SegmentBuilder));
+        }
     }
 }

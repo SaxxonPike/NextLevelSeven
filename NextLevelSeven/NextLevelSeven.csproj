@@ -120,7 +120,6 @@
     <Compile Include="Transformation\ElementTransform.cs" />
     <Compile Include="Transformation\IElementTransformFactory.cs" />
     <Compile Include="Utility\CapsKeyDictionary.cs" />
-    <Compile Include="Utility\EmptyEnumerable.cs" />
     <Compile Include="MessageGeneration\AckMessageGenerator.cs" />
     <Compile Include="Utility\IEnumerableIndexable.cs" />
     <Compile Include="Utility\IIndexable.cs" />

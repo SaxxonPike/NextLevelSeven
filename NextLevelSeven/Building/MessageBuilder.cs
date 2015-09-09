@@ -24,7 +24,8 @@ namespace NextLevelSeven.Building
             EscapeDelimiter = '\\';
             RepetitionDelimiter = '~';
             SubcomponentDelimiter = '&';
-            Fields(1, "MSH", new string('|', 1),
+            FieldDelimiter = '|';
+            Fields(1, "MSH", new string(FieldDelimiter, 1),
                 new string(new[] {ComponentDelimiter, RepetitionDelimiter, EscapeDelimiter, SubcomponentDelimiter}));
         }
 
