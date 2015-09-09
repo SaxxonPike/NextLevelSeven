@@ -105,6 +105,8 @@
     <Compile Include="Mapping\MapConfiguration.cs" />
     <Compile Include="Mapping\MapLocation.cs" />
     <Compile Include="Mapping\MappedMessage.cs" />
+    <Compile Include="Mapping\Maps\MshSegmentConfiguration.cs" />
+    <Compile Include="Mapping\Maps\MshSegmentMap.cs" />
     <Compile Include="MessageGeneration\MessageGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Routing\BroadcastRouter.cs" />

@@ -16,6 +16,11 @@ namespace NextLevelSeven.Mapping
             Message = message;
         }
 
+        public string this[TKey key]
+        {
+            get { return GetFirstValue(key); }
+        }
+
         public IMapConfiguration<TKey> Configuration
         {
             get;
