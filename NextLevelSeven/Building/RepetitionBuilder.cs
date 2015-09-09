@@ -9,7 +9,7 @@ namespace NextLevelSeven.Building
     /// <summary>
     ///     Represents an HL7 field repetition.
     /// </summary>
-    public sealed class RepetitionBuilder : BuilderBase
+    public class RepetitionBuilder : BuilderBaseDescendant
     {
         /// <summary>
         ///     Descendant builders.
@@ -19,9 +19,9 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Create a repetition builder using the specified encoding configuration.
         /// </summary>
-        /// <param name="encodingConfiguration">Message's encoding configuration.</param>
-        internal RepetitionBuilder(EncodingConfiguration encodingConfiguration)
-            : base(encodingConfiguration)
+        /// <param name="builder">Ancestor builder.</param>
+        internal RepetitionBuilder(BuilderBase builder)
+            : base(builder)
         {
         }
 
@@ -30,13 +30,13 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="index">Index within the field repetition to get the builder from.</param>
         /// <returns>Component builder for the specified index.</returns>
-        public ComponentBuilder this[int index]
+        virtual public ComponentBuilder this[int index]
         {
             get
             {
                 if (!_componentBuilders.ContainsKey(index))
                 {
-                    _componentBuilders[index] = new ComponentBuilder(EncodingConfiguration);
+                    _componentBuilders[index] = new ComponentBuilder(this);
                 }
                 return _componentBuilders[index];
             }
@@ -45,7 +45,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get the number of components in this field repetition, including components with no content.
         /// </summary>
-        public int Count
+        virtual public int Count
         {
             get { return _componentBuilders.Max(kv => kv.Key); }
         }
@@ -53,7 +53,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set component content within this field repetition.
         /// </summary>
-        public IEnumerableIndexable<int, string> Values
+        virtual public IEnumerableIndexable<int, string> Values
         {
             get
             {
@@ -104,6 +104,24 @@ namespace NextLevelSeven.Building
             foreach (var component in components)
             {
                 Component(index++, component);
+            }
+            return this;
+        }
+
+        /// <summary>
+        /// Set a field repetition's value.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns>This RepetitionBuilder, for chaining purposes.</returns>
+        public RepetitionBuilder FieldRepetition(string value)
+        {
+            if (value == null)
+            {
+                _componentBuilders.Clear();
+            }
+            else
+            {
+                Components(value.Split(ComponentDelimiter));                
             }
             return this;
         }

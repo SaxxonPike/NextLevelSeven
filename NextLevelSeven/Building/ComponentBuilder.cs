@@ -9,7 +9,7 @@ namespace NextLevelSeven.Building
     /// <summary>
     ///     Represents an HL7 component.
     /// </summary>
-    public sealed class ComponentBuilder : BuilderBase
+    public sealed class ComponentBuilder : BuilderBaseDescendant
     {
         /// <summary>
         ///     Descendant builders.
@@ -20,8 +20,9 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Create a component builder using the specified encoding configuration.
         /// </summary>
-        /// <param name="encodingConfiguration">Message's encoding configuration.</param>
-        internal ComponentBuilder(EncodingConfiguration encodingConfiguration) : base(encodingConfiguration)
+        /// <param name="builder">Ancestor builder.</param>
+        internal ComponentBuilder(BuilderBase builder)
+            : base(builder)
         {
         }
 
@@ -36,7 +37,7 @@ namespace NextLevelSeven.Building
             {
                 if (!_subcomponentBuilders.ContainsKey(index))
                 {
-                    _subcomponentBuilders[index] = new SubcomponentBuilder(EncodingConfiguration);
+                    _subcomponentBuilders[index] = new SubcomponentBuilder(this);
                 }
                 return _subcomponentBuilders[index];
             }

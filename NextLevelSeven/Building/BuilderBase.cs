@@ -2,6 +2,9 @@
 
 namespace NextLevelSeven.Building
 {
+    /// <summary>
+    /// Base class for message builders.
+    /// </summary>
     abstract public class BuilderBase
     {
         /// <summary>
@@ -29,12 +32,12 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set the character used to separate component-level content.
         /// </summary>
-        public char ComponentDelimiter { get; set; }
+        virtual public char ComponentDelimiter { get; set; }
 
         /// <summary>
         ///     Get or set the character used to signify escape sequences.
         /// </summary>
-        public char EscapeDelimiter { get; set; }
+        virtual public char EscapeDelimiter { get; set; }
 
         /// <summary>
         /// Get or set the character used to separate fields.
@@ -44,12 +47,12 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set the character used to separate field repetition content.
         /// </summary>
-        public char RepetitionDelimiter { get; set; }
+        virtual public char RepetitionDelimiter { get; set; }
 
         /// <summary>
         ///     Get or set the character used to separate subcomponent-level content.
         /// </summary>
-        public char SubcomponentDelimiter { get; set; }
+        virtual public char SubcomponentDelimiter { get; set; }
 
         /// <summary>
         /// Get an HL7 escaped string.

@@ -44,13 +44,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Building\BuilderBase.cs" />
+    <Compile Include="Building\BuilderBaseDescendant.cs" />
     <Compile Include="Building\BuilderException.cs" />
     <Compile Include="Building\ComponentBuilder.cs" />
+    <Compile Include="Building\DelimiterFieldBuilder.cs" />
+    <Compile Include="Building\EncodingFieldBuilder.cs" />
     <Compile Include="Building\FieldBuilder.cs" />
     <Compile Include="Building\MessageBuilder.cs" />
     <Compile Include="Building\RepetitionBuilder.cs" />
     <Compile Include="Building\SegmentBuilder.cs" />
     <Compile Include="Building\SubcomponentBuilder.cs" />
+    <Compile Include="Building\TypeFieldBuilder.cs" />
     <Compile Include="Codecs\Codec.cs" />
     <Compile Include="Codecs\IndexedCodec.cs" />
     <Compile Include="Core\ElementException.cs" />

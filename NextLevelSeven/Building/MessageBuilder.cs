@@ -58,7 +58,7 @@ namespace NextLevelSeven.Building
             {
                 if (!_segmentBuilders.ContainsKey(index))
                 {
-                    _segmentBuilders[index] = new SegmentBuilder(EncodingConfiguration);
+                    _segmentBuilders[index] = new SegmentBuilder(this);
                 }
                 return _segmentBuilders[index];
             }
@@ -224,6 +224,7 @@ namespace NextLevelSeven.Building
             var length = value.Length;
             ComponentDelimiter = (length >= 5) ? value[5] : '^';
             EscapeDelimiter = (length >= 6) ? value[6] : '\\';
+            FieldDelimiter = (length >= 3) ? value[3] : '|';
             RepetitionDelimiter = (length >= 7) ? value[7] : '~';
             SubcomponentDelimiter = (length >= 8) ? value[8] : '&';
 

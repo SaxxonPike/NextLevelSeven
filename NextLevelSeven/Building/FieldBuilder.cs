@@ -9,7 +9,7 @@ namespace NextLevelSeven.Building
     /// <summary>
     ///     Represents an HL7 field.
     /// </summary>
-    public sealed class FieldBuilder : BuilderBase
+    public class FieldBuilder : BuilderBaseDescendant
     {
         /// <summary>
         ///     Descendant builders.
@@ -20,9 +20,9 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Create a field builder with the specified encoding configuration.
         /// </summary>
-        /// <param name="encodingConfiguration">Message's encoding configuration.</param>
-        internal FieldBuilder(EncodingConfiguration encodingConfiguration)
-            : base(encodingConfiguration)
+        /// <param name="builder">Ancestor builder.</param>
+        internal FieldBuilder(BuilderBase builder)
+            : base(builder)
         {
         }
 
@@ -31,13 +31,13 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="index">Index within the field to get the builder from.</param>
         /// <returns>Field repetition builder for the specified index.</returns>
-        public RepetitionBuilder this[int index]
+        virtual public RepetitionBuilder this[int index]
         {
             get
             {
                 if (!_repetitionBuilders.ContainsKey(index))
                 {
-                    _repetitionBuilders[index] = new RepetitionBuilder(EncodingConfiguration);
+                    _repetitionBuilders[index] = new RepetitionBuilder(this);
                 }
                 return _repetitionBuilders[index];
             }
@@ -46,7 +46,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get the number of field repetitions in this field, including field repetitions with no content.
         /// </summary>
-        public int Count
+        virtual public int Count
         {
             get { return (_repetitionBuilders.Count > 0) ? _repetitionBuilders.Max(kv => kv.Key) : 0; }
         }
@@ -54,7 +54,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set field repetition content within this field.
         /// </summary>
-        public IEnumerableIndexable<int, string> Values
+        virtual public IEnumerableIndexable<int, string> Values
         {
             get
             {
@@ -108,7 +108,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="value">New value.</param>
         /// <returns>This FieldBuilder, for chaining purposes.</returns>
-        public FieldBuilder Field(string value)
+        virtual public FieldBuilder Field(string value)
         {
             _repetitionBuilders.Clear();
             var index = 1;
@@ -128,7 +128,7 @@ namespace NextLevelSeven.Building
         /// <param name="repetition">Field repetition index.</param>
         /// <param name="value">New value.</param>
         /// <returns>This FieldBuilder, for chaining purposes.</returns>
-        public FieldBuilder FieldRepetition(int repetition, string value)
+        virtual public FieldBuilder FieldRepetition(int repetition, string value)
         {
             if (repetition < 1)
             {
@@ -138,7 +138,7 @@ namespace NextLevelSeven.Building
             {
                 _repetitionBuilders.Remove(repetition);
             }
-            this[repetition].Component(1, value);
+            this[repetition].FieldRepetition(value);
             return this;
         }
 

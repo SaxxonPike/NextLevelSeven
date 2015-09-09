@@ -55,8 +55,12 @@
   <ItemGroup>
     <Compile Include="AssertIterations.cs" />
     <Compile Include="AssertTime.cs" />
+    <Compile Include="Building\ComponentBuilderTests.cs" />
+    <Compile Include="Building\FieldBuilderTests.cs" />
+    <Compile Include="Building\RepetitionBuilderTests.cs" />
     <Compile Include="Building\MessageBuilderPerformanceTests.cs" />
     <Compile Include="Building\MessageBuilderTests.cs" />
+    <Compile Include="Building\SegmentBuilderTests.cs" />
     <Compile Include="Core\ElementPerformanceTests.cs" />
     <Compile Include="Core\ElementTests.cs" />
     <Compile Include="Core\EscapeTests.cs" />

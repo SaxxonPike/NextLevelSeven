@@ -2,7 +2,7 @@
 
 namespace NextLevelSeven.Building
 {
-    public sealed class SubcomponentBuilder : BuilderBase
+    public sealed class SubcomponentBuilder : BuilderBaseDescendant
     {
         /// <summary>
         ///     Internal subcomponent value.
@@ -12,8 +12,9 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Create a subcomponent builder.
         /// </summary>
-        internal SubcomponentBuilder(EncodingConfiguration encodingConfiguration)
-            : base(encodingConfiguration)
+        /// <param name="builder">Ancestor builder.</param>
+        internal SubcomponentBuilder(BuilderBase builder)
+            : base(builder)
         {
         }
 

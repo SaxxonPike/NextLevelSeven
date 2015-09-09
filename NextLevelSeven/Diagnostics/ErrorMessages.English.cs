@@ -13,6 +13,8 @@
                 {
                     case ErrorCode.AncestorDoesNotExist:
                         return "Ancestor does not exist.";
+                    case ErrorCode.ChangingSegmentTypesToAndFromMshIsNotSupported:
+                        return "Changing segment types to and from MSH is not currently supported.";
                     case ErrorCode.ComponentIndexMustBeGreaterThanZero:
                         return "Component index must be greater than zero.";
                     case ErrorCode.DescendantElementsCannotBeModified:
@@ -29,6 +31,8 @@
                         return "Exceeded retries for message.";
                     case ErrorCode.FieldIndexMustBeZeroOrGreater:
                         return "Field index must be zero or greater.";
+                    case ErrorCode.FixedFieldsCannotBeDivided:
+                        return "Fixed fields (such as field delimiter and encoding characters) cannot be divided.";
                     case ErrorCode.HeaderByteIsIncorrect:
                         return "Header byte is incorrect.";
                     case ErrorCode.InvalidMlpCharacter:

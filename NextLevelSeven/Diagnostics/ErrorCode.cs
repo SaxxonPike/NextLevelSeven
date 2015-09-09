@@ -65,5 +65,9 @@
         SegmentBuilderHasInvalidSegmentType,
         /* 0027 */
         TransportNotStarted,
+        /* 0028 */
+        FixedFieldsCannotBeDivided,
+        /* 0029 */
+        ChangingSegmentTypesToAndFromMshIsNotSupported,
     }
 }

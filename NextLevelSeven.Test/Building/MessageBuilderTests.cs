@@ -314,5 +314,141 @@ namespace NextLevelSeven.Test.Building
             Assert.AreEqual(string.Format("MSH|^~\\&|{0}", id1), builderValues[0]);
             Assert.AreEqual(string.Format("PID|{0}", id2), builderValues[1]);
         }
+
+        [TestMethod]
+        public void MessageBuilder_CanSetMsh1()
+        {
+            var builder = new MessageBuilder("MSH|^~\\&|");
+            builder.Field(1, 1, ":");
+            Assert.AreEqual("MSH:^~\\&:", builder.ToString());
+        }
+
+        [TestMethod]
+        public void MessageBuilder_CanSetMsh1ToDefaultWithNull()
+        {
+            var builder = new MessageBuilder("MSH|^~\\&|");
+            builder.Field(1, 1, null);
+            Assert.AreEqual("MSH|^~\\&|", builder.ToString());
+        }
+
+        [TestMethod]
+        public void MessageBuilder_CanSetMsh2()
+        {
+            var builder = new MessageBuilder("MSH|^~\\&|");
+            builder.Field(1, 2, "@#$%");
+            Assert.AreEqual("MSH|@#$%|", builder.ToString());
+        }
+
+        [TestMethod]
+        public void MessageBuilder_CanSetTypeToMsh()
+        {
+            var builder = new MessageBuilder();
+            builder.Field(2, 0, "MSH");
+        }
+
+        [TestMethod]
+        public void MessageBuilder_CanNotChangeTypeFromMsh()
+        {
+            var builder = new MessageBuilder();
+            It.Throws<BuilderException>(() => builder.Field(1, 0, "PID"));
+        }
+
+        [TestMethod]
+        public void MessageBuilder_CanSetMsh2Component()
+        {
+            var id1 = Randomized.String();
+            var id2 = Randomized.String();
+            var builder = new MessageBuilder(string.Format("MSH|^~\\&|{0}^{1}", id1, id2));
+            builder.Field(1, 2, "$~\\&");
+            Assert.AreEqual(string.Format("MSH|$~\\&|{0}${1}", id1, id2), builder.ToString());            
+        }
+
+        [TestMethod]
+        public void MessageBuilder_CanSetMsh2Repetition()
+        {
+            var id1 = Randomized.String();
+            var id2 = Randomized.String();
+            var builder = new MessageBuilder(string.Format("MSH|^~\\&|{0}~{1}", id1, id2));
+            builder.Field(1, 2, "^$\\&");
+            Assert.AreEqual(string.Format("MSH|^$\\&|{0}${1}", id1, id2), builder.ToString());
+        }
+
+        [TestMethod]
+        public void MessageBuilder_CanSetMsh2Escape()
+        {
+            // note: changing escape code does not affect anything but MSH-2 for design reasons.
+            // (change this message if the functionality is ever added and this test updated.)
+            var id1 = Randomized.String();
+            var id2 = Randomized.String();
+            var builder = new MessageBuilder(string.Format("MSH|^~\\&|\\H\\{0}\\N\\{1}", id1, id2));
+            builder.Field(1, 2, "^~$&");
+            Assert.AreEqual(string.Format("MSH|^~$&|\\H\\{0}\\N\\{1}", id1, id2), builder.ToString());
+        }
+
+        [TestMethod]
+        public void MessageBuilder_CanSetMsh2Subcomponent()
+        {
+            var id1 = Randomized.String();
+            var id2 = Randomized.String();
+            var builder = new MessageBuilder(string.Format("MSH|^~\\&|{0}&{1}", id1, id2));
+            builder.Field(1, 2, "^~\\$");
+            Assert.AreEqual(string.Format("MSH|^~\\$|{0}${1}", id1, id2), builder.ToString());
+        }
+
+        [TestMethod]
+        public void MessageBuilder_CanSetMsh2ToDefaultWithNull()
+        {
+            var builder = new MessageBuilder("MSH|^~\\&|");
+            builder.Field(1, 2, null);
+            Assert.AreEqual("MSH|^~\\&|", builder.ToString());
+        }
+
+        [TestMethod]
+        public void MessageBuilder_CanSetMsh2Partially()
+        {
+            var builder = new MessageBuilder("MSH|^~\\&|");
+            builder.Field(1, 2, "$");
+            Assert.AreEqual("MSH|$~\\&|", builder.ToString());
+        }
+
+        [TestMethod]
+        public void MessageBuilder_CanUseDifferentFieldDelimiter()
+        {
+            var id = Randomized.String();
+            const char delimiter = ':';
+            var builder = new MessageBuilder(string.Format("MSH{0}^~\\&{0}{1}", delimiter, id));
+            Assert.AreEqual(delimiter, builder.FieldDelimiter);
+            Assert.AreEqual(id, builder[1][3].ToString());
+        }
+
+        [TestMethod]
+        public void MessageBuilder_CanChangeFieldDelimiter()
+        {
+            var id = Randomized.String();
+            const char delimiter = ':';
+            var builder = new MessageBuilder(string.Format("MSH|^~\\&|{0}", id)) {FieldDelimiter = delimiter};
+            Assert.AreEqual(delimiter, builder.FieldDelimiter);
+            Assert.AreEqual(id, builder[1][3].ToString());
+        }
+
+        [TestMethod]
+        public void MessageBuilder_CanUseDifferentEscapeDelimiter()
+        {
+            var id = Randomized.String();
+            const char delimiter = ':';
+            var builder = new MessageBuilder(string.Format("MSH|^~{0}&|{1}", delimiter, id));
+            Assert.AreEqual(delimiter, builder.EscapeDelimiter);
+            Assert.AreEqual(id, builder[1][3].ToString());
+        }
+
+        [TestMethod]
+        public void MessageBuilder_CanChangeEscapeDelimiter()
+        {
+            var id = Randomized.String();
+            const char delimiter = ':';
+            var builder = new MessageBuilder(string.Format("MSH|^~\\&|{0}", id)) { FieldDelimiter = delimiter };
+            Assert.AreEqual(delimiter, builder.FieldDelimiter);
+            Assert.AreEqual(id, builder[1][3].ToString());
+        }
     }
 }

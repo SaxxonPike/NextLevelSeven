@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Text;
 using NextLevelSeven.Core;
+using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building
@@ -9,7 +10,7 @@ namespace NextLevelSeven.Building
     /// <summary>
     ///     Represents an HL7 segment.
     /// </summary>
-    public sealed class SegmentBuilder : BuilderBase
+    public sealed class SegmentBuilder : BuilderBaseDescendant
     {
         /// <summary>
         ///     Descendant builders.
@@ -19,11 +20,10 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Create a segment builder with the specified encoding configuration.
         /// </summary>
-        /// <param name="encodingConfiguration">Message's encoding configuration.</param>
-        internal SegmentBuilder(EncodingConfiguration encodingConfiguration)
-            : base(encodingConfiguration)
+        /// <param name="builder">Ancestor builder.</param>
+        internal SegmentBuilder(BuilderBase builder)
+            : base(builder)
         {
-            FieldDelimiter = '|';
         }
 
         /// <summary>
@@ -35,10 +35,34 @@ namespace NextLevelSeven.Building
         {
             get
             {
-                if (!_fieldBuilders.ContainsKey(index))
+                if (_fieldBuilders.ContainsKey(index))
                 {
-                    _fieldBuilders[index] = new FieldBuilder(EncodingConfiguration);
+                    return _fieldBuilders[index];
                 }
+
+                // segment type is treated specially
+                if (index == 0)
+                {
+                    _fieldBuilders[0] = new TypeFieldBuilder(this, OnTypeFieldModified);
+                    return _fieldBuilders[0];
+                }
+
+                // msh-1 and msh-2 are treated specially
+                if (IsMsh)
+                {
+                    if (index == 1)
+                    {
+                        _fieldBuilders[index] = new DelimiterFieldBuilder(this);
+                        return _fieldBuilders[index];                        
+                    }
+                    if (index == 2)
+                    {
+                        _fieldBuilders[index] = new EncodingFieldBuilder(this);
+                        return _fieldBuilders[index];
+                    }
+                }
+
+                _fieldBuilders[index] = new FieldBuilder(this);
                 return _fieldBuilders[index];
             }
         }
@@ -122,11 +146,11 @@ namespace NextLevelSeven.Building
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
         public SegmentBuilder Field(int fieldIndex, string value)
         {
-            if (_fieldBuilders.ContainsKey(fieldIndex))
+            if (fieldIndex > 0 && _fieldBuilders.ContainsKey(fieldIndex))
             {
                 _fieldBuilders.Remove(fieldIndex);
             }
-            this[fieldIndex].FieldRepetition(1, value);
+            this[fieldIndex].Field(value);
             return this;
         }
 
@@ -196,6 +220,34 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
+        /// If true, this is an MSH segment which has special behavior in fields 1 and 2.
+        /// </summary>
+        public bool IsMsh
+        {
+            get
+            {
+                if (!_fieldBuilders.ContainsKey(0))
+                {
+                    return false;
+                }
+                return _fieldBuilders[0].ToString() == "MSH";
+            }
+        }
+
+        /// <summary>
+        /// Method that is called when a descendant type field has changed.
+        /// </summary>
+        /// <param name="oldValue">Old type field value.</param>
+        /// <param name="newValue">New type field value.</param>
+        private void OnTypeFieldModified(string oldValue, string newValue)
+        {
+            if (oldValue != null && oldValue != newValue && (newValue == "MSH" || oldValue == "MSH"))
+            {
+                throw new BuilderException(ErrorCode.ChangingSegmentTypesToAndFromMshIsNotSupported);
+            }
+        }
+
+        /// <summary>
         ///     Set this segment's content.
         /// </summary>
         /// <param name="value">New value.</param>
@@ -204,10 +256,16 @@ namespace NextLevelSeven.Building
         {
             if (value.Length > 3)
             {
-                var values = value.Split(FieldDelimiter);
-                if (value.Substring(0, 3) == "MSH")
+                var isMsh = value.Substring(0, 3) == "MSH";
+
+                if (isMsh)
                 {
                     FieldDelimiter = value[3];
+                }
+
+                var values = value.Split(FieldDelimiter);
+                if (isMsh)
+                {
                     var valueList = values.ToList();
                     valueList.Insert(1, new string(FieldDelimiter, 1));
                     values = valueList.ToArray();
