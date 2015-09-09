@@ -205,6 +205,16 @@ namespace NextLevelSeven.Test
         public void Nullify()
         {
         }
+
+        public string GetValue(int segment, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            return null;
+        }
+
+        public string GetValue(string segmentName, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            return null;
+        }
     }
 }
 

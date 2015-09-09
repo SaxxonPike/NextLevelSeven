@@ -8,7 +8,7 @@ namespace NextLevelSeven.Building
     /// <summary>
     ///     Represents an HL7 message as discrete parts, which can be quickly modified and exported.
     /// </summary>
-    public sealed class MessageBuilder : BuilderBase
+    public sealed class MessageBuilder : BuilderBase, IElementTree
     {
         /// <summary>
         ///     Descendant segments.
@@ -360,6 +360,55 @@ namespace NextLevelSeven.Building
         public override string ToString()
         {
             return Value;
+        }
+
+        /// <summary>
+        /// Get the value at the specific location in the message.
+        /// </summary>
+        /// <param name="segment">Segment index.</param>
+        /// <param name="field">Field index.</param>
+        /// <param name="repetition">Repetition index.</param>
+        /// <param name="component">Component index.</param>
+        /// <param name="subcomponent">Subcomponent index.</param>
+        /// <returns>Value at the specified location. Returns null if not found.</returns>
+        public string GetValue(int segment, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            if (field == -1)
+            {
+                return this[segment].Value;
+            }
+            if (repetition == -1)
+            {
+                return this[segment][field].Value;
+            }
+            if (component == -1)
+            {
+                return this[segment][field][repetition].Value;
+            }
+            return (subcomponent == -1)
+                ? this[segment][field][repetition][component].Value
+                : this[segment][field][repetition][component][subcomponent].Value;
+        }
+
+        /// <summary>
+        /// Get the value at the specific location in the message.
+        /// </summary>
+        /// <param name="segmentName">Three letter segment name.</param>
+        /// <param name="field">Field index.</param>
+        /// <param name="repetition">Repetition index.</param>
+        /// <param name="component">Component index.</param>
+        /// <param name="subcomponent">Subcomponent index.</param>
+        /// <returns>Value at the specified location. Returns null if not found.</returns>
+        public string GetValue(string segmentName, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            for (var i = 1; i <= Count; i++)
+            {
+                if (this[i].Type == segmentName)
+                {
+                    return GetValue(i, field, repetition, component, subcomponent);
+                }
+            }
+            return null;
         }
     }
 }

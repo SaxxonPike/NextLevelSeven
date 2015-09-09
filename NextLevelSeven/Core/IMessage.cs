@@ -6,7 +6,7 @@ namespace NextLevelSeven.Core
     /// <summary>
     ///     Common interface for the highest level element in an HL7 message: the message itself.
     /// </summary>
-    public interface IMessage : IElement
+    public interface IMessage : IElement, IElementTree
     {
         /// <summary>
         ///     Get a descendant segment at the specified index. Indices match the HL7 specification, and are not necessarily

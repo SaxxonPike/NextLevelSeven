@@ -62,6 +62,7 @@
     <Compile Include="Core\EncodingConfigurationExtensions.cs" />
     <Compile Include="Core\Identity.cs" />
     <Compile Include="Core\IdentityProxy.cs" />
+    <Compile Include="Core\IElementTree.cs" />
     <Compile Include="Core\IIdentity.cs" />
     <Compile Include="Core\ISegment.cs" />
     <Compile Include="Core\MessageEncodingConfiguration.cs" />
