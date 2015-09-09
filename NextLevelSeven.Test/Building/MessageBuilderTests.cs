@@ -292,5 +292,27 @@ namespace NextLevelSeven.Test.Building
             var builder = new MessageBuilder();
             Assert.IsInstanceOfType(builder[1], typeof(SegmentBuilder));
         }
+
+        [TestMethod]
+        public void MessageBuilder_ReturnsSegmentValues()
+        {
+            var id1 = Randomized.String();
+            var id2 = Randomized.String();
+            var builder = new MessageBuilder(string.Format("MSH|^~\\&|{0}\xDPID|{1}", id1, id2));
+            var builderValues = builder.Values;
+            Assert.AreEqual(string.Format("MSH|^~\\&|{0}", id1), builderValues[1]);
+            Assert.AreEqual(string.Format("PID|{0}", id2), builderValues[2]);
+        }
+
+        [TestMethod]
+        public void MessageBuilder_ReturnsSegmentValuesAsArray()
+        {
+            var id1 = Randomized.String();
+            var id2 = Randomized.String();
+            var builder = new MessageBuilder(string.Format("MSH|^~\\&|{0}\xDPID|{1}", id1, id2));
+            var builderValues = builder.Values.ToArray();
+            Assert.AreEqual(string.Format("MSH|^~\\&|{0}", id1), builderValues[0]);
+            Assert.AreEqual(string.Format("PID|{0}", id2), builderValues[1]);
+        }
     }
 }
