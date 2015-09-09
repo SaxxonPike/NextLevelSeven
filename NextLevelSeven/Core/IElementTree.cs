@@ -23,7 +23,7 @@ namespace NextLevelSeven.Core
         string GetValue(int segment, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1);
 
         /// <summary>
-        ///     Get data from a specific place in the message. Depth is determined by how many indices are specified.
+        ///     Get first available data from a specific place in the message. Depth is determined by how many indices are specified.
         /// </summary>
         /// <param name="segmentName">Segment name.</param>
         /// <param name="field">Field index.</param>
@@ -32,6 +32,18 @@ namespace NextLevelSeven.Core
         /// <param name="subcomponent">Subcomponent index.</param>
         /// <returns>The first occurrence of the specified element.</returns>
         string GetValue(string segmentName, int field = -1, int repetition = -1, int component = -1,
+            int subcomponent = -1);
+
+        /// <summary>
+        ///     Get data from a specific place in the message. Depth is determined by how many indices are specified. This can return multiple values.
+        /// </summary>
+        /// <param name="segmentName">Segment name.</param>
+        /// <param name="field">Field index.</param>
+        /// <param name="repetition">Repetition number.</param>
+        /// <param name="component">Component index.</param>
+        /// <param name="subcomponent">Subcomponent index.</param>
+        /// <returns>The first occurrence of the specified element.</returns>
+        IEnumerable<string> GetValues(string segmentName, int field = -1, int repetition = -1, int component = -1,
             int subcomponent = -1);
     }
 }

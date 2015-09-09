@@ -215,6 +215,16 @@ namespace NextLevelSeven.Test
         {
             return null;
         }
+
+        public IEnumerable<IElement> GetFields(string segmentName, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            return Enumerable.Empty<IElement>();
+        }
+
+        public IEnumerable<string> GetValues(string segmentName, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            return Enumerable.Empty<string>();
+        }
     }
 }
 

@@ -257,24 +257,36 @@ namespace NextLevelSeven.Core
         public IElement GetField(string segmentName, int field = -1, int repetition = -1, int component = -1,
             int subcomponent = -1)
         {
-            var segment = _message.DescendantElements.FirstOrDefault(s => s.Value != null && s.Value.StartsWith(segmentName));
-            if (field < 0 || segment == null)
+            return GetFields(segmentName, field, repetition, component, subcomponent).FirstOrDefault();
+        }
+
+        /// <summary>
+        ///     Get data from a specific place in the message. Depth is determined by how many indices are specified.
+        /// </summary>
+        /// <param name="segmentName">Segment index.</param>
+        /// <param name="field">Field index.</param>
+        /// <param name="repetition">Repetition number.</param>
+        /// <param name="component">Component index.</param>
+        /// <param name="subcomponent">Subcomponent index.</param>
+        /// <returns>The first occurrence of the specified element.</returns>
+        public IEnumerable<IElement> GetFields(string segmentName, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            var matches = _message.Segments.Where(s => s.Type == segmentName);
+            if (field < 0)
             {
-                return segment;
+                return matches;
             }
             if (repetition < 0)
             {
-                return segment[field];
+                return matches.Select(m => m[field]);
             }
             if (component < 0)
             {
-                return segment[field][repetition];
+                return matches.Select(m => m[field][repetition]);
             }
-            if (subcomponent < 0)
-            {
-                return segment[field][repetition][component];
-            }
-            return segment[field][repetition][component][subcomponent];
+            return (subcomponent < 0)
+                ? matches.Select(m => m[field][repetition][component])
+                : matches.Select(m => m[field][repetition][component][subcomponent]);
         }
 
         /// <summary>
@@ -527,7 +539,7 @@ namespace NextLevelSeven.Core
         /// <summary>
         ///     Get data from a specific place in the message. Depth is determined by how many indices are specified.
         /// </summary>
-        /// <param name="segmentName">Segment name.</param>
+        /// <param name="segmentName">Three letter segment name.</param>
         /// <param name="field">Field index.</param>
         /// <param name="repetition">Repetition number.</param>
         /// <param name="component">Component index.</param>
@@ -536,6 +548,20 @@ namespace NextLevelSeven.Core
         public string GetValue(string segmentName, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
         {
             return GetField(segmentName, field, repetition, component, subcomponent).Value;
+        }
+
+        /// <summary>
+        ///     Get data from a specific place in the message. Depth is determined by how many indices are specified.
+        /// </summary>
+        /// <param name="segmentName">Three letter segment name.</param>
+        /// <param name="field">Field index.</param>
+        /// <param name="repetition">Repetition number.</param>
+        /// <param name="component">Component index.</param>
+        /// <param name="subcomponent">Subcomponent index.</param>
+        /// <returns>The first occurrence of the specified element.</returns>
+        public IEnumerable<string> GetValues(string segmentName, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            return GetFields(segmentName, field, repetition, component, subcomponent).Select(f => f.Value);
         }
     }
 }
