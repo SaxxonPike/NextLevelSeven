@@ -2,6 +2,7 @@
 using System.IO;
 using System.Text;
 using NextLevelSeven.Core;
+using NextLevelSeven.Native;
 
 namespace NextLevelSeven.Streaming
 {

@@ -2,8 +2,9 @@
 using System.Linq;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Transformation;
+using NextLevelSeven.Core;
 
-namespace NextLevelSeven.Core
+namespace NextLevelSeven.Native
 {
     /// <summary>
     ///     Extensions for generic element functionality.

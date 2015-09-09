@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using NextLevelSeven.Codecs;
 using NextLevelSeven.Core;
+using NextLevelSeven.Native;
 
 namespace NextLevelSeven.Transformation
 {

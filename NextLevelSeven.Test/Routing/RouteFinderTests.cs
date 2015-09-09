@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
+using NextLevelSeven.Native;
 using NextLevelSeven.Routing;
 
 namespace NextLevelSeven.Test.Routing

@@ -1,4 +1,4 @@
-﻿namespace NextLevelSeven.Core
+﻿namespace NextLevelSeven.Native
 {
     /// <summary>
     ///     Common interface for the second depth level of an HL7 message, which contains segment type information.

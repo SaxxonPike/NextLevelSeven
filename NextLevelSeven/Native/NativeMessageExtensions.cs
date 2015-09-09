@@ -2,7 +2,7 @@
 using System.Linq;
 using NextLevelSeven.Routing;
 
-namespace NextLevelSeven.Core
+namespace NextLevelSeven.Native
 {
     /// <summary>
     ///     Extends the functionality of top-level HL7 message elements.

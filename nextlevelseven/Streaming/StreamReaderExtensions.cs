@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using NextLevelSeven.Core;
+using NextLevelSeven.Native;
 
 namespace NextLevelSeven.Streaming
 {

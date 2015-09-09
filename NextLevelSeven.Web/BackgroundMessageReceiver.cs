@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading;
 using NextLevelSeven.Core;
 using NextLevelSeven.MessageGeneration;
+using NextLevelSeven.Native;
 using NextLevelSeven.Streaming;
 
 namespace NextLevelSeven.Web

@@ -6,6 +6,7 @@ using NextLevelSeven.Codecs;
 using NextLevelSeven.Core;
 using NextLevelSeven.Cursors.Dividers;
 using NextLevelSeven.Diagnostics;
+using NextLevelSeven.Native;
 
 namespace NextLevelSeven.Cursors
 {
@@ -140,7 +141,7 @@ namespace NextLevelSeven.Cursors
             {
                 if (Ancestor is Message)
                 {
-                    return new Core.NativeMessage(Ancestor as Message);
+                    return new NativeMessage(Ancestor as Message);
                 }
 
                 return (Ancestor != null)

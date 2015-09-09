@@ -3,6 +3,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using NextLevelSeven.Core;
+using NextLevelSeven.Native;
 using NextLevelSeven.Web;
 
 namespace NextLevelSeven.Test.Web

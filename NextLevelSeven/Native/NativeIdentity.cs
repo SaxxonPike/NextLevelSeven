@@ -1,4 +1,6 @@
-﻿namespace NextLevelSeven.Core
+﻿using NextLevelSeven.Specification;
+
+namespace NextLevelSeven.Native
 {
     /// <summary>
     ///     Allows for the use of Identity via an element's data.

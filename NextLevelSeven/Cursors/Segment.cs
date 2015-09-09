@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NextLevelSeven.Core;
 using NextLevelSeven.Diagnostics;
+using NextLevelSeven.Native;
 
 namespace NextLevelSeven.Cursors
 {

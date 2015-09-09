@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Building;
 using NextLevelSeven.Core;
+using NextLevelSeven.Native;
 
 namespace NextLevelSeven.Test.Building
 {

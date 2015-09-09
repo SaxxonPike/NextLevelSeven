@@ -1,6 +1,7 @@
 ﻿using System.Text;
 using NextLevelSeven.Core;
 using NextLevelSeven.Cursors.Dividers;
+using NextLevelSeven.Native;
 
 namespace NextLevelSeven.Cursors
 {

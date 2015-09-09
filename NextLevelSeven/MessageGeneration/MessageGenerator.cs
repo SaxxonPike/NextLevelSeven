@@ -1,5 +1,7 @@
 ﻿using System;
 using NextLevelSeven.Core;
+using NextLevelSeven.Native;
+using NextLevelSeven.Specification;
 
 namespace NextLevelSeven.MessageGeneration
 {

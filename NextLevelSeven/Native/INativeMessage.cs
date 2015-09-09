@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using NextLevelSeven.Core;
+using NextLevelSeven.Specification;
 
-namespace NextLevelSeven.Core
+namespace NextLevelSeven.Native
 {
     /// <summary>
     ///     Common interface for the highest level element in an HL7 message: the message itself.

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NextLevelSeven.Building;
+using NextLevelSeven.Native;
 
 namespace NextLevelSeven.Core
 {

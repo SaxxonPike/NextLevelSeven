@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
+using NextLevelSeven.Core;
 
-namespace NextLevelSeven.Core
+namespace NextLevelSeven.Specification
 {
     /// <summary>
     ///     Contains identity information for a sender or receiver.

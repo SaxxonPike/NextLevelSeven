@@ -1,4 +1,5 @@
 ﻿using NextLevelSeven.Core;
+using NextLevelSeven.Native;
 using NextLevelSeven.Transformation;
 
 namespace NextLevelSeven.Test.Transformation

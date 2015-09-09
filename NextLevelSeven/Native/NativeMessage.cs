@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using NextLevelSeven.Codecs;
 using NextLevelSeven.Diagnostics;
+using NextLevelSeven.Core;
+using NextLevelSeven.Specification;
 
-namespace NextLevelSeven.Core
+namespace NextLevelSeven.Native
 {
     /// <summary>
     ///     Represents a textual HL7v2 message.

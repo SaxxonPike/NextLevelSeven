@@ -1,4 +1,6 @@
-﻿namespace NextLevelSeven.Core
+﻿using NextLevelSeven.Core;
+
+namespace NextLevelSeven.Native
 {
     /// <summary>
     ///     An encoding configuration that gets its values from an HL7 message.

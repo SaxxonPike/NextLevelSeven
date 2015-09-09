@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
+using NextLevelSeven.Native;
 using NextLevelSeven.Web;
 
 namespace NextLevelSeven.Test.Web
