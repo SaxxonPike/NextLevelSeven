@@ -82,7 +82,7 @@ namespace NextLevelSeven.Web
             var config = Configuration;
             var listener = new HttpListener();
             Listener = listener;
-            var innerQueue = new List<IMessage>();
+            var innerQueue = new List<INativeMessage>();
 
             try
             {
@@ -100,7 +100,7 @@ namespace NextLevelSeven.Web
                     var failureReason = string.Empty;
                     var messageRawData = new byte[0];
 
-                    IMessage request = null;
+                    INativeMessage request = null;
 
                     using (var mem = new MemoryStream())
                     {
@@ -108,7 +108,7 @@ namespace NextLevelSeven.Web
                         mem.Position = 0;
                         while (true)
                         {
-                            IMessage message;
+                            INativeMessage message;
 
                             try
                             {
@@ -149,7 +149,7 @@ namespace NextLevelSeven.Web
                         }
                     }
 
-                    IMessage responseMessage;
+                    INativeMessage responseMessage;
                     if (request != null)
                     {
                         responseMessage = AckMessageGenerator.GenerateSuccess(request, null, config.OwnFacility,
@@ -162,7 +162,7 @@ namespace NextLevelSeven.Web
                     }
                     else
                     {
-                        responseMessage = AckMessageGenerator.GenerateReject(new Message(), failureReason,
+                        responseMessage = AckMessageGenerator.GenerateReject(new NativeMessage(), failureReason,
                             config.OwnFacility, config.OwnApplication);
                         if (MessageRejected != null)
                         {
@@ -209,7 +209,7 @@ namespace NextLevelSeven.Web
         /// </summary>
         /// <param name="source">Stream to read from.</param>
         /// <returns>Loaded message.</returns>
-        private static IMessage ReadMessageStream(Stream source)
+        private static INativeMessage ReadMessageStream(Stream source)
         {
             var reader = new MessageStreamReader(source);
             var message = reader.Read();

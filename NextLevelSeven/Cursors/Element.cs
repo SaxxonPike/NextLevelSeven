@@ -12,7 +12,7 @@ namespace NextLevelSeven.Cursors
     /// <summary>
     ///     Represents a generic HL7 message element, which may contain other elements.
     /// </summary>
-    internal abstract class Element : IElement, IEquatable<string>
+    internal abstract class Element : INativeElement, IEquatable<string>
     {
         private IStringDivider _descendantDivider;
         private bool _descendantDividerInitialized;
@@ -53,12 +53,12 @@ namespace NextLevelSeven.Cursors
         protected int ParentIndex { get; set; }
         public event EventHandler ValueChanged;
 
-        public IElement this[int index]
+        public INativeElement this[int index]
         {
             get { return GetDescendant(index); }
         }
 
-        public IElement AncestorElement
+        public INativeElement AncestorElement
         {
             get { return Ancestor; }
         }
@@ -68,7 +68,7 @@ namespace NextLevelSeven.Cursors
             get { return new Codec(this); }
         }
 
-        public abstract IElement CloneDetached();
+        public abstract INativeElement CloneDetached();
 
         public void Delete()
         {
@@ -86,7 +86,7 @@ namespace NextLevelSeven.Cursors
             get { return DescendantDivider.Count; }
         }
 
-        public IEnumerable<IElement> DescendantElements
+        public IEnumerable<INativeElement> DescendantElements
         {
             get { return new ElementEnumerable(this); }
         }
@@ -134,13 +134,13 @@ namespace NextLevelSeven.Cursors
             }
         }
 
-        public IMessage Message
+        public INativeMessage Message
         {
             get
             {
                 if (Ancestor is Message)
                 {
-                    return new Core.Message(Ancestor as Message);
+                    return new Core.NativeMessage(Ancestor as Message);
                 }
 
                 return (Ancestor != null)
@@ -231,7 +231,7 @@ namespace NextLevelSeven.Cursors
             return element.ToString();
         }
 
-        public abstract IElement GetDescendant(int index);
+        public abstract INativeElement GetDescendant(int index);
 
         protected virtual IStringDivider GetDescendantDivider(Element ancestor, int index)
         {

@@ -14,7 +14,7 @@ namespace NextLevelSeven.Streaming
         /// </summary>
         /// <param name="reader">Reader to read with.</param>
         /// <returns>Message that was read, or null if none were found.</returns>
-        public static IMessage ReadAndSkipMessageErrors(this MessageStreamReader reader)
+        public static INativeMessage ReadAndSkipMessageErrors(this MessageStreamReader reader)
         {
             try
             {
@@ -35,9 +35,9 @@ namespace NextLevelSeven.Streaming
         /// </summary>
         /// <param name="reader">Reader to read with.</param>
         /// <returns>Messages that were read.</returns>
-        public static IEnumerable<IMessage> ReadAllAndSkipMessageErrors(this MessageStreamReader reader)
+        public static IEnumerable<INativeMessage> ReadAllAndSkipMessageErrors(this MessageStreamReader reader)
         {
-            var messages = new List<IMessage>();
+            var messages = new List<INativeMessage>();
 
             while (true)
             {

@@ -29,7 +29,7 @@ namespace NextLevelSeven.Web
             ReceivedMessage = receivedMessage;
         }
 
-        public MessageTransportEventArgs(IMessage sentMessage, IMessage receivedMessage)
+        public MessageTransportEventArgs(INativeMessage sentMessage, INativeMessage receivedMessage)
         {
             SentMessage = sentMessage.ToString();
             ReceivedMessage = receivedMessage.ToString();

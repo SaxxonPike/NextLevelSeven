@@ -9,7 +9,7 @@ namespace NextLevelSeven.Test.MessageGeneration
     public class AckMessageGeneratorTests
     {
         private string _controlId;
-        private IMessage _message;
+        private INativeMessage _message;
         private string _trigger;
         private string _type;
 

@@ -17,7 +17,7 @@ namespace NextLevelSeven.Codecs
         /// <param name="baseElement">Element to reference.</param>
         /// <param name="decoder">Decoding function from HL7.</param>
         /// <param name="encoder">Encoding function to HL7.</param>
-        public IndexedCodec(IElement baseElement, Func<string, TDecoded> decoder, Func<TDecoded, string> encoder)
+        public IndexedCodec(INativeElement baseElement, Func<string, TDecoded> decoder, Func<TDecoded, string> encoder)
         {
             BaseElement = baseElement;
             Decoder = decoder;
@@ -27,7 +27,7 @@ namespace NextLevelSeven.Codecs
         /// <summary>
         ///     Referenced element.
         /// </summary>
-        private IElement BaseElement { get; set; }
+        private INativeElement BaseElement { get; set; }
 
         /// <summary>
         ///     Decoding function from HL7.

@@ -8,7 +8,7 @@ namespace NextLevelSeven.Cursors
     /// <summary>
     ///     Enumerable interface for element descendants.
     /// </summary>
-    internal sealed class ElementEnumerable : IEnumerable<IElement>
+    internal sealed class ElementEnumerable : IEnumerable<INativeElement>
     {
         public ElementEnumerable(Element element)
         {
@@ -17,9 +17,9 @@ namespace NextLevelSeven.Cursors
 
         private Element Element { get; set; }
 
-        public IEnumerator<IElement> GetEnumerator()
+        public IEnumerator<INativeElement> GetEnumerator()
         {
-            return new ElementEnumerator<IElement>(Element.DescendantDivider, Element.GetDescendant);
+            return new ElementEnumerator<INativeElement>(Element.DescendantDivider, Element.GetDescendant);
         }
 
         IEnumerator IEnumerable.GetEnumerator()

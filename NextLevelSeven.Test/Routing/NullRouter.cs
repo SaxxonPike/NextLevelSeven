@@ -10,7 +10,7 @@ namespace NextLevelSeven.Test.Routing
             Success = success;
         }
 
-        public bool Route(IMessage message)
+        public bool Route(INativeMessage message)
         {
             LastMessage = message;
             Routed = Routed || Success;
@@ -20,7 +20,7 @@ namespace NextLevelSeven.Test.Routing
 
         public bool Checked { get; private set; }
 
-        public IMessage LastMessage { get; private set; }
+        public INativeMessage LastMessage { get; private set; }
 
         public bool Routed { get; private set; }
 

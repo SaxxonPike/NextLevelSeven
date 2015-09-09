@@ -10,7 +10,7 @@ namespace NextLevelSeven.Mapping
 {
     public class MappedMessage<TKey>
     {
-        public MappedMessage(IMapConfiguration<TKey> configuration, IElementTree message)
+        public MappedMessage(IMapConfiguration<TKey> configuration, IMessage message)
         {
             Configuration = configuration;
             Message = message;
@@ -54,7 +54,7 @@ namespace NextLevelSeven.Mapping
             return GetAllValues(key).FirstOrDefault();
         }
 
-        public IElementTree Message
+        public IMessage Message
         {
             get;
             private set;

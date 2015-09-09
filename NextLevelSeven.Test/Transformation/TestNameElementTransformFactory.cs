@@ -12,7 +12,7 @@ namespace NextLevelSeven.Test.Transformation
 
         private readonly string _readString;
 
-        public ElementTransform CreateTransform(IElement element)
+        public ElementTransform CreateTransform(INativeElement element)
         {
             return new TestNameElementTransform(element, _readString);
         }

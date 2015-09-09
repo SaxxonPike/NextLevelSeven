@@ -34,7 +34,7 @@ namespace NextLevelSeven.Web
         ///     Remove an item from the front of the queue and get its message.
         /// </summary>
         /// <returns>Message that came from the dequeued item.</returns>
-        public IMessage Dequeue()
+        public INativeMessage Dequeue()
         {
             if (Messages.Count > 0)
             {
@@ -47,7 +47,7 @@ namespace NextLevelSeven.Web
         ///     Add an item to the back of the queue.
         /// </summary>
         /// <param name="message">Message to add to the queue.</param>
-        public void Enqueue(IMessage message)
+        public void Enqueue(INativeMessage message)
         {
             var queuedMessage = new QueuedMessage(message);
             Messages.Enqueue(queuedMessage);

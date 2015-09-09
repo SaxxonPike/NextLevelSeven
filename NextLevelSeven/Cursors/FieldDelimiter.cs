@@ -51,12 +51,12 @@ namespace NextLevelSeven.Cursors
             }
         }
 
-        public override IElement CloneDetached()
+        public override INativeElement CloneDetached()
         {
             return new Field(Value, EncodingConfiguration);
         }
 
-        public override IElement GetDescendant(int index)
+        public override INativeElement GetDescendant(int index)
         {
             return new FieldDelimiter(this);
         }

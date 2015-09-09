@@ -7,7 +7,7 @@ namespace NextLevelSeven.Core
     /// <summary>
     ///     Common interface that represents any one of the HL7v2 message constructs that holds data.
     /// </summary>
-    public interface IElement
+    public interface INativeElement
     {
         /// <summary>
         ///     Get a descendant element at the specified index. Indices match the HL7 specification, and are not necessarily
@@ -15,12 +15,12 @@ namespace NextLevelSeven.Core
         /// </summary>
         /// <param name="index">Index to query.</param>
         /// <returns>Element that was found at the index.</returns>
-        IElement this[int index] { get; }
+        INativeElement this[int index] { get; }
 
         /// <summary>
         ///     Get the ancestor (higher level in the heirarchy) element.
         /// </summary>
-        IElement AncestorElement { get; }
+        INativeElement AncestorElement { get; }
 
         /// <summary>
         ///     Get conversion options for non-string datatypes, such as numeric and dates.
@@ -40,7 +40,7 @@ namespace NextLevelSeven.Core
         /// <summary>
         ///     Get all descendant elements.
         /// </summary>
-        IEnumerable<IElement> DescendantElements { get; }
+        IEnumerable<INativeElement> DescendantElements { get; }
 
         /// <summary>
         ///     If true, the element is considered to exist in the message. This is not dependent on the value being null.
@@ -65,7 +65,7 @@ namespace NextLevelSeven.Core
         /// <summary>
         ///     Get the root message for this element.
         /// </summary>
-        IMessage Message { get; }
+        INativeMessage Message { get; }
 
         /// <summary>
         ///     Get or set the element data. When setting new data, descendents will automatically be repopulated.
@@ -86,7 +86,7 @@ namespace NextLevelSeven.Core
         ///     Create a detached clone of the element with no ancestors.
         /// </summary>
         /// <returns></returns>
-        IElement CloneDetached();
+        INativeElement CloneDetached();
 
         /// <summary>
         ///     Delete the element from its ancestor. This cannot be performed on the root element (message).

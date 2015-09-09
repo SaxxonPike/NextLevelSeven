@@ -18,11 +18,11 @@ namespace NextLevelSeven.MessageGeneration
         /// <param name="facility">Facility name for MSH-3.</param>
         /// <param name="application">Application name for MSH-4.</param>
         /// <returns>A complete ACK message.</returns>
-        private static IMessage Generate(IMessage message, string code, string reason = null, string facility = null,
+        private static INativeMessage Generate(INativeMessage message, string code, string reason = null, string facility = null,
             string application = null)
         {
             var sourceMsh = message["MSH"].First();
-            var result = new Message(sourceMsh.Value);
+            var result = new NativeMessage(sourceMsh.Value);
             var targetMsh = result[1];
             var msa = result[2];
 
@@ -52,7 +52,7 @@ namespace NextLevelSeven.MessageGeneration
         /// <param name="facility">Facility name for MSH-3.</param>
         /// <param name="application">Application name for MSH-4.</param>
         /// <returns>Complete HL7 ACK message.</returns>
-        public static IMessage GenerateError(IMessage message, string reason = null, string facility = null,
+        public static INativeMessage GenerateError(INativeMessage message, string reason = null, string facility = null,
             string application = null)
         {
             return Generate(message, "AE", reason, facility, application);
@@ -66,7 +66,7 @@ namespace NextLevelSeven.MessageGeneration
         /// <param name="facility">Facility name for MSH-3.</param>
         /// <param name="application">Application name for MSH-4.</param>
         /// <returns>Complete HL7 ACK message.</returns>
-        public static IMessage GenerateReject(IMessage message, string reason = null, string facility = null,
+        public static INativeMessage GenerateReject(INativeMessage message, string reason = null, string facility = null,
             string application = null)
         {
             return Generate(message, "AR", reason, facility, application);
@@ -80,7 +80,7 @@ namespace NextLevelSeven.MessageGeneration
         /// <param name="facility">Facility name for MSH-3.</param>
         /// <param name="application">Application name for MSH-4.</param>
         /// <returns>Complete HL7 ACK message.</returns>
-        public static IMessage GenerateSuccess(IMessage message, string reason = null, string facility = null,
+        public static INativeMessage GenerateSuccess(INativeMessage message, string reason = null, string facility = null,
             string application = null)
         {
             return Generate(message, "AA", reason, facility, application);

@@ -8,7 +8,7 @@ namespace NextLevelSeven.Cursors
     /// <summary>
     ///     Enumerable interface for segment descendants.
     /// </summary>
-    internal sealed class SegmentEnumerable : IEnumerable<ISegment>
+    internal sealed class SegmentEnumerable : IEnumerable<INativeSegment>
     {
         public SegmentEnumerable(Message message)
         {
@@ -17,9 +17,9 @@ namespace NextLevelSeven.Cursors
 
         private Message Element { get; set; }
 
-        public IEnumerator<ISegment> GetEnumerator()
+        public IEnumerator<INativeSegment> GetEnumerator()
         {
-            return new ElementEnumerator<ISegment>(Element.DescendantDivider, Element.GetSegment);
+            return new ElementEnumerator<INativeSegment>(Element.DescendantDivider, Element.GetSegment);
         }
 
         IEnumerator IEnumerable.GetEnumerator()

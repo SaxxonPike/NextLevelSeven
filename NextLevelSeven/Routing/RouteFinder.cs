@@ -43,7 +43,7 @@ namespace NextLevelSeven.Routing
         /// </summary>
         /// <param name="message">Message to route.</param>
         /// <returns>True if route succeeds. False otherwise.</returns>
-        public bool Route(IMessage message)
+        public bool Route(INativeMessage message)
         {
             return Routers.Any(r => r.Route(message));
         }

@@ -9,9 +9,9 @@ namespace NextLevelSeven.Cursors
     /// <summary>
     ///     Represents a segment-level element in an HL7 message.
     /// </summary>
-    internal sealed class Segment : Element, ISegment
+    internal sealed class Segment : Element, INativeSegment
     {
-        private readonly Dictionary<int, IElement> _cache = new Dictionary<int, IElement>();
+        private readonly Dictionary<int, INativeElement> _cache = new Dictionary<int, INativeElement>();
         private readonly EncodingConfiguration _encodingConfigurationOverride;
 
         public Segment(Element ancestor, int parentIndex, int externalIndex)
@@ -30,12 +30,12 @@ namespace NextLevelSeven.Cursors
             get { return _encodingConfigurationOverride ?? Ancestor.EncodingConfiguration; }
         }
 
-        public override IElement CloneDetached()
+        public override INativeElement CloneDetached()
         {
             return CloneDetachedSegment();
         }
 
-        ISegment ISegment.CloneDetached()
+        INativeSegment INativeSegment.CloneDetached()
         {
             return CloneDetachedSegment();
         }
@@ -90,12 +90,12 @@ namespace NextLevelSeven.Cursors
             set { DescendantDivider[0] = value; }
         }
 
-        private ISegment CloneDetachedSegment()
+        private INativeSegment CloneDetachedSegment()
         {
             return new Segment(Value, EncodingConfiguration);
         }
 
-        public override IElement GetDescendant(int index)
+        public override INativeElement GetDescendant(int index)
         {
             if (_cache.ContainsKey(index))
             {

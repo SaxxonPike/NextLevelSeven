@@ -22,7 +22,7 @@ namespace NextLevelSeven.Streaming
         ///     Read the next message in the stream.
         /// </summary>
         /// <returns>Message that was read, or null if there were no more.</returns>
-        public virtual IMessage Read()
+        public virtual INativeMessage Read()
         {
             return Process(BaseStream);
         }
@@ -32,14 +32,14 @@ namespace NextLevelSeven.Streaming
         ///     stream will be read as one message.)
         /// </summary>
         /// <returns>Messages that were read.</returns>
-        public virtual IEnumerable<IMessage> ReadAll()
+        public virtual IEnumerable<INativeMessage> ReadAll()
         {
             var message = Read();
             if (message != null)
             {
                 return new[] {message};
             }
-            return new IMessage[] {};
+            return new INativeMessage[] {};
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace NextLevelSeven.Streaming
         /// </summary>
         /// <param name="data">Data to decode.</param>
         /// <returns>Decoded message.</returns>
-        protected virtual IMessage Decode(byte[] data)
+        protected virtual INativeMessage Decode(byte[] data)
         {
             return Interpret(Encoding.UTF8.GetString(data));
         }
@@ -57,9 +57,9 @@ namespace NextLevelSeven.Streaming
         /// </summary>
         /// <param name="data">Text to interpret.</param>
         /// <returns>Interpreted message.</returns>
-        protected virtual IMessage Interpret(string data)
+        protected virtual INativeMessage Interpret(string data)
         {
-            return new Message(data);
+            return new NativeMessage(data);
         }
 
         /// <summary>
@@ -67,7 +67,7 @@ namespace NextLevelSeven.Streaming
         /// </summary>
         /// <param name="stream">Stream to read from.</param>
         /// <returns>Processed message.</returns>
-        protected virtual IMessage Process(Stream stream)
+        protected virtual INativeMessage Process(Stream stream)
         {
             var length = (int) (stream.Length - stream.Position);
             var buffer = new byte[length];

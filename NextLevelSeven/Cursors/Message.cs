@@ -10,7 +10,7 @@ namespace NextLevelSeven.Cursors
     /// </summary>
     internal sealed class Message : Element
     {
-        private readonly Dictionary<int, IElement> _cache = new Dictionary<int, IElement>();
+        private readonly Dictionary<int, INativeElement> _cache = new Dictionary<int, INativeElement>();
 
         private readonly EncodingConfiguration _encodingConfiguration;
         private Guid _keyGuid;
@@ -23,7 +23,7 @@ namespace NextLevelSeven.Cursors
                 throw new ArgumentNullException(@"message");
             }
 
-            _encodingConfiguration = new MessageEncodingConfiguration(this);
+            _encodingConfiguration = new NativeMessageEncodingConfiguration(this);
         }
 
         public override char Delimiter
@@ -58,7 +58,7 @@ namespace NextLevelSeven.Cursors
             }
         }
 
-        public IEnumerable<ISegment> Segments
+        public IEnumerable<INativeSegment> Segments
         {
             get { return new SegmentEnumerable(this); }
         }
@@ -86,21 +86,21 @@ namespace NextLevelSeven.Cursors
             return ToString().GetHashCode();
         }
 
-        public override IElement CloneDetached()
+        public override INativeElement CloneDetached()
         {
             return new Message(Value);
         }
 
-        public override IElement GetDescendant(int index)
+        public override INativeElement GetDescendant(int index)
         {
             return GetSegment(index);
         }
 
-        public ISegment GetSegment(int index)
+        public INativeSegment GetSegment(int index)
         {
             if (_cache.ContainsKey(index))
             {
-                return _cache[index] as ISegment;
+                return _cache[index] as INativeSegment;
             }
 
             if (index < 1)

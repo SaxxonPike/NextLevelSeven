@@ -32,7 +32,7 @@ namespace NextLevelSeven.Streaming
         ///     Write one textual HL7 message.
         /// </summary>
         /// <param name="message">Message to write.</param>
-        public override void Write(IMessage message)
+        public override void Write(INativeMessage message)
         {
             if (WriteBlankLine)
             {

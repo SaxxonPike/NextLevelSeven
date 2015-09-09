@@ -12,6 +12,6 @@ namespace NextLevelSeven.Routing
         /// </summary>
         /// <param name="message">Message to route.</param>
         /// <returns>Whether or not the message was handled or rerouted.</returns>
-        bool Route(IMessage message);
+        bool Route(INativeMessage message);
     }
 }

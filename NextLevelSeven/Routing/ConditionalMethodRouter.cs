@@ -13,7 +13,7 @@ namespace NextLevelSeven.Routing
         /// </summary>
         /// <param name="condition">Condition that must be met for messages to be routed.</param>
         /// <param name="action">Action to run if the condition is met.</param>
-        public ConditionalMethodRouter(Func<IMessage, bool> condition, Action<IMessage> action)
+        public ConditionalMethodRouter(Func<INativeMessage, bool> condition, Action<INativeMessage> action)
         {
             Action = action;
             Condition = condition;
@@ -22,19 +22,19 @@ namespace NextLevelSeven.Routing
         /// <summary>
         /// Method to route messages to if the condition is met.
         /// </summary>
-        public readonly Action<IMessage> Action;
+        public readonly Action<INativeMessage> Action;
 
         /// <summary>
         /// Condition to check messages against. Returns true if met.
         /// </summary>
-        public readonly Func<IMessage, bool> Condition;
+        public readonly Func<INativeMessage, bool> Condition;
 
         /// <summary>
         /// If the condition is met, route the message and return true. Returns false otherwise.
         /// </summary>
         /// <param name="message">Message to route.</param>
         /// <returns>True if the message was handled.</returns>
-        public bool Route(IMessage message)
+        public bool Route(INativeMessage message)
         {
             if (Condition(message))
             {

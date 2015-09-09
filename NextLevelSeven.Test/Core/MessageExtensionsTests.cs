@@ -10,7 +10,7 @@ namespace NextLevelSeven.Test.Core
         [TestMethod]
         public void MessageExtensions_CanFilterPid_FromMessage()
         {
-            var message = new Message(ExampleMessages.MultiplePid);
+            var message = new NativeMessage(ExampleMessages.MultiplePid);
             Assert.IsTrue(message.ExcludeSegments("PID").Any(), "Only PIDs are to be filtered.");
             Assert.IsTrue(message.ExcludeSegments("PID").All(s => s.Type != "PID"), "PIDs were not completely filtered.");
         }
@@ -18,7 +18,7 @@ namespace NextLevelSeven.Test.Core
         [TestMethod]
         public void MessageExtensions_CanGetObrSplitsWithoutExtras()
         {
-            var message = new Message(ExampleMessages.MultipleObr);
+            var message = new NativeMessage(ExampleMessages.MultipleObr);
             var splits = message.SplitSegments("OBR");
             Assert.AreEqual(message["OBR"].Count(), splits.Count(), "OBR split count doesn't match number of OBR segments.");
         }
@@ -26,7 +26,7 @@ namespace NextLevelSeven.Test.Core
         [TestMethod]
         public void MessageExtensions_CanGetObrSplitsWithExtras()
         {
-            var message = new Message(ExampleMessages.MultipleObr);
+            var message = new NativeMessage(ExampleMessages.MultipleObr);
             var splits = message.SplitSegments("OBR", true);
             Assert.AreEqual(message["OBR"].Count() + 1, splits.Count(), "OBR split count (with extras) doesn't match number of OBR segments + 1.");
         }

@@ -8,7 +8,7 @@ namespace NextLevelSeven.Test.MessageGeneration
     [TestClass]
     public class MessageGeneratorTests
     {
-        private IMessage _message;
+        private INativeMessage _message;
         private string _controlId;
         private string _processingId;
         private string _receivingApplication;

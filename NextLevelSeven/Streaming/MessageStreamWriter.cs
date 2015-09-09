@@ -22,7 +22,7 @@ namespace NextLevelSeven.Streaming
         ///     Write an HL7 message to the stream.
         /// </summary>
         /// <param name="message">Message to write.</param>
-        public virtual void Write(IMessage message)
+        public virtual void Write(INativeMessage message)
         {
             using (var stream = Process(Encode(Interpret(message))))
             {
@@ -41,7 +41,7 @@ namespace NextLevelSeven.Streaming
         ///     Write all messages to the stream.
         /// </summary>
         /// <param name="messages">Messages to write.</param>
-        public virtual void WriteAll(IEnumerable<IMessage> messages)
+        public virtual void WriteAll(IEnumerable<INativeMessage> messages)
         {
             foreach (var message in messages)
             {
@@ -64,7 +64,7 @@ namespace NextLevelSeven.Streaming
         /// </summary>
         /// <param name="message">Message to convert.</param>
         /// <returns>Converted message.</returns>
-        protected virtual string Interpret(IMessage message)
+        protected virtual string Interpret(INativeMessage message)
         {
             return message.ToString();
         }

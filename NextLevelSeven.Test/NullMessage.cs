@@ -11,26 +11,26 @@ namespace NextLevelSeven.Test
     /// <summary>
     ///     A null message that contains nothing. This exists solely to implement IMessage without extra plumbing.
     /// </summary>
-    sealed public class NullMessage : IMessage
+    sealed public class NullMessage : INativeMessage
     {
         /// <summary>
         ///     Get the singleton instance of NullMessage.
         /// </summary>
         public static readonly NullMessage Instance = new NullMessage();
 
-        public ISegment this[int index]
+        public INativeSegment this[int index]
         {
             get { return null; }
         }
 
-        public IEnumerable<ISegment> this[string segmentType]
+        public IEnumerable<INativeSegment> this[string segmentType]
         {
-            get { return Enumerable.Empty<ISegment>(); }
+            get { return Enumerable.Empty<INativeSegment>(); }
         }
 
-        public IEnumerable<ISegment> this[IEnumerable<string> segmentTypes]
+        public IEnumerable<INativeSegment> this[IEnumerable<string> segmentTypes]
         {
-            get { return Enumerable.Empty<ISegment>(); }
+            get { return Enumerable.Empty<INativeSegment>(); }
         }
 
         public string ControlId
@@ -61,9 +61,9 @@ namespace NextLevelSeven.Test
             set { }
         }
 
-        public IEnumerable<ISegment> Segments
+        public IEnumerable<INativeSegment> Segments
         {
-            get { return Enumerable.Empty<ISegment>(); }
+            get { return Enumerable.Empty<INativeSegment>(); }
         }
 
         public IIdentity Sender
@@ -99,17 +99,17 @@ namespace NextLevelSeven.Test
             get { return null; }
         }
 
-        public IMessage Clone()
+        public INativeMessage Clone()
         {
             return new NullMessage();
         }
 
-        public IElement GetField(int segment, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
+        public INativeElement GetField(int segment, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
         {
             return null;
         }
 
-        public IElement GetField(string segmentName, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
+        public INativeElement GetField(string segmentName, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
         {
             return null;
         }
@@ -119,12 +119,12 @@ namespace NextLevelSeven.Test
             return true;
         }
 
-        IElement IElement.this[int index]
+        INativeElement INativeElement.this[int index]
         {
             get { return null; }
         }
 
-        public IElement AncestorElement
+        public INativeElement AncestorElement
         {
             get { return null; }
         }
@@ -144,9 +144,9 @@ namespace NextLevelSeven.Test
             get { return 0; }
         }
 
-        public IEnumerable<IElement> DescendantElements
+        public IEnumerable<INativeElement> DescendantElements
         {
-            get { return Enumerable.Empty<IElement>(); }
+            get { return Enumerable.Empty<INativeElement>(); }
         }
 
         public bool Exists
@@ -169,7 +169,7 @@ namespace NextLevelSeven.Test
             get { return null; }
         }
 
-        public IMessage Message
+        public INativeMessage Message
         {
             get { return this; }
         }
@@ -188,7 +188,7 @@ namespace NextLevelSeven.Test
 
         public event EventHandler ValueChanged;
 
-        public IElement CloneDetached()
+        public INativeElement CloneDetached()
         {
             return new NullMessage();
         }
@@ -216,9 +216,9 @@ namespace NextLevelSeven.Test
             return null;
         }
 
-        public IEnumerable<IElement> GetFields(string segmentName, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
+        public IEnumerable<INativeElement> GetFields(string segmentName, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
         {
-            return Enumerable.Empty<IElement>();
+            return Enumerable.Empty<INativeElement>();
         }
 
         public IEnumerable<string> GetValues(string segmentName, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)

@@ -32,7 +32,7 @@ namespace NextLevelSeven.Test.Web
             Assert.AreEqual(0, sender.Count, "Sender queue is not empty.");
 
             Debug.WriteLine("Enqueueing message...");
-            sender.Enqueue(new Message(ExampleMessages.Standard));
+            sender.Enqueue(new NativeMessage(ExampleMessages.Standard));
             Measure.WaitTime(() =>
             {
                 var queueIsPopulated = receiver.Count > 0;

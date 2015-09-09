@@ -12,6 +12,6 @@ namespace NextLevelSeven.Transformation
         /// </summary>
         /// <param name="element">Element to apply the transform to.</param>
         /// <returns>A transform for the specified element.</returns>
-        ElementTransform CreateTransform(IElement element);
+        ElementTransform CreateTransform(INativeElement element);
     }
 }

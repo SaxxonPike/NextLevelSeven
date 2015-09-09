@@ -41,12 +41,12 @@ namespace NextLevelSeven.Cursors
             get { return false; }
         }
 
-        public override IElement CloneDetached()
+        public override INativeElement CloneDetached()
         {
             return new Subcomponent(Value, EncodingConfiguration);
         }
 
-        public override IElement GetDescendant(int index)
+        public override INativeElement GetDescendant(int index)
         {
             throw new ElementException(ErrorCode.SubcomponentCannotHaveDescendants);
         }

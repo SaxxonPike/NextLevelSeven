@@ -10,7 +10,7 @@ namespace NextLevelSeven.Cursors
     /// </summary>
     internal sealed class Component : Element
     {
-        private readonly Dictionary<int, IElement> _cache = new Dictionary<int, IElement>();
+        private readonly Dictionary<int, INativeElement> _cache = new Dictionary<int, INativeElement>();
 
         public Component(Element ancestor, int parentIndex, int externalIndex)
             : base(ancestor, parentIndex, externalIndex)
@@ -32,12 +32,12 @@ namespace NextLevelSeven.Cursors
             get { return Ancestor.EncodingConfiguration; }
         }
 
-        public override IElement CloneDetached()
+        public override INativeElement CloneDetached()
         {
             return new Component(Value);
         }
 
-        public override IElement GetDescendant(int index)
+        public override INativeElement GetDescendant(int index)
         {
             if (_cache.ContainsKey(index))
             {

@@ -8,7 +8,7 @@ namespace NextLevelSeven.Core
     /// <summary>
     ///     Extensions for generic element functionality.
     /// </summary>
-    public static class ElementExtensions
+    public static class NativeElementExtensions
     {
         /// <summary>
         ///     Add a string as a descendant.
@@ -16,7 +16,7 @@ namespace NextLevelSeven.Core
         /// <param name="target">Element to add to.</param>
         /// <param name="elementToAdd">String to be added.</param>
         /// <returns>The newly added element.</returns>
-        public static void Add(this IElement target, string elementToAdd)
+        public static void Add(this INativeElement target, string elementToAdd)
         {
             target.Value = string.Join(new string(target.Delimiter, 1), target.Value, elementToAdd);
         }
@@ -27,7 +27,7 @@ namespace NextLevelSeven.Core
         /// <param name="target">Element to add to.</param>
         /// <param name="elementToAdd">Element to be added.</param>
         /// <returns>The newly added element.</returns>
-        public static void Add(this IElement target, IElement elementToAdd)
+        public static void Add(this INativeElement target, INativeElement elementToAdd)
         {
             target.Value = string.Join(new string(target.Delimiter, 1), target.Value, elementToAdd.ToString());
         }
@@ -37,7 +37,7 @@ namespace NextLevelSeven.Core
         /// </summary>
         /// <param name="target">Element to add to.</param>
         /// <param name="elementsToAdd">Elements to be added.</param>
-        public static void AddRange(this IElement target, IEnumerable<string> elementsToAdd)
+        public static void AddRange(this INativeElement target, IEnumerable<string> elementsToAdd)
         {
             target.Value = string.Join(new string(target.Delimiter, 1), (new[] {target.Value}).Concat(elementsToAdd));
         }
@@ -47,7 +47,7 @@ namespace NextLevelSeven.Core
         /// </summary>
         /// <param name="target">Element to add to.</param>
         /// <param name="elementsToAdd">Elements to be added.</param>
-        public static void AddRange(this IElement target, IEnumerable<IElement> elementsToAdd)
+        public static void AddRange(this INativeElement target, IEnumerable<INativeElement> elementsToAdd)
         {
             target.Value = string.Join(new string(target.Delimiter, 1),
                 (new[] {target.Value}).Concat(elementsToAdd.Select(e => e.ToString())));
@@ -58,7 +58,7 @@ namespace NextLevelSeven.Core
         /// </summary>
         /// <param name="target">Element to delete from.</param>
         /// <param name="index">Index of descendant to delete.</param>
-        public static void Delete(this IElement target, int index)
+        public static void Delete(this INativeElement target, int index)
         {
             if (index >= 1 && index <= target.DescendantCount)
             {
@@ -70,7 +70,7 @@ namespace NextLevelSeven.Core
         ///     Delete elements in the enumerable. All elements must share a direct ancestor.
         /// </summary>
         /// <param name="targets">Elements to delete.</param>
-        public static void Delete(this IEnumerable<IElement> targets)
+        public static void Delete(this IEnumerable<INativeElement> targets)
         {
             var elements = targets.ToList();
             if (elements.Count <= 0)
@@ -98,7 +98,7 @@ namespace NextLevelSeven.Core
         /// <param name="target">Element to add to.</param>
         /// <param name="index">Index of the descendant to add data after.</param>
         /// <param name="elementToInsert">Descendant data to insert.</param>
-        public static void InsertAfter(this IElement target, int index, IElement elementToInsert)
+        public static void InsertAfter(this INativeElement target, int index, INativeElement elementToInsert)
         {
             target[index].InsertAfter(elementToInsert);
         }
@@ -108,7 +108,7 @@ namespace NextLevelSeven.Core
         /// </summary>
         /// <param name="target">Element to add data after.</param>
         /// <param name="elementToInsert">Descendant data to insert.</param>
-        public static void InsertAfter(this IElement target, IElement elementToInsert)
+        public static void InsertAfter(this INativeElement target, INativeElement elementToInsert)
         {
             if (target.AncestorElement == null)
             {
@@ -132,7 +132,7 @@ namespace NextLevelSeven.Core
         /// <param name="target">Element to add to.</param>
         /// <param name="index">Index of the descendant to add data after.</param>
         /// <param name="dataToInsert">Descendant string to insert.</param>
-        public static void InsertAfter(this IElement target, int index, string dataToInsert)
+        public static void InsertAfter(this INativeElement target, int index, string dataToInsert)
         {
             target[index].InsertAfter(dataToInsert);
         }
@@ -142,7 +142,7 @@ namespace NextLevelSeven.Core
         /// </summary>
         /// <param name="target">Element to add data after.</param>
         /// <param name="dataToInsert">Descendant string to insert.</param>
-        public static void InsertAfter(this IElement target, string dataToInsert)
+        public static void InsertAfter(this INativeElement target, string dataToInsert)
         {
             if (target.AncestorElement == null)
             {
@@ -166,7 +166,7 @@ namespace NextLevelSeven.Core
         /// <param name="target">Element to add to.</param>
         /// <param name="index">Index of the descendant to add data before.</param>
         /// <param name="elementToInsert">Descendant data to insert.</param>
-        public static void InsertBefore(this IElement target, int index, IElement elementToInsert)
+        public static void InsertBefore(this INativeElement target, int index, INativeElement elementToInsert)
         {
             target[index].InsertBefore(elementToInsert);
         }
@@ -176,7 +176,7 @@ namespace NextLevelSeven.Core
         /// </summary>
         /// <param name="target">Element to add data before.</param>
         /// <param name="elementToInsert">Descendant data to insert.</param>
-        public static void InsertBefore(this IElement target, IElement elementToInsert)
+        public static void InsertBefore(this INativeElement target, INativeElement elementToInsert)
         {
             if (target.AncestorElement == null)
             {
@@ -200,7 +200,7 @@ namespace NextLevelSeven.Core
         /// <param name="target">Element to add to.</param>
         /// <param name="index">Index of the descendant to add data before.</param>
         /// <param name="dataToInsert">Descendant data to insert.</param>
-        public static void InsertBefore(this IElement target, int index, string dataToInsert)
+        public static void InsertBefore(this INativeElement target, int index, string dataToInsert)
         {
             target[index].InsertBefore(dataToInsert);
         }
@@ -210,7 +210,7 @@ namespace NextLevelSeven.Core
         /// </summary>
         /// <param name="target">Element to add data before.</param>
         /// <param name="dataToInsert">Descendant data to insert.</param>
-        public static void InsertBefore(this IElement target, string dataToInsert)
+        public static void InsertBefore(this INativeElement target, string dataToInsert)
         {
             if (target.AncestorElement == null)
             {
@@ -234,7 +234,7 @@ namespace NextLevelSeven.Core
         /// <param name="target">Element to move.</param>
         /// <param name="targetIndex">Target index.</param>
         /// <returns>Element in its new place.</returns>
-        public static IElement MoveToIndex(this IElement target, int targetIndex)
+        public static INativeElement MoveToIndex(this INativeElement target, int targetIndex)
         {
             var ancestor = target.AncestorElement;
             if (ancestor == null)
@@ -252,14 +252,14 @@ namespace NextLevelSeven.Core
                 return target;
             }
 
-            if (ancestor is ISegment)
+            if (ancestor is INativeSegment)
             {
                 if (target.Index < 1)
                 {
                     throw new ElementException(ErrorCode.SegmentTypeCannotBeMoved);
                 }
 
-                if (target.Index <= 2 && (ancestor as ISegment).Type == "MSH")
+                if (target.Index <= 2 && (ancestor as INativeSegment).Type == "MSH")
                 {
                     throw new ElementException(ErrorCode.EncodingElementCannotBeMoved);
                 }
@@ -286,7 +286,7 @@ namespace NextLevelSeven.Core
         /// <param name="element">Element to transform.</param>
         /// <param name="transform">A transform to clone.</param>
         /// <returns>Transformed element.</returns>
-        public static ElementTransform Transform(this IElement element, ElementTransform transform)
+        public static ElementTransform Transform(this INativeElement element, ElementTransform transform)
         {
             return transform.CloneTransform(element);
         }
@@ -297,7 +297,7 @@ namespace NextLevelSeven.Core
         /// <param name="element">Element to transform.</param>
         /// <param name="transformFactory">Factory that generates a transform for this element.</param>
         /// <returns>Transformed element.</returns>
-        public static ElementTransform Transform(this IElement element, IElementTransformFactory transformFactory)
+        public static ElementTransform Transform(this INativeElement element, IElementTransformFactory transformFactory)
         {
             return transformFactory.CreateTransform(element);
         }
@@ -308,7 +308,7 @@ namespace NextLevelSeven.Core
         /// <param name="elements">Elements to transform.</param>
         /// <param name="transform">A transform to clone.</param>
         /// <returns>Transformed elements.</returns>
-        public static IEnumerable<ElementTransform> TransformAll(this IEnumerable<IElement> elements,
+        public static IEnumerable<ElementTransform> TransformAll(this IEnumerable<INativeElement> elements,
             ElementTransform transform)
         {
             return elements.Select(transform.CloneTransform);
@@ -320,7 +320,7 @@ namespace NextLevelSeven.Core
         /// <param name="elements">Elements to transform.</param>
         /// <param name="transformFactory">Factory that generates a transform for these elements.</param>
         /// <returns>Transformed elements.</returns>
-        public static IEnumerable<ElementTransform> TransformAll(this IEnumerable<IElement> elements,
+        public static IEnumerable<ElementTransform> TransformAll(this IEnumerable<INativeElement> elements,
             IElementTransformFactory transformFactory)
         {
             return elements.Select(transformFactory.CreateTransform);

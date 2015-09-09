@@ -11,7 +11,7 @@ namespace NextLevelSeven.Test.Routing
         public void ListenerRouter_ReceivesMessages()
         {
             var routed = false;
-            var message = new Message(ExampleMessages.Standard);
+            var message = new NativeMessage(ExampleMessages.Standard);
             var listener = new ListenerRouter(m => routed = true, new NullRouter(true));
             Assert.IsFalse(routed, "Test initialized incorrectly.");
             message.RouteTo(listener);
@@ -23,7 +23,7 @@ namespace NextLevelSeven.Test.Routing
         {
             var routed = false;
             var router = new NullRouter(true);
-            var message = new Message(ExampleMessages.Standard);
+            var message = new NativeMessage(ExampleMessages.Standard);
             var listener = new ListenerRouter(m => routed = true, router);
             Assert.IsFalse(routed, "Test initialized incorrectly.");
             message.RouteTo(listener);
@@ -33,8 +33,8 @@ namespace NextLevelSeven.Test.Routing
         [TestMethod]
         public void ListenerRouter_PassesCorrectData()
         {
-            IMessage routedData = null;
-            var message = new Message(ExampleMessages.Standard);
+            INativeMessage routedData = null;
+            var message = new NativeMessage(ExampleMessages.Standard);
             var router = new ListenerRouter(m => { routedData = m; });
             Assert.IsNull(routedData, "Test initialized incorrectly.");
             message.RouteTo(router);
@@ -46,7 +46,7 @@ namespace NextLevelSeven.Test.Routing
         public void ListenerRouter_ReturnsSuccessIfNoTargetRouter()
         {
             var routed = false;
-            var message = new Message(ExampleMessages.Standard);
+            var message = new NativeMessage(ExampleMessages.Standard);
             var listener = new ListenerRouter(m => routed = true);
             Assert.IsFalse(routed, "Test initialized incorrectly.");
             Assert.IsTrue(message.RouteTo(listener), "Listener must return True when there is no target router.");

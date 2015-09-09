@@ -8,18 +8,18 @@ namespace NextLevelSeven.Transformation
     /// <summary>
     ///     Base class for performing transformations on elements.
     /// </summary>
-    public abstract class ElementTransform : IElement
+    public abstract class ElementTransform : INativeElement
     {
         /// <summary>
         ///     Get the wrapped element.
         /// </summary>
-        protected readonly IElement BaseElement;
+        protected readonly INativeElement BaseElement;
 
         /// <summary>
         ///     Create a transform.
         /// </summary>
         /// <param name="baseElement">Element to wrap.</param>
-        protected ElementTransform(IElement baseElement)
+        protected ElementTransform(INativeElement baseElement)
         {
             BaseElement = baseElement;
         }
@@ -32,7 +32,7 @@ namespace NextLevelSeven.Transformation
         /// </summary>
         /// <param name="index">Index to query.</param>
         /// <returns>Element that was found at the index.</returns>
-        public virtual IElement this[int index]
+        public virtual INativeElement this[int index]
         {
             get { return BaseElement[index]; }
         }
@@ -40,7 +40,7 @@ namespace NextLevelSeven.Transformation
         /// <summary>
         ///     Get the ancestor (higher level in the heirarchy) element.
         /// </summary>
-        public virtual IElement AncestorElement
+        public virtual INativeElement AncestorElement
         {
             get { return BaseElement.AncestorElement; }
         }
@@ -57,7 +57,7 @@ namespace NextLevelSeven.Transformation
         ///     Create a detached clone of the element with no ancestors.
         /// </summary>
         /// <returns></returns>
-        public virtual IElement CloneDetached()
+        public virtual INativeElement CloneDetached()
         {
             return BaseElement.CloneDetached();
         }
@@ -89,7 +89,7 @@ namespace NextLevelSeven.Transformation
         /// <summary>
         ///     Get all descendant elements.
         /// </summary>
-        public virtual IEnumerable<IElement> DescendantElements
+        public virtual IEnumerable<INativeElement> DescendantElements
         {
             get { return BaseElement.DescendantElements; }
         }
@@ -137,7 +137,7 @@ namespace NextLevelSeven.Transformation
         /// <summary>
         ///     Get the root message for this element.
         /// </summary>
-        public virtual IMessage Message
+        public virtual INativeMessage Message
         {
             get { return BaseElement.Message; }
         }
@@ -180,6 +180,6 @@ namespace NextLevelSeven.Transformation
         ///     Create a clone of this element transform to be used with another element.
         /// </summary>
         /// <returns>Cloned transform.</returns>
-        public abstract ElementTransform CloneTransform(IElement element);
+        public abstract ElementTransform CloneTransform(INativeElement element);
     }
 }

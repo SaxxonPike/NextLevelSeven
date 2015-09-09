@@ -9,8 +9,8 @@ namespace NextLevelSeven.Test.Core
         [TestMethod]
         public void ElementExtensions_CanInsertElementAfter()
         {
-            var message = new Message(ExampleMessages.Standard);
-            var modifiedMessage = new Message(ExampleMessages.Standard);
+            var message = new NativeMessage(ExampleMessages.Standard);
+            var modifiedMessage = new NativeMessage(ExampleMessages.Standard);
             modifiedMessage.InsertAfter(2, message[2]);
             Assert.AreEqual(modifiedMessage[3], message[2], "Element insertion (after) failed: duplication didn't work.");
             Assert.AreEqual(modifiedMessage[4], message[3], "Element insertion (after) failed: shifted segments weren't in order.");
@@ -21,8 +21,8 @@ namespace NextLevelSeven.Test.Core
         {
             const string testSegment = @"TST|0|";
 
-            var message = new Message(ExampleMessages.Standard);
-            var modifiedMessage = new Message(ExampleMessages.Standard);
+            var message = new NativeMessage(ExampleMessages.Standard);
+            var modifiedMessage = new NativeMessage(ExampleMessages.Standard);
             modifiedMessage[1].InsertAfter(testSegment);
             Assert.AreEqual(modifiedMessage[2], testSegment, "Text insertion (after) failed: expected string didn't appear in modified message.");
             Assert.AreEqual(modifiedMessage[3], message[2], "Text insertion (after) failed: shifted segments weren't in order.");

@@ -8,7 +8,7 @@ namespace NextLevelSeven.Building
     /// <summary>
     ///     Represents an HL7 message as discrete parts, which can be quickly modified and exported.
     /// </summary>
-    public sealed class MessageBuilder : BuilderBase, IElementTree
+    public sealed class MessageBuilder : BuilderBase, IMessage
     {
         /// <summary>
         ///     Descendant segments.
@@ -42,7 +42,7 @@ namespace NextLevelSeven.Building
         ///     Create a message builder initialized with the copied content of the specified message.
         /// </summary>
         /// <param name="message">Message to copy content from.</param>
-        public MessageBuilder(IMessage message)
+        public MessageBuilder(INativeMessage message)
         {
             Message(message.ToString());
         }
@@ -348,9 +348,9 @@ namespace NextLevelSeven.Building
         ///     Copy the contents of this builder to an HL7 message.
         /// </summary>
         /// <returns>Converted message.</returns>
-        public IMessage ToMessage()
+        public INativeMessage ToMessage()
         {
-            return new Message(ToString());
+            return new NativeMessage(ToString());
         }
 
         /// <summary>

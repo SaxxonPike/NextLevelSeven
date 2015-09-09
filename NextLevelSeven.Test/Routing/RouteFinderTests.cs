@@ -35,7 +35,7 @@ namespace NextLevelSeven.Test.Routing
             var router1 = new NullRouter(true);
             var router2 = new NullRouter(false);
             var routeFinder = new RouteFinder(router1, router2);
-            var message = new Message(ExampleMessages.Standard);
+            var message = new NativeMessage(ExampleMessages.Standard);
             var routeResult = routeFinder.Route(message);
 
             Assert.IsTrue(routeResult, "A valid route should have been found.");
@@ -51,7 +51,7 @@ namespace NextLevelSeven.Test.Routing
             var router1 = new NullRouter(true);
             var router2 = new NullRouter(true);
             var routeFinder = new RouteFinder(router1, router2);
-            var message = new Message(ExampleMessages.Standard);
+            var message = new NativeMessage(ExampleMessages.Standard);
             var routeResult = routeFinder.Route(message);
 
             Assert.IsTrue(routeResult, "A valid route should have been found.");
@@ -67,7 +67,7 @@ namespace NextLevelSeven.Test.Routing
             var router1 = new NullRouter(false);
             var router2 = new NullRouter(true);
             var routeFinder = new RouteFinder(router1, router2);
-            var message = new Message(ExampleMessages.Standard);
+            var message = new NativeMessage(ExampleMessages.Standard);
             var routeResult = routeFinder.Route(message);
 
             Assert.IsTrue(routeResult, "A valid route should have been found.");
@@ -83,7 +83,7 @@ namespace NextLevelSeven.Test.Routing
             var router1 = new NullRouter(false);
             var router2 = new NullRouter(false);
             var routeFinder = new RouteFinder(router1, router2);
-            var message = new Message(ExampleMessages.Standard);
+            var message = new NativeMessage(ExampleMessages.Standard);
             var routeResult = routeFinder.Route(message);
 
             Assert.IsFalse(routeResult, "A valid route should not have been found.");

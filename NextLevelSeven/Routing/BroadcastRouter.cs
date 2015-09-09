@@ -44,7 +44,7 @@ namespace NextLevelSeven.Routing
         /// </summary>
         /// <param name="message">Message to route.</param>
         /// <returns>True, if any of the routes are successful.</returns>
-        public bool Route(IMessage message)
+        public bool Route(INativeMessage message)
         {
             return Routers.Aggregate(false, (current, router) => current | router.Route(message));
         }

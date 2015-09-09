@@ -225,7 +225,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_ConvertsFromMessage()
         {
-            var message = new Message(ExampleMessages.Standard);
+            var message = new NativeMessage(ExampleMessages.Standard);
             var beforeBuilderString = message.ToString();
             var afterBuilder = new MessageBuilder(message);
             Assert.AreEqual(beforeBuilderString, afterBuilder.ToString(), "Conversion from message to builder failed.");
@@ -461,6 +461,52 @@ namespace NextLevelSeven.Test.Building
             var builder = new MessageBuilder(string.Format("MSH|^~\\&|{0}", id)) { FieldDelimiter = delimiter };
             Assert.AreEqual(delimiter, builder.FieldDelimiter);
             Assert.AreEqual(id, builder[1][3].ToString());
+        }
+
+        [TestMethod]
+        public void MessageBuilder_CanMapSegments()
+        {
+            var id = Randomized.String();
+            IMessage tree = new MessageBuilder(string.Format("MSH|^~\\&|{0}", id));
+            Assert.AreEqual(string.Format("MSH|^~\\&|{0}", id), tree.GetValue(1));
+        }
+
+        [TestMethod]
+        public void MessageBuilder_CanMapFields()
+        {
+            var id = Randomized.String();
+            IMessage tree = new MessageBuilder(string.Format("MSH|^~\\&|{0}", id));
+            Assert.AreEqual(id, tree.GetValue(1, 3));
+        }
+
+        [TestMethod]
+        public void MessageBuilder_CanMapRepetitions()
+        {
+            var id1 = Randomized.String();
+            var id2 = Randomized.String();
+            IMessage tree = new MessageBuilder(string.Format("MSH|^~\\&|{0}~{1}", id1, id2));
+            Assert.AreEqual(id1, tree.GetValue(1, 3, 1));
+            Assert.AreEqual(id2, tree.GetValue(1, 3, 2));
+        }
+
+        [TestMethod]
+        public void MessageBuilder_CanMapComponents()
+        {
+            var id1 = Randomized.String();
+            var id2 = Randomized.String();
+            IMessage tree = new MessageBuilder(string.Format("MSH|^~\\&|{0}^{1}", id1, id2));
+            Assert.AreEqual(id1, tree.GetValue(1, 3, 1, 1));
+            Assert.AreEqual(id2, tree.GetValue(1, 3, 1, 2));
+        }
+
+        [TestMethod]
+        public void MessageBuilder_CanMapSubcomponents()
+        {
+            var id1 = Randomized.String();
+            var id2 = Randomized.String();
+            IMessage tree = new MessageBuilder(string.Format("MSH|^~\\&|{0}&{1}", id1, id2));
+            Assert.AreEqual(id1, tree.GetValue(1, 3, 1, 1, 1));
+            Assert.AreEqual(id2, tree.GetValue(1, 3, 1, 1, 2));
         }
     }
 }

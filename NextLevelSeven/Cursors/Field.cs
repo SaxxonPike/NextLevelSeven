@@ -10,7 +10,7 @@ namespace NextLevelSeven.Cursors
     /// </summary>
     internal sealed class Field : Element
     {
-        private readonly Dictionary<int, IElement> _cache = new Dictionary<int, IElement>();
+        private readonly Dictionary<int, INativeElement> _cache = new Dictionary<int, INativeElement>();
         private readonly EncodingConfiguration _encodingConfigurationOverride;
 
         public Field(Element ancestor, int parentIndex, int externalIndex)
@@ -34,12 +34,12 @@ namespace NextLevelSeven.Cursors
             get { return _encodingConfigurationOverride ?? Ancestor.EncodingConfiguration; }
         }
 
-        public override IElement CloneDetached()
+        public override INativeElement CloneDetached()
         {
             return new Field(Value, EncodingConfiguration);
         }
 
-        public override IElement GetDescendant(int index)
+        public override INativeElement GetDescendant(int index)
         {
             if (_cache.ContainsKey(index))
             {

@@ -14,7 +14,7 @@ namespace NextLevelSeven.Codecs
         ///     Create a codec that references the specified element's data.
         /// </summary>
         /// <param name="baseElement">Element to reference.</param>
-        public Codec(IElement baseElement)
+        public Codec(INativeElement baseElement)
         {
             BaseElement = baseElement;
         }
@@ -22,7 +22,7 @@ namespace NextLevelSeven.Codecs
         /// <summary>
         ///     Referenced element.
         /// </summary>
-        private IElement BaseElement { get; set; }
+        private INativeElement BaseElement { get; set; }
 
         /// <summary>
         ///     Get or set the element's value as a date.

@@ -10,7 +10,7 @@ namespace NextLevelSeven.Cursors
     ///     Enumerator for element descendants.
     /// </summary>
     /// <typeparam name="T">Type of descendants.</typeparam>
-    internal sealed class ElementEnumerator<T> : IEnumerator<T> where T : IElement
+    internal sealed class ElementEnumerator<T> : IEnumerator<T> where T : INativeElement
     {
         public ElementEnumerator(IStringDivider descendantDivider, Func<int, T> descendantFactory)
         {
@@ -19,7 +19,7 @@ namespace NextLevelSeven.Cursors
             Reset();
         }
 
-        public IElement Current
+        public INativeElement Current
         {
             get { return Factory(Index); }
         }

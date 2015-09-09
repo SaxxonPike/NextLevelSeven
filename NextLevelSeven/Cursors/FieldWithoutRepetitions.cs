@@ -35,12 +35,12 @@ namespace NextLevelSeven.Cursors
             get { return _encodingConfigurationOverride ?? Ancestor.EncodingConfiguration; }
         }
 
-        public override IElement CloneDetached()
+        public override INativeElement CloneDetached()
         {
             return new FieldWithoutRepetitions(Value, EncodingConfiguration);
         }
 
-        public override IElement GetDescendant(int index)
+        public override INativeElement GetDescendant(int index)
         {
             return new Repetition(this, index - 1, index);
         }

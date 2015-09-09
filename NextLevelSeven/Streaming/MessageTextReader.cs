@@ -27,7 +27,7 @@ namespace NextLevelSeven.Streaming
         ///     Read one textual HL7 message from the stream.
         /// </summary>
         /// <returns>Message that was read, or null if there are no more messages.</returns>
-        public override IMessage Read()
+        public override INativeMessage Read()
         {
             var lines = new List<string>();
             var foundLine = false;
@@ -66,9 +66,9 @@ namespace NextLevelSeven.Streaming
         ///     Read all messages in the stream. If empty, there were no more messages.
         /// </summary>
         /// <returns>Messages that were read.</returns>
-        public override IEnumerable<IMessage> ReadAll()
+        public override IEnumerable<INativeMessage> ReadAll()
         {
-            var messages = new List<IMessage>();
+            var messages = new List<INativeMessage>();
             while (true)
             {
                 var message = Read();

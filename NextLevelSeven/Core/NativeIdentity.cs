@@ -3,7 +3,7 @@
     /// <summary>
     ///     Allows for the use of Identity via an element's data.
     /// </summary>
-    internal sealed class IdentityProxy : IIdentity
+    internal sealed class NativeIdentity : IIdentity
     {
         /// <summary>
         ///     Create an Identity reference via HL7 element.
@@ -11,7 +11,7 @@
         /// <param name="element">Element to reference.</param>
         /// <param name="applicationIndex">Index of the application data.</param>
         /// <param name="facilityIndex">Index of the facility data.</param>
-        public IdentityProxy(IElement element, int applicationIndex, int facilityIndex)
+        public NativeIdentity(INativeElement element, int applicationIndex, int facilityIndex)
         {
             ApplicationIndex = applicationIndex;
             Element = element;
@@ -26,7 +26,7 @@
         /// <summary>
         ///     Get the referenced element.
         /// </summary>
-        private IElement Element { get; set; }
+        private INativeElement Element { get; set; }
 
         /// <summary>
         ///     Get the facility data index.
