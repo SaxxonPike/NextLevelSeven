@@ -20,8 +20,9 @@ namespace NextLevelSeven.Building
         ///     Create a segment builder with the specified encoding configuration.
         /// </summary>
         /// <param name="builder">Ancestor builder.</param>
-        internal SegmentBuilder(BuilderBase builder)
-            : base(builder)
+        /// <param name="index">Index in the ancestor.</param>
+        internal SegmentBuilder(BuilderBase builder, int index)
+            : base(builder, index)
         {
         }
 
@@ -57,7 +58,7 @@ namespace NextLevelSeven.Building
                 // segment type is treated specially
                 if (index == 0)
                 {
-                    _fieldBuilders[0] = new TypeFieldBuilder(this, OnTypeFieldModified);
+                    _fieldBuilders[0] = new TypeFieldBuilder(this, OnTypeFieldModified, index);
                     return _fieldBuilders[0];
                 }
 
@@ -66,17 +67,17 @@ namespace NextLevelSeven.Building
                 {
                     if (index == 1)
                     {
-                        _fieldBuilders[index] = new DelimiterFieldBuilder(this);
+                        _fieldBuilders[index] = new DelimiterFieldBuilder(this, index);
                         return _fieldBuilders[index];
                     }
                     if (index == 2)
                     {
-                        _fieldBuilders[index] = new EncodingFieldBuilder(this);
+                        _fieldBuilders[index] = new EncodingFieldBuilder(this, index);
                         return _fieldBuilders[index];
                     }
                 }
 
-                _fieldBuilders[index] = new FieldBuilder(this);
+                _fieldBuilders[index] = new FieldBuilder(this, index);
                 return _fieldBuilders[index];
             }
         }
@@ -101,7 +102,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set field content within this segment.
         /// </summary>
-        public IEnumerableIndexable<int, string> Values
+        public IEnumerable<string> Values
         {
             get
             {
@@ -109,6 +110,7 @@ namespace NextLevelSeven.Building
                     (index, data) => Field(index, data),
                     () => Count);
             }
+            set { Fields(value.ToArray()); }
         }
 
         /// <summary>

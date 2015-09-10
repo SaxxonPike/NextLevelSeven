@@ -18,15 +18,18 @@ namespace NextLevelSeven.Building
         internal BuilderBase()
         {
             EncodingConfiguration = new BuilderEncodingConfiguration(this);
+            Index = 0;
         }
 
         /// <summary>
         ///     Initialize the message builder base class.
         /// </summary>
         /// <param name="config">Message's encoding configuration.</param>
-        internal BuilderBase(EncodingConfiguration config)
+        /// <param name="index">Index in the parent.</param>
+        internal BuilderBase(EncodingConfiguration config, int index)
         {
             EncodingConfiguration = config;
+            Index = index;
         }
 
         /// <summary>
@@ -73,5 +76,7 @@ namespace NextLevelSeven.Building
         {
             return EncodingConfiguration.UnEscape(s);
         }
+
+        public int Index { get; private set; }
     }
 }

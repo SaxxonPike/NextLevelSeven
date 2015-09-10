@@ -5,7 +5,7 @@ namespace NextLevelSeven.Core
     /// <summary>
     ///     Represents a component element in an HL7 message.
     /// </summary>
-    public interface IComponent
+    public interface IComponent : IElement
     {
         /// <summary>
         ///     Get data from a specific place in the message. Depth is determined by how many indices are specified.

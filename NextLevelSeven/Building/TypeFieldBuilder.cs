@@ -23,8 +23,9 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="builder">Ancestor builder.</param>
         /// <param name="onTypeFieldChangedHandler">Method to call when the type field has changed.</param>
-        internal TypeFieldBuilder(BuilderBase builder, Action<string, string> onTypeFieldChangedHandler)
-            : base(builder)
+        /// <param name="index">Index in the ancestor.</param>
+        internal TypeFieldBuilder(BuilderBase builder, Action<string, string> onTypeFieldChangedHandler, int index)
+            : base(builder, index)
         {
             _onTypeFieldChangedHandler = onTypeFieldChangedHandler;
         }

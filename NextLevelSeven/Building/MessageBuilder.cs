@@ -59,7 +59,7 @@ namespace NextLevelSeven.Building
             {
                 if (!_segmentBuilders.ContainsKey(index))
                 {
-                    _segmentBuilders[index] = new SegmentBuilder(this);
+                    _segmentBuilders[index] = new SegmentBuilder(this, index);
                 }
                 return _segmentBuilders[index];
             }
@@ -76,7 +76,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set segment content within this message.
         /// </summary>
-        public IEnumerableIndexable<int, string> Values
+        public IEnumerable<string> Values
         {
             get
             {
@@ -85,6 +85,7 @@ namespace NextLevelSeven.Building
                     () => Count,
                     1);
             }
+            set { Segments(value.ToArray()); }
         }
 
         /// <summary>

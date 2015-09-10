@@ -19,8 +19,9 @@ namespace NextLevelSeven.Building
         ///     Create a repetition builder using the specified encoding configuration.
         /// </summary>
         /// <param name="builder">Ancestor builder.</param>
-        internal RepetitionBuilder(BuilderBase builder)
-            : base(builder)
+        /// <param name="index">Index in the ancestor.</param>
+        internal RepetitionBuilder(BuilderBase builder, int index)
+            : base(builder, index)
         {
         }
 
@@ -35,7 +36,7 @@ namespace NextLevelSeven.Building
             {
                 if (!_componentBuilders.ContainsKey(index))
                 {
-                    _componentBuilders[index] = new ComponentBuilder(this);
+                    _componentBuilders[index] = new ComponentBuilder(this, index);
                 }
                 return _componentBuilders[index];
             }
@@ -52,7 +53,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set component content within this field repetition.
         /// </summary>
-        public IEnumerableIndexable<int, string> Values
+        public IEnumerable<string> Values
         {
             get
             {
@@ -61,6 +62,7 @@ namespace NextLevelSeven.Building
                     () => Count,
                     1);
             }
+            set { Components(value.ToArray()); }
         }
 
         /// <summary>

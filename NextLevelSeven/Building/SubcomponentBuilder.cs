@@ -17,8 +17,9 @@ namespace NextLevelSeven.Building
         ///     Create a subcomponent builder.
         /// </summary>
         /// <param name="builder">Ancestor builder.</param>
-        internal SubcomponentBuilder(BuilderBase builder)
-            : base(builder)
+        /// <param name="index">Index in the ancestor.</param>
+        internal SubcomponentBuilder(BuilderBase builder, int index)
+            : base(builder, index)
         {
         }
 
@@ -53,9 +54,10 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Return an enumerable with the content inside.
         /// </summary>
-        public IEnumerableIndexable<int, string> Values
+        public IEnumerable<string> Values
         {
             get { return new WrapperEnumerable<string>(i => _value, (i, v) => { }, () => Count, 1); }
+            set { _value = string.Concat(value); }
         }
 
         /// <summary>

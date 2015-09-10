@@ -5,7 +5,7 @@ namespace NextLevelSeven.Core
     /// <summary>
     ///     Represents a subcomponent element in an HL7 message.
     /// </summary>
-    public interface ISubcomponent
+    public interface ISubcomponent : IElement
     {
         /// <summary>
         ///     Get data from a subcomponent.

@@ -5,7 +5,7 @@ namespace NextLevelSeven.Core
     /// <summary>
     ///     Represents a field repetition element in an HL7 message.
     /// </summary>
-    public interface IRepetition
+    public interface IRepetition : IElement
     {
         /// <summary>
         ///     Get data from a specific place in the field repetition. Depth is determined by how many indices are specified.

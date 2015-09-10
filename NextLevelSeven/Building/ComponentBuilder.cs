@@ -20,8 +20,8 @@ namespace NextLevelSeven.Building
         ///     Create a component builder using the specified encoding configuration.
         /// </summary>
         /// <param name="builder">Ancestor builder.</param>
-        internal ComponentBuilder(BuilderBase builder)
-            : base(builder)
+        internal ComponentBuilder(BuilderBase builder, int index)
+            : base(builder, index)
         {
         }
 
@@ -36,7 +36,7 @@ namespace NextLevelSeven.Building
             {
                 if (!_subcomponentBuilders.ContainsKey(index))
                 {
-                    _subcomponentBuilders[index] = new SubcomponentBuilder(this);
+                    _subcomponentBuilders[index] = new SubcomponentBuilder(this, index);
                 }
                 return _subcomponentBuilders[index];
             }
@@ -53,7 +53,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set subcomponent content within this component.
         /// </summary>
-        public IEnumerableIndexable<int, string> Values
+        public IEnumerable<string> Values
         {
             get
             {
@@ -62,6 +62,7 @@ namespace NextLevelSeven.Building
                     () => Count,
                     1);
             }
+            set { Subcomponents(value.ToArray()); }
         }
 
         /// <summary>

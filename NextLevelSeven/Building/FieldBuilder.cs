@@ -20,8 +20,9 @@ namespace NextLevelSeven.Building
         ///     Create a field builder with the specified encoding configuration.
         /// </summary>
         /// <param name="builder">Ancestor builder.</param>
-        internal FieldBuilder(BuilderBase builder)
-            : base(builder)
+        /// <param name="index">Index in the ancestor.</param>
+        internal FieldBuilder(BuilderBase builder, int index)
+            : base(builder, index)
         {
         }
 
@@ -36,7 +37,7 @@ namespace NextLevelSeven.Building
             {
                 if (!_repetitionBuilders.ContainsKey(index))
                 {
-                    _repetitionBuilders[index] = new RepetitionBuilder(this);
+                    _repetitionBuilders[index] = new RepetitionBuilder(this, index);
                 }
                 return _repetitionBuilders[index];
             }
@@ -53,7 +54,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set field repetition content within this field.
         /// </summary>
-        public virtual IEnumerableIndexable<int, string> Values
+        public virtual IEnumerable<string> Values
         {
             get
             {
@@ -62,6 +63,7 @@ namespace NextLevelSeven.Building
                     () => Count,
                     1);
             }
+            set { FieldRepetitions(value.ToArray()); }
         }
 
         /// <summary>

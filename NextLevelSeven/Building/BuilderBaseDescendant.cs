@@ -14,8 +14,9 @@
         ///     Initialize the message builder base class.
         /// </summary>
         /// <param name="ancestor">Ancestor from which configuration will be obtained.</param>
-        internal BuilderBaseDescendant(BuilderBase ancestor)
-            : base(ancestor.EncodingConfiguration)
+        /// <param name="index">Index in the parent.</param>
+        internal BuilderBaseDescendant(BuilderBase ancestor, int index)
+            : base(ancestor.EncodingConfiguration, index)
         {
             _ancestor = ancestor;
         }

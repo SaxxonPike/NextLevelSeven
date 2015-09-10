@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Building;
 using NextLevelSeven.Core;
@@ -299,9 +300,9 @@ namespace NextLevelSeven.Test.Building
             var id1 = Randomized.String();
             var id2 = Randomized.String();
             var builder = Message.Build(string.Format("MSH|^~\\&|{0}\xDPID|{1}", id1, id2));
-            var builderValues = builder.Values;
-            Assert.AreEqual(string.Format("MSH|^~\\&|{0}", id1), builderValues[1]);
-            Assert.AreEqual(string.Format("PID|{0}", id2), builderValues[2]);
+            var builderValues = builder.Values.ToList();
+            Assert.AreEqual(string.Format("MSH|^~\\&|{0}", id1), builderValues[0]);
+            Assert.AreEqual(string.Format("PID|{0}", id2), builderValues[1]);
         }
 
         [TestMethod]

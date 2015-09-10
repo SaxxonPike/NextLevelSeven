@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Collections.Generic;
+using System.Text;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Utility;
 
@@ -18,8 +19,9 @@ namespace NextLevelSeven.Building
         ///     Create a field builder with the specified encoding configuration.
         /// </summary>
         /// <param name="builder">Ancestor builder.</param>
-        internal EncodingFieldBuilder(BuilderBase builder)
-            : base(builder)
+        /// <param name="index">Index in the ancestor.</param>
+        internal EncodingFieldBuilder(BuilderBase builder, int index)
+            : base(builder, index)
         {
         }
 
@@ -44,9 +46,10 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set field repetition content within this field.
         /// </summary>
-        public override IEnumerableIndexable<int, string> Values
+        public override IEnumerable<string> Values
         {
             get { return new WrapperEnumerable<string>(OnReadValue, OnWriteValue, OnGetCount); }
+            set { Field(string.Concat(value)); }
         }
 
         /// <summary>

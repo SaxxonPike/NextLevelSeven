@@ -5,7 +5,7 @@ namespace NextLevelSeven.Core
     /// <summary>
     ///     Represents a field element in an HL7 message.
     /// </summary>
-    public interface IField
+    public interface IField : IElement
     {
         /// <summary>
         ///     Get data from a specific place in the field. Depth is determined by how many indices are specified.
