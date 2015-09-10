@@ -13,12 +13,12 @@ namespace NextLevelSeven.Streaming
         ///     Write one message.
         /// </summary>
         /// <param name="message">Message to write.</param>
-        void Write(INativeMessage message);
+        void Write(IMessage message);
 
         /// <summary>
         ///     Write a collection of messages.
         /// </summary>
         /// <param name="messages">Messages to write.</param>
-        void WriteAll(IEnumerable<INativeMessage> messages);
+        void WriteAll(IEnumerable<IMessage> messages);
     }
 }
