@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Generation;
 
-namespace NextLevelSeven.Test.MessageGeneration
+namespace NextLevelSeven.Test.Generation
 {
     [TestClass]
     public class MessageGeneratorPerformanceTests

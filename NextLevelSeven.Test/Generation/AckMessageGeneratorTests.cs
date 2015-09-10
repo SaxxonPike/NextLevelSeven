@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Generation;
 using NextLevelSeven.Native;
 
-namespace NextLevelSeven.Test.MessageGeneration
+namespace NextLevelSeven.Test.Generation
 {
     [TestClass]
     public class AckMessageGeneratorTests

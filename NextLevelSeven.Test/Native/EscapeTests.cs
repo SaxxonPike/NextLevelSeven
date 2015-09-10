@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
 
-namespace NextLevelSeven.Test.Core
+namespace NextLevelSeven.Test.Native
 {
     [TestClass]
     public class EscapeTests

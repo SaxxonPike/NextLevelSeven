@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
 using NextLevelSeven.Native;
 
-namespace NextLevelSeven.Test.Core
+namespace NextLevelSeven.Test.Native
 {
     [TestClass]
     public class MessageExtensionsTests
