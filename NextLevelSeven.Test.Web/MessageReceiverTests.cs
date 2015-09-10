@@ -12,7 +12,7 @@ namespace NextLevelSeven.Test.Web
         [TestMethod]
         public void MessageReceiver_DuringAcknowledgement_ReturnsProperAckStructure()
         {
-            var request = new NativeMessage(ExampleMessages.Standard);
+            var request = Message.Create(ExampleMessages.Standard);
             request.Sender.Application = Randomized.String();
             request.Sender.Facility = Randomized.String();
             request.Receiver.Application = null;
@@ -20,7 +20,7 @@ namespace NextLevelSeven.Test.Web
 
             var responseData = MessageSenderMock.SendMessage(request);
             Assert.IsNotNull(responseData, @"Response data was null.");
-            var response = new NativeMessage(responseData);
+            var response = Message.Create(responseData);
             var responseTime = response.Time;
 
             Assert.AreEqual(2, response.DescendantCount, @"ACK must consist of exactly two segments.");
@@ -36,7 +36,7 @@ namespace NextLevelSeven.Test.Web
         public void MessageReceiver_DuringAcknowledgement_WithBadMessage_ReturnsProperAckStructure()
         {
             var responseData = MessageSenderMock.SendData("BadMessage");
-            var response = new NativeMessage(responseData);
+            var response = Message.Create(responseData);
 
             Assert.AreEqual(2, response.DescendantCount, @"ACK must consist of exactly two segments.");
             Assert.AreEqual("AR", response["MSA"].First()[1].Value, @"MSA-1 must be 'AR' when rejecting bad messages.");

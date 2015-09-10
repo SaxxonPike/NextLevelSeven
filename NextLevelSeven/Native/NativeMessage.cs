@@ -12,7 +12,7 @@ namespace NextLevelSeven.Native
     /// <summary>
     ///     Represents a textual HL7v2 message.
     /// </summary>
-    public class NativeMessage : INativeMessage
+    internal class NativeMessage : INativeMessage
     {
         /// <summary>
         ///     Internal message cursor.

@@ -163,7 +163,7 @@ namespace NextLevelSeven.Web
                     }
                     else
                     {
-                        responseMessage = AckMessageGenerator.GenerateReject(new NativeMessage(), failureReason,
+                        responseMessage = AckMessageGenerator.GenerateReject(Message.Create(), failureReason,
                             config.OwnFacility, config.OwnApplication);
                         if (MessageRejected != null)
                         {

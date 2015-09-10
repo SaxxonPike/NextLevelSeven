@@ -10,7 +10,7 @@ namespace NextLevelSeven.Test.Core
     {
         static void Test_Escape(string expected, string test)
         {
-            var message = new NativeMessage();
+            var message = Message.Create();
             Assert.AreEqual(expected, message.Escape(test));
         }
 

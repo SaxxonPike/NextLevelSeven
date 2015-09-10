@@ -11,7 +11,7 @@ namespace NextLevelSeven.Test.Core
         [TestMethod]
         public void ExampleMessage_HasProperSampleData()
         {
-            var obrMessage = new NativeMessage(ExampleMessages.MultipleObr);
+            var obrMessage = Message.Create(ExampleMessages.MultipleObr);
             Assert.IsTrue(obrMessage["OBR"].Count() > 1, "Sample multiple OBR data is bad: needs multiple OBR segments.");
         }
     }

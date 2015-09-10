@@ -34,6 +34,11 @@ namespace NextLevelSeven.Native
         IEnumerable<INativeSegment> this[IEnumerable<string> segmentTypes] { get; }
 
         /// <summary>
+        ///     Get or set the message control ID.
+        /// </summary>
+        string ControlId { get; set; }
+
+        /// <summary>
         /// Get an escaped version of the string, using encoding characters from this message.
         /// </summary>
         /// <param name="data">Data to escape.</param>

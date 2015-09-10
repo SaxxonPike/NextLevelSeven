@@ -12,7 +12,7 @@ namespace NextLevelSeven.Test.Routing
         public void ConditionalMethodRouter_ReceivesMessages()
         {
             var queried = false;
-            var message = new NativeMessage(ExampleMessages.Standard);
+            var message = Message.Create(ExampleMessages.Standard);
             var router = new ConditionalMethodRouter(m => { queried = true; return true; }, m => {});
             Assert.IsFalse(queried, "Test initialized incorrectly.");
             message.RouteTo(router);
@@ -23,7 +23,7 @@ namespace NextLevelSeven.Test.Routing
         public void ConditionalMethodRouter_PassesMessagesThrough()
         {
             var routed = false;
-            var message = new NativeMessage(ExampleMessages.Standard);
+            var message = Message.Create(ExampleMessages.Standard);
             var router = new ConditionalMethodRouter(m => true, m => routed = true);
             Assert.IsFalse(routed, "Test initialized incorrectly.");
             message.RouteTo(router);
@@ -34,7 +34,7 @@ namespace NextLevelSeven.Test.Routing
         public void ConditionalMethodRouter_PassesCorrectData()
         {
             INativeMessage routedData = null;
-            var message = new NativeMessage(ExampleMessages.Standard);
+            var message = Message.Create(ExampleMessages.Standard);
             var router = new ConditionalMethodRouter(m => true, m => { routedData = m; });
             Assert.IsNull(routedData, "Test initialized incorrectly.");
             message.RouteTo(router);
@@ -45,7 +45,7 @@ namespace NextLevelSeven.Test.Routing
         [TestMethod]
         public void ConditionalMethodRouter_ReturnsSuccessIfNoTarget()
         {
-            var message = new NativeMessage(ExampleMessages.Standard);
+            var message = Message.Create(ExampleMessages.Standard);
             var listener = new ConditionalMethodRouter(m => true, null);
             Assert.IsTrue(message.RouteTo(listener), "Listener must return True when there is no target router.");
         }
