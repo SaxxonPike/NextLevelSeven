@@ -36,8 +36,8 @@ namespace NextLevelSeven.Test.Native
         {
             var testString = Randomized.String();
             var message = Message.Create();
-            var time = Measure.ExecutionTime(() => { message[2][HighIndex].Value = testString; });
-            Assert.AreEqual(testString, message[2][HighIndex].Value);
+            var time = Measure.ExecutionTime(() => { message[1][HighIndex].Value = testString; });
+            Assert.AreEqual(testString, message[1][HighIndex].Value);
             AssertTime.IsWithin(1000, time);
         }
 
@@ -48,7 +48,7 @@ namespace NextLevelSeven.Test.Native
             var message = Message.Create();
             var time = Measure.ExecutionTime(() => { message[100][1].Value = testString; });
             Assert.AreEqual(testString, message[100][1].Value);
-            AssertTime.IsWithin(500, time);
+            AssertTime.IsWithin(100, time);
         }
 
         [TestMethod]
