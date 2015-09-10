@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Building;
+using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Test.Building
 {
@@ -10,7 +11,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void ComponentBuilder_CanBuildSubcomponents_Individually()
         {
-            var builder = new MessageBuilder()[1][3][1][1];
+            var builder = Message.Build()[1][3][1][1];
             var subcomponent1 = Randomized.String();
             var subcomponent2 = Randomized.String();
 
@@ -24,7 +25,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void ComponentBuilder_CanBuildSubcomponents_OutOfOrder()
         {
-            var builder = new MessageBuilder()[1][3][1][1];
+            var builder = Message.Build()[1][3][1][1];
             var subcomponent1 = Randomized.String();
             var subcomponent2 = Randomized.String();
 
@@ -38,7 +39,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void ComponentBuilder_CanBuildSubcomponents_Sequentially()
         {
-            var builder = new MessageBuilder()[1][3][1][1];
+            var builder = Message.Build()[1][3][1][1];
             var subcomponent1 = Randomized.String();
             var subcomponent2 = Randomized.String();
 
@@ -51,11 +52,11 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void ComponentBuilder_ChangesEncodingCharactersIfMessageChanges()
         {
-            var messageBuilder = new MessageBuilder();
+            var messageBuilder = Message.Build();
             var builder = messageBuilder[1][3][1][1];
-            Assert.AreEqual(messageBuilder.FieldDelimiter, '|');
+            Assert.AreEqual(builder.FieldDelimiter, '|');
             messageBuilder.FieldDelimiter = ':';
-            Assert.AreEqual(messageBuilder.FieldDelimiter, ':');
+            Assert.AreEqual(builder.FieldDelimiter, ':');
         }
     }
 }

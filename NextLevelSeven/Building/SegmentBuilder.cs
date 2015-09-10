@@ -10,7 +10,7 @@ namespace NextLevelSeven.Building
     /// <summary>
     ///     Represents an HL7 segment.
     /// </summary>
-    public sealed class SegmentBuilder : BuilderBaseDescendant
+    internal sealed class SegmentBuilder : BuilderBaseDescendant, ISegmentBuilder
     {
         /// <summary>
         ///     Descendant builders.
@@ -31,7 +31,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="index">Index within the segment to get the builder from.</param>
         /// <returns>Field builder for the specified index.</returns>
-        public FieldBuilder this[int index]
+        public IFieldBuilder this[int index]
         {
             get
             {
@@ -150,7 +150,7 @@ namespace NextLevelSeven.Building
         /// <param name="componentIndex">Component index.</param>
         /// <param name="value">New value.</param>
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
-        public SegmentBuilder Component(int fieldIndex, int repetition, int componentIndex, string value)
+        public ISegmentBuilder Component(int fieldIndex, int repetition, int componentIndex, string value)
         {
             this[fieldIndex].Component(repetition, componentIndex, value);
             return this;
@@ -163,7 +163,7 @@ namespace NextLevelSeven.Building
         /// <param name="repetition">Field repetition index.</param>
         /// <param name="components">Values to replace with.</param>
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
-        public SegmentBuilder Components(int fieldIndex, int repetition, params string[] components)
+        public ISegmentBuilder Components(int fieldIndex, int repetition, params string[] components)
         {
             this[fieldIndex].Components(repetition, components);
             return this;
@@ -177,7 +177,7 @@ namespace NextLevelSeven.Building
         /// <param name="startIndex">Component index to begin replacing at.</param>
         /// <param name="components">Values to replace with.</param>
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
-        public SegmentBuilder Components(int fieldIndex, int repetition, int startIndex, params string[] components)
+        public ISegmentBuilder Components(int fieldIndex, int repetition, int startIndex, params string[] components)
         {
             this[fieldIndex].Components(repetition, startIndex, components);
             return this;
@@ -189,7 +189,7 @@ namespace NextLevelSeven.Building
         /// <param name="fieldIndex">Field index.</param>
         /// <param name="value">New value.</param>
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
-        public SegmentBuilder Field(int fieldIndex, string value)
+        public ISegmentBuilder Field(int fieldIndex, string value)
         {
             if (fieldIndex > 0 && _fieldBuilders.ContainsKey(fieldIndex))
             {
@@ -204,7 +204,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="fields">Values to replace with.</param>
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
-        public SegmentBuilder Fields(params string[] fields)
+        public ISegmentBuilder Fields(params string[] fields)
         {
             _fieldBuilders.Clear();
             return Fields(0, fields);
@@ -216,7 +216,7 @@ namespace NextLevelSeven.Building
         /// <param name="startIndex">Field index to begin replacing at.</param>
         /// <param name="fields">Values to replace with.</param>
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
-        public SegmentBuilder Fields(int startIndex, params string[] fields)
+        public ISegmentBuilder Fields(int startIndex, params string[] fields)
         {
             foreach (var field in fields)
             {
@@ -233,7 +233,7 @@ namespace NextLevelSeven.Building
         /// <param name="repetition">Field repetition index.</param>
         /// <param name="value">New value.</param>
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
-        public SegmentBuilder FieldRepetition(int fieldIndex, int repetition, string value)
+        public ISegmentBuilder FieldRepetition(int fieldIndex, int repetition, string value)
         {
             this[fieldIndex].FieldRepetition(repetition, value);
             return this;
@@ -245,7 +245,7 @@ namespace NextLevelSeven.Building
         /// <param name="fieldIndex">Field index.</param>
         /// <param name="repetitions">Values to replace with.</param>
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
-        public SegmentBuilder FieldRepetitions(int fieldIndex, params string[] repetitions)
+        public ISegmentBuilder FieldRepetitions(int fieldIndex, params string[] repetitions)
         {
             this[fieldIndex].FieldRepetitions(repetitions);
             return this;
@@ -258,7 +258,7 @@ namespace NextLevelSeven.Building
         /// <param name="startIndex">Field repetition index to begin replacing at.</param>
         /// <param name="repetitions">Values to replace with.</param>
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
-        public SegmentBuilder FieldRepetitions(int fieldIndex, int startIndex, params string[] repetitions)
+        public ISegmentBuilder FieldRepetitions(int fieldIndex, int startIndex, params string[] repetitions)
         {
             this[fieldIndex].FieldRepetitions(startIndex, repetitions);
             return this;
@@ -297,7 +297,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="value">New value.</param>
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
-        public SegmentBuilder Segment(string value)
+        public ISegmentBuilder Segment(string value)
         {
             if (value.Length > 3)
             {
@@ -330,7 +330,7 @@ namespace NextLevelSeven.Building
         /// <param name="subcomponentIndex">Subcomponent index.</param>
         /// <param name="value">New value.</param>
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
-        public SegmentBuilder Subcomponent(int fieldIndex, int repetition, int componentIndex, int subcomponentIndex,
+        public ISegmentBuilder Subcomponent(int fieldIndex, int repetition, int componentIndex, int subcomponentIndex,
             string value)
         {
             this[fieldIndex].Subcomponent(repetition, componentIndex, subcomponentIndex, value);
@@ -345,7 +345,7 @@ namespace NextLevelSeven.Building
         /// <param name="componentIndex">Component index.</param>
         /// <param name="subcomponents">Subcomponent index.</param>
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
-        public SegmentBuilder Subcomponents(int fieldIndex, int repetition, int componentIndex,
+        public ISegmentBuilder Subcomponents(int fieldIndex, int repetition, int componentIndex,
             params string[] subcomponents)
         {
             this[fieldIndex].Subcomponents(repetition, componentIndex, subcomponents);
@@ -361,7 +361,7 @@ namespace NextLevelSeven.Building
         /// <param name="startIndex">Subcomponent index to begin replacing at.</param>
         /// <param name="subcomponents">Values to replace with.</param>
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
-        public SegmentBuilder Subcomponents(int fieldIndex, int repetition, int componentIndex, int startIndex,
+        public ISegmentBuilder Subcomponents(int fieldIndex, int repetition, int componentIndex, int startIndex,
             params string[] subcomponents)
         {
             this[fieldIndex].Subcomponents(repetition, componentIndex, startIndex, subcomponents);

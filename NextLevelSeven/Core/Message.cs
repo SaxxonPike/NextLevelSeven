@@ -17,7 +17,7 @@ namespace NextLevelSeven.Core
         /// Create a message builder with a default MSH.
         /// </summary>
         /// <returns>New message builder.</returns>
-        static public MessageBuilder Build()
+        static public IMessageBuilder Build()
         {
             return new MessageBuilder();
         }
@@ -27,7 +27,17 @@ namespace NextLevelSeven.Core
         /// </summary>
         /// <param name="message">Message data.</param>
         /// <returns>New message builder.</returns>
-        static public MessageBuilder Build(string message)
+        static public IMessageBuilder Build(string message)
+        {
+            return new MessageBuilder(message);
+        }
+
+        /// <summary>
+        /// Create a message builder, initialized with the specified message.
+        /// </summary>
+        /// <param name="message">Message data.</param>
+        /// <returns>New message builder.</returns>
+        static public IMessageBuilder Build(INativeMessage message)
         {
             return new MessageBuilder(message);
         }
@@ -36,7 +46,7 @@ namespace NextLevelSeven.Core
         /// Create a new message with a default MSH.
         /// </summary>
         /// <returns>New message.</returns>
-        static public NativeMessage Create()
+        static public INativeMessage Create()
         {
             return new NativeMessage();
         }
@@ -46,7 +56,7 @@ namespace NextLevelSeven.Core
         /// </summary>
         /// <param name="message">Message data.</param>
         /// <returns>New message builder.</returns>
-        static public NativeMessage Create(string message)
+        static public INativeMessage Create(string message)
         {
             return new NativeMessage(message);
         }

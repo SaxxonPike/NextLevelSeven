@@ -10,7 +10,7 @@ namespace NextLevelSeven.Building
     /// <summary>
     /// Base class for builders that are not root level.
     /// </summary>
-    abstract public class BuilderBaseDescendant : BuilderBase
+    abstract internal class BuilderBaseDescendant : BuilderBase
     {
         /// <summary>
         /// Initialize the message builder base class.

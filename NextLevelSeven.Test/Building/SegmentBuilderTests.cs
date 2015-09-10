@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Building;
+using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Test.Building
 {
@@ -9,7 +10,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void SegmentBuilder_CanBuildFields_Individually()
         {
-            var builder = new MessageBuilder()[1];
+            var builder = Message.Build()[1];
             var field3 = Randomized.String();
             var field5 = Randomized.String();
 
@@ -23,7 +24,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void SegmentBuilder_CanBuildFields_OutOfOrder()
         {
-            var builder = new MessageBuilder()[1];
+            var builder = Message.Build()[1];
             var field3 = Randomized.String();
             var field5 = Randomized.String();
 
@@ -37,7 +38,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void SegmentBuilder_CanBuildFields_Sequentially()
         {
-            var builder = new MessageBuilder()[1];
+            var builder = Message.Build()[1];
             var field3 = Randomized.String();
             var field5 = Randomized.String();
 
@@ -50,7 +51,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void SegmentBuilder_CanBuildRepetitions_Individually()
         {
-            var builder = new MessageBuilder()[1];
+            var builder = Message.Build()[1];
             var repetition1 = Randomized.String();
             var repetition2 = Randomized.String();
 
@@ -64,7 +65,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void SegmentBuilder_CanBuildRepetitions_OutOfOrder()
         {
-            var builder = new MessageBuilder()[1];
+            var builder = Message.Build()[1];
             var repetition1 = Randomized.String();
             var repetition2 = Randomized.String();
 
@@ -78,7 +79,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void SegmentBuilder_CanBuildRepetitions_Sequentially()
         {
-            var builder = new MessageBuilder()[1];
+            var builder = Message.Build()[1];
             var repetition1 = Randomized.String();
             var repetition2 = Randomized.String();
 
@@ -91,7 +92,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void SegmentBuilder_CanBuildComponents_Individually()
         {
-            var builder = new MessageBuilder()[1];
+            var builder = Message.Build()[1];
             var component1 = Randomized.String();
             var component2 = Randomized.String();
 
@@ -105,7 +106,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void SegmentBuilder_CanBuildComponents_OutOfOrder()
         {
-            var builder = new MessageBuilder()[1];
+            var builder = Message.Build()[1];
             var component1 = Randomized.String();
             var component2 = Randomized.String();
 
@@ -119,7 +120,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void SegmentBuilder_CanBuildComponents_Sequentially()
         {
-            var builder = new MessageBuilder()[1];
+            var builder = Message.Build()[1];
             var component1 = Randomized.String();
             var component2 = Randomized.String();
 
@@ -132,7 +133,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void SegmentBuilder_CanBuildSubcomponents_Individually()
         {
-            var builder = new MessageBuilder()[1];
+            var builder = Message.Build()[1];
             var subcomponent1 = Randomized.String();
             var subcomponent2 = Randomized.String();
 
@@ -146,7 +147,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void SegmentBuilder_CanBuildSubcomponents_OutOfOrder()
         {
-            var builder = new MessageBuilder()[1];
+            var builder = Message.Build()[1];
             var subcomponent1 = Randomized.String();
             var subcomponent2 = Randomized.String();
 
@@ -160,7 +161,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void SegmentBuilder_CanBuildSubcomponents_Sequentially()
         {
-            var builder = new MessageBuilder()[1];
+            var builder = Message.Build()[1];
             var subcomponent1 = Randomized.String();
             var subcomponent2 = Randomized.String();
 
@@ -173,7 +174,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void SegmentBuilder_ChangesEncodingCharactersIfMessageChanges()
         {
-            var messageBuilder = new MessageBuilder();
+            var messageBuilder = Message.Build();
             var builder = messageBuilder[1];
             Assert.AreEqual(builder.FieldDelimiter, '|');
             messageBuilder.FieldDelimiter = ':';
@@ -183,7 +184,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void SegmentBuilder_ChangesEncodingCharactersIfMshSegmentChanges()
         {
-            var messageBuilder = new MessageBuilder();
+            var messageBuilder = Message.Build();
             var builder = messageBuilder[1];
             Assert.AreEqual(builder.FieldDelimiter, '|');
             builder.Field(1, ":");

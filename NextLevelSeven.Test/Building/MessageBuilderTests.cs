@@ -12,7 +12,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_CanBuildFields_Individually()
         {
-            var builder = new MessageBuilder();
+            var builder = Message.Build();
             var field3 = Randomized.String();
             var field5 = Randomized.String();
 
@@ -26,7 +26,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_CanBuildFields_OutOfOrder()
         {
-            var builder = new MessageBuilder();
+            var builder = Message.Build();
             var field3 = Randomized.String();
             var field5 = Randomized.String();
 
@@ -40,7 +40,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_CanBuildFields_Sequentially()
         {
-            var builder = new MessageBuilder();
+            var builder = Message.Build();
             var field3 = Randomized.String();
             var field5 = Randomized.String();
 
@@ -53,7 +53,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_CanBuildRepetitions_Individually()
         {
-            var builder = new MessageBuilder();
+            var builder = Message.Build();
             var repetition1 = Randomized.String();
             var repetition2 = Randomized.String();
 
@@ -67,7 +67,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_CanBuildRepetitions_OutOfOrder()
         {
-            var builder = new MessageBuilder();
+            var builder = Message.Build();
             var repetition1 = Randomized.String();
             var repetition2 = Randomized.String();
 
@@ -81,7 +81,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_CanBuildRepetitions_Sequentially()
         {
-            var builder = new MessageBuilder();
+            var builder = Message.Build();
             var repetition1 = Randomized.String();
             var repetition2 = Randomized.String();
 
@@ -94,7 +94,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_CanBuildSegments_Individually()
         {
-            var builder = new MessageBuilder();
+            var builder = Message.Build();
             var segment2 = "ZZZ|" + Randomized.String();
             var segment3 = "ZAA|" + Randomized.String();
 
@@ -108,7 +108,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_CanBuildSegments_OutOfOrder()
         {
-            var builder = new MessageBuilder();
+            var builder = Message.Build();
             var segment2 = "ZOT|" + Randomized.String();
             var segment3 = "ZED|" + Randomized.String();
 
@@ -122,7 +122,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_CanBuildSegments_Sequentially()
         {
-            var builder = new MessageBuilder();
+            var builder = Message.Build();
             var segment2 = "ZIP|" + Randomized.String();
             var segment3 = "ZAP|" + Randomized.String();
 
@@ -135,7 +135,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_CanBuildComponents_Individually()
         {
-            var builder = new MessageBuilder();
+            var builder = Message.Build();
             var component1 = Randomized.String();
             var component2 = Randomized.String();
 
@@ -149,7 +149,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_CanBuildComponents_OutOfOrder()
         {
-            var builder = new MessageBuilder();
+            var builder = Message.Build();
             var component1 = Randomized.String();
             var component2 = Randomized.String();
 
@@ -163,7 +163,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_CanBuildComponents_Sequentially()
         {
-            var builder = new MessageBuilder();
+            var builder = Message.Build();
             var component1 = Randomized.String();
             var component2 = Randomized.String();
 
@@ -176,7 +176,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_CanBuildSubcomponents_Individually()
         {
-            var builder = new MessageBuilder();
+            var builder = Message.Build();
             var subcomponent1 = Randomized.String();
             var subcomponent2 = Randomized.String();
 
@@ -190,7 +190,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_CanBuildSubcomponents_OutOfOrder()
         {
-            var builder = new MessageBuilder();
+            var builder = Message.Build();
             var subcomponent1 = Randomized.String();
             var subcomponent2 = Randomized.String();
 
@@ -204,7 +204,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_CanBuildSubcomponents_Sequentially()
         {
-            var builder = new MessageBuilder();
+            var builder = Message.Build();
             var subcomponent1 = Randomized.String();
             var subcomponent2 = Randomized.String();
 
@@ -217,7 +217,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_ConvertsToMessage()
         {
-            var builder = new MessageBuilder(ExampleMessages.Standard);
+            var builder = Message.Build(ExampleMessages.Standard);
             var beforeMessageString = builder.ToString();
             var message = builder.ToMessage();
             Assert.AreEqual(beforeMessageString, message.ToString(), "Conversion from builder to message failed.");
@@ -226,16 +226,16 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_ConvertsFromMessage()
         {
-            var message = new NativeMessage(ExampleMessages.Standard);
+            var message = Message.Create(ExampleMessages.Standard);
             var beforeBuilderString = message.ToString();
-            var afterBuilder = new MessageBuilder(message);
+            var afterBuilder = Message.Build(message);
             Assert.AreEqual(beforeBuilderString, afterBuilder.ToString(), "Conversion from message to builder failed.");
         }
 
         [TestMethod]
         public void MessageBuilder_ConvertsMshCorrectly()
         {
-            var builder = new MessageBuilder(ExampleMessages.MshOnly);
+            var builder = Message.Build(ExampleMessages.MshOnly);
             Assert.AreEqual(ExampleMessages.MshOnly, builder.ToString());
         }
 
@@ -243,7 +243,7 @@ namespace NextLevelSeven.Test.Building
         public void MessageBuilder_UsesReasonableMemory_WhenParsingLargeMessages()
         {
             var before = GC.GetTotalMemory(true);
-            var message = new MessageBuilder();
+            var message = Message.Build();
             message.Field(1000000, 1000000, Randomized.String());
             var messageString = message.ToString();
             var usage = GC.GetTotalMemory(false) - before;
@@ -255,43 +255,43 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_HasProperDefaultFieldDelimiter()
         {
-            var builder = new MessageBuilder();
+            var builder = Message.Build();
             Assert.AreEqual('|', builder.FieldDelimiter);
         }
 
         [TestMethod]
         public void MessageBuilder_HasProperDefaultComponentDelimiter()
         {
-            var builder = new MessageBuilder();
+            var builder = Message.Build();
             Assert.AreEqual('^', builder.ComponentDelimiter);
         }
 
         [TestMethod]
         public void MessageBuilder_HasProperDefaultSubcomponentDelimiter()
         {
-            var builder = new MessageBuilder();
+            var builder = Message.Build();
             Assert.AreEqual('&', builder.SubcomponentDelimiter);
         }
 
         [TestMethod]
         public void MessageBuilder_HasProperDefaultEscapeDelimiter()
         {
-            var builder = new MessageBuilder();
+            var builder = Message.Build();
             Assert.AreEqual('\\', builder.EscapeDelimiter);
         }
 
         [TestMethod]
         public void MessageBuilder_HasProperDefaultRepetitionDelimiter()
         {
-            var builder = new MessageBuilder();
+            var builder = Message.Build();
             Assert.AreEqual('~', builder.RepetitionDelimiter);
         }
 
         [TestMethod]
         public void MessageBuilder_ContainsSegmentBuilders()
         {
-            var builder = new MessageBuilder();
-            Assert.IsInstanceOfType(builder[1], typeof(SegmentBuilder));
+            var builder = Message.Build();
+            Assert.IsInstanceOfType(builder[1], typeof(ISegmentBuilder));
         }
 
         [TestMethod]
@@ -299,7 +299,7 @@ namespace NextLevelSeven.Test.Building
         {
             var id1 = Randomized.String();
             var id2 = Randomized.String();
-            var builder = new MessageBuilder(string.Format("MSH|^~\\&|{0}\xDPID|{1}", id1, id2));
+            var builder = Message.Build(string.Format("MSH|^~\\&|{0}\xDPID|{1}", id1, id2));
             var builderValues = builder.Values;
             Assert.AreEqual(string.Format("MSH|^~\\&|{0}", id1), builderValues[1]);
             Assert.AreEqual(string.Format("PID|{0}", id2), builderValues[2]);
@@ -310,7 +310,7 @@ namespace NextLevelSeven.Test.Building
         {
             var id1 = Randomized.String();
             var id2 = Randomized.String();
-            var builder = new MessageBuilder(string.Format("MSH|^~\\&|{0}\xDPID|{1}", id1, id2));
+            var builder = Message.Build(string.Format("MSH|^~\\&|{0}\xDPID|{1}", id1, id2));
             var builderValues = builder.Values.ToArray();
             Assert.AreEqual(string.Format("MSH|^~\\&|{0}", id1), builderValues[0]);
             Assert.AreEqual(string.Format("PID|{0}", id2), builderValues[1]);
@@ -319,7 +319,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_CanSetMsh1()
         {
-            var builder = new MessageBuilder("MSH|^~\\&|");
+            var builder = Message.Build("MSH|^~\\&|");
             builder.Field(1, 1, ":");
             Assert.AreEqual("MSH:^~\\&:", builder.ToString());
         }
@@ -327,7 +327,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_CanSetMsh1ToDefaultWithNull()
         {
-            var builder = new MessageBuilder("MSH|^~\\&|");
+            var builder = Message.Build("MSH|^~\\&|");
             builder.Field(1, 1, null);
             Assert.AreEqual("MSH|^~\\&|", builder.ToString());
         }
@@ -335,7 +335,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_CanSetMsh2()
         {
-            var builder = new MessageBuilder("MSH|^~\\&|");
+            var builder = Message.Build("MSH|^~\\&|");
             builder.Field(1, 2, "@#$%");
             Assert.AreEqual("MSH|@#$%|", builder.ToString());
         }
@@ -343,7 +343,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_CanSetTypeToMsh()
         {
-            var builder = new MessageBuilder();
+            var builder = Message.Build();
             builder.Field(2, 0, "MSH");
         }
 
@@ -352,7 +352,7 @@ namespace NextLevelSeven.Test.Building
         {
             // NOTE: by design.
             // (change this test if the design changes.)
-            var builder = new MessageBuilder();
+            var builder = Message.Build();
             It.Throws<BuilderException>(() => builder.Field(1, 0, "PID"));
         }
 
@@ -361,7 +361,7 @@ namespace NextLevelSeven.Test.Building
         {
             // NOTE: by design.
             // (change this test if the design changes.)
-            var builder = new MessageBuilder();
+            var builder = Message.Build();
             builder.Field(2, 0, "PID");
             It.Throws<BuilderException>(() => builder.Field(2, 0, "MSH"));
         }
@@ -371,7 +371,7 @@ namespace NextLevelSeven.Test.Building
         {
             var id1 = Randomized.String();
             var id2 = Randomized.String();
-            var builder = new MessageBuilder(string.Format("MSH|^~\\&|{0}^{1}", id1, id2));
+            var builder = Message.Build(string.Format("MSH|^~\\&|{0}^{1}", id1, id2));
             builder.Field(1, 2, "$~\\&");
             Assert.AreEqual(string.Format("MSH|$~\\&|{0}${1}", id1, id2), builder.ToString());            
         }
@@ -381,7 +381,7 @@ namespace NextLevelSeven.Test.Building
         {
             var id1 = Randomized.String();
             var id2 = Randomized.String();
-            var builder = new MessageBuilder(string.Format("MSH|^~\\&|{0}~{1}", id1, id2));
+            var builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}", id1, id2));
             builder.Field(1, 2, "^$\\&");
             Assert.AreEqual(string.Format("MSH|^$\\&|{0}${1}", id1, id2), builder.ToString());
         }
@@ -393,7 +393,7 @@ namespace NextLevelSeven.Test.Building
             // (change this message if the functionality is ever added and this test updated.)
             var id1 = Randomized.String();
             var id2 = Randomized.String();
-            var builder = new MessageBuilder(string.Format("MSH|^~\\&|\\H\\{0}\\N\\{1}", id1, id2));
+            var builder = Message.Build(string.Format("MSH|^~\\&|\\H\\{0}\\N\\{1}", id1, id2));
             builder.Field(1, 2, "^~$&");
             Assert.AreEqual(string.Format("MSH|^~$&|\\H\\{0}\\N\\{1}", id1, id2), builder.ToString());
         }
@@ -403,7 +403,7 @@ namespace NextLevelSeven.Test.Building
         {
             var id1 = Randomized.String();
             var id2 = Randomized.String();
-            var builder = new MessageBuilder(string.Format("MSH|^~\\&|{0}&{1}", id1, id2));
+            var builder = Message.Build(string.Format("MSH|^~\\&|{0}&{1}", id1, id2));
             builder.Field(1, 2, "^~\\$");
             Assert.AreEqual(string.Format("MSH|^~\\$|{0}${1}", id1, id2), builder.ToString());
         }
@@ -411,7 +411,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_CanSetMsh2ToDefaultWithNull()
         {
-            var builder = new MessageBuilder("MSH|^~\\&|");
+            var builder = Message.Build("MSH|^~\\&|");
             builder.Field(1, 2, null);
             Assert.AreEqual("MSH|^~\\&|", builder.ToString());
         }
@@ -419,7 +419,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_CanSetMsh2Partially()
         {
-            var builder = new MessageBuilder("MSH|^~\\&|");
+            var builder = Message.Build("MSH|^~\\&|");
             builder.Field(1, 2, "$");
             Assert.AreEqual("MSH|$~\\&|", builder.ToString());
         }
@@ -429,7 +429,7 @@ namespace NextLevelSeven.Test.Building
         {
             var id = Randomized.String();
             const char delimiter = ':';
-            var builder = new MessageBuilder(string.Format("MSH{0}^~\\&{0}{1}", delimiter, id));
+            var builder = Message.Build(string.Format("MSH{0}^~\\&{0}{1}", delimiter, id));
             Assert.AreEqual(delimiter, builder.FieldDelimiter);
             Assert.AreEqual(id, builder[1][3].ToString());
         }
@@ -439,7 +439,8 @@ namespace NextLevelSeven.Test.Building
         {
             var id = Randomized.String();
             const char delimiter = ':';
-            var builder = new MessageBuilder(string.Format("MSH|^~\\&|{0}", id)) {FieldDelimiter = delimiter};
+            var builder = Message.Build(string.Format("MSH|^~\\&|{0}", id));
+            builder.FieldDelimiter = delimiter;
             Assert.AreEqual(delimiter, builder.FieldDelimiter);
             Assert.AreEqual(id, builder[1][3].ToString());
         }
@@ -449,7 +450,7 @@ namespace NextLevelSeven.Test.Building
         {
             var id = Randomized.String();
             const char delimiter = ':';
-            var builder = new MessageBuilder(string.Format("MSH|^~{0}&|{1}", delimiter, id));
+            var builder = Message.Build(string.Format("MSH|^~{0}&|{1}", delimiter, id));
             Assert.AreEqual(delimiter, builder.EscapeDelimiter);
             Assert.AreEqual(id, builder[1][3].ToString());
         }
@@ -459,7 +460,8 @@ namespace NextLevelSeven.Test.Building
         {
             var id = Randomized.String();
             const char delimiter = ':';
-            var builder = new MessageBuilder(string.Format("MSH|^~\\&|{0}", id)) { FieldDelimiter = delimiter };
+            var builder = Message.Build(string.Format("MSH|^~\\&|{0}", id));
+            builder.FieldDelimiter = delimiter;
             Assert.AreEqual(delimiter, builder.FieldDelimiter);
             Assert.AreEqual(id, builder[1][3].ToString());
         }
@@ -468,7 +470,7 @@ namespace NextLevelSeven.Test.Building
         public void MessageBuilder_CanMapSegments()
         {
             var id = Randomized.String();
-            IMessage tree = new MessageBuilder(string.Format("MSH|^~\\&|{0}", id));
+            IMessage tree = Message.Build(string.Format("MSH|^~\\&|{0}", id));
             Assert.AreEqual(string.Format("MSH|^~\\&|{0}", id), tree.GetValue(1));
         }
 
@@ -476,7 +478,7 @@ namespace NextLevelSeven.Test.Building
         public void MessageBuilder_CanMapFields()
         {
             var id = Randomized.String();
-            IMessage tree = new MessageBuilder(string.Format("MSH|^~\\&|{0}", id));
+            IMessage tree = Message.Build(string.Format("MSH|^~\\&|{0}", id));
             Assert.AreEqual(id, tree.GetValue(1, 3));
         }
 
@@ -485,7 +487,7 @@ namespace NextLevelSeven.Test.Building
         {
             var id1 = Randomized.String();
             var id2 = Randomized.String();
-            IMessage tree = new MessageBuilder(string.Format("MSH|^~\\&|{0}~{1}", id1, id2));
+            IMessage tree = Message.Build(string.Format("MSH|^~\\&|{0}~{1}", id1, id2));
             Assert.AreEqual(id1, tree.GetValue(1, 3, 1));
             Assert.AreEqual(id2, tree.GetValue(1, 3, 2));
         }
@@ -495,7 +497,7 @@ namespace NextLevelSeven.Test.Building
         {
             var id1 = Randomized.String();
             var id2 = Randomized.String();
-            IMessage tree = new MessageBuilder(string.Format("MSH|^~\\&|{0}^{1}", id1, id2));
+            IMessage tree = Message.Build(string.Format("MSH|^~\\&|{0}^{1}", id1, id2));
             Assert.AreEqual(id1, tree.GetValue(1, 3, 1, 1));
             Assert.AreEqual(id2, tree.GetValue(1, 3, 1, 2));
         }
@@ -505,7 +507,7 @@ namespace NextLevelSeven.Test.Building
         {
             var id1 = Randomized.String();
             var id2 = Randomized.String();
-            IMessage tree = new MessageBuilder(string.Format("MSH|^~\\&|{0}&{1}", id1, id2));
+            IMessage tree = Message.Build(string.Format("MSH|^~\\&|{0}&{1}", id1, id2));
             Assert.AreEqual(id1, tree.GetValue(1, 3, 1, 1, 1));
             Assert.AreEqual(id2, tree.GetValue(1, 3, 1, 1, 2));
         }

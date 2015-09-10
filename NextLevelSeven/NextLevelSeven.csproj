@@ -72,7 +72,6 @@
     <Compile Include="Core\ISegment.cs" />
     <Compile Include="Core\ISubcomponent.cs" />
     <Compile Include="Core\Message.cs" />
-    <Compile Include="Core\ElementExtensions.cs" />
     <Compile Include="Native\NativeElementExtensions.cs" />
     <Compile Include="Core\EncodingConfigurationExtensions.cs" />
     <Compile Include="Specification\Default.cs" />

@@ -27,7 +27,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="index">Index within the field to get the builder from.</param>
         /// <returns>Field repetition builder for the specified index.</returns>
-        override public RepetitionBuilder this[int index]
+        override public IRepetitionBuilder this[int index]
         {
             get { throw new BuilderException(ErrorCode.FixedFieldsCannotBeDivided); }
         }
@@ -53,7 +53,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="value">New value.</param>
         /// <returns>This FieldBuilder, for chaining purposes.</returns>
-        override public FieldBuilder Field(string value)
+        override public IFieldBuilder Field(string value)
         {
             Value = value ?? string.Empty;
             return this;
@@ -65,7 +65,7 @@ namespace NextLevelSeven.Building
         /// <param name="repetition"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public override FieldBuilder FieldRepetition(int repetition, string value)
+        public override IFieldBuilder FieldRepetition(int repetition, string value)
         {
             if (repetition > 1)
             {

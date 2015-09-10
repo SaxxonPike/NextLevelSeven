@@ -9,7 +9,7 @@ namespace NextLevelSeven.Building
     /// <summary>
     ///     Represents an HL7 field repetition.
     /// </summary>
-    sealed public class RepetitionBuilder : BuilderBaseDescendant
+    sealed internal class RepetitionBuilder : BuilderBaseDescendant, IRepetitionBuilder
     {
         /// <summary>
         ///     Descendant builders.
@@ -99,7 +99,7 @@ namespace NextLevelSeven.Building
         /// <param name="componentIndex">Component index.</param>
         /// <param name="value">New value.</param>
         /// <returns>This RepetitionBuilder, for chaining purposes.</returns>
-        public RepetitionBuilder Component(int componentIndex, string value)
+        public IRepetitionBuilder Component(int componentIndex, string value)
         {
             this[componentIndex].Component(value);
             return this;
@@ -110,7 +110,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="components">Values to replace with.</param>
         /// <returns>This RepetitionBuilder, for chaining purposes.</returns>
-        public RepetitionBuilder Components(params string[] components)
+        public IRepetitionBuilder Components(params string[] components)
         {
             _componentBuilders.Clear();
             var index = 1;
@@ -127,7 +127,7 @@ namespace NextLevelSeven.Building
         /// <param name="startIndex">Component index to begin replacing at.</param>
         /// <param name="components">Values to replace with.</param>
         /// <returns>This RepetitionBuilder, for chaining purposes.</returns>
-        public RepetitionBuilder Components(int startIndex, params string[] components)
+        public IRepetitionBuilder Components(int startIndex, params string[] components)
         {
             var index = startIndex;
             foreach (var component in components)
@@ -142,7 +142,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="value"></param>
         /// <returns>This RepetitionBuilder, for chaining purposes.</returns>
-        public RepetitionBuilder FieldRepetition(string value)
+        public IRepetitionBuilder FieldRepetition(string value)
         {
             if (value == null)
             {
@@ -162,7 +162,7 @@ namespace NextLevelSeven.Building
         /// <param name="subcomponentIndex">Subcomponent index.</param>
         /// <param name="value">New value.</param>
         /// <returns>This RepetitionBuilder, for chaining purposes.</returns>
-        public RepetitionBuilder Subcomponent(int componentIndex, int subcomponentIndex, string value)
+        public IRepetitionBuilder Subcomponent(int componentIndex, int subcomponentIndex, string value)
         {
             this[componentIndex].Subcomponent(subcomponentIndex, value);
             return this;
@@ -174,7 +174,7 @@ namespace NextLevelSeven.Building
         /// <param name="componentIndex">Component index.</param>
         /// <param name="subcomponents">Subcomponent index.</param>
         /// <returns>This RepetitionBuilder, for chaining purposes.</returns>
-        public RepetitionBuilder Subcomponents(int componentIndex, params string[] subcomponents)
+        public IRepetitionBuilder Subcomponents(int componentIndex, params string[] subcomponents)
         {
             this[componentIndex].Subcomponents(subcomponents);
             return this;
@@ -187,7 +187,7 @@ namespace NextLevelSeven.Building
         /// <param name="startIndex">Subcomponent index to begin replacing at.</param>
         /// <param name="subcomponents">Values to replace with.</param>
         /// <returns>This RepetitionBuilder, for chaining purposes.</returns>
-        public RepetitionBuilder Subcomponents(int componentIndex, int startIndex, params string[] subcomponents)
+        public IRepetitionBuilder Subcomponents(int componentIndex, int startIndex, params string[] subcomponents)
         {
             this[componentIndex].Subcomponents(startIndex, subcomponents);
             return this;

@@ -9,7 +9,7 @@ namespace NextLevelSeven.Building
     /// <summary>
     ///     Represents an HL7 component.
     /// </summary>
-    public sealed class ComponentBuilder : BuilderBaseDescendant, IComponentBuilder
+    internal sealed class ComponentBuilder : BuilderBaseDescendant, IComponentBuilder
     {
         /// <summary>
         ///     Descendant builders.

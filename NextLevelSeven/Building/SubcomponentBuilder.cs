@@ -4,7 +4,7 @@ using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building
 {
-    public sealed class SubcomponentBuilder : BuilderBaseDescendant, ISubcomponentBuilder
+    internal sealed class SubcomponentBuilder : BuilderBaseDescendant, ISubcomponentBuilder
     {
         /// <summary>
         ///     Internal subcomponent value.
