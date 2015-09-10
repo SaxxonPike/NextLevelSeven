@@ -40,7 +40,7 @@ namespace NextLevelSeven.Test.Routing
             var message = Message.Create(ExampleMessages.Standard);
             var router = new NullRouter(true);
             router.Route(message);
-            Assert.AreEqual(message.ToString(), router.LastMessage.ToString(), "Message mismatch.");
+            Assert.AreEqual(message.Value, router.LastMessage.Value, "Message mismatch.");
         }
     }
 }

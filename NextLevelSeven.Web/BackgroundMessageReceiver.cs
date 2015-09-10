@@ -116,7 +116,7 @@ namespace NextLevelSeven.Web
                                 message = ReadMessageStream(mem);
                                 if (message != null && MessageReceived != null)
                                 {
-                                    MessageReceived(this, new MessageTransportEventArgs(null, message.ToString()));
+                                    MessageReceived(this, new MessageTransportEventArgs(null, message.Value));
                                 }
                             }
                             catch (Exception ex)
@@ -158,7 +158,7 @@ namespace NextLevelSeven.Web
                         if (MessageAccepted != null)
                         {
                             MessageAccepted(this,
-                                new MessageTransportEventArgs(responseMessage.ToString(), request.ToString()));
+                                new MessageTransportEventArgs(responseMessage.Value, request.Value));
                         }
                     }
                     else
@@ -168,13 +168,13 @@ namespace NextLevelSeven.Web
                         if (MessageRejected != null)
                         {
                             MessageRejected(this,
-                                new MessageTransportEventArgs(responseMessage.ToString(),
+                                new MessageTransportEventArgs(responseMessage.Value,
                                     Encoding.UTF8.GetString(messageRawData)));
                         }
                     }
 
                     httpResponse.ContentType = Hl7ContentType;
-                    using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(responseMessage.ToString())))
+                    using (var mem = new MemoryStream(Encoding.UTF8.GetBytes(responseMessage.Value)))
                     {
                         mem.CopyTo(httpResponse.OutputStream);
                         httpResponse.OutputStream.Close();

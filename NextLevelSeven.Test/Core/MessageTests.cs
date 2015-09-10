@@ -22,7 +22,7 @@ namespace NextLevelSeven.Test.Core
         public void Message_ConvertsMshCorrectly()
         {
             var message = Message.Create(ExampleMessages.MshOnly);
-            Assert.AreEqual(ExampleMessages.MshOnly, message.ToString(), "MSH conversion back to string did not match.");
+            Assert.AreEqual(ExampleMessages.MshOnly, message.Value, "MSH conversion back to string did not match.");
         }
 
         [TestMethod]
@@ -33,18 +33,6 @@ namespace NextLevelSeven.Test.Core
             Assert.AreEqual("MSH", message[1].Type, @"Default message should create an MSH segment.");
             Assert.AreEqual(@"^~\&", message[1][2].Value, @"Default message should use standard HL7 encoding characters.");
             Assert.AreEqual("|", message[1][1].Value, @"Default message should use standard HL7 field delimiter character.");
-        }
-
-        [TestMethod]
-        public void Message_EmptyConstructorMatchesStaticEmptyConstructor()
-        {
-            Assert.AreEqual(Message.Create().ToString(), Message.Create().ToString());
-        }
-
-        [TestMethod]
-        public void Message_StringConstructorMatchesStaticStringConstructor()
-        {
-            Assert.AreEqual(Message.Create(ExampleMessages.Standard).ToString(), Message.Create(ExampleMessages.Standard).ToString());
         }
 
         [TestMethod]
@@ -184,7 +172,7 @@ namespace NextLevelSeven.Test.Core
             var before = GC.GetTotalMemory(true);
             var message = Message.Create();
             message[1000000][1000000].Value = Randomized.String();
-            var messageString = message.ToString();
+            var messageString = message.Value;
             var usage = GC.GetTotalMemory(false) - before;
             var overhead = usage - (messageString.Length << 1);
             var usePerCharacter = (overhead / (messageString.Length << 1));

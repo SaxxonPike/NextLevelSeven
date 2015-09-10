@@ -40,7 +40,7 @@ namespace NextLevelSeven.Test.Routing
             Assert.IsNull(routedData, "Test initialized incorrectly.");
             message.RouteTo(router);
             Assert.IsNotNull(routedData);
-            Assert.AreEqual(message.ToString(), routedData.ToString());
+            Assert.AreEqual(message.Value, routedData.Value);
         }
 
         [TestMethod]

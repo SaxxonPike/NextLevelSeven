@@ -58,7 +58,7 @@ namespace NextLevelSeven.Building
         {
             get
             {
-                return new WrapperEnumerable<string>(index => this[index].ToString(),
+                return new WrapperEnumerable<string>(index => this[index].Value,
                     (index, data) => Subcomponent(index, data),
                     () => Count,
                     1);

@@ -18,7 +18,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .FieldRepetition(1, repetition1)
                 .FieldRepetition(2, repetition2);
-            Assert.AreEqual(string.Format("{0}~{1}", repetition1, repetition2), builder.ToString(),
+            Assert.AreEqual(string.Format("{0}~{1}", repetition1, repetition2), builder.Value,
                 @"Unexpected result.");
         }
 
@@ -32,7 +32,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .FieldRepetition(2, repetition2)
                 .FieldRepetition(1, repetition1);
-            Assert.AreEqual(string.Format("{0}~{1}", repetition1, repetition2), builder.ToString(),
+            Assert.AreEqual(string.Format("{0}~{1}", repetition1, repetition2), builder.Value,
                 @"Unexpected result.");
         }
 
@@ -45,7 +45,7 @@ namespace NextLevelSeven.Test.Building
 
             builder
                 .FieldRepetitions(3, repetition1, repetition2);
-            Assert.AreEqual(string.Format("~~{0}~{1}", repetition1, repetition2), builder.ToString(),
+            Assert.AreEqual(string.Format("~~{0}~{1}", repetition1, repetition2), builder.Value,
                 @"Unexpected result.");
         }
 
@@ -59,7 +59,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .Component(1, 1, component1)
                 .Component(1, 2, component2);
-            Assert.AreEqual(string.Format("{0}^{1}", component1, component2), builder.ToString(),
+            Assert.AreEqual(string.Format("{0}^{1}", component1, component2), builder.Value,
                 @"Unexpected result.");
         }
 
@@ -73,7 +73,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .Component(1, 2, component2)
                 .Component(1, 1, component1);
-            Assert.AreEqual(string.Format("{0}^{1}", component1, component2), builder.ToString(),
+            Assert.AreEqual(string.Format("{0}^{1}", component1, component2), builder.Value,
                 @"Unexpected result.");
         }
 
@@ -86,7 +86,7 @@ namespace NextLevelSeven.Test.Building
 
             builder
                 .Components(1, component1, component2);
-            Assert.AreEqual(string.Format("{0}^{1}", component1, component2), builder.ToString(),
+            Assert.AreEqual(string.Format("{0}^{1}", component1, component2), builder.Value,
                 @"Unexpected result.");
         }
 
@@ -100,7 +100,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .Subcomponent(1, 1, 1, subcomponent1)
                 .Subcomponent(1, 1, 2, subcomponent2);
-            Assert.AreEqual(string.Format("{0}&{1}", subcomponent1, subcomponent2), builder.ToString(),
+            Assert.AreEqual(string.Format("{0}&{1}", subcomponent1, subcomponent2), builder.Value,
                 @"Unexpected result.");
         }
 
@@ -114,7 +114,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .Subcomponent(1, 1, 2, subcomponent2)
                 .Subcomponent(1, 1, 1, subcomponent1);
-            Assert.AreEqual(string.Format("{0}&{1}", subcomponent1, subcomponent2), builder.ToString(),
+            Assert.AreEqual(string.Format("{0}&{1}", subcomponent1, subcomponent2), builder.Value,
                 @"Unexpected result.");
         }
 
@@ -127,7 +127,7 @@ namespace NextLevelSeven.Test.Building
 
             builder
                 .Subcomponents(1, 1, 1, subcomponent1, subcomponent2);
-            Assert.AreEqual(string.Format("{0}&{1}", subcomponent1, subcomponent2), builder.ToString(),
+            Assert.AreEqual(string.Format("{0}&{1}", subcomponent1, subcomponent2), builder.Value,
                 @"Unexpected result.");
         }
 

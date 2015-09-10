@@ -68,7 +68,7 @@ namespace NextLevelSeven.Test.Web
         /// <returns>Response from the receiver.</returns>
         static public string SendMessage(INativeMessage message, MessageTransportEventHandler receivedHandler = null)
         {
-            return SendData(message.ToString(), receivedHandler: receivedHandler);
+            return SendData(message.Value, receivedHandler: receivedHandler);
         }
 
         /// <summary>

@@ -80,7 +80,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         public string Type
         {
-            get { return this[0].ToString(); }
+            get { return this[0].Value; }
             set { Field(0, value); }
         }
 
@@ -91,7 +91,7 @@ namespace NextLevelSeven.Building
         {
             get
             {
-                return new WrapperEnumerable<string>(index => this[index].ToString(),
+                return new WrapperEnumerable<string>(index => this[index].Value,
                     (index, data) => Field(index, data),
                     () => Count);
             }
@@ -112,7 +112,7 @@ namespace NextLevelSeven.Building
                     return string.Empty;
                 }
 
-                var typeIsMsh = (_fieldBuilders.ContainsKey(0) && _fieldBuilders[0].ToString() == "MSH");
+                var typeIsMsh = (_fieldBuilders.ContainsKey(0) && _fieldBuilders[0].Value == "MSH");
 
                 foreach (var field in _fieldBuilders.OrderBy(i => i.Key))
                 {
@@ -275,7 +275,7 @@ namespace NextLevelSeven.Building
                 {
                     return false;
                 }
-                return _fieldBuilders[0].ToString() == "MSH";
+                return _fieldBuilders[0].Value == "MSH";
             }
         }
 

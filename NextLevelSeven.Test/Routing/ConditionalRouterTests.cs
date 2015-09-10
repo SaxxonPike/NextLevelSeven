@@ -36,7 +36,7 @@ namespace NextLevelSeven.Test.Routing
             var message = Message.Create(ExampleMessages.Standard);
             var router = new ConditionalRouter(m => true, subRouter);
             message.RouteTo(router);
-            Assert.AreEqual(message.ToString(), subRouter.LastMessage.ToString(), "Message mismatch.");
+            Assert.AreEqual(message.Value, subRouter.LastMessage.Value, "Message mismatch.");
         }
 
         [TestMethod]

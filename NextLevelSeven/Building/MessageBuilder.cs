@@ -45,7 +45,7 @@ namespace NextLevelSeven.Building
         /// <param name="message">Message to copy content from.</param>
         public MessageBuilder(INativeMessage message)
         {
-            Message(message.ToString());
+            Message(message.Value);
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace NextLevelSeven.Building
         {
             get
             {
-                return new WrapperEnumerable<string>(index => this[index].ToString(),
+                return new WrapperEnumerable<string>(index => this[index].Value,
                     (index, data) => Segment(index, data),
                     () => Count,
                     1);
@@ -95,7 +95,7 @@ namespace NextLevelSeven.Building
             get
             {
                 var result = string.Join("\xD",
-                    _segmentBuilders.OrderBy(i => i.Key).Select(i => i.Value.ToString()));
+                    _segmentBuilders.OrderBy(i => i.Key).Select(i => i.Value.Value));
                 return result;                
             }
             set { Message(value); }
@@ -351,7 +351,7 @@ namespace NextLevelSeven.Building
         /// <returns>Converted message.</returns>
         public INativeMessage ToMessage()
         {
-            return new NativeMessage(ToString());
+            return new NativeMessage(Value);
         }
 
         /// <summary>

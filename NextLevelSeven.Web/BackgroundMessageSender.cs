@@ -68,13 +68,13 @@ namespace NextLevelSeven.Web
                         request.ContentType = Hl7ContentType;
 
                         using (var requestStream = request.GetRequestStream())
-                        using (var messageStream = new MemoryStream(Encoding.UTF8.GetBytes(message.Contents.ToString()))
+                        using (var messageStream = new MemoryStream(Encoding.UTF8.GetBytes(message.Contents.Value))
                             )
                         {
                             messageStream.CopyTo(requestStream);
                             if (MessageSent != null)
                             {
-                                MessageSent(this, new MessageTransportEventArgs(message.Contents.ToString(), null));
+                                MessageSent(this, new MessageTransportEventArgs(message.Contents.Value, null));
                             }
                         }
 
