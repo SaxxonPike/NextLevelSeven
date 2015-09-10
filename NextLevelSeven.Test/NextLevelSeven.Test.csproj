@@ -90,9 +90,6 @@
     <Compile Include="Streaming\Hl7TextReaderTests.cs" />
     <Compile Include="Streaming\MlpStreamReaderTests.cs" />
     <Compile Include="Streaming\MlpStreamWriterTests.cs" />
-    <Compile Include="Transformation\ElementTransformTests.cs" />
-    <Compile Include="Transformation\TestNameElementTransform.cs" />
-    <Compile Include="Transformation\TestNameElementTransformFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NextLevelSeven\NextLevelSeven.csproj">

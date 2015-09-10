@@ -146,12 +146,12 @@ namespace NextLevelSeven.Test.Core
         {
             var message = new NativeMessage(ExampleMessages.Standard);
             var segmentStrings = message.Value.Split('\xD');
-            var segments = message.Values;
+            var segments = message.Values.ToList();
 
-            Assert.AreEqual(segmentStrings.Length, segments.Length,
+            Assert.AreEqual(segmentStrings.Length, segments.Count,
                 @"Splitting main value and calling Values returns different element counts.");
 
-            for (var i = 0; i < segments.Length; i++)
+            for (var i = 0; i < segments.Count; i++)
             {
                 Assert.AreEqual(segments[i], segmentStrings[i], @"Values are not equal.");
             }

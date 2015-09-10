@@ -182,7 +182,7 @@ namespace NextLevelSeven.Test
             set { }
         }
 
-        public string[] Values
+        public IEnumerable<string> Values
         {
             get { return new string[0]; }
             set { }
@@ -208,24 +208,14 @@ namespace NextLevelSeven.Test
         {
         }
 
-        public string GetValue(int segment, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
-        {
-            return null;
-        }
-
-        public string GetValue(string segmentName, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
-        {
-            return null;
-        }
-
-        public IEnumerable<INativeElement> GetFields(string segmentName, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
-        {
-            return Enumerable.Empty<INativeElement>();
-        }
-
-        public IEnumerable<string> GetValues(string segmentName, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
+        public IEnumerable<string> GetValues(int segment = -1, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
         {
             return Enumerable.Empty<string>();
+        }
+
+        public string GetValue(int segment = -1, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            return null;
         }
     }
 }

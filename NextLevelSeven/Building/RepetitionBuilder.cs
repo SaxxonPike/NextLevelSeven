@@ -30,7 +30,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="index">Index within the field repetition to get the builder from.</param>
         /// <returns>Component builder for the specified index.</returns>
-        public ComponentBuilder this[int index]
+        public IComponentBuilder this[int index]
         {
             get
             {

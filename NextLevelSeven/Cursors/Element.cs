@@ -188,7 +188,7 @@ namespace NextLevelSeven.Cursors
             }
         }
 
-        public string[] Values
+        public IEnumerable<string> Values
         {
             get
             {

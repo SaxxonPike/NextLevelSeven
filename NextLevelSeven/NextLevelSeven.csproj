@@ -50,6 +50,13 @@
     <Compile Include="Building\DelimiterFieldBuilder.cs" />
     <Compile Include="Building\EncodingFieldBuilder.cs" />
     <Compile Include="Building\FieldBuilder.cs" />
+    <Compile Include="Building\IBuilder.cs" />
+    <Compile Include="Building\IComponentBuilder.cs" />
+    <Compile Include="Building\IFieldBuilder.cs" />
+    <Compile Include="Building\IMessageBuilder.cs" />
+    <Compile Include="Building\IRepetitionBuilder.cs" />
+    <Compile Include="Building\ISegmentBuilder.cs" />
+    <Compile Include="Building\ISubcomponentBuilder.cs" />
     <Compile Include="Building\MessageBuilder.cs" />
     <Compile Include="Building\RepetitionBuilder.cs" />
     <Compile Include="Building\SegmentBuilder.cs" />
@@ -58,7 +65,14 @@
     <Compile Include="Codecs\Codec.cs" />
     <Compile Include="Codecs\IndexedCodec.cs" />
     <Compile Include="Core\ElementException.cs" />
+    <Compile Include="Core\IComponent.cs" />
+    <Compile Include="Core\IElement.cs" />
+    <Compile Include="Core\IField.cs" />
+    <Compile Include="Core\IRepetition.cs" />
+    <Compile Include="Core\ISegment.cs" />
+    <Compile Include="Core\ISubcomponent.cs" />
     <Compile Include="Core\Message.cs" />
+    <Compile Include="Core\ElementExtensions.cs" />
     <Compile Include="Native\NativeElementExtensions.cs" />
     <Compile Include="Core\EncodingConfigurationExtensions.cs" />
     <Compile Include="Specification\Default.cs" />
@@ -122,8 +136,6 @@
     <Compile Include="Streaming\MlpStreamWriter.cs" />
     <Compile Include="Streaming\StreamReaderExtensions.cs" />
     <Compile Include="Streaming\StreamWrapperBase.cs" />
-    <Compile Include="Transformation\ElementTransform.cs" />
-    <Compile Include="Transformation\IElementTransformFactory.cs" />
     <Compile Include="MessageGeneration\AckMessageGenerator.cs" />
     <Compile Include="Utility\EnumerableExtensions.cs" />
     <Compile Include="Utility\IEnumerableIndexable.cs" />

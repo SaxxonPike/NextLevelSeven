@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using NextLevelSeven.Codecs;
+using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Native
 {
     /// <summary>
     ///     Common interface that represents any one of the HL7v2 message constructs that holds data.
     /// </summary>
-    public interface INativeElement
+    public interface INativeElement : IElement
     {
         /// <summary>
         ///     Get a descendant element at the specified index. Indices match the HL7 specification, and are not necessarily
@@ -53,11 +54,6 @@ namespace NextLevelSeven.Native
         bool HasSignificantDescendants { get; }
 
         /// <summary>
-        ///     Index of the element.
-        /// </summary>
-        int Index { get; }
-
-        /// <summary>
         ///     Unique key of the element within the message.
         /// </summary>
         string Key { get; }
@@ -66,16 +62,6 @@ namespace NextLevelSeven.Native
         ///     Get the root message for this element.
         /// </summary>
         INativeMessage Message { get; }
-
-        /// <summary>
-        ///     Get or set the element data. When setting new data, descendents will automatically be repopulated.
-        /// </summary>
-        string Value { get; set; }
-
-        /// <summary>
-        ///     Get or set the element data. Delimiters are automatically inserted.
-        /// </summary>
-        string[] Values { get; set; }
 
         /// <summary>
         ///     Event that is triggered whenever either this element's value

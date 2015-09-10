@@ -107,31 +107,7 @@ namespace NextLevelSeven.Native
         /// <param name="component">Component index.</param>
         /// <param name="subcomponent">Subcomponent index.</param>
         /// <returns>The first occurrence of the specified element.</returns>
-        INativeElement GetField(int segment, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1);
-
-        /// <summary>
-        ///     Get the first available data from a specific place in the message. Depth is determined by how many indices are specified.
-        /// </summary>
-        /// <param name="segmentName">Segment name.</param>
-        /// <param name="field">Field index.</param>
-        /// <param name="repetition">Repetition number.</param>
-        /// <param name="component">Component index.</param>
-        /// <param name="subcomponent">Subcomponent index.</param>
-        /// <returns>The first occurrence of the specified element.</returns>
-        INativeElement GetField(string segmentName, int field = -1, int repetition = -1, int component = -1,
-            int subcomponent = -1);
-
-        /// <summary>
-        ///     Get data from a specific place in the message. Depth is determined by how many indices are specified. This can return multiple results.
-        /// </summary>
-        /// <param name="segmentName">Segment name.</param>
-        /// <param name="field">Field index.</param>
-        /// <param name="repetition">Repetition number.</param>
-        /// <param name="component">Component index.</param>
-        /// <param name="subcomponent">Subcomponent index.</param>
-        /// <returns>The first occurrence of the specified element.</returns>
-        IEnumerable<INativeElement> GetFields(string segmentName, int field = -1, int repetition = -1, int component = -1,
-            int subcomponent = -1);
+        INativeElement GetField(int segment = -1, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1);
 
         /// <summary>
         ///     Check for validity of the message. Returns true if the message can reasonably be parsed.

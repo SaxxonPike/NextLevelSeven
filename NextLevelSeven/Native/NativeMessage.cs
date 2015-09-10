@@ -5,6 +5,7 @@ using NextLevelSeven.Codecs;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Core;
 using NextLevelSeven.Specification;
+using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Native
 {
@@ -439,7 +440,7 @@ namespace NextLevelSeven.Native
         /// <summary>
         ///     Get or set the element data. Delimiters are automatically inserted.
         /// </summary>
-        public string[] Values
+        public IEnumerable<string> Values
         {
             get { return _message.Values; }
             set { _message.Values = value; }
@@ -532,38 +533,60 @@ namespace NextLevelSeven.Native
         /// <param name="repetition">Repetition number.</param>
         /// <param name="component">Component index.</param>
         /// <param name="subcomponent">Subcomponent index.</param>
-        /// <returns>The first occurrence of the specified element.</returns>
-        public string GetValue(int segment, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
+        /// <returns>The occurrences of the specified element.</returns>
+        public IEnumerable<string> GetValues(int segment = -1, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
         {
-            return GetField(segment, field, repetition, component, subcomponent).Value;
+            if (segment < 0)
+            {
+                return Values;
+            }
+            if (field < 0)
+            {
+                return _message[segment].Values;
+            }
+            if (repetition < 0)
+            {
+                return _message[segment][field].Values;
+            }
+            if (component < 0)
+            {
+                return _message[segment][field][repetition].Values;
+            }
+            return subcomponent < 0
+                ? _message[segment][field][repetition][component].Values
+                : _message[segment][field][repetition][component][subcomponent].Value.Yield();
         }
 
         /// <summary>
         ///     Get data from a specific place in the message. Depth is determined by how many indices are specified.
         /// </summary>
-        /// <param name="segmentName">Three letter segment name.</param>
+        /// <param name="segment">Segment index.</param>
         /// <param name="field">Field index.</param>
         /// <param name="repetition">Repetition number.</param>
         /// <param name="component">Component index.</param>
         /// <param name="subcomponent">Subcomponent index.</param>
         /// <returns>The first occurrence of the specified element.</returns>
-        public string GetValue(string segmentName, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
+        public string GetValue(int segment = -1, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
         {
-            return GetField(segmentName, field, repetition, component, subcomponent).Value;
-        }
-
-        /// <summary>
-        ///     Get data from a specific place in the message. Depth is determined by how many indices are specified.
-        /// </summary>
-        /// <param name="segmentName">Three letter segment name.</param>
-        /// <param name="field">Field index.</param>
-        /// <param name="repetition">Repetition number.</param>
-        /// <param name="component">Component index.</param>
-        /// <param name="subcomponent">Subcomponent index.</param>
-        /// <returns>The first occurrence of the specified element.</returns>
-        public IEnumerable<string> GetValues(string segmentName, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
-        {
-            return GetFields(segmentName, field, repetition, component, subcomponent).Select(f => f.Value);
+            if (segment < 0)
+            {
+                return Value;
+            }
+            if (field < 0)
+            {
+                return _message[segment].Value;
+            }
+            if (repetition < 0)
+            {
+                return _message[segment][field].Value;
+            }
+            if (component < 0)
+            {
+                return _message[segment][field][repetition].Value;
+            }
+            return subcomponent < 0
+                ? _message[segment][field][repetition][component].Value
+                : _message[segment][field][repetition][component][subcomponent].Value;
         }
     }
 }

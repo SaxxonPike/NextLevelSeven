@@ -9,7 +9,7 @@ namespace NextLevelSeven.Building
     /// <summary>
     ///     Represents an HL7 component.
     /// </summary>
-    public sealed class ComponentBuilder : BuilderBaseDescendant
+    public sealed class ComponentBuilder : BuilderBaseDescendant, IComponentBuilder
     {
         /// <summary>
         ///     Descendant builders.
@@ -31,7 +31,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="index">Index within the component to get the builder from.</param>
         /// <returns>Subcomponent builder for the specified index.</returns>
-        public SubcomponentBuilder this[int index]
+        public ISubcomponentBuilder this[int index]
         {
             get
             {
@@ -99,7 +99,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="value">New value.</param>
         /// <returns>This ComponentBuilder, for chaining purposes.</returns>
-        public ComponentBuilder Component(string value)
+        public IComponentBuilder Component(string value)
         {
             _subcomponentBuilders.Clear();
             var index = 1;
@@ -119,7 +119,7 @@ namespace NextLevelSeven.Building
         /// <param name="subcomponentIndex">Subcomponent index.</param>
         /// <param name="value">New value.</param>
         /// <returns>This ComponentBuilder, for chaining purposes.</returns>
-        public ComponentBuilder Subcomponent(int subcomponentIndex, string value)
+        public IComponentBuilder Subcomponent(int subcomponentIndex, string value)
         {
             this[subcomponentIndex].Subcomponent(value);
             return this;
@@ -130,7 +130,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="subcomponents">Subcomponent index.</param>
         /// <returns>This ComponentBuilder, for chaining purposes.</returns>
-        public ComponentBuilder Subcomponents(params string[] subcomponents)
+        public IComponentBuilder Subcomponents(params string[] subcomponents)
         {
             _subcomponentBuilders.Clear();
             var index = 1;
@@ -147,7 +147,7 @@ namespace NextLevelSeven.Building
         /// <param name="startIndex">Subcomponent index to begin replacing at.</param>
         /// <param name="subcomponents">Values to replace with.</param>
         /// <returns>This ComponentBuilder, for chaining purposes.</returns>
-        public ComponentBuilder Subcomponents(int startIndex, params string[] subcomponents)
+        public IComponentBuilder Subcomponents(int startIndex, params string[] subcomponents)
         {
             var index = startIndex;
             foreach (var subcomponent in subcomponents)

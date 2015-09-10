@@ -364,6 +364,38 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
+        /// Get the values at the specific location in the message.
+        /// </summary>
+        /// <param name="segment">Segment index.</param>
+        /// <param name="field">Field index.</param>
+        /// <param name="repetition">Repetition index.</param>
+        /// <param name="component">Component index.</param>
+        /// <param name="subcomponent">Subcomponent index.</param>
+        /// <returns>Value at the specified location. Returns null if not found.</returns>
+        public IEnumerable<string> GetValues(int segment = -1, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            if (segment < 0)
+            {
+                return Values;
+            }
+            if (field < 0)
+            {
+                return this[segment].Values;
+            }
+            if (repetition < 0)
+            {
+                return this[segment][field].Values;
+            }
+            if (component < 0)
+            {
+                return this[segment][field][repetition].Values;
+            }
+            return (subcomponent < 0)
+                ? this[segment][field][repetition][component].Values
+                : this[segment][field][repetition][component][subcomponent].Value.Yield();
+        }
+
+        /// <summary>
         /// Get the value at the specific location in the message.
         /// </summary>
         /// <param name="segment">Segment index.</param>
@@ -372,8 +404,12 @@ namespace NextLevelSeven.Building
         /// <param name="component">Component index.</param>
         /// <param name="subcomponent">Subcomponent index.</param>
         /// <returns>Value at the specified location. Returns null if not found.</returns>
-        public string GetValue(int segment, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
+        public string GetValue(int segment = -1, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
         {
+            if (segment < 0)
+            {
+                return Value;
+            }
             if (field < 0)
             {
                 return this[segment].Value;
@@ -389,49 +425,6 @@ namespace NextLevelSeven.Building
             return (subcomponent < 0)
                 ? this[segment][field][repetition][component].Value
                 : this[segment][field][repetition][component][subcomponent].Value;
-        }
-
-        /// <summary>
-        /// Get the value at the specific location in the message.
-        /// </summary>
-        /// <param name="segmentName">Three letter segment name.</param>
-        /// <param name="field">Field index.</param>
-        /// <param name="repetition">Repetition index.</param>
-        /// <param name="component">Component index.</param>
-        /// <param name="subcomponent">Subcomponent index.</param>
-        /// <returns>Value at the specified location. Returns null if not found.</returns>
-        public string GetValue(string segmentName, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
-        {
-            return GetValues(segmentName, field, repetition, component, subcomponent).FirstOrDefault();
-        }
-
-        /// <summary>
-        /// Get the values at the specific location in the message.
-        /// </summary>
-        /// <param name="segmentName">Three letter segment name.</param>
-        /// <param name="field">Field index.</param>
-        /// <param name="repetition">Repetition index.</param>
-        /// <param name="component">Component index.</param>
-        /// <param name="subcomponent">Subcomponent index.</param>
-        /// <returns>Value at the specified location. Returns null if not found.</returns>
-        public IEnumerable<string> GetValues(string segmentName, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
-        {
-            var matches = _segmentBuilders.Where(s => s.Value.Type == segmentName);
-            if (field < 0)
-            {
-                return matches.Select(m => m.Value.Value);
-            }
-            if (repetition < 0)
-            {
-                return matches.Select(m => m.Value[field].Value);
-            }
-            if (component < 0)
-            {
-                return matches.Select(m => m.Value[field][repetition].Value);
-            }
-            return (subcomponent < 0)
-                ? matches.Select(m => m.Value[field][repetition][component].Value)
-                : matches.Select(m => m.Value[field][repetition][component][subcomponent].Value);
         }
     }
 }
