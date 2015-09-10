@@ -7,7 +7,7 @@ using NextLevelSeven.Native;
 namespace NextLevelSeven.Test.Native
 {
     [TestClass]
-    public class ElementTests
+    public class NativeElementTests
     {
         [TestMethod]
         public void Element_CanAddDescendantsAtEnd()

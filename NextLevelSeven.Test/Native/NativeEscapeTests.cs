@@ -5,7 +5,7 @@ using NextLevelSeven.Core;
 namespace NextLevelSeven.Test.Native
 {
     [TestClass]
-    public class EscapeTests
+    public class NativeEscapeTests
     {
         private static void Test_Escape(string expected, string test)
         {

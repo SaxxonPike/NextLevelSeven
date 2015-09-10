@@ -7,7 +7,7 @@ using NextLevelSeven.Core;
 namespace NextLevelSeven.Test.Native
 {
     [TestClass]
-    public class MessageTests
+    public class NativeMessageTests
     {
         [TestInitialize]
         public void Message_Initialization()

@@ -6,7 +6,7 @@ using NextLevelSeven.Native;
 namespace NextLevelSeven.Test.Native
 {
     [TestClass]
-    public class ElementPerformanceTests
+    public class NativeElementPerformanceTests
     {
         private const int MediumIndex = 1000;
         private const int HighIndex = 1000000;
