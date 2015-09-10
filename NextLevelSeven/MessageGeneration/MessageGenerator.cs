@@ -39,8 +39,8 @@ namespace NextLevelSeven.MessageGeneration
             };
             message.Receiver.Application = receivingApplication;
             message.Receiver.Facility = receivingFacility;
-            message.Sender.Application = sendingApplication ?? Identity.ApplicationDefault;
-            message.Sender.Facility = sendingFacility ?? Identity.FacilityDefault;
+            message.Sender.Application = sendingApplication ?? Default.Application;
+            message.Sender.Facility = sendingFacility ?? Default.Facility;
             return message;
         }
     }

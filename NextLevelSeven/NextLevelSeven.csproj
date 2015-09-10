@@ -61,7 +61,7 @@
     <Compile Include="Core\Message.cs" />
     <Compile Include="Native\NativeElementExtensions.cs" />
     <Compile Include="Core\EncodingConfigurationExtensions.cs" />
-    <Compile Include="Specification\Identity.cs" />
+    <Compile Include="Specification\Default.cs" />
     <Compile Include="Native\NativeIdentity.cs" />
     <Compile Include="Core\IMessage.cs" />
     <Compile Include="Specification\IIdentity.cs" />
@@ -102,12 +102,6 @@
     <Compile Include="Diagnostics\ErrorMessages.Deutsch.cs" />
     <Compile Include="Diagnostics\ErrorMessages.English.cs" />
     <Compile Include="Diagnostics\ErrorCode.cs" />
-    <Compile Include="Mapping\IMapConfiguration.cs" />
-    <Compile Include="Mapping\MapConfiguration.cs" />
-    <Compile Include="Mapping\MapLocation.cs" />
-    <Compile Include="Mapping\MappedMessage.cs" />
-    <Compile Include="Mapping\Maps\MshSegmentConfiguration.cs" />
-    <Compile Include="Mapping\Maps\MshSegmentMap.cs" />
     <Compile Include="MessageGeneration\MessageGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Routing\BroadcastRouter.cs" />
