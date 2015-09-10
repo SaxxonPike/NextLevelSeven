@@ -1,5 +1,4 @@
-﻿using NextLevelSeven.Core;
-using NextLevelSeven.Native;
+﻿using NextLevelSeven.Native;
 
 namespace NextLevelSeven.Web
 {

@@ -14,6 +14,11 @@ namespace NextLevelSeven.Web
     public class BackgroundMessageSender : BackgroundTransportBase
     {
         /// <summary>
+        ///     Sender configuration.
+        /// </summary>
+        private readonly MessageSenderConfiguration _configuration;
+
+        /// <summary>
         ///     Create a sender, which will monitor the queue and perform POSTs to the target address with messages in it.
         /// </summary>
         /// <param name="address"></param>
@@ -26,11 +31,6 @@ namespace NextLevelSeven.Web
 
             _configuration = config;
         }
-
-        /// <summary>
-        ///     Sender configuration.
-        /// </summary>
-        private readonly MessageSenderConfiguration _configuration;
 
         /// <summary>
         ///     Event that is invoked whenever a message is accepted as valid by the receiver.
@@ -50,7 +50,7 @@ namespace NextLevelSeven.Web
         /// <summary>
         ///     Main method for the sender. This runs on a separate thread.
         /// </summary>
-        override protected void BackgroundMessageThreadMain()
+        protected override void BackgroundMessageThreadMain()
         {
             var config = _configuration;
             try

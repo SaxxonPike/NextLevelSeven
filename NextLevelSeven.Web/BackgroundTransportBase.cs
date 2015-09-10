@@ -14,34 +14,9 @@ namespace NextLevelSeven.Web
         public static readonly string Hl7ContentType = "x-application/hl7-v2+er7";
 
         /// <summary>
-        /// Finalizer.
-        /// </summary>
-        ~BackgroundTransportBase()
-        {
-            Dispose(false);
-        }
-
-        /// <summary>
         ///     If true, the thread was aborted.
         /// </summary>
         protected bool Aborted { get; set; }
-
-        /// <summary>
-        /// Background message thread main method.
-        /// </summary>
-        protected abstract void BackgroundMessageThreadMain();
-
-        /// <summary>
-        /// Background message thread exception handler.
-        /// </summary>
-        /// <param name="task">Running task.</param>
-        protected virtual void BackgroundMessageThreadExceptionHandler(Task task)
-        {
-            if (task.Exception != null)
-            {
-                throw task.Exception;
-            }            
-        }
 
         /// <summary>
         ///     Cancellation token for the task.
@@ -54,12 +29,52 @@ namespace NextLevelSeven.Web
         public bool Disposed { get; private set; }
 
         /// <summary>
+        ///     If true, the transport is ready to process further requests. If false, the transport is busy processing requests.
+        /// </summary>
+        public bool Ready { get; protected set; }
+
+        /// <summary>
+        ///     If true, transport is active. If false, the transport is not processing requests.
+        /// </summary>
+        public bool Running { get; protected set; }
+
+        /// <summary>
+        ///     Thread the main method is running on.
+        /// </summary>
+        protected Task Task { get; set; }
+
+        /// <summary>
         ///     Stop transport and clean up.
         /// </summary>
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        ///     Finalizer.
+        /// </summary>
+        ~BackgroundTransportBase()
+        {
+            Dispose(false);
+        }
+
+        /// <summary>
+        ///     Background message thread main method.
+        /// </summary>
+        protected abstract void BackgroundMessageThreadMain();
+
+        /// <summary>
+        ///     Background message thread exception handler.
+        /// </summary>
+        /// <param name="task">Running task.</param>
+        protected virtual void BackgroundMessageThreadExceptionHandler(Task task)
+        {
+            if (task.Exception != null)
+            {
+                throw task.Exception;
+            }
         }
 
         /// <summary>
@@ -80,19 +95,9 @@ namespace NextLevelSeven.Web
         }
 
         /// <summary>
-        ///     If true, the transport is ready to process further requests. If false, the transport is busy processing requests.
-        /// </summary>
-        public bool Ready { get; protected set; }
-
-        /// <summary>
-        ///     If true, transport is active. If false, the transport is not processing requests.
-        /// </summary>
-        public bool Running { get; protected set; }
-
-        /// <summary>
         ///     Start processing messages on the transport.
         /// </summary>
-        virtual public void Start()
+        public virtual void Start()
         {
             if (Disposed)
             {
@@ -115,7 +120,7 @@ namespace NextLevelSeven.Web
         /// <summary>
         ///     Stop processing messages on the transport.
         /// </summary>
-        virtual public void Stop()
+        public virtual void Stop()
         {
             if (Disposed)
             {
@@ -131,11 +136,6 @@ namespace NextLevelSeven.Web
             Ready = false;
             CancelTokenSource.Cancel();
         }
-
-        /// <summary>
-        ///     Thread the main method is running on.
-        /// </summary>
-        protected Task Task { get; set; }
 
         /// <summary>
         ///     Wait for the transport to become ready. An exception is thrown if this is not done before the timeout specified.

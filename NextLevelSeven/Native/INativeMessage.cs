@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using NextLevelSeven.Core;
-using NextLevelSeven.Specification;
+using NextLevelSeven.Core.Specification;
 
 namespace NextLevelSeven.Native
 {
@@ -37,13 +37,6 @@ namespace NextLevelSeven.Native
         ///     Get or set the message control ID.
         /// </summary>
         string ControlId { get; set; }
-
-        /// <summary>
-        /// Get an escaped version of the string, using encoding characters from this message.
-        /// </summary>
-        /// <param name="data">Data to escape.</param>
-        /// <returns>Escaped data.</returns>
-        string Escape(string data);
 
         /// <summary>
         ///     Get or set the message processing ID.
@@ -86,16 +79,23 @@ namespace NextLevelSeven.Native
         string Type { get; set; }
 
         /// <summary>
-        /// Get a string that has been unescaped from HL7.
+        ///     Get the HL7 version number. If it does not exist, returns null.
+        /// </summary>
+        string Version { get; }
+
+        /// <summary>
+        ///     Get an escaped version of the string, using encoding characters from this message.
+        /// </summary>
+        /// <param name="data">Data to escape.</param>
+        /// <returns>Escaped data.</returns>
+        string Escape(string data);
+
+        /// <summary>
+        ///     Get a string that has been unescaped from HL7.
         /// </summary>
         /// <param name="data">Data to unescape.</param>
         /// <returns>Unescaped string.</returns>
         string UnEscape(string data);
-
-        /// <summary>
-        ///     Get the HL7 version number. If it does not exist, returns null.
-        /// </summary>
-        string Version { get; }
 
         /// <summary>
         ///     Create a deep clone of the message.
@@ -112,7 +112,8 @@ namespace NextLevelSeven.Native
         /// <param name="component">Component index.</param>
         /// <param name="subcomponent">Subcomponent index.</param>
         /// <returns>The first occurrence of the specified element.</returns>
-        INativeElement GetField(int segment = -1, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1);
+        INativeElement GetField(int segment = -1, int field = -1, int repetition = -1, int component = -1,
+            int subcomponent = -1);
 
         /// <summary>
         ///     Check for validity of the message. Returns true if the message can reasonably be parsed.

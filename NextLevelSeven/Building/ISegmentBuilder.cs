@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NextLevelSeven.Diagnostics;
-using NextLevelSeven.Utility;
-
-namespace NextLevelSeven.Building
+﻿namespace NextLevelSeven.Building
 {
     public interface ISegmentBuilder : IBuilder
     {

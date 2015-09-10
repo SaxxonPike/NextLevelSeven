@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NextLevelSeven.Utility;
+﻿using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building
 {
@@ -15,7 +10,7 @@ namespace NextLevelSeven.Building
         int Count { get; }
 
         /// <summary>
-        /// Get or set the content string.
+        ///     Get or set the content string.
         /// </summary>
         string Value { get; set; }
 
@@ -35,7 +30,7 @@ namespace NextLevelSeven.Building
         char EscapeDelimiter { get; set; }
 
         /// <summary>
-        /// Get or set the character used to separate fields.
+        ///     Get or set the character used to separate fields.
         /// </summary>
         char FieldDelimiter { get; set; }
 

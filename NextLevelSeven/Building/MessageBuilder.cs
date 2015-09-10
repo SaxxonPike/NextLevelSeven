@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using NextLevelSeven.Core;
 using NextLevelSeven.Native;
+using NextLevelSeven.Native.Elements;
 using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building
@@ -88,7 +88,7 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
-        /// Get or set the message string.
+        ///     Get or set the message string.
         /// </summary>
         public string Value
         {
@@ -96,7 +96,7 @@ namespace NextLevelSeven.Building
             {
                 var result = string.Join("\xD",
                     _segmentBuilders.OrderBy(i => i.Key).Select(i => i.Value.Value));
-                return result;                
+                return result;
             }
             set { Message(value); }
         }
@@ -355,16 +355,7 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
-        ///     Copy the contents of this builder to a string.
-        /// </summary>
-        /// <returns>Converted message.</returns>
-        public override string ToString()
-        {
-            return Value;
-        }
-
-        /// <summary>
-        /// Get the values at the specific location in the message.
+        ///     Get the values at the specific location in the message.
         /// </summary>
         /// <param name="segment">Segment index.</param>
         /// <param name="field">Field index.</param>
@@ -372,7 +363,8 @@ namespace NextLevelSeven.Building
         /// <param name="component">Component index.</param>
         /// <param name="subcomponent">Subcomponent index.</param>
         /// <returns>Value at the specified location. Returns null if not found.</returns>
-        public IEnumerable<string> GetValues(int segment = -1, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
+        public IEnumerable<string> GetValues(int segment = -1, int field = -1, int repetition = -1, int component = -1,
+            int subcomponent = -1)
         {
             if (segment < 0)
             {
@@ -396,7 +388,7 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
-        /// Get the value at the specific location in the message.
+        ///     Get the value at the specific location in the message.
         /// </summary>
         /// <param name="segment">Segment index.</param>
         /// <param name="field">Field index.</param>
@@ -404,7 +396,8 @@ namespace NextLevelSeven.Building
         /// <param name="component">Component index.</param>
         /// <param name="subcomponent">Subcomponent index.</param>
         /// <returns>Value at the specified location. Returns null if not found.</returns>
-        public string GetValue(int segment = -1, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
+        public string GetValue(int segment = -1, int field = -1, int repetition = -1, int component = -1,
+            int subcomponent = -1)
         {
             if (segment < 0)
             {
@@ -425,6 +418,15 @@ namespace NextLevelSeven.Building
             return (subcomponent < 0)
                 ? this[segment][field][repetition][component].Value
                 : this[segment][field][repetition][component][subcomponent].Value;
+        }
+
+        /// <summary>
+        ///     Copy the contents of this builder to a string.
+        /// </summary>
+        /// <returns>Converted message.</returns>
+        public override string ToString()
+        {
+            return Value;
         }
     }
 }

@@ -12,7 +12,7 @@ namespace NextLevelSeven.Core
         /// <summary>
         ///     Create an element exception.
         /// </summary>
-        public MessageException(ErrorCode code) : base(ErrorMessages.Get(code))
+        internal MessageException(ErrorCode code) : base(ErrorMessages.Get(code))
         {
         }
     }

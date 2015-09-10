@@ -1,17 +1,19 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using NextLevelSeven.Core;
 using NextLevelSeven.Native;
 
 namespace NextLevelSeven.Routing
 {
     /// <summary>
-    /// A router that broadcasts all incoming messages to a list of routers. The route is successful when any of these routes is successful.
+    ///     A router that broadcasts all incoming messages to a list of routers. The route is successful when any of these
+    ///     routes is successful.
     /// </summary>
-    sealed public class BroadcastRouter : IRouter
+    public sealed class BroadcastRouter : IRouter
     {
+        private readonly List<IRouter> _routers = new List<IRouter>();
+
         /// <summary>
-        /// Create a route finder with the specified routes initially in the list.
+        ///     Create a route finder with the specified routes initially in the list.
         /// </summary>
         /// <param name="routers">Routers to put in the list.</param>
         public BroadcastRouter(params IRouter[] routers)
@@ -23,7 +25,7 @@ namespace NextLevelSeven.Routing
         }
 
         /// <summary>
-        /// Create a route finder with the specified routes initially in the list.
+        ///     Create a route finder with the specified routes initially in the list.
         /// </summary>
         /// <param name="routers">Routers to put in the list.</param>
         public BroadcastRouter(IEnumerable<IRouter> routers)
@@ -31,17 +33,19 @@ namespace NextLevelSeven.Routing
             foreach (var router in routers)
             {
                 Routers.Add(router);
-            }            
+            }
         }
 
         /// <summary>
-        /// List of routers to broadcast messages to.
+        ///     List of routers to broadcast messages to.
         /// </summary>
-        public IList<IRouter> Routers { get { return _routers; } }
-        private readonly List<IRouter> _routers = new List<IRouter>();
+        public IList<IRouter> Routers
+        {
+            get { return _routers; }
+        }
 
         /// <summary>
-        /// Route a message to all other routers in the list.
+        ///     Route a message to all other routers in the list.
         /// </summary>
         /// <param name="message">Message to route.</param>
         /// <returns>True, if any of the routes are successful.</returns>

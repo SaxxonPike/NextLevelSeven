@@ -3,12 +3,17 @@
 namespace NextLevelSeven.Building
 {
     /// <summary>
-    /// Base class for message builders.
+    ///     Base class for message builders.
     /// </summary>
-    abstract internal class BuilderBase
+    internal abstract class BuilderBase
     {
         /// <summary>
-        /// Initialize the message builder base class.
+        ///     Encoding configuration for this message.
+        /// </summary>
+        internal readonly EncodingConfiguration EncodingConfiguration;
+
+        /// <summary>
+        ///     Initialize the message builder base class.
         /// </summary>
         internal BuilderBase()
         {
@@ -16,7 +21,7 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
-        /// Initialize the message builder base class.
+        ///     Initialize the message builder base class.
         /// </summary>
         /// <param name="config">Message's encoding configuration.</param>
         internal BuilderBase(EncodingConfiguration config)
@@ -25,37 +30,32 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
-        ///     Encoding configuration for this message.
-        /// </summary>
-        internal readonly EncodingConfiguration EncodingConfiguration;
-
-        /// <summary>
         ///     Get or set the character used to separate component-level content.
         /// </summary>
-        virtual public char ComponentDelimiter { get; set; }
+        public virtual char ComponentDelimiter { get; set; }
 
         /// <summary>
         ///     Get or set the character used to signify escape sequences.
         /// </summary>
-        virtual public char EscapeDelimiter { get; set; }
+        public virtual char EscapeDelimiter { get; set; }
 
         /// <summary>
-        /// Get or set the character used to separate fields.
+        ///     Get or set the character used to separate fields.
         /// </summary>
-        virtual public char FieldDelimiter { get; set; }
+        public virtual char FieldDelimiter { get; set; }
 
         /// <summary>
         ///     Get or set the character used to separate field repetition content.
         /// </summary>
-        virtual public char RepetitionDelimiter { get; set; }
+        public virtual char RepetitionDelimiter { get; set; }
 
         /// <summary>
         ///     Get or set the character used to separate subcomponent-level content.
         /// </summary>
-        virtual public char SubcomponentDelimiter { get; set; }
+        public virtual char SubcomponentDelimiter { get; set; }
 
         /// <summary>
-        /// Get an HL7 escaped string.
+        ///     Get an HL7 escaped string.
         /// </summary>
         /// <param name="s">String to escape.</param>
         /// <returns>Escaped string.</returns>
@@ -65,7 +65,7 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
-        /// Get an unescaped HL7 string.
+        ///     Get an unescaped HL7 string.
         /// </summary>
         /// <param name="s">String to unescape.</param>
         /// <returns>Unescaped string.</returns>

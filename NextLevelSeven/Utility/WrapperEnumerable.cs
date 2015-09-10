@@ -1,17 +1,23 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace NextLevelSeven.Utility
 {
     /// <summary>
-    /// An IEnumerable+IIndexable wrapper around a method set, using a numeric index.
+    ///     An IEnumerable+IIndexable wrapper around a method set, using a numeric index.
     /// </summary>
     /// <typeparam name="TItem">Type of contained items.</typeparam>
-    sealed internal class WrapperEnumerable<TItem> : IEnumerableIndexable<int, TItem>
+    internal sealed class WrapperEnumerable<TItem> : IEnumerableIndexable<int, TItem>
     {
+        private readonly Func<int> _count;
+        private readonly Func<int, TItem> _read;
+        private readonly int _startIndex;
+        private readonly Action<int, TItem> _write;
+
         /// <summary>
-        /// Create a wrapper.
+        ///     Create a wrapper.
         /// </summary>
         /// <param name="read">Function to read values at a specified index.</param>
         /// <param name="write">Function to write values at a specified index.</param>
@@ -25,13 +31,8 @@ namespace NextLevelSeven.Utility
             _write = write;
         }
 
-        private readonly Func<int> _count;
-        private readonly Func<int, TItem> _read;
-        private readonly int _startIndex;
-        private readonly Action<int, TItem> _write;
-
         /// <summary>
-        /// Get the enumerator for this enumerable wrapper.
+        ///     Get the enumerator for this enumerable wrapper.
         /// </summary>
         /// <returns>Enumerator.</returns>
         public IEnumerator<TItem> GetEnumerator()
@@ -40,16 +41,16 @@ namespace NextLevelSeven.Utility
         }
 
         /// <summary>
-        /// Get the enumerator for this enumerable wrapper.
+        ///     Get the enumerator for this enumerable wrapper.
         /// </summary>
         /// <returns>Enumerator.</returns>
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return GetEnumerator();
         }
 
         /// <summary>
-        /// Get or set the item at the specified index.
+        ///     Get or set the item at the specified index.
         /// </summary>
         /// <param name="index">Index of the item.</param>
         /// <returns>Item at the specified index.</returns>
@@ -60,7 +61,7 @@ namespace NextLevelSeven.Utility
         }
 
         /// <summary>
-        /// Copy the contained items to another array, starting at the specified index.
+        ///     Copy the contained items to another array, starting at the specified index.
         /// </summary>
         /// <param name="array">Array to copy to.</param>
         /// <param name="arrayIndex">Index on the target array to start.</param>
@@ -75,7 +76,7 @@ namespace NextLevelSeven.Utility
         }
 
         /// <summary>
-        /// Copy the contained items to a new array.
+        ///     Copy the contained items to a new array.
         /// </summary>
         /// <returns>Array containing the items.</returns>
         public TItem[] ToArray()

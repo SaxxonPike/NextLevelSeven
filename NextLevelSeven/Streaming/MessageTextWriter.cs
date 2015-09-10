@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using NextLevelSeven.Core;
-using NextLevelSeven.Native;
 
 namespace NextLevelSeven.Streaming
 {

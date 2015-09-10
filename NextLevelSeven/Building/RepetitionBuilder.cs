@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NextLevelSeven.Core;
 using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building
@@ -9,7 +8,7 @@ namespace NextLevelSeven.Building
     /// <summary>
     ///     Represents an HL7 field repetition.
     /// </summary>
-    sealed internal class RepetitionBuilder : BuilderBaseDescendant, IRepetitionBuilder
+    internal sealed class RepetitionBuilder : BuilderBaseDescendant, IRepetitionBuilder
     {
         /// <summary>
         ///     Descendant builders.
@@ -65,7 +64,7 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
-        /// Get or set the field repetition string.
+        ///     Get or set the field repetition string.
         /// </summary>
         public string Value
         {
@@ -138,7 +137,7 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
-        /// Set a field repetition's value.
+        ///     Set a field repetition's value.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>This RepetitionBuilder, for chaining purposes.</returns>
@@ -150,7 +149,7 @@ namespace NextLevelSeven.Building
             }
             else
             {
-                Components(value.Split(ComponentDelimiter));                
+                Components(value.Split(ComponentDelimiter));
             }
             return this;
         }

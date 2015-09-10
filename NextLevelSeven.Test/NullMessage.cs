@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using NextLevelSeven.Codecs;
 using NextLevelSeven.Core;
+using NextLevelSeven.Core.Codec;
+using NextLevelSeven.Core.Specification;
 using NextLevelSeven.Native;
-using NextLevelSeven.Specification;
 
 #pragma warning disable 0067
 

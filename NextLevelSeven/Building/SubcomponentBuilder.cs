@@ -1,6 +1,4 @@
-﻿using System.Linq;
-using NextLevelSeven.Core;
-using NextLevelSeven.Utility;
+﻿using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building
 {
@@ -32,16 +30,7 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
-        ///     Copy the contents of this builder to a string.
-        /// </summary>
-        /// <returns>Converted subcomponent.</returns>
-        public override string ToString()
-        {
-            return Value;
-        }
-
-        /// <summary>
-        /// Get or set the component string.
+        ///     Get or set the component string.
         /// </summary>
         public string Value
         {
@@ -50,7 +39,7 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
-        /// Returns 0 if null, and 1 otherwise.
+        ///     Returns 0 if null, and 1 otherwise.
         /// </summary>
         public int Count
         {
@@ -58,11 +47,20 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
-        /// Return an enumerable with the content inside.
+        ///     Return an enumerable with the content inside.
         /// </summary>
         public IEnumerableIndexable<int, string> Values
         {
             get { return new WrapperEnumerable<string>(i => _value, (i, v) => { }, () => Count, 1); }
+        }
+
+        /// <summary>
+        ///     Copy the contents of this builder to a string.
+        /// </summary>
+        /// <returns>Converted subcomponent.</returns>
+        public override string ToString()
+        {
+            return Value;
         }
     }
 }

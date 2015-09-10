@@ -26,7 +26,8 @@ namespace NextLevelSeven.Native
         /// <param name="message">Message to get segments from.</param>
         /// <param name="segmentTypes">Segment types to filter out.</param>
         /// <returns>Segments that do not match the filtered segment types.</returns>
-        public static IEnumerable<INativeSegment> ExcludeSegments(this INativeMessage message, IEnumerable<string> segmentTypes)
+        public static IEnumerable<INativeSegment> ExcludeSegments(this INativeMessage message,
+            IEnumerable<string> segmentTypes)
         {
             return message.Segments.Where(s => !segmentTypes.Contains(s.Type));
         }
@@ -48,13 +49,14 @@ namespace NextLevelSeven.Native
         /// <param name="message">Message to get segments from.</param>
         /// <param name="segmentTypes">Segment types to get.</param>
         /// <returns>Segments that match one of the specified segment types.</returns>
-        public static IEnumerable<INativeSegment> OnlySegments(this INativeMessage message, IEnumerable<string> segmentTypes)
+        public static IEnumerable<INativeSegment> OnlySegments(this INativeMessage message,
+            IEnumerable<string> segmentTypes)
         {
             return message.Segments.Where(s => !segmentTypes.Contains(s.Type));
         }
 
         /// <summary>
-        /// Send the message to a router.
+        ///     Send the message to a router.
         /// </summary>
         /// <param name="message">Message to route.</param>
         /// <param name="router">Router to route the message through.</param>
@@ -71,7 +73,8 @@ namespace NextLevelSeven.Native
         /// <param name="segmentType">Segment type to split by.</param>
         /// <param name="includeExtras">If true, include the extra split data at the beginning.</param>
         /// <returns>Segment sets that start with the specified segment type.</returns>
-        public static IEnumerable<IEnumerable<INativeSegment>> SplitSegments(this INativeMessage message, string segmentType,
+        public static IEnumerable<IEnumerable<INativeSegment>> SplitSegments(this INativeMessage message,
+            string segmentType,
             bool includeExtras = false)
         {
             var result = new List<IEnumerable<INativeSegment>>();

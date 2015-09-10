@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NextLevelSeven.Core;
+﻿using NextLevelSeven.Core;
 using NextLevelSeven.Native;
-using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building
 {
@@ -16,10 +10,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="index">Index within the message to get the builder from.</param>
         /// <returns>Segment builder for the specified index.</returns>
-        ISegmentBuilder this[int index]
-        {
-            get;
-        }
+        ISegmentBuilder this[int index] { get; }
 
         /// <summary>
         ///     Set a component's content.

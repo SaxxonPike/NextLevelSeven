@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NextLevelSeven.Core;
 using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building
@@ -31,7 +30,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="index">Index within the field to get the builder from.</param>
         /// <returns>Field repetition builder for the specified index.</returns>
-        virtual public IRepetitionBuilder this[int index]
+        public virtual IRepetitionBuilder this[int index]
         {
             get
             {
@@ -46,7 +45,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get the number of field repetitions in this field, including field repetitions with no content.
         /// </summary>
-        virtual public int Count
+        public virtual int Count
         {
             get { return (_repetitionBuilders.Count > 0) ? _repetitionBuilders.Max(kv => kv.Key) : 0; }
         }
@@ -54,7 +53,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set field repetition content within this field.
         /// </summary>
-        virtual public IEnumerableIndexable<int, string> Values
+        public virtual IEnumerableIndexable<int, string> Values
         {
             get
             {
@@ -66,9 +65,9 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
-        /// Get or set the field string.
+        ///     Get or set the field string.
         /// </summary>
-        virtual public string Value
+        public virtual string Value
         {
             get
             {
@@ -137,7 +136,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="value">New value.</param>
         /// <returns>This FieldBuilder, for chaining purposes.</returns>
-        virtual public IFieldBuilder Field(string value)
+        public virtual IFieldBuilder Field(string value)
         {
             _repetitionBuilders.Clear();
             var index = 1;
@@ -157,7 +156,7 @@ namespace NextLevelSeven.Building
         /// <param name="repetition">Field repetition index.</param>
         /// <param name="value">New value.</param>
         /// <returns>This FieldBuilder, for chaining purposes.</returns>
-        virtual public IFieldBuilder FieldRepetition(int repetition, string value)
+        public virtual IFieldBuilder FieldRepetition(int repetition, string value)
         {
             if (repetition < 1)
             {

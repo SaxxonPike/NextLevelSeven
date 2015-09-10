@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using NextLevelSeven.Core;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Native;
 

@@ -12,7 +12,8 @@ namespace NextLevelSeven.Streaming
         /// <summary>
         ///     Create an MLP stream exception.
         /// </summary>
-        public MlpStreamException(ErrorCode code) : base(ErrorMessages.Get(code))
+        internal MlpStreamException(ErrorCode code)
+            : base(ErrorMessages.Get(code))
         {
         }
     }

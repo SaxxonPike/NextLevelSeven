@@ -33,7 +33,7 @@
         public virtual char EscapeDelimiter { get; protected set; }
 
         /// <summary>
-        /// Get the escape character used to separate fields.
+        ///     Get the escape character used to separate fields.
         /// </summary>
         public virtual char FieldDelimiter { get; protected set; }
 

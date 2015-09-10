@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace NextLevelSeven.Core
 {
     /// <summary>
-    /// An interface to get values at any level in the HL7 message heirarchy.
+    ///     An interface to get values at any level in the HL7 message heirarchy.
     /// </summary>
     public interface IMessage
     {

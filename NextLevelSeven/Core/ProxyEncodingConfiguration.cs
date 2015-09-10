@@ -7,6 +7,12 @@ namespace NextLevelSeven.Core
     /// </summary>
     internal class ProxyEncodingConfiguration : EncodingConfiguration
     {
+        private readonly Func<char> _getComponent;
+        private readonly Func<char> _getEscape;
+        private readonly Func<char> _getField;
+        private readonly Func<char> _getRepetition;
+        private readonly Func<char> _getSubcomponent;
+
         /// <summary>
         ///     Create an encoding configuration from a message or segment.
         /// </summary>
@@ -15,7 +21,8 @@ namespace NextLevelSeven.Core
         /// <param name="repetition">Function to get the repetition character.</param>
         /// <param name="component">Function to get the component separator character.</param>
         /// <param name="subcomponent">Function to get the subcomponent separator character.</param>
-        public ProxyEncodingConfiguration(Func<char> field, Func<char> escape, Func<char> repetition, Func<char> component, Func<char> subcomponent)
+        public ProxyEncodingConfiguration(Func<char> field, Func<char> escape, Func<char> repetition,
+            Func<char> component, Func<char> subcomponent)
         {
             _getEscape = escape;
             _getField = field;
@@ -23,12 +30,6 @@ namespace NextLevelSeven.Core
             _getComponent = component;
             _getSubcomponent = subcomponent;
         }
-
-        private readonly Func<char> _getEscape;
-        private readonly Func<char> _getField;
-        private readonly Func<char> _getRepetition;
-        private readonly Func<char> _getComponent;
-        private readonly Func<char> _getSubcomponent;
 
         /// <summary>
         ///     Get the delimiter character used to split components.
@@ -49,7 +50,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        /// Get the character used to separate fields.
+        ///     Get the character used to separate fields.
         /// </summary>
         public override char FieldDelimiter
         {

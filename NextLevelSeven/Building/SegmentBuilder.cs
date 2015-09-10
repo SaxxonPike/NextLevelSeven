@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NextLevelSeven.Core;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Utility;
 
@@ -24,6 +23,21 @@ namespace NextLevelSeven.Building
         internal SegmentBuilder(BuilderBase builder)
             : base(builder)
         {
+        }
+
+        /// <summary>
+        ///     If true, this is an MSH segment which has special behavior in fields 1 and 2.
+        /// </summary>
+        public bool IsMsh
+        {
+            get
+            {
+                if (!_fieldBuilders.ContainsKey(0))
+                {
+                    return false;
+                }
+                return _fieldBuilders[0].Value == "MSH";
+            }
         }
 
         /// <summary>
@@ -53,7 +67,7 @@ namespace NextLevelSeven.Building
                     if (index == 1)
                     {
                         _fieldBuilders[index] = new DelimiterFieldBuilder(this);
-                        return _fieldBuilders[index];                        
+                        return _fieldBuilders[index];
                     }
                     if (index == 2)
                     {
@@ -98,7 +112,7 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
-        /// Get or set the segment string.
+        ///     Get or set the segment string.
         /// </summary>
         public string Value
         {
@@ -265,34 +279,6 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
-        /// If true, this is an MSH segment which has special behavior in fields 1 and 2.
-        /// </summary>
-        public bool IsMsh
-        {
-            get
-            {
-                if (!_fieldBuilders.ContainsKey(0))
-                {
-                    return false;
-                }
-                return _fieldBuilders[0].Value == "MSH";
-            }
-        }
-
-        /// <summary>
-        /// Method that is called when a descendant type field has changed.
-        /// </summary>
-        /// <param name="oldValue">Old type field value.</param>
-        /// <param name="newValue">New type field value.</param>
-        private void OnTypeFieldModified(string oldValue, string newValue)
-        {
-            if (oldValue != null && oldValue != newValue && (newValue == "MSH" || oldValue == "MSH"))
-            {
-                throw new BuilderException(ErrorCode.ChangingSegmentTypesToAndFromMshIsNotSupported);
-            }
-        }
-
-        /// <summary>
         ///     Set this segment's content.
         /// </summary>
         /// <param name="value">New value.</param>
@@ -366,6 +352,19 @@ namespace NextLevelSeven.Building
         {
             this[fieldIndex].Subcomponents(repetition, componentIndex, startIndex, subcomponents);
             return this;
+        }
+
+        /// <summary>
+        ///     Method that is called when a descendant type field has changed.
+        /// </summary>
+        /// <param name="oldValue">Old type field value.</param>
+        /// <param name="newValue">New type field value.</param>
+        private void OnTypeFieldModified(string oldValue, string newValue)
+        {
+            if (oldValue != null && oldValue != newValue && (newValue == "MSH" || oldValue == "MSH"))
+            {
+                throw new BuilderException(ErrorCode.ChangingSegmentTypesToAndFromMshIsNotSupported);
+            }
         }
 
         /// <summary>

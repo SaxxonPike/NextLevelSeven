@@ -3,9 +3,9 @@ using System.Text;
 
 namespace NextLevelSeven.Core
 {
-    static internal class EncodingConfigurationExtensions
+    internal static class EncodingConfigurationExtensions
     {
-        static public string Escape(this EncodingConfiguration config, string s)
+        public static string Escape(this EncodingConfiguration config, string s)
         {
             if (s == null)
             {
@@ -104,25 +104,25 @@ namespace NextLevelSeven.Core
                         }
                     }
 
-                    output.Append(new[] { escapeDelimiter, 'E', escapeDelimiter });
+                    output.Append(new[] {escapeDelimiter, 'E', escapeDelimiter});
                     continue;
                 }
 
                 if (c == fieldDelimiter)
                 {
-                    output.Append(new[] { escapeDelimiter, 'F', escapeDelimiter });
-                    continue;                    
+                    output.Append(new[] {escapeDelimiter, 'F', escapeDelimiter});
+                    continue;
                 }
 
                 if (c == repetitionDelimiter)
                 {
-                    output.Append(new[] { escapeDelimiter, 'R', escapeDelimiter });
+                    output.Append(new[] {escapeDelimiter, 'R', escapeDelimiter});
                     continue;
                 }
 
                 if (c == subcomponentDelimiter)
                 {
-                    output.Append(new[] { escapeDelimiter, 'T', escapeDelimiter });
+                    output.Append(new[] {escapeDelimiter, 'T', escapeDelimiter});
                     continue;
                 }
 
@@ -132,7 +132,7 @@ namespace NextLevelSeven.Core
             return output.ToString();
         }
 
-        static public string UnEscape(this EncodingConfiguration config, string s)
+        public static string UnEscape(this EncodingConfiguration config, string s)
         {
             throw new NotImplementedException();
         }

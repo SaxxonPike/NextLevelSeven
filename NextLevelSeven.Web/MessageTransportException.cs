@@ -12,7 +12,7 @@ namespace NextLevelSeven.Web
         /// <summary>
         ///     Create a generic message transport exception.
         /// </summary>
-        public MessageTransportException(ErrorCode code) : base(ErrorMessages.Get(code))
+        internal MessageTransportException(ErrorCode code) : base(ErrorMessages.Get(code))
         {
         }
     }

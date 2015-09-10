@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NextLevelSeven.Diagnostics;
+﻿using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building
 {
     /// <summary>
-    /// A fixed field builder that notifies a segment builder when its value has changed.
+    ///     A fixed field builder that notifies a segment builder when its value has changed.
     /// </summary>
     internal sealed class DelimiterFieldBuilder : FieldBuilder
     {
@@ -27,7 +22,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="index">Index within the field to get the builder from.</param>
         /// <returns>Field repetition builder for the specified index.</returns>
-        override public IRepetitionBuilder this[int index]
+        public override IRepetitionBuilder this[int index]
         {
             get { throw new BuilderException(ErrorCode.FixedFieldsCannotBeDivided); }
         }
@@ -35,7 +30,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get the number of field repetitions in this field, including field repetitions with no content.
         /// </summary>
-        override public int Count
+        public override int Count
         {
             get { return 1; }
         }
@@ -43,9 +38,26 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set field repetition content within this field.
         /// </summary>
-        override public IEnumerableIndexable<int, string> Values
+        public override IEnumerableIndexable<int, string> Values
         {
             get { return new WrapperEnumerable<string>(index => Value, (index, value) => Value = value, () => 1); }
+        }
+
+        /// <summary>
+        ///     Get or set the field type value.
+        /// </summary>
+        public override string Value
+        {
+            get { return new string(FieldDelimiter, 1); }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    FieldDelimiter = '|';
+                    return;
+                }
+                FieldDelimiter = value[0];
+            }
         }
 
         /// <summary>
@@ -53,14 +65,14 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="value">New value.</param>
         /// <returns>This FieldBuilder, for chaining purposes.</returns>
-        override public IFieldBuilder Field(string value)
+        public override IFieldBuilder Field(string value)
         {
             Value = value ?? string.Empty;
             return this;
         }
 
         /// <summary>
-        /// Set the contents of this field.
+        ///     Set the contents of this field.
         /// </summary>
         /// <param name="repetition"></param>
         /// <param name="value"></param>
@@ -82,23 +94,6 @@ namespace NextLevelSeven.Building
         public override string ToString()
         {
             return Value;
-        }
-
-        /// <summary>
-        /// Get or set the field type value.
-        /// </summary>
-        override public string Value
-        {
-            get { return new string(FieldDelimiter, 1); }
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                {
-                    FieldDelimiter = '|';
-                    return;
-                }
-                FieldDelimiter = value[0];
-            }
         }
     }
 }

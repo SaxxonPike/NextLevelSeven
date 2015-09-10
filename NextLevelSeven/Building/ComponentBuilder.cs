@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using NextLevelSeven.Core;
 using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building
@@ -66,7 +65,7 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
-        /// Get or set the component string.
+        ///     Get or set the component string.
         /// </summary>
         public string Value
         {

@@ -1,62 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NextLevelSeven.Building;
+﻿using NextLevelSeven.Building;
 using NextLevelSeven.Native;
+using NextLevelSeven.Native.Elements;
 
 namespace NextLevelSeven.Core
 {
     /// <summary>
-    /// Factory class. A starting point for all HL7 message related activities.
+    ///     Factory class. A starting point for all HL7 message related activities.
     /// </summary>
-    static public class Message
+    public static class Message
     {
         /// <summary>
-        /// Create a message builder with a default MSH.
+        ///     Create a message builder with a default MSH.
         /// </summary>
         /// <returns>New message builder.</returns>
-        static public IMessageBuilder Build()
+        public static IMessageBuilder Build()
         {
             return new MessageBuilder();
         }
 
         /// <summary>
-        /// Create a message builder, initialized with the specified message data.
+        ///     Create a message builder, initialized with the specified message data.
         /// </summary>
         /// <param name="message">Message data.</param>
         /// <returns>New message builder.</returns>
-        static public IMessageBuilder Build(string message)
+        public static IMessageBuilder Build(string message)
         {
             return new MessageBuilder(message);
         }
 
         /// <summary>
-        /// Create a message builder, initialized with the specified message.
+        ///     Create a message builder, initialized with the specified message.
         /// </summary>
         /// <param name="message">Message data.</param>
         /// <returns>New message builder.</returns>
-        static public IMessageBuilder Build(INativeMessage message)
+        public static IMessageBuilder Build(INativeMessage message)
         {
             return new MessageBuilder(message);
         }
 
         /// <summary>
-        /// Create a new message with a default MSH.
+        ///     Create a new message with a default MSH.
         /// </summary>
         /// <returns>New message.</returns>
-        static public INativeMessage Create()
+        public static INativeMessage Create()
         {
             return new NativeMessage();
         }
 
         /// <summary>
-        /// Create a new message, initialized with the specified message data.
+        ///     Create a new message, initialized with the specified message data.
         /// </summary>
         /// <param name="message">Message data.</param>
         /// <returns>New message builder.</returns>
-        static public INativeMessage Create(string message)
+        public static INativeMessage Create(string message)
         {
             return new NativeMessage(message);
         }

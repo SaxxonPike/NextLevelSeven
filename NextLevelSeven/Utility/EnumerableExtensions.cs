@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace NextLevelSeven.Utility
 {
-    static public class EnumerableExtensions
+    public static class EnumerableExtensions
     {
         /// <summary>
-        /// Wrap an IEnumerable around a single item.
+        ///     Wrap an IEnumerable around a single item.
         /// </summary>
         /// <typeparam name="T">Type of item.</typeparam>
         /// <param name="item">Item to wrap.</param>

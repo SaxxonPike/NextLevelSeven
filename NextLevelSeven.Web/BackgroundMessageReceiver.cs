@@ -6,7 +6,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using NextLevelSeven.Core;
-using NextLevelSeven.MessageGeneration;
+using NextLevelSeven.Generators;
 using NextLevelSeven.Native;
 using NextLevelSeven.Streaming;
 
@@ -17,6 +17,11 @@ namespace NextLevelSeven.Web
     /// </summary>
     public class BackgroundMessageReceiver : BackgroundTransportBase
     {
+        /// <summary>
+        ///     Receiver configuration.
+        /// </summary>
+        public readonly MessageReceiverConfiguration Configuration;
+
         /// <summary>
         ///     Create a receiver and begin listening on the specified port for HL7v2 over HTTP requests. Facility and Application
         ///     fields are automatically populated.
@@ -56,11 +61,6 @@ namespace NextLevelSeven.Web
         private HttpListener Listener { get; set; }
 
         /// <summary>
-        ///     Receiver configuration.
-        /// </summary>
-        public readonly MessageReceiverConfiguration Configuration;
-
-        /// <summary>
         ///     Event that is invoked whenever a message is accepted as valid.
         /// </summary>
         public event MessageTransportEventHandler MessageAccepted;
@@ -78,7 +78,7 @@ namespace NextLevelSeven.Web
         /// <summary>
         ///     Main method for the receiver. This runs on a separate thread.
         /// </summary>
-        override protected async void BackgroundMessageThreadMain()
+        protected override async void BackgroundMessageThreadMain()
         {
             var config = Configuration;
             var listener = new HttpListener();

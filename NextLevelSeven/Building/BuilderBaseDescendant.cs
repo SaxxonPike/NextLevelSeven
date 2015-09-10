@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NextLevelSeven.Core;
-
-namespace NextLevelSeven.Building
+﻿namespace NextLevelSeven.Building
 {
     /// <summary>
-    /// Base class for builders that are not root level.
+    ///     Base class for builders that are not root level.
     /// </summary>
-    abstract internal class BuilderBaseDescendant : BuilderBase
+    internal abstract class BuilderBaseDescendant : BuilderBase
     {
         /// <summary>
-        /// Initialize the message builder base class.
+        ///     Get the ancestor builder.
+        /// </summary>
+        private readonly BuilderBase _ancestor;
+
+        /// <summary>
+        ///     Initialize the message builder base class.
         /// </summary>
         /// <param name="ancestor">Ancestor from which configuration will be obtained.</param>
         internal BuilderBaseDescendant(BuilderBase ancestor)
@@ -23,12 +21,7 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
-        /// Get the ancestor builder.
-        /// </summary>
-        private readonly BuilderBase _ancestor;
-
-        /// <summary>
-        /// Get or set the component delimiter character.
+        ///     Get or set the component delimiter character.
         /// </summary>
         public override char ComponentDelimiter
         {
@@ -37,7 +30,7 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
-        /// Get or set the escape delimiter character.
+        ///     Get or set the escape delimiter character.
         /// </summary>
         public override char EscapeDelimiter
         {
@@ -46,7 +39,7 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
-        /// Get or set the field delimiter character.
+        ///     Get or set the field delimiter character.
         /// </summary>
         public override char FieldDelimiter
         {
@@ -55,7 +48,7 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
-        /// Get or set the repetition delimiter character.
+        ///     Get or set the repetition delimiter character.
         /// </summary>
         public override char RepetitionDelimiter
         {
@@ -64,7 +57,7 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
-        /// Get or set the subcomponent delimiter character.
+        ///     Get or set the subcomponent delimiter character.
         /// </summary>
         public override char SubcomponentDelimiter
         {

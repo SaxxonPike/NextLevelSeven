@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NextLevelSeven.Building
+﻿namespace NextLevelSeven.Building
 {
     public interface IFieldBuilder : IBuilder
     {
@@ -100,6 +94,5 @@ namespace NextLevelSeven.Building
         /// <returns>This IFieldBuilder, for chaining purposes.</returns>
         IFieldBuilder Subcomponents(int repetition, int componentIndex, int startIndex,
             params string[] subcomponents);
-
     }
 }

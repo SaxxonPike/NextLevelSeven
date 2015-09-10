@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NextLevelSeven.Building
+﻿namespace NextLevelSeven.Building
 {
     public interface IRepetitionBuilder : IBuilder
     {
@@ -39,7 +33,7 @@ namespace NextLevelSeven.Building
         IRepetitionBuilder Components(int startIndex, params string[] components);
 
         /// <summary>
-        /// Set a field repetition's value.
+        ///     Set a field repetition's value.
         /// </summary>
         /// <param name="value"></param>
         /// <returns>This IRepetitionBuilder, for chaining purposes.</returns>

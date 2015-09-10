@@ -12,7 +12,8 @@ namespace NextLevelSeven.Streaming
         /// <summary>
         ///     Create an HL7 stream exception.
         /// </summary>
-        public MessageStreamException(ErrorCode code) : base(ErrorMessages.Get(code))
+        internal MessageStreamException(ErrorCode code)
+            : base(ErrorMessages.Get(code))
         {
         }
     }

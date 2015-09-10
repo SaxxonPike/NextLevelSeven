@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NextLevelSeven.MessageGeneration;
+using NextLevelSeven.Generators;
 
 namespace NextLevelSeven.Test.MessageGeneration
 {
