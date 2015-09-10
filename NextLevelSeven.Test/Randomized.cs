@@ -3,31 +3,31 @@ using System.Text;
 
 namespace NextLevelSeven.Test
 {
-    static public class Randomized
+    public static class Randomized
     {
         private static readonly Random Rng = new Random();
 
-        static public int Number()
+        public static int Number()
         {
             return Rng.Next(int.MaxValue);
         }
 
-        static public int Number(int maxExclusiveValue)
+        public static int Number(int maxExclusiveValue)
         {
             return Rng.Next(maxExclusiveValue);
         }
 
-        static public int Number(int minInclusiveValue, int maxExclusiveValue)
+        public static int Number(int minInclusiveValue, int maxExclusiveValue)
         {
             return Rng.Next(minInclusiveValue, maxExclusiveValue);
         }
 
-        static public string String()
+        public static string String()
         {
             return Guid.NewGuid().ToString();
         }
 
-        static public string String(int length)
+        public static string String(int length)
         {
             if (length <= 0)
             {
@@ -42,42 +42,42 @@ namespace NextLevelSeven.Test
             return builder.ToString().Substring(0, length);
         }
 
-        static public string StringCaps()
+        public static string StringCaps()
         {
             return String().ToUpperInvariant().Replace('-', 'A');
         }
 
-        static public string StringCaps(int length)
+        public static string StringCaps(int length)
         {
             return String(length).ToUpperInvariant().Replace('-', 'A');
         }
 
-        static public string StringLetters()
+        public static string StringLetters()
         {
             return StringLetters(16);
         }
 
-        static public string StringLetters(int length)
+        public static string StringLetters(int length)
         {
             var builder = new StringBuilder();
             for (var i = 0; i < length; i++)
             {
-                builder.Append((char)Number(0x41, 0x41 + 26));
+                builder.Append((char) Number(0x41, 0x41 + 26));
             }
             return builder.ToString();
         }
 
-        static public string StringNumbers()
+        public static string StringNumbers()
         {
             return StringNumbers(16);
         }
 
-        static public string StringNumbers(int length)
+        public static string StringNumbers(int length)
         {
             var builder = new StringBuilder();
             for (var i = 0; i < length; i++)
             {
-                builder.Append((char)Number(0x30, 0x30 + 10));
+                builder.Append((char) Number(0x30, 0x30 + 10));
             }
             return builder.ToString();
         }

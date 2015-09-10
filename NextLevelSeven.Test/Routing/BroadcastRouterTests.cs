@@ -24,7 +24,7 @@ namespace NextLevelSeven.Test.Routing
         [TestMethod]
         public void BroadcastRouter_CanBeInitializedWithRoutesAsEnumerable()
         {
-            var router = new BroadcastRouter(new IRouter[] { new NullRouter(true), new NullRouter(false) }.AsEnumerable());
+            var router = new BroadcastRouter(new IRouter[] {new NullRouter(true), new NullRouter(false)}.AsEnumerable());
             Assert.AreEqual(2, router.Routers.Count, "There should be two routers.");
         }
 

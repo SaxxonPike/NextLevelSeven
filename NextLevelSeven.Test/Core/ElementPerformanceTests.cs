@@ -16,10 +16,7 @@ namespace NextLevelSeven.Test.Core
         {
             var testString = Randomized.String();
             var message = Message.Create();
-            var time = Measure.ExecutionTime(() =>
-            {
-                message[HighIndex].Value = testString;
-            });
+            var time = Measure.ExecutionTime(() => { message[HighIndex].Value = testString; });
             Assert.AreEqual(testString, message[HighIndex].Value);
             AssertTime.IsWithin(1000, time);
         }
@@ -29,10 +26,7 @@ namespace NextLevelSeven.Test.Core
         {
             var testString = Randomized.String();
             var message = Message.Create();
-            var time = Measure.ExecutionTime(() =>
-            {
-                message[1][HighIndex].Value = testString;
-            });
+            var time = Measure.ExecutionTime(() => { message[1][HighIndex].Value = testString; });
             Assert.AreEqual(message[1][HighIndex], testString);
             AssertTime.IsWithin(1000, time);
         }
@@ -42,10 +36,7 @@ namespace NextLevelSeven.Test.Core
         {
             var testString = Randomized.String();
             var message = Message.Create();
-            var time = Measure.ExecutionTime(() =>
-            {
-                message[2][HighIndex].Value = testString;
-            });
+            var time = Measure.ExecutionTime(() => { message[2][HighIndex].Value = testString; });
             Assert.AreEqual(testString, message[2][HighIndex].Value);
             AssertTime.IsWithin(1000, time);
         }
@@ -55,10 +46,7 @@ namespace NextLevelSeven.Test.Core
         {
             var testString = Randomized.String();
             var message = Message.Create();
-            var time = Measure.ExecutionTime(() =>
-            {
-                message[HighIndex][HighIndex].Value = testString;
-            });
+            var time = Measure.ExecutionTime(() => { message[HighIndex][HighIndex].Value = testString; });
             Assert.AreEqual(testString, message[HighIndex][HighIndex].Value);
             AssertTime.IsWithin(2000, time);
         }
@@ -88,7 +76,7 @@ namespace NextLevelSeven.Test.Core
                 var msh = message[1];
                 for (var i = 1; i <= 1000; i++)
                 {
-                    msh[i].Value = "test";                    
+                    msh[i].Value = "test";
                 }
             });
             AssertTime.IsWithin(1000, time);
@@ -101,10 +89,7 @@ namespace NextLevelSeven.Test.Core
             string field = null;
             string value = Randomized.String();
             message[1][HighIndex].Value = value;
-            var time = Measure.ExecutionTime(() =>
-            {
-                field = message[1][HighIndex].Value;
-            });
+            var time = Measure.ExecutionTime(() => { field = message[1][HighIndex].Value; });
             Assert.AreEqual(value, field);
             AssertTime.IsWithin(1000, time);
         }
@@ -115,10 +100,7 @@ namespace NextLevelSeven.Test.Core
             var message = Message.Create();
             string field = null;
             message[1][HighIndex].Value = Randomized.String();
-            var time = Measure.ExecutionTime(() =>
-            {
-                field = message[1][3].Value;
-            });
+            var time = Measure.ExecutionTime(() => { field = message[1][3].Value; });
             Assert.AreEqual(null, field);
             AssertTime.IsWithin(500, time);
         }
@@ -143,10 +125,7 @@ namespace NextLevelSeven.Test.Core
         {
             var message = Message.Create();
             message[1][HighIndex].Value = "test";
-            var time = Measure.ExecutionTime(() =>
-            {
-                message[1][3].Value = "test2";
-            });
+            var time = Measure.ExecutionTime(() => { message[1][3].Value = "test2"; });
             AssertTime.IsWithin(500, time);
         }
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using NextLevelSeven.Core;
 using NextLevelSeven.Core.Codec;
 using NextLevelSeven.Core.Specification;
 using NextLevelSeven.Native;
@@ -13,7 +12,7 @@ namespace NextLevelSeven.Test
     /// <summary>
     ///     A null message that contains nothing. This exists solely to implement IMessage without extra plumbing.
     /// </summary>
-    sealed public class NullMessage : INativeMessage
+    public sealed class NullMessage : INativeMessage
     {
         /// <summary>
         ///     Get the singleton instance of NullMessage.
@@ -106,12 +105,8 @@ namespace NextLevelSeven.Test
             return new NullMessage();
         }
 
-        public INativeElement GetField(int segment, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
-        {
-            return null;
-        }
-
-        public INativeElement GetField(string segmentName, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
+        public INativeElement GetField(int segment, int field = -1, int repetition = -1, int component = -1,
+            int subcomponent = -1)
         {
             return null;
         }
@@ -208,12 +203,20 @@ namespace NextLevelSeven.Test
         {
         }
 
-        public IEnumerable<string> GetValues(int segment = -1, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
+        public IEnumerable<string> GetValues(int segment = -1, int field = -1, int repetition = -1, int component = -1,
+            int subcomponent = -1)
         {
             return Enumerable.Empty<string>();
         }
 
-        public string GetValue(int segment = -1, int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
+        public string GetValue(int segment = -1, int field = -1, int repetition = -1, int component = -1,
+            int subcomponent = -1)
+        {
+            return null;
+        }
+
+        public INativeElement GetField(string segmentName, int field = -1, int repetition = -1, int component = -1,
+            int subcomponent = -1)
         {
             return null;
         }

@@ -3,9 +3,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NextLevelSeven.Test
 {
-    static public class It
+    public static class It
     {
-        static public void Throws<TException>(Action action, string message = null)
+        public static void Throws<TException>(Action action, string message = null)
         {
             try
             {
@@ -20,7 +20,7 @@ namespace NextLevelSeven.Test
                 throw;
             }
 
-            Assert.Fail(message ?? String.Format("Expected exception {0} was not thrown.", typeof(TException).Name));
+            Assert.Fail(message ?? String.Format("Expected exception {0} was not thrown.", typeof (TException).Name));
         }
     }
 }

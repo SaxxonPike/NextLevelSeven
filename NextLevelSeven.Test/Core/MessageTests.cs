@@ -3,7 +3,6 @@ using System.Diagnostics;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
-using NextLevelSeven.Native;
 
 namespace NextLevelSeven.Test.Core
 {
@@ -31,8 +30,10 @@ namespace NextLevelSeven.Test.Core
             var message = Message.Create();
             Assert.AreEqual(1, message.DescendantCount, @"Default message should not contain multiple segments.");
             Assert.AreEqual("MSH", message[1].Type, @"Default message should create an MSH segment.");
-            Assert.AreEqual(@"^~\&", message[1][2].Value, @"Default message should use standard HL7 encoding characters.");
-            Assert.AreEqual("|", message[1][1].Value, @"Default message should use standard HL7 field delimiter character.");
+            Assert.AreEqual(@"^~\&", message[1][2].Value,
+                @"Default message should use standard HL7 encoding characters.");
+            Assert.AreEqual("|", message[1][1].Value,
+                @"Default message should use standard HL7 field delimiter character.");
         }
 
         [TestMethod]
@@ -96,7 +97,8 @@ namespace NextLevelSeven.Test.Core
         {
             var message = Message.Create(ExampleMessages.RepeatingName);
             var pid = message["PID"].First();
-            Assert.AreEqual("Lincoln^Abe~Bro~Dude", pid[5][0].Value, "Retrieving full field data using index 0 returned incorrect data.");
+            Assert.AreEqual("Lincoln^Abe~Bro~Dude", pid[5][0].Value,
+                "Retrieving full field data using index 0 returned incorrect data.");
             Assert.AreEqual("Lincoln^Abe", pid[5][1].Value, "Retrieving first repetition returned incorrect data.");
             Assert.AreEqual("Bro", pid[5][2].Value, "Retrieving second repetition returned incorrect data.");
             Assert.AreEqual("Dude", pid[5][3].Value, "Retrieving third repetition returned incorrect data.");
@@ -106,10 +108,14 @@ namespace NextLevelSeven.Test.Core
         public void Message_RetrievalMethodsAreIdentical()
         {
             var message = Message.Create(ExampleMessages.Standard);
-            Assert.AreEqual(message.GetField(1).Value, message[1].Value, "Retrieval methods differ at the segment level.");
-            Assert.AreEqual(message.GetField(1, 2).Value, message[1][2].Value, "Retrieval methods differ at the field level.");
-            Assert.AreEqual(message.GetField(1, 2, 0).Value, message[1][2][0].Value, "Retrieval methods differ at the repetition level.");
-            Assert.AreEqual(message.GetField(1, 2, 0, 1).Value, message[1][2][0][1].Value, "Retrieval methods differ at the component level.");
+            Assert.AreEqual(message.GetField(1).Value, message[1].Value,
+                "Retrieval methods differ at the segment level.");
+            Assert.AreEqual(message.GetField(1, 2).Value, message[1][2].Value,
+                "Retrieval methods differ at the field level.");
+            Assert.AreEqual(message.GetField(1, 2, 0).Value, message[1][2][0].Value,
+                "Retrieval methods differ at the repetition level.");
+            Assert.AreEqual(message.GetField(1, 2, 0, 1).Value, message[1][2][0][1].Value,
+                "Retrieval methods differ at the component level.");
         }
 
         [TestMethod]
@@ -175,7 +181,7 @@ namespace NextLevelSeven.Test.Core
             var messageString = message.Value;
             var usage = GC.GetTotalMemory(false) - before;
             var overhead = usage - (messageString.Length << 1);
-            var usePerCharacter = (overhead / (messageString.Length << 1));
+            var usePerCharacter = (overhead/(messageString.Length << 1));
             Assert.IsTrue(usePerCharacter < 20);
         }
 

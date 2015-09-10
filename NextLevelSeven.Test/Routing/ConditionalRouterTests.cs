@@ -13,7 +13,11 @@ namespace NextLevelSeven.Test.Routing
         {
             var queried = false;
             var message = Message.Create(ExampleMessages.Standard);
-            var router = new ConditionalRouter(m => { queried = true; return true; }, new NullRouter(true));
+            var router = new ConditionalRouter(m =>
+            {
+                queried = true;
+                return true;
+            }, new NullRouter(true));
             Assert.IsFalse(queried, "Test initialized incorrectly.");
             message.RouteTo(router);
             Assert.IsTrue(queried, "Router was not queried.");
@@ -46,6 +50,5 @@ namespace NextLevelSeven.Test.Routing
             var router = new ConditionalRouter(m => true);
             Assert.IsTrue(message.RouteTo(router), "Router must return True when there is no target router.");
         }
-
     }
 }

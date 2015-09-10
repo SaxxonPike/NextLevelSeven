@@ -13,7 +13,11 @@ namespace NextLevelSeven.Test.Routing
         {
             var queried = false;
             var message = Message.Create(ExampleMessages.Standard);
-            var router = new ConditionalMethodRouter(m => { queried = true; return true; }, m => {});
+            var router = new ConditionalMethodRouter(m =>
+            {
+                queried = true;
+                return true;
+            }, m => { });
             Assert.IsFalse(queried, "Test initialized incorrectly.");
             message.RouteTo(router);
             Assert.IsTrue(queried, "Router was not queried.");

@@ -101,6 +101,5 @@ namespace NextLevelSeven.Test.Streaming
                 Assert.IsTrue(messageStream.Position < messageStream.Length, "MLP text reader read too much data.");
             }
         }
-
     }
 }

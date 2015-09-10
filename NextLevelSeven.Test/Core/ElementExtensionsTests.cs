@@ -14,7 +14,8 @@ namespace NextLevelSeven.Test.Core
             var modifiedMessage = Message.Create(ExampleMessages.Standard);
             modifiedMessage.InsertAfter(2, message[2]);
             Assert.AreEqual(modifiedMessage[3], message[2], "Element insertion (after) failed: duplication didn't work.");
-            Assert.AreEqual(modifiedMessage[4], message[3], "Element insertion (after) failed: shifted segments weren't in order.");
+            Assert.AreEqual(modifiedMessage[4], message[3],
+                "Element insertion (after) failed: shifted segments weren't in order.");
         }
 
         [TestMethod]
@@ -25,8 +26,10 @@ namespace NextLevelSeven.Test.Core
             var message = Message.Create(ExampleMessages.Standard);
             var modifiedMessage = Message.Create(ExampleMessages.Standard);
             modifiedMessage[1].InsertAfter(testSegment);
-            Assert.AreEqual(modifiedMessage[2], testSegment, "Text insertion (after) failed: expected string didn't appear in modified message.");
-            Assert.AreEqual(modifiedMessage[3], message[2], "Text insertion (after) failed: shifted segments weren't in order.");
+            Assert.AreEqual(modifiedMessage[2], testSegment,
+                "Text insertion (after) failed: expected string didn't appear in modified message.");
+            Assert.AreEqual(modifiedMessage[3], message[2],
+                "Text insertion (after) failed: shifted segments weren't in order.");
         }
     }
 }

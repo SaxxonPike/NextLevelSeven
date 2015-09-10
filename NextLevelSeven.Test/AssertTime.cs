@@ -2,9 +2,9 @@
 
 namespace NextLevelSeven.Test
 {
-    static public class AssertTime
+    public static class AssertTime
     {
-        static public void IsWithin(long tolerance, long measured)
+        public static void IsWithin(long tolerance, long measured)
         {
             if (measured > tolerance)
             {

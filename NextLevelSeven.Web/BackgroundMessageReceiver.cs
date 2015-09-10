@@ -6,7 +6,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using NextLevelSeven.Core;
-using NextLevelSeven.Generators;
+using NextLevelSeven.Generation;
 using NextLevelSeven.Native;
 using NextLevelSeven.Streaming;
 

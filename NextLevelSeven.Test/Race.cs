@@ -4,9 +4,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NextLevelSeven.Test
 {
-    static public class Race
+    public static class Race
     {
-        static public void ExecutionTime(Action nl7Action, Action otherAction)
+        public static void ExecutionTime(Action nl7Action, Action otherAction)
         {
             Debug.WriteLine("Racing NL7...");
 
@@ -24,10 +24,10 @@ namespace NextLevelSeven.Test
                 otherTime = long.MaxValue;
             }
 
-            Assert.IsTrue(nl7Time < otherTime);            
+            Assert.IsTrue(nl7Time < otherTime);
         }
 
-        static public void ExecutionTime(Action<string> nl7Action, Action<string> otherAction, string data)
+        public static void ExecutionTime(Action<string> nl7Action, Action<string> otherAction, string data)
         {
             Debug.WriteLine("Racing NL7...");
 

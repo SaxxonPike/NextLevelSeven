@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Building;
 using NextLevelSeven.Core;
-using NextLevelSeven.Native;
 
 namespace NextLevelSeven.Test.Building
 {
@@ -248,7 +247,7 @@ namespace NextLevelSeven.Test.Building
             var messageString = message.Value;
             var usage = GC.GetTotalMemory(false) - before;
             var overhead = usage - (messageString.Length << 1);
-            var usePerCharacter = (overhead / (messageString.Length << 1));
+            var usePerCharacter = (overhead/(messageString.Length << 1));
             Assert.IsTrue(usePerCharacter < 10);
         }
 
@@ -291,7 +290,7 @@ namespace NextLevelSeven.Test.Building
         public void MessageBuilder_ContainsSegmentBuilders()
         {
             var builder = Message.Build();
-            Assert.IsInstanceOfType(builder[1], typeof(ISegmentBuilder));
+            Assert.IsInstanceOfType(builder[1], typeof (ISegmentBuilder));
         }
 
         [TestMethod]
@@ -373,7 +372,7 @@ namespace NextLevelSeven.Test.Building
             var id2 = Randomized.String();
             var builder = Message.Build(string.Format("MSH|^~\\&|{0}^{1}", id1, id2));
             builder.Field(1, 2, "$~\\&");
-            Assert.AreEqual(string.Format("MSH|$~\\&|{0}${1}", id1, id2), builder.Value);            
+            Assert.AreEqual(string.Format("MSH|$~\\&|{0}${1}", id1, id2), builder.Value);
         }
 
         [TestMethod]

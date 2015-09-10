@@ -26,7 +26,7 @@ namespace NextLevelSeven.Test.Core
             var fieldCount = segment.DescendantCount;
             segment[fieldCount + 2].Value = "test";
             Assert.AreEqual(fieldCount + 2, segment.DescendantCount,
-                @"Number of elements after appending at the end is incorrect.");            
+                @"Number of elements after appending at the end is incorrect.");
         }
 
         [TestMethod]
@@ -58,7 +58,8 @@ namespace NextLevelSeven.Test.Core
         {
             var field = Message.Create(ExampleMessages.VersionlessMessage)[1][7];
             field.Value = "20130528073829";
-            Assert.AreEqual(new DateTime(2013, 05, 28, 07, 38, 29), field.As.DateTime, "DateTime was not converted correctly.");
+            Assert.AreEqual(new DateTime(2013, 05, 28, 07, 38, 29), field.As.DateTime,
+                "DateTime was not converted correctly.");
             field.Value = "201305280738";
             Assert.AreEqual(new DateTime(2013, 05, 28, 07, 38, 00), field.As.DateTime, "Second didn't default to zero.");
             field.Value = "2013052807";
@@ -70,7 +71,8 @@ namespace NextLevelSeven.Test.Core
             field.Value = "2013";
             Assert.AreEqual(new DateTime(2013, 01, 01, 00, 00, 00), field.As.DateTime, "Month didn't default to one.");
             field.Value = "201";
-            It.Throws<ArgumentException>(() => Assert.IsNotNull(field.As.DateTime), "Conversion must fail with too short of a year.");
+            It.Throws<ArgumentException>(() => Assert.IsNotNull(field.As.DateTime),
+                "Conversion must fail with too short of a year.");
             field.Value = "";
             Assert.IsNull(field.As.DateTime, "Empty or null input values must return null.");
         }
@@ -104,14 +106,16 @@ namespace NextLevelSeven.Test.Core
         public void Element_WithNoSignificantDescendants_ShouldNotClaimToHaveSignificantDescendants()
         {
             var message = Message.Create();
-            Assert.IsFalse(message[1][3].HasSignificantDescendants, @"Element claims to have descendants when it should not.");
+            Assert.IsFalse(message[1][3].HasSignificantDescendants,
+                @"Element claims to have descendants when it should not.");
         }
 
         [TestMethod]
         public void Element_WithSignificantDescendants_ShouldClaimToHaveSignificantDescendants()
         {
             var message = Message.Create();
-            Assert.IsTrue(message[1].HasSignificantDescendants, @"Segment claims to not have descendants when it should.");
+            Assert.IsTrue(message[1].HasSignificantDescendants,
+                @"Segment claims to not have descendants when it should.");
         }
 
         [TestMethod]

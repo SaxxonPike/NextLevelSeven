@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NextLevelSeven.Core;
-using NextLevelSeven.Generators;
+using NextLevelSeven.Generation;
 using NextLevelSeven.Native;
 
 namespace NextLevelSeven.Test.MessageGeneration
@@ -9,8 +8,8 @@ namespace NextLevelSeven.Test.MessageGeneration
     [TestClass]
     public class MessageGeneratorTests
     {
-        private INativeMessage _message;
         private string _controlId;
+        private INativeMessage _message;
         private string _processingId;
         private string _receivingApplication;
         private string _receivingFacility;
@@ -61,7 +60,8 @@ namespace NextLevelSeven.Test.MessageGeneration
         [TestMethod]
         public void MessageGenerator_GeneratesReceivingApplication()
         {
-            Assert.AreEqual(_receivingApplication, _message.Receiver.Application, @"Receiving Application doesn't match.");
+            Assert.AreEqual(_receivingApplication, _message.Receiver.Application,
+                @"Receiving Application doesn't match.");
         }
 
         [TestMethod]

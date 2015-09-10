@@ -21,7 +21,8 @@ namespace NextLevelSeven.Test.Core
         {
             var message = Message.Create(ExampleMessages.MultipleObr);
             var splits = message.SplitSegments("OBR");
-            Assert.AreEqual(message["OBR"].Count(), splits.Count(), "OBR split count doesn't match number of OBR segments.");
+            Assert.AreEqual(message["OBR"].Count(), splits.Count(),
+                "OBR split count doesn't match number of OBR segments.");
         }
 
         [TestMethod]
@@ -29,7 +30,8 @@ namespace NextLevelSeven.Test.Core
         {
             var message = Message.Create(ExampleMessages.MultipleObr);
             var splits = message.SplitSegments("OBR", true);
-            Assert.AreEqual(message["OBR"].Count() + 1, splits.Count(), "OBR split count (with extras) doesn't match number of OBR segments + 1.");
+            Assert.AreEqual(message["OBR"].Count() + 1, splits.Count(),
+                "OBR split count (with extras) doesn't match number of OBR segments + 1.");
         }
     }
 }

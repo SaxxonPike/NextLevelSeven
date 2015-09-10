@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
-using NextLevelSeven.Native;
 using NextLevelSeven.Routing;
 
 namespace NextLevelSeven.Test.Routing
@@ -13,7 +12,8 @@ namespace NextLevelSeven.Test.Routing
         public void RouteFinder_CanBeInitializedWithNoRoutes()
         {
             var routeFinder = new RouteFinder();
-            Assert.AreEqual(0, routeFinder.Routers.Count, "There should be zero routes when initializing with no parameters.");
+            Assert.AreEqual(0, routeFinder.Routers.Count,
+                "There should be zero routes when initializing with no parameters.");
         }
 
         [TestMethod]
@@ -26,7 +26,7 @@ namespace NextLevelSeven.Test.Routing
         [TestMethod]
         public void RouteFinder_CanBeInitializedWithEnumerableRoutes()
         {
-            var routeFinder = new RouteFinder(new IRouter[] { new NullRouter(true), new NullRouter(false) }.AsEnumerable());
+            var routeFinder = new RouteFinder(new IRouter[] {new NullRouter(true), new NullRouter(false)}.AsEnumerable());
             Assert.AreEqual(2, routeFinder.Routers.Count, "There should be two routes.");
         }
 

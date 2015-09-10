@@ -1,20 +1,19 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
-using NextLevelSeven.Native;
 
 namespace NextLevelSeven.Test.Core
 {
     [TestClass]
     public class EscapeTests
     {
-        static void Test_Escape(string expected, string test)
+        private static void Test_Escape(string expected, string test)
         {
             var message = Message.Create();
             Assert.AreEqual(expected, message.Escape(test));
         }
 
-        static void Test_SingleDelimiterEscape(string delimiter, string escapeCode)
+        private static void Test_SingleDelimiterEscape(string delimiter, string escapeCode)
         {
             var leftString = Randomized.String();
             var middleString = Randomized.String();
@@ -103,7 +102,5 @@ namespace NextLevelSeven.Test.Core
             var message = String.Format("{0}\\CABCD\\{1}", Randomized.String(), Randomized.String());
             Test_Escape(message, message);
         }
-
-
     }
 }

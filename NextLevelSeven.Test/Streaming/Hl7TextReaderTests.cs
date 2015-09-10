@@ -71,7 +71,7 @@ namespace NextLevelSeven.Test.Streaming
                         using (var mem = new MemoryStream(rawMessage))
                         {
                             fileCount++;
-                            byteCount += (int)mem.Length;
+                            byteCount += (int) mem.Length;
                             var reader = new MessageTextReader(mem);
                             while (true)
                             {

@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NextLevelSeven.Core;
-using NextLevelSeven.Generators;
+using NextLevelSeven.Generation;
 using NextLevelSeven.Native;
 
 namespace NextLevelSeven.Test.MessageGeneration
@@ -20,7 +19,7 @@ namespace NextLevelSeven.Test.MessageGeneration
             _type = Randomized.StringCaps(3);
             _trigger = Randomized.StringCaps(3);
             _controlId = Randomized.String();
-            _message = MessageGenerator.Generate(_type, _trigger, _controlId);            
+            _message = MessageGenerator.Generate(_type, _trigger, _controlId);
         }
 
         [TestMethod]

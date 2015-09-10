@@ -1,13 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
+﻿using System;
 using System.Diagnostics;
 using System.Threading;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NextLevelSeven.Test
 {
-    static public class Measure
+    public static class Measure
     {
-        static public int ExecutionIterations(Action action, long timeLimit)
+        public static int ExecutionIterations(Action action, long timeLimit)
         {
             var iterations = 0;
             var sw = new Stopwatch();
@@ -21,7 +21,7 @@ namespace NextLevelSeven.Test
             return iterations;
         }
 
-        static public long ExecutionTime(Action action)
+        public static long ExecutionTime(Action action)
         {
             var sw = new Stopwatch();
             sw.Start();
@@ -31,7 +31,7 @@ namespace NextLevelSeven.Test
             return sw.ElapsedMilliseconds;
         }
 
-        static public long ExecutionTime(Action action, int iterations)
+        public static long ExecutionTime(Action action, int iterations)
         {
             Debug.WriteLine("Measuring {0} iterations.", iterations);
             return ExecutionTime(() =>
@@ -44,17 +44,17 @@ namespace NextLevelSeven.Test
             });
         }
 
-        static public long ExecutionTime(Action<string> action, string data)
+        public static long ExecutionTime(Action<string> action, string data)
         {
             var sw = new Stopwatch();
             sw.Start();
             action(data);
             sw.Stop();
             Debug.WriteLine("Executed in {0}ms", sw.ElapsedMilliseconds);
-            return sw.ElapsedMilliseconds;            
+            return sw.ElapsedMilliseconds;
         }
 
-        static public long ExecutionTime(Action<string> action, string data, int iterations)
+        public static long ExecutionTime(Action<string> action, string data, int iterations)
         {
             Debug.WriteLine("Measuring {0} iterations.", iterations);
             return ExecutionTime(() =>
@@ -67,7 +67,7 @@ namespace NextLevelSeven.Test
             });
         }
 
-        static public long WaitTime(Func<bool> condition, long timeout, string message)
+        public static long WaitTime(Func<bool> condition, long timeout, string message)
         {
             var sw = new Stopwatch();
             while (!condition())

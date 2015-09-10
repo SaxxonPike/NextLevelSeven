@@ -140,7 +140,7 @@ namespace NextLevelSeven.Native.Elements
             }
         }
 
-        virtual public INativeMessage Message
+        public virtual INativeMessage Message
         {
             get
             {

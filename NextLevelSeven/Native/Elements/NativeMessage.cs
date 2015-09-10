@@ -181,7 +181,7 @@ namespace NextLevelSeven.Native.Elements
         /// <summary>
         ///     Get the root message for this element.
         /// </summary>
-        override public INativeMessage Message
+        public override INativeMessage Message
         {
             get { return this; }
         }

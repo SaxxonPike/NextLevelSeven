@@ -2,7 +2,7 @@
 
 namespace NextLevelSeven.Test
 {
-    static public class ExampleMessages
+    public static class ExampleMessages
     {
         public static readonly string A04 =
             @"MSH|^~\&|SENDER|DEV|RECEIVER|SYSTEM|20120731102052||ADT^A04|20731172052000155374|P|2.2|18

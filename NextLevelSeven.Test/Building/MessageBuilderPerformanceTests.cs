@@ -1,6 +1,5 @@
 ﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NextLevelSeven.Building;
 using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Test.Building
@@ -12,7 +11,8 @@ namespace NextLevelSeven.Test.Building
         public void MessageBuilder_Timely_CanBuildSmallMessages()
         {
             var testString = "ZZZ|" + Randomized.String();
-            var expectedString = string.Format("MSH|^~\\&\xD" + string.Concat(Enumerable.Repeat("{0}\xD", 8)) + "{0}", testString);
+            var expectedString = string.Format("MSH|^~\\&\xD" + string.Concat(Enumerable.Repeat("{0}\xD", 8)) + "{0}",
+                testString);
             var time = Measure.ExecutionTime(() =>
             {
                 var builder = Message.Build();
@@ -29,7 +29,8 @@ namespace NextLevelSeven.Test.Building
         public void MessageBuilder_Timely_CanBuildLargeMessages()
         {
             var testString = "ZZZ|" + Randomized.String();
-            var expectedString = string.Format("MSH|^~\\&\xD" + string.Concat(Enumerable.Repeat("{0}\xD", 98)) + "{0}", testString);
+            var expectedString = string.Format("MSH|^~\\&\xD" + string.Concat(Enumerable.Repeat("{0}\xD", 98)) + "{0}",
+                testString);
             var time = Measure.ExecutionTime(() =>
             {
                 var builder = Message.Build();

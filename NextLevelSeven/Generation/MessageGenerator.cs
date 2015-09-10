@@ -3,7 +3,7 @@ using NextLevelSeven.Core;
 using NextLevelSeven.Native;
 using NextLevelSeven.Native.Elements;
 
-namespace NextLevelSeven.Generators
+namespace NextLevelSeven.Generation
 {
     /// <summary>
     ///     A generic message generator for HL7v2 messages, which fills in most basic information when creating new messages.

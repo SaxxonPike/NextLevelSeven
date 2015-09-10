@@ -9,7 +9,7 @@ namespace NextLevelSeven.Test.Diagnostics
         [TestInitialize]
         public void ErrorMessages_Initializer()
         {
-            ErrorMessages.SetLanguage("en");            
+            ErrorMessages.SetLanguage("en");
         }
 
         [TestCleanup]
@@ -32,7 +32,8 @@ namespace NextLevelSeven.Test.Diagnostics
             ErrorMessages.SetLanguage("de");
             var germanMessage = ErrorMessages.Get(ErrorCode.DoNotTranslateThisMessageForTestingPurposes);
             Assert.AreEqual(message, germanMessage, @"German did not fall back to English.");
-            Assert.AreNotEqual(message, ErrorMessages.Get(ErrorCode.Unspecified), @"German and English returned the same error string.");
+            Assert.AreNotEqual(message, ErrorMessages.Get(ErrorCode.Unspecified),
+                @"German and English returned the same error string.");
         }
 
         [TestMethod]
@@ -41,7 +42,8 @@ namespace NextLevelSeven.Test.Diagnostics
             ErrorMessages.SetLanguage("de");
             var message = ErrorMessages.Get(ErrorCode.Unspecified);
             ErrorMessages.SetLanguage();
-            Assert.AreNotEqual(message, ErrorMessages.Get(ErrorCode.Unspecified), @"German and English returned the same error string.");
+            Assert.AreNotEqual(message, ErrorMessages.Get(ErrorCode.Unspecified),
+                @"German and English returned the same error string.");
         }
     }
 }

@@ -22,6 +22,7 @@ namespace NextLevelSeven.Building
         ///     Create a field builder with the specified encoding configuration.
         /// </summary>
         /// <param name="builder">Ancestor builder.</param>
+        /// <param name="onTypeFieldChangedHandler">Method to call when the type field has changed.</param>
         internal TypeFieldBuilder(BuilderBase builder, Action<string, string> onTypeFieldChangedHandler)
             : base(builder)
         {
