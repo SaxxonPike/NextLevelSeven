@@ -375,5 +375,19 @@ namespace NextLevelSeven.Building
         {
             return Value;
         }
+
+        public string GetValue(int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            return field < 0
+                ? Value
+                : this[field].GetValue(repetition, component, subcomponent);
+        }
+
+        public IEnumerable<string> GetValues(int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            return field < 0
+                ? Values
+                : this[field].GetValues(repetition, component, subcomponent);
+        }
     }
 }

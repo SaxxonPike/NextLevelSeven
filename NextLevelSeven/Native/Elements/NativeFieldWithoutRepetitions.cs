@@ -1,11 +1,12 @@
-﻿using NextLevelSeven.Core;
+﻿using System.Collections.Generic;
+using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Native.Elements
 {
     /// <summary>
     ///     Represents a field that does not use a repetition delimiter (repeats are considered part of the value.)
     /// </summary>
-    internal sealed class NativeFieldWithoutRepetitions : NativeElement
+    internal sealed class NativeFieldWithoutRepetitions : NativeElement, INativeField
     {
         private readonly EncodingConfiguration _encodingConfigurationOverride;
 
@@ -42,7 +43,36 @@ namespace NextLevelSeven.Native.Elements
 
         public override INativeElement GetDescendant(int index)
         {
-            return new NativeRepetition(this, index - 1, index);
+            return GetRepetition(index);
+        }
+
+        private INativeRepetition GetRepetition(int index)
+        {
+            return new NativeRepetition(this, index - 1, index);            
+        }
+
+        public string GetValue(int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            return repetition < 0
+                ? Value
+                : GetRepetition(repetition).GetValue(component, subcomponent);
+        }
+
+        public IEnumerable<string> GetValues(int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            return repetition < 0
+                ? Values
+                : GetRepetition(repetition).GetValues(component, subcomponent);
+        }
+
+        public new INativeRepetition this[int index]
+        {
+            get { return GetRepetition(index); }
+        }
+
+        INativeField INativeField.CloneDetached()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

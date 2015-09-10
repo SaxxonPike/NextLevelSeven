@@ -3,6 +3,9 @@ using NextLevelSeven.Native;
 
 namespace NextLevelSeven.Building
 {
+    /// <summary>
+    ///     Interface for a top-level message element builder.
+    /// </summary>
     public interface IMessageBuilder : IMessage, IBuilder
     {
         /// <summary>

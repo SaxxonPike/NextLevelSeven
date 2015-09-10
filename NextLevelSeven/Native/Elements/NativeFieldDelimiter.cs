@@ -1,12 +1,13 @@
 ﻿using NextLevelSeven.Core;
 using NextLevelSeven.Native.Dividers;
+using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Native.Elements
 {
     /// <summary>
     ///     Represents the special MSH-1 field, which contains the field delimiter for the rest of the segment.
     /// </summary>
-    internal sealed class NativeFieldDelimiter : NativeElement
+    internal sealed class NativeFieldDelimiter : NativeElement, INativeField
     {
         public NativeFieldDelimiter(NativeElement ancestor)
             : base(ancestor, 0, 1)
@@ -69,6 +70,26 @@ namespace NextLevelSeven.Native.Elements
         public override string ToString()
         {
             return Value;
+        }
+
+        public string GetValue(int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            return Value;
+        }
+
+        public System.Collections.Generic.IEnumerable<string> GetValues(int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            return Value.Yield();
+        }
+
+        public new INativeRepetition this[int index]
+        {
+            get { return new NativeRepetition(this, 0, index); }
+        }
+
+        INativeField INativeField.CloneDetached()
+        {
+            return new NativeField(Value, EncodingConfiguration);
         }
     }
 }

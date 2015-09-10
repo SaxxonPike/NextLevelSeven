@@ -2,6 +2,10 @@
 
 namespace NextLevelSeven.Core.Codec
 {
+    /// <summary>
+    ///     Get or set elements via an HL7 data value codec.
+    /// </summary>
+    /// <typeparam name="TDecoded"></typeparam>
     public interface IIndexedCodec<TDecoded> : IEnumerable<TDecoded>
     {
         /// <summary>

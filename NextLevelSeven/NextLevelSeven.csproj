@@ -72,6 +72,10 @@
     <Compile Include="Core\ISegment.cs" />
     <Compile Include="Core\ISubcomponent.cs" />
     <Compile Include="Core\Message.cs" />
+    <Compile Include="Native\INativeComponent.cs" />
+    <Compile Include="Native\INativeField.cs" />
+    <Compile Include="Native\INativeRepetition.cs" />
+    <Compile Include="Native\INativeSubcomponent.cs" />
     <Compile Include="Native\NativeElementExtensions.cs" />
     <Compile Include="Core\EncodingConfigurationExtensions.cs" />
     <Compile Include="Core\Default.cs" />

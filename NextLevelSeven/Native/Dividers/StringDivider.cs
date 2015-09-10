@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace NextLevelSeven.Native.Dividers
 {
@@ -30,7 +32,7 @@ namespace NextLevelSeven.Native.Dividers
         /// </summary>
         /// <param name="index">Index of the string to get or set.</param>
         /// <returns>Substring.</returns>
-        public override string this[int index]
+        override public string this[int index]
         {
             get
             {
@@ -45,35 +47,37 @@ namespace NextLevelSeven.Native.Dividers
                 var d = Divisions[index];
                 return new string(ValueChars, d.Offset, d.Length);
             }
-            set
-            {
-                if (index < 0)
-                {
-                    return;
-                }
+            set { SetValue(index, value); }
+        }
 
-                List<StringDivision> divisions;
-                var paddedString = StringDividerOperations.GetPaddedString(ValueChars, index, Delimiter, out divisions);
-                if (index >= divisions.Count)
-                {
-                    Initialize((index >= divisions.Count)
-                        ? StringDividerOperations.JoinCharsWithDelimiter(Delimiter, paddedString,
-                            StringDividerOperations.GetChars(value))
-                        : StringDividerOperations.GetChars(value));
-                }
-                else
-                {
-                    var d = divisions[index];
-                    Initialize(StringDividerOperations.GetSplicedString(paddedString, d.Offset, d.Length,
-                        StringDividerOperations.GetChars(value)));
-                }
+        private void SetValue(int index, string value)
+        {
+            if (index < 0)
+            {
+                return;
             }
+
+            List<StringDivision> divisions;
+            var paddedString = StringDividerOperations.GetPaddedString(ValueChars, index, Delimiter, out divisions);
+            if (index >= divisions.Count)
+            {
+                Initialize((index >= divisions.Count)
+                    ? StringDividerOperations.JoinCharsWithDelimiter(Delimiter, paddedString,
+                        StringDividerOperations.GetChars(value))
+                    : StringDividerOperations.GetChars(value));
+            }
+            else
+            {
+                var d = divisions[index];
+                Initialize(StringDividerOperations.GetSplicedString(paddedString, d.Offset, d.Length,
+                    StringDividerOperations.GetChars(value)));
+            }            
         }
 
         /// <summary>
         ///     String that is operated upon, as a character array.
         /// </summary>
-        public override char[] BaseValue
+        override public char[] BaseValue
         {
             get { return ValueChars; }
         }
@@ -81,15 +85,25 @@ namespace NextLevelSeven.Native.Dividers
         /// <summary>
         ///     Get the number of divisions.
         /// </summary>
-        public override int Count
+        override public int Count
         {
             get { return Divisions.Count; }
         }
 
         /// <summary>
+        /// Delete a division of text.
+        /// </summary>
+        /// <param name="division"></param>
+        override public void Delete(StringDivision division)
+        {
+            ValueChars = StringDividerOperations.GetSplicedString(ValueChars, division.Offset, division.Length,
+                new char[0]);
+        }
+
+        /// <summary>
         ///     Get the division offsets in the string.
         /// </summary>
-        public override IReadOnlyList<StringDivision> Divisions
+        override public IReadOnlyList<StringDivision> Divisions
         {
             get
             {
@@ -101,7 +115,7 @@ namespace NextLevelSeven.Native.Dividers
         /// <summary>
         ///     Calculated value of all divisions separated by delimiters.
         /// </summary>
-        public override string Value
+        override public string Value
         {
             get { return new string(ValueChars); }
             set { ValueChars = StringDividerOperations.GetChars(value); }
@@ -110,20 +124,10 @@ namespace NextLevelSeven.Native.Dividers
         /// <summary>
         ///     Calculated value of all divisions separated by delimiters, as chars.
         /// </summary>
-        public override char[] ValueChars
+        override public char[] ValueChars
         {
             get { return _valueChars; }
             set { Initialize(value); }
-        }
-
-        /// <summary>
-        ///     Delete a division of text.
-        /// </summary>
-        /// <param name="division"></param>
-        public override void Delete(StringDivision division)
-        {
-            ValueChars = StringDividerOperations.GetSplicedString(ValueChars, division.Offset, division.Length,
-                new char[0]);
         }
 
         /// <summary>

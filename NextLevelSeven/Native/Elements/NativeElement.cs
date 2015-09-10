@@ -17,6 +17,14 @@ namespace NextLevelSeven.Native.Elements
         private IStringDivider _descendantDivider;
         private bool _descendantDividerInitialized;
 
+        protected NativeElement()
+        {
+            Index = 0;
+            ParentIndex = 0;
+            _descendantDivider = GetDescendantDividerRoot(string.Empty);
+            Ancestor = null;
+        }
+
         protected NativeElement(string value)
         {
             Index = 0;

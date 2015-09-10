@@ -1,12 +1,13 @@
 ﻿using NextLevelSeven.Core;
 using NextLevelSeven.Diagnostics;
+using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Native.Elements
 {
     /// <summary>
     ///     Represents a subcomponent-level element in an HL7 message.
     /// </summary>
-    internal sealed class NativeSubcomponent : NativeElement
+    internal sealed class NativeSubcomponent : NativeElement, INativeSubcomponent
     {
         private readonly EncodingConfiguration _encodingConfigurationOverride;
 
@@ -49,6 +50,16 @@ namespace NextLevelSeven.Native.Elements
         public override INativeElement GetDescendant(int index)
         {
             throw new ElementException(ErrorCode.SubcomponentCannotHaveDescendants);
+        }
+
+        public string GetValue()
+        {
+            return Value;
+        }
+
+        public System.Collections.Generic.IEnumerable<string> GetValues()
+        {
+            return Value.Yield();
         }
     }
 }

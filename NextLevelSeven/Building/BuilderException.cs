@@ -13,7 +13,7 @@ namespace NextLevelSeven.Building
         ///     Create a BuilderException with the specified error code.
         /// </summary>
         /// <param name="code">Error code.</param>
-        public BuilderException(ErrorCode code) : base(ErrorMessages.Get(code))
+        internal BuilderException(ErrorCode code) : base(ErrorMessages.Get(code))
         {
         }
     }

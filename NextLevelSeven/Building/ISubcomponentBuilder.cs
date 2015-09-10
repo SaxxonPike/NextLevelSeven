@@ -1,6 +1,11 @@
-﻿namespace NextLevelSeven.Building
+﻿using NextLevelSeven.Core;
+
+namespace NextLevelSeven.Building
 {
-    public interface ISubcomponentBuilder : IBuilder
+    /// <summary>
+    ///     Interface for a subcomponent element builder.
+    /// </summary>
+    public interface ISubcomponentBuilder : IBuilder, ISubcomponent
     {
         /// <summary>
         ///     Set this subcomponent's content.

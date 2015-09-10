@@ -42,6 +42,16 @@ namespace NextLevelSeven.Test.Native
         }
 
         [TestMethod]
+        public void Element_Timely_AddsLowIndexSegmentAndLowIndexField()
+        {
+            var testString = Randomized.String();
+            var message = Message.Create();
+            var time = Measure.ExecutionTime(() => { message[100][1].Value = testString; });
+            Assert.AreEqual(testString, message[100][1].Value);
+            AssertTime.IsWithin(500, time);
+        }
+
+        [TestMethod]
         public void Element_Timely_AddsHighIndexSegmentAndField()
         {
             var testString = Randomized.String();
@@ -74,12 +84,14 @@ namespace NextLevelSeven.Test.Native
             var time = Measure.ExecutionTime(() =>
             {
                 var msh = message[1];
-                for (var i = 1; i <= 1000; i++)
+                for (var i = 3; i <= 1000; i++)
                 {
-                    msh[i].Value = "test";
+                    var id = Randomized.String();
+                    msh[i].Value = id;
+                    Assert.AreEqual(msh[i].Value, id);
                 }
             });
-            AssertTime.IsWithin(1000, time);
+            AssertTime.IsWithin(2000, time);
         }
 
         [TestMethod]

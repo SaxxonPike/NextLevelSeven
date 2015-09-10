@@ -32,6 +32,32 @@ namespace NextLevelSeven.Utility
         }
 
         /// <summary>
+        ///     Create a wrapper over an IList.
+        /// </summary>
+        /// <param name="other">Other IList.</param>
+        /// <param name="startIndex">Index where items begin. Defaults to zero.</param>
+        internal WrapperEnumerable(IList<TItem> other, int startIndex = 0)
+        {
+            _count = () => other.Count;
+            _read = i => other[i];
+            _startIndex = startIndex;
+            _write = (i, v) => { other[i] = v; };
+        }
+
+        /// <summary>
+        ///     Create a wrapper over another IEnumerable. This will not permit writes.
+        /// </summary>
+        /// <param name="other">Other IEnumerable.</param>
+        /// <param name="startIndex">Index where items begin. Defaults to zero.</param>
+        internal WrapperEnumerable(IEnumerable<TItem> other, int startIndex = 0)
+        {
+            _count = other.Count;
+            _read = other.ElementAt;
+            _startIndex = startIndex;
+            _write = (i, v) => { throw new NotSupportedException(@"Writing items to the underlying IEnumerable is not supported."); };
+        }
+
+        /// <summary>
         ///     Get the enumerator for this enumerable wrapper.
         /// </summary>
         /// <returns>Enumerator.</returns>

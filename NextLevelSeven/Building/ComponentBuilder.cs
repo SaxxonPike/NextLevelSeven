@@ -164,5 +164,24 @@ namespace NextLevelSeven.Building
         {
             return Value;
         }
+
+        /// <summary>
+        ///     Get the value at the specified index.
+        /// </summary>
+        /// <param name="subcomponent">Subcomponent to get value from.</param>
+        /// <returns>Value at index. Null if not present.</returns>
+        public string GetValue(int subcomponent = -1)
+        {
+            return subcomponent < 0
+                ? Value
+                : this[subcomponent].Value;
+        }
+
+        public IEnumerable<string> GetValues(int subcomponent = -1)
+        {
+            return subcomponent < 0
+                ? Values
+                : this[subcomponent].Value.Yield();
+        }
     }
 }

@@ -2,6 +2,9 @@
 
 namespace NextLevelSeven.Core.Codec
 {
+    /// <summary>
+    ///     Conversion methods for HL7 data values.
+    /// </summary>
     public interface ICodec
     {
         /// <summary>

@@ -1,7 +1,11 @@
-﻿using NextLevelSeven.Utility;
+﻿using System.Collections.Generic;
+using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building
 {
+    /// <summary>
+    ///     Subcomponent HL7 element builder.
+    /// </summary>
     internal sealed class SubcomponentBuilder : BuilderBaseDescendant, ISubcomponentBuilder
     {
         /// <summary>
@@ -61,6 +65,16 @@ namespace NextLevelSeven.Building
         public override string ToString()
         {
             return Value;
+        }
+
+        public string GetValue()
+        {
+            return Value;
+        }
+
+        public IEnumerable<string> GetValues()
+        {
+            return Value.Yield();
         }
     }
 }

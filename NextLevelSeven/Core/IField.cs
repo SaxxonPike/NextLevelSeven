@@ -2,6 +2,9 @@
 
 namespace NextLevelSeven.Core
 {
+    /// <summary>
+    ///     Represents a field element in an HL7 message.
+    /// </summary>
     public interface IField
     {
         /// <summary>

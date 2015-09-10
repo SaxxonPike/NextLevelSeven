@@ -3,8 +3,17 @@ using System.Text;
 
 namespace NextLevelSeven.Core
 {
+    /// <summary>
+    ///     Extensions for encoding configurations.
+    /// </summary>
     internal static class EncodingConfigurationExtensions
     {
+        /// <summary>
+        ///     Add HL7 escape codes where necessary, according to this encoding configuration.
+        /// </summary>
+        /// <param name="config">Encoding configuration.</param>
+        /// <param name="s">String to escape.</param>
+        /// <returns>Escaped string.</returns>
         public static string Escape(this EncodingConfiguration config, string s)
         {
             if (s == null)
@@ -132,6 +141,12 @@ namespace NextLevelSeven.Core
             return output.ToString();
         }
 
+        /// <summary>
+        ///     Remove HL7 escape codes, using this encoding configuration for special characters.
+        /// </summary>
+        /// <param name="config">Encoding configuration.</param>
+        /// <param name="s">String to unescape.</param>
+        /// <returns>Unescaped string.</returns>
         public static string UnEscape(this EncodingConfiguration config, string s)
         {
             throw new NotImplementedException();

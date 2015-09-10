@@ -6,7 +6,7 @@ using NextLevelSeven.Native;
 namespace NextLevelSeven.Core.Codec
 {
     /// <summary>
-    ///     A wrapper around Codec to allow for indexing an element's descendants.
+    ///     A wrapper around ICodec to allow for indexing an element's descendants.
     /// </summary>
     /// <typeparam name="TDecoded">Type of the decoded value.</typeparam>
     internal sealed class IndexedCodec<TDecoded> : IIndexedCodec<TDecoded>

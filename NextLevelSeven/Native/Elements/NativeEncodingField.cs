@@ -1,13 +1,15 @@
-﻿using System.Text;
+﻿using System.Collections.Generic;
+using System.Text;
 using NextLevelSeven.Core;
 using NextLevelSeven.Native.Dividers;
+using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Native.Elements
 {
     /// <summary>
     ///     Represents the special field at MSH-2, which contains encoding characters for a message.
     /// </summary>
-    internal sealed class NativeEncodingField : NativeElement
+    internal sealed class NativeEncodingField : NativeElement, INativeField
     {
         public NativeEncodingField(NativeElement ancestor)
             : base(ancestor, 1, 2)
@@ -61,6 +63,26 @@ namespace NextLevelSeven.Native.Elements
         public override string ToString()
         {
             return Value;
+        }
+
+        public string GetValue(int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            return Value;
+        }
+
+        public IEnumerable<string> GetValues(int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            return Value.Yield();
+        }
+
+        public new INativeRepetition this[int index]
+        {
+            get { return new NativeRepetition(this, 0, 1); }
+        }
+
+        INativeField INativeField.CloneDetached()
+        {
+            return new NativeEncodingField(this);
         }
     }
 }

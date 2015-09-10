@@ -121,11 +121,9 @@ namespace NextLevelSeven.Building
             }
 
             var valueLength = _value.Length;
-            if (valueLength > 4)
-            {
-                return valueLength;
-            }
-            return 4;
+            return valueLength > 4
+                ? valueLength
+                : 4;
         }
 
         /// <summary>

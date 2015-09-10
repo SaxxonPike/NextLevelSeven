@@ -3,7 +3,7 @@
 namespace NextLevelSeven.Core
 {
     /// <summary>
-    ///     An interface to an HL7 element.
+    ///     Represents an abstract element in an HL7 message.
     /// </summary>
     public interface IElement
     {

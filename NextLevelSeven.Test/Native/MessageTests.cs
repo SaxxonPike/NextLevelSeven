@@ -110,11 +110,13 @@ namespace NextLevelSeven.Test.Native
             var message = Message.Create(ExampleMessages.Standard);
             Assert.AreEqual(message.GetField(1).Value, message[1].Value,
                 "Retrieval methods differ at the segment level.");
-            Assert.AreEqual(message.GetField(1, 2).Value, message[1][2].Value,
+            Assert.AreEqual(message.GetField(1, 3).Value, message[1][3].Value,
                 "Retrieval methods differ at the field level.");
-            Assert.AreEqual(message.GetField(1, 2, 0).Value, message[1][2][0].Value,
+            Assert.AreEqual(message.GetField(1, 3, 1).Value, message[1][3][1].Value,
                 "Retrieval methods differ at the repetition level.");
-            Assert.AreEqual(message.GetField(1, 2, 0, 1).Value, message[1][2][0][1].Value,
+            Assert.AreEqual(message.GetField(1, 3, 1, 1).Value, message[1][3][1][1].Value,
+                "Retrieval methods differ at the component level.");
+            Assert.AreEqual(message.GetField(1, 3, 1, 1, 1).Value, message[1][3][1][1][1].Value,
                 "Retrieval methods differ at the component level.");
         }
 

@@ -8,7 +8,7 @@ namespace NextLevelSeven.Native.Elements
     /// <summary>
     ///     Represents a repetition-level element in an HL7 message.
     /// </summary>
-    internal sealed class NativeRepetition : NativeElement
+    internal sealed class NativeRepetition : NativeElement, INativeRepetition
     {
         private readonly Dictionary<int, INativeElement> _cache = new Dictionary<int, INativeElement>();
         private readonly EncodingConfiguration _encodingConfigurationOverride;
@@ -41,11 +41,13 @@ namespace NextLevelSeven.Native.Elements
 
         public override INativeElement GetDescendant(int index)
         {
-            if (_cache.ContainsKey(index))
-            {
-                return _cache[index];
-            }
+            return _cache.ContainsKey(index)
+                ? _cache[index]
+                : GetComponent(index);
+        }
 
+        private INativeComponent GetComponent(int index)
+        {
             if (index < 1)
             {
                 throw new ArgumentException(ErrorMessages.Get(ErrorCode.ComponentIndexMustBeGreaterThanZero));
@@ -53,7 +55,31 @@ namespace NextLevelSeven.Native.Elements
 
             var result = new NativeComponent(this, index - 1, index);
             _cache[index] = result;
-            return result;
+            return result;            
+        }
+
+        public string GetValue(int component = -1, int subcomponent = -1)
+        {
+            return component < 0
+                ? Value
+                : GetComponent(component).GetValue(subcomponent);
+        }
+
+        public IEnumerable<string> GetValues(int component = -1, int subcomponent = -1)
+        {
+            return component < 0
+                ? Values
+                : GetComponent(component).GetValues(subcomponent);
+        }
+
+        public new INativeComponent this[int index]
+        {
+            get { return GetComponent(index); }
+        }
+
+        INativeRepetition INativeRepetition.CloneDetached()
+        {
+            return new NativeRepetition(Value, EncodingConfiguration);            
         }
     }
 }

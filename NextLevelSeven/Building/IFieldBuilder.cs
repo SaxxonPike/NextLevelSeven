@@ -1,6 +1,11 @@
-﻿namespace NextLevelSeven.Building
+﻿using NextLevelSeven.Core;
+
+namespace NextLevelSeven.Building
 {
-    public interface IFieldBuilder : IBuilder
+    /// <summary>
+    ///     Interface for a field element builder.
+    /// </summary>
+    public interface IFieldBuilder : IBuilder, IField
     {
         /// <summary>
         ///     Get a descendant field repetition builder.

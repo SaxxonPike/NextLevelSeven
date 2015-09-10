@@ -8,7 +8,7 @@ namespace NextLevelSeven.Native.Elements
     /// <summary>
     ///     Represents a field-level element in an HL7 message.
     /// </summary>
-    internal sealed class NativeField : NativeElement
+    internal sealed class NativeField : NativeElement, INativeField
     {
         private readonly Dictionary<int, INativeElement> _cache = new Dictionary<int, INativeElement>();
         private readonly EncodingConfiguration _encodingConfigurationOverride;
@@ -41,11 +41,13 @@ namespace NextLevelSeven.Native.Elements
 
         public override INativeElement GetDescendant(int index)
         {
-            if (_cache.ContainsKey(index))
-            {
-                return _cache[index];
-            }
+            return _cache.ContainsKey(index)
+                ? _cache[index]
+                : GetRepetition(index);
+        }
 
+        private INativeRepetition GetRepetition(int index)
+        {
             if (index < 0)
             {
                 throw new ArgumentException(ErrorMessages.Get(ErrorCode.RepetitionIndexMustBeZeroOrGreater));
@@ -61,7 +63,31 @@ namespace NextLevelSeven.Native.Elements
 
             var result = new NativeRepetition(this, index - 1, index);
             _cache[index] = result;
-            return result;
+            return result;            
+        }
+
+        public string GetValue(int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            return repetition < 0
+                ? Value
+                : GetRepetition(repetition).GetValue(component, subcomponent);
+        }
+
+        public IEnumerable<string> GetValues(int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            return repetition < 0
+                ? Values
+                : GetRepetition(repetition).GetValues(component, subcomponent);
+        }
+
+        public new INativeRepetition this[int index]
+        {
+            get { return GetRepetition(index); }
+        }
+
+        INativeField INativeField.CloneDetached()
+        {
+            return new NativeField(Value, EncodingConfiguration);
         }
     }
 }

@@ -2,6 +2,9 @@
 
 namespace NextLevelSeven.Building
 {
+    /// <summary>
+    ///     Base interface for element builders.
+    /// </summary>
     public interface IBuilder
     {
         /// <summary>

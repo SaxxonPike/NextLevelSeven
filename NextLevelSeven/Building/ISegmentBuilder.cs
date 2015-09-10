@@ -1,6 +1,11 @@
-﻿namespace NextLevelSeven.Building
+﻿using NextLevelSeven.Core;
+
+namespace NextLevelSeven.Building
 {
-    public interface ISegmentBuilder : IBuilder
+    /// <summary>
+    ///     Interface for a segment element builder.
+    /// </summary>
+    public interface ISegmentBuilder : IBuilder, ISegment
     {
         /// <summary>
         ///     Get a descendant field builder.
@@ -8,11 +13,6 @@
         /// <param name="index">Index within the segment to get the builder from.</param>
         /// <returns>Field builder for the specified index.</returns>
         IFieldBuilder this[int index] { get; }
-
-        /// <summary>
-        ///     Get or set the three-letter type field of this segment.
-        /// </summary>
-        string Type { get; set; }
 
         /// <summary>
         ///     Set a component's content.

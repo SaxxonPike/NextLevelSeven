@@ -8,14 +8,14 @@ namespace NextLevelSeven.Core
     /// </summary>
     internal static class Default
     {
-        public static string Application
-        {
-            get { return Process.GetCurrentProcess().ProcessName; }
-        }
+        /// <summary>
+        ///     Default "HD" Application when sending messages.
+        /// </summary>
+        public static readonly string Application = Process.GetCurrentProcess().ProcessName;
 
-        public static string Facility
-        {
-            get { return Environment.UserDomainName; }
-        }
+        /// <summary>
+        ///     Default "HD" Facility when sending messages.
+        /// </summary>
+        public static readonly string Facility = Environment.UserDomainName;
     }
 }

@@ -21,7 +21,6 @@ namespace NextLevelSeven.Native.Elements
         ///     Create a message with a default MSH segment.
         /// </summary>
         public NativeMessage()
-            : base(null, 0, 0)
         {
             _encodingConfiguration = new NativeMessageEncodingConfiguration(this);
             Value = @"MSH|^~\&|";
@@ -32,7 +31,6 @@ namespace NextLevelSeven.Native.Elements
         /// </summary>
         /// <param name="message">Message data to interpret.</param>
         public NativeMessage(string message)
-            : base(null, 0, 0)
         {
             if (message == null)
             {
@@ -150,24 +148,21 @@ namespace NextLevelSeven.Native.Elements
         public INativeElement GetField(int segment, int field = -1, int repetition = -1, int component = -1,
             int subcomponent = -1)
         {
-            var segmentElement = this[segment];
             if (field < 0)
             {
-                return segmentElement;
+                return this[segment];
             }
             if (repetition < 0)
             {
-                return segmentElement[field];
+                return this[segment][field];
             }
             if (component < 0)
             {
-                return segmentElement[field][repetition];
+                return this[segment][field][repetition];
             }
-            if (subcomponent < 0)
-            {
-                return segmentElement[field][repetition][component];
-            }
-            return segmentElement[field][repetition][component][subcomponent];
+            return subcomponent < 0
+                ? this[segment][field][repetition][component]
+                : this[segment][field][repetition][component][subcomponent];
         }
 
         /// <summary>
@@ -314,25 +309,9 @@ namespace NextLevelSeven.Native.Elements
         public IEnumerable<string> GetValues(int segment = -1, int field = -1, int repetition = -1, int component = -1,
             int subcomponent = -1)
         {
-            if (segment < 0)
-            {
-                return Values;
-            }
-            if (field < 0)
-            {
-                return this[segment].Values;
-            }
-            if (repetition < 0)
-            {
-                return this[segment][field].Values;
-            }
-            if (component < 0)
-            {
-                return this[segment][field][repetition].Values;
-            }
-            return subcomponent < 0
-                ? this[segment][field][repetition][component].Values
-                : this[segment][field][repetition][component][subcomponent].Value.Yield();
+            return segment < 0
+                ? Values
+                : GetSegment(segment).GetValues(field, repetition, component, subcomponent);
         }
 
         /// <summary>
@@ -347,25 +326,9 @@ namespace NextLevelSeven.Native.Elements
         public string GetValue(int segment = -1, int field = -1, int repetition = -1, int component = -1,
             int subcomponent = -1)
         {
-            if (segment < 0)
-            {
-                return Value;
-            }
-            if (field < 0)
-            {
-                return this[segment].Value;
-            }
-            if (repetition < 0)
-            {
-                return this[segment][field].Value;
-            }
-            if (component < 0)
-            {
-                return this[segment][field][repetition].Value;
-            }
-            return subcomponent < 0
-                ? this[segment][field][repetition][component].Value
-                : this[segment][field][repetition][component][subcomponent].Value;
+            return segment < 0
+                ? Value
+                : GetSegment(segment).GetValue(field, repetition, component, subcomponent);
         }
 
         /// <summary>
@@ -392,7 +355,9 @@ namespace NextLevelSeven.Native.Elements
         /// <returns></returns>
         public override INativeElement GetDescendant(int index)
         {
-            return GetSegment(index);
+            return _cache.ContainsKey(index)
+                ? _cache[index]
+                : GetSegment(index);
         }
 
         /// <summary>
@@ -436,8 +401,8 @@ namespace NextLevelSeven.Native.Elements
                 return matches.Select(m => m[field][repetition]);
             }
             return (subcomponent < 0)
-                ? matches.Select(m => m[field][repetition][component])
-                : matches.Select(m => m[field][repetition][component][subcomponent]);
+                ? matches.Select(m => (INativeElement) m[field][repetition][component])
+                : matches.Select(m => (INativeElement) m[field][repetition][component][subcomponent]);
         }
 
         /// <summary>
@@ -447,11 +412,6 @@ namespace NextLevelSeven.Native.Elements
         /// <returns></returns>
         public INativeSegment GetSegment(int index)
         {
-            if (_cache.ContainsKey(index))
-            {
-                return _cache[index] as INativeSegment;
-            }
-
             if (index < 1)
             {
                 throw new ArgumentException(ErrorMessages.Get(ErrorCode.SegmentIndexMustBeGreaterThanZero));

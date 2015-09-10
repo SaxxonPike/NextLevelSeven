@@ -25,6 +25,8 @@ namespace NextLevelSeven.Native.Elements
             _encodingConfigurationOverride = new EncodingConfiguration(config);
         }
 
+        INativeField INativeSegment.this[int index] { get { return GetField(index); } }
+
         public override EncodingConfiguration EncodingConfiguration
         {
             get { return _encodingConfigurationOverride ?? Ancestor.EncodingConfiguration; }
@@ -97,11 +99,13 @@ namespace NextLevelSeven.Native.Elements
 
         public override INativeElement GetDescendant(int index)
         {
-            if (_cache.ContainsKey(index))
-            {
-                return _cache[index];
-            }
+            return _cache.ContainsKey(index)
+                ? _cache[index]
+                : GetField(index);
+        }
 
+        private INativeField GetField(int index)
+        {
             if (index < 0)
             {
                 throw new ArgumentException(ErrorMessages.Get(ErrorCode.FieldIndexMustBeZeroOrGreater));
@@ -133,7 +137,21 @@ namespace NextLevelSeven.Native.Elements
 
             var result = new NativeField(this, index, index);
             _cache[index] = result;
-            return result;
+            return result;            
+        }
+
+        public string GetValue(int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            return field < 0
+                ? Value
+                : GetField(field).GetValue(repetition, component, subcomponent);
+        }
+
+        public IEnumerable<string> GetValues(int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            return field < 0
+                ? Values
+                : GetField(field).GetValues(repetition, component, subcomponent);
         }
     }
 }

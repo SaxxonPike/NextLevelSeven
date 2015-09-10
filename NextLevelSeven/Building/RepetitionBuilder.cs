@@ -200,5 +200,31 @@ namespace NextLevelSeven.Building
         {
             return Value;
         }
+
+        /// <summary>
+        ///     Get the value at the specified indices.
+        /// </summary>
+        /// <param name="component">Component index.</param>
+        /// <param name="subcomponent">Subcomponent index.</param>
+        /// <returns>Data.</returns>
+        public string GetValue(int component = -1, int subcomponent = -1)
+        {
+            return component < 0
+                ? Value
+                : this[component].GetValue(subcomponent);
+        }
+
+        /// <summary>
+        ///     Get the values at the specified indices.
+        /// </summary>
+        /// <param name="component">Component index.</param>
+        /// <param name="subcomponent">Subcomponent index.</param>
+        /// <returns>All occurrences.</returns>
+        public IEnumerable<string> GetValues(int component = -1, int subcomponent = -1)
+        {
+            return component < 0
+                ? Values
+                : this[component].GetValues(subcomponent);
+        }
     }
 }

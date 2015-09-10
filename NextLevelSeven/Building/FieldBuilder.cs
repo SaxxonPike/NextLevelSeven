@@ -252,5 +252,33 @@ namespace NextLevelSeven.Building
         {
             return Value;
         }
+
+        /// <summary>
+        ///     Get the value at the specified indices.
+        /// </summary>
+        /// <param name="repetition">Repetition number.</param>
+        /// <param name="component">Component index.</param>
+        /// <param name="subcomponent">Subcomponent index.</param>
+        /// <returns></returns>
+        public string GetValue(int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            return repetition < 0
+                ? Value
+                : this[repetition].GetValue(component, subcomponent);
+        }
+
+        /// <summary>
+        ///     Get the values at the specified indices.
+        /// </summary>
+        /// <param name="repetition">Repetition number.</param>
+        /// <param name="component">Component index.</param>
+        /// <param name="subcomponent">Subcomponent index.</param>
+        /// <returns></returns>
+        public IEnumerable<string> GetValues(int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            return repetition < 0
+                ? Values
+                : this[repetition].GetValues(component, subcomponent);
+        }
     }
 }

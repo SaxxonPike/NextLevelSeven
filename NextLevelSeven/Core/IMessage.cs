@@ -3,7 +3,7 @@
 namespace NextLevelSeven.Core
 {
     /// <summary>
-    ///     An interface to get values at any level in the HL7 message heirarchy.
+    ///     Represents an HL7 message.
     /// </summary>
     public interface IMessage
     {

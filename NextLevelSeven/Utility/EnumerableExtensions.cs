@@ -2,7 +2,10 @@
 
 namespace NextLevelSeven.Utility
 {
-    public static class EnumerableExtensions
+    /// <summary>
+    ///     Extensions for IEnumerable.
+    /// </summary>
+    internal static class EnumerableExtensions
     {
         /// <summary>
         ///     Wrap an IEnumerable around a single item.
