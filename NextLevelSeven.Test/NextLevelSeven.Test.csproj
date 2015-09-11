@@ -68,7 +68,6 @@
     <Compile Include="Diagnostics\DiagnosticsTestFixture.cs" />
     <Compile Include="Generation\GenerationTestFixture.cs" />
     <Compile Include="Native\NativeComponentTests.cs" />
-    <Compile Include="Native\NativeElementTests.cs" />
     <Compile Include="Native\NativeEscapeTests.cs" />
     <Compile Include="Diagnostics\ErrorMessageTests.cs" />
     <Compile Include="It.cs" />

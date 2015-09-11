@@ -85,5 +85,31 @@ namespace NextLevelSeven.Test.Conversion
         {
             Assert.AreEqual(new DateTime(2015, 07, 08, 18, 52, 00), DateTimeConverter.ConvertToDateTime("201507081852"));
         }
+
+        [TestMethod]
+        public void DateTimeConverter_DecodesDateWithOnlyYear()
+        {
+            Assert.AreEqual(new DateTime(2015, 01, 01), DateTimeConverter.ConvertToDate("2015"));
+        }
+
+        [TestMethod]
+        public void DateTimeConverter_DecodesDateWithOnlyYearMonth()
+        {
+            Assert.AreEqual(new DateTime(2015, 07, 01), DateTimeConverter.ConvertToDate("201507"));
+        }
+
+        [TestMethod]
+        public void DateTimeConverter_DecodesTimeWithOnlyDateHour()
+        {
+            Assert.AreEqual(new TimeSpan(13, 00, 00), DateTimeConverter.ConvertToTime("13"));
+        }
+
+        [TestMethod]
+        public void DateTimeConverter_DecodesTimeWithOnlyDateHourMinute()
+        {
+            Assert.AreEqual(new TimeSpan(13, 35, 00), DateTimeConverter.ConvertToTime("1335"));
+        }
+
+
     }
 }
