@@ -70,7 +70,6 @@
     <Compile Include="Diagnostics\ErrorMessageTests.cs" />
     <Compile Include="It.cs" />
     <Compile Include="Native\NativeElementExtensionsTests.cs" />
-    <Compile Include="Native\NativeExampleMessageTests.cs" />
     <Compile Include="ExampleMessages.cs" />
     <Compile Include="Native\NativeFieldTests.cs" />
     <Compile Include="Native\NativeMessageExtensionsTests.cs" />

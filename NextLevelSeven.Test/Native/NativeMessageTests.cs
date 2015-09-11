@@ -356,5 +356,34 @@ namespace NextLevelSeven.Test.Native
             var segment = message[1];
             Assert.AreEqual(@"MSH|^~\&|SENDER|DEV|RECEIVER|SYSTEM|20130528073829||ADT^A17|14150278|P|2.3|", segment.Value);
         }
+
+        [TestMethod]
+        public void Message_CanDeleteSegment()
+        {
+            var message = Message.Create(ExampleMessages.Standard);
+            var segment1 = message[1].Value;
+            var segment3 = message[3].Value;
+            var segment4 = message[4].Value;
+            message.Delete(2);
+            Assert.AreEqual(segment1, message[1].Value, @"Expected message[1] to remain the same after delete.");
+            Assert.AreEqual(segment3, message[2].Value, @"Expected message[3] to become message[2].");
+            Assert.AreEqual(segment4, message[3].Value, @"Expected message[4] to become message[3].");
+        }
+
+        [TestMethod]
+        public void Message_ValuesReturnsProperlySplitData()
+        {
+            var message = Message.Create(ExampleMessages.Standard);
+            var segmentStrings = message.Value.Split('\xD');
+            var segments = message.Values.ToList();
+
+            Assert.AreEqual(segmentStrings.Length, segments.Count,
+                @"Splitting main value and calling Values returns different element counts.");
+
+            for (var i = 0; i < segments.Count; i++)
+            {
+                Assert.AreEqual(segments[i], segmentStrings[i], @"Values are not equal.");
+            }
+        }
     }
 }

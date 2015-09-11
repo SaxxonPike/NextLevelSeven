@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
+using NextLevelSeven.Native;
 
 namespace NextLevelSeven.Test.Native
 {
@@ -27,5 +28,20 @@ namespace NextLevelSeven.Test.Native
                 @"Number of elements after appending at the end of a repetition is incorrect.");
         }
 
+        [TestMethod]
+        public void Repetition_CanGetComponentsByIndexer()
+        {
+            var component = Message.Create(ExampleMessages.Standard)[8][13][2][2];
+            Assert.AreEqual(@"ORN", component.Value);
+        }
+
+        [TestMethod]
+        public void Repetition_CanDeleteComponent()
+        {
+            var message = Message.Create("MSH|^~\\&|\rTST|123^456~789^012");
+            var component = message[2][1][2];
+            component.Delete(1);
+            Assert.AreEqual("MSH|^~\\&|\rTST|123^456~012", message.Value, @"Message was modified unexpectedly.");
+        }
     }
 }
