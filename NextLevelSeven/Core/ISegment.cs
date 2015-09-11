@@ -8,6 +8,11 @@ namespace NextLevelSeven.Core
     public interface ISegment : IElement
     {
         /// <summary>
+        ///     Get a copy of the segment.
+        /// </summary>
+        new ISegment Clone();
+
+        /// <summary>
         ///     Get or set the three-letter type code for the segment.
         /// </summary>
         string Type { get; set; }

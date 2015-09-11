@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NextLevelSeven.Core;
 using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building
@@ -20,9 +21,13 @@ namespace NextLevelSeven.Building
         ///     Create a component builder using the specified encoding configuration.
         /// </summary>
         /// <param name="builder">Ancestor builder.</param>
-        internal ComponentBuilder(BuilderBase builder, int index)
+        internal ComponentBuilder(BuilderBase builder, int index, string value = null)
             : base(builder, index)
         {
+            if (value != null)
+            {
+                Value = value;
+            }
         }
 
         /// <summary>
@@ -53,7 +58,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set subcomponent content within this component.
         /// </summary>
-        public IEnumerable<string> Values
+        override public IEnumerable<string> Values
         {
             get
             {
@@ -68,7 +73,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set the component string.
         /// </summary>
-        public string Value
+        override public string Value
         {
             get
             {
@@ -183,6 +188,16 @@ namespace NextLevelSeven.Building
             return subcomponent < 0
                 ? Values
                 : this[subcomponent].Value.Yield();
+        }
+
+        override public IElement Clone()
+        {
+            return new ComponentBuilder(Ancestor, Index);
+        }
+
+        IComponent IComponent.Clone()
+        {
+            return new ComponentBuilder(Ancestor, Index);
         }
     }
 }

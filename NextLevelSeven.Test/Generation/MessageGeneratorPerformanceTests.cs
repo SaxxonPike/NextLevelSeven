@@ -4,7 +4,7 @@ using NextLevelSeven.Generation;
 namespace NextLevelSeven.Test.Generation
 {
     [TestClass]
-    public class MessageGeneratorPerformanceTests
+    public class MessageGeneratorPerformanceTests : GenerationTestFixture
     {
         [TestMethod]
         public void MessageGenerator_Timely_GeneratesMessages()

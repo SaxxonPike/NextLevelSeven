@@ -4,7 +4,7 @@ using NextLevelSeven.Core;
 namespace NextLevelSeven.Test.Building
 {
     [TestClass]
-    public class RepetitionBuilderTests
+    public class RepetitionBuilderTests : BuildingTestFixture
     {
         [TestMethod]
         public void RepetitionBuilder_CanBuildComponents_Individually()

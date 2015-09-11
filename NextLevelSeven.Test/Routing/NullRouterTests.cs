@@ -4,7 +4,7 @@ using NextLevelSeven.Core;
 namespace NextLevelSeven.Test.Routing
 {
     [TestClass]
-    public class NullRouterTests
+    public class NullRouterTests : RoutingTestFixture
     {
         [TestMethod]
         public void NullRouter_ReportsChecked_OnlyWhenAttempted()

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NextLevelSeven.Core;
 using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building
@@ -21,9 +22,22 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="builder">Ancestor builder.</param>
         /// <param name="index">Index in the ancestor.</param>
-        internal FieldBuilder(BuilderBase builder, int index)
+        internal FieldBuilder(BuilderBase builder, int index, string value = null)
             : base(builder, index)
         {
+            if (value != null)
+            {
+                InitValue(value);
+            }
+        }
+
+        /// <summary>
+        /// Initialize initial value.
+        /// </summary>
+        /// <param name="value"></param>
+        void InitValue(string value)
+        {
+            Value = value;            
         }
 
         /// <summary>
@@ -54,7 +68,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set field repetition content within this field.
         /// </summary>
-        public virtual IEnumerable<string> Values
+        override public IEnumerable<string> Values
         {
             get
             {
@@ -69,7 +83,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set the field string.
         /// </summary>
-        public virtual string Value
+        override public string Value
         {
             get
             {
@@ -281,6 +295,16 @@ namespace NextLevelSeven.Building
             return repetition < 0
                 ? Values
                 : this[repetition].GetValues(component, subcomponent);
+        }
+
+        public override IElement Clone()
+        {
+            return new FieldBuilder(Ancestor, Index);
+        }
+
+        IField IField.Clone()
+        {
+            return new FieldBuilder(Ancestor, Index);
         }
     }
 }

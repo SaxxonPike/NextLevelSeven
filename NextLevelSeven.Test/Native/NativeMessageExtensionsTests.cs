@@ -6,7 +6,7 @@ using NextLevelSeven.Native;
 namespace NextLevelSeven.Test.Native
 {
     [TestClass]
-    public class NativeMessageExtensionsTests
+    public class NativeMessageExtensionsTests : NativeTestFixture
     {
         [TestMethod]
         public void MessageExtensions_CanFilterPid_FromMessage()

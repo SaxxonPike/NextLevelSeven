@@ -8,6 +8,11 @@ namespace NextLevelSeven.Core
     public interface IElement
     {
         /// <summary>
+        ///     Get a copy of the element.
+        /// </summary>
+        IElement Clone();
+
+        /// <summary>
         ///     Get the index of the element.
         /// </summary>
         int Index { get; }

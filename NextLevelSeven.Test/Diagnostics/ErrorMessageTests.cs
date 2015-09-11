@@ -4,7 +4,7 @@ using NextLevelSeven.Diagnostics;
 namespace NextLevelSeven.Test.Diagnostics
 {
     [TestClass]
-    public class ErrorMessageTests
+    public class ErrorMessageTests : DiagnosticsTestFixture
     {
         [TestInitialize]
         public void ErrorMessages_Initializer()

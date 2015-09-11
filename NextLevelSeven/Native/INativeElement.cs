@@ -69,12 +69,6 @@ namespace NextLevelSeven.Native
         event EventHandler ValueChanged;
 
         /// <summary>
-        ///     Create a detached clone of the element with no ancestors.
-        /// </summary>
-        /// <returns></returns>
-        INativeElement CloneDetached();
-
-        /// <summary>
         ///     Delete the element from its ancestor. This cannot be performed on the root element (message).
         /// </summary>
         void Delete();

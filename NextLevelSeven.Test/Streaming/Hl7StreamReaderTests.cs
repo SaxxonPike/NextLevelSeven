@@ -3,7 +3,7 @@
 namespace NextLevelSeven.Test.Streaming
 {
     [TestClass]
-    public class Hl7StreamReaderTests
+    public class Hl7StreamReaderTests : StreamingTestFixture
     {
     }
 }

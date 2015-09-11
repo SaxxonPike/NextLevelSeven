@@ -4,7 +4,6 @@ using System.Linq;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Specification;
 using NextLevelSeven.Diagnostics;
-using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Native.Elements
 {
@@ -98,25 +97,6 @@ namespace NextLevelSeven.Native.Elements
         public IEnumerable<INativeSegment> this[IEnumerable<string> segmentTypes]
         {
             get { return Segments.Where(s => segmentTypes.Contains(s.Type)); }
-        }
-
-        /// <summary>
-        ///     Create a deep clone of the message.
-        /// </summary>
-        /// <returns>Clone of the message.</returns>
-        public INativeMessage Clone()
-        {
-            return new NativeMessage(Value);
-        }
-
-        /// <summary>
-        ///     Create a deep clone of the message. Because a message is at the top of the heirarchy, this is identical to calling
-        ///     Clone().
-        /// </summary>
-        /// <returns>Clone of the message.</returns>
-        public override INativeElement CloneDetached()
-        {
-            return new NativeMessage(Value);
         }
 
         /// <summary>
@@ -470,6 +450,21 @@ namespace NextLevelSeven.Native.Elements
             return DescendantDivider == null
                 ? string.Empty
                 : DescendantDivider.Value;
+        }
+
+        override public IElement Clone()
+        {
+            return CloneInternal();
+        }
+
+        IMessage IMessage.Clone()
+        {
+            return CloneInternal();
+        }
+
+        private NativeMessage CloneInternal()
+        {
+            return new NativeMessage(Value) {Index = Index};
         }
     }
 }

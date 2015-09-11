@@ -6,7 +6,7 @@ using NextLevelSeven.Native;
 namespace NextLevelSeven.Test.Generation
 {
     [TestClass]
-    public class AckMessageGeneratorTests
+    public class AckMessageGeneratorTests : GenerationTestFixture
     {
         private string _controlId;
         private INativeMessage _message;

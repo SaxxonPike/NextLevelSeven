@@ -11,7 +11,6 @@ namespace NextLevelSeven.Native.Elements
     internal sealed class NativeRepetition : NativeElement, INativeRepetition
     {
         private readonly Dictionary<int, INativeElement> _cache = new Dictionary<int, INativeElement>();
-        private readonly EncodingConfiguration _encodingConfigurationOverride;
 
         public NativeRepetition(NativeElement ancestor, int parentIndex, int externalIndex)
             : base(ancestor, parentIndex, externalIndex)
@@ -19,24 +18,13 @@ namespace NextLevelSeven.Native.Elements
         }
 
         private NativeRepetition(string value, EncodingConfiguration config)
-            : base(value)
+            : base(value, config)
         {
-            _encodingConfigurationOverride = new EncodingConfiguration(config);
         }
 
         public override char Delimiter
         {
             get { return EncodingConfiguration.ComponentDelimiter; }
-        }
-
-        public override EncodingConfiguration EncodingConfiguration
-        {
-            get { return _encodingConfigurationOverride ?? Ancestor.EncodingConfiguration; }
-        }
-
-        public override INativeElement CloneDetached()
-        {
-            return new NativeRepetition(Value, EncodingConfiguration);
         }
 
         public override INativeElement GetDescendant(int index)
@@ -77,9 +65,19 @@ namespace NextLevelSeven.Native.Elements
             get { return GetComponent(index); }
         }
 
-        INativeRepetition INativeRepetition.CloneDetached()
+        override public IElement Clone()
         {
-            return new NativeRepetition(Value, EncodingConfiguration);            
+            return CloneInternal();
+        }
+
+        IRepetition IRepetition.Clone()
+        {
+            return CloneInternal();
+        }
+
+        NativeRepetition CloneInternal()
+        {
+            return new NativeRepetition(Value, EncodingConfiguration) { Index = Index };
         }
     }
 }

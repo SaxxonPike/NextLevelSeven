@@ -8,6 +8,11 @@ namespace NextLevelSeven.Core
     public interface IComponent : IElement
     {
         /// <summary>
+        ///     Get a copy of the segment.
+        /// </summary>
+        new IComponent Clone();
+
+        /// <summary>
         ///     Get data from a specific place in the message. Depth is determined by how many indices are specified.
         /// </summary>
         /// <param name="subcomponent">Subcomponent index.</param>

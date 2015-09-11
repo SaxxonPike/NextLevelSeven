@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NextLevelSeven.Core;
 using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building
@@ -37,7 +38,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set the component string.
         /// </summary>
-        public string Value
+        override public string Value
         {
             get { return _value ?? string.Empty; }
             set { Subcomponent(value); }
@@ -54,7 +55,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Return an enumerable with the content inside.
         /// </summary>
-        public IEnumerable<string> Values
+        override public IEnumerable<string> Values
         {
             get { return new WrapperEnumerable<string>(i => _value, (i, v) => { }, () => Count, 1); }
             set { _value = string.Concat(value); }
@@ -77,6 +78,16 @@ namespace NextLevelSeven.Building
         public IEnumerable<string> GetValues()
         {
             return Value.Yield();
+        }
+
+        override public IElement Clone()
+        {
+            return new SubcomponentBuilder(Ancestor, Index);
+        }
+
+        ISubcomponent ISubcomponent.Clone()
+        {
+            return new SubcomponentBuilder(Ancestor, Index);
         }
     }
 }

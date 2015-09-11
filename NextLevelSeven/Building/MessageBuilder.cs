@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NextLevelSeven.Core;
 using NextLevelSeven.Native;
 using NextLevelSeven.Native.Elements;
 using NextLevelSeven.Utility;
@@ -76,7 +77,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set segment content within this message.
         /// </summary>
-        public IEnumerable<string> Values
+        override public IEnumerable<string> Values
         {
             get
             {
@@ -91,7 +92,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set the message string.
         /// </summary>
-        public string Value
+        override public string Value
         {
             get
             {
@@ -428,6 +429,16 @@ namespace NextLevelSeven.Building
         public override string ToString()
         {
             return Value;
+        }
+
+        public override IElement Clone()
+        {
+            return new MessageBuilder(Value);
+        }
+
+        IMessage IMessage.Clone()
+        {
+            return new MessageBuilder(Value);
         }
     }
 }

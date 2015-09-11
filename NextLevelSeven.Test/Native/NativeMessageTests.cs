@@ -1,22 +1,16 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
+using NextLevelSeven.Native;
 
 namespace NextLevelSeven.Test.Native
 {
     [TestClass]
-    public class NativeMessageTests
+    public class NativeMessageTests : NativeTestFixture
     {
-        [TestInitialize]
-        public void Message_Initialization()
-        {
-            var message = Message.Create(ExampleMessages.Standard);
-            Assert.IsNotNull(message, "Message was not initialized.");
-            Debug.WriteLine(message.Type);
-        }
-
         [TestMethod]
         public void Message_ConvertsMshCorrectly()
         {
@@ -231,6 +225,136 @@ namespace NextLevelSeven.Test.Native
             IMessage tree = Message.Create(string.Format("MSH|^~\\&|{0}&{1}", id1, id2));
             Assert.AreEqual(id1, tree.GetValue(1, 3, 1, 1, 1));
             Assert.AreEqual(id2, tree.GetValue(1, 3, 1, 1, 2));
+        }
+
+        [TestMethod]
+        public void Message_CanAddDescendantsAtEnd()
+        {
+            var message = Message.Create(ExampleMessages.Standard);
+            var count = message.DescendantCount;
+            var id = Randomized.String();
+            message[count + 1].Value = id;
+            Assert.AreEqual(count + 1, message.DescendantCount,
+                @"Number of elements after appending at the end of a message is incorrect.");
+        }
+
+        [TestMethod]
+        public void Message_Timely_AddsHighIndexSegment()
+        {
+            var testString = Randomized.String();
+            var message = Message.Create();
+            var time = Measure.ExecutionTime(() => { message[HighIndex].Value = testString; });
+            Assert.AreEqual(testString, message[HighIndex].Value);
+            AssertTime.IsWithin(1000, time);
+        }
+
+        [TestMethod]
+        public void Message_Timely_AddsLowIndexSegmentAndHighIndexField()
+        {
+            var testString = Randomized.String();
+            var message = Message.Create();
+            var time = Measure.ExecutionTime(() => { message[1][HighIndex].Value = testString; });
+            Assert.AreEqual(testString, message[1][HighIndex].Value);
+            AssertTime.IsWithin(1000, time);
+        }
+
+        [TestMethod]
+        public void Message_Timely_AddsLowIndexSegmentAndLowIndexField()
+        {
+            var testString = Randomized.String();
+            var message = Message.Create();
+            var time = Measure.ExecutionTime(() => { message[100][1].Value = testString; });
+            Assert.AreEqual(testString, message[100][1].Value);
+            AssertTime.IsWithin(100, time);
+        }
+
+        [TestMethod]
+        public void Message_Timely_AddsHighIndexSegmentAndField()
+        {
+            var testString = Randomized.String();
+            var message = Message.Create();
+            var time = Measure.ExecutionTime(() => { message[HighIndex][HighIndex].Value = testString; });
+            Assert.AreEqual(testString, message[HighIndex][HighIndex].Value);
+            AssertTime.IsWithin(2000, time);
+        }
+
+        [TestMethod]
+        public void Message_Timely_PopulatesSegments()
+        {
+            var testString = Randomized.String().Substring(0, 3).ToUpperInvariant() + "|";
+            var message = Message.Create();
+            var time = Measure.ExecutionTime(() =>
+            {
+                for (var i = 1; i <= MediumIndex; i++)
+                {
+                    message[i].Value = testString;
+                }
+            });
+            Assert.AreEqual(message[MediumIndex].Value, testString);
+            AssertTime.IsWithin(1000, time);
+        }
+
+        [TestMethod]
+        public void Message_Timely_SplitsSegmentsInLargeMessage()
+        {
+            INativeMessage message = null;
+            var builder = new StringBuilder();
+            builder.AppendLine(@"MSH|^~\&|");
+
+            for (var i = 0; i < 100; i++)
+            {
+                builder.AppendLine("OBR|" + Randomized.String());
+                for (var j = 0; j < 10; j++)
+                {
+                    builder.AppendLine("OBX|" + Randomized.String());
+                    builder.AppendLine("OBX|" + Randomized.String());
+                    builder.AppendLine("NTE|" + Randomized.String());
+                }
+            }
+            Debug.WriteLine("Building...");
+            Measure.ExecutionTime(() =>
+            {
+                message = Message.Create(builder.ToString());
+            });
+            Debug.WriteLine("Splitting...");
+            var time = Measure.ExecutionTime(() =>
+            {
+                var segments = message.SplitSegments("OBR");
+                Assert.IsNotNull(segments);
+            });
+            AssertTime.IsWithin(500, time);
+        }
+
+        [TestMethod]
+        public void Message_Timely_ProcessesManySmallMessages()
+        {
+            var time = Measure.ExecutionTime(() =>
+            {
+                var message = Message.Create(ExampleMessages.A04);
+                var dataField = message["IN1"].First()[7][0][1];
+                Assert.AreEqual("MUTUAL OF OMAHA", dataField.Value, @"Parsing IN1-7-1 failed.");
+            }, 10000);
+            AssertTime.IsWithin(1000, time);
+        }
+
+        [TestMethod]
+        public void Message_Timely_ProcessesManyLargeMessages()
+        {
+            var time = Measure.ExecutionTime(() =>
+            {
+                var message = Message.Create(ExampleMessages.MultipleObr);
+                var dataField = message["OBR"].First(s => s[1].Value == "4")[16][0][2];
+                Assert.AreEqual("OLSTAD", dataField.Value, @"Parsing OBR4-16-2 failed.");
+            }, 1000);
+            AssertTime.IsWithin(1000, time);
+        }
+
+        [TestMethod]
+        public void Message_CanGetSegmentsByIndexer()
+        {
+            var message = Message.Create(ExampleMessages.Standard);
+            var segment = message[1];
+            Assert.AreEqual(@"MSH|^~\&|SENDER|DEV|RECEIVER|SYSTEM|20130528073829||ADT^A17|14150278|P|2.3|", segment.Value);
         }
     }
 }

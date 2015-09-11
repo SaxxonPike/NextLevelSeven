@@ -8,6 +8,11 @@ namespace NextLevelSeven.Core
     public interface IMessage : IElement
     {
         /// <summary>
+        ///     Get a copy of the message.
+        /// </summary>
+        new IMessage Clone();
+
+        /// <summary>
         ///     Get data from a specific place in the message. Depth is determined by how many indices are specified.
         /// </summary>
         /// <param name="segment">Segment index.</param>

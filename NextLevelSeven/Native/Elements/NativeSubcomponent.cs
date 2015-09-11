@@ -1,4 +1,5 @@
-﻿using NextLevelSeven.Core;
+﻿using System.Collections.Generic;
+using NextLevelSeven.Core;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Utility;
 
@@ -9,17 +10,14 @@ namespace NextLevelSeven.Native.Elements
     /// </summary>
     internal sealed class NativeSubcomponent : NativeElement, INativeSubcomponent
     {
-        private readonly EncodingConfiguration _encodingConfigurationOverride;
-
         public NativeSubcomponent(NativeElement ancestor, int index, int externalIndex)
             : base(ancestor, index, externalIndex)
         {
         }
 
         private NativeSubcomponent(string value, EncodingConfiguration config)
-            : base(value)
+            : base(value, config)
         {
-            _encodingConfigurationOverride = new EncodingConfiguration(config);
         }
 
         public override char Delimiter
@@ -32,19 +30,9 @@ namespace NextLevelSeven.Native.Elements
             get { return 0; }
         }
 
-        public override EncodingConfiguration EncodingConfiguration
-        {
-            get { return _encodingConfigurationOverride ?? Ancestor.EncodingConfiguration; }
-        }
-
         public override bool HasSignificantDescendants
         {
             get { return false; }
-        }
-
-        public override INativeElement CloneDetached()
-        {
-            return new NativeSubcomponent(Value, EncodingConfiguration);
         }
 
         public override INativeElement GetDescendant(int index)
@@ -57,9 +45,24 @@ namespace NextLevelSeven.Native.Elements
             return Value;
         }
 
-        public System.Collections.Generic.IEnumerable<string> GetValues()
+        public IEnumerable<string> GetValues()
         {
             return Value.Yield();
+        }
+
+        public override IElement Clone()
+        {
+            return CloneInternal();
+        }
+
+        ISubcomponent ISubcomponent.Clone()
+        {
+            return CloneInternal();
+        }
+
+        private NativeSubcomponent CloneInternal()
+        {
+            return new NativeSubcomponent(Value, EncodingConfiguration) {Index = Index};
         }
     }
 }

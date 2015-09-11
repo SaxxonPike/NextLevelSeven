@@ -7,45 +7,8 @@ using NextLevelSeven.Native;
 namespace NextLevelSeven.Test.Native
 {
     [TestClass]
-    public class NativeElementTests
+    public class NativeElementTests : NativeTestFixture
     {
-        [TestMethod]
-        public void Element_CanAddDescendantsAtEnd()
-        {
-            var segment = Message.Create(ExampleMessages.Standard)[2];
-            var fieldCount = segment.DescendantCount;
-            segment[fieldCount + 1].Value = "test";
-            Assert.AreEqual(fieldCount + 1, segment.DescendantCount,
-                @"Number of elements after appending at the end is incorrect.");
-        }
-
-        [TestMethod]
-        public void Element_CanAddDescendantsBeyondEnd()
-        {
-            var segment = Message.Create(ExampleMessages.Standard)[2];
-            var fieldCount = segment.DescendantCount;
-            segment[fieldCount + 2].Value = "test";
-            Assert.AreEqual(fieldCount + 2, segment.DescendantCount,
-                @"Number of elements after appending at the end is incorrect.");
-        }
-
-        [TestMethod]
-        public void Element_CanBeCloned()
-        {
-            var segment = Message.Create(ExampleMessages.Standard)[2];
-            var clone = segment.CloneDetached();
-            Assert.AreNotSame(segment, clone, @"Segment and clone are referencing the same object.");
-            Assert.AreEqual(segment.Value, clone.Value);
-        }
-
-        [TestMethod]
-        public void Element_WithIdenticalValueToAnotherElement_IsEquivalent()
-        {
-            var segment1 = Message.Create(ExampleMessages.Standard)[1];
-            var segment2 = Message.Create(ExampleMessages.Standard)[1];
-            Assert.AreEqual(segment1.Value, segment2.Value);
-        }
-
         [TestMethod]
         public void Element_CanConvertDateTimes()
         {
@@ -75,15 +38,6 @@ namespace NextLevelSeven.Test.Native
                 "Conversion must fail with too short of a year.");
             field.Value = "";
             Assert.IsNull(field.As.DateTime, "Empty or null input values must return null.");
-        }
-
-        [TestMethod]
-        public void Element_CanGetDescendants()
-        {
-            var message = Message.Create(ExampleMessages.Standard);
-            var segment = message[2];
-            var field = segment[2];
-            Assert.AreEqual(@"20130528073829", field.Value);
         }
 
         [TestMethod]
@@ -222,6 +176,24 @@ namespace NextLevelSeven.Test.Native
             var component = message[2][1][1][2];
             component.Delete(1);
             Assert.AreEqual("MSH|^~\\&|\rTST|123^ABC~789^012", message.Value, @"Message was modified unexpectedly.");
+        }
+
+        [TestMethod]
+        public void Element_CanBeCloned_WithIndex()
+        {
+            var message = Message.Create("MSH|^~\\&|\rTST|123^456&ABC~789^012");
+            var segment = message[1];
+            var field = segment[4];
+            var repetition = field[1];
+            var component = repetition[2];
+            var subcomponent = component[2];
+
+            Assert.AreEqual(message.Index, message.Clone().Index, @"Cloned message had different index.");
+            Assert.AreEqual(segment.Index, segment.Clone().Index, @"Cloned segment had different index.");
+            Assert.AreEqual(field.Index, field.Clone().Index, @"Cloned field had different index.");
+            Assert.AreEqual(repetition.Index, repetition.Clone().Index, @"Cloned repetition had different index.");
+            Assert.AreEqual(component.Index, component.Clone().Index, @"Cloned component had different index.");
+            Assert.AreEqual(subcomponent.Index, subcomponent.Clone().Index, @"Cloned subcomponent had different index.");
         }
     }
 }

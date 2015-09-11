@@ -11,7 +11,6 @@ namespace NextLevelSeven.Native.Elements
     internal sealed class NativeField : NativeElement, INativeField
     {
         private readonly Dictionary<int, INativeElement> _cache = new Dictionary<int, INativeElement>();
-        private readonly EncodingConfiguration _encodingConfigurationOverride;
 
         public NativeField(NativeElement ancestor, int parentIndex, int externalIndex)
             : base(ancestor, parentIndex, externalIndex)
@@ -19,24 +18,13 @@ namespace NextLevelSeven.Native.Elements
         }
 
         public NativeField(string value, EncodingConfiguration config)
-            : base(value)
+            : base(value, config)
         {
-            _encodingConfigurationOverride = new EncodingConfiguration(config);
         }
 
         public override char Delimiter
         {
             get { return EncodingConfiguration.RepetitionDelimiter; }
-        }
-
-        public override EncodingConfiguration EncodingConfiguration
-        {
-            get { return _encodingConfigurationOverride ?? Ancestor.EncodingConfiguration; }
-        }
-
-        public override INativeElement CloneDetached()
-        {
-            return new NativeField(Value, EncodingConfiguration);
         }
 
         public override INativeElement GetDescendant(int index)
@@ -85,9 +73,19 @@ namespace NextLevelSeven.Native.Elements
             get { return GetRepetition(index); }
         }
 
-        INativeField INativeField.CloneDetached()
+        override public IElement Clone()
         {
-            return new NativeField(Value, EncodingConfiguration);
+            return CloneInternal();
+        }
+
+        IField IField.Clone()
+        {
+            return CloneInternal();
+        }
+
+        NativeField CloneInternal()
+        {
+            return new NativeField(Value, EncodingConfiguration) { Index = Index };
         }
     }
 }

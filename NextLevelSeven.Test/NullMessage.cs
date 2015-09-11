@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NextLevelSeven.Core;
 using NextLevelSeven.Core.Codec;
 using NextLevelSeven.Core.Specification;
 using NextLevelSeven.Native;
@@ -102,7 +103,7 @@ namespace NextLevelSeven.Test
 
         public INativeMessage Clone()
         {
-            return new NullMessage();
+            return CloneInternal();
         }
 
         public INativeElement GetField(int segment, int field = -1, int repetition = -1, int component = -1,
@@ -185,11 +186,6 @@ namespace NextLevelSeven.Test
 
         public event EventHandler ValueChanged;
 
-        public INativeElement CloneDetached()
-        {
-            return new NullMessage();
-        }
-
         public void Delete()
         {
             throw new NotImplementedException();
@@ -219,6 +215,22 @@ namespace NextLevelSeven.Test
             int subcomponent = -1)
         {
             return null;
+        }
+
+        IElement IElement.Clone()
+        {
+            return CloneInternal();
+        }
+
+        IMessage IMessage.Clone()
+        {
+            return CloneInternal();
+        }
+
+        static NullMessage CloneInternal()
+        {
+            var result = new NullMessage();
+            return result;
         }
     }
 }

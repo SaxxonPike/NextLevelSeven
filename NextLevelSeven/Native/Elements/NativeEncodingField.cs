@@ -45,14 +45,9 @@ namespace NextLevelSeven.Native.Elements
             }
         }
 
-        public override INativeElement CloneDetached()
-        {
-            return new NativeField(Value, EncodingConfiguration);
-        }
-
         public override INativeElement GetDescendant(int index)
         {
-            return new NativeEncodingField(this);
+            return GetRepetition(index);
         }
 
         protected override IStringDivider GetDescendantDivider(NativeElement ancestor, int index)
@@ -63,6 +58,11 @@ namespace NextLevelSeven.Native.Elements
         public override string ToString()
         {
             return Value;
+        }
+
+        private INativeRepetition GetRepetition(int index)
+        {
+            return new NativeRepetition(this, 0, 1);
         }
 
         public string GetValue(int repetition = -1, int component = -1, int subcomponent = -1)
@@ -77,12 +77,22 @@ namespace NextLevelSeven.Native.Elements
 
         public new INativeRepetition this[int index]
         {
-            get { return new NativeRepetition(this, 0, 1); }
+            get { return GetRepetition(index); }
         }
 
-        INativeField INativeField.CloneDetached()
+        override public IElement Clone()
         {
-            return new NativeEncodingField(this);
+            return CloneInternal();
+        }
+
+        IField IField.Clone()
+        {
+            return CloneInternal();
+        }
+
+        NativeField CloneInternal()
+        {
+            return new NativeField(Value, EncodingConfiguration) { Index = Index };
         }
     }
 }

@@ -12,7 +12,6 @@ namespace NextLevelSeven.Native.Elements
     internal sealed class NativeSegment : NativeElement, INativeSegment
     {
         private readonly Dictionary<int, INativeElement> _cache = new Dictionary<int, INativeElement>();
-        private readonly EncodingConfiguration _encodingConfigurationOverride;
 
         public NativeSegment(NativeElement ancestor, int parentIndex, int externalIndex)
             : base(ancestor, parentIndex, externalIndex)
@@ -20,27 +19,11 @@ namespace NextLevelSeven.Native.Elements
         }
 
         private NativeSegment(string value, EncodingConfiguration config)
-            : base(value)
+            : base(value, config)
         {
-            _encodingConfigurationOverride = new EncodingConfiguration(config);
         }
 
         INativeField INativeSegment.this[int index] { get { return GetField(index); } }
-
-        public override EncodingConfiguration EncodingConfiguration
-        {
-            get { return _encodingConfigurationOverride ?? Ancestor.EncodingConfiguration; }
-        }
-
-        public override INativeElement CloneDetached()
-        {
-            return CloneDetachedSegment();
-        }
-
-        INativeSegment INativeSegment.CloneDetached()
-        {
-            return CloneDetachedSegment();
-        }
 
         public override char Delimiter
         {
@@ -90,11 +73,6 @@ namespace NextLevelSeven.Native.Elements
         {
             get { return DescendantDivider[0]; }
             set { DescendantDivider[0] = value; }
-        }
-
-        private INativeSegment CloneDetachedSegment()
-        {
-            return new NativeSegment(Value, EncodingConfiguration);
         }
 
         public override INativeElement GetDescendant(int index)
@@ -152,6 +130,21 @@ namespace NextLevelSeven.Native.Elements
             return field < 0
                 ? Values
                 : GetField(field).GetValues(repetition, component, subcomponent);
+        }
+
+        public override IElement Clone()
+        {
+            return CloneInternal();
+        }
+
+        ISegment ISegment.Clone()
+        {
+            return CloneInternal();
+        }
+
+        NativeSegment CloneInternal()
+        {
+            return new NativeSegment(Value, EncodingConfiguration) {Index = Index};
         }
     }
 }

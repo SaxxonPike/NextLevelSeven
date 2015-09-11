@@ -10,7 +10,7 @@ using NextLevelSeven.Streaming;
 namespace NextLevelSeven.Test.Streaming
 {
     [TestClass]
-    public class Hl7TextReaderTests
+    public class Hl7TextReaderTests : StreamingTestFixture
     {
         [TestMethod]
         public void HL7TextReader_CanReadAllMessagesInAStream()

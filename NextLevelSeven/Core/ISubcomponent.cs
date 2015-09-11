@@ -8,6 +8,11 @@ namespace NextLevelSeven.Core
     public interface ISubcomponent : IElement
     {
         /// <summary>
+        ///     Get a copy of the segment.
+        /// </summary>
+        new ISubcomponent Clone();
+
+        /// <summary>
         ///     Get data from a subcomponent.
         /// </summary>
         /// <returns>Subcomponent data.</returns>

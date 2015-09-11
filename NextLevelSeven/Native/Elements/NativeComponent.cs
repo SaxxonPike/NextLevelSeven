@@ -18,24 +18,14 @@ namespace NextLevelSeven.Native.Elements
         {
         }
 
-        private NativeComponent(string value)
-            : base(value)
+        private NativeComponent(string value, EncodingConfiguration config)
+            : base(value, config)
         {
         }
 
         public override char Delimiter
         {
             get { return EncodingConfiguration.SubcomponentDelimiter; }
-        }
-
-        public override EncodingConfiguration EncodingConfiguration
-        {
-            get { return Ancestor.EncodingConfiguration; }
-        }
-
-        public override INativeElement CloneDetached()
-        {
-            return new NativeComponent(Value);
         }
 
         public override INativeElement GetDescendant(int index)
@@ -79,9 +69,19 @@ namespace NextLevelSeven.Native.Elements
             get { return GetSubcomponent(index); }
         }
 
-        INativeComponent INativeComponent.CloneDetached()
+        override public IElement Clone()
         {
-            return new NativeComponent(Value);
+            return CloneInternal();
+        }
+
+        IComponent IComponent.Clone()
+        {
+            return CloneInternal();
+        }
+
+        private NativeComponent CloneInternal()
+        {
+            return new NativeComponent(Value, EncodingConfiguration) {Index = Index};
         }
     }
 }

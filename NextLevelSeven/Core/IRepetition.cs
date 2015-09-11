@@ -8,6 +8,11 @@ namespace NextLevelSeven.Core
     public interface IRepetition : IElement
     {
         /// <summary>
+        ///     Get a copy of the segment.
+        /// </summary>
+        new IRepetition Clone();
+
+        /// <summary>
         ///     Get data from a specific place in the field repetition. Depth is determined by how many indices are specified.
         /// </summary>
         /// <param name="component">Component index.</param>

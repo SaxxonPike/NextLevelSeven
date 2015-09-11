@@ -8,6 +8,11 @@ namespace NextLevelSeven.Core
     public interface IField : IElement
     {
         /// <summary>
+        ///     Get a copy of the segment.
+        /// </summary>
+        new IField Clone();
+
+        /// <summary>
         ///     Get data from a specific place in the field. Depth is determined by how many indices are specified.
         /// </summary>
         /// <param name="repetition">Repetition number.</param>

@@ -1,15 +1,13 @@
-﻿namespace NextLevelSeven.Building
+﻿using System.Collections.Generic;
+using NextLevelSeven.Core;
+
+namespace NextLevelSeven.Building
 {
     /// <summary>
     ///     Base class for builders that are not root level.
     /// </summary>
     internal abstract class BuilderBaseDescendant : BuilderBase
     {
-        /// <summary>
-        ///     Get the ancestor builder.
-        /// </summary>
-        private readonly BuilderBase _ancestor;
-
         /// <summary>
         ///     Initialize the message builder base class.
         /// </summary>
@@ -18,7 +16,16 @@
         internal BuilderBaseDescendant(BuilderBase ancestor, int index)
             : base(ancestor.EncodingConfiguration, index)
         {
-            _ancestor = ancestor;
+            Ancestor = ancestor;
+        }
+
+        /// <summary>
+        ///     Get the ancestor builder.
+        /// </summary>
+        protected BuilderBase Ancestor
+        {
+            get;
+            private set;
         }
 
         /// <summary>
@@ -26,8 +33,8 @@
         /// </summary>
         public override char ComponentDelimiter
         {
-            get { return _ancestor.ComponentDelimiter; }
-            set { _ancestor.ComponentDelimiter = value; }
+            get { return Ancestor.ComponentDelimiter; }
+            set { Ancestor.ComponentDelimiter = value; }
         }
 
         /// <summary>
@@ -35,8 +42,8 @@
         /// </summary>
         public override char EscapeDelimiter
         {
-            get { return _ancestor.EscapeDelimiter; }
-            set { _ancestor.EscapeDelimiter = value; }
+            get { return Ancestor.EscapeDelimiter; }
+            set { Ancestor.EscapeDelimiter = value; }
         }
 
         /// <summary>
@@ -44,8 +51,8 @@
         /// </summary>
         public override char FieldDelimiter
         {
-            get { return _ancestor.FieldDelimiter; }
-            set { _ancestor.FieldDelimiter = value; }
+            get { return Ancestor.FieldDelimiter; }
+            set { Ancestor.FieldDelimiter = value; }
         }
 
         /// <summary>
@@ -53,8 +60,8 @@
         /// </summary>
         public override char RepetitionDelimiter
         {
-            get { return _ancestor.RepetitionDelimiter; }
-            set { _ancestor.RepetitionDelimiter = value; }
+            get { return Ancestor.RepetitionDelimiter; }
+            set { Ancestor.RepetitionDelimiter = value; }
         }
 
         /// <summary>
@@ -62,8 +69,22 @@
         /// </summary>
         public override char SubcomponentDelimiter
         {
-            get { return _ancestor.SubcomponentDelimiter; }
-            set { _ancestor.SubcomponentDelimiter = value; }
+            get { return Ancestor.SubcomponentDelimiter; }
+            set { Ancestor.SubcomponentDelimiter = value; }
+        }
+
+        public abstract override IElement Clone();
+
+        public abstract override string Value
+        {
+            get;
+            set;
+        }
+
+        public abstract override IEnumerable<string> Values
+        {
+            get;
+            set;
         }
     }
 }

@@ -6,7 +6,7 @@ using NextLevelSeven.Routing;
 namespace NextLevelSeven.Test.Routing
 {
     [TestClass]
-    public class ConditionalMethodRouterTests
+    public class ConditionalMethodRouterTests : RoutingTestFixture
     {
         [TestMethod]
         public void ConditionalMethodRouter_ReceivesMessages()

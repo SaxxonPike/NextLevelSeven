@@ -8,17 +8,14 @@ namespace NextLevelSeven.Native.Elements
     /// </summary>
     internal sealed class NativeFieldWithoutRepetitions : NativeElement, INativeField
     {
-        private readonly EncodingConfiguration _encodingConfigurationOverride;
-
         public NativeFieldWithoutRepetitions(NativeElement ancestor, int parentIndex, int externalIndex)
             : base(ancestor, parentIndex, externalIndex)
         {
         }
 
         private NativeFieldWithoutRepetitions(string value, EncodingConfiguration config)
-            : base(value)
+            : base(value, config)
         {
-            _encodingConfigurationOverride = new EncodingConfiguration(config);
         }
 
         public override char Delimiter
@@ -29,16 +26,6 @@ namespace NextLevelSeven.Native.Elements
         public override int DescendantCount
         {
             get { return 1; }
-        }
-
-        public override EncodingConfiguration EncodingConfiguration
-        {
-            get { return _encodingConfigurationOverride ?? Ancestor.EncodingConfiguration; }
-        }
-
-        public override INativeElement CloneDetached()
-        {
-            return new NativeFieldWithoutRepetitions(Value, EncodingConfiguration);
         }
 
         public override INativeElement GetDescendant(int index)
@@ -70,9 +57,19 @@ namespace NextLevelSeven.Native.Elements
             get { return GetRepetition(index); }
         }
 
-        INativeField INativeField.CloneDetached()
+        public override IElement Clone()
         {
-            throw new System.NotImplementedException();
+            return CloneInternal();
+        }
+
+        IField IField.Clone()
+        {
+            return CloneInternal();
+        }
+
+        NativeFieldWithoutRepetitions CloneInternal()
+        {
+            return new NativeFieldWithoutRepetitions(Value, EncodingConfiguration) { Index = Index };
         }
     }
 }

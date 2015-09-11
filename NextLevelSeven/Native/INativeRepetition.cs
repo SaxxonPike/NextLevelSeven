@@ -16,11 +16,5 @@ namespace NextLevelSeven.Native
         /// <param name="index">Index to query.</param>
         /// <returns>Element that was found at the index.</returns>
         new INativeComponent this[int index] { get; }
-
-        /// <summary>
-        ///     Create a detached clone of the field repetition with no ancestors.
-        /// </summary>
-        /// <returns></returns>
-        new INativeRepetition CloneDetached();
     }
 }

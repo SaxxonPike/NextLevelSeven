@@ -7,7 +7,7 @@ using NextLevelSeven.Streaming;
 namespace NextLevelSeven.Test.Streaming
 {
     [TestClass]
-    public class MlpStreamReaderTests
+    public class MlpStreamReaderTests : StreamingTestFixture
     {
         [TestMethod]
         public void MLPStreamReader_CanReadAllMessages()

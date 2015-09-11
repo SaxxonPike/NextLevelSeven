@@ -6,7 +6,7 @@ using NextLevelSeven.Routing;
 namespace NextLevelSeven.Test.Routing
 {
     [TestClass]
-    public class ListenerRouterTests
+    public class ListenerRouterTests : RoutingTestFixture
     {
         [TestMethod]
         public void ListenerRouter_ReceivesMessages()

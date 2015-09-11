@@ -98,12 +98,6 @@ namespace NextLevelSeven.Native
         string UnEscape(string data);
 
         /// <summary>
-        ///     Create a deep clone of the message.
-        /// </summary>
-        /// <returns>The new message.</returns>
-        INativeMessage Clone();
-
-        /// <summary>
         ///     Get data from a specific place in the message. Depth is determined by how many indices are specified.
         /// </summary>
         /// <param name="segment">Segment index.</param>

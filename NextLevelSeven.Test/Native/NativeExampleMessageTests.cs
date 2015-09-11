@@ -5,7 +5,7 @@ using NextLevelSeven.Core;
 namespace NextLevelSeven.Test.Native
 {
     [TestClass]
-    public class NativeExampleMessageTests
+    public class NativeExampleMessageTests : NativeTestFixture
     {
         [TestMethod]
         public void ExampleMessage_HasProperSampleData()

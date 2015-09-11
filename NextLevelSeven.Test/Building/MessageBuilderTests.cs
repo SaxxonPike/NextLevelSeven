@@ -7,7 +7,7 @@ using NextLevelSeven.Core;
 namespace NextLevelSeven.Test.Building
 {
     [TestClass]
-    public class MessageBuilderTests
+    public class MessageBuilderTests : BuildingTestFixture
     {
         [TestMethod]
         public void MessageBuilder_CanBuildFields_Individually()

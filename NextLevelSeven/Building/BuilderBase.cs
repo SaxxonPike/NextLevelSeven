@@ -1,11 +1,12 @@
-﻿using NextLevelSeven.Core;
+﻿using System.Collections.Generic;
+using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Building
 {
     /// <summary>
     ///     Base class for message builders.
     /// </summary>
-    internal abstract class BuilderBase
+    internal abstract class BuilderBase : IElement
     {
         /// <summary>
         ///     Encoding configuration for this message.
@@ -78,5 +79,19 @@ namespace NextLevelSeven.Building
         }
 
         public int Index { get; private set; }
+
+        public abstract IElement Clone();
+
+        abstract public string Value
+        {
+            get;
+            set;
+        }
+
+        abstract public IEnumerable<string> Values
+        {
+            get;
+            set;
+        }
     }
 }

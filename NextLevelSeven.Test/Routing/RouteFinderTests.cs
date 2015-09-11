@@ -6,7 +6,7 @@ using NextLevelSeven.Routing;
 namespace NextLevelSeven.Test.Routing
 {
     [TestClass]
-    public class RouteFinderTests
+    public class RouteFinderTests : RoutingTestFixture
     {
         [TestMethod]
         public void RouteFinder_CanBeInitializedWithNoRoutes()

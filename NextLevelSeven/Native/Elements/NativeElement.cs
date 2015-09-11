@@ -33,6 +33,13 @@ namespace NextLevelSeven.Native.Elements
             Ancestor = null;
         }
 
+        protected NativeElement(string value, EncodingConfiguration config)
+        {
+            EncodingConfigurationInternal = config;
+            _descendantDivider = GetDescendantDividerRoot(value);
+            Ancestor = null;
+        }
+
         protected NativeElement(NativeElement ancestor, int parentIndex, int externalIndex)
         {
             Index = externalIndex;
@@ -57,7 +64,10 @@ namespace NextLevelSeven.Native.Elements
             }
         }
 
-        public abstract EncodingConfiguration EncodingConfiguration { get; }
+        public virtual EncodingConfiguration EncodingConfiguration { get { return EncodingConfigurationInternal ?? Ancestor.EncodingConfiguration; } }
+
+        protected readonly EncodingConfiguration EncodingConfigurationInternal;
+
         protected int ParentIndex { get; set; }
 
         public bool Equals(string other)
@@ -81,8 +91,6 @@ namespace NextLevelSeven.Native.Elements
         {
             get { return new NativeCodec(this); }
         }
-
-        public abstract INativeElement CloneDetached();
 
         public void Delete()
         {
@@ -256,5 +264,7 @@ namespace NextLevelSeven.Native.Elements
         {
             return DescendantDivider.Value;
         }
+
+        public abstract IElement Clone();
     }
 }

@@ -5,7 +5,7 @@ using NextLevelSeven.Routing;
 namespace NextLevelSeven.Test.Routing
 {
     [TestClass]
-    public class BroadcastRouterTests
+    public class BroadcastRouterTests : RoutingTestFixture
     {
         [TestMethod]
         public void BroadcastRouter_CanBeInitializedWithoutRoutes()

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NextLevelSeven.Core;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Utility;
 
@@ -21,9 +22,13 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="builder">Ancestor builder.</param>
         /// <param name="index">Index in the ancestor.</param>
-        internal SegmentBuilder(BuilderBase builder, int index)
+        internal SegmentBuilder(BuilderBase builder, int index, string value = null)
             : base(builder, index)
         {
+            if (value != null)
+            {
+                Value = value;
+            }
         }
 
         /// <summary>
@@ -102,7 +107,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set field content within this segment.
         /// </summary>
-        public IEnumerable<string> Values
+        override public IEnumerable<string> Values
         {
             get
             {
@@ -116,7 +121,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set the segment string.
         /// </summary>
-        public string Value
+        override public string Value
         {
             get
             {
@@ -390,6 +395,16 @@ namespace NextLevelSeven.Building
             return field < 0
                 ? Values
                 : this[field].GetValues(repetition, component, subcomponent);
+        }
+
+        override public IElement Clone()
+        {
+            return new SegmentBuilder(Ancestor, Index, Value);
+        }
+
+        ISegment ISegment.Clone()
+        {
+            return new SegmentBuilder(Ancestor, Index, Value);
         }
     }
 }

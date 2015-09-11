@@ -19,11 +19,6 @@ namespace NextLevelSeven.Native.Elements
             get { return '\0'; }
         }
 
-        public override EncodingConfiguration EncodingConfiguration
-        {
-            get { return Ancestor.EncodingConfiguration; }
-        }
-
         public override bool HasSignificantDescendants
         {
             get { return false; }
@@ -50,11 +45,6 @@ namespace NextLevelSeven.Native.Elements
                         (s.Length > 3 ? s.Substring(4) : string.Empty));
                 }
             }
-        }
-
-        public override INativeElement CloneDetached()
-        {
-            return new NativeField(Value, EncodingConfiguration);
         }
 
         public override INativeElement GetDescendant(int index)
@@ -87,9 +77,19 @@ namespace NextLevelSeven.Native.Elements
             get { return new NativeRepetition(this, 0, index); }
         }
 
-        INativeField INativeField.CloneDetached()
+        override public IElement Clone()
         {
-            return new NativeField(Value, EncodingConfiguration);
+            return CloneInternal();
+        }
+
+        IField IField.Clone()
+        {
+            return CloneInternal();
+        }
+
+        NativeField CloneInternal()
+        {
+            return new NativeField(Value, EncodingConfiguration) { Index = Index };
         }
     }
 }

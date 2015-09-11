@@ -87,6 +87,7 @@ namespace NextLevelSeven.Native.Dividers
                 ValueChars = StringDividerOperations.GetSplicedString(paddedString, d.Offset, d.Length,
                     StringDividerOperations.GetChars(value));
             }
+            _divisions = null;
 
             RaiseValueChanged();            
         }

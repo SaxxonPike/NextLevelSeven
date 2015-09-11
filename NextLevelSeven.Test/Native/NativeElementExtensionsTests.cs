@@ -5,7 +5,7 @@ using NextLevelSeven.Native;
 namespace NextLevelSeven.Test.Native
 {
     [TestClass]
-    public class NativeElementExtensionsTests
+    public class NativeElementExtensionsTests : NativeTestFixture
     {
         [TestMethod]
         public void ElementExtensions_CanInsertElementAfter()
