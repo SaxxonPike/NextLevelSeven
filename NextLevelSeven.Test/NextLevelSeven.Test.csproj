@@ -63,6 +63,8 @@
     <Compile Include="Building\MessageBuilderTests.cs" />
     <Compile Include="Building\SegmentBuilderTests.cs" />
     <Compile Include="Conversion\ConversionTestFixture.cs" />
+    <Compile Include="Conversion\DateTimeConverterTests.cs" />
+    <Compile Include="Conversion\NumberConverterTests.cs" />
     <Compile Include="Diagnostics\DiagnosticsTestFixture.cs" />
     <Compile Include="Generation\GenerationTestFixture.cs" />
     <Compile Include="Native\NativeComponentTests.cs" />

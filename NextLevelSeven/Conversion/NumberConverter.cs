@@ -64,6 +64,11 @@ namespace NextLevelSeven.Conversion
             int output;
             if (!int.TryParse(input.Trim(), out output))
             {
+                var decimalValue = ConvertToDecimal(input);
+                if (decimalValue.HasValue)
+                {
+                    return (int) decimalValue;
+                }
                 return null;
             }
 
