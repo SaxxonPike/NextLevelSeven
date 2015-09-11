@@ -93,5 +93,27 @@ namespace NextLevelSeven.Building
             get;
             set;
         }
+
+        abstract public IEncodedTypeConverter As
+        {
+            get;
+        }
+
+        abstract public int ValueCount
+        {
+            get;
+        }
+
+        abstract public char Delimiter
+        {
+            get;
+        }
+
+        public IElement this[int index]
+        {
+            get { return GetGenericElement(index); }
+        }
+
+        protected abstract IElement GetGenericElement(int index);
     }
 }

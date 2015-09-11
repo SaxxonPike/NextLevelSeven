@@ -127,7 +127,7 @@ namespace NextLevelSeven.Test
             get { return null; }
         }
 
-        public ICodec As
+        public IEncodedTypeConverter As
         {
             get { return null; }
         }
@@ -231,6 +231,20 @@ namespace NextLevelSeven.Test
         {
             var result = new NullMessage();
             return result;
+        }
+
+        IElement IElement.this[int index]
+        {
+            get
+            {
+                return null;
+            }
+        }
+
+
+        public int ValueCount
+        {
+            get { return 0; }
         }
     }
 }

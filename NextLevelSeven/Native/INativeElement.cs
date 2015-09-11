@@ -16,27 +16,12 @@ namespace NextLevelSeven.Native
         /// </summary>
         /// <param name="index">Index to query.</param>
         /// <returns>Element that was found at the index.</returns>
-        INativeElement this[int index] { get; }
+        new INativeElement this[int index] { get; }
 
         /// <summary>
         ///     Get the ancestor (higher level in the heirarchy) element.
         /// </summary>
         INativeElement AncestorElement { get; }
-
-        /// <summary>
-        ///     Get conversion options for non-string datatypes, such as numeric and dates.
-        /// </summary>
-        ICodec As { get; }
-
-        /// <summary>
-        ///     Delimiter used to separate descendants.
-        /// </summary>
-        char Delimiter { get; }
-
-        /// <summary>
-        ///     Get the number of descendant elements.
-        /// </summary>
-        int DescendantCount { get; }
 
         /// <summary>
         ///     Get all descendant elements.

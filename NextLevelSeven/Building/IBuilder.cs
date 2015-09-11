@@ -9,11 +9,6 @@ namespace NextLevelSeven.Building
     public interface IBuilder : IElement
     {
         /// <summary>
-        ///     Get the number of subcomponents in this component, including subcomponents with no content.
-        /// </summary>
-        int Count { get; }
-
-        /// <summary>
         ///     Get or set the character used to separate component-level content.
         /// </summary>
         char ComponentDelimiter { get; set; }

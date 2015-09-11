@@ -38,7 +38,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get the number of field repetitions in this field, including field repetitions with no content.
         /// </summary>
-        public override int Count
+        public override int ValueCount
         {
             get { return Value.Length; }
         }

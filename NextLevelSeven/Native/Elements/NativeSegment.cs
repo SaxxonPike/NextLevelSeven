@@ -44,7 +44,7 @@ namespace NextLevelSeven.Native.Elements
             }
         }
 
-        public override int DescendantCount
+        public override int ValueCount
         {
             get
             {

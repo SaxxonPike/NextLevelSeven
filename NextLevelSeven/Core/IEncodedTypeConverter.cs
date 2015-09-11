@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using NextLevelSeven.Core.Codec;
 
-namespace NextLevelSeven.Core.Codec
+namespace NextLevelSeven.Core
 {
     /// <summary>
     ///     Conversion methods for HL7 data values.
     /// </summary>
-    public interface ICodec
+    public interface IEncodedTypeConverter
     {
         /// <summary>
         ///     Get or set element data as a date only.
@@ -15,7 +17,7 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>
         ///     Get all descendant element data as dates only.
         /// </summary>
-        IIndexedCodec<DateTime?> Dates { get; }
+        IIndexedEncodedTypeConverter<DateTime?> Dates { get; }
 
         /// <summary>
         ///     Get or set element data as a date/time.
@@ -25,7 +27,7 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>
         ///     Get all descendant element data as date/time.
         /// </summary>
-        IIndexedCodec<DateTimeOffset?> DateTimes { get; }
+        IIndexedEncodedTypeConverter<DateTimeOffset?> DateTimes { get; }
 
         /// <summary>
         ///     Get or set element data as a decimal number.
@@ -35,12 +37,12 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>
         ///     Get all descendant element data as decimal numbers.
         /// </summary>
-        IIndexedCodec<decimal?> Decimals { get; }
+        IIndexedEncodedTypeConverter<decimal?> Decimals { get; }
 
         /// <summary>
         ///     Get or set formatted text.
         /// </summary>
-        string FormattedText { get; set; }
+        IEnumerable<string> FormattedText { get; set; }
 
         /// <summary>
         ///     Get or set element data as an integer.
@@ -50,7 +52,7 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>
         ///     Get all descendant element data as integers.
         /// </summary>
-        IIndexedCodec<int?> Ints { get; }
+        IIndexedEncodedTypeConverter<int?> Ints { get; }
 
         /// <summary>
         ///     Get or set element data as a string.
@@ -60,7 +62,7 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>
         ///     Get or set all descendant element data as strings.
         /// </summary>
-        IIndexedCodec<string> Strings { get; }
+        IIndexedEncodedTypeConverter<string> Strings { get; }
 
         /// <summary>
         ///     Get or set data as a text field.
@@ -75,6 +77,6 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>
         ///     Get all descendant element data as times only.
         /// </summary>
-        IIndexedCodec<TimeSpan?> Times { get; }
+        IIndexedEncodedTypeConverter<TimeSpan?> Times { get; }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using NextLevelSeven.Conversion;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Specification;
 using NextLevelSeven.Diagnostics;
@@ -216,8 +217,8 @@ namespace NextLevelSeven.Native.Elements
         /// </summary>
         public DateTimeOffset? Time
         {
-            get { return NativeCodec.ConvertToDateTime(Msh[7].Value); }
-            set { Msh[7].Value = NativeCodec.ConvertFromDateTime(value); }
+            get { return DateTimeConverter.ConvertToDateTime(Msh[7].Value); }
+            set { Msh[7].Value = DateTimeConverter.ConvertFromDateTime(value); }
         }
 
         /// <summary>

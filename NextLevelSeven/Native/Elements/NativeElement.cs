@@ -87,7 +87,7 @@ namespace NextLevelSeven.Native.Elements
             get { return Ancestor; }
         }
 
-        public ICodec As
+        public IEncodedTypeConverter As
         {
             get { return new NativeCodec(this); }
         }
@@ -103,7 +103,7 @@ namespace NextLevelSeven.Native.Elements
 
         public abstract char Delimiter { get; }
 
-        public virtual int DescendantCount
+        public virtual int ValueCount
         {
             get { return DescendantDivider.Count; }
         }
@@ -127,7 +127,7 @@ namespace NextLevelSeven.Native.Elements
                 {
                     return true;
                 }
-                return (Index <= Ancestor.DescendantCount);
+                return (Index <= Ancestor.ValueCount);
             }
         }
 
@@ -135,12 +135,12 @@ namespace NextLevelSeven.Native.Elements
         {
             get
             {
-                if (!Exists || DescendantCount == 0 || Delimiter == '\0')
+                if (!Exists || ValueCount == 0 || Delimiter == '\0')
                 {
                     return false;
                 }
 
-                return (DescendantCount > 1) || DescendantElements.Any(d => d.HasSignificantDescendants);
+                return (ValueCount > 1) || DescendantElements.Any(d => d.HasSignificantDescendants);
             }
         }
 
@@ -213,7 +213,7 @@ namespace NextLevelSeven.Native.Elements
         {
             get
             {
-                return (DescendantCount > 1)
+                return (ValueCount > 1)
                     ? DescendantDivider.Value.Split(DescendantDivider.Delimiter)
                     : new[] {DescendantDivider.Value};
             }
@@ -266,5 +266,10 @@ namespace NextLevelSeven.Native.Elements
         }
 
         public abstract IElement Clone();
+
+        IElement IElement.this[int index]
+        {
+            get { return GetDescendant(index); }
+        }
     }
 }

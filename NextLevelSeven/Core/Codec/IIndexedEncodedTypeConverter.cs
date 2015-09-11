@@ -6,7 +6,7 @@ namespace NextLevelSeven.Core.Codec
     ///     Get or set elements via an HL7 data value codec.
     /// </summary>
     /// <typeparam name="TDecoded"></typeparam>
-    public interface IIndexedCodec<TDecoded> : IEnumerable<TDecoded>
+    public interface IIndexedEncodedTypeConverter<TDecoded> : IEnumerable<TDecoded>
     {
         /// <summary>
         ///     Get or set element data at the specified index.

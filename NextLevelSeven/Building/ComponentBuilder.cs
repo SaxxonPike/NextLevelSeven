@@ -35,7 +35,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="index">Index within the component to get the builder from.</param>
         /// <returns>Subcomponent builder for the specified index.</returns>
-        public ISubcomponentBuilder this[int index]
+        new public ISubcomponentBuilder this[int index]
         {
             get
             {
@@ -50,7 +50,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get the number of subcomponents in this component, including subcomponents with no content.
         /// </summary>
-        public int Count
+        override public int ValueCount
         {
             get { return _subcomponentBuilders.Max(kv => kv.Key); }
         }
@@ -64,7 +64,7 @@ namespace NextLevelSeven.Building
             {
                 return new WrapperEnumerable<string>(index => this[index].Value,
                     (index, data) => Subcomponent(index, data),
-                    () => Count,
+                    () => ValueCount,
                     1);
             }
             set { Subcomponents(value.ToArray()); }
@@ -198,6 +198,21 @@ namespace NextLevelSeven.Building
         IComponent IComponent.Clone()
         {
             return new ComponentBuilder(Ancestor, Index);
+        }
+
+        override public IEncodedTypeConverter As
+        {
+            get { return new BuilderCodec(this); }
+        }
+
+        public override char Delimiter
+        {
+            get { return SubcomponentDelimiter; }
+        }
+
+        protected override IElement GetGenericElement(int index)
+        {
+            return this[index];
         }
     }
 }

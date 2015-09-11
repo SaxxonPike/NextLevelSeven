@@ -54,7 +54,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="index">Index within the message to get the builder from.</param>
         /// <returns>Segment builder for the specified index.</returns>
-        public ISegmentBuilder this[int index]
+        new public ISegmentBuilder this[int index]
         {
             get
             {
@@ -69,7 +69,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get the number of segments in the message.
         /// </summary>
-        public int Count
+        override public int ValueCount
         {
             get { return _segmentBuilders.Max(kv => kv.Key); }
         }
@@ -83,7 +83,7 @@ namespace NextLevelSeven.Building
             {
                 return new WrapperEnumerable<string>(index => this[index].Value,
                     (index, data) => Segment(index, data),
-                    () => Count,
+                    () => ValueCount,
                     1);
             }
             set { Segments(value.ToArray()); }
@@ -439,6 +439,21 @@ namespace NextLevelSeven.Building
         IMessage IMessage.Clone()
         {
             return new MessageBuilder(Value);
+        }
+
+        public override IEncodedTypeConverter As
+        {
+            get { return new BuilderCodec(this); }
+        }
+
+        public override char Delimiter
+        {
+            get { return '\xD'; }
+        }
+
+        protected override IElement GetGenericElement(int index)
+        {
+            return this[index];
         }
     }
 }

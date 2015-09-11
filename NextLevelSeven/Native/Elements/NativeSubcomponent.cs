@@ -25,7 +25,7 @@ namespace NextLevelSeven.Native.Elements
             get { return '\0'; }
         }
 
-        public override int DescendantCount
+        public override int ValueCount
         {
             get { return 0; }
         }

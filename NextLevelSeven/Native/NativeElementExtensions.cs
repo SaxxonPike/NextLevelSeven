@@ -60,7 +60,7 @@ namespace NextLevelSeven.Native
         /// <param name="index">Index of descendant to delete.</param>
         public static void Delete(this INativeElement target, int index)
         {
-            if (index >= 1 && index <= target.DescendantCount)
+            if (index >= 1 && index <= target.ValueCount)
             {
                 target[index].Delete();
             }

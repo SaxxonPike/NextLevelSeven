@@ -22,7 +22,7 @@ namespace NextLevelSeven.Test.Native
         public void Message_ReturnsBasicMessage()
         {
             var message = Message.Create();
-            Assert.AreEqual(1, message.DescendantCount, @"Default message should not contain multiple segments.");
+            Assert.AreEqual(1, message.ValueCount, @"Default message should not contain multiple segments.");
             Assert.AreEqual("MSH", message[1].Type, @"Default message should create an MSH segment.");
             Assert.AreEqual(@"^~\&", message[1][2].Value,
                 @"Default message should use standard HL7 encoding characters.");
@@ -231,10 +231,10 @@ namespace NextLevelSeven.Test.Native
         public void Message_CanAddDescendantsAtEnd()
         {
             var message = Message.Create(ExampleMessages.Standard);
-            var count = message.DescendantCount;
+            var count = message.ValueCount;
             var id = Randomized.String();
             message[count + 1].Value = id;
-            Assert.AreEqual(count + 1, message.DescendantCount,
+            Assert.AreEqual(count + 1, message.ValueCount,
                 @"Number of elements after appending at the end of a message is incorrect.");
         }
 

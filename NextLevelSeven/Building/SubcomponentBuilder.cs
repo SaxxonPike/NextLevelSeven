@@ -47,7 +47,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Returns 0 if null, and 1 otherwise.
         /// </summary>
-        public int Count
+        override public int ValueCount
         {
             get { return _value == null ? 0 : 1; }
         }
@@ -57,7 +57,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         override public IEnumerable<string> Values
         {
-            get { return new WrapperEnumerable<string>(i => _value, (i, v) => { }, () => Count, 1); }
+            get { return new WrapperEnumerable<string>(i => _value, (i, v) => { }, () => ValueCount, 1); }
             set { _value = string.Concat(value); }
         }
 
@@ -88,6 +88,21 @@ namespace NextLevelSeven.Building
         ISubcomponent ISubcomponent.Clone()
         {
             return new SubcomponentBuilder(Ancestor, Index);
+        }
+
+        public override IEncodedTypeConverter As
+        {
+            get { return new BuilderCodec(this); }
+        }
+
+        public override char Delimiter
+        {
+            get { return '\0'; }
+        }
+
+        protected override IElement GetGenericElement(int index)
+        {
+            return this[index];
         }
     }
 }

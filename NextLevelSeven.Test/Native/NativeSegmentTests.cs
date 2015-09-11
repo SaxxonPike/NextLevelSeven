@@ -37,10 +37,10 @@ namespace NextLevelSeven.Test.Native
         public void Segment_CanAddDescendantsAtEnd()
         {
             var segment = Message.Create(ExampleMessages.Standard)[2];
-            var fieldCount = segment.DescendantCount;
+            var fieldCount = segment.ValueCount;
             var id = Randomized.String();
             segment[fieldCount + 1].Value = id;
-            Assert.AreEqual(fieldCount + 1, segment.DescendantCount,
+            Assert.AreEqual(fieldCount + 1, segment.ValueCount,
                 @"Number of elements after appending at the end is incorrect.");
         }
 

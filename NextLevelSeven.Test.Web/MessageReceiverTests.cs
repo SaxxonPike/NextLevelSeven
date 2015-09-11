@@ -22,7 +22,7 @@ namespace NextLevelSeven.Test.Web
             var response = Message.Create(responseData);
             var responseTime = response.Time;
 
-            Assert.AreEqual(2, response.DescendantCount, @"ACK must consist of exactly two segments.");
+            Assert.AreEqual(2, response.ValueCount, @"ACK must consist of exactly two segments.");
             Assert.AreEqual(request.Sender.Application, response.Receiver.Application,
                 @"Application field doesn't match what was sent.");
             Assert.AreEqual(request.Sender.Facility, response.Receiver.Facility,
@@ -40,7 +40,7 @@ namespace NextLevelSeven.Test.Web
             var responseData = MessageSenderMock.SendData("BadMessage");
             var response = Message.Create(responseData);
 
-            Assert.AreEqual(2, response.DescendantCount, @"ACK must consist of exactly two segments.");
+            Assert.AreEqual(2, response.ValueCount, @"ACK must consist of exactly two segments.");
             Assert.AreEqual("AR", response["MSA"].First()[1].Value, @"MSA-1 must be 'AR' when rejecting bad messages.");
             Assert.AreEqual("ACK", response.Type, "MSH-9-1 should be ACK.");
         }

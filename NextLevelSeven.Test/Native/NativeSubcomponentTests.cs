@@ -20,10 +20,10 @@ namespace NextLevelSeven.Test.Native
         public void Subcomponent_CanAddDescendantsAtEnd()
         {
             var subcomponent = Message.Create(ExampleMessages.Standard)[2][3][4][1];
-            var count = subcomponent.DescendantCount;
+            var count = subcomponent.ValueCount;
             var id = Randomized.String();
             subcomponent[count + 1].Value = id;
-            Assert.AreEqual(count + 1, subcomponent.DescendantCount,
+            Assert.AreEqual(count + 1, subcomponent.ValueCount,
                 @"Number of elements after appending at the end of a subcomponent is incorrect.");
         }
     }

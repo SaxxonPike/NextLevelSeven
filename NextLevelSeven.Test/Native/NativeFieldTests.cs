@@ -21,10 +21,10 @@ namespace NextLevelSeven.Test.Native
         public void Field_CanAddDescendantsAtEnd()
         {
             var field = Message.Create(ExampleMessages.Standard)[2][3];
-            var count = field.DescendantCount;
+            var count = field.ValueCount;
             var id = Randomized.String();
             field[count + 1].Value = id;
-            Assert.AreEqual(count + 1, field.DescendantCount,
+            Assert.AreEqual(count + 1, field.ValueCount,
                 @"Number of elements after appending at the end of a field is incorrect.");
         }
 

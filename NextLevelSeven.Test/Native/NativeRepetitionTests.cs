@@ -21,10 +21,10 @@ namespace NextLevelSeven.Test.Native
         public void Repetition_CanAddDescendantsAtEnd()
         {
             var repetition = Message.Create(ExampleMessages.Standard)[2][3][4];
-            var count = repetition.DescendantCount;
+            var count = repetition.ValueCount;
             var id = Randomized.String();
             repetition[count + 1].Value = id;
-            Assert.AreEqual(count + 1, repetition.DescendantCount,
+            Assert.AreEqual(count + 1, repetition.ValueCount,
                 @"Number of elements after appending at the end of a repetition is incorrect.");
         }
 

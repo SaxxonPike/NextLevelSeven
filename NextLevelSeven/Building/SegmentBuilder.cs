@@ -51,7 +51,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="index">Index within the segment to get the builder from.</param>
         /// <returns>Field builder for the specified index.</returns>
-        public IFieldBuilder this[int index]
+        new public IFieldBuilder this[int index]
         {
             get
             {
@@ -90,7 +90,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get the number of fields in this segment, including fields with no content.
         /// </summary>
-        public int Count
+        override public int ValueCount
         {
             get { return (_fieldBuilders.Count > 0) ? _fieldBuilders.Max(kv => kv.Key) + 1 : 0; }
         }
@@ -113,7 +113,7 @@ namespace NextLevelSeven.Building
             {
                 return new WrapperEnumerable<string>(index => this[index].Value,
                     (index, data) => Field(index, data),
-                    () => Count);
+                    () => ValueCount);
             }
             set { Fields(value.ToArray()); }
         }
@@ -405,6 +405,21 @@ namespace NextLevelSeven.Building
         ISegment ISegment.Clone()
         {
             return new SegmentBuilder(Ancestor, Index, Value);
+        }
+
+        public override IEncodedTypeConverter As
+        {
+            get { return new BuilderCodec(this); }
+        }
+
+        public override char Delimiter
+        {
+            get { return FieldDelimiter; }
+        }
+
+        protected override IElement GetGenericElement(int index)
+        {
+            return this[index];
         }
     }
 }

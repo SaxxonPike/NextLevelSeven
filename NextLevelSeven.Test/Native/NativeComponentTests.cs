@@ -21,10 +21,10 @@ namespace NextLevelSeven.Test.Native
         public void Component_CanAddDescendantsAtEnd()
         {
             var component = Message.Create(ExampleMessages.Standard)[2][3][4][1];
-            var count = component.DescendantCount;
+            var count = component.ValueCount;
             var id = Randomized.String();
             component[count + 1].Value = id;
-            Assert.AreEqual(count + 1, component.DescendantCount,
+            Assert.AreEqual(count + 1, component.ValueCount,
                 @"Number of elements after appending at the end of a component is incorrect.");
         }
 

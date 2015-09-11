@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Building\BuilderBase.cs" />
     <Compile Include="Building\BuilderBaseDescendant.cs" />
+    <Compile Include="Building\BuilderCodec.cs" />
     <Compile Include="Building\BuilderException.cs" />
     <Compile Include="Building\ComponentBuilder.cs" />
     <Compile Include="Building\DelimiterFieldBuilder.cs" />
@@ -62,8 +63,11 @@
     <Compile Include="Building\SegmentBuilder.cs" />
     <Compile Include="Building\SubcomponentBuilder.cs" />
     <Compile Include="Building\TypeFieldBuilder.cs" />
+    <Compile Include="Conversion\DateTimeConverter.cs" />
+    <Compile Include="Conversion\NumberConverter.cs" />
+    <Compile Include="Conversion\TextConverter.cs" />
     <Compile Include="Native\Elements\NativeCodec.cs" />
-    <Compile Include="Core\Codec\IndexedCodec.cs" />
+    <Compile Include="Core\Codec\IndexedEncodedTypeConverter.cs" />
     <Compile Include="Core\ElementException.cs" />
     <Compile Include="Core\IComponent.cs" />
     <Compile Include="Core\IElement.cs" />
@@ -99,10 +103,10 @@
     <Compile Include="Native\Elements\NativeEncodingField.cs" />
     <Compile Include="Native\Elements\NativeField.cs" />
     <Compile Include="Native\Elements\NativeFieldDelimiter.cs" />
-    <Compile Include="Core\Codec\ICodec.cs" />
+    <Compile Include="Core\IEncodedTypeConverter.cs" />
     <Compile Include="Native\INativeElement.cs" />
     <Compile Include="Native\Dividers\IStringDivider.cs" />
-    <Compile Include="Core\Codec\IIndexedCodec.cs" />
+    <Compile Include="Core\Codec\IIndexedEncodedTypeConverter.cs" />
     <Compile Include="Native\INativeMessage.cs" />
     <Compile Include="Native\Elements\NativeMessage.cs" />
     <Compile Include="Native\Elements\NativeFieldWithoutRepetitions.cs" />

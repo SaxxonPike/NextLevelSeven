@@ -35,7 +35,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="index">Index within the field repetition to get the builder from.</param>
         /// <returns>Component builder for the specified index.</returns>
-        public IComponentBuilder this[int index]
+        new public IComponentBuilder this[int index]
         {
             get
             {
@@ -50,7 +50,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get the number of components in this field repetition, including components with no content.
         /// </summary>
-        public int Count
+        override public int ValueCount
         {
             get { return _componentBuilders.Max(kv => kv.Key); }
         }
@@ -64,7 +64,7 @@ namespace NextLevelSeven.Building
             {
                 return new WrapperEnumerable<string>(index => this[index].Value,
                     (index, data) => Component(index, data),
-                    () => Count,
+                    () => ValueCount,
                     1);
             }
             set { Components(value.ToArray()); }
@@ -242,6 +242,21 @@ namespace NextLevelSeven.Building
         IRepetition IRepetition.Clone()
         {
             return new RepetitionBuilder(Ancestor, Index, Value);
+        }
+
+        public override IEncodedTypeConverter As
+        {
+            get { return new BuilderCodec(this); }
+        }
+
+        public override char Delimiter
+        {
+            get { return ComponentDelimiter; }
+        }
+
+        protected override IElement GetGenericElement(int index)
+        {
+            return this[index];
         }
     }
 }

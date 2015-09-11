@@ -9,7 +9,7 @@ namespace NextLevelSeven.Core.Codec
     ///     A wrapper around ICodec to allow for indexing an element's descendants.
     /// </summary>
     /// <typeparam name="TDecoded">Type of the decoded value.</typeparam>
-    internal sealed class IndexedCodec<TDecoded> : IIndexedCodec<TDecoded>
+    internal sealed class IndexedEncodedTypeConverter<TDecoded> : IIndexedEncodedTypeConverter<TDecoded>
     {
         /// <summary>
         ///     Create a codec indexer.
@@ -17,7 +17,7 @@ namespace NextLevelSeven.Core.Codec
         /// <param name="baseElement">Element to reference.</param>
         /// <param name="decoder">Decoding function from HL7.</param>
         /// <param name="encoder">Encoding function to HL7.</param>
-        public IndexedCodec(INativeElement baseElement, Func<string, TDecoded> decoder, Func<TDecoded, string> encoder)
+        public IndexedEncodedTypeConverter(IElement baseElement, Func<string, TDecoded> decoder, Func<TDecoded, string> encoder)
         {
             BaseElement = baseElement;
             Decoder = decoder;
@@ -27,7 +27,7 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>
         ///     Referenced element.
         /// </summary>
-        private INativeElement BaseElement { get; set; }
+        private IElement BaseElement { get; set; }
 
         /// <summary>
         ///     Decoding function from HL7.
@@ -56,7 +56,7 @@ namespace NextLevelSeven.Core.Codec
         /// <returns>Enumerator.</returns>
         public IEnumerator<TDecoded> GetEnumerator()
         {
-            return new IndexedCodecEnumerator(this, BaseElement.DescendantCount);
+            return new IndexedCodecEnumerator(this, BaseElement.ValueCount);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace NextLevelSeven.Core.Codec
         /// </summary>
         private sealed class IndexedCodecEnumerator : IEnumerator<TDecoded>
         {
-            public IndexedCodecEnumerator(IIndexedCodec<TDecoded> indexedCodec, int count)
+            public IndexedCodecEnumerator(IIndexedEncodedTypeConverter<TDecoded> indexedCodec, int count)
             {
                 IndexedCodec = indexedCodec;
                 Count = count;
@@ -83,7 +83,7 @@ namespace NextLevelSeven.Core.Codec
             /// <summary>
             ///     Parent codec indexer.
             /// </summary>
-            private IIndexedCodec<TDecoded> IndexedCodec { get; set; }
+            private IIndexedEncodedTypeConverter<TDecoded> IndexedCodec { get; set; }
 
             /// <summary>
             ///     Number of items.

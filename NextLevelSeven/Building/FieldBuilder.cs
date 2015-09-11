@@ -45,7 +45,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="index">Index within the field to get the builder from.</param>
         /// <returns>Field repetition builder for the specified index.</returns>
-        public virtual IRepetitionBuilder this[int index]
+        new public virtual IRepetitionBuilder this[int index]
         {
             get
             {
@@ -60,7 +60,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get the number of field repetitions in this field, including field repetitions with no content.
         /// </summary>
-        public virtual int Count
+        override public int ValueCount
         {
             get { return (_repetitionBuilders.Count > 0) ? _repetitionBuilders.Max(kv => kv.Key) : 0; }
         }
@@ -74,7 +74,7 @@ namespace NextLevelSeven.Building
             {
                 return new WrapperEnumerable<string>(index => this[index].Value,
                     (index, data) => FieldRepetition(index, data),
-                    () => Count,
+                    () => ValueCount,
                     1);
             }
             set { FieldRepetitions(value.ToArray()); }
@@ -305,6 +305,21 @@ namespace NextLevelSeven.Building
         IField IField.Clone()
         {
             return new FieldBuilder(Ancestor, Index);
+        }
+
+        public override IEncodedTypeConverter As
+        {
+            get { return new BuilderCodec(this); }
+        }
+
+        public override char Delimiter
+        {
+            get { return RepetitionDelimiter; }
+        }
+
+        protected override IElement GetGenericElement(int index)
+        {
+            return this[index];
         }
     }
 }
