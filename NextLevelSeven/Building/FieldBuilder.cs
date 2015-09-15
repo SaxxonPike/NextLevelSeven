@@ -281,12 +281,12 @@ namespace NextLevelSeven.Building
 
         public override IElement Clone()
         {
-            return new FieldBuilder(Ancestor, Index);
+            return new FieldBuilder(Ancestor, Index, Value);
         }
 
         IField IField.Clone()
         {
-            return new FieldBuilder(Ancestor, Index);
+            return new FieldBuilder(Ancestor, Index, Value);
         }
 
         public override IEncodedTypeConverter As

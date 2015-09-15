@@ -183,12 +183,12 @@ namespace NextLevelSeven.Building
 
         public override IElement Clone()
         {
-            return new ComponentBuilder(Ancestor, Index);
+            return new ComponentBuilder(Ancestor, Index, Value);
         }
 
         IComponent IComponent.Clone()
         {
-            return new ComponentBuilder(Ancestor, Index);
+            return new ComponentBuilder(Ancestor, Index, Value);
         }
 
         public override IEncodedTypeConverter As

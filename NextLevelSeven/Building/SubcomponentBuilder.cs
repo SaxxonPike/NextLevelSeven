@@ -20,9 +20,14 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="builder">Ancestor builder.</param>
         /// <param name="index">Index in the ancestor.</param>
-        internal SubcomponentBuilder(BuilderBase builder, int index)
+        /// <param name="value">Initial value.</param>
+        internal SubcomponentBuilder(BuilderBase builder, int index, string value = null)
             : base(builder, index)
         {
+            if (value != null)
+            {
+                Value = value;
+            }
         }
 
         /// <summary>
@@ -79,12 +84,12 @@ namespace NextLevelSeven.Building
 
         public override IElement Clone()
         {
-            return new SubcomponentBuilder(Ancestor, Index);
+            return new SubcomponentBuilder(Ancestor, Index, Value);
         }
 
         ISubcomponent ISubcomponent.Clone()
         {
-            return new SubcomponentBuilder(Ancestor, Index);
+            return new SubcomponentBuilder(Ancestor, Index, Value);
         }
 
         public override IEncodedTypeConverter As

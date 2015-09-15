@@ -10,6 +10,15 @@ namespace NextLevelSeven.Test.Building
     public class MessageBuilderTests : BuildingTestFixture
     {
         [TestMethod]
+        public void MessageBuilder_CanBeCloned()
+        {
+            var builder = Message.Build(ExampleMessages.Standard);
+            var clone = builder.Clone();
+            Assert.AreNotSame(builder, clone, "Builder and its clone must not refer to the same object.");
+            Assert.AreEqual(builder.ToString(), clone.ToString(), "Clone data doesn't match source data.");
+        }
+
+        [TestMethod]
         public void MessageBuilder_CanBuildFields_Individually()
         {
             var builder = Message.Build();

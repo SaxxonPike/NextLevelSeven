@@ -7,6 +7,15 @@ namespace NextLevelSeven.Test.Building
     public class SegmentBuilderTests : BuildingTestFixture
     {
         [TestMethod]
+        public void SegmentBuilder_CanBeCloned()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1];
+            var clone = builder.Clone();
+            Assert.AreNotSame(builder, clone, "Builder and its clone must not refer to the same object.");
+            Assert.AreEqual(builder.ToString(), clone.ToString(), "Clone data doesn't match source data.");            
+        }
+
+        [TestMethod]
         public void SegmentBuilder_CanBuildFields_Individually()
         {
             var builder = Message.Build()[1];
@@ -189,5 +198,26 @@ namespace NextLevelSeven.Test.Building
             builder.Field(1, ":");
             Assert.AreEqual(builder.FieldDelimiter, ':');
         }
+
+        [TestMethod]
+        public void SegmentBuilder_CanGetType()
+        {
+            var messageBuilder = Message.Build();
+            var builder = messageBuilder[2];
+            var type = Randomized.StringCaps(3);
+            builder[0].Value = type;
+            Assert.AreEqual(builder.Type, type);
+        }
+
+        [TestMethod]
+        public void SegmentBuilder_CanSetType()
+        {
+            var messageBuilder = Message.Build();
+            var builder = messageBuilder[2];
+            var type = Randomized.StringCaps(3);
+            builder.Type = type;
+            Assert.AreEqual(builder[0].Value, type);
+        }
+
     }
 }

@@ -62,6 +62,7 @@
     <Compile Include="Building\MessageBuilderPerformanceTests.cs" />
     <Compile Include="Building\MessageBuilderTests.cs" />
     <Compile Include="Building\SegmentBuilderTests.cs" />
+    <Compile Include="Building\SubcomponentBuilderTests.cs" />
     <Compile Include="Conversion\AddressTypeConverterTests.cs" />
     <Compile Include="Conversion\ConversionTestFixture.cs" />
     <Compile Include="Conversion\DateTimeConverterTests.cs" />
