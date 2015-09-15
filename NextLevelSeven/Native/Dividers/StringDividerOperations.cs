@@ -187,7 +187,7 @@ namespace NextLevelSeven.Native.Dividers
 
                 if (replacement == null)
                 {
-                    return s;
+                    replacement = new char[0];
                 }
 
                 var preStringLength = offset;
