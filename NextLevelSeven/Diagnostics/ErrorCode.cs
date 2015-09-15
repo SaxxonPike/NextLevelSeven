@@ -69,5 +69,11 @@
         FixedFieldsCannotBeDivided,
         /* 0029 */
         ChangingSegmentTypesToAndFromMshIsNotSupported,
+        /* 0030 */
+        InvalidAddressType,
+        /* 0031 */
+        DataTypeIsTooLong,
+        /* 0032 */
+        DataIsInvalidForType,
     }
 }

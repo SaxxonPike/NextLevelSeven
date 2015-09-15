@@ -70,6 +70,7 @@
     <Compile Include="Core\ElementExtensions.cs" />
     <Compile Include="Core\Specification\AddressElement.cs" />
     <Compile Include="Core\Specification\AddressType.cs" />
+    <Compile Include="Core\Specification\CodedElementElement.cs" />
     <Compile Include="Core\Specification\IAddress.cs" />
     <Compile Include="Core\Specification\IAuthorizationInfo.cs" />
     <Compile Include="Core\Specification\IChannelCalibrationParameters.cs" />
@@ -83,6 +84,7 @@
     <Compile Include="Core\Specification\ISpecificationElement.cs" />
     <Compile Include="Core\Specification\IWaveformSource.cs" />
     <Compile Include="Core\Specification\SpecificationElementBase.cs" />
+    <Compile Include="Core\Specification\ValidationException.cs" />
     <Compile Include="Native\Elements\NativeCodec.cs" />
     <Compile Include="Core\Codec\IndexedEncodedTypeConverter.cs" />
     <Compile Include="Core\ElementException.cs" />

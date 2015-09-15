@@ -8,13 +8,23 @@ namespace NextLevelSeven.Core
     static public class ElementExtensions
     {
         /// <summary>
-        ///     Get the element expressed as an HL7 address type.
+        ///     Get the element expressed as an HL7 address type. (AD)
         /// </summary>
         /// <param name="element">Element to interpret.</param>
         /// <returns>Address interpreter.</returns>
         static public IAddress AsAddress(this IElement element)
         {
             return new AddressElement(element);
+        }
+
+        /// <summary>
+        ///     Get the element expressed as an HL7 coded element type. (CE)
+        /// </summary>
+        /// <param name="element">Element to interpret.</param>
+        /// <returns>Coded element interpreter.</returns>
+        static public ICodedElement AsCodedElement(this IElement element)
+        {
+            return new CodedElementElement(element);
         }
     }
 }

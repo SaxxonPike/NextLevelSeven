@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NextLevelSeven.Conversion;
+using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Core.Specification
 {
@@ -67,17 +68,9 @@ namespace NextLevelSeven.Core.Specification
             set { Element[8].Value = value; }
         }
 
-        public bool IsValid
+        override public void Validate()
         {
-            get
-            {
-                return true;
-            }
-        }
-
-        public void Validate()
-        {
-            // there are no required fields.
+            AssertTypedValueOrNull(AddressType, AddressTypeData, "AddressType");
         }
     }
 }

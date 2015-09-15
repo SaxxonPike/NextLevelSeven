@@ -17,6 +17,8 @@
                         return "Changing segment types to and from MSH is not currently supported.";
                     case ErrorCode.ComponentIndexMustBeGreaterThanZero:
                         return "Component index must be greater than zero.";
+                    case ErrorCode.DataIsInvalidForType:
+                        return "Data is invalid for type: {0}";
                     case ErrorCode.DescendantElementsCannotBeModified:
                         return "Descendant elements cannot be modified.";
                     case ErrorCode.DoNotTranslateThisMessageForTestingPurposes:
@@ -35,6 +37,8 @@
                         return "Fixed fields (such as field delimiter and encoding characters) cannot be divided.";
                     case ErrorCode.HeaderByteIsIncorrect:
                         return "Header byte is incorrect.";
+                    case ErrorCode.InvalidAddressType:
+                        return "Address type is not valid.";
                     case ErrorCode.InvalidMlpCharacter:
                         return "Invalid character found in MLP stream.";
                     case ErrorCode.MessageDataIsTooShort:

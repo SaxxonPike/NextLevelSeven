@@ -17,6 +17,7 @@ namespace NextLevelSeven.Test.Core.Specification
         private string _addressType;
         private string _otherGeographicDesignation;
         private string _message;
+        private IAddress _address;
 
         [TestInitialize]
         public void Initialize()
@@ -29,81 +30,85 @@ namespace NextLevelSeven.Test.Core.Specification
             _country = Randomized.String();
             _addressType = "C";
             _otherGeographicDesignation = Randomized.String();
-            _message = string.Format("MSH|^~\\&|{0}^{1}^{2}^{3}^{4}^{5}^{6}^{7}",
+            _message = string.Format("MSH|^~\\&|{0}^{1}^{2}^{3}^{4}^{5}^{6}^{7}|{8}",
                 _streetAddress, _otherDesignation, _city, _stateOrProvince,
-                _zipOrPostalCode, _country, _addressType, _otherGeographicDesignation);
+                _zipOrPostalCode, _country, _addressType, _otherGeographicDesignation,
+                Randomized.String());
+            _address = Message.Create(_message)[1][3][1].AsAddress();
+        }
+
+        [TestMethod]
+        public void Address_Validate_Fails_WithInvalidAddressType()
+        {
+            _address.AddressTypeData = "\x1";
+            It.Throws<ValidationException>(_address.Validate, "Validation must fail with invalid address type.");
+        }
+
+        [TestMethod]
+        public void Address_Validate_Succeeds_WithValidAddressType()
+        {
+            _address.Validate();
+        }
+
+        [TestMethod]
+        public void Address_Validate_Succeeds_WithNullAddressType()
+        {
+            _address.AddressTypeData = null;
+            _address.Validate();
         }
 
         [TestMethod]
         public void Address_Parses_StreetAddress()
         {
-            var message = Message.Create(_message);
-            var address = message[1][3][1].AsAddress();
-            Assert.AreEqual(_streetAddress, address.StreetAddress);
+            Assert.AreEqual(_streetAddress, _address.StreetAddress);
         }
 
         [TestMethod]
         public void Address_Parses_OtherDesignation()
         {
-            var message = Message.Create(_message);
-            var address = message[1][3][1].AsAddress();
-            Assert.AreEqual(_otherDesignation, address.OtherDesignation);
+            Assert.AreEqual(_otherDesignation, _address.OtherDesignation);
         }
 
         [TestMethod]
         public void Address_Parses_City()
         {
-            var message = Message.Create(_message);
-            var address = message[1][3][1].AsAddress();
-            Assert.AreEqual(_city, address.City);
+            Assert.AreEqual(_city, _address.City);
         }
 
         [TestMethod]
         public void Address_Parses_State()
         {
-            var message = Message.Create(_message);
-            var address = message[1][3][1].AsAddress();
-            Assert.AreEqual(_stateOrProvince, address.StateOrProvince);
+            Assert.AreEqual(_stateOrProvince, _address.StateOrProvince);
         }
 
         [TestMethod]
         public void Address_Parses_Zip()
         {
-            var message = Message.Create(_message);
-            var address = message[1][3][1].AsAddress();
-            Assert.AreEqual(_zipOrPostalCode, address.ZipOrPostalCode);
+            Assert.AreEqual(_zipOrPostalCode, _address.ZipOrPostalCode);
         }
 
         [TestMethod]
         public void Address_Parses_Country()
         {
-            var message = Message.Create(_message);
-            var address = message[1][3][1].AsAddress();
-            Assert.AreEqual(_country, address.Country);
+            Assert.AreEqual(_country, _address.Country);
         }
 
         [TestMethod]
         public void Address_Parses_AddressType()
         {
-            var message = Message.Create(_message);
-            var address = message[1][3][1].AsAddress();
-            Assert.AreEqual(AddressType.CurrentOrTemporary, address.AddressType);
+            Assert.AreEqual(AddressType.CurrentOrTemporary, _address.AddressType);
         }
 
         [TestMethod]
         public void Address_Parses_AddressTypeData()
         {
-            var message = Message.Create(_message);
-            var address = message[1][3][1].AsAddress();
-            Assert.AreEqual(_addressType, address.AddressTypeData);
+            Assert.AreEqual(_addressType, _address.AddressTypeData);
         }
 
         [TestMethod]
         public void Address_Parses_OtherGeographicDesignation()
         {
-            var message = Message.Create(_message);
-            var address = message[1][3][1].AsAddress();
-            Assert.AreEqual(_otherGeographicDesignation, address.OtherGeographicDesignation);
+            Assert.AreEqual(_otherGeographicDesignation, _address.OtherGeographicDesignation);
         }
 
     }

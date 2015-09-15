@@ -36,8 +36,9 @@ namespace NextLevelSeven.Diagnostics
         ///     Get an error message for the currently selected language.
         /// </summary>
         /// <param name="code">Error code to get the message for.</param>
+        /// <param name="extraInfo">Extra information to pass for string formatting.</param>
         /// <returns></returns>
-        public static string Get(ErrorCode code)
+        public static string Get(ErrorCode code, params object[] extraInfo)
         {
             var message = Language.GetMessage(code);
             if (string.IsNullOrWhiteSpace(message))
@@ -45,7 +46,7 @@ namespace NextLevelSeven.Diagnostics
                 message = FallbackLanguage.GetMessage(code);
             }
 
-            return string.Format("{0} (NL7-{1})", message ?? "Unknown error.", (int) code);
+            return string.Format("{0} (NL7-{1})", string.Format(message ?? "Unknown error.", extraInfo), (int)code);            
         }
 
         /// <summary>
