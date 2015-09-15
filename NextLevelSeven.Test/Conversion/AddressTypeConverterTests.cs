@@ -69,6 +69,12 @@ namespace NextLevelSeven.Test.Conversion
         }
 
         [TestMethod]
+        public void AddressTypeConverter_DecodesLowercaseCharacters()
+        {
+            Assert.AreEqual(AddressType.CurrentOrTemporary, AddressTypeConverter.ConvertToTable("c"));
+        }
+
+        [TestMethod]
         public void AddressTypeConverter_DecodesCurrent()
         {
             Assert.AreEqual(AddressType.CurrentOrTemporary, AddressTypeConverter.ConvertToTable("C"));
