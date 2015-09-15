@@ -7,19 +7,32 @@ using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Core.Specification
 {
+    /// <summary>
+    ///     Base class for HL7 specification element wrappers.
+    /// </summary>
     abstract internal class SpecificationElementBase : ISpecificationElement
     {
+        /// <summary>
+        ///     Create a specification element wrapper.
+        /// </summary>
+        /// <param name="element"></param>
         protected SpecificationElementBase(IElement element)
         {
             Element = element;
         }
 
+        /// <summary>
+        ///     Element that is being wrapped.
+        /// </summary>
         public IElement Element
         {
             get;
             private set;
         }
 
+        /// <summary>
+        ///     Return true if validation passes, otherwise false.
+        /// </summary>
         public bool IsValid
         {
             get
@@ -36,7 +49,24 @@ namespace NextLevelSeven.Core.Specification
             }
         }
 
+        /// <summary>
+        ///     Perform validation. This throws a ValidationException when validation fails.
+        /// </summary>
         public abstract void Validate();
+
+        /// <summary>
+        ///     Assert that a value is not null.
+        /// </summary>
+        /// <param name="value">Value to check.</param>
+        /// <param name="fieldName">Name of the field that's being checked.</param>
+        protected void AssertNotNull(string value, string fieldName)
+        {
+            if (value != null)
+            {
+                return;
+            }
+            throw new ValidationException(ErrorCode.FieldCannotBeNull, fieldName);
+        }
 
         /// <summary>
         ///     Assert that either the value is null, or the typed value is not default (which should be a null default).
@@ -63,13 +93,14 @@ namespace NextLevelSeven.Core.Specification
         /// </summary>
         /// <param name="length">Length limit.</param>
         /// <param name="value">String to validate.</param>
-        protected void AssertTotalLengthIsWithin(int length, string value)
+        /// <param name="fieldName">Name of the field that's being checked.</param>
+        protected void AssertTotalLengthIsWithin(int length, string value, string fieldName)
         {
             if (value == null || value.Length <= length)
             {
                 return;
             }
-            throw new ValidationException(ErrorCode.DataTypeIsTooLong);
+            throw new ValidationException(ErrorCode.DataTypeIsTooLong, fieldName);
         }
     }
 }

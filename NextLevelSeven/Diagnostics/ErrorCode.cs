@@ -75,5 +75,7 @@
         DataTypeIsTooLong,
         /* 0032 */
         DataIsInvalidForType,
+        /* 0033 */
+        FieldCannotBeNull,
     }
 }

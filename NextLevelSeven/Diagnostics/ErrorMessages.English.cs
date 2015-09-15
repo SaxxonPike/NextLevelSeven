@@ -31,6 +31,8 @@
                         return "Encoding element cannot be moved.";
                     case ErrorCode.ExceededRetriesForMessage:
                         return "Exceeded retries for message.";
+                    case ErrorCode.FieldCannotBeNull:
+                        return "Field cannot be null: {0}";
                     case ErrorCode.FieldIndexMustBeZeroOrGreater:
                         return "Field index must be zero or greater.";
                     case ErrorCode.FixedFieldsCannotBeDivided:
