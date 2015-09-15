@@ -54,7 +54,11 @@ namespace NextLevelSeven.Utility
             _count = other.Count;
             _read = other.ElementAt;
             _startIndex = startIndex;
-            _write = (i, v) => { throw new NotSupportedException(@"Writing items to the underlying IEnumerable is not supported."); };
+            _write =
+                (i, v) =>
+                {
+                    throw new NotSupportedException(@"Writing items to the underlying IEnumerable is not supported.");
+                };
         }
 
         /// <summary>

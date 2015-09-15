@@ -38,7 +38,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set the component string.
         /// </summary>
-        override public string Value
+        public override string Value
         {
             get { return _value ?? string.Empty; }
             set { Subcomponent(value); }
@@ -47,7 +47,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Returns 0 if null, and 1 otherwise.
         /// </summary>
-        override public int ValueCount
+        public override int ValueCount
         {
             get { return _value == null ? 0 : 1; }
         }
@@ -55,19 +55,10 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Return an enumerable with the content inside.
         /// </summary>
-        override public IEnumerable<string> Values
+        public override IEnumerable<string> Values
         {
             get { return new WrapperEnumerable<string>(i => _value, (i, v) => { }, () => ValueCount, 1); }
             set { _value = string.Concat(value); }
-        }
-
-        /// <summary>
-        ///     Copy the contents of this builder to a string.
-        /// </summary>
-        /// <returns>Converted subcomponent.</returns>
-        public override string ToString()
-        {
-            return Value;
         }
 
         public string GetValue()
@@ -80,7 +71,7 @@ namespace NextLevelSeven.Building
             return Value.Yield();
         }
 
-        override public IElement Clone()
+        public override IElement Clone()
         {
             return new SubcomponentBuilder(Ancestor, Index);
         }
@@ -98,6 +89,15 @@ namespace NextLevelSeven.Building
         public override char Delimiter
         {
             get { return '\0'; }
+        }
+
+        /// <summary>
+        ///     Copy the contents of this builder to a string.
+        /// </summary>
+        /// <returns>Converted subcomponent.</returns>
+        public override string ToString()
+        {
+            return Value;
         }
 
         protected override IElement GetGenericElement(int index)

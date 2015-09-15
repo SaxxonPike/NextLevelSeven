@@ -16,14 +16,14 @@ namespace NextLevelSeven.Native.Elements
         {
         }
 
-        public override char Delimiter
-        {
-            get { return '\0'; }
-        }
-
         public override EncodingConfiguration EncodingConfiguration
         {
             get { return Ancestor.EncodingConfiguration; }
+        }
+
+        public override char Delimiter
+        {
+            get { return '\0'; }
         }
 
         public override bool HasSignificantDescendants
@@ -43,6 +43,31 @@ namespace NextLevelSeven.Native.Elements
                 builder.Append(s.Substring(4));
                 Ancestor.DescendantDivider.Value = builder.ToString();
             }
+        }
+
+        public string GetValue(int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            return Value;
+        }
+
+        public IEnumerable<string> GetValues(int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            return Value.Yield();
+        }
+
+        public new INativeRepetition this[int index]
+        {
+            get { return GetRepetition(index); }
+        }
+
+        public override IElement Clone()
+        {
+            return CloneInternal();
+        }
+
+        IField IField.Clone()
+        {
+            return CloneInternal();
         }
 
         public override INativeElement GetDescendant(int index)
@@ -65,34 +90,9 @@ namespace NextLevelSeven.Native.Elements
             return new NativeRepetition(this, 0, 1);
         }
 
-        public string GetValue(int repetition = -1, int component = -1, int subcomponent = -1)
+        private NativeField CloneInternal()
         {
-            return Value;
-        }
-
-        public IEnumerable<string> GetValues(int repetition = -1, int component = -1, int subcomponent = -1)
-        {
-            return Value.Yield();
-        }
-
-        public new INativeRepetition this[int index]
-        {
-            get { return GetRepetition(index); }
-        }
-
-        override public IElement Clone()
-        {
-            return CloneInternal();
-        }
-
-        IField IField.Clone()
-        {
-            return CloneInternal();
-        }
-
-        NativeField CloneInternal()
-        {
-            return new NativeField(Value, EncodingConfiguration) { Index = Index };
+            return new NativeField(Value, EncodingConfiguration) {Index = Index};
         }
     }
 }

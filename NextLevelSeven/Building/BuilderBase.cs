@@ -58,6 +58,25 @@ namespace NextLevelSeven.Building
         /// </summary>
         public virtual char SubcomponentDelimiter { get; set; }
 
+        public int Index { get; private set; }
+
+        public abstract IElement Clone();
+
+        public abstract string Value { get; set; }
+
+        public abstract IEnumerable<string> Values { get; set; }
+
+        public abstract IEncodedTypeConverter As { get; }
+
+        public abstract int ValueCount { get; }
+
+        public abstract char Delimiter { get; }
+
+        public IElement this[int index]
+        {
+            get { return GetGenericElement(index); }
+        }
+
         /// <summary>
         ///     Get an HL7 escaped string.
         /// </summary>
@@ -76,42 +95,6 @@ namespace NextLevelSeven.Building
         public string UnEscape(string s)
         {
             return EncodingConfiguration.UnEscape(s);
-        }
-
-        public int Index { get; private set; }
-
-        public abstract IElement Clone();
-
-        abstract public string Value
-        {
-            get;
-            set;
-        }
-
-        abstract public IEnumerable<string> Values
-        {
-            get;
-            set;
-        }
-
-        abstract public IEncodedTypeConverter As
-        {
-            get;
-        }
-
-        abstract public int ValueCount
-        {
-            get;
-        }
-
-        abstract public char Delimiter
-        {
-            get;
-        }
-
-        public IElement this[int index]
-        {
-            get { return GetGenericElement(index); }
         }
 
         protected abstract IElement GetGenericElement(int index);

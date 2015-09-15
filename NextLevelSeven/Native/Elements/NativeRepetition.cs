@@ -27,25 +27,6 @@ namespace NextLevelSeven.Native.Elements
             get { return EncodingConfiguration.ComponentDelimiter; }
         }
 
-        public override INativeElement GetDescendant(int index)
-        {
-            return _cache.ContainsKey(index)
-                ? _cache[index]
-                : GetComponent(index);
-        }
-
-        private INativeComponent GetComponent(int index)
-        {
-            if (index < 1)
-            {
-                throw new ArgumentException(ErrorMessages.Get(ErrorCode.ComponentIndexMustBeGreaterThanZero));
-            }
-
-            var result = new NativeComponent(this, index - 1, index);
-            _cache[index] = result;
-            return result;            
-        }
-
         public string GetValue(int component = -1, int subcomponent = -1)
         {
             return component < 0
@@ -65,7 +46,7 @@ namespace NextLevelSeven.Native.Elements
             get { return GetComponent(index); }
         }
 
-        override public IElement Clone()
+        public override IElement Clone()
         {
             return CloneInternal();
         }
@@ -75,9 +56,28 @@ namespace NextLevelSeven.Native.Elements
             return CloneInternal();
         }
 
-        NativeRepetition CloneInternal()
+        public override INativeElement GetDescendant(int index)
         {
-            return new NativeRepetition(Value, EncodingConfiguration) { Index = Index };
+            return _cache.ContainsKey(index)
+                ? _cache[index]
+                : GetComponent(index);
+        }
+
+        private INativeComponent GetComponent(int index)
+        {
+            if (index < 1)
+            {
+                throw new ArgumentException(ErrorMessages.Get(ErrorCode.ComponentIndexMustBeGreaterThanZero));
+            }
+
+            var result = new NativeComponent(this, index - 1, index);
+            _cache[index] = result;
+            return result;
+        }
+
+        private NativeRepetition CloneInternal()
+        {
+            return new NativeRepetition(Value, EncodingConfiguration) {Index = Index};
         }
     }
 }

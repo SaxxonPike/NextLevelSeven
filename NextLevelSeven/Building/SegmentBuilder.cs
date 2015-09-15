@@ -51,7 +51,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="index">Index within the segment to get the builder from.</param>
         /// <returns>Field builder for the specified index.</returns>
-        new public IFieldBuilder this[int index]
+        public new IFieldBuilder this[int index]
         {
             get
             {
@@ -90,7 +90,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get the number of fields in this segment, including fields with no content.
         /// </summary>
-        override public int ValueCount
+        public override int ValueCount
         {
             get { return (_fieldBuilders.Count > 0) ? _fieldBuilders.Max(kv => kv.Key) + 1 : 0; }
         }
@@ -107,7 +107,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set field content within this segment.
         /// </summary>
-        override public IEnumerable<string> Values
+        public override IEnumerable<string> Values
         {
             get
             {
@@ -121,7 +121,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set the segment string.
         /// </summary>
-        override public string Value
+        public override string Value
         {
             get
             {
@@ -361,6 +361,41 @@ namespace NextLevelSeven.Building
             return this;
         }
 
+        public string GetValue(int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            return field < 0
+                ? Value
+                : this[field].GetValue(repetition, component, subcomponent);
+        }
+
+        public IEnumerable<string> GetValues(int field = -1, int repetition = -1, int component = -1,
+            int subcomponent = -1)
+        {
+            return field < 0
+                ? Values
+                : this[field].GetValues(repetition, component, subcomponent);
+        }
+
+        public override IElement Clone()
+        {
+            return new SegmentBuilder(Ancestor, Index, Value);
+        }
+
+        ISegment ISegment.Clone()
+        {
+            return new SegmentBuilder(Ancestor, Index, Value);
+        }
+
+        public override IEncodedTypeConverter As
+        {
+            get { return new BuilderCodec(this); }
+        }
+
+        public override char Delimiter
+        {
+            get { return FieldDelimiter; }
+        }
+
         /// <summary>
         ///     Method that is called when a descendant type field has changed.
         /// </summary>
@@ -381,40 +416,6 @@ namespace NextLevelSeven.Building
         public override string ToString()
         {
             return Value;
-        }
-
-        public string GetValue(int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
-        {
-            return field < 0
-                ? Value
-                : this[field].GetValue(repetition, component, subcomponent);
-        }
-
-        public IEnumerable<string> GetValues(int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
-        {
-            return field < 0
-                ? Values
-                : this[field].GetValues(repetition, component, subcomponent);
-        }
-
-        override public IElement Clone()
-        {
-            return new SegmentBuilder(Ancestor, Index, Value);
-        }
-
-        ISegment ISegment.Clone()
-        {
-            return new SegmentBuilder(Ancestor, Index, Value);
-        }
-
-        public override IEncodedTypeConverter As
-        {
-            get { return new BuilderCodec(this); }
-        }
-
-        public override char Delimiter
-        {
-            get { return FieldDelimiter; }
         }
 
         protected override IElement GetGenericElement(int index)

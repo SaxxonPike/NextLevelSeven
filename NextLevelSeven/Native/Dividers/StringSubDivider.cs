@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace NextLevelSeven.Native.Dividers
 {
@@ -50,7 +48,7 @@ namespace NextLevelSeven.Native.Dividers
         /// </summary>
         /// <param name="index">Index of the string to get or set.</param>
         /// <returns>Substring.</returns>
-        override public string this[int index]
+        public override string this[int index]
         {
             get
             {
@@ -64,6 +62,67 @@ namespace NextLevelSeven.Native.Dividers
                 return new string(BaseValue, split.Offset, split.Length);
             }
             set { SetValue(index, value); }
+        }
+
+        /// <summary>
+        ///     String that is operated upon, as a character array. This points to the parent divider's BaseValue.
+        /// </summary>
+        public override char[] BaseValue
+        {
+            get { return BaseDivider.BaseValue; }
+        }
+
+        /// <summary>
+        ///     Get the number of divisions.
+        /// </summary>
+        public override int Count
+        {
+            get { return Divisions.Count; }
+        }
+
+        /// <summary>
+        ///     Get the division offsets in the string.
+        /// </summary>
+        public override IReadOnlyList<StringDivision> Divisions
+        {
+            get
+            {
+                if (_divisions == null || Version != BaseDivider.Version)
+                {
+                    Update();
+                }
+                return _divisions;
+            }
+        }
+
+        /// <summary>
+        ///     Calculated value of all divisions separated by delimiters.
+        /// </summary>
+        public override string Value
+        {
+            get
+            {
+                var d = BaseDivider.GetSubDivision(Index);
+                return (!d.Valid)
+                    ? null
+                    : new string(BaseValue, d.Offset, d.Length);
+            }
+            set { BaseDivider[Index] = value; }
+        }
+
+        /// <summary>
+        ///     Calculated value of all divisions separated by delimiters, as characters.
+        /// </summary>
+        public override char[] ValueChars
+        {
+            get
+            {
+                var d = BaseDivider.GetSubDivision(Index);
+                return (!d.Valid)
+                    ? null
+                    : StringDividerOperations.CharSubstring(BaseValue, d.Offset, d.Length);
+            }
+            set { BaseDivider[Index] = new string(value); }
         }
 
         private void SetValue(int index, string value)
@@ -89,77 +148,16 @@ namespace NextLevelSeven.Native.Dividers
             }
             _divisions = null;
 
-            RaiseValueChanged();            
+            RaiseValueChanged();
         }
 
         /// <summary>
-        ///     String that is operated upon, as a character array. This points to the parent divider's BaseValue.
-        /// </summary>
-        override public char[] BaseValue
-        {
-            get { return BaseDivider.BaseValue; }
-        }
-
-        /// <summary>
-        ///     Get the number of divisions.
-        /// </summary>
-        override public int Count
-        {
-            get { return Divisions.Count; }
-        }
-
-        /// <summary>
-        /// Delete a division of text.
+        ///     Delete a division of text.
         /// </summary>
         /// <param name="division"></param>
-        override public void Delete(StringDivision division)
+        public override void Delete(StringDivision division)
         {
             BaseDivider.Delete(division);
-        }
-
-        /// <summary>
-        ///     Get the division offsets in the string.
-        /// </summary>
-        override public IReadOnlyList<StringDivision> Divisions
-        {
-            get
-            {
-                if (_divisions == null || Version != BaseDivider.Version)
-                {
-                    Update();
-                }
-                return _divisions;
-            }
-        }
-
-        /// <summary>
-        ///     Calculated value of all divisions separated by delimiters.
-        /// </summary>
-        override public string Value
-        {
-            get
-            {
-                var d = BaseDivider.GetSubDivision(Index);
-                return (!d.Valid)
-                    ? null
-                    : new string(BaseValue, d.Offset, d.Length);
-            }
-            set { BaseDivider[Index] = value; }
-        }
-
-        /// <summary>
-        ///     Calculated value of all divisions separated by delimiters, as characters.
-        /// </summary>
-        override public char[] ValueChars
-        {
-            get
-            {
-                var d = BaseDivider.GetSubDivision(Index);
-                return (!d.Valid)
-                    ? null
-                    : StringDividerOperations.CharSubstring(BaseValue, d.Offset, d.Length);
-            }
-            set { BaseDivider[Index] = new string(value); }
         }
 
         /// <summary>

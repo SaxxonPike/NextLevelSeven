@@ -28,16 +28,6 @@ namespace NextLevelSeven.Native.Elements
             get { return 1; }
         }
 
-        public override INativeElement GetDescendant(int index)
-        {
-            return GetRepetition(index);
-        }
-
-        private INativeRepetition GetRepetition(int index)
-        {
-            return new NativeRepetition(this, index - 1, index);            
-        }
-
         public string GetValue(int repetition = -1, int component = -1, int subcomponent = -1)
         {
             return repetition < 0
@@ -67,9 +57,19 @@ namespace NextLevelSeven.Native.Elements
             return CloneInternal();
         }
 
-        NativeFieldWithoutRepetitions CloneInternal()
+        public override INativeElement GetDescendant(int index)
         {
-            return new NativeFieldWithoutRepetitions(Value, EncodingConfiguration) { Index = Index };
+            return GetRepetition(index);
+        }
+
+        private INativeRepetition GetRepetition(int index)
+        {
+            return new NativeRepetition(this, index - 1, index);
+        }
+
+        private NativeFieldWithoutRepetitions CloneInternal()
+        {
+            return new NativeFieldWithoutRepetitions(Value, EncodingConfiguration) {Index = Index};
         }
     }
 }

@@ -23,7 +23,10 @@ namespace NextLevelSeven.Native.Elements
         {
         }
 
-        INativeField INativeSegment.this[int index] { get { return GetField(index); } }
+        INativeField INativeSegment.this[int index]
+        {
+            get { return GetField(index); }
+        }
 
         public override char Delimiter
         {
@@ -75,6 +78,31 @@ namespace NextLevelSeven.Native.Elements
             set { DescendantDivider[0] = value; }
         }
 
+        public string GetValue(int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            return field < 0
+                ? Value
+                : GetField(field).GetValue(repetition, component, subcomponent);
+        }
+
+        public IEnumerable<string> GetValues(int field = -1, int repetition = -1, int component = -1,
+            int subcomponent = -1)
+        {
+            return field < 0
+                ? Values
+                : GetField(field).GetValues(repetition, component, subcomponent);
+        }
+
+        public override IElement Clone()
+        {
+            return CloneInternal();
+        }
+
+        ISegment ISegment.Clone()
+        {
+            return CloneInternal();
+        }
+
         public override INativeElement GetDescendant(int index)
         {
             return _cache.ContainsKey(index)
@@ -115,34 +143,10 @@ namespace NextLevelSeven.Native.Elements
 
             var result = new NativeField(this, index, index);
             _cache[index] = result;
-            return result;            
+            return result;
         }
 
-        public string GetValue(int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
-        {
-            return field < 0
-                ? Value
-                : GetField(field).GetValue(repetition, component, subcomponent);
-        }
-
-        public IEnumerable<string> GetValues(int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
-        {
-            return field < 0
-                ? Values
-                : GetField(field).GetValues(repetition, component, subcomponent);
-        }
-
-        public override IElement Clone()
-        {
-            return CloneInternal();
-        }
-
-        ISegment ISegment.Clone()
-        {
-            return CloneInternal();
-        }
-
-        NativeSegment CloneInternal()
+        private NativeSegment CloneInternal()
         {
             return new NativeSegment(Value, EncodingConfiguration) {Index = Index};
         }

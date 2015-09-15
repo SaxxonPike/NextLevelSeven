@@ -8,14 +8,14 @@ namespace NextLevelSeven.Core
     public interface ISegment : IElement
     {
         /// <summary>
-        ///     Get a copy of the segment.
-        /// </summary>
-        new ISegment Clone();
-
-        /// <summary>
         ///     Get or set the three-letter type code for the segment.
         /// </summary>
         string Type { get; set; }
+
+        /// <summary>
+        ///     Get a copy of the segment.
+        /// </summary>
+        new ISegment Clone();
 
         /// <summary>
         ///     Get data from a specific place in the segment. Depth is determined by how many indices are specified.

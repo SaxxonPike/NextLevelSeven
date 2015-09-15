@@ -54,7 +54,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="index">Index within the message to get the builder from.</param>
         /// <returns>Segment builder for the specified index.</returns>
-        new public ISegmentBuilder this[int index]
+        public new ISegmentBuilder this[int index]
         {
             get
             {
@@ -69,7 +69,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get the number of segments in the message.
         /// </summary>
-        override public int ValueCount
+        public override int ValueCount
         {
             get { return _segmentBuilders.Max(kv => kv.Key); }
         }
@@ -77,7 +77,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set segment content within this message.
         /// </summary>
-        override public IEnumerable<string> Values
+        public override IEnumerable<string> Values
         {
             get
             {
@@ -92,7 +92,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set the message string.
         /// </summary>
-        override public string Value
+        public override string Value
         {
             get
             {
@@ -422,15 +422,6 @@ namespace NextLevelSeven.Building
                 : this[segment][field][repetition][component][subcomponent].Value;
         }
 
-        /// <summary>
-        ///     Copy the contents of this builder to a string.
-        /// </summary>
-        /// <returns>Converted message.</returns>
-        public override string ToString()
-        {
-            return Value;
-        }
-
         public override IElement Clone()
         {
             return new MessageBuilder(Value);
@@ -449,6 +440,15 @@ namespace NextLevelSeven.Building
         public override char Delimiter
         {
             get { return '\xD'; }
+        }
+
+        /// <summary>
+        ///     Copy the contents of this builder to a string.
+        /// </summary>
+        /// <returns>Converted message.</returns>
+        public override string ToString()
+        {
+            return Value;
         }
 
         protected override IElement GetGenericElement(int index)

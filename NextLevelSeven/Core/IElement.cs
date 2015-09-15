@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using NextLevelSeven.Core.Codec;
 
 namespace NextLevelSeven.Core
 {
@@ -12,18 +11,13 @@ namespace NextLevelSeven.Core
         ///     Get a sub-element at the specified index.
         /// </summary>
         /// <param name="index"></param>
-        /// <returns></returns>
+        /// <returns>Sub-element at the specified index.</returns>
         IElement this[int index] { get; }
 
         /// <summary>
         ///     Interpret the stored value as other types.
         /// </summary>
         IEncodedTypeConverter As { get; }
-
-        /// <summary>
-        ///     Get a copy of the element.
-        /// </summary>
-        IElement Clone();
 
         /// <summary>
         ///     Get the delimiter character of the element. This will be zero if there are no sub-elements.
@@ -49,5 +43,10 @@ namespace NextLevelSeven.Core
         ///     Get or set the subvalues of the element.
         /// </summary>
         IEnumerable<string> Values { get; set; }
+
+        /// <summary>
+        ///     Get a copy of the element.
+        /// </summary>
+        IElement Clone();
     }
 }

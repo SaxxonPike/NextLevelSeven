@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using NextLevelSeven.Core;
-using NextLevelSeven.Core.Codec;
 
 namespace NextLevelSeven.Native
 {

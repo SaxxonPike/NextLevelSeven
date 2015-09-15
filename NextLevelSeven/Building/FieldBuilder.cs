@@ -32,20 +32,11 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
-        /// Initialize initial value.
-        /// </summary>
-        /// <param name="value"></param>
-        void InitValue(string value)
-        {
-            Value = value;            
-        }
-
-        /// <summary>
         ///     Get a descendant field repetition builder.
         /// </summary>
         /// <param name="index">Index within the field to get the builder from.</param>
         /// <returns>Field repetition builder for the specified index.</returns>
-        new public virtual IRepetitionBuilder this[int index]
+        public new virtual IRepetitionBuilder this[int index]
         {
             get
             {
@@ -60,7 +51,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get the number of field repetitions in this field, including field repetitions with no content.
         /// </summary>
-        override public int ValueCount
+        public override int ValueCount
         {
             get { return (_repetitionBuilders.Count > 0) ? _repetitionBuilders.Max(kv => kv.Key) : 0; }
         }
@@ -68,7 +59,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set field repetition content within this field.
         /// </summary>
-        override public IEnumerable<string> Values
+        public override IEnumerable<string> Values
         {
             get
             {
@@ -83,7 +74,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set the field string.
         /// </summary>
-        override public string Value
+        public override string Value
         {
             get
             {
@@ -261,15 +252,6 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
-        ///     Copy the contents of this builder to a string.
-        /// </summary>
-        /// <returns>Converted field.</returns>
-        public override string ToString()
-        {
-            return Value;
-        }
-
-        /// <summary>
         ///     Get the value at the specified indices.
         /// </summary>
         /// <param name="repetition">Repetition number.</param>
@@ -315,6 +297,24 @@ namespace NextLevelSeven.Building
         public override char Delimiter
         {
             get { return RepetitionDelimiter; }
+        }
+
+        /// <summary>
+        ///     Initialize initial value.
+        /// </summary>
+        /// <param name="value"></param>
+        private void InitValue(string value)
+        {
+            Value = value;
+        }
+
+        /// <summary>
+        ///     Copy the contents of this builder to a string.
+        /// </summary>
+        /// <returns>Converted field.</returns>
+        public override string ToString()
+        {
+            return Value;
         }
 
         protected override IElement GetGenericElement(int index)

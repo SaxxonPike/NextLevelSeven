@@ -35,7 +35,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="index">Index within the component to get the builder from.</param>
         /// <returns>Subcomponent builder for the specified index.</returns>
-        new public ISubcomponentBuilder this[int index]
+        public new ISubcomponentBuilder this[int index]
         {
             get
             {
@@ -50,7 +50,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get the number of subcomponents in this component, including subcomponents with no content.
         /// </summary>
-        override public int ValueCount
+        public override int ValueCount
         {
             get { return _subcomponentBuilders.Max(kv => kv.Key); }
         }
@@ -58,7 +58,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set subcomponent content within this component.
         /// </summary>
-        override public IEnumerable<string> Values
+        public override IEnumerable<string> Values
         {
             get
             {
@@ -73,7 +73,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set the component string.
         /// </summary>
-        override public string Value
+        public override string Value
         {
             get
             {
@@ -163,15 +163,6 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
-        ///     Copy the contents of this builder to a string.
-        /// </summary>
-        /// <returns>Converted component.</returns>
-        public override string ToString()
-        {
-            return Value;
-        }
-
-        /// <summary>
         ///     Get the value at the specified index.
         /// </summary>
         /// <param name="subcomponent">Subcomponent to get value from.</param>
@@ -190,7 +181,7 @@ namespace NextLevelSeven.Building
                 : this[subcomponent].Value.Yield();
         }
 
-        override public IElement Clone()
+        public override IElement Clone()
         {
             return new ComponentBuilder(Ancestor, Index);
         }
@@ -200,7 +191,7 @@ namespace NextLevelSeven.Building
             return new ComponentBuilder(Ancestor, Index);
         }
 
-        override public IEncodedTypeConverter As
+        public override IEncodedTypeConverter As
         {
             get { return new BuilderCodec(this); }
         }
@@ -208,6 +199,15 @@ namespace NextLevelSeven.Building
         public override char Delimiter
         {
             get { return SubcomponentDelimiter; }
+        }
+
+        /// <summary>
+        ///     Copy the contents of this builder to a string.
+        /// </summary>
+        /// <returns>Converted component.</returns>
+        public override string ToString()
+        {
+            return Value;
         }
 
         protected override IElement GetGenericElement(int index)

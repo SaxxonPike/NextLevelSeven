@@ -1,4 +1,5 @@
-﻿using NextLevelSeven.Core;
+﻿using System.Collections.Generic;
+using NextLevelSeven.Core;
 using NextLevelSeven.Native.Dividers;
 using NextLevelSeven.Utility;
 
@@ -47,6 +48,31 @@ namespace NextLevelSeven.Native.Elements
             }
         }
 
+        public string GetValue(int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            return Value;
+        }
+
+        public IEnumerable<string> GetValues(int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            return Value.Yield();
+        }
+
+        public new INativeRepetition this[int index]
+        {
+            get { return new NativeRepetition(this, 0, index); }
+        }
+
+        public override IElement Clone()
+        {
+            return CloneInternal();
+        }
+
+        IField IField.Clone()
+        {
+            return CloneInternal();
+        }
+
         public override INativeElement GetDescendant(int index)
         {
             return new NativeFieldDelimiter(this);
@@ -62,34 +88,9 @@ namespace NextLevelSeven.Native.Elements
             return Value;
         }
 
-        public string GetValue(int repetition = -1, int component = -1, int subcomponent = -1)
+        private NativeField CloneInternal()
         {
-            return Value;
-        }
-
-        public System.Collections.Generic.IEnumerable<string> GetValues(int repetition = -1, int component = -1, int subcomponent = -1)
-        {
-            return Value.Yield();
-        }
-
-        public new INativeRepetition this[int index]
-        {
-            get { return new NativeRepetition(this, 0, index); }
-        }
-
-        override public IElement Clone()
-        {
-            return CloneInternal();
-        }
-
-        IField IField.Clone()
-        {
-            return CloneInternal();
-        }
-
-        NativeField CloneInternal()
-        {
-            return new NativeField(Value, EncodingConfiguration) { Index = Index };
+            return new NativeField(Value, EncodingConfiguration) {Index = Index};
         }
     }
 }

@@ -19,7 +19,8 @@ namespace NextLevelSeven.Core
         string GetValue();
 
         /// <summary>
-        ///     Get data from a subcomponent. Because subcomponent level elements are at the lowest possible level, there will be at most one item.
+        ///     Get data from a subcomponent. Because subcomponent level elements are at the lowest possible level, there will be
+        ///     at most one item.
         /// </summary>
         /// <returns>Subcomponent data.</returns>
         IEnumerable<string> GetValues();

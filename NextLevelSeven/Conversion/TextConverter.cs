@@ -2,7 +2,7 @@
 
 namespace NextLevelSeven.Conversion
 {
-    static public class TextConverter
+    public static class TextConverter
     {
         /// <summary>
         ///     Convert from standard string to HL7 formatted text.

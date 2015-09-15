@@ -27,6 +27,35 @@ namespace NextLevelSeven.Native.Elements
             get { return EncodingConfiguration.RepetitionDelimiter; }
         }
 
+        public string GetValue(int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            return repetition < 0
+                ? Value
+                : GetRepetition(repetition).GetValue(component, subcomponent);
+        }
+
+        public IEnumerable<string> GetValues(int repetition = -1, int component = -1, int subcomponent = -1)
+        {
+            return repetition < 0
+                ? Values
+                : GetRepetition(repetition).GetValues(component, subcomponent);
+        }
+
+        public new INativeRepetition this[int index]
+        {
+            get { return GetRepetition(index); }
+        }
+
+        public override IElement Clone()
+        {
+            return CloneInternal();
+        }
+
+        IField IField.Clone()
+        {
+            return CloneInternal();
+        }
+
         public override INativeElement GetDescendant(int index)
         {
             return _cache.ContainsKey(index)
@@ -51,41 +80,12 @@ namespace NextLevelSeven.Native.Elements
 
             var result = new NativeRepetition(this, index - 1, index);
             _cache[index] = result;
-            return result;            
+            return result;
         }
 
-        public string GetValue(int repetition = -1, int component = -1, int subcomponent = -1)
+        private NativeField CloneInternal()
         {
-            return repetition < 0
-                ? Value
-                : GetRepetition(repetition).GetValue(component, subcomponent);
-        }
-
-        public IEnumerable<string> GetValues(int repetition = -1, int component = -1, int subcomponent = -1)
-        {
-            return repetition < 0
-                ? Values
-                : GetRepetition(repetition).GetValues(component, subcomponent);
-        }
-
-        public new INativeRepetition this[int index]
-        {
-            get { return GetRepetition(index); }
-        }
-
-        override public IElement Clone()
-        {
-            return CloneInternal();
-        }
-
-        IField IField.Clone()
-        {
-            return CloneInternal();
-        }
-
-        NativeField CloneInternal()
-        {
-            return new NativeField(Value, EncodingConfiguration) { Index = Index };
+            return new NativeField(Value, EncodingConfiguration) {Index = Index};
         }
     }
 }

@@ -312,6 +312,16 @@ namespace NextLevelSeven.Native.Elements
                 : GetSegment(segment).GetValue(field, repetition, component, subcomponent);
         }
 
+        public override IElement Clone()
+        {
+            return CloneInternal();
+        }
+
+        IMessage IMessage.Clone()
+        {
+            return CloneInternal();
+        }
+
         /// <summary>
         ///     Create a message with a default MSH segment.
         /// </summary>
@@ -451,16 +461,6 @@ namespace NextLevelSeven.Native.Elements
             return DescendantDivider == null
                 ? string.Empty
                 : DescendantDivider.Value;
-        }
-
-        override public IElement Clone()
-        {
-            return CloneInternal();
-        }
-
-        IMessage IMessage.Clone()
-        {
-            return CloneInternal();
         }
 
         private NativeMessage CloneInternal()

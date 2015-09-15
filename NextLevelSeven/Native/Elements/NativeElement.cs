@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using NextLevelSeven.Core;
-using NextLevelSeven.Core.Codec;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Native.Dividers;
 
@@ -14,6 +13,7 @@ namespace NextLevelSeven.Native.Elements
     /// </summary>
     internal abstract class NativeElement : INativeElement, IEquatable<string>
     {
+        protected readonly EncodingConfiguration EncodingConfigurationInternal;
         private IStringDivider _descendantDivider;
         private bool _descendantDividerInitialized;
 
@@ -64,9 +64,10 @@ namespace NextLevelSeven.Native.Elements
             }
         }
 
-        public virtual EncodingConfiguration EncodingConfiguration { get { return EncodingConfigurationInternal ?? Ancestor.EncodingConfiguration; } }
-
-        protected readonly EncodingConfiguration EncodingConfigurationInternal;
+        public virtual EncodingConfiguration EncodingConfiguration
+        {
+            get { return EncodingConfigurationInternal ?? Ancestor.EncodingConfiguration; }
+        }
 
         protected int ParentIndex { get; set; }
 
@@ -225,6 +226,13 @@ namespace NextLevelSeven.Native.Elements
             }
         }
 
+        public abstract IElement Clone();
+
+        IElement IElement.this[int index]
+        {
+            get { return GetDescendant(index); }
+        }
+
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(this, obj))
@@ -263,13 +271,6 @@ namespace NextLevelSeven.Native.Elements
         public override string ToString()
         {
             return DescendantDivider.Value;
-        }
-
-        public abstract IElement Clone();
-
-        IElement IElement.this[int index]
-        {
-            get { return GetDescendant(index); }
         }
     }
 }

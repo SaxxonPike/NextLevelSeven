@@ -28,6 +28,35 @@ namespace NextLevelSeven.Native.Elements
             get { return EncodingConfiguration.SubcomponentDelimiter; }
         }
 
+        public string GetValue(int subcomponent = -1)
+        {
+            return subcomponent < 0
+                ? Value
+                : GetSubcomponent(subcomponent).Value;
+        }
+
+        public IEnumerable<string> GetValues(int subcomponent = -1)
+        {
+            return subcomponent < 0
+                ? Values
+                : GetSubcomponent(subcomponent).Value.Yield();
+        }
+
+        public new INativeSubcomponent this[int index]
+        {
+            get { return GetSubcomponent(index); }
+        }
+
+        public override IElement Clone()
+        {
+            return CloneInternal();
+        }
+
+        IComponent IComponent.Clone()
+        {
+            return CloneInternal();
+        }
+
         public override INativeElement GetDescendant(int index)
         {
             if (_cache.ContainsKey(index))
@@ -48,35 +77,6 @@ namespace NextLevelSeven.Native.Elements
             var result = new NativeSubcomponent(this, index - 1, index);
             _cache[index] = result;
             return result;
-        }
-
-        public string GetValue(int subcomponent = -1)
-        {
-            return subcomponent < 0
-                ? Value
-                : GetSubcomponent(subcomponent).Value;
-        }
-
-        public IEnumerable<string> GetValues(int subcomponent = -1)
-        {
-            return subcomponent < 0
-                ? Values
-                : GetSubcomponent(subcomponent).Value.Yield();
-        }
-
-        public new INativeSubcomponent this[int index]
-        {
-            get { return GetSubcomponent(index); }
-        }
-
-        override public IElement Clone()
-        {
-            return CloneInternal();
-        }
-
-        IComponent IComponent.Clone()
-        {
-            return CloneInternal();
         }
 
         private NativeComponent CloneInternal()

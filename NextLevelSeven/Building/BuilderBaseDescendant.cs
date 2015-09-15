@@ -22,11 +22,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get the ancestor builder.
         /// </summary>
-        protected BuilderBase Ancestor
-        {
-            get;
-            private set;
-        }
+        protected BuilderBase Ancestor { get; private set; }
 
         /// <summary>
         ///     Get or set the component delimiter character.
@@ -73,18 +69,9 @@ namespace NextLevelSeven.Building
             set { Ancestor.SubcomponentDelimiter = value; }
         }
 
+        public abstract override string Value { get; set; }
+
+        public abstract override IEnumerable<string> Values { get; set; }
         public abstract override IElement Clone();
-
-        public abstract override string Value
-        {
-            get;
-            set;
-        }
-
-        public abstract override IEnumerable<string> Values
-        {
-            get;
-            set;
-        }
     }
 }

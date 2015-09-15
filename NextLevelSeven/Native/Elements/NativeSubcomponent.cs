@@ -35,11 +35,6 @@ namespace NextLevelSeven.Native.Elements
             get { return false; }
         }
 
-        public override INativeElement GetDescendant(int index)
-        {
-            throw new ElementException(ErrorCode.SubcomponentCannotHaveDescendants);
-        }
-
         public string GetValue()
         {
             return Value;
@@ -58,6 +53,11 @@ namespace NextLevelSeven.Native.Elements
         ISubcomponent ISubcomponent.Clone()
         {
             return CloneInternal();
+        }
+
+        public override INativeElement GetDescendant(int index)
+        {
+            throw new ElementException(ErrorCode.SubcomponentCannotHaveDescendants);
         }
 
         private NativeSubcomponent CloneInternal()

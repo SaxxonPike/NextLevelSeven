@@ -2,7 +2,7 @@
 
 namespace NextLevelSeven.Conversion
 {
-    static public class NumberConverter
+    public static class NumberConverter
     {
         /// <summary>
         ///     Convert from decimal value to HL7 number.

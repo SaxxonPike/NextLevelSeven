@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NextLevelSeven.Conversion;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Codec;
-using NextLevelSeven.Native;
 
 namespace NextLevelSeven.Building
 {
@@ -43,7 +39,11 @@ namespace NextLevelSeven.Building
         /// </summary>
         public IIndexedEncodedTypeConverter<DateTime?> Dates
         {
-            get { return new IndexedEncodedTypeConverter<DateTime?>(BaseElement, DateTimeConverter.ConvertToDate, DateTimeConverter.ConvertFromDate); }
+            get
+            {
+                return new IndexedEncodedTypeConverter<DateTime?>(BaseElement, DateTimeConverter.ConvertToDate,
+                    DateTimeConverter.ConvertFromDate);
+            }
         }
 
         /// <summary>
@@ -60,7 +60,11 @@ namespace NextLevelSeven.Building
         /// </summary>
         public IIndexedEncodedTypeConverter<DateTimeOffset?> DateTimes
         {
-            get { return new IndexedEncodedTypeConverter<DateTimeOffset?>(BaseElement, DateTimeConverter.ConvertToDateTime, DateTimeConverter.ConvertFromDateTime); }
+            get
+            {
+                return new IndexedEncodedTypeConverter<DateTimeOffset?>(BaseElement, DateTimeConverter.ConvertToDateTime,
+                    DateTimeConverter.ConvertFromDateTime);
+            }
         }
 
         /// <summary>
@@ -77,7 +81,11 @@ namespace NextLevelSeven.Building
         /// </summary>
         public IIndexedEncodedTypeConverter<decimal?> Decimals
         {
-            get { return new IndexedEncodedTypeConverter<decimal?>(BaseElement, NumberConverter.ConvertToDecimal, NumberConverter.ConvertFromDecimal); }
+            get
+            {
+                return new IndexedEncodedTypeConverter<decimal?>(BaseElement, NumberConverter.ConvertToDecimal,
+                    NumberConverter.ConvertFromDecimal);
+            }
         }
 
         /// <summary>
@@ -103,7 +111,11 @@ namespace NextLevelSeven.Building
         /// </summary>
         public IIndexedEncodedTypeConverter<int?> Ints
         {
-            get { return new IndexedEncodedTypeConverter<int?>(BaseElement, NumberConverter.ConvertToInt, NumberConverter.ConvertFromInt); }
+            get
+            {
+                return new IndexedEncodedTypeConverter<int?>(BaseElement, NumberConverter.ConvertToInt,
+                    NumberConverter.ConvertFromInt);
+            }
         }
 
         /// <summary>
@@ -120,7 +132,11 @@ namespace NextLevelSeven.Building
         /// </summary>
         public IIndexedEncodedTypeConverter<string> Strings
         {
-            get { return new IndexedEncodedTypeConverter<string>(BaseElement, TextConverter.ConvertToString, TextConverter.ConvertFromString); }
+            get
+            {
+                return new IndexedEncodedTypeConverter<string>(BaseElement, TextConverter.ConvertToString,
+                    TextConverter.ConvertFromString);
+            }
         }
 
         // Todo: escape and format
@@ -129,14 +145,8 @@ namespace NextLevelSeven.Building
         /// </summary>
         public string TextField
         {
-            get
-            {
-                return BaseElement.Value;
-            }
-            set
-            {
-                BaseElement.Value = value;
-            }
+            get { return BaseElement.Value; }
+            set { BaseElement.Value = value; }
         }
 
         /// <summary>
@@ -153,7 +163,11 @@ namespace NextLevelSeven.Building
         /// </summary>
         public IIndexedEncodedTypeConverter<TimeSpan?> Times
         {
-            get { return new IndexedEncodedTypeConverter<TimeSpan?>(BaseElement, DateTimeConverter.ConvertToTime, DateTimeConverter.ConvertFromTime); }
+            get
+            {
+                return new IndexedEncodedTypeConverter<TimeSpan?>(BaseElement, DateTimeConverter.ConvertToTime,
+                    DateTimeConverter.ConvertFromTime);
+            }
         }
     }
 }

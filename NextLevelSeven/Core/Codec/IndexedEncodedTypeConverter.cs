@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using NextLevelSeven.Native;
 
 namespace NextLevelSeven.Core.Codec
 {
@@ -17,7 +16,8 @@ namespace NextLevelSeven.Core.Codec
         /// <param name="baseElement">Element to reference.</param>
         /// <param name="decoder">Decoding function from HL7.</param>
         /// <param name="encoder">Encoding function to HL7.</param>
-        public IndexedEncodedTypeConverter(IElement baseElement, Func<string, TDecoded> decoder, Func<TDecoded, string> encoder)
+        public IndexedEncodedTypeConverter(IElement baseElement, Func<string, TDecoded> decoder,
+            Func<TDecoded, string> encoder)
         {
             BaseElement = baseElement;
             Decoder = decoder;

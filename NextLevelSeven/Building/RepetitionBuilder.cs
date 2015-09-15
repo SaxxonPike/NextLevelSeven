@@ -35,7 +35,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="index">Index within the field repetition to get the builder from.</param>
         /// <returns>Component builder for the specified index.</returns>
-        new public IComponentBuilder this[int index]
+        public new IComponentBuilder this[int index]
         {
             get
             {
@@ -50,7 +50,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get the number of components in this field repetition, including components with no content.
         /// </summary>
-        override public int ValueCount
+        public override int ValueCount
         {
             get { return _componentBuilders.Max(kv => kv.Key); }
         }
@@ -58,7 +58,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set component content within this field repetition.
         /// </summary>
-        override public IEnumerable<string> Values
+        public override IEnumerable<string> Values
         {
             get
             {
@@ -73,7 +73,7 @@ namespace NextLevelSeven.Building
         /// <summary>
         ///     Get or set the field repetition string.
         /// </summary>
-        override public string Value
+        public override string Value
         {
             get
             {
@@ -200,15 +200,6 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
-        ///     Copy the contents of this builder to a string.
-        /// </summary>
-        /// <returns>Converted field repetition.</returns>
-        public override string ToString()
-        {
-            return Value;
-        }
-
-        /// <summary>
         ///     Get the value at the specified indices.
         /// </summary>
         /// <param name="component">Component index.</param>
@@ -252,6 +243,15 @@ namespace NextLevelSeven.Building
         public override char Delimiter
         {
             get { return ComponentDelimiter; }
+        }
+
+        /// <summary>
+        ///     Copy the contents of this builder to a string.
+        /// </summary>
+        /// <returns>Converted field repetition.</returns>
+        public override string ToString()
+        {
+            return Value;
         }
 
         protected override IElement GetGenericElement(int index)

@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Conversion
 {
-    static public class DateTimeConverter
+    public static class DateTimeConverter
     {
         /// <summary>
         ///     Convert from date to HL7 date.
@@ -129,8 +125,8 @@ namespace NextLevelSeven.Conversion
             var hour = (length >= 2) ? int.Parse(input.Substring(0, 2)) : 0;
             var minute = (length >= 4) ? int.Parse(input.Substring(2, 2)) : 0;
             var second = (length >= 6) ? decimal.Parse(input.Substring(4)) : 0;
-            var secondValue = (int)Math.Round(second);
-            var millisecond = (int)(second - secondValue);
+            var secondValue = (int) Math.Round(second);
+            var millisecond = (int) (second - secondValue);
 
             return new TimeSpan(0, hour, minute, secondValue, millisecond);
         }
