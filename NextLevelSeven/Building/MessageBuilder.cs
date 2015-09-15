@@ -348,15 +348,6 @@ namespace NextLevelSeven.Building
         }
 
         /// <summary>
-        ///     Copy the contents of this builder to an HL7 message.
-        /// </summary>
-        /// <returns>Converted message.</returns>
-        public INativeMessage ToNativeMessage()
-        {
-            return new NativeMessage(Value);
-        }
-
-        /// <summary>
         ///     Get the values at the specific location in the message.
         /// </summary>
         /// <param name="segment">Segment index.</param>

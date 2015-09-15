@@ -173,11 +173,5 @@ namespace NextLevelSeven.Building
         /// <returns>This IMessageBuilder, for chaining purposes.</returns>
         IMessageBuilder Subcomponents(int segmentIndex, int fieldIndex, int repetition, int componentIndex,
             int startIndex, params string[] subcomponents);
-
-        /// <summary>
-        ///     Copy the contents of this builder to an HL7 message.
-        /// </summary>
-        /// <returns>Converted message.</returns>
-        INativeMessage ToNativeMessage();
     }
 }

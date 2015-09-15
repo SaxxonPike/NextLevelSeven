@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NextLevelSeven.Building;
 using NextLevelSeven.Routing;
 
 namespace NextLevelSeven.Native
@@ -121,6 +122,15 @@ namespace NextLevelSeven.Native
             IEnumerable<string> segmentTypes, bool includeExtras = false)
         {
             return segmentTypes.SelectMany(s => SplitSegments(message, s, includeExtras));
+        }
+
+        /// <summary>
+        ///     Create a message builder with the contents of this message.
+        /// </summary>
+        /// <returns>New message builder.</returns>
+        public static IMessageBuilder ToMessageBuilder(this INativeMessage message)
+        {
+            return new MessageBuilder(message);
         }
     }
 }
