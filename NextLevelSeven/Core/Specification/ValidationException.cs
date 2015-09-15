@@ -9,6 +9,8 @@ namespace NextLevelSeven.Core.Specification
     [Serializable]
     public class ValidationException : Exception
     {
+        // ReSharper disable once CoVariantArrayConversion
+
         /// <summary>
         ///     Create a specification validation exception.
         /// </summary>

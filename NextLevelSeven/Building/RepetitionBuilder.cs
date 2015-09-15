@@ -21,6 +21,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="builder">Ancestor builder.</param>
         /// <param name="index">Index in the ancestor.</param>
+        /// <param name="value">Default value.</param>
         internal RepetitionBuilder(BuilderBase builder, int index, string value = null)
             : base(builder, index)
         {

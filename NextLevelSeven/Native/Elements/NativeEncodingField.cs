@@ -57,7 +57,7 @@ namespace NextLevelSeven.Native.Elements
 
         public new INativeRepetition this[int index]
         {
-            get { return GetRepetition(index); }
+            get { return GetRepetition(); }
         }
 
         public override IElement Clone()
@@ -72,7 +72,7 @@ namespace NextLevelSeven.Native.Elements
 
         public override INativeElement GetDescendant(int index)
         {
-            return GetRepetition(index);
+            return GetRepetition();
         }
 
         protected override IStringDivider GetDescendantDivider(NativeElement ancestor, int index)
@@ -85,7 +85,7 @@ namespace NextLevelSeven.Native.Elements
             return Value;
         }
 
-        private INativeRepetition GetRepetition(int index)
+        private INativeRepetition GetRepetition()
         {
             return new NativeRepetition(this, 0, 1);
         }

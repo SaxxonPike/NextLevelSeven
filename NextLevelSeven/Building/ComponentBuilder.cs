@@ -21,6 +21,8 @@ namespace NextLevelSeven.Building
         ///     Create a component builder using the specified encoding configuration.
         /// </summary>
         /// <param name="builder">Ancestor builder.</param>
+        /// <param name="index">Index of the component.</param>
+        /// <param name="value">Default value of the component.</param>
         internal ComponentBuilder(BuilderBase builder, int index, string value = null)
             : base(builder, index)
         {

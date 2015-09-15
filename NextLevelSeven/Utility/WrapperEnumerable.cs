@@ -51,6 +51,7 @@ namespace NextLevelSeven.Utility
         /// <param name="startIndex">Index where items begin. Defaults to zero.</param>
         internal WrapperEnumerable(IEnumerable<TItem> other, int startIndex = 0)
         {
+            // ReSharper disable PossibleMultipleEnumeration
             _count = other.Count;
             _read = other.ElementAt;
             _startIndex = startIndex;
@@ -59,6 +60,7 @@ namespace NextLevelSeven.Utility
                 {
                     throw new NotSupportedException(@"Writing items to the underlying IEnumerable is not supported.");
                 };
+            // ReSharper restore PossibleMultipleEnumeration
         }
 
         /// <summary>
