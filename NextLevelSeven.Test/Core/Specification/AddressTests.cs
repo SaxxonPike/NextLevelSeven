@@ -111,5 +111,75 @@ namespace NextLevelSeven.Test.Core.Specification
             Assert.AreEqual(_otherGeographicDesignation, _address.OtherGeographicDesignation);
         }
 
+        [TestMethod]
+        public void Address_Sets_StreetAddress()
+        {
+            var value = Randomized.String();
+            _address.StreetAddress = value;
+            Assert.AreEqual(value, _address.StreetAddress);
+        }
+
+        [TestMethod]
+        public void Address_Sets_OtherDesignation()
+        {
+            var value = Randomized.String();
+            _address.OtherDesignation = value;
+            Assert.AreEqual(value, _address.OtherDesignation);
+        }
+
+        [TestMethod]
+        public void Address_Sets_City()
+        {
+            var value = Randomized.String();
+            _address.City = value;
+            Assert.AreEqual(value, _address.City);
+        }
+
+        [TestMethod]
+        public void Address_Sets_State()
+        {
+            var value = Randomized.String();
+            _address.StateOrProvince = value;
+            Assert.AreEqual(value, _address.StateOrProvince);
+        }
+
+        [TestMethod]
+        public void Address_Sets_Zip()
+        {
+            var value = Randomized.String();
+            _address.ZipOrPostalCode = value;
+            Assert.AreEqual(value, _address.ZipOrPostalCode);
+        }
+
+        [TestMethod]
+        public void Address_Sets_Country()
+        {
+            var value = Randomized.String();
+            _address.Country = value;
+            Assert.AreEqual(value, _address.Country);
+        }
+
+        [TestMethod]
+        public void Address_Sets_AddressType()
+        {
+            _address.AddressType = AddressType.Office;
+            Assert.AreEqual(AddressType.Office, _address.AddressType);
+        }
+
+        [TestMethod]
+        public void Address_Sets_AddressTypeData()
+        {
+            _address.AddressTypeData = "O";
+            Assert.AreEqual("O", _address.AddressTypeData);
+        }
+
+        [TestMethod]
+        public void Address_Sets_OtherGeographicDesignation()
+        {
+            var value = Randomized.String();
+            _address.OtherGeographicDesignation = value;
+            Assert.AreEqual(value, _address.OtherGeographicDesignation);
+        }
+
     }
 }
