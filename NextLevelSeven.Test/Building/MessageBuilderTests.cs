@@ -10,6 +10,26 @@ namespace NextLevelSeven.Test.Building
     public class MessageBuilderTests : BuildingTestFixture
     {
         [TestMethod]
+        public void MessageBuilder_CanGetValue()
+        {
+            var val0 = Randomized.StringCaps(3) + "|" + Randomized.String();
+            var val1 = Randomized.StringCaps(3) + "|" + Randomized.String();
+            var message = string.Format("MSH|^~\\&\r{0}\r{1}", val0, val1);
+            var builder = Message.Build(message);
+            Assert.AreEqual(builder.Value, message);
+        }
+
+        [TestMethod]
+        public void MessageBuilder_CanGetValues()
+        {
+            var val0 = Randomized.StringCaps(3) + "|" + Randomized.String();
+            var val1 = Randomized.StringCaps(3) + "|" + Randomized.String();
+            var builder = Message.Build(string.Format("MSH|^~\\&\r{0}\r{1}",
+                val0, val1));
+            AssertEnumerable.AreEqual(builder.Values, new[] { "MSH|^~\\&", val0, val1 });
+        }
+
+        [TestMethod]
         public void MessageBuilder_CanBeCloned()
         {
             var builder = Message.Build(ExampleMessages.Standard);

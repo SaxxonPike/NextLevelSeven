@@ -7,6 +7,26 @@ namespace NextLevelSeven.Test.Building
     public class ComponentBuilderTests : BuildingTestFixture
     {
         [TestMethod]
+        public void ComponentBuilder_CanGetValue()
+        {
+            var val0 = Randomized.String();
+            var val1 = Randomized.String();
+            var builder = Message.Build(string.Format("MSH|^~\\&|{2}^{0}&{1}", val0, val1, Randomized.String()))[1][3][1][2];
+            Assert.AreEqual(builder.Value, string.Format("{0}&{1}", val0, val1));
+        }
+
+        [TestMethod]
+        public void ComponentBuilder_CanGetValues()
+        {
+            var val1 = Randomized.String();
+            var val2 = Randomized.String();
+            var val3 = Randomized.String();
+            var builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}",
+                Randomized.String(), val1, val2, val3))[1][3][2][2];
+            AssertEnumerable.AreEqual(builder.Values, new[] { val2, val3 });
+        }
+
+        [TestMethod]
         public void ComponentBuilder_CanBeCloned()
         {
             var builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}",

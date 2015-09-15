@@ -7,6 +7,27 @@ namespace NextLevelSeven.Test.Building
     public class FieldBuilderTests : BuildingTestFixture
     {
         [TestMethod]
+        public void FieldBuilder_CanGetValue()
+        {
+            var val0 = Randomized.String();
+            var val1 = Randomized.String();
+            var builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}", val0, val1))[1][3];
+            Assert.AreEqual(builder.Value, string.Format("{0}~{1}", val0, val1));
+        }
+
+        [TestMethod]
+        public void FieldBuilder_CanGetValues()
+        {
+            var val0 = Randomized.String();
+            var val1 = Randomized.String();
+            var val2 = Randomized.String();
+            var val3 = Randomized.String();
+            var builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}",
+                val0, val1, val2, val3))[1][3];
+            AssertEnumerable.AreEqual(builder.Values, new[] { val0, string.Format("{0}^{1}&{2}", val1, val2, val3) });
+        }
+
+        [TestMethod]
         public void FieldBuilder_CanBeCloned()
         {
             var builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}",

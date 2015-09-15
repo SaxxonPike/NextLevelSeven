@@ -239,11 +239,11 @@ namespace NextLevelSeven.Building
             value = value ?? string.Empty;
 
             var length = value.Length;
-            ComponentDelimiter = (length >= 5) ? value[5] : '^';
-            EscapeDelimiter = (length >= 6) ? value[6] : '\\';
+            ComponentDelimiter = (length >= 5) ? value[4] : '^';
+            EscapeDelimiter = (length >= 6) ? value[5] : '\\';
             FieldDelimiter = (length >= 3) ? value[3] : '|';
-            RepetitionDelimiter = (length >= 7) ? value[7] : '~';
-            SubcomponentDelimiter = (length >= 8) ? value[8] : '&';
+            RepetitionDelimiter = (length >= 7) ? value[6] : '~';
+            SubcomponentDelimiter = (length >= 8) ? value[7] : '&';
 
             _segmentBuilders.Clear();
             value = value.Replace("\r\n", "\xD");

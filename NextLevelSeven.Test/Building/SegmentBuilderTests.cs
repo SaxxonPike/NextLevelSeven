@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Test.Building
@@ -13,6 +14,20 @@ namespace NextLevelSeven.Test.Building
             var clone = builder.Clone();
             Assert.AreNotSame(builder, clone, "Builder and its clone must not refer to the same object.");
             Assert.AreEqual(builder.ToString(), clone.ToString(), "Clone data doesn't match source data.");            
+        }
+
+        [TestMethod]
+        public void SegmentBuilder_CanGetValue()
+        {
+            var builder = Message.Build("MSH|^~\\&\rPID|1234")[1];
+            Assert.AreEqual(builder.Value, "MSH|^~\\&");
+        }
+
+        [TestMethod]
+        public void SegmentBuilder_CanGetValues()
+        {
+            var builder = Message.Build("MSH|^~\\&")[1];
+            AssertEnumerable.AreEqual(builder.Values, new[] { "MSH", "|", "^~\\&" });
         }
 
         [TestMethod]

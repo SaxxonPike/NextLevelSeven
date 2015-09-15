@@ -53,6 +53,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="AssertEnumerable.cs" />
     <Compile Include="AssertIterations.cs" />
     <Compile Include="AssertTime.cs" />
     <Compile Include="Building\BuildingTestFixture.cs" />
