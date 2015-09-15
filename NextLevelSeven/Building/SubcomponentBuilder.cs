@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NextLevelSeven.Core;
 using NextLevelSeven.Utility;
 
@@ -40,7 +41,12 @@ namespace NextLevelSeven.Building
         /// </summary>
         public override string Value
         {
-            get { return (_value == "\"\"") ? null : (_value ?? string.Empty); }
+            get
+            {
+                return string.Equals("\"\"", _value, StringComparison.Ordinal)
+                    ? null
+                    : (_value ?? string.Empty);
+            }
             set { Subcomponent(value); }
         }
 

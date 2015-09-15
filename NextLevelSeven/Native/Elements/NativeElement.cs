@@ -192,12 +192,9 @@ namespace NextLevelSeven.Native.Elements
                     return null;
                 }
 
-                if (string.Equals("\"\"", value, StringComparison.Ordinal))
-                {
-                    return null;
-                }
-
-                return value;
+                return string.Equals("\"\"", value, StringComparison.Ordinal)
+                    ? null
+                    : value;
             }
             set
             {
