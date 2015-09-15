@@ -6,7 +6,7 @@ using NextLevelSeven.Core.Specification;
 namespace NextLevelSeven.Test.Core.Specification
 {
     [TestClass]
-    public class CodedElementTests
+    public class CodedElementTests : SpecificationTestFixture
     {
         private string _identifier;
         private string _text;

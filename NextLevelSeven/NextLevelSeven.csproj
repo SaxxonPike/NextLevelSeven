@@ -83,7 +83,9 @@
     <Compile Include="Core\Specification\INumberRange.cs" />
     <Compile Include="Core\Specification\ISpecificationElement.cs" />
     <Compile Include="Core\Specification\IWaveformSource.cs" />
+    <Compile Include="Core\Specification\NumberRangeElement.cs" />
     <Compile Include="Core\Specification\SpecificationElementBase.cs" />
+    <Compile Include="Core\Specification\SpecificationExtensions.cs" />
     <Compile Include="Core\Specification\ValidationException.cs" />
     <Compile Include="Native\Elements\NativeCodec.cs" />
     <Compile Include="Core\Codec\IndexedEncodedTypeConverter.cs" />

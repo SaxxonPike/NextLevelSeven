@@ -26,5 +26,15 @@ namespace NextLevelSeven.Core
         {
             return new CodedElementElement(element);
         }
+
+        /// <summary>
+        ///     Get the element expressed as an HL7 number range type. (NR)
+        /// </summary>
+        /// <param name="element">Element to interpret.</param>
+        /// <returns>Number range interpreter.</returns>
+        static public INumberRange AsNumberRange(this IElement element)
+        {
+            return new NumberRangeElement(element);
+        }
     }
 }

@@ -69,6 +69,7 @@
     <Compile Include="Core\CoreTestFixture.cs" />
     <Compile Include="Core\Specification\AddressTests.cs" />
     <Compile Include="Core\Specification\CodedElementTests.cs" />
+    <Compile Include="Core\Specification\NumberRangeExtensionTests.cs" />
     <Compile Include="Core\Specification\SpecificationTestFixture.cs" />
     <Compile Include="Diagnostics\DiagnosticsTestFixture.cs" />
     <Compile Include="Generation\GenerationTestFixture.cs" />

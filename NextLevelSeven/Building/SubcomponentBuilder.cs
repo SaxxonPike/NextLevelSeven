@@ -40,7 +40,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         public override string Value
         {
-            get { return _value ?? string.Empty; }
+            get { return (_value == "\"\"") ? null : (_value ?? string.Empty); }
             set { Subcomponent(value); }
         }
 
