@@ -178,6 +178,6 @@ namespace NextLevelSeven.Building
         ///     Copy the contents of this builder to an HL7 message.
         /// </summary>
         /// <returns>Converted message.</returns>
-        INativeMessage ToMessage();
+        INativeMessage ToNativeMessage();
     }
 }

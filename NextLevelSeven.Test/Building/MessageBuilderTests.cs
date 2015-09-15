@@ -248,7 +248,7 @@ namespace NextLevelSeven.Test.Building
         {
             var builder = Message.Build(ExampleMessages.Standard);
             var beforeMessageString = builder.Value;
-            var message = builder.ToMessage();
+            var message = builder.ToNativeMessage();
             Assert.AreEqual(beforeMessageString, message.Value, "Conversion from builder to message failed.");
         }
 

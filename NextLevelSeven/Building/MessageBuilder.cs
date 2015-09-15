@@ -351,7 +351,7 @@ namespace NextLevelSeven.Building
         ///     Copy the contents of this builder to an HL7 message.
         /// </summary>
         /// <returns>Converted message.</returns>
-        public INativeMessage ToMessage()
+        public INativeMessage ToNativeMessage()
         {
             return new NativeMessage(Value);
         }
