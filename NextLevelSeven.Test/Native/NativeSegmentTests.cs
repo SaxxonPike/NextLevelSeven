@@ -178,5 +178,24 @@ namespace NextLevelSeven.Test.Native
             var message = Message.Create();
             Assert.IsFalse(message[2].Exists, @"Nonexistant segment is marked as existing.");
         }
+
+        [TestMethod]
+        public void Segment_CanWriteStringValue()
+        {
+            var segment = Message.Create(ExampleMessages.Standard)[2];
+            var value = Randomized.String();
+            segment.Value = value;
+            Assert.AreEqual(value, segment.Value, "Value mismatch after write.");
+        }
+
+        [TestMethod]
+        public void Segment_CanWriteNullValue()
+        {
+            var segment = Message.Create(ExampleMessages.Standard)[2];
+            var value = Randomized.String();
+            segment.Value = value;
+            segment.Value = null;
+            Assert.IsNull(segment.Value, "Value mismatch after write.");
+        }
     }
 }

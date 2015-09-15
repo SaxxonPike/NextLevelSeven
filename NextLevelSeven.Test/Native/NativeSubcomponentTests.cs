@@ -26,5 +26,24 @@ namespace NextLevelSeven.Test.Native
             Assert.AreEqual(count + 1, subcomponent.ValueCount,
                 @"Number of elements after appending at the end of a subcomponent is incorrect.");
         }
+
+        [TestMethod]
+        public void Subcomponent_CanWriteStringValue()
+        {
+            var subcomponent = Message.Create(ExampleMessages.Standard)[1][3][1][1][1];
+            var value = Randomized.String();
+            subcomponent.Value = value;
+            Assert.AreEqual(value, subcomponent.Value, "Value mismatch after write.");
+        }
+
+        [TestMethod]
+        public void Subcomponent_CanWriteNullValue()
+        {
+            var subcomponent = Message.Create(ExampleMessages.Standard)[1][3][1][1][1];
+            var value = Randomized.String();
+            subcomponent.Value = value;
+            subcomponent.Value = null;
+            Assert.IsNull(subcomponent.Value, "Value mismatch after write.");
+        }
     }
 }

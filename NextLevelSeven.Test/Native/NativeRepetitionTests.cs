@@ -43,5 +43,25 @@ namespace NextLevelSeven.Test.Native
             component.Delete(1);
             Assert.AreEqual("MSH|^~\\&|\rTST|123^456~012", message.Value, @"Message was modified unexpectedly.");
         }
+
+        [TestMethod]
+        public void Repetition_CanWriteStringValue()
+        {
+            var repetition = Message.Create(ExampleMessages.Standard)[1][3][1];
+            var value = Randomized.String();
+            repetition.Value = value;
+            Assert.AreEqual(value, repetition.Value, "Value mismatch after write.");
+        }
+
+        [TestMethod]
+        public void Repetition_CanWriteNullValue()
+        {
+            var repetition = Message.Create(ExampleMessages.Standard)[1][3][1];
+            var value = Randomized.String();
+            repetition.Value = value;
+            repetition.Value = null;
+            Assert.IsNull(repetition.Value, "Value mismatch after write.");
+        }
+
     }
 }

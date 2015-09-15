@@ -74,5 +74,24 @@ namespace NextLevelSeven.Test.Native
             Assert.AreEqual(message[1][3].Value, null, @"Value of two double quotes was not interpreted as null.");
             Assert.IsTrue(message[1][3].Exists, @"Explicitly set null value must appear to exist.");
         }
+
+        [TestMethod]
+        public void Field_CanWriteStringValue()
+        {
+            var field = Message.Create(ExampleMessages.Standard)[1][3];
+            var value = Randomized.String();
+            field.Value = value;
+            Assert.AreEqual(value, field.Value, "Value mismatch after write.");
+        }
+
+        [TestMethod]
+        public void Field_CanWriteNullValue()
+        {
+            var field = Message.Create(ExampleMessages.Standard)[1][3];
+            var value = Randomized.String();
+            field.Value = value;
+            field.Value = null;
+            Assert.IsNull(field.Value, "Value mismatch after write.");
+        }
     }
 }
