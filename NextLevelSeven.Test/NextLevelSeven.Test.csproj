@@ -62,9 +62,13 @@
     <Compile Include="Building\MessageBuilderPerformanceTests.cs" />
     <Compile Include="Building\MessageBuilderTests.cs" />
     <Compile Include="Building\SegmentBuilderTests.cs" />
+    <Compile Include="Conversion\AddressTypeConverterTests.cs" />
     <Compile Include="Conversion\ConversionTestFixture.cs" />
     <Compile Include="Conversion\DateTimeConverterTests.cs" />
     <Compile Include="Conversion\NumberConverterTests.cs" />
+    <Compile Include="Core\CoreTestFixture.cs" />
+    <Compile Include="Core\Specification\AddressTests.cs" />
+    <Compile Include="Core\Specification\SpecificationTestFixture.cs" />
     <Compile Include="Diagnostics\DiagnosticsTestFixture.cs" />
     <Compile Include="Generation\GenerationTestFixture.cs" />
     <Compile Include="Native\NativeComponentTests.cs" />
