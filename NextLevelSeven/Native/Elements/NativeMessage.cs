@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using NextLevelSeven.Conversion;
 using NextLevelSeven.Core;
-using NextLevelSeven.Core.Specification;
 using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Native.Elements

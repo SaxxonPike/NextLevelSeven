@@ -1,5 +1,4 @@
 ﻿using NextLevelSeven.Core;
-using NextLevelSeven.Core.Specification;
 
 namespace NextLevelSeven.Native.Elements
 {

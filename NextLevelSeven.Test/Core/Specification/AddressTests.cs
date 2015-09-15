@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Specification;
 
@@ -8,16 +7,16 @@ namespace NextLevelSeven.Test.Core.Specification
     [TestClass]
     public class AddressTests : SpecificationTestFixture
     {
-        private string _streetAddress;
-        private string _otherDesignation;
-        private string _city;
-        private string _stateOrProvince;
-        private string _zipOrPostalCode;
-        private string _country;
-        private string _addressType;
-        private string _otherGeographicDesignation;
-        private string _message;
         private IAddress _address;
+        private string _addressType;
+        private string _city;
+        private string _country;
+        private string _message;
+        private string _otherDesignation;
+        private string _otherGeographicDesignation;
+        private string _stateOrProvince;
+        private string _streetAddress;
+        private string _zipOrPostalCode;
 
         [TestInitialize]
         public void Initialize()
@@ -180,6 +179,5 @@ namespace NextLevelSeven.Test.Core.Specification
             _address.OtherGeographicDesignation = value;
             Assert.AreEqual(value, _address.OtherGeographicDesignation);
         }
-
     }
 }

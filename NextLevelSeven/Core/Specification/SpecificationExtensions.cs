@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NextLevelSeven.Core.Specification
+﻿namespace NextLevelSeven.Core.Specification
 {
     /// <summary>
     ///     Extensions for specification classes.
     /// </summary>
-    static public class SpecificationExtensions
+    public static class SpecificationExtensions
     {
         /// <summary>
-        ///     Return whether or not the specified number is within this number range (inclusive). Null values will always return false.
+        ///     Return whether or not the specified number is within this number range (inclusive). Null values will always return
+        ///     false.
         /// </summary>
         /// <param name="range">Range to check.</param>
         /// <param name="value">Value to check.</param>
         /// <returns>True if the value falls within the range, false otherwise.</returns>
-        static public bool Contains(this INumberRange range, decimal? value)
+        public static bool Contains(this INumberRange range, decimal? value)
         {
             if (!value.HasValue)
             {

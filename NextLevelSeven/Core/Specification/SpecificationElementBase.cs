@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Core.Specification
@@ -10,7 +6,7 @@ namespace NextLevelSeven.Core.Specification
     /// <summary>
     ///     Base class for HL7 specification element wrappers.
     /// </summary>
-    abstract internal class SpecificationElementBase : ISpecificationElement
+    internal abstract class SpecificationElementBase : ISpecificationElement
     {
         /// <summary>
         ///     Create a specification element wrapper.
@@ -24,11 +20,7 @@ namespace NextLevelSeven.Core.Specification
         /// <summary>
         ///     Element that is being wrapped.
         /// </summary>
-        public IElement Element
-        {
-            get;
-            private set;
-        }
+        public IElement Element { get; private set; }
 
         /// <summary>
         ///     Return true if validation passes, otherwise false.

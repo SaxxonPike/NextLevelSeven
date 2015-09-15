@@ -46,7 +46,7 @@ namespace NextLevelSeven.Diagnostics
                 message = FallbackLanguage.GetMessage(code);
             }
 
-            return string.Format("{0} (NL7-{1})", string.Format(message ?? "Unknown error.", extraInfo), (int)code);            
+            return string.Format("{0} (NL7-{1})", string.Format(message ?? "Unknown error.", extraInfo), (int) code);
         }
 
         /// <summary>

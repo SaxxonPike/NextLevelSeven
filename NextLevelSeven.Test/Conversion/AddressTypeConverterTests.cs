@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Conversion;
 using NextLevelSeven.Core.Specification;
 
@@ -59,7 +58,7 @@ namespace NextLevelSeven.Test.Conversion
         [TestMethod]
         public void AddressTypeConverter_EncodesInvalidAsNull()
         {
-            Assert.AreEqual(null, AddressTypeConverter.ConvertFromTable((AddressType)(-1)));
+            Assert.AreEqual(null, AddressTypeConverter.ConvertFromTable((AddressType) (-1)));
         }
 
         [TestMethod]
@@ -139,6 +138,5 @@ namespace NextLevelSeven.Test.Conversion
         {
             Assert.AreEqual(AddressType.Null, AddressTypeConverter.ConvertToTable(null));
         }
-
     }
 }

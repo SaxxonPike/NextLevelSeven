@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Specification;
 
@@ -8,25 +7,25 @@ namespace NextLevelSeven.Test.Core.Specification
     [TestClass]
     public class NumberRangeExtensionTests : SpecificationTestFixture
     {
-        static void EdgeTest(decimal? low, decimal? high)
+        private static void EdgeTest(decimal? low, decimal? high)
         {
             var range = GetNumberRange(low, high);
             if (low.HasValue)
             {
                 Assert.IsFalse(range.Contains(range.LowValue - 1));
                 Assert.IsTrue(range.Contains(range.LowValue));
-                Assert.IsTrue(range.Contains(range.LowValue + 1));                
+                Assert.IsTrue(range.Contains(range.LowValue + 1));
             }
             if (high.HasValue)
             {
                 Assert.IsTrue(range.Contains(range.HighValue - 1));
                 Assert.IsTrue(range.Contains(range.HighValue));
-                Assert.IsFalse(range.Contains(range.HighValue + 1));                
+                Assert.IsFalse(range.Contains(range.HighValue + 1));
             }
             Assert.IsFalse(range.Contains(null));
         }
 
-        static INumberRange GetNumberRange(decimal? low, decimal? high)
+        private static INumberRange GetNumberRange(decimal? low, decimal? high)
         {
             var range = Message.Create()[1][3][1].AsNumberRange();
             range.LowValue = low;

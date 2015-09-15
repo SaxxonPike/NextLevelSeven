@@ -5,14 +5,14 @@ namespace NextLevelSeven.Core
     /// <summary>
     ///     Extensions to the IElement interface.
     /// </summary>
-    static public class ElementExtensions
+    public static class ElementExtensions
     {
         /// <summary>
         ///     Get the element expressed as an HL7 address type. (AD)
         /// </summary>
         /// <param name="element">Element to interpret.</param>
         /// <returns>Address interpreter.</returns>
-        static public IAddress AsAddress(this IElement element)
+        public static IAddress AsAddress(this IElement element)
         {
             return new AddressElement(element);
         }
@@ -22,7 +22,7 @@ namespace NextLevelSeven.Core
         /// </summary>
         /// <param name="element">Element to interpret.</param>
         /// <returns>Coded element interpreter.</returns>
-        static public ICodedElement AsCodedElement(this IElement element)
+        public static ICodedElement AsCodedElement(this IElement element)
         {
             return new CodedElementElement(element);
         }
@@ -32,7 +32,7 @@ namespace NextLevelSeven.Core
         /// </summary>
         /// <param name="element">Element to interpret.</param>
         /// <returns>Number range interpreter.</returns>
-        static public INumberRange AsNumberRange(this IElement element)
+        public static INumberRange AsNumberRange(this IElement element)
         {
             return new NumberRangeElement(element);
         }

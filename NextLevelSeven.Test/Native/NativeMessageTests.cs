@@ -312,10 +312,7 @@ namespace NextLevelSeven.Test.Native
                 }
             }
             Debug.WriteLine("Building...");
-            Measure.ExecutionTime(() =>
-            {
-                message = Message.Create(builder.ToString());
-            });
+            Measure.ExecutionTime(() => { message = Message.Create(builder.ToString()); });
             Debug.WriteLine("Splitting...");
             var time = Measure.ExecutionTime(() =>
             {
@@ -354,7 +351,8 @@ namespace NextLevelSeven.Test.Native
         {
             var message = Message.Create(ExampleMessages.Standard);
             var segment = message[1];
-            Assert.AreEqual(@"MSH|^~\&|SENDER|DEV|RECEIVER|SYSTEM|20130528073829||ADT^A17|14150278|P|2.3|", segment.Value);
+            Assert.AreEqual(@"MSH|^~\&|SENDER|DEV|RECEIVER|SYSTEM|20130528073829||ADT^A17|14150278|P|2.3|",
+                segment.Value);
         }
 
         [TestMethod]

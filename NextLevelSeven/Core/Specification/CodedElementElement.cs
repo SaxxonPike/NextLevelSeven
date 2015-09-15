@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NextLevelSeven.Core.Specification
+﻿namespace NextLevelSeven.Core.Specification
 {
     internal class CodedElementElement : SpecificationElementBase, ICodedElement
     {
@@ -49,7 +43,7 @@ namespace NextLevelSeven.Core.Specification
             set { Element[6].Value = value; }
         }
 
-        override public void Validate()
+        public override void Validate()
         {
             // there are no required fields.
         }

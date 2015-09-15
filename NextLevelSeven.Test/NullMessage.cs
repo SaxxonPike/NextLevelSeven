@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using NextLevelSeven.Core;
-using NextLevelSeven.Core.Codec;
-using NextLevelSeven.Core.Specification;
 using NextLevelSeven.Native;
 
 #pragma warning disable 0067
@@ -19,6 +17,11 @@ namespace NextLevelSeven.Test
         ///     Get the singleton instance of NullMessage.
         /// </summary>
         public static readonly NullMessage Instance = new NullMessage();
+
+        public int DescendantCount
+        {
+            get { return 0; }
+        }
 
         public INativeSegment this[int index]
         {
@@ -101,11 +104,6 @@ namespace NextLevelSeven.Test
             get { return null; }
         }
 
-        public INativeMessage Clone()
-        {
-            return CloneInternal();
-        }
-
         public INativeElement GetField(int segment, int field = -1, int repetition = -1, int component = -1,
             int subcomponent = -1)
         {
@@ -135,11 +133,6 @@ namespace NextLevelSeven.Test
         public char Delimiter
         {
             get { return '\0'; }
-        }
-
-        public int DescendantCount
-        {
-            get { return 0; }
         }
 
         public IEnumerable<INativeElement> DescendantElements
@@ -211,12 +204,6 @@ namespace NextLevelSeven.Test
             return null;
         }
 
-        public INativeElement GetField(string segmentName, int field = -1, int repetition = -1, int component = -1,
-            int subcomponent = -1)
-        {
-            return null;
-        }
-
         IElement IElement.Clone()
         {
             return CloneInternal();
@@ -227,24 +214,32 @@ namespace NextLevelSeven.Test
             return CloneInternal();
         }
 
-        static NullMessage CloneInternal()
-        {
-            var result = new NullMessage();
-            return result;
-        }
-
         IElement IElement.this[int index]
         {
-            get
-            {
-                return null;
-            }
+            get { return null; }
         }
 
 
         public int ValueCount
         {
             get { return 0; }
+        }
+
+        public INativeMessage Clone()
+        {
+            return CloneInternal();
+        }
+
+        public INativeElement GetField(string segmentName, int field = -1, int repetition = -1, int component = -1,
+            int subcomponent = -1)
+        {
+            return null;
+        }
+
+        private static NullMessage CloneInternal()
+        {
+            var result = new NullMessage();
+            return result;
         }
     }
 }

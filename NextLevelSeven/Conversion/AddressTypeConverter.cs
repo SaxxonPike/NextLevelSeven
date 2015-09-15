@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NextLevelSeven.Core.Specification;
+﻿using NextLevelSeven.Core.Specification;
 
 namespace NextLevelSeven.Conversion
 {
     /// <summary>
     ///     Converter for HL7 address type.
     /// </summary>
-    static public class AddressTypeConverter
+    public static class AddressTypeConverter
     {
         /// <summary>
         ///     Get the raw value for the specified address type.
         /// </summary>
         /// <param name="addressType">Address type.</param>
         /// <returns>HL7 value.</returns>
-        static public string ConvertFromTable(AddressType addressType)
+        public static string ConvertFromTable(AddressType addressType)
         {
             switch (addressType)
             {
@@ -46,7 +41,7 @@ namespace NextLevelSeven.Conversion
         /// </summary>
         /// <param name="addressType">Address type.</param>
         /// <returns>Interpreted value.</returns>
-        static public AddressType ConvertToTable(string addressType)
+        public static AddressType ConvertToTable(string addressType)
         {
             if (addressType == null)
             {

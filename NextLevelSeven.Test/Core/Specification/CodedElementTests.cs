@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Specification;
 
@@ -8,14 +7,14 @@ namespace NextLevelSeven.Test.Core.Specification
     [TestClass]
     public class CodedElementTests : SpecificationTestFixture
     {
-        private string _identifier;
-        private string _text;
-        private string _codingSystemName;
+        private string _alternateCodingSystemName;
         private string _alternateIdentifier;
         private string _alternateText;
-        private string _alternateCodingSystemName;
-        private string _message;
+        private string _codingSystemName;
         private ICodedElement _element;
+        private string _identifier;
+        private string _message;
+        private string _text;
 
         [TestInitialize]
         public void Initialize()

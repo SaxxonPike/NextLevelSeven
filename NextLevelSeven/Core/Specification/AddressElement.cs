@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NextLevelSeven.Conversion;
-using NextLevelSeven.Diagnostics;
+﻿using NextLevelSeven.Conversion;
 
 namespace NextLevelSeven.Core.Specification
 {
@@ -68,7 +62,7 @@ namespace NextLevelSeven.Core.Specification
             set { Element[8].Value = value; }
         }
 
-        override public void Validate()
+        public override void Validate()
         {
             AssertTypedValueOrNull(AddressType, AddressTypeData, "AddressType");
         }

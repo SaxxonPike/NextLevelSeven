@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
 using NextLevelSeven.Native;
@@ -147,7 +146,7 @@ namespace NextLevelSeven.Test.Native
         {
             var message = Message.Create("MSH|^~\\&|1|2|3|4|5");
             var segment = message[1];
-            segment.DescendantElements.Skip(2).Where(i => i.As.Int % 2 == 0).Delete();
+            segment.DescendantElements.Skip(2).Where(i => i.As.Int%2 == 0).Delete();
             Assert.AreEqual("MSH|^~\\&|1|3|5", message.Value, @"Message was modified unexpectedly.");
         }
 

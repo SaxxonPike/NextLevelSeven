@@ -26,7 +26,7 @@ namespace NextLevelSeven.Test.Building
             var val1 = Randomized.StringCaps(3) + "|" + Randomized.String();
             var builder = Message.Build(string.Format("MSH|^~\\&\r{0}\r{1}",
                 val0, val1));
-            AssertEnumerable.AreEqual(builder.Values, new[] { "MSH|^~\\&", val0, val1 });
+            AssertEnumerable.AreEqual(builder.Values, new[] {"MSH|^~\\&", val0, val1});
         }
 
         [TestMethod]

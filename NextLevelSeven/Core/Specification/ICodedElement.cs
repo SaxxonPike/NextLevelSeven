@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NextLevelSeven.Core.Specification
+﻿namespace NextLevelSeven.Core.Specification
 {
     /// <summary>
     ///     Represents a coded element in the HL7 specification. (CE)

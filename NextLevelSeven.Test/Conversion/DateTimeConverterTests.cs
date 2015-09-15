@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Conversion;
-using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Test.Conversion
 {
@@ -35,19 +34,22 @@ namespace NextLevelSeven.Test.Conversion
         [TestMethod]
         public void DateTimeConverter_DecodesDateTime()
         {
-            Assert.AreEqual(new DateTime(2013, 05, 28, 07, 38, 29), DateTimeConverter.ConvertToDateTime("20130528073829"));
+            Assert.AreEqual(new DateTime(2013, 05, 28, 07, 38, 29),
+                DateTimeConverter.ConvertToDateTime("20130528073829"));
         }
 
         [TestMethod]
         public void DateTimeConverter_DecodesDateTimeWithNegativeTimeZoneOffset()
         {
-            Assert.AreEqual(new DateTimeOffset(2013, 05, 28, 07, 38, 29, new TimeSpan(-5, 30, 0)), DateTimeConverter.ConvertToDateTime("20130528073829-0530"));
+            Assert.AreEqual(new DateTimeOffset(2013, 05, 28, 07, 38, 29, new TimeSpan(-5, 30, 0)),
+                DateTimeConverter.ConvertToDateTime("20130528073829-0530"));
         }
 
         [TestMethod]
         public void DateTimeConverter_DecodesDateTimeWithPositiveTimeZoneOffset()
         {
-            Assert.AreEqual(new DateTimeOffset(2013, 05, 28, 07, 38, 29, new TimeSpan(5, 30, 0)), DateTimeConverter.ConvertToDateTime("20130528073829+0530"));
+            Assert.AreEqual(new DateTimeOffset(2013, 05, 28, 07, 38, 29, new TimeSpan(5, 30, 0)),
+                DateTimeConverter.ConvertToDateTime("20130528073829+0530"));
         }
 
         [TestMethod]
@@ -109,7 +111,5 @@ namespace NextLevelSeven.Test.Conversion
         {
             Assert.AreEqual(new TimeSpan(13, 35, 00), DateTimeConverter.ConvertToTime("1335"));
         }
-
-
     }
 }

@@ -24,7 +24,7 @@ namespace NextLevelSeven.Test.Building
             var val3 = Randomized.String();
             var builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}",
                 val0, val1, val2, val3))[1][3];
-            AssertEnumerable.AreEqual(builder.Values, new[] { val0, string.Format("{0}^{1}&{2}", val1, val2, val3) });
+            AssertEnumerable.AreEqual(builder.Values, new[] {val0, string.Format("{0}^{1}&{2}", val1, val2, val3)});
         }
 
         [TestMethod]

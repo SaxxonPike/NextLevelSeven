@@ -2,7 +2,6 @@
 using System.Linq;
 using NextLevelSeven.Core;
 using NextLevelSeven.Native;
-using NextLevelSeven.Native.Elements;
 using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building

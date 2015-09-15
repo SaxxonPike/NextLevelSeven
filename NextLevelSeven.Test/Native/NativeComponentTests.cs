@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
 using NextLevelSeven.Native;
 
@@ -35,7 +34,8 @@ namespace NextLevelSeven.Test.Native
             var id2 = Randomized.String();
             var id3 = Randomized.String();
             var id4 = Randomized.String();
-            var component = Message.Create(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}", id1, id2, id3, id4))[1][3][2][2][2];
+            var component =
+                Message.Create(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}", id1, id2, id3, id4))[1][3][2][2][2];
             Assert.AreEqual(id4, component.Value);
         }
 

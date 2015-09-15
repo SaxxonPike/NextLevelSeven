@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NextLevelSeven.Test
 {
-    static public class AssertEnumerable
+    public static class AssertEnumerable
     {
-        static public void AreEqual<T>(IEnumerable<T> expected, IEnumerable<T> observed)
+        public static void AreEqual<T>(IEnumerable<T> expected, IEnumerable<T> observed)
         {
             var a = expected.ToList();
             var b = observed.ToList();

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NextLevelSeven.Test
@@ -25,7 +24,7 @@ namespace NextLevelSeven.Test
             _stopwatch.Stop();
             var ticks = _stopwatch.ElapsedTicks;
             var milliseconds = _stopwatch.ElapsedMilliseconds;
-            Debug.WriteLine("---> {0}ms ({1}\x00B5s)", milliseconds, (ticks * 1000000) / _frequency);
+            Debug.WriteLine("---> {0}ms ({1}\x00B5s)", milliseconds, (ticks*1000000)/_frequency);
         }
     }
 }
