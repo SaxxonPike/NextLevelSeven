@@ -1,12 +1,11 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NextLevelSeven.Conversion;
 using NextLevelSeven.Specification.Conversion;
 using NextLevelSeven.Specification.Elements;
 
-namespace NextLevelSeven.Test.Conversion
+namespace NextLevelSeven.Test.Specification.Conversion
 {
     [TestClass]
-    public class AddressTypeConverterTests
+    public class AddressTypeConverterTests : SpecificationTestFixture
     {
         [TestMethod]
         public void AddressTypeConverter_EncodesCurrent()

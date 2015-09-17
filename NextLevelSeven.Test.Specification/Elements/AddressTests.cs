@@ -3,7 +3,7 @@ using NextLevelSeven.Core;
 using NextLevelSeven.Specification;
 using NextLevelSeven.Specification.Elements;
 
-namespace NextLevelSeven.Test.Specification
+namespace NextLevelSeven.Test.Specification.Elements
 {
     [TestClass]
     public class AddressTests : SpecificationTestFixture

@@ -1,5 +1,4 @@
-﻿using NextLevelSeven.Conversion;
-using NextLevelSeven.Core;
+﻿using NextLevelSeven.Core;
 using NextLevelSeven.Specification.Conversion;
 
 namespace NextLevelSeven.Specification.Elements

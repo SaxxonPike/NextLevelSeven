@@ -2,7 +2,7 @@
 using NextLevelSeven.Core;
 using NextLevelSeven.Specification;
 
-namespace NextLevelSeven.Test.Specification
+namespace NextLevelSeven.Test.Specification.Elements
 {
     [TestClass]
     public class CodedElementTests : SpecificationTestFixture
