@@ -6,7 +6,7 @@ namespace NextLevelSeven.Core
     /// <summary>
     ///     Manages default settings. TODO: convert this into local settings.
     /// </summary>
-    internal static class Default
+    internal static class ElementDefaults
     {
         /// <summary>
         ///     Default "HD" Application when sending messages.

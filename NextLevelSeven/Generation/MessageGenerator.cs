@@ -39,8 +39,8 @@ namespace NextLevelSeven.Generation
             details.Version = version;
             details.Receiver.Application = receivingApplication;
             details.Receiver.Facility = receivingFacility;
-            details.Sender.Application = sendingApplication ?? Default.Application;
-            details.Sender.Facility = sendingFacility ?? Default.Facility;
+            details.Sender.Application = sendingApplication ?? ElementDefaults.Application;
+            details.Sender.Facility = sendingFacility ?? ElementDefaults.Facility;
             return message;
         }
     }

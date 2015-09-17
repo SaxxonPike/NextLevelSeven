@@ -109,7 +109,7 @@
     <Compile Include="Native\INativeSubcomponent.cs" />
     <Compile Include="Native\NativeElementExtensions.cs" />
     <Compile Include="Core\Encoding\EncodingConfigurationExtensions.cs" />
-    <Compile Include="Core\Default.cs" />
+    <Compile Include="Core\ElementDefaults.cs" />
     <Compile Include="Core\IMessage.cs" />
     <Compile Include="Core\Properties\IIdentity.cs" />
     <Compile Include="Native\INativeSegment.cs" />
