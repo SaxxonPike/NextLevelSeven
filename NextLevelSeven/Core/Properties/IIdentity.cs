@@ -1,4 +1,4 @@
-﻿namespace NextLevelSeven.Core
+﻿namespace NextLevelSeven.Core.Properties
 {
     /// <summary>
     ///     Interface that provides Application and Facility information.

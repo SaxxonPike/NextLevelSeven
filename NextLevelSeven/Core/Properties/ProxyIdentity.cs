@@ -1,11 +1,6 @@
-﻿using NextLevelSeven.Core;
-
-namespace NextLevelSeven.Native.Elements
+﻿namespace NextLevelSeven.Core.Properties
 {
-    /// <summary>
-    ///     Allows for the use of Identity via an element's data.
-    /// </summary>
-    internal sealed class NativeIdentity : IIdentity
+    internal sealed class ProxyIdentity : IIdentity
     {
         /// <summary>
         ///     Create an Identity reference via HL7 element.
@@ -13,7 +8,7 @@ namespace NextLevelSeven.Native.Elements
         /// <param name="element">Element to reference.</param>
         /// <param name="applicationIndex">Index of the application data.</param>
         /// <param name="facilityIndex">Index of the facility data.</param>
-        public NativeIdentity(INativeElement element, int applicationIndex, int facilityIndex)
+        public ProxyIdentity(IElement element, int applicationIndex, int facilityIndex)
         {
             ApplicationIndex = applicationIndex;
             Element = element;
@@ -26,9 +21,9 @@ namespace NextLevelSeven.Native.Elements
         private int ApplicationIndex { get; set; }
 
         /// <summary>
-        ///     Get the referenced element.
+        ///     Get the referenced builder.
         /// </summary>
-        private INativeElement Element { get; set; }
+        private IElement Element { get; set; }
 
         /// <summary>
         ///     Get the facility data index.

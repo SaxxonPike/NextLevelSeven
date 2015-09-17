@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using NextLevelSeven.Core;
+using NextLevelSeven.Core.Encoding;
 using NextLevelSeven.Diagnostics;
+using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Native.Elements
 {
@@ -11,21 +13,26 @@ namespace NextLevelSeven.Native.Elements
     /// </summary>
     internal sealed class NativeSegment : NativeElement, INativeSegment
     {
-        private readonly Dictionary<int, INativeElement> _cache = new Dictionary<int, INativeElement>();
+        /// <summary>
+        ///     Internal component cache.
+        /// </summary>
+        private readonly IndexedCache<int, NativeField> _cache;
 
         public NativeSegment(NativeElement ancestor, int parentIndex, int externalIndex)
             : base(ancestor, parentIndex, externalIndex)
         {
+            _cache = new IndexedCache<int, NativeField>(CreateField);
         }
 
         private NativeSegment(string value, EncodingConfiguration config)
             : base(value, config)
         {
+            _cache = new IndexedCache<int, NativeField>(CreateField);
         }
 
         INativeField INativeSegment.this[int index]
         {
-            get { return GetField(index); }
+            get { return _cache[index]; }
         }
 
         public override char Delimiter
@@ -82,7 +89,7 @@ namespace NextLevelSeven.Native.Elements
         {
             return field < 0
                 ? Value
-                : GetField(field).GetValue(repetition, component, subcomponent);
+                : _cache[field].GetValue(repetition, component, subcomponent);
         }
 
         public IEnumerable<string> GetValues(int field = -1, int repetition = -1, int component = -1,
@@ -90,7 +97,7 @@ namespace NextLevelSeven.Native.Elements
         {
             return field < 0
                 ? Values
-                : GetField(field).GetValues(repetition, component, subcomponent);
+                : _cache[field].GetValues(repetition, component, subcomponent);
         }
 
         public override IElement Clone()
@@ -105,12 +112,15 @@ namespace NextLevelSeven.Native.Elements
 
         public override INativeElement GetDescendant(int index)
         {
-            return _cache.ContainsKey(index)
-                ? _cache[index]
-                : GetField(index);
+            return _cache[index];
         }
 
-        private INativeField GetField(int index)
+        /// <summary>
+        ///     Create a field object.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
+        private NativeField CreateField(int index)
         {
             if (index < 0)
             {
@@ -122,27 +132,23 @@ namespace NextLevelSeven.Native.Elements
                 if (index == 1)
                 {
                     var descendant = new NativeFieldDelimiter(this);
-                    _cache[index] = descendant;
                     return descendant;
                 }
 
                 if (index == 2)
                 {
                     var descendant = new NativeEncodingField(this);
-                    _cache[index] = descendant;
                     return descendant;
                 }
 
                 if (index > 2)
                 {
                     var descendant = new NativeField(this, index - 1, index);
-                    _cache[index] = descendant;
                     return descendant;
                 }
             }
 
             var result = new NativeField(this, index, index);
-            _cache[index] = result;
             return result;
         }
 

@@ -1,10 +1,20 @@
-﻿namespace NextLevelSeven.Core
+﻿namespace NextLevelSeven.Core.Encoding
 {
     /// <summary>
     ///     Provides information about the characters used to encode an HL7 message.
     /// </summary>
     internal class EncodingConfiguration
     {
+        /// <summary>
+        ///     Default encoding configuration.
+        /// </summary>
+        public static readonly EncodingConfiguration Default = new EncodingConfiguration();
+
+        /// <summary>
+        ///     An encoding configuration with all characters set to zero.
+        /// </summary>
+        public static readonly EncodingConfiguration Empty = new EncodingConfiguration('\0', '\0', '\0', '\0', '\0');
+
         /// <summary>
         ///     Create a default encoding configuration.
         /// </summary>
@@ -20,6 +30,19 @@
         public EncodingConfiguration(EncodingConfiguration other)
         {
             InitializeFrom(other);
+        }
+
+        /// <summary>
+        ///     Create an encoding configuration with the specified characters.
+        /// </summary>
+        /// <param name="field">Field delimiter.</param>
+        /// <param name="repetition">Repetition delimiter.</param>
+        /// <param name="component">Component delimiter.</param>
+        /// <param name="subcomponent">Subcomponent delimiter.</param>
+        /// <param name="escape">Escape character.</param>
+        public EncodingConfiguration(char field, char repetition, char component, char subcomponent, char escape)
+        {
+            InitializeCtor(field, repetition, component, subcomponent, escape);
         }
 
         /// <summary>
@@ -65,6 +88,24 @@
         private void InitializeCtor()
         {
             Initialize();
+        }
+
+        /// <summary>
+        ///     Initialize defaults.
+        /// </summary>
+        /// <param name="field"></param>
+        /// <param name="repetition"></param>
+        /// <param name="component"></param>
+        /// <param name="subcomponent"></param>
+        /// <param name="escape"></param>
+        private void InitializeCtor(char field, char repetition, char component, char subcomponent, char escape)
+        {
+            InitializeCtor();
+            FieldDelimiter = field;
+            RepetitionDelimiter = repetition;
+            ComponentDelimiter = component;
+            SubcomponentDelimiter = subcomponent;
+            EscapeDelimiter = escape;
         }
 
         /// <summary>

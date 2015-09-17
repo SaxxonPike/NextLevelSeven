@@ -2,10 +2,11 @@
 using System.Linq;
 using System.Text;
 using NextLevelSeven.Core;
+using NextLevelSeven.Core.Codec;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Utility;
 
-namespace NextLevelSeven.Building
+namespace NextLevelSeven.Building.Elements
 {
     /// <summary>
     ///     Represents an HL7 segment.

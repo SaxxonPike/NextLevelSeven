@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using NextLevelSeven.Core;
+using NextLevelSeven.Core.Codec;
+using NextLevelSeven.Core.Encoding;
 
-namespace NextLevelSeven.Building
+namespace NextLevelSeven.Building.Elements
 {
     /// <summary>
     ///     Base class for message builders.

@@ -52,23 +52,23 @@ namespace NextLevelSeven.Test.Native
         public void Message_CanRetrieveMessageTypeAndTriggerEvent()
         {
             var message = Message.Create(ExampleMessages.Standard);
-            Assert.AreEqual("ADT", message.Type, "Message type is incorrect.");
-            Assert.AreEqual("A17", message.TriggerEvent, "Message trigger event is incorrect.");
+            Assert.AreEqual("ADT", message.Details.Type, "Message type is incorrect.");
+            Assert.AreEqual("A17", message.Details.TriggerEvent, "Message trigger event is incorrect.");
         }
 
         [TestMethod]
         public void Message_CanParseMessageDate()
         {
             var message = Message.Create(ExampleMessages.Standard);
-            Assert.IsTrue(message.Time.HasValue, "Parsed message date is incorrect.");
-            Assert.AreEqual(new DateTime(2013, 05, 28, 07, 38, 29), message.Time.Value.DateTime);
+            Assert.IsTrue(message.Details.Time.HasValue, "Parsed message date is incorrect.");
+            Assert.AreEqual(new DateTime(2013, 05, 28, 07, 38, 29), message.Details.Time.Value.DateTime);
         }
 
         [TestMethod]
         public void Message_CanRetrieveMessageVersion()
         {
             var message = Message.Create(ExampleMessages.Standard);
-            Assert.AreEqual("2.3", message.Version, "Message version is incorrect.");
+            Assert.AreEqual("2.3", message.Details.Version, "Message version is incorrect.");
         }
 
         [TestMethod]

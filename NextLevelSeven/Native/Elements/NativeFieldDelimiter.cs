@@ -1,30 +1,22 @@
-﻿using System.Collections.Generic;
-using NextLevelSeven.Core;
-using NextLevelSeven.Native.Dividers;
-using NextLevelSeven.Utility;
-
-namespace NextLevelSeven.Native.Elements
+﻿namespace NextLevelSeven.Native.Elements
 {
     /// <summary>
     ///     Represents the special MSH-1 field, which contains the field delimiter for the rest of the segment.
     /// </summary>
-    internal sealed class NativeFieldDelimiter : NativeElement, INativeField
+    internal sealed class NativeFieldDelimiter : NativeFieldWithStaticValue
     {
+        /// <summary>
+        ///     Create a field delimiter descendant.
+        /// </summary>
+        /// <param name="ancestor">Ancestor element.</param>
         public NativeFieldDelimiter(NativeElement ancestor)
             : base(ancestor, 0, 1)
         {
         }
 
-        public override char Delimiter
-        {
-            get { return '\0'; }
-        }
-
-        public override bool HasSignificantDescendants
-        {
-            get { return false; }
-        }
-
+        /// <summary>
+        ///     Get or set the value of the field delimiter.
+        /// </summary>
         public override string Value
         {
             get
@@ -46,51 +38,6 @@ namespace NextLevelSeven.Native.Elements
                         (s.Length > 3 ? s.Substring(4) : string.Empty));
                 }
             }
-        }
-
-        public string GetValue(int repetition = -1, int component = -1, int subcomponent = -1)
-        {
-            return Value;
-        }
-
-        public IEnumerable<string> GetValues(int repetition = -1, int component = -1, int subcomponent = -1)
-        {
-            return Value.Yield();
-        }
-
-        public new INativeRepetition this[int index]
-        {
-            get { return new NativeRepetition(this, 0, index); }
-        }
-
-        public override IElement Clone()
-        {
-            return CloneInternal();
-        }
-
-        IField IField.Clone()
-        {
-            return CloneInternal();
-        }
-
-        public override INativeElement GetDescendant(int index)
-        {
-            return new NativeFieldDelimiter(this);
-        }
-
-        protected override IStringDivider GetDescendantDivider(NativeElement ancestor, int index)
-        {
-            return new ProxyStringDivider(() => Value, v => Value = v);
-        }
-
-        public override string ToString()
-        {
-            return Value;
-        }
-
-        private NativeField CloneInternal()
-        {
-            return new NativeField(Value, EncodingConfiguration) {Index = Index};
         }
     }
 }

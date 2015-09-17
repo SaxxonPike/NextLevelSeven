@@ -29,19 +29,18 @@ namespace NextLevelSeven.Generation
             string receivingApplication = null, string receivingFacility = null, string sendingApplication = null,
             string sendingFacility = null, string version = "2.3")
         {
-            var message = new NativeMessage
-            {
-                Type = type,
-                TriggerEvent = triggerEvent,
-                ControlId = controlId,
-                ProcessingId = processingId,
-                Time = DateTimeOffset.Now,
-                Version = version
-            };
-            message.Receiver.Application = receivingApplication;
-            message.Receiver.Facility = receivingFacility;
-            message.Sender.Application = sendingApplication ?? Default.Application;
-            message.Sender.Facility = sendingFacility ?? Default.Facility;
+            var message = new NativeMessage();
+            var details = message.Details;
+            details.Type = type;
+            details.TriggerEvent = triggerEvent;
+            details.ControlId = controlId;
+            details.ProcessingId = processingId;
+            details.Time = DateTimeOffset.Now;
+            details.Version = version;
+            details.Receiver.Application = receivingApplication;
+            details.Receiver.Facility = receivingFacility;
+            details.Sender.Application = sendingApplication ?? Default.Application;
+            details.Sender.Facility = sendingFacility ?? Default.Facility;
             return message;
         }
     }

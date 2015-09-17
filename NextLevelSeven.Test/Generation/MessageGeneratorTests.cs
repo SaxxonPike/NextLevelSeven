@@ -54,38 +54,38 @@ namespace NextLevelSeven.Test.Generation
         [TestMethod]
         public void MessageGenerator_GeneratesProcessingId()
         {
-            Assert.AreEqual(_processingId, _message.ProcessingId, @"Processing ID doesn't match.");
+            Assert.AreEqual(_processingId, _message.Details.ProcessingId, @"Processing ID doesn't match.");
         }
 
         [TestMethod]
         public void MessageGenerator_GeneratesReceivingApplication()
         {
-            Assert.AreEqual(_receivingApplication, _message.Receiver.Application,
+            Assert.AreEqual(_receivingApplication, _message.Details.Receiver.Application,
                 @"Receiving Application doesn't match.");
         }
 
         [TestMethod]
         public void MessageGenerator_GeneratesReceivingFacility()
         {
-            Assert.AreEqual(_receivingFacility, _message.Receiver.Facility, @"Receiving Facility doesn't match.");
+            Assert.AreEqual(_receivingFacility, _message.Details.Receiver.Facility, @"Receiving Facility doesn't match.");
         }
 
         [TestMethod]
         public void MessageGenerator_GeneratesSendingApplication()
         {
-            Assert.AreEqual(_sendingApplication, _message.Sender.Application, @"Sending Application doesn't match.");
+            Assert.AreEqual(_sendingApplication, _message.Details.Sender.Application, @"Sending Application doesn't match.");
         }
 
         [TestMethod]
         public void MessageGenerator_GeneratesSendingFacility()
         {
-            Assert.AreEqual(_sendingFacility, _message.Sender.Facility, @"Sending Facility doesn't match.");
+            Assert.AreEqual(_sendingFacility, _message.Details.Sender.Facility, @"Sending Facility doesn't match.");
         }
 
         [TestMethod]
         public void MessageGenerator_GeneratesVersion()
         {
-            Assert.AreEqual(_version, _message.Version, @"Version doesn't match.");
+            Assert.AreEqual(_version, _message.Details.Version, @"Version doesn't match.");
         }
     }
 }

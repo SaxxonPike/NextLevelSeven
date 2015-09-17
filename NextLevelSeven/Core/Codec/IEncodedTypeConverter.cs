@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using NextLevelSeven.Core.Codec;
 
-namespace NextLevelSeven.Core
+namespace NextLevelSeven.Core.Codec
 {
     /// <summary>
     ///     Conversion methods for HL7 data values.

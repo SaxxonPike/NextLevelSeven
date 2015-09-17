@@ -14,8 +14,8 @@ namespace NextLevelSeven.Test.Generation
             var time = Measure.ExecutionTime(() =>
             {
                 var message = MessageGenerator.Generate(type, trigger, Randomized.String());
-                Assert.AreEqual(message.Type, type);
-                Assert.AreEqual(message.TriggerEvent, trigger);
+                Assert.AreEqual(message.Details.Type, type);
+                Assert.AreEqual(message.Details.TriggerEvent, trigger);
             }, 100);
             AssertTime.IsWithin(1000, time);
         }

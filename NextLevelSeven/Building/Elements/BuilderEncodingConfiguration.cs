@@ -1,6 +1,6 @@
-﻿using NextLevelSeven.Core;
+﻿using NextLevelSeven.Core.Encoding;
 
-namespace NextLevelSeven.Building
+namespace NextLevelSeven.Building.Elements
 {
     /// <summary>
     ///     An encoding configuration wrapper that redirects character properties from a MessageBuilder.

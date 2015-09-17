@@ -47,7 +47,7 @@ namespace NextLevelSeven.Test.Generation
         public void AckMessageGenerator_UsesAckType()
         {
             var ack = AckMessageGenerator.GenerateSuccess(_message);
-            Assert.AreEqual("ACK", ack.Type);
+            Assert.AreEqual("ACK", ack.Details.Type);
         }
 
         [TestMethod]
@@ -68,14 +68,14 @@ namespace NextLevelSeven.Test.Generation
         public void AckMessageGenerator_MatchesSenderApplication()
         {
             var ack = AckMessageGenerator.GenerateSuccess(_message);
-            Assert.AreEqual(_message.Sender.Application, ack.Receiver.Application);
+            Assert.AreEqual(_message.Details.Sender.Application, ack.Details.Receiver.Application);
         }
 
         [TestMethod]
         public void AckMessageGenerator_MatchesSenderFacility()
         {
             var ack = AckMessageGenerator.GenerateSuccess(_message);
-            Assert.AreEqual(_message.Sender.Facility, ack.Receiver.Facility);
+            Assert.AreEqual(_message.Details.Sender.Facility, ack.Details.Receiver.Facility);
         }
 
         [TestMethod]

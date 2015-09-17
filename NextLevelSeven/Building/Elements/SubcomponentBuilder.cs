@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using NextLevelSeven.Core;
+using NextLevelSeven.Core.Codec;
 using NextLevelSeven.Utility;
 
-namespace NextLevelSeven.Building
+namespace NextLevelSeven.Building.Elements
 {
     /// <summary>
     ///     Subcomponent HL7 element builder.

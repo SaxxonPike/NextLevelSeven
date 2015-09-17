@@ -1,4 +1,4 @@
-﻿using NextLevelSeven.Core;
+﻿using NextLevelSeven.Core.Encoding;
 
 namespace NextLevelSeven.Native.Elements
 {

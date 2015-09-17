@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace NextLevelSeven.Core
+namespace NextLevelSeven.Core.Encoding
 {
     /// <summary>
     ///     Extensions for encoding configurations.

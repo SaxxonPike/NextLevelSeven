@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using NextLevelSeven.Core;
 
-namespace NextLevelSeven.Building
+namespace NextLevelSeven.Building.Elements
 {
     /// <summary>
     ///     Base class for builders that are not root level.

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NextLevelSeven.Core.Properties;
 
 namespace NextLevelSeven.Core
 {
@@ -7,6 +8,11 @@ namespace NextLevelSeven.Core
     /// </summary>
     public interface IMessage : IElement
     {
+        /// <summary>
+        ///     Access message details as a property set.
+        /// </summary>
+        IMessageDetails Details { get; }
+
         /// <summary>
         ///     Get a copy of the message.
         /// </summary>

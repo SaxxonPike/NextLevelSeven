@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using NextLevelSeven.Conversion;
-using NextLevelSeven.Core;
 using NextLevelSeven.Core.Codec;
 
-namespace NextLevelSeven.Building
+namespace NextLevelSeven.Building.Elements
 {
     /// <summary>
     ///     Provides HL7 value conversion.

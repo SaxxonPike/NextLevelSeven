@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using NextLevelSeven.Core;
+using NextLevelSeven.Core.Codec;
+using NextLevelSeven.Core.Properties;
 using NextLevelSeven.Native;
 
 #pragma warning disable 0067
@@ -41,7 +44,7 @@ namespace NextLevelSeven.Test
         public string ControlId
         {
             get { return null; }
-            set { }
+            set { Debug.WriteLine("Write to ControlId: {0}", value); }
         }
 
         public string Escape(string data)
@@ -49,59 +52,14 @@ namespace NextLevelSeven.Test
             return data;
         }
 
-        public string ProcessingId
-        {
-            get { return null; }
-            set { }
-        }
-
-        public IIdentity Receiver
-        {
-            get { return null; }
-        }
-
-        public string Security
-        {
-            get { return null; }
-            set { }
-        }
-
         public IEnumerable<INativeSegment> Segments
         {
             get { return Enumerable.Empty<INativeSegment>(); }
         }
 
-        public IIdentity Sender
-        {
-            get { return null; }
-        }
-
-        public DateTimeOffset? Time
-        {
-            get { return null; }
-            set { }
-        }
-
-        public string TriggerEvent
-        {
-            get { return null; }
-            set { }
-        }
-
-        public string Type
-        {
-            get { return null; }
-            set { }
-        }
-
         public string UnEscape(string data)
         {
             return data;
-        }
-
-        public string Version
-        {
-            get { return null; }
         }
 
         public INativeElement GetField(int segment, int field = -1, int repetition = -1, int component = -1,
@@ -240,6 +198,12 @@ namespace NextLevelSeven.Test
         {
             var result = new NullMessage();
             return result;
+        }
+
+
+        public IMessageDetails Details
+        {
+            get { return null; }
         }
     }
 }

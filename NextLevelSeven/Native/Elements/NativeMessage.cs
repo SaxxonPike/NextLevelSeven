@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using NextLevelSeven.Conversion;
 using NextLevelSeven.Core;
+using NextLevelSeven.Core.Encoding;
+using NextLevelSeven.Core.Properties;
 using NextLevelSeven.Diagnostics;
+using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Native.Elements
 {
@@ -12,8 +14,16 @@ namespace NextLevelSeven.Native.Elements
     /// </summary>
     internal sealed class NativeMessage : NativeElement, INativeMessage
     {
-        private readonly Dictionary<int, INativeElement> _cache = new Dictionary<int, INativeElement>();
+        private readonly IndexedCache<int, NativeSegment> _cache;
+
+        /// <summary>
+        ///     Internal backing field for encoding configuration.
+        /// </summary>
         private readonly EncodingConfiguration _encodingConfiguration;
+
+        /// <summary>
+        ///     Cached Guid.
+        /// </summary>
         private Guid _keyGuid;
 
         /// <summary>
@@ -21,6 +31,7 @@ namespace NextLevelSeven.Native.Elements
         /// </summary>
         public NativeMessage()
         {
+            _cache = new IndexedCache<int, NativeSegment>(CreateSegment);
             _encodingConfiguration = new NativeMessageEncodingConfiguration(this);
             Value = @"MSH|^~\&|";
         }
@@ -31,6 +42,7 @@ namespace NextLevelSeven.Native.Elements
         /// <param name="message">Message data to interpret.</param>
         public NativeMessage(string message)
         {
+            _cache = new IndexedCache<int, NativeSegment>(CreateSegment);
             if (message == null)
             {
                 throw new MessageException(ErrorCode.MessageDataMustNotBeNull);
@@ -45,14 +57,6 @@ namespace NextLevelSeven.Native.Elements
             }
             _encodingConfiguration = new NativeMessageEncodingConfiguration(this);
             Value = SanitizeLineEndings(message);
-        }
-
-        /// <summary>
-        ///     Get the first MSH segment.
-        /// </summary>
-        private INativeElement Msh
-        {
-            get { return this["MSH"].First(); }
         }
 
         /// <summary>
@@ -97,15 +101,6 @@ namespace NextLevelSeven.Native.Elements
         public IEnumerable<INativeSegment> this[IEnumerable<string> segmentTypes]
         {
             get { return Segments.Where(s => segmentTypes.Contains(s.Type)); }
-        }
-
-        /// <summary>
-        ///     Get or set the message Control ID from MSH-10.
-        /// </summary>
-        public string ControlId
-        {
-            get { return Msh[10].Value; }
-            set { Msh[10].Value = value; }
         }
 
         /// <summary>
@@ -170,72 +165,11 @@ namespace NextLevelSeven.Native.Elements
         }
 
         /// <summary>
-        ///     Get or set the message Processing ID from MSH-11.
-        /// </summary>
-        public string ProcessingId
-        {
-            get { return Msh[11].Value; }
-            set { Msh[11].Value = value; }
-        }
-
-        /// <summary>
-        ///     Get the receiving application and facility.
-        /// </summary>
-        public IIdentity Receiver
-        {
-            get { return new NativeIdentity(Msh, 5, 6); }
-        }
-
-        /// <summary>
-        ///     Get or set the message Security from MSH-8.
-        /// </summary>
-        public string Security
-        {
-            get { return Msh[8].Value; }
-            set { Msh[8].Value = value; }
-        }
-
-        /// <summary>
         ///     Get all segments in the message.
         /// </summary>
         public IEnumerable<INativeSegment> Segments
         {
             get { return new NativeSegmentEnumerable(this); }
-        }
-
-        /// <summary>
-        ///     Get the sending application and facility.
-        /// </summary>
-        public IIdentity Sender
-        {
-            get { return new NativeIdentity(Msh, 3, 4); }
-        }
-
-        /// <summary>
-        ///     Get or set the message Time from MSH-7.
-        /// </summary>
-        public DateTimeOffset? Time
-        {
-            get { return DateTimeConverter.ConvertToDateTime(Msh[7].Value); }
-            set { Msh[7].Value = DateTimeConverter.ConvertFromDateTime(value); }
-        }
-
-        /// <summary>
-        ///     Get or set the message Trigger Event from MSH-9-2.
-        /// </summary>
-        public string TriggerEvent
-        {
-            get { return Msh[9][0][2].Value; }
-            set { Msh[9][0][2].Value = value; }
-        }
-
-        /// <summary>
-        ///     Get or set the message Trigger Event from MSH-9-1.
-        /// </summary>
-        public string Type
-        {
-            get { return Msh[9][0][1].Value; }
-            set { Msh[9][0][1].Value = value; }
         }
 
         /// <summary>
@@ -246,15 +180,6 @@ namespace NextLevelSeven.Native.Elements
         {
             var value = Value;
             return value != null && value.StartsWith("MSH");
-        }
-
-        /// <summary>
-        ///     Get or set the message Version from MSH-12.
-        /// </summary>
-        public string Version
-        {
-            get { return Msh[12].Value; }
-            set { Msh[12].Value = value; }
         }
 
         /// <summary>
@@ -311,14 +236,30 @@ namespace NextLevelSeven.Native.Elements
                 : GetSegment(segment).GetValue(field, repetition, component, subcomponent);
         }
 
+        /// <summary>
+        ///     Deep clone this message.
+        /// </summary>
+        /// <returns>Clone of the message.</returns>
         public override IElement Clone()
         {
             return CloneInternal();
         }
 
+        /// <summary>
+        ///     Deep clone this message.
+        /// </summary>
+        /// <returns>Clone of the message.</returns>
         IMessage IMessage.Clone()
         {
             return CloneInternal();
+        }
+
+        /// <summary>
+        ///     Access message details as a property set.
+        /// </summary>
+        public IMessageDetails Details
+        {
+            get { return new MessageDetails(this); }
         }
 
         /// <summary>
@@ -345,9 +286,7 @@ namespace NextLevelSeven.Native.Elements
         /// <returns></returns>
         public override INativeElement GetDescendant(int index)
         {
-            return _cache.ContainsKey(index)
-                ? _cache[index]
-                : GetSegment(index);
+            return GetSegment(index);
         }
 
         /// <summary>
@@ -402,13 +341,22 @@ namespace NextLevelSeven.Native.Elements
         /// <returns></returns>
         public INativeSegment GetSegment(int index)
         {
+            return _cache[index];
+        }
+
+        /// <summary>
+        ///     Create a segment object.
+        /// </summary>
+        /// <param name="index">Desired index.</param>
+        /// <returns>Segment object.</returns>
+        private NativeSegment CreateSegment(int index)
+        {
             if (index < 1)
             {
                 throw new ArgumentException(ErrorMessages.Get(ErrorCode.SegmentIndexMustBeGreaterThanZero));
             }
 
             var result = new NativeSegment(this, index - 1, index);
-            _cache[index] = result;
             return result;
         }
 
@@ -462,6 +410,10 @@ namespace NextLevelSeven.Native.Elements
                 : DescendantDivider.Value;
         }
 
+        /// <summary>
+        ///     Deep clone this message.
+        /// </summary>
+        /// <returns>Clone of the message.</returns>
         private NativeMessage CloneInternal()
         {
             return new NativeMessage(Value) {Index = Index};

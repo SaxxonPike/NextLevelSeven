@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using NextLevelSeven.Core;
+using NextLevelSeven.Core.Codec;
+using NextLevelSeven.Core.Properties;
 using NextLevelSeven.Native;
 using NextLevelSeven.Utility;
 
-namespace NextLevelSeven.Building
+namespace NextLevelSeven.Building.Elements
 {
     /// <summary>
     ///     Represents an HL7 message as discrete parts, which can be quickly modified and exported.
@@ -430,6 +432,11 @@ namespace NextLevelSeven.Building
         public override char Delimiter
         {
             get { return '\xD'; }
+        }
+
+        public IMessageDetails Details
+        {
+            get { return new MessageDetails(this); }
         }
 
         /// <summary>
