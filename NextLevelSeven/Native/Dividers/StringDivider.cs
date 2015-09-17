@@ -134,12 +134,9 @@ namespace NextLevelSeven.Native.Dividers
         /// <param name="s">Characters to set the value to.</param>
         private void Initialize(char[] s)
         {
-            lock (SyncRoot)
-            {
-                _divisions = null;
-                _valueChars = s;
-                Version++;
-            }
+            _divisions = null;
+            _valueChars = s;
+            Version++;
 
             RaiseValueChanged();
         }

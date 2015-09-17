@@ -6,8 +6,6 @@ namespace NextLevelSeven.Native.Dividers
 {
     internal abstract class StringDividerBase : IStringDivider
     {
-        public readonly object SyncRoot = new object();
-
         /// <summary>
         ///     This event is raised whenever the value is changed. This event does not propagate to the parent string divider.
         /// </summary>
