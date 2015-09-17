@@ -33,7 +33,7 @@ namespace NextLevelSeven.Test.Native
         [TestMethod]
         public void Message_ThrowsOnNullData()
         {
-            It.Throws<MessageException>(() => Message.Create(null));
+            It.Throws<MessageException>(() => Message.Create((string)null));
         }
 
         [TestMethod]

@@ -8,7 +8,7 @@ namespace NextLevelSeven.Utility
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    internal sealed class IndexedCache<TKey, TValue>
+    internal sealed class IndexedCache<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
     {
         /// <summary>
         ///     Internal cache.
@@ -51,6 +51,16 @@ namespace NextLevelSeven.Utility
         }
 
         /// <summary>
+        ///     Returns true if the specified key exists in the cache.
+        /// </summary>
+        /// <param name="index">Index to search for.</param>
+        /// <returns></returns>
+        public bool Contains(TKey index)
+        {
+            return _cache.ContainsKey(index);
+        }
+
+        /// <summary>
         ///     Get the number of items in the cache.
         /// </summary>
         public int Count
@@ -63,6 +73,34 @@ namespace NextLevelSeven.Utility
         /// </summary>
         public void Clear()
         {
+        }
+
+        /// <summary>
+        ///     Remove an item from the cache.
+        /// </summary>
+        /// <param name="index">Index of the item to remove.</param>
+        /// <returns>True, if removal was successful.</returns>
+        public bool Remove(TKey index)
+        {
+            return _cache.Remove(index);
+        }
+
+        /// <summary>
+        ///     Get an enumerator for the cache.
+        /// </summary>
+        /// <returns>Enumerator.</returns>
+        public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
+        {
+            return _cache.GetEnumerator();
+        }
+
+        /// <summary>
+        ///     Get an enumerator for the cache.
+        /// </summary>
+        /// <returns>Enumerator.</returns>
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        {
+            return _cache.GetEnumerator();
         }
     }
 }

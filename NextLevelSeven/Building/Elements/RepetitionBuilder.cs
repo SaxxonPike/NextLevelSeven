@@ -15,7 +15,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>
         ///     Descendant builders.
         /// </summary>
-        private readonly Dictionary<int, ComponentBuilder> _componentBuilders = new Dictionary<int, ComponentBuilder>();
+        private readonly IndexedCache<int, ComponentBuilder> _cache;
 
         /// <summary>
         ///     Create a repetition builder using the specified encoding configuration.
@@ -26,6 +26,7 @@ namespace NextLevelSeven.Building.Elements
         internal RepetitionBuilder(BuilderBase builder, int index, string value = null)
             : base(builder, index)
         {
+            _cache = new IndexedCache<int, ComponentBuilder>(CreateComponentBuilder);
             if (value != null)
             {
                 Value = value;
@@ -39,14 +40,12 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Component builder for the specified index.</returns>
         public new IComponentBuilder this[int index]
         {
-            get
-            {
-                if (!_componentBuilders.ContainsKey(index))
-                {
-                    _componentBuilders[index] = new ComponentBuilder(this, index);
-                }
-                return _componentBuilders[index];
-            }
+            get { return _cache[index]; }
+        }
+
+        private ComponentBuilder CreateComponentBuilder(int index)
+        {
+            return new ComponentBuilder(this, index);
         }
 
         /// <summary>
@@ -54,7 +53,7 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         public override int ValueCount
         {
-            get { return _componentBuilders.Max(kv => kv.Key); }
+            get { return _cache.Max(kv => kv.Key); }
         }
 
         /// <summary>
@@ -64,7 +63,7 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                return new WrapperEnumerable<string>(index => this[index].Value,
+                return new WrapperEnumerable<string>(index => _cache[index].Value,
                     (index, data) => Component(index, data),
                     () => ValueCount,
                     1);
@@ -82,7 +81,7 @@ namespace NextLevelSeven.Building.Elements
                 var index = 1;
                 var result = new StringBuilder();
 
-                foreach (var component in _componentBuilders.OrderBy(i => i.Key))
+                foreach (var component in _cache.OrderBy(i => i.Key))
                 {
                     while (index < component.Key)
                     {
@@ -109,7 +108,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This RepetitionBuilder, for chaining purposes.</returns>
         public IRepetitionBuilder Component(int componentIndex, string value)
         {
-            this[componentIndex].Component(value);
+            _cache[componentIndex].Component(value);
             return this;
         }
 
@@ -120,7 +119,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This RepetitionBuilder, for chaining purposes.</returns>
         public IRepetitionBuilder Components(params string[] components)
         {
-            _componentBuilders.Clear();
+            _cache.Clear();
             var index = 1;
             foreach (var component in components)
             {
@@ -154,7 +153,7 @@ namespace NextLevelSeven.Building.Elements
         {
             if (value == null)
             {
-                _componentBuilders.Clear();
+                _cache.Clear();
             }
             else
             {
@@ -172,7 +171,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This RepetitionBuilder, for chaining purposes.</returns>
         public IRepetitionBuilder Subcomponent(int componentIndex, int subcomponentIndex, string value)
         {
-            this[componentIndex].Subcomponent(subcomponentIndex, value);
+            _cache[componentIndex].Subcomponent(subcomponentIndex, value);
             return this;
         }
 
@@ -184,7 +183,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This RepetitionBuilder, for chaining purposes.</returns>
         public IRepetitionBuilder Subcomponents(int componentIndex, params string[] subcomponents)
         {
-            this[componentIndex].Subcomponents(subcomponents);
+            _cache[componentIndex].Subcomponents(subcomponents);
             return this;
         }
 
@@ -197,7 +196,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This RepetitionBuilder, for chaining purposes.</returns>
         public IRepetitionBuilder Subcomponents(int componentIndex, int startIndex, params string[] subcomponents)
         {
-            this[componentIndex].Subcomponents(startIndex, subcomponents);
+            _cache[componentIndex].Subcomponents(startIndex, subcomponents);
             return this;
         }
 
@@ -211,7 +210,7 @@ namespace NextLevelSeven.Building.Elements
         {
             return component < 0
                 ? Value
-                : this[component].GetValue(subcomponent);
+                : _cache[component].GetValue(subcomponent);
         }
 
         /// <summary>
@@ -224,7 +223,7 @@ namespace NextLevelSeven.Building.Elements
         {
             return component < 0
                 ? Values
-                : this[component].GetValues(subcomponent);
+                : _cache[component].GetValues(subcomponent);
         }
 
         public override IElement Clone()
@@ -258,7 +257,7 @@ namespace NextLevelSeven.Building.Elements
 
         protected override IElement GetGenericElement(int index)
         {
-            return this[index];
+            return _cache[index];
         }
     }
 }

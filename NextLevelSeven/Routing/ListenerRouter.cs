@@ -6,7 +6,7 @@ namespace NextLevelSeven.Routing
     /// <summary>
     ///     Router that calls a method each time a message is passed through.
     /// </summary>
-    public class ListenerRouter : IRouter
+    sealed public class ListenerRouter : IRouter
     {
         /// <summary>
         ///     Method to relay messages to.

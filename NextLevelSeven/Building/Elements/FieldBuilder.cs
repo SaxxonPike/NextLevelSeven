@@ -15,8 +15,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>
         ///     Descendant builders.
         /// </summary>
-        private readonly Dictionary<int, RepetitionBuilder> _repetitionBuilders =
-            new Dictionary<int, RepetitionBuilder>();
+        private readonly IndexedCache<int, RepetitionBuilder> _cache;
 
         /// <summary>
         ///     Create a field builder with the specified encoding configuration.
@@ -27,6 +26,7 @@ namespace NextLevelSeven.Building.Elements
         internal FieldBuilder(BuilderBase builder, int index, string value = null)
             : base(builder, index)
         {
+            _cache = new IndexedCache<int, RepetitionBuilder>(CreateRepetitionBuilder);
             if (value != null)
             {
                 InitValue(value);
@@ -38,16 +38,19 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         /// <param name="index">Index within the field to get the builder from.</param>
         /// <returns>Field repetition builder for the specified index.</returns>
-        public new virtual IRepetitionBuilder this[int index]
+        public new IRepetitionBuilder this[int index]
         {
-            get
-            {
-                if (!_repetitionBuilders.ContainsKey(index))
-                {
-                    _repetitionBuilders[index] = new RepetitionBuilder(this, index);
-                }
-                return _repetitionBuilders[index];
-            }
+            get { return _cache[index]; }
+        }
+
+        /// <summary>
+        ///     Create a repetition builder object.
+        /// </summary>
+        /// <param name="index">Index for the new object.</param>
+        /// <returns>Repetition builder object.</returns>
+        protected virtual RepetitionBuilder CreateRepetitionBuilder(int index)
+        {
+            return new RepetitionBuilder(this, index);
         }
 
         /// <summary>
@@ -55,7 +58,7 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         public override int ValueCount
         {
-            get { return (_repetitionBuilders.Count > 0) ? _repetitionBuilders.Max(kv => kv.Key) : 0; }
+            get { return (_cache.Count > 0) ? _cache.Max(kv => kv.Key) : 0; }
         }
 
         /// <summary>
@@ -65,7 +68,7 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                return new WrapperEnumerable<string>(index => this[index].Value,
+                return new WrapperEnumerable<string>(index => _cache[index].Value,
                     (index, data) => FieldRepetition(index, data),
                     () => ValueCount,
                     1);
@@ -83,7 +86,7 @@ namespace NextLevelSeven.Building.Elements
                 var index = 1;
                 var result = new StringBuilder();
 
-                foreach (var repetition in _repetitionBuilders.OrderBy(i => i.Key))
+                foreach (var repetition in _cache.OrderBy(i => i.Key))
                 {
                     while (index < repetition.Key)
                     {
@@ -111,7 +114,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This FieldBuilder, for chaining purposes.</returns>
         public IFieldBuilder Component(int repetition, int componentIndex, string value)
         {
-            this[repetition].Component(componentIndex, value);
+            _cache[repetition].Component(componentIndex, value);
             return this;
         }
 
@@ -123,7 +126,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This FieldBuilder, for chaining purposes.</returns>
         public IFieldBuilder Components(int repetition, params string[] components)
         {
-            this[repetition].Components(components);
+            _cache[repetition].Components(components);
             return this;
         }
 
@@ -136,7 +139,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This FieldBuilder, for chaining purposes.</returns>
         public IFieldBuilder Components(int repetition, int startIndex, params string[] components)
         {
-            this[repetition].Components(startIndex, components);
+            _cache[repetition].Components(startIndex, components);
             return this;
         }
 
@@ -147,7 +150,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This FieldBuilder, for chaining purposes.</returns>
         public virtual IFieldBuilder Field(string value)
         {
-            _repetitionBuilders.Clear();
+            _cache.Clear();
             var index = 1;
 
             value = value ?? string.Empty;
@@ -169,13 +172,13 @@ namespace NextLevelSeven.Building.Elements
         {
             if (repetition < 1)
             {
-                _repetitionBuilders.Clear();
+                _cache.Clear();
             }
-            else if (_repetitionBuilders.ContainsKey(repetition))
+            else if (_cache.Contains(repetition))
             {
-                _repetitionBuilders.Remove(repetition);
+                _cache.Remove(repetition);
             }
-            this[repetition].FieldRepetition(value);
+            _cache[repetition].FieldRepetition(value);
             return this;
         }
 
@@ -186,7 +189,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This FieldBuilder, for chaining purposes.</returns>
         public IFieldBuilder FieldRepetitions(params string[] repetitions)
         {
-            _repetitionBuilders.Clear();
+            _cache.Clear();
             var index = 1;
             foreach (var repetition in repetitions)
             {
@@ -221,7 +224,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This FieldBuilder, for chaining purposes.</returns>
         public IFieldBuilder Subcomponent(int repetition, int componentIndex, int subcomponentIndex, string value)
         {
-            this[repetition].Subcomponent(componentIndex, subcomponentIndex, value);
+            _cache[repetition].Subcomponent(componentIndex, subcomponentIndex, value);
             return this;
         }
 
@@ -234,7 +237,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This FieldBuilder, for chaining purposes.</returns>
         public IFieldBuilder Subcomponents(int repetition, int componentIndex, params string[] subcomponents)
         {
-            this[repetition].Subcomponents(componentIndex, subcomponents);
+            _cache[repetition].Subcomponents(componentIndex, subcomponents);
             return this;
         }
 
@@ -249,7 +252,7 @@ namespace NextLevelSeven.Building.Elements
         public IFieldBuilder Subcomponents(int repetition, int componentIndex, int startIndex,
             params string[] subcomponents)
         {
-            this[repetition].Subcomponents(componentIndex, startIndex, subcomponents);
+            _cache[repetition].Subcomponents(componentIndex, startIndex, subcomponents);
             return this;
         }
 
@@ -264,7 +267,7 @@ namespace NextLevelSeven.Building.Elements
         {
             return repetition < 0
                 ? Value
-                : this[repetition].GetValue(component, subcomponent);
+                : _cache[repetition].GetValue(component, subcomponent);
         }
 
         /// <summary>
@@ -278,10 +281,10 @@ namespace NextLevelSeven.Building.Elements
         {
             return repetition < 0
                 ? Values
-                : this[repetition].GetValues(component, subcomponent);
+                : _cache[repetition].GetValues(component, subcomponent);
         }
 
-        public override IElement Clone()
+        sealed public override IElement Clone()
         {
             return new FieldBuilder(Ancestor, Index, Value);
         }
@@ -291,12 +294,12 @@ namespace NextLevelSeven.Building.Elements
             return new FieldBuilder(Ancestor, Index, Value);
         }
 
-        public override IEncodedTypeConverter As
+        sealed public override IEncodedTypeConverter As
         {
             get { return new BuilderCodec(this); }
         }
 
-        public override char Delimiter
+        sealed public override char Delimiter
         {
             get { return RepetitionDelimiter; }
         }
@@ -314,14 +317,14 @@ namespace NextLevelSeven.Building.Elements
         ///     Copy the contents of this builder to a string.
         /// </summary>
         /// <returns>Converted field.</returns>
-        public override string ToString()
+        sealed public override string ToString()
         {
             return Value;
         }
 
-        protected override IElement GetGenericElement(int index)
+        sealed protected override IElement GetGenericElement(int index)
         {
-            return this[index];
+            return _cache[index];
         }
     }
 }

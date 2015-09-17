@@ -15,8 +15,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>
         ///     Descendant builders.
         /// </summary>
-        private readonly Dictionary<int, SubcomponentBuilder> _subcomponentBuilders =
-            new Dictionary<int, SubcomponentBuilder>();
+        private readonly IndexedCache<int, SubcomponentBuilder> _cache;
 
         /// <summary>
         ///     Create a component builder using the specified encoding configuration.
@@ -27,6 +26,7 @@ namespace NextLevelSeven.Building.Elements
         internal ComponentBuilder(BuilderBase builder, int index, string value = null)
             : base(builder, index)
         {
+            _cache = new IndexedCache<int, SubcomponentBuilder>(CreateSubcomponentBuilder);
             if (value != null)
             {
                 Value = value;
@@ -42,12 +42,18 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                if (!_subcomponentBuilders.ContainsKey(index))
-                {
-                    _subcomponentBuilders[index] = new SubcomponentBuilder(this, index);
-                }
-                return _subcomponentBuilders[index];
+                return _cache[index];
             }
+        }
+
+        /// <summary>
+        ///     Create a subcomponent builder object.
+        /// </summary>
+        /// <param name="index">Index to reference.</param>
+        /// <returns>Subcomponent builder object.</returns>
+        private SubcomponentBuilder CreateSubcomponentBuilder(int index)
+        {
+            return new SubcomponentBuilder(this, index);
         }
 
         /// <summary>
@@ -55,7 +61,7 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         public override int ValueCount
         {
-            get { return _subcomponentBuilders.Max(kv => kv.Key); }
+            get { return _cache.Max(kv => kv.Key); }
         }
 
         /// <summary>
@@ -83,7 +89,7 @@ namespace NextLevelSeven.Building.Elements
                 var index = 1;
                 var result = new StringBuilder();
 
-                foreach (var subcomponent in _subcomponentBuilders.OrderBy(i => i.Key))
+                foreach (var subcomponent in _cache.OrderBy(i => i.Key))
                 {
                     while (index < subcomponent.Key)
                     {
@@ -109,7 +115,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This ComponentBuilder, for chaining purposes.</returns>
         public IComponentBuilder Component(string value)
         {
-            _subcomponentBuilders.Clear();
+            _cache.Clear();
             var index = 1;
 
             value = value ?? string.Empty;
@@ -140,7 +146,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This ComponentBuilder, for chaining purposes.</returns>
         public IComponentBuilder Subcomponents(params string[] subcomponents)
         {
-            _subcomponentBuilders.Clear();
+            _cache.Clear();
             var index = 1;
             foreach (var subcomponent in subcomponents)
             {
@@ -215,7 +221,7 @@ namespace NextLevelSeven.Building.Elements
 
         protected override IElement GetGenericElement(int index)
         {
-            return this[index];
+            return _cache[index];
         }
     }
 }

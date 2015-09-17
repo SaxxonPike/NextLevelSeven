@@ -77,5 +77,7 @@
         DataIsInvalidForType,
         /* 0033 */
         FieldCannotBeNull,
+        /* 0034 */
+        SegmentDataIsTooShort,
     }
 }

@@ -90,7 +90,7 @@ namespace NextLevelSeven.Native.Elements
         ///     Deep clone this field.
         /// </summary>
         /// <returns>Clone of the field.</returns>
-        public override IElement Clone()
+        sealed public override IElement Clone()
         {
             return CloneInternal();
         }
@@ -109,7 +109,7 @@ namespace NextLevelSeven.Native.Elements
         /// </summary>
         /// <param name="index">Desired index.</param>
         /// <returns>Element at the specified index.</returns>
-        public override INativeElement GetDescendant(int index)
+        sealed public override INativeElement GetDescendant(int index)
         {
             return GetRepetition(index);
         }

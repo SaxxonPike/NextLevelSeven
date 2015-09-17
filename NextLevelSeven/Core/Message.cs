@@ -30,11 +30,11 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        ///     Create a message builder, initialized with the specified message.
+        ///     Create a message builder, initialized with the content of the specified message or other element.
         /// </summary>
-        /// <param name="message">Message data.</param>
+        /// <param name="message">Message or other element data.</param>
         /// <returns>New message builder.</returns>
-        public static IMessageBuilder Build(INativeMessage message)
+        public static IMessageBuilder Build(IElement message)
         {
             return new MessageBuilder(message);
         }
@@ -57,5 +57,16 @@ namespace NextLevelSeven.Core
         {
             return new NativeMessage(message);
         }
+
+        /// <summary>
+        ///     Create a new message, initialized with the content of the specified message or other element.
+        /// </summary>
+        /// <param name="message">Message or other element data.</param>
+        /// <returns>New message builder.</returns>
+        public static INativeMessage Create(IElement message)
+        {
+            return new NativeMessage(message);
+        }
+
     }
 }

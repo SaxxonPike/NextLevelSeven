@@ -27,7 +27,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>
         ///     Get or set the component delimiter character.
         /// </summary>
-        public override char ComponentDelimiter
+        sealed public override char ComponentDelimiter
         {
             get { return Ancestor.ComponentDelimiter; }
             set { Ancestor.ComponentDelimiter = value; }
@@ -36,7 +36,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>
         ///     Get or set the escape delimiter character.
         /// </summary>
-        public override char EscapeDelimiter
+        sealed public override char EscapeDelimiter
         {
             get { return Ancestor.EscapeDelimiter; }
             set { Ancestor.EscapeDelimiter = value; }
@@ -45,7 +45,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>
         ///     Get or set the field delimiter character.
         /// </summary>
-        public override char FieldDelimiter
+        sealed public override char FieldDelimiter
         {
             get { return Ancestor.FieldDelimiter; }
             set { Ancestor.FieldDelimiter = value; }
@@ -54,7 +54,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>
         ///     Get or set the repetition delimiter character.
         /// </summary>
-        public override char RepetitionDelimiter
+        sealed public override char RepetitionDelimiter
         {
             get { return Ancestor.RepetitionDelimiter; }
             set { Ancestor.RepetitionDelimiter = value; }
@@ -63,14 +63,13 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>
         ///     Get or set the subcomponent delimiter character.
         /// </summary>
-        public override char SubcomponentDelimiter
+        sealed public override char SubcomponentDelimiter
         {
             get { return Ancestor.SubcomponentDelimiter; }
             set { Ancestor.SubcomponentDelimiter = value; }
         }
 
         public abstract override string Value { get; set; }
-
         public abstract override IEnumerable<string> Values { get; set; }
         public abstract override IElement Clone();
     }

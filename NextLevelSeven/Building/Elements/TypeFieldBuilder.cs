@@ -31,13 +31,13 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>
-        ///     Get a descendant field repetition builder.
+        ///     Type fields cannot have repetitions; this method throws unconditionally.
         /// </summary>
-        /// <param name="index">Index within the field to get the builder from.</param>
-        /// <returns>Field repetition builder for the specified index.</returns>
-        public override IRepetitionBuilder this[int index]
+        /// <param name="index">Not used.</param>
+        /// <returns>Nothing.</returns>
+        protected override RepetitionBuilder CreateRepetitionBuilder(int index)
         {
-            get { throw new BuilderException(ErrorCode.FixedFieldsCannotBeDivided); }
+            throw new BuilderException(ErrorCode.FixedFieldsCannotBeDivided);
         }
 
         /// <summary>
@@ -80,15 +80,6 @@ namespace NextLevelSeven.Building.Elements
             }
             Value = value;
             return this;
-        }
-
-        /// <summary>
-        ///     Get the field's contents as a string.
-        /// </summary>
-        /// <returns>Type as string.</returns>
-        public override string ToString()
-        {
-            return Value;
         }
     }
 }

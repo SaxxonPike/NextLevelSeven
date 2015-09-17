@@ -34,7 +34,7 @@ namespace NextLevelSeven.Core.Encoding
         /// <summary>
         ///     Get the delimiter character used to split components.
         /// </summary>
-        public override char ComponentDelimiter
+        sealed public override char ComponentDelimiter
         {
             get { return _getComponent(); }
             protected set { }
@@ -43,7 +43,7 @@ namespace NextLevelSeven.Core.Encoding
         /// <summary>
         ///     Get the escape character used to mark encoded sequences.
         /// </summary>
-        public override char EscapeDelimiter
+        sealed public override char EscapeDelimiter
         {
             get { return _getEscape(); }
             protected set { }
@@ -52,7 +52,7 @@ namespace NextLevelSeven.Core.Encoding
         /// <summary>
         ///     Get the character used to separate fields.
         /// </summary>
-        public override char FieldDelimiter
+        sealed public override char FieldDelimiter
         {
             get { return _getField(); }
             protected set { }
@@ -61,7 +61,7 @@ namespace NextLevelSeven.Core.Encoding
         /// <summary>
         ///     Get the repetition character used to separate multiple data in the same field.
         /// </summary>
-        public override char RepetitionDelimiter
+        sealed public override char RepetitionDelimiter
         {
             get { return _getRepetition(); }
             protected set { }
@@ -70,7 +70,7 @@ namespace NextLevelSeven.Core.Encoding
         /// <summary>
         ///     Get the delimiter character used to split subcomponents.
         /// </summary>
-        public override char SubcomponentDelimiter
+        sealed public override char SubcomponentDelimiter
         {
             get { return _getSubcomponent(); }
             protected set { }
@@ -79,7 +79,7 @@ namespace NextLevelSeven.Core.Encoding
         /// <summary>
         ///     Prevent the value initialization process.
         /// </summary>
-        protected override void Initialize()
+        sealed protected override void Initialize()
         {
         }
     }

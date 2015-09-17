@@ -16,7 +16,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>
         ///     Descendant builders.
         /// </summary>
-        private readonly Dictionary<int, FieldBuilder> _fieldBuilders = new Dictionary<int, FieldBuilder>();
+        private readonly IndexedCache<int, FieldBuilder> _cache;
 
         /// <summary>
         ///     Create a segment builder with the specified encoding configuration.
@@ -27,6 +27,7 @@ namespace NextLevelSeven.Building.Elements
         internal SegmentBuilder(BuilderBase builder, int index, string value = null)
             : base(builder, index)
         {
+            _cache = new IndexedCache<int, FieldBuilder>(CreateFieldBuilder);
             if (value != null)
             {
                 Value = value;
@@ -40,11 +41,12 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                if (!_fieldBuilders.ContainsKey(0))
+                // We don't want to modify the cache here, so don't use the indexer until we know it exists.
+                if (!_cache.Contains(0))
                 {
                     return false;
                 }
-                return _fieldBuilders[0].Value == "MSH";
+                return _cache[0].Value == "MSH";
             }
         }
 
@@ -55,38 +57,36 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Field builder for the specified index.</returns>
         public new IFieldBuilder this[int index]
         {
-            get
+            get { return _cache[index]; }
+        }
+
+        /// <summary>
+        ///     Create a field builder object.
+        /// </summary>
+        /// <param name="index">Index of the object to create.</param>
+        /// <returns>Field builder object.</returns>
+        private FieldBuilder CreateFieldBuilder(int index)
+        {
+            // segment type is treated specially
+            if (index == 0)
             {
-                if (_fieldBuilders.ContainsKey(index))
-                {
-                    return _fieldBuilders[index];
-                }
-
-                // segment type is treated specially
-                if (index == 0)
-                {
-                    _fieldBuilders[0] = new TypeFieldBuilder(this, OnTypeFieldModified, index);
-                    return _fieldBuilders[0];
-                }
-
-                // msh-1 and msh-2 are treated specially
-                if (IsMsh)
-                {
-                    if (index == 1)
-                    {
-                        _fieldBuilders[index] = new DelimiterFieldBuilder(this, index);
-                        return _fieldBuilders[index];
-                    }
-                    if (index == 2)
-                    {
-                        _fieldBuilders[index] = new EncodingFieldBuilder(this, index);
-                        return _fieldBuilders[index];
-                    }
-                }
-
-                _fieldBuilders[index] = new FieldBuilder(this, index);
-                return _fieldBuilders[index];
+                return new TypeFieldBuilder(this, OnTypeFieldModified, index);
             }
+
+            if (!IsMsh)
+            {
+                return new FieldBuilder(this, index);
+            }
+
+            // msh-1 and msh-2 are treated specially
+            if (index == 1)
+            {
+                return new DelimiterFieldBuilder(this, index);
+            }
+
+            return (index == 2)
+                ? new EncodingFieldBuilder(this, index)
+                : new FieldBuilder(this, index);
         }
 
         /// <summary>
@@ -94,7 +94,7 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         public override int ValueCount
         {
-            get { return (_fieldBuilders.Count > 0) ? _fieldBuilders.Max(kv => kv.Key) + 1 : 0; }
+            get { return (_cache.Count > 0) ? _cache.Max(kv => kv.Key) + 1 : 0; }
         }
 
         /// <summary>
@@ -130,20 +130,15 @@ namespace NextLevelSeven.Building.Elements
                 var index = 0;
                 var result = new StringBuilder();
 
-                if (_fieldBuilders.Count <= 0)
+                if (_cache.Count <= 0)
                 {
                     return string.Empty;
                 }
 
-                var typeIsMsh = (_fieldBuilders.ContainsKey(0) && _fieldBuilders[0].Value == "MSH");
+                var typeIsMsh = IsMsh;
 
-                foreach (var field in _fieldBuilders.OrderBy(i => i.Key))
+                foreach (var field in _cache.OrderBy(i => i.Key).Where(field => field.Key >= 0))
                 {
-                    if (field.Key < 0)
-                    {
-                        continue;
-                    }
-
                     while (index < field.Key)
                     {
                         result.Append(FieldDelimiter);
@@ -214,10 +209,6 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
         public ISegmentBuilder Field(int fieldIndex, string value)
         {
-            if (fieldIndex > 0 && _fieldBuilders.ContainsKey(fieldIndex))
-            {
-                _fieldBuilders.Remove(fieldIndex);
-            }
             this[fieldIndex].Field(value);
             return this;
         }
@@ -229,7 +220,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
         public ISegmentBuilder Fields(params string[] fields)
         {
-            _fieldBuilders.Clear();
+            _cache.Clear();
             return Fields(0, fields);
         }
 
@@ -294,26 +285,35 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
         public ISegmentBuilder Segment(string value)
         {
-            if (value.Length > 3)
+            if (Type != "MSH" && value == null)
             {
-                var isMsh = value.Substring(0, 3) == "MSH";
+                // non-MSH fields can be nullified.
+                Fields(null);
+                return this;
+            }
 
-                if (isMsh)
-                {
-                    FieldDelimiter = value[3];
-                }
+            if (value == null || value.Length <= 3)
+            {
+                throw new BuilderException(ErrorCode.SegmentDataIsTooShort);
+            }
 
-                var values = value.Split(FieldDelimiter);
-                if (isMsh)
-                {
-                    var valueList = values.ToList();
-                    valueList.Insert(1, new string(FieldDelimiter, 1));
-                    values = valueList.ToArray();
-                }
+            var isMsh = value.Substring(0, 3) == "MSH";
+            if (isMsh)
+            {
+                // MSH determines field delimiter.
+                FieldDelimiter = value[3];
+            }
+
+            var values = value.Split(FieldDelimiter);
+            if (!isMsh)
+            {
                 return Fields(values.ToArray());
             }
 
-            return this;
+            var valueList = values.ToList();
+            valueList.Insert(1, new string(FieldDelimiter, 1));
+            values = valueList.ToArray();
+            return Fields(values.ToArray());
         }
 
         /// <summary>
@@ -403,7 +403,7 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         /// <param name="oldValue">Old type field value.</param>
         /// <param name="newValue">New type field value.</param>
-        private void OnTypeFieldModified(string oldValue, string newValue)
+        private static void OnTypeFieldModified(string oldValue, string newValue)
         {
             if (oldValue != null && oldValue != newValue && (newValue == "MSH" || oldValue == "MSH"))
             {

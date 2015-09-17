@@ -5,7 +5,7 @@
         /// <summary>
         ///     German language translation.
         /// </summary>
-        private class Deutsch : ErrorMessageLanguage
+        sealed private class Deutsch : ErrorMessageLanguage
         {
             public override string GetMessage(ErrorCode code)
             {

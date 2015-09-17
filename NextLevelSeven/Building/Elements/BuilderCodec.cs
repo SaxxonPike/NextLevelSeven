@@ -14,7 +14,7 @@ namespace NextLevelSeven.Building.Elements
         ///     Create a codec that references the specified element's data.
         /// </summary>
         /// <param name="baseElement">Element to reference.</param>
-        public BuilderCodec(IBuilder baseElement)
+        public BuilderCodec(BuilderBase baseElement)
         {
             BaseElement = baseElement;
         }
@@ -22,7 +22,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>
         ///     Referenced element.
         /// </summary>
-        private IBuilder BaseElement { get; set; }
+        private BuilderBase BaseElement { get; set; }
 
         /// <summary>
         ///     Get or set the element's value as a date.

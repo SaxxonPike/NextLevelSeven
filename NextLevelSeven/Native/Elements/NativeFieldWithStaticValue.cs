@@ -21,7 +21,7 @@ namespace NextLevelSeven.Native.Elements
         /// <summary>
         ///     Delimiter is invalid for a field delimiter field.
         /// </summary>
-        public override char Delimiter
+        sealed public override char Delimiter
         {
             get { return '\0'; }
         }
@@ -29,7 +29,7 @@ namespace NextLevelSeven.Native.Elements
         /// <summary>
         ///     False, as MSH-1 cannot have descendants.
         /// </summary>
-        public override bool HasSignificantDescendants
+        sealed public override bool HasSignificantDescendants
         {
             get { return false; }
         }
@@ -41,7 +41,7 @@ namespace NextLevelSeven.Native.Elements
         /// <param name="component">Not used.</param>
         /// <param name="subcomponent">Not used.</param>
         /// <returns>Field delimiter value.</returns>
-        public override string GetValue(int repetition = -1, int component = -1, int subcomponent = -1)
+        sealed public override string GetValue(int repetition = -1, int component = -1, int subcomponent = -1)
         {
             return Value;
         }
@@ -53,7 +53,7 @@ namespace NextLevelSeven.Native.Elements
         /// <param name="component">Not used.</param>
         /// <param name="subcomponent">Not used.</param>
         /// <returns>Field delimiter value.</returns>
-        public override IEnumerable<string> GetValues(int repetition = -1, int component = -1, int subcomponent = -1)
+        sealed public override IEnumerable<string> GetValues(int repetition = -1, int component = -1, int subcomponent = -1)
         {
             return Value.Yield();
         }
@@ -64,7 +64,7 @@ namespace NextLevelSeven.Native.Elements
         /// <param name="ancestor">Ancestor element.</param>
         /// <param name="index">Index of the raw value.</param>
         /// <returns>Descendant divider within the specified index.</returns>
-        protected override IStringDivider GetDescendantDivider(NativeElement ancestor, int index)
+        sealed protected override IStringDivider GetDescendantDivider(NativeElement ancestor, int index)
         {
             return index <= 1
                 ? new ProxyStringDivider(() => Value, v => Value = v)
@@ -75,7 +75,7 @@ namespace NextLevelSeven.Native.Elements
         ///     Get a repetition division of this field.
         /// </summary>
         /// <returns>Repetition descendant.</returns>
-        protected override NativeRepetition CreateRepetition(int index)
+        sealed protected override NativeRepetition CreateRepetition(int index)
         {
             return new NativeRepetition(this, index - 1, index) {EncodingConfiguration = EncodingConfiguration.Empty};
         }
@@ -84,7 +84,7 @@ namespace NextLevelSeven.Native.Elements
         ///     Deep clone this field.
         /// </summary>
         /// <returns>Cloned field.</returns>
-        protected override NativeField CloneInternal()
+        sealed protected override NativeField CloneInternal()
         {
             return new NativeField(Value, EncodingConfiguration) {Index = Index};
         }

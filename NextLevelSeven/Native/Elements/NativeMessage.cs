@@ -60,6 +60,15 @@ namespace NextLevelSeven.Native.Elements
         }
 
         /// <summary>
+        ///     Create a message using an HL7 element's content.
+        /// </summary>
+        /// <param name="message">Message or other element data to interpret.</param>
+        public NativeMessage(IElement message)
+            : this(message.Value)
+        {
+        }
+
+        /// <summary>
         ///     Get the encoding configuration for the message.
         /// </summary>
         public override EncodingConfiguration EncodingConfiguration

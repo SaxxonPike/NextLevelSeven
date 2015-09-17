@@ -5,7 +5,7 @@
         /// <summary>
         ///     English language translation.
         /// </summary>
-        private class English : ErrorMessageLanguage
+        sealed private class English : ErrorMessageLanguage
         {
             public override string GetMessage(ErrorCode code)
             {
@@ -61,6 +61,8 @@
                         return "Root element cannot be erased.";
                     case ErrorCode.SegmentBuilderHasInvalidSegmentType:
                         return "Segment builder has invalid segment type. Field 0 must have a three-letter code.";
+                    case ErrorCode.SegmentDataIsTooShort:
+                        return "Segment data must be at least 4 characters in length.";
                     case ErrorCode.SegmentIndexMustBeGreaterThanZero:
                         return "Segment index must be greater than zero.";
                     case ErrorCode.SegmentTypeCannotBeMoved:

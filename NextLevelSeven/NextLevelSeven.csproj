@@ -59,7 +59,7 @@
     <Compile Include="Building\ISegmentBuilder.cs" />
     <Compile Include="Building\ISubcomponentBuilder.cs" />
     <Compile Include="Building\Elements\MessageBuilder.cs" />
-    <Compile Include="Building\MessageBuilderExtensions.cs" />
+    <Compile Include="Building\BuilderExtensions.cs" />
     <Compile Include="Building\Elements\RepetitionBuilder.cs" />
     <Compile Include="Building\Elements\SegmentBuilder.cs" />
     <Compile Include="Building\Elements\SubcomponentBuilder.cs" />
