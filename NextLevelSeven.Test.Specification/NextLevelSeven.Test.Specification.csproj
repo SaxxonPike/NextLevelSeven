@@ -1,13 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{93328B56-4FEA-4AC2-B9A5-66547B0C7CC7}</ProjectGuid>
+    <ProjectGuid>{C9DCF7EC-595C-41B8-B2BD-AA5EAAC6F711}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NextLevelSeven.Test</RootNamespace>
-    <AssemblyName>NextLevelSeven.Test</AssemblyName>
+    <RootNamespace>NextLevelSeven.Test.Specification</RootNamespace>
+    <AssemblyName>NextLevelSeven.Test.Specification</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -16,7 +16,6 @@
     <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
     <IsCodedUITest>False</IsCodedUITest>
     <TestProjectType>UnitTest</TestProjectType>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -46,67 +45,27 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
-          <Private>False</Private>
-        </Reference>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
       </ItemGroup>
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="AssertEnumerable.cs" />
-    <Compile Include="AssertIterations.cs" />
-    <Compile Include="AssertTime.cs" />
-    <Compile Include="Building\BuildingTestFixture.cs" />
-    <Compile Include="Building\ComponentBuilderTests.cs" />
-    <Compile Include="Building\FieldBuilderTests.cs" />
-    <Compile Include="Building\RepetitionBuilderTests.cs" />
-    <Compile Include="Building\MessageBuilderPerformanceTests.cs" />
-    <Compile Include="Building\MessageBuilderTests.cs" />
-    <Compile Include="Building\SegmentBuilderTests.cs" />
-    <Compile Include="Building\SubcomponentBuilderTests.cs" />
-    <Compile Include="Conversion\ConversionTestFixture.cs" />
-    <Compile Include="Conversion\DateTimeConverterTests.cs" />
-    <Compile Include="Conversion\NumberConverterTests.cs" />
-    <Compile Include="Core\CoreTestFixture.cs" />
-    <Compile Include="Diagnostics\DiagnosticsTestFixture.cs" />
-    <Compile Include="Generation\GenerationTestFixture.cs" />
-    <Compile Include="Native\NativeComponentTests.cs" />
-    <Compile Include="Native\NativeEscapeTests.cs" />
-    <Compile Include="Diagnostics\ErrorMessageTests.cs" />
-    <Compile Include="It.cs" />
-    <Compile Include="Native\NativeElementExtensionsTests.cs" />
-    <Compile Include="ExampleMessages.cs" />
-    <Compile Include="Native\NativeFieldTests.cs" />
-    <Compile Include="Native\NativeMessageExtensionsTests.cs" />
-    <Compile Include="Native\NativeMessageTests.cs" />
-    <Compile Include="Measure.cs" />
-    <Compile Include="Generation\AckMessageGeneratorTests.cs" />
-    <Compile Include="Generation\MessageGeneratorPerformanceTests.cs" />
-    <Compile Include="Generation\MessageGeneratorTests.cs" />
-    <Compile Include="Native\NativeRepetitionTests.cs" />
-    <Compile Include="Native\NativeSegmentTests.cs" />
-    <Compile Include="Native\NativeSubcomponentTests.cs" />
-    <Compile Include="Native\NativeTestFixture.cs" />
-    <Compile Include="NullMessage.cs" />
+    <Compile Include="Elements\AddressTests.cs" />
+    <Compile Include="Conversion\AddressTypeConverterTests.cs" />
+    <Compile Include="Elements\CodedElementTests.cs" />
+    <Compile Include="Elements\NumberRangeExtensionTests.cs" />
+    <Compile Include="SpecificationTestFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Race.cs" />
-    <Compile Include="Randomized.cs" />
-    <Compile Include="Routing\BroadcastRouterTests.cs" />
-    <Compile Include="Routing\ConditionalMethodRouterTests.cs" />
-    <Compile Include="Routing\ConditionalRouterTests.cs" />
-    <Compile Include="Routing\ListenerRouterTests.cs" />
-    <Compile Include="Routing\NullRouter.cs" />
-    <Compile Include="Routing\NullRouterTests.cs" />
-    <Compile Include="Routing\RouteFinderTests.cs" />
-    <Compile Include="Routing\RoutingTestFixture.cs" />
-    <Compile Include="Streaming\Hl7StreamReaderTests.cs" />
-    <Compile Include="Streaming\Hl7TextReaderTests.cs" />
-    <Compile Include="Streaming\MlpStreamReaderTests.cs" />
-    <Compile Include="Streaming\MlpStreamWriterTests.cs" />
-    <Compile Include="Streaming\StreamingTestFixture.cs" />
-    <Compile Include="PerformanceTestFixture.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\NextLevelSeven.Specification\NextLevelSeven.Specification.csproj">
+      <Project>{6bd62ee0-1254-4517-b5cc-978ed66c300a}</Project>
+      <Name>NextLevelSeven.Specification</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\NextLevelSeven.Test\NextLevelSeven.Test.csproj">
+      <Project>{93328b56-4fea-4ac2-b9a5-66547b0c7cc7}</Project>
+      <Name>NextLevelSeven.Test</Name>
+    </ProjectReference>
     <ProjectReference Include="..\NextLevelSeven\NextLevelSeven.csproj">
       <Project>{ec7fc595-07f4-467f-a51a-25cfa9711310}</Project>
       <Name>NextLevelSeven</Name>
