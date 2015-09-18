@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using NextLevelSeven.Conversion;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Codec;
 using NextLevelSeven.Core.Encoding;
@@ -13,7 +14,7 @@ namespace NextLevelSeven.Native.Elements
     /// <summary>
     ///     Represents a generic HL7 message element, which may contain other elements.
     /// </summary>
-    internal abstract class NativeElement : INativeElement, IEquatable<string>
+    internal abstract class NativeElement : INativeElement, IComparable, IComparable<IElement>, IComparable<string>, IEquatable<IElement>, IEquatable<string>
     {
         /// <summary>
         ///     Encoding configuration override.
@@ -282,25 +283,13 @@ namespace NextLevelSeven.Native.Elements
         {
             get
             {
-                if (DescendantDivider == null)
-                {
-                    return null;
-                }
-
-                var value = DescendantDivider.Value;
-                if (string.IsNullOrEmpty(value))
-                {
-                    return null;
-                }
-
-                return string.Equals("\"\"", value, StringComparison.Ordinal)
+                return (DescendantDivider == null)
                     ? null
-                    : value;
+                    : DescendantDivider.Value;
             }
             set
             {
                 DescendantDivider.Value = value;
-
                 if (ValueChanged != null)
                 {
                     ValueChanged(this, EventArgs.Empty);
@@ -402,9 +391,62 @@ namespace NextLevelSeven.Native.Elements
         ///     Copy the contents of this element to a string.
         /// </summary>
         /// <returns>Copied string.</returns>
-        public override string ToString()
+        sealed public override string ToString()
         {
-            return DescendantDivider.Value;
+            return Value;
+        }
+
+        /// <summary>
+        ///     Compare this builder's value with another object's value. (IComparable support)
+        /// </summary>
+        /// <param name="obj">Other BuilderBase.</param>
+        /// <returns></returns>
+        public int CompareTo(object obj)
+        {
+            return obj == null
+                ? 1
+                : CompareTo(obj.ToString());
+        }
+
+        /// <summary>
+        ///     Compare this builder's value with another string. (generic IComparable support)
+        /// </summary>
+        /// <param name="other">Other string to compare to.</param>
+        /// <returns></returns>
+        public int CompareTo(string other)
+        {
+            return string.Compare(Value, other, StringComparison.CurrentCulture);
+        }
+
+        /// <summary>
+        ///     Compare this builder's value with another element's value. (element IComparable support)
+        /// </summary>
+        /// <param name="other">Other element to compare to.</param>
+        /// <returns></returns>
+        public int CompareTo(IElement other)
+        {
+            return other == null
+                ? 1
+                : CompareTo(other.Value);
+        }
+
+        /// <summary>
+        ///     Determines whether this builder's value is equivalent to another element's value. (element IEquatable support)
+        /// </summary>
+        /// <param name="other">Object to compare to.</param>
+        /// <returns>True, if objects are considered to be equivalent.</returns>
+        public bool Equals(IElement other)
+        {
+            return string.Equals(Value, other.Value, StringComparison.Ordinal);
+        }
+
+        /// <summary>
+        ///     Get or set the value as a formatted string.
+        /// </summary>
+        public string FormattedValue
+        {
+            get { return TextConverter.ConvertToString(Value); }
+            set { Value = TextConverter.ConvertFromString(value); }
         }
     }
 }

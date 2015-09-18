@@ -56,6 +56,7 @@
     <Compile Include="AssertEnumerable.cs" />
     <Compile Include="AssertIterations.cs" />
     <Compile Include="AssertTime.cs" />
+    <Compile Include="Building\BuilderBaseTests.cs" />
     <Compile Include="Building\BuildingTestFixture.cs" />
     <Compile Include="Building\ComponentBuilderTests.cs" />
     <Compile Include="Building\FieldBuilderTests.cs" />

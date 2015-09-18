@@ -41,6 +41,8 @@
                         return "Header byte is incorrect.";
                     case ErrorCode.InvalidAddressType:
                         return "Address type is not valid.";
+                    case ErrorCode.InvalidCompare:
+                        return "Object cannot be compared to types other than its own.";
                     case ErrorCode.InvalidMlpCharacter:
                         return "Invalid character found in MLP stream.";
                     case ErrorCode.MessageDataIsTooShort:

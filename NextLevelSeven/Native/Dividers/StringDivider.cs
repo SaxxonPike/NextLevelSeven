@@ -34,11 +34,11 @@ namespace NextLevelSeven.Native.Dividers
         {
             get
             {
-                if (index < 0 || index >= Count)
+                if (IsNull)
                 {
                     return null;
                 }
-                if (ValueChars == null)
+                if (index < 0 || index >= Count)
                 {
                     return null;
                 }
@@ -81,7 +81,7 @@ namespace NextLevelSeven.Native.Dividers
         /// </summary>
         public override string Value
         {
-            get { return new string(ValueChars); }
+            get { return IsNull ? null : new string(ValueChars); }
             set { ValueChars = StringDividerOperations.GetChars(value); }
         }
 
@@ -136,9 +136,17 @@ namespace NextLevelSeven.Native.Dividers
         {
             _divisions = null;
             _valueChars = s;
+            _isNull = ValueChars == null;
             Version++;
 
             RaiseValueChanged();
+        }
+
+        private bool _isNull;
+
+        public override bool IsNull
+        {
+            get { return _isNull; }
         }
 
         /// <summary>

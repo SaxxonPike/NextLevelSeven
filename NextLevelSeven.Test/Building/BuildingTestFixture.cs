@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Test.Building
 {

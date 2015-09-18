@@ -51,7 +51,7 @@ namespace NextLevelSeven.Building.Elements
             {
                 return string.Equals("\"\"", _value, StringComparison.Ordinal)
                     ? null
-                    : (_value ?? string.Empty);
+                    : _value;
             }
             set { Subcomponent(value); }
         }
@@ -101,15 +101,6 @@ namespace NextLevelSeven.Building.Elements
         public override char Delimiter
         {
             get { return '\0'; }
-        }
-
-        /// <summary>
-        ///     Copy the contents of this builder to a string.
-        /// </summary>
-        /// <returns>Converted subcomponent.</returns>
-        public override string ToString()
-        {
-            return Value;
         }
 
         protected override IElement GetGenericElement(int index)

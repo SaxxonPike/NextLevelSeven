@@ -92,7 +92,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This FieldBuilder, for chaining purposes.</returns>
         public override IFieldBuilder Field(string value)
         {
-            Value = value ?? string.Empty;
+            Value = value;
             return this;
         }
 

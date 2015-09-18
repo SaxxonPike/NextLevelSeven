@@ -15,6 +15,8 @@ namespace NextLevelSeven.Native.Dividers
 
         public abstract char[] BaseValue { get; }
 
+        public abstract bool IsNull { get; }
+
         public abstract int Count { get; }
 
         /// <summary>

@@ -78,6 +78,11 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
+                if (_cache.Count == 0)
+                {
+                    return null;
+                }
+
                 var index = 1;
                 var result = new StringBuilder();
 
@@ -244,15 +249,6 @@ namespace NextLevelSeven.Building.Elements
         public override char Delimiter
         {
             get { return ComponentDelimiter; }
-        }
-
-        /// <summary>
-        ///     Copy the contents of this builder to a string.
-        /// </summary>
-        /// <returns>Converted field repetition.</returns>
-        public override string ToString()
-        {
-            return Value;
         }
 
         protected override IElement GetGenericElement(int index)

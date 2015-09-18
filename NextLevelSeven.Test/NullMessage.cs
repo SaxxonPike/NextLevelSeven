@@ -205,6 +205,13 @@ namespace NextLevelSeven.Test
         {
             get { return null; }
         }
+
+
+        public string FormattedValue
+        {
+            get { return null; }
+            set { }
+        }
     }
 }
 

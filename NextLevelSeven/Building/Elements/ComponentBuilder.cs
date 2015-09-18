@@ -86,6 +86,11 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
+                if (_cache.Count == 0)
+                {
+                    return null;
+                }
+
                 var index = 1;
                 var result = new StringBuilder();
 
@@ -118,7 +123,6 @@ namespace NextLevelSeven.Building.Elements
             _cache.Clear();
             var index = 1;
 
-            value = value ?? string.Empty;
             foreach (var subcomponent in value.Split(EncodingConfiguration.SubcomponentDelimiter))
             {
                 Subcomponent(index++, subcomponent);
@@ -208,15 +212,6 @@ namespace NextLevelSeven.Building.Elements
         public override char Delimiter
         {
             get { return SubcomponentDelimiter; }
-        }
-
-        /// <summary>
-        ///     Copy the contents of this builder to a string.
-        /// </summary>
-        /// <returns>Converted component.</returns>
-        public override string ToString()
-        {
-            return Value;
         }
 
         protected override IElement GetGenericElement(int index)

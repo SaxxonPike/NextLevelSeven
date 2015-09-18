@@ -83,6 +83,11 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
+                if (_cache.Count == 0)
+                {
+                    return null;
+                }
+
                 var index = 1;
                 var result = new StringBuilder();
 
@@ -153,7 +158,11 @@ namespace NextLevelSeven.Building.Elements
             _cache.Clear();
             var index = 1;
 
-            value = value ?? string.Empty;
+            if (value == null)
+            {
+                return this;
+            }
+
             foreach (var repetition in value.Split(EncodingConfiguration.RepetitionDelimiter))
             {
                 FieldRepetition(index++, repetition);
@@ -311,15 +320,6 @@ namespace NextLevelSeven.Building.Elements
         private void InitValue(string value)
         {
             Value = value;
-        }
-
-        /// <summary>
-        ///     Copy the contents of this builder to a string.
-        /// </summary>
-        /// <returns>Converted field.</returns>
-        sealed public override string ToString()
-        {
-            return Value;
         }
 
         sealed protected override IElement GetGenericElement(int index)

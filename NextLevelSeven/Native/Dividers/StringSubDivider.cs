@@ -52,6 +52,11 @@ namespace NextLevelSeven.Native.Dividers
         {
             get
             {
+                if (IsNull)
+                {
+                    return null;
+                }
+
                 var splits = Divisions;
                 if (index >= splits.Count || index < 0)
                 {
@@ -59,9 +64,14 @@ namespace NextLevelSeven.Native.Dividers
                 }
 
                 var split = splits[index];
-                return new string(BaseValue, split.Offset, split.Length);
+                return split.Length == 0 ? null : new string(BaseValue, split.Offset, split.Length);
             }
             set { SetValue(index, value); }
+        }
+
+        public override bool IsNull
+        {
+            get { return BaseDivider.IsNull || ValueChars == null || ValueChars.Length == 0; }
         }
 
         /// <summary>
@@ -103,7 +113,7 @@ namespace NextLevelSeven.Native.Dividers
             get
             {
                 var d = BaseDivider.GetSubDivision(Index);
-                return (!d.Valid)
+                return (!d.Valid || d.Length == 0)
                     ? null
                     : new string(BaseValue, d.Offset, d.Length);
             }
@@ -118,7 +128,7 @@ namespace NextLevelSeven.Native.Dividers
             get
             {
                 var d = BaseDivider.GetSubDivision(Index);
-                return (!d.Valid)
+                return (!d.Valid || d.Length == 0)
                     ? null
                     : StringDividerOperations.CharSubstring(BaseValue, d.Offset, d.Length);
             }

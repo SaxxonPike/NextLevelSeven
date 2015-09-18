@@ -40,6 +40,17 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
+        ///     Create a message builder, initialized with the specified formatted-string message data.
+        /// </summary>
+        /// <param name="message">Formatted string.</param>
+        /// <param name="args">Arguments for the format.</param>
+        /// <returns>New message builder.</returns>
+        public static IMessageBuilder BuildFormat(string message, params object[] args)
+        {
+            return new MessageBuilder(string.Format(message, args));
+        }
+
+        /// <summary>
         ///     Create a new message with a default MSH.
         /// </summary>
         /// <returns>New message.</returns>
@@ -68,5 +79,15 @@ namespace NextLevelSeven.Core
             return new NativeMessage(message);
         }
 
+        /// <summary>
+        ///     Create a new message, initialized with the specified formatted-string message data.
+        /// </summary>
+        /// <param name="message">Formatted string.</param>
+        /// <param name="args">Arguments for the format.</param>
+        /// <returns>New message builder.</returns>
+        public static INativeMessage CreateFormat(string message, params object[] args)
+        {
+            return new NativeMessage(string.Format(message, args));
+        }
     }
 }

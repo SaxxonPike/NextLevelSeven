@@ -127,14 +127,13 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                var index = 0;
-                var result = new StringBuilder();
-
-                if (_cache.Count <= 0)
+                if (_cache.Count == 0)
                 {
-                    return string.Empty;
+                    return null;
                 }
 
+                var index = 0;
+                var result = new StringBuilder();
                 var typeIsMsh = IsMsh;
 
                 foreach (var field in _cache.OrderBy(i => i.Key).Where(field => field.Key >= 0))
@@ -409,15 +408,6 @@ namespace NextLevelSeven.Building.Elements
             {
                 throw new BuilderException(ErrorCode.ChangingSegmentTypesToAndFromMshIsNotSupported);
             }
-        }
-
-        /// <summary>
-        ///     Copy the contents of this builder to a string.
-        /// </summary>
-        /// <returns>Converted segment.</returns>
-        public override string ToString()
-        {
-            return Value;
         }
 
         protected override IElement GetGenericElement(int index)

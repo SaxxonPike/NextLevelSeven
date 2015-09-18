@@ -67,11 +67,20 @@ namespace NextLevelSeven.Test.Native
         }
 
         [TestMethod]
-        public void Field_WillHaveValuesInterpretedAsNull()
+        public void Field_WillHaveValuesInterpretedAsDoubleQuotes()
         {
             var message = Message.Create();
             message[1][3].Value = "\"\"";
-            Assert.AreEqual(message[1][3].Value, null, @"Value of two double quotes was not interpreted as null.");
+            Assert.AreEqual("\"\"", message[1][3].Value, @"Value of two double quotes was not interpreted as null.");
+            Assert.IsTrue(message[1][3].Exists, @"Explicitly set null value must appear to exist.");
+        }
+
+        [TestMethod]
+        public void Field_WillHaveFormattedValuesInterpretedAsNull()
+        {
+            var message = Message.Create();
+            message[1][3].Value = "\"\"";
+            Assert.AreEqual(null, message[1][3].FormattedValue, @"Value of two double quotes was not interpreted as null.");
             Assert.IsTrue(message[1][3].Exists, @"Explicitly set null value must appear to exist.");
         }
 

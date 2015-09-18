@@ -65,6 +65,11 @@ namespace NextLevelSeven.Native.Dividers
             set { }
         }
 
+        public bool IsNull
+        {
+            get { return Value == null; }
+        }
+
         public string Value
         {
             get { return GetValue(); }

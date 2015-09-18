@@ -348,7 +348,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_CanSetMsh1()
         {
-            var builder = Message.Build("MSH|^~\\&|");
+            var builder = Message.Build(ExampleMessages.Minimum + "|");
             builder.Field(1, 1, ":");
             Assert.AreEqual("MSH:^~\\&:", builder.Value);
         }
@@ -356,7 +356,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_CanSetMsh1ToDefaultWithNull()
         {
-            var builder = Message.Build("MSH|^~\\&|");
+            var builder = Message.Build(ExampleMessages.Minimum + "|");
             builder.Field(1, 1, null);
             Assert.AreEqual("MSH|^~\\&|", builder.Value);
         }
@@ -364,7 +364,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_CanSetMsh2()
         {
-            var builder = Message.Build("MSH|^~\\&|");
+            var builder = Message.Build(ExampleMessages.Minimum + "|");
             builder.Field(1, 2, "@#$%");
             Assert.AreEqual("MSH|@#$%|", builder.Value);
         }
@@ -440,7 +440,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_CanSetMsh2ToDefaultWithNull()
         {
-            var builder = Message.Build("MSH|^~\\&|");
+            var builder = Message.Build(ExampleMessages.Minimum + "|");
             builder.Field(1, 2, null);
             Assert.AreEqual("MSH|^~\\&|", builder.Value);
         }
@@ -448,7 +448,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void MessageBuilder_CanSetMsh2Partially()
         {
-            var builder = Message.Build("MSH|^~\\&|");
+            var builder = Message.Build(ExampleMessages.Minimum + "|");
             builder.Field(1, 2, "$");
             Assert.AreEqual("MSH|$~\\&|", builder.Value);
         }

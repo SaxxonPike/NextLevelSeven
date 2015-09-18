@@ -51,7 +51,7 @@ namespace NextLevelSeven.Native.Elements
             {
                 throw new MessageException(ErrorCode.MessageDataMustStartWithMsh);
             }
-            if (message.Length < 9)
+            if (message.Length < 8)
             {
                 throw new MessageException(ErrorCode.MessageDataIsTooShort);
             }
@@ -406,17 +406,6 @@ namespace NextLevelSeven.Native.Elements
             return message == null
                 ? null
                 : message.Replace(Environment.NewLine, "\xD");
-        }
-
-        /// <summary>
-        ///     Get the string representation of the message.
-        /// </summary>
-        /// <returns>Message as a string.</returns>
-        public override string ToString()
-        {
-            return DescendantDivider == null
-                ? string.Empty
-                : DescendantDivider.Value;
         }
 
         /// <summary>

@@ -14,6 +14,7 @@ namespace NextLevelSeven.Native.Dividers
         char Delimiter { get; }
         IReadOnlyList<StringDivision> Divisions { get; }
         int Index { get; set; }
+        bool IsNull { get; }
         string Value { get; set; }
         char[] ValueChars { get; set; }
         int Version { get; }

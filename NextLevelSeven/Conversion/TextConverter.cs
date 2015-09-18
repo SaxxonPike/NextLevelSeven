@@ -22,7 +22,7 @@ namespace NextLevelSeven.Conversion
         /// <returns>Converted string.</returns>
         public static string ConvertFromString(string input)
         {
-            return input;
+            return input ?? "\"\"";
         }
 
         /// <summary>
@@ -43,7 +43,9 @@ namespace NextLevelSeven.Conversion
         /// <returns>Converted string.</returns>
         public static string ConvertToString(string input)
         {
-            return input;
+            return input == "\"\""
+                ? null
+                : input;
         }
     }
 }

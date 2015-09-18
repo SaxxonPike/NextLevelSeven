@@ -79,5 +79,7 @@
         FieldCannotBeNull,
         /* 0034 */
         SegmentDataIsTooShort,
+        /* 0035 */
+        InvalidCompare,
     }
 }

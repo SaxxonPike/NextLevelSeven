@@ -26,6 +26,11 @@ namespace NextLevelSeven.Core
         char Delimiter { get; }
 
         /// <summary>
+        ///     Get or set the formatted value of the element.
+        /// </summary>
+        string FormattedValue { get; set; }
+
+        /// <summary>
         ///     Get the index of the element.
         /// </summary>
         int Index { get; }

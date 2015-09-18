@@ -3,6 +3,7 @@ using System.Linq;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Codec;
 using NextLevelSeven.Core.Properties;
+using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building.Elements
@@ -100,6 +101,11 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
+                if (_cache.Count == 0)
+                {
+                    return null;
+                }
+
                 var result = string.Join("\xD",
                     _cache.OrderBy(i => i.Key).Select(i => i.Value.Value));
                 return result;
@@ -240,9 +246,22 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This MessageBuilder, for chaining purposes.</returns>
         public IMessageBuilder Message(string value)
         {
-            value = value ?? string.Empty;
-
+            if (value == null)
+            {
+                throw new BuilderException(ErrorCode.MessageDataMustNotBeNull);
+            }
+            
             var length = value.Length;
+            if (length < 8)
+            {
+                throw new BuilderException(ErrorCode.MessageDataIsTooShort);
+            }
+
+            if (!value.StartsWith("MSH"))
+            {
+                throw new BuilderException(ErrorCode.MessageDataMustStartWithMsh);
+            }
+
             ComponentDelimiter = (length >= 5) ? value[4] : '^';
             EscapeDelimiter = (length >= 6) ? value[5] : '\\';
             FieldDelimiter = (length >= 3) ? value[3] : '|';
@@ -440,15 +459,6 @@ namespace NextLevelSeven.Building.Elements
         public IMessageDetails Details
         {
             get { return new MessageDetails(this); }
-        }
-
-        /// <summary>
-        ///     Copy the contents of this builder to a string.
-        /// </summary>
-        /// <returns>Converted message.</returns>
-        public override string ToString()
-        {
-            return Value;
         }
 
         protected override IElement GetGenericElement(int index)
