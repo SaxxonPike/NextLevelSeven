@@ -55,6 +55,7 @@
     <Compile Include="MessageSenderTests.cs" />
     <Compile Include="MessageTransportTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="WebTestFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NextLevelSeven.Test\NextLevelSeven.Test.csproj">

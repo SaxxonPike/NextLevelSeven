@@ -3,7 +3,7 @@
 namespace NextLevelSeven.Test.Web
 {
     [TestClass]
-    public class MessageSenderTests
+    public class MessageSenderTests : WebTestFixture
     {
         [TestMethod]
         public void MessageSender_CanSendMessages()

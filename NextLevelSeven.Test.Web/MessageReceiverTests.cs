@@ -6,7 +6,7 @@ using NextLevelSeven.Core;
 namespace NextLevelSeven.Test.Web
 {
     [TestClass]
-    public class MessageReceiverTests
+    public class MessageReceiverTests : WebTestFixture
     {
         [TestMethod]
         public void MessageReceiver_DuringAcknowledgement_ReturnsProperAckStructure()

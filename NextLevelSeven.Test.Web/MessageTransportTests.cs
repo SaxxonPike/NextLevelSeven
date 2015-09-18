@@ -6,7 +6,7 @@ using NextLevelSeven.Web;
 namespace NextLevelSeven.Test.Web
 {
     [TestClass]
-    public class MessageTransportTests
+    public class MessageTransportTests : WebTestFixture
     {
         [TestMethod]
         public void MessageTransport_CanSendAndReceiveMessages()
