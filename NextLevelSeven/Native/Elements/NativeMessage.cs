@@ -388,9 +388,9 @@ namespace NextLevelSeven.Native.Elements
         }
 
         /// <summary>
-        ///     Get this message's hash code.
+        ///     Get the hash code for this element.
         /// </summary>
-        /// <returns>Hash code for the message.</returns>
+        /// <returns>Hash code of the value's string.</returns>
         public override int GetHashCode()
         {
             return ToString().GetHashCode();

@@ -17,7 +17,7 @@ namespace NextLevelSeven.Native.Elements
         /// </summary>
         /// <param name="descendantDivider">Divider to get the data from.</param>
         /// <param name="descendantFactory">Function that creates descendant elements.</param>
-        public NativeElementEnumerator(IStringDivider descendantDivider, IndexedProxyGetter<T> descendantFactory)
+        public NativeElementEnumerator(IStringDivider descendantDivider, ProxyFactory<int, T> descendantFactory)
         {
             Factory = descendantFactory;
             Divider = descendantDivider;
@@ -40,7 +40,7 @@ namespace NextLevelSeven.Native.Elements
         /// <summary>
         ///     Function that creates descendant elements.
         /// </summary>
-        private IndexedProxyGetter<T> Factory { get; set; }
+        private ProxyFactory<int, T> Factory { get; set; }
 
         /// <summary>
         ///     Currently selected index.

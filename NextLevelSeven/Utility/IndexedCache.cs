@@ -19,13 +19,13 @@ namespace NextLevelSeven.Utility
         /// <summary>
         ///     Factory method to generate keys that don't exist already.
         /// </summary>
-        private readonly IndexedProxyGetter<TKey, TValue> _factory;
+        private readonly ProxyFactory<TKey, TValue> _factory;
 
         /// <summary>
         ///     Create an indexed cache that uses the specified factory to generate items not already cached.
         /// </summary>
         /// <param name="factory"></param>
-        public IndexedCache(IndexedProxyGetter<TKey, TValue> factory)
+        public IndexedCache(ProxyFactory<TKey, TValue> factory)
         {
             _factory = factory;
         }

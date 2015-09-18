@@ -5,7 +5,7 @@ using NextLevelSeven.Specification.Elements;
 
 namespace NextLevelSeven.Specification
 {
-    internal class NumberRangeElement : SpecificationElementBase, INumberRange
+    internal sealed class NumberRangeElement : SpecificationElementBase, INumberRange
     {
         public NumberRangeElement(IElement element) : base(element)
         {
