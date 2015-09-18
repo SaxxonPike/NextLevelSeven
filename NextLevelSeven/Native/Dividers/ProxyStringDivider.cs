@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Native.Dividers
 {
@@ -17,14 +18,14 @@ namespace NextLevelSeven.Native.Dividers
             SetValue = v => proxyString = v;
         }
 
-        public ProxyStringDivider(Func<string> getValue, Action<string> setValue)
+        public ProxyStringDivider(ProxyGetter<string> getValue, ProxySetter<string> setValue)
         {
             GetValue = getValue;
             SetValue = setValue;
         }
 
-        private Func<string> GetValue { get; set; }
-        private Action<string> SetValue { get; set; }
+        private ProxyGetter<string> GetValue { get; set; }
+        private ProxySetter<string> SetValue { get; set; }
         public event EventHandler ValueChanged;
 
         public string this[int index]

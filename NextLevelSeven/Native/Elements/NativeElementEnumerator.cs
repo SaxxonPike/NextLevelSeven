@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using NextLevelSeven.Core;
 using NextLevelSeven.Native.Dividers;
 
 namespace NextLevelSeven.Native.Elements
@@ -16,7 +17,7 @@ namespace NextLevelSeven.Native.Elements
         /// </summary>
         /// <param name="descendantDivider">Divider to get the data from.</param>
         /// <param name="descendantFactory">Function that creates descendant elements.</param>
-        public NativeElementEnumerator(IStringDivider descendantDivider, Func<int, T> descendantFactory)
+        public NativeElementEnumerator(IStringDivider descendantDivider, IndexedProxyGetter<T> descendantFactory)
         {
             Factory = descendantFactory;
             Divider = descendantDivider;
@@ -39,7 +40,7 @@ namespace NextLevelSeven.Native.Elements
         /// <summary>
         ///     Function that creates descendant elements.
         /// </summary>
-        private Func<int, T> Factory { get; set; }
+        private IndexedProxyGetter<T> Factory { get; set; }
 
         /// <summary>
         ///     Currently selected index.

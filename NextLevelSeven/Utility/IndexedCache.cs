@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Utility
 {
@@ -18,13 +19,13 @@ namespace NextLevelSeven.Utility
         /// <summary>
         ///     Factory method to generate keys that don't exist already.
         /// </summary>
-        private readonly Func<TKey, TValue> _factory;
+        private readonly IndexedProxyGetter<TKey, TValue> _factory;
 
         /// <summary>
         ///     Create an indexed cache that uses the specified factory to generate items not already cached.
         /// </summary>
         /// <param name="factory"></param>
-        public IndexedCache(Func<TKey, TValue> factory)
+        public IndexedCache(IndexedProxyGetter<TKey, TValue> factory)
         {
             _factory = factory;
         }

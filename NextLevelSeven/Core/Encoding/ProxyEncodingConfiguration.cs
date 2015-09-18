@@ -7,11 +7,11 @@ namespace NextLevelSeven.Core.Encoding
     /// </summary>
     internal class ProxyEncodingConfiguration : EncodingConfiguration
     {
-        private readonly Func<char> _getComponent;
-        private readonly Func<char> _getEscape;
-        private readonly Func<char> _getField;
-        private readonly Func<char> _getRepetition;
-        private readonly Func<char> _getSubcomponent;
+        private readonly ProxyGetter<char> _getComponent;
+        private readonly ProxyGetter<char> _getEscape;
+        private readonly ProxyGetter<char> _getField;
+        private readonly ProxyGetter<char> _getRepetition;
+        private readonly ProxyGetter<char> _getSubcomponent;
 
         /// <summary>
         ///     Create an encoding configuration from a message or segment.
@@ -21,8 +21,8 @@ namespace NextLevelSeven.Core.Encoding
         /// <param name="repetition">Function to get the repetition character.</param>
         /// <param name="component">Function to get the component separator character.</param>
         /// <param name="subcomponent">Function to get the subcomponent separator character.</param>
-        public ProxyEncodingConfiguration(Func<char> field, Func<char> escape, Func<char> repetition,
-            Func<char> component, Func<char> subcomponent)
+        public ProxyEncodingConfiguration(ProxyGetter<char> field, ProxyGetter<char> escape, ProxyGetter<char> repetition,
+            ProxyGetter<char> component, ProxyGetter<char> subcomponent)
         {
             _getEscape = escape;
             _getField = field;

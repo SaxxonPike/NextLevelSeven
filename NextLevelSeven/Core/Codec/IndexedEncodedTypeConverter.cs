@@ -16,8 +16,8 @@ namespace NextLevelSeven.Core.Codec
         /// <param name="baseElement">Element to reference.</param>
         /// <param name="decoder">Decoding function from HL7.</param>
         /// <param name="encoder">Encoding function to HL7.</param>
-        public IndexedEncodedTypeConverter(IElement baseElement, Func<string, TDecoded> decoder,
-            Func<TDecoded, string> encoder)
+        public IndexedEncodedTypeConverter(IElement baseElement, ProxyConverter<string, TDecoded> decoder,
+            ProxyConverter<TDecoded, string> encoder)
         {
             BaseElement = baseElement;
             Decoder = decoder;
@@ -32,12 +32,12 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>
         ///     Decoding function from HL7.
         /// </summary>
-        private Func<string, TDecoded> Decoder { get; set; }
+        private ProxyConverter<string, TDecoded> Decoder { get; set; }
 
         /// <summary>
         ///     Encoding function to HL7.
         /// </summary>
-        private Func<TDecoded, string> Encoder { get; set; }
+        private ProxyConverter<TDecoded, string> Encoder { get; set; }
 
         /// <summary>
         ///     Get or set the element descendant's value as the codec indexer's type.

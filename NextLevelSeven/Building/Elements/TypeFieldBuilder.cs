@@ -1,4 +1,5 @@
 ﻿using System;
+using NextLevelSeven.Core;
 using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Building.Elements
@@ -11,7 +12,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>
         ///     Method to call when this field changes.
         /// </summary>
-        private readonly Action<string, string> _onTypeFieldChangedHandler;
+        private readonly ProxyChangePendingNotifier<string> _onTypeFieldChangedHandler;
 
         /// <summary>
         ///     Internal value.
@@ -24,7 +25,7 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="builder">Ancestor builder.</param>
         /// <param name="onTypeFieldChangedHandler">Method to call when the type field has changed.</param>
         /// <param name="index">Index in the ancestor.</param>
-        internal TypeFieldBuilder(BuilderBase builder, Action<string, string> onTypeFieldChangedHandler, int index)
+        internal TypeFieldBuilder(BuilderBase builder, ProxyChangePendingNotifier<string> onTypeFieldChangedHandler, int index)
             : base(builder, index)
         {
             _onTypeFieldChangedHandler = onTypeFieldChangedHandler;

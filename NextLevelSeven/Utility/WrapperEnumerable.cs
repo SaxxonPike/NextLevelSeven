@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Utility
 {
@@ -11,10 +12,10 @@ namespace NextLevelSeven.Utility
     /// <typeparam name="TItem">Type of contained items.</typeparam>
     internal sealed class WrapperEnumerable<TItem> : IEnumerableIndexable<int, TItem>
     {
-        private readonly Func<int> _count;
-        private readonly Func<int, TItem> _read;
+        private readonly ProxyGetter<int> _count;
+        private readonly IndexedProxyGetter<TItem> _read;
         private readonly int _startIndex;
-        private readonly Action<int, TItem> _write;
+        private readonly IndexedProxySetter<TItem> _write;
 
         /// <summary>
         ///     Create a wrapper.
@@ -23,7 +24,7 @@ namespace NextLevelSeven.Utility
         /// <param name="write">Function to write values at a specified index.</param>
         /// <param name="count">Function to get the number of items contained.</param>
         /// <param name="startIndex">Index where items begin. Defaults to zero.</param>
-        internal WrapperEnumerable(Func<int, TItem> read, Action<int, TItem> write, Func<int> count, int startIndex = 0)
+        internal WrapperEnumerable(IndexedProxyGetter<TItem> read, IndexedProxySetter<TItem> write, ProxyGetter<int> count, int startIndex = 0)
         {
             _count = count;
             _read = read;
