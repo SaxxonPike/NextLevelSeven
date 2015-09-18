@@ -24,7 +24,7 @@ namespace NextLevelSeven.Native.Elements
             _cache = new IndexedCache<int, NativeField>(CreateField);
         }
 
-        private NativeSegment(string value, EncodingConfiguration config)
+        private NativeSegment(string value, EncodingConfigurationBase config)
             : base(value, config)
         {
             _cache = new IndexedCache<int, NativeField>(CreateField);

@@ -68,11 +68,13 @@
     <Compile Include="Conversion\NumberConverter.cs" />
     <Compile Include="Conversion\TextConverter.cs" />
     <Compile Include="Core\ElementExtensions.cs" />
+    <Compile Include="Core\Encoding\EncodingConfiguration.cs" />
     <Compile Include="Core\MessageExtensions.cs" />
     <Compile Include="Core\Properties\ProxyIdentity.cs" />
     <Compile Include="Core\Properties\IMessageDetails.cs" />
     <Compile Include="Core\Properties\MessageDetails.cs" />
     <Compile Include="Core\ProxyDelegates.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Native\Elements\NativeCodec.cs" />
     <Compile Include="Core\Codec\IndexedEncodedTypeConverter.cs" />
     <Compile Include="Core\ElementException.cs" />
@@ -85,6 +87,7 @@
     <Compile Include="Core\Message.cs" />
     <Compile Include="Native\Elements\NativeFieldWithStaticValue.cs" />
     <Compile Include="Native\INativeComponent.cs" />
+    <Compile Include="Native\IDividable.cs" />
     <Compile Include="Native\INativeField.cs" />
     <Compile Include="Native\INativeRepetition.cs" />
     <Compile Include="Native\INativeSubcomponent.cs" />
@@ -106,7 +109,7 @@
     <Compile Include="Native\Elements\NativeElement.cs" />
     <Compile Include="Native\Elements\NativeElementEnumerable.cs" />
     <Compile Include="Native\Elements\NativeElementEnumerator.cs" />
-    <Compile Include="Core\Encoding\EncodingConfiguration.cs" />
+    <Compile Include="Core\Encoding\EncodingConfigurationBase.cs" />
     <Compile Include="Native\Elements\NativeEncodingField.cs" />
     <Compile Include="Native\Elements\NativeField.cs" />
     <Compile Include="Native\Elements\NativeFieldDelimiter.cs" />

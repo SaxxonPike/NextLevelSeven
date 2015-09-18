@@ -16,7 +16,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>
         ///     Encoding configuration for this message.
         /// </summary>
-        internal readonly EncodingConfiguration EncodingConfiguration;
+        internal readonly EncodingConfigurationBase EncodingConfiguration;
 
         /// <summary>
         ///     Initialize the message builder base class.
@@ -32,7 +32,7 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         /// <param name="config">Message's encoding configuration.</param>
         /// <param name="index">Index in the parent.</param>
-        internal BuilderBase(EncodingConfiguration config, int index)
+        internal BuilderBase(EncodingConfigurationBase config, int index)
         {
             EncodingConfiguration = config;
             Index = index;

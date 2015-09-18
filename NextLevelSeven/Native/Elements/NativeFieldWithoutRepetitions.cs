@@ -23,7 +23,7 @@ namespace NextLevelSeven.Native.Elements
         /// </summary>
         /// <param name="value">Initial value.</param>
         /// <param name="config">Encoding configuration.</param>
-        private NativeFieldWithoutRepetitions(string value, EncodingConfiguration config)
+        private NativeFieldWithoutRepetitions(string value, EncodingConfigurationBase config)
             : base(value, config)
         {
         }

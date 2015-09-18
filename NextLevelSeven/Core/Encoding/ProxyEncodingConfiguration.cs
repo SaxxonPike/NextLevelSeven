@@ -5,7 +5,7 @@ namespace NextLevelSeven.Core.Encoding
     /// <summary>
     ///     An encoding configuration that gets its values from an HL7 message.
     /// </summary>
-    internal class ProxyEncodingConfiguration : EncodingConfiguration
+    internal class ProxyEncodingConfiguration : EncodingConfigurationBase
     {
         private readonly ProxyGetter<char> _getComponent;
         private readonly ProxyGetter<char> _getEscape;
@@ -74,13 +74,6 @@ namespace NextLevelSeven.Core.Encoding
         {
             get { return _getSubcomponent(); }
             protected set { }
-        }
-
-        /// <summary>
-        ///     Prevent the value initialization process.
-        /// </summary>
-        sealed protected override void Initialize()
-        {
         }
     }
 }

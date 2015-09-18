@@ -4,7 +4,7 @@ using NextLevelSeven.Core;
 namespace NextLevelSeven.Test.Building
 {
     [TestClass]
-    public class BuildingTestFixture : PerformanceTestFixture
+    abstract public class BuildingTestFixture : PerformanceTestFixture
     {
     }
 }

@@ -4,7 +4,7 @@ using NextLevelSeven.Core;
 namespace NextLevelSeven.Test.Building
 {
     [TestClass]
-    public class SegmentBuilderTests : BuildingTestFixture
+    sealed public class SegmentBuilderTests : BuildingTestFixture
     {
         [TestMethod]
         public void SegmentBuilder_CanBeCloned()

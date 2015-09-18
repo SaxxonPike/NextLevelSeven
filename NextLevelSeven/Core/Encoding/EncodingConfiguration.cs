@@ -1,9 +1,12 @@
-﻿namespace NextLevelSeven.Core.Encoding
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace NextLevelSeven.Core.Encoding
 {
-    /// <summary>
-    ///     Provides information about the characters used to encode an HL7 message.
-    /// </summary>
-    internal class EncodingConfiguration
+    sealed internal class EncodingConfiguration : EncodingConfigurationBase
     {
         /// <summary>
         ///     Default encoding configuration.
@@ -16,20 +19,20 @@
         public static readonly EncodingConfiguration Empty = new EncodingConfiguration('\0', '\0', '\0', '\0', '\0');
 
         /// <summary>
-        ///     Create a default encoding configuration.
+        ///     Create an encoding configuration with the default characters.
         /// </summary>
         public EncodingConfiguration()
         {
-            InitializeCtor();
+            
         }
 
         /// <summary>
         ///     Clone an existing encoding configuration.
         /// </summary>
         /// <param name="other">Source configuration to pull values from.</param>
-        public EncodingConfiguration(EncodingConfiguration other)
+        public EncodingConfiguration(EncodingConfigurationBase other)
         {
-            InitializeFrom(other);
+            CopyFrom(other);
         }
 
         /// <summary>
@@ -42,83 +45,37 @@
         /// <param name="escape">Escape character.</param>
         public EncodingConfiguration(char field, char repetition, char component, char subcomponent, char escape)
         {
-            InitializeCtor(field, repetition, component, subcomponent, escape);
+            InitializeWith(field, repetition, component, subcomponent, escape);
         }
 
-        /// <summary>
-        ///     Get the delimiter character used to split components.
-        /// </summary>
-        public virtual char ComponentDelimiter { get; protected set; }
-
-        /// <summary>
-        ///     Get the escape character used to mark encoded sequences.
-        /// </summary>
-        public virtual char EscapeDelimiter { get; protected set; }
-
-        /// <summary>
-        ///     Get the escape character used to separate fields.
-        /// </summary>
-        public virtual char FieldDelimiter { get; protected set; }
-
-        /// <summary>
-        ///     Get the repetition character used to separate multiple data in the same field.
-        /// </summary>
-        public virtual char RepetitionDelimiter { get; protected set; }
-
-        /// <summary>
-        ///     Get the delimiter character used to split subcomponents.
-        /// </summary>
-        public virtual char SubcomponentDelimiter { get; protected set; }
-
-        /// <summary>
-        ///     Initialize defaults.
-        /// </summary>
-        protected virtual void Initialize()
+        public override char ComponentDelimiter
         {
-            ComponentDelimiter = '^';
-            EscapeDelimiter = '\\';
-            FieldDelimiter = '|';
-            RepetitionDelimiter = '~';
-            SubcomponentDelimiter = '&';
+            get;
+            protected set;
         }
 
-        /// <summary>
-        ///     Initialize defaults (to be called from constructor.)
-        /// </summary>
-        private void InitializeCtor()
+        public override char EscapeDelimiter
         {
-            Initialize();
+            get;
+            protected set;
         }
 
-        /// <summary>
-        ///     Initialize defaults.
-        /// </summary>
-        /// <param name="field"></param>
-        /// <param name="repetition"></param>
-        /// <param name="component"></param>
-        /// <param name="subcomponent"></param>
-        /// <param name="escape"></param>
-        private void InitializeCtor(char field, char repetition, char component, char subcomponent, char escape)
+        public override char FieldDelimiter
         {
-            InitializeCtor();
-            FieldDelimiter = field;
-            RepetitionDelimiter = repetition;
-            ComponentDelimiter = component;
-            SubcomponentDelimiter = subcomponent;
-            EscapeDelimiter = escape;
+            get;
+            protected set;
         }
 
-        /// <summary>
-        ///     Clone defaults from another configuration.
-        /// </summary>
-        /// <param name="other">Source configuration.</param>
-        protected void InitializeFrom(EncodingConfiguration other)
+        public override char RepetitionDelimiter
         {
-            ComponentDelimiter = other.ComponentDelimiter;
-            EscapeDelimiter = other.EscapeDelimiter;
-            FieldDelimiter = other.FieldDelimiter;
-            RepetitionDelimiter = other.RepetitionDelimiter;
-            SubcomponentDelimiter = other.SubcomponentDelimiter;
+            get;
+            protected set;
+        }
+
+        public override char SubcomponentDelimiter
+        {
+            get;
+            protected set;
         }
     }
 }

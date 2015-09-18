@@ -5,7 +5,7 @@ using NextLevelSeven.Core;
 namespace NextLevelSeven.Test.Building
 {
     [TestClass]
-    public class BuilderBaseTests : BuildingTestFixture
+    sealed public class BuilderBaseTests : BuildingTestFixture
     {
         [TestMethod]
         public void Builder_CanFormat()

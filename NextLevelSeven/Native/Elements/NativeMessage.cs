@@ -19,7 +19,7 @@ namespace NextLevelSeven.Native.Elements
         /// <summary>
         ///     Internal backing field for encoding configuration.
         /// </summary>
-        private readonly EncodingConfiguration _encodingConfiguration;
+        private readonly EncodingConfigurationBase _encodingConfiguration;
 
         /// <summary>
         ///     Cached Guid.
@@ -71,7 +71,7 @@ namespace NextLevelSeven.Native.Elements
         /// <summary>
         ///     Get the encoding configuration for the message.
         /// </summary>
-        public override EncodingConfiguration EncodingConfiguration
+        public override EncodingConfigurationBase EncodingConfiguration
         {
             get { return _encodingConfiguration; }
         }

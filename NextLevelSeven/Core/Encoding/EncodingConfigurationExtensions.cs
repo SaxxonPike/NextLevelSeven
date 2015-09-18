@@ -14,7 +14,7 @@ namespace NextLevelSeven.Core.Encoding
         /// <param name="config">Encoding configuration.</param>
         /// <param name="s">String to escape.</param>
         /// <returns>Escaped string.</returns>
-        public static string Escape(this EncodingConfiguration config, string s)
+        public static string Escape(this EncodingConfigurationBase config, string s)
         {
             if (s == null)
             {
@@ -147,7 +147,7 @@ namespace NextLevelSeven.Core.Encoding
         /// <param name="config">Encoding configuration.</param>
         /// <param name="s">String to unescape.</param>
         /// <returns>Unescaped string.</returns>
-        public static string UnEscape(this EncodingConfiguration config, string s)
+        public static string UnEscape(this EncodingConfigurationBase config, string s)
         {
             throw new NotImplementedException();
         }

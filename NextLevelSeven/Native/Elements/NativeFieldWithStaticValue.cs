@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using NextLevelSeven.Core.Encoding;
 using NextLevelSeven.Native.Dividers;
 using NextLevelSeven.Utility;
 
@@ -77,7 +76,7 @@ namespace NextLevelSeven.Native.Elements
         /// <returns>Repetition descendant.</returns>
         sealed protected override NativeRepetition CreateRepetition(int index)
         {
-            return new NativeRepetition(this, index - 1, index) {EncodingConfiguration = EncodingConfiguration.Empty};
+            return new NativeRepetition(this, index - 1, index) {EncodingConfiguration = Core.Encoding.EncodingConfiguration.Empty};
         }
 
         /// <summary>

@@ -14,12 +14,12 @@ namespace NextLevelSeven.Native.Elements
     /// <summary>
     ///     Represents a generic HL7 message element, which may contain other elements.
     /// </summary>
-    internal abstract class NativeElement : INativeElement, IComparable, IComparable<IElement>, IComparable<string>, IEquatable<IElement>, IEquatable<string>
+    internal abstract class NativeElement : INativeElement, IComparable, IComparable<IElement>, IComparable<string>, IEquatable<IElement>, IEquatable<string>, IDividable
     {
         /// <summary>
         ///     Encoding configuration override.
         /// </summary>
-        protected EncodingConfiguration EncodingConfigurationOverride;
+        protected EncodingConfigurationBase EncodingConfigurationOverride;
 
         /// <summary>
         ///     String divider used to split the element's raw value.
@@ -59,7 +59,7 @@ namespace NextLevelSeven.Native.Elements
         /// </summary>
         /// <param name="value">Initial value.</param>
         /// <param name="config">Encoding configuration.</param>
-        protected NativeElement(string value, EncodingConfiguration config)
+        protected NativeElement(string value, EncodingConfigurationBase config)
         {
             EncodingConfigurationOverride = config;
             _descendantDivider = GetDescendantDividerRoot(value);
@@ -82,7 +82,7 @@ namespace NextLevelSeven.Native.Elements
         /// <summary>
         ///     Ancestor element. Null if this element is a root element.
         /// </summary>
-        protected NativeElement Ancestor { get; private set; }
+        public NativeElement Ancestor { get; private set; }
 
         /// <summary>
         ///     Get the string divider used to find descendant values.
@@ -107,7 +107,7 @@ namespace NextLevelSeven.Native.Elements
         /// <summary>
         ///     Get the encoding configuration.
         /// </summary>
-        public virtual EncodingConfiguration EncodingConfiguration
+        public virtual EncodingConfigurationBase EncodingConfiguration
         {
             get { return EncodingConfigurationOverride ?? Ancestor.EncodingConfiguration; }
             set { EncodingConfigurationOverride = value; }

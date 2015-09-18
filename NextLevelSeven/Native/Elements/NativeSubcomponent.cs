@@ -16,7 +16,7 @@ namespace NextLevelSeven.Native.Elements
         {
         }
 
-        private NativeSubcomponent(string value, EncodingConfiguration config)
+        private NativeSubcomponent(string value, EncodingConfigurationBase config)
             : base(value, config)
         {
         }

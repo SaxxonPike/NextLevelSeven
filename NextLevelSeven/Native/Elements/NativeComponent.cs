@@ -34,7 +34,7 @@ namespace NextLevelSeven.Native.Elements
         /// </summary>
         /// <param name="value">Initial value.</param>
         /// <param name="config">Encoding configuration.</param>
-        private NativeComponent(string value, EncodingConfiguration config)
+        private NativeComponent(string value, EncodingConfigurationBase config)
             : base(value, config)
         {
             _cache = new IndexedCache<int, NativeSubcomponent>(CreateSubcomponent);
