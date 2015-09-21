@@ -6,7 +6,7 @@ namespace NextLevelSeven.Specification
     /// <summary>
     ///     Specification-specific extensions to the IElement interface.
     /// </summary>
-    static public class ElementSpecificationExtensions
+    public static class ElementSpecificationExtensions
     {
         /// <summary>
         ///     Get the element expressed as an HL7 address type. (AD)

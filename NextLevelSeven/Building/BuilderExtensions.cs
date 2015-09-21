@@ -1,6 +1,4 @@
 ﻿using NextLevelSeven.Building.Elements;
-using NextLevelSeven.Native;
-using NextLevelSeven.Native.Elements;
 
 namespace NextLevelSeven.Building
 {

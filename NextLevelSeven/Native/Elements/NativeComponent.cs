@@ -101,6 +101,28 @@ namespace NextLevelSeven.Native.Elements
         }
 
         /// <summary>
+        ///     Get all subcomponents.
+        /// </summary>
+        public IEnumerable<INativeSubcomponent> Subcomponents
+        {
+            get
+            {
+                return new WrapperEnumerable<INativeSubcomponent>(i => _cache[i],
+                    (i, v) => { },
+                    () => ValueCount,
+                    1);
+            }
+        }
+
+        /// <summary>
+        ///     Get all subcomponents.
+        /// </summary>
+        IEnumerable<ISubcomponent> IComponent.Subcomponents
+        {
+            get { return Subcomponents; }
+        }
+
+        /// <summary>
         ///     Get the descendant element at the specified index.
         /// </summary>
         /// <param name="index">Index of the desired element.</param>
@@ -132,31 +154,6 @@ namespace NextLevelSeven.Native.Elements
         private NativeComponent CloneInternal()
         {
             return new NativeComponent(Value, EncodingConfiguration) {Index = Index};
-        }
-
-        /// <summary>
-        ///     Get all subcomponents.
-        /// </summary>
-        public IEnumerable<INativeSubcomponent> Subcomponents
-        {
-            get
-            {
-                return new WrapperEnumerable<INativeSubcomponent>(i => _cache[i],
-                    (i, v) => { },
-                    () => ValueCount,
-                    1);
-            }
-        }
-
-        /// <summary>
-        ///     Get all subcomponents.
-        /// </summary>
-        IEnumerable<ISubcomponent> IComponent.Subcomponents
-        {
-            get
-            {
-                return Subcomponents;
-            }
         }
     }
 }

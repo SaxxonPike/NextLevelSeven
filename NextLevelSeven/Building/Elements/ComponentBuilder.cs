@@ -40,20 +40,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Subcomponent builder for the specified index.</returns>
         public new ISubcomponentBuilder this[int index]
         {
-            get
-            {
-                return _subcomponents[index];
-            }
-        }
-
-        /// <summary>
-        ///     Create a subcomponent builder object.
-        /// </summary>
-        /// <param name="index">Index to reference.</param>
-        /// <returns>Subcomponent builder object.</returns>
-        private SubcomponentBuilder CreateSubcomponentBuilder(int index)
-        {
-            return new SubcomponentBuilder(this, index);
+            get { return _subcomponents[index]; }
         }
 
         /// <summary>
@@ -234,16 +221,6 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>
-        ///     Get the element at the specified index.
-        /// </summary>
-        /// <param name="index">Index to reference.</param>
-        /// <returns>Element at index.</returns>
-        protected override IElement GetGenericElement(int index)
-        {
-            return _subcomponents[index];
-        }
-
-        /// <summary>
         ///     Get this element's subcomponents.
         /// </summary>
         IEnumerable<ISubcomponent> IComponent.Subcomponents
@@ -255,6 +232,26 @@ namespace NextLevelSeven.Building.Elements
                     () => ValueCount,
                     1);
             }
+        }
+
+        /// <summary>
+        ///     Create a subcomponent builder object.
+        /// </summary>
+        /// <param name="index">Index to reference.</param>
+        /// <returns>Subcomponent builder object.</returns>
+        private SubcomponentBuilder CreateSubcomponentBuilder(int index)
+        {
+            return new SubcomponentBuilder(this, index);
+        }
+
+        /// <summary>
+        ///     Get the element at the specified index.
+        /// </summary>
+        /// <param name="index">Index to reference.</param>
+        /// <returns>Element at index.</returns>
+        protected override IElement GetGenericElement(int index)
+        {
+            return _subcomponents[index];
         }
     }
 }

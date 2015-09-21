@@ -30,6 +30,11 @@ namespace NextLevelSeven.Native.Elements
             _cache = new IndexedCache<int, NativeField>(CreateField);
         }
 
+        private bool IsMsh
+        {
+            get { return (string.Equals(Type, "MSH", StringComparison.Ordinal)); }
+        }
+
         INativeField INativeSegment.this[int index]
         {
             get { return _cache[index]; }
@@ -120,6 +125,46 @@ namespace NextLevelSeven.Native.Elements
             return CloneInternal();
         }
 
+        public override IEnumerable<string> Values
+        {
+            get { return base.Values; }
+            set
+            {
+                if (IsMsh)
+                {
+                    // MSH changes how indices work
+                    var values = value.ToList();
+                    var delimiter = values[1];
+                    values.RemoveAt(1);
+                    DescendantDivider.Value = string.Join(delimiter, values);
+                    return;
+                }
+                base.Values = value;
+            }
+        }
+
+        /// <summary>
+        ///     Get all components.
+        /// </summary>
+        public IEnumerable<INativeField> Fields
+        {
+            get
+            {
+                return new WrapperEnumerable<INativeField>(i => _cache[i],
+                    (i, v) => { },
+                    () => ValueCount,
+                    1);
+            }
+        }
+
+        /// <summary>
+        ///     Get all components.
+        /// </summary>
+        IEnumerable<IField> ISegment.Fields
+        {
+            get { return Fields; }
+        }
+
         public override INativeElement GetDescendant(int index)
         {
             return _cache[index];
@@ -162,57 +207,9 @@ namespace NextLevelSeven.Native.Elements
             return result;
         }
 
-        private bool IsMsh
-        {
-            get { return (string.Equals(Type, "MSH", StringComparison.Ordinal)); }
-        }
-
         private NativeSegment CloneInternal()
         {
             return new NativeSegment(Value, EncodingConfiguration) {Index = Index};
-        }
-
-        public override IEnumerable<string> Values
-        {
-            get { return base.Values; }
-            set
-            {
-                if (IsMsh)
-                {
-                    // MSH changes how indices work
-                    var values = value.ToList();
-                    var delimiter = values[1];
-                    values.RemoveAt(1);
-                    DescendantDivider.Value = string.Join(delimiter, values);
-                    return;
-                }
-                base.Values = value;
-            }
-        }
-
-        /// <summary>
-        ///     Get all components.
-        /// </summary>
-        public IEnumerable<INativeField> Fields
-        {
-            get
-            {
-                return new WrapperEnumerable<INativeField>(i => _cache[i],
-                    (i, v) => { },
-                    () => ValueCount,
-                    1);
-            }
-        }
-
-        /// <summary>
-        ///     Get all components.
-        /// </summary>
-        IEnumerable<IField> ISegment.Fields
-        {
-            get
-            {
-                return Fields;
-            }
         }
     }
 }

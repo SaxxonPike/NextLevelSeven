@@ -38,7 +38,7 @@ namespace NextLevelSeven.Core
         /// <param name="elementsToAdd">Elements to be added.</param>
         public static void AddRange(this IElement target, IEnumerable<string> elementsToAdd)
         {
-            target.Value = string.Join(new string(target.Delimiter, 1), (new[] { target.Value }).Concat(elementsToAdd));
+            target.Value = string.Join(new string(target.Delimiter, 1), (new[] {target.Value}).Concat(elementsToAdd));
         }
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace NextLevelSeven.Core
         public static void AddRange(this IElement target, IEnumerable<IElement> elementsToAdd)
         {
             target.Value = string.Join(new string(target.Delimiter, 1),
-                (new[] { target.Value }).Concat(elementsToAdd.Select(e => e.ToString())));
+                (new[] {target.Value}).Concat(elementsToAdd.Select(e => e.ToString())));
         }
 
         /// <summary>

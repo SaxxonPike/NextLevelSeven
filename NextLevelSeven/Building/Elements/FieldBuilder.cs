@@ -44,16 +44,6 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>
-        ///     Create a repetition builder object.
-        /// </summary>
-        /// <param name="index">Index for the new object.</param>
-        /// <returns>Repetition builder object.</returns>
-        protected virtual RepetitionBuilder CreateRepetitionBuilder(int index)
-        {
-            return new RepetitionBuilder(this, index);
-        }
-
-        /// <summary>
         ///     Get the number of field repetitions in this field, including field repetitions with no content.
         /// </summary>
         public override int ValueCount
@@ -297,7 +287,7 @@ namespace NextLevelSeven.Building.Elements
         ///     Deep clone this element.
         /// </summary>
         /// <returns>Clone of the element.</returns>
-        sealed public override IElement Clone()
+        public override sealed IElement Clone()
         {
             return new FieldBuilder(Ancestor, Index, Value);
         }
@@ -314,7 +304,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>
         ///     Get a codec that allows interpretation of the value as other types.
         /// </summary>
-        sealed public override IEncodedTypeConverter As
+        public override sealed IEncodedTypeConverter As
         {
             get { return new BuilderCodec(this); }
         }
@@ -322,9 +312,33 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>
         ///     Get this element's value delimiter.
         /// </summary>
-        sealed public override char Delimiter
+        public override sealed char Delimiter
         {
             get { return RepetitionDelimiter; }
+        }
+
+        /// <summary>
+        ///     Get this element's field repetitions.
+        /// </summary>
+        IEnumerable<IRepetition> IField.Repetitions
+        {
+            get
+            {
+                return new WrapperEnumerable<IRepetition>(index => this[index],
+                    (index, data) => { },
+                    () => ValueCount,
+                    1);
+            }
+        }
+
+        /// <summary>
+        ///     Create a repetition builder object.
+        /// </summary>
+        /// <param name="index">Index for the new object.</param>
+        /// <returns>Repetition builder object.</returns>
+        protected virtual RepetitionBuilder CreateRepetitionBuilder(int index)
+        {
+            return new RepetitionBuilder(this, index);
         }
 
         /// <summary>
@@ -341,23 +355,9 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        sealed protected override IElement GetGenericElement(int index)
+        protected override sealed IElement GetGenericElement(int index)
         {
             return _repetitions[index];
-        }
-
-        /// <summary>
-        ///     Get this element's field repetitions.
-        /// </summary>
-        IEnumerable<IRepetition> IField.Repetitions
-        {
-            get
-            {
-                return new WrapperEnumerable<IRepetition>(index => this[index],
-                    (index, data) => { },
-                    () => ValueCount,
-                    1);
-            }
         }
     }
 }

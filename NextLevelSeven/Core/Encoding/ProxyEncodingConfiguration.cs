@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace NextLevelSeven.Core.Encoding
+﻿namespace NextLevelSeven.Core.Encoding
 {
     /// <summary>
     ///     An encoding configuration that gets its values from an HL7 message.
@@ -21,7 +19,8 @@ namespace NextLevelSeven.Core.Encoding
         /// <param name="repetition">Function to get the repetition character.</param>
         /// <param name="component">Function to get the component separator character.</param>
         /// <param name="subcomponent">Function to get the subcomponent separator character.</param>
-        public ProxyEncodingConfiguration(ProxyGetter<char> field, ProxyGetter<char> escape, ProxyGetter<char> repetition,
+        public ProxyEncodingConfiguration(ProxyGetter<char> field, ProxyGetter<char> escape,
+            ProxyGetter<char> repetition,
             ProxyGetter<char> component, ProxyGetter<char> subcomponent)
         {
             _getEscape = escape;
@@ -34,7 +33,7 @@ namespace NextLevelSeven.Core.Encoding
         /// <summary>
         ///     Get the delimiter character used to split components.
         /// </summary>
-        sealed public override char ComponentDelimiter
+        public override sealed char ComponentDelimiter
         {
             get { return _getComponent(); }
             protected set { }
@@ -43,7 +42,7 @@ namespace NextLevelSeven.Core.Encoding
         /// <summary>
         ///     Get the escape character used to mark encoded sequences.
         /// </summary>
-        sealed public override char EscapeDelimiter
+        public override sealed char EscapeDelimiter
         {
             get { return _getEscape(); }
             protected set { }
@@ -52,7 +51,7 @@ namespace NextLevelSeven.Core.Encoding
         /// <summary>
         ///     Get the character used to separate fields.
         /// </summary>
-        sealed public override char FieldDelimiter
+        public override sealed char FieldDelimiter
         {
             get { return _getField(); }
             protected set { }
@@ -61,7 +60,7 @@ namespace NextLevelSeven.Core.Encoding
         /// <summary>
         ///     Get the repetition character used to separate multiple data in the same field.
         /// </summary>
-        sealed public override char RepetitionDelimiter
+        public override sealed char RepetitionDelimiter
         {
             get { return _getRepetition(); }
             protected set { }
@@ -70,7 +69,7 @@ namespace NextLevelSeven.Core.Encoding
         /// <summary>
         ///     Get the delimiter character used to split subcomponents.
         /// </summary>
-        sealed public override char SubcomponentDelimiter
+        public override sealed char SubcomponentDelimiter
         {
             get { return _getSubcomponent(); }
             protected set { }

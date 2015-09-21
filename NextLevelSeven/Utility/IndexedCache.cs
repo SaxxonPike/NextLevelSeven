@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections;
 using System.Collections.Generic;
 using NextLevelSeven.Core;
 
@@ -100,7 +100,7 @@ namespace NextLevelSeven.Utility
         ///     Get an enumerator for the cache.
         /// </summary>
         /// <returns>Enumerator.</returns>
-        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        IEnumerator IEnumerable.GetEnumerator()
         {
             return _cache.GetEnumerator();
         }

@@ -264,6 +264,28 @@ namespace NextLevelSeven.Native.Elements
         }
 
         /// <summary>
+        ///     Get all segments.
+        /// </summary>
+        public IEnumerable<INativeSegment> Segments
+        {
+            get
+            {
+                return new WrapperEnumerable<INativeSegment>(i => _cache[i],
+                    (i, v) => { },
+                    () => ValueCount,
+                    1);
+            }
+        }
+
+        /// <summary>
+        ///     Get all segments.
+        /// </summary>
+        IEnumerable<ISegment> IMessage.Segments
+        {
+            get { return Segments; }
+        }
+
+        /// <summary>
         ///     Create a message with a default MSH segment.
         /// </summary>
         public static NativeMessage Create()
@@ -408,31 +430,5 @@ namespace NextLevelSeven.Native.Elements
         {
             return new NativeMessage(Value) {Index = Index};
         }
-
-        /// <summary>
-        ///     Get all segments.
-        /// </summary>
-        public IEnumerable<INativeSegment> Segments
-        {
-            get
-            {
-                return new WrapperEnumerable<INativeSegment>(i => _cache[i],
-                    (i, v) => { },
-                    () => ValueCount,
-                    1);
-            }
-        }
-
-        /// <summary>
-        ///     Get all segments.
-        /// </summary>
-        IEnumerable<ISegment> IMessage.Segments
-        {
-            get
-            {
-                return Segments;
-            }
-        }
-
     }
 }

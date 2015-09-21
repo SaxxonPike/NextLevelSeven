@@ -1,5 +1,4 @@
-﻿using System;
-using NextLevelSeven.Core;
+﻿using NextLevelSeven.Core;
 using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Building.Elements
@@ -25,20 +24,11 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="builder">Ancestor builder.</param>
         /// <param name="onTypeFieldChangedHandler">Method to call when the type field has changed.</param>
         /// <param name="index">Index in the ancestor.</param>
-        internal TypeFieldBuilder(BuilderBase builder, ProxyChangePendingNotifier<string> onTypeFieldChangedHandler, int index)
+        internal TypeFieldBuilder(BuilderBase builder, ProxyChangePendingNotifier<string> onTypeFieldChangedHandler,
+            int index)
             : base(builder, index)
         {
             _onTypeFieldChangedHandler = onTypeFieldChangedHandler;
-        }
-
-        /// <summary>
-        ///     Type fields cannot have repetitions; this method throws unconditionally.
-        /// </summary>
-        /// <param name="index">Not used.</param>
-        /// <returns>Nothing.</returns>
-        protected override RepetitionBuilder CreateRepetitionBuilder(int index)
-        {
-            throw new BuilderException(ErrorCode.FixedFieldsCannotBeDivided);
         }
 
         /// <summary>
@@ -54,6 +44,16 @@ namespace NextLevelSeven.Building.Elements
                 _onTypeFieldChangedHandler(oldValue, newValue);
                 _value = newValue;
             }
+        }
+
+        /// <summary>
+        ///     Type fields cannot have repetitions; this method throws unconditionally.
+        /// </summary>
+        /// <param name="index">Not used.</param>
+        /// <returns>Nothing.</returns>
+        protected override RepetitionBuilder CreateRepetitionBuilder(int index)
+        {
+            throw new BuilderException(ErrorCode.FixedFieldsCannotBeDivided);
         }
 
         /// <summary>

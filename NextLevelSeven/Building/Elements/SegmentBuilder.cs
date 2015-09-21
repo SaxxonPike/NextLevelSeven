@@ -61,35 +61,6 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>
-        ///     Create a field builder object.
-        /// </summary>
-        /// <param name="index">Index of the object to create.</param>
-        /// <returns>Field builder object.</returns>
-        private FieldBuilder CreateFieldBuilder(int index)
-        {
-            // segment type is treated specially
-            if (index == 0)
-            {
-                return new TypeFieldBuilder(this, OnTypeFieldModified, index);
-            }
-
-            if (!IsMsh)
-            {
-                return new FieldBuilder(this, index);
-            }
-
-            // msh-1 and msh-2 are treated specially
-            if (index == 1)
-            {
-                return new DelimiterFieldBuilder(this, index);
-            }
-
-            return (index == 2)
-                ? new EncodingFieldBuilder(this, index)
-                : new FieldBuilder(this, index);
-        }
-
-        /// <summary>
         ///     Get the number of fields in this segment, including fields with no content.
         /// </summary>
         public override int ValueCount
@@ -428,6 +399,48 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>
+        ///     Get this element's fields.
+        /// </summary>
+        IEnumerable<IField> ISegment.Fields
+        {
+            get
+            {
+                return new WrapperEnumerable<IField>(index => this[index],
+                    (index, data) => { },
+                    () => ValueCount);
+            }
+        }
+
+        /// <summary>
+        ///     Create a field builder object.
+        /// </summary>
+        /// <param name="index">Index of the object to create.</param>
+        /// <returns>Field builder object.</returns>
+        private FieldBuilder CreateFieldBuilder(int index)
+        {
+            // segment type is treated specially
+            if (index == 0)
+            {
+                return new TypeFieldBuilder(this, OnTypeFieldModified, index);
+            }
+
+            if (!IsMsh)
+            {
+                return new FieldBuilder(this, index);
+            }
+
+            // msh-1 and msh-2 are treated specially
+            if (index == 1)
+            {
+                return new DelimiterFieldBuilder(this, index);
+            }
+
+            return (index == 2)
+                ? new EncodingFieldBuilder(this, index)
+                : new FieldBuilder(this, index);
+        }
+
+        /// <summary>
         ///     Method that is called when a descendant type field has changed.
         /// </summary>
         /// <param name="oldValue">Old type field value.</param>
@@ -448,19 +461,6 @@ namespace NextLevelSeven.Building.Elements
         protected override IElement GetGenericElement(int index)
         {
             return this[index];
-        }
-
-        /// <summary>
-        ///     Get this element's fields.
-        /// </summary>
-        IEnumerable<IField> ISegment.Fields
-        {
-            get
-            {
-                return new WrapperEnumerable<IField>(index => this[index],
-                    (index, data) => { },
-                    () => ValueCount);                                
-            }
         }
     }
 }

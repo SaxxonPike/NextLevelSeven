@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace NextLevelSeven.Core.Encoding
+﻿namespace NextLevelSeven.Core.Encoding
 {
-    sealed internal class EncodingConfiguration : EncodingConfigurationBase
+    internal sealed class EncodingConfiguration : EncodingConfigurationBase
     {
         /// <summary>
         ///     Default encoding configuration.
@@ -23,7 +17,6 @@ namespace NextLevelSeven.Core.Encoding
         /// </summary>
         public EncodingConfiguration()
         {
-            
         }
 
         /// <summary>
@@ -48,34 +41,14 @@ namespace NextLevelSeven.Core.Encoding
             InitializeWith(field, repetition, component, subcomponent, escape);
         }
 
-        public override char ComponentDelimiter
-        {
-            get;
-            protected set;
-        }
+        public override char ComponentDelimiter { get; protected set; }
 
-        public override char EscapeDelimiter
-        {
-            get;
-            protected set;
-        }
+        public override char EscapeDelimiter { get; protected set; }
 
-        public override char FieldDelimiter
-        {
-            get;
-            protected set;
-        }
+        public override char FieldDelimiter { get; protected set; }
 
-        public override char RepetitionDelimiter
-        {
-            get;
-            protected set;
-        }
+        public override char RepetitionDelimiter { get; protected set; }
 
-        public override char SubcomponentDelimiter
-        {
-            get;
-            protected set;
-        }
+        public override char SubcomponentDelimiter { get; protected set; }
     }
 }

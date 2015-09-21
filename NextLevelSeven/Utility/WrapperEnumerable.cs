@@ -24,7 +24,8 @@ namespace NextLevelSeven.Utility
         /// <param name="write">Function to write values at a specified index.</param>
         /// <param name="count">Function to get the number of items contained.</param>
         /// <param name="startIndex">Index where items begin. Defaults to zero.</param>
-        internal WrapperEnumerable(ProxyGetter<int, TItem> read, ProxySetter<int, TItem> write, ProxyGetter<int> count, int startIndex = 0)
+        internal WrapperEnumerable(ProxyGetter<int, TItem> read, ProxySetter<int, TItem> write, ProxyGetter<int> count,
+            int startIndex = 0)
         {
             _count = count ?? (() => 0);
             _read = read ?? (i => default(TItem));

@@ -62,16 +62,6 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>
-        ///     Create a segment builder object.
-        /// </summary>
-        /// <param name="index">Index to create the object for.</param>
-        /// <returns>Segment builder object.</returns>
-        private SegmentBuilder CreateSegmentBuilder(int index)
-        {
-            return new SegmentBuilder(this, index);
-        }
-
-        /// <summary>
         ///     Get the number of segments in the message.
         /// </summary>
         public override int ValueCount
@@ -137,7 +127,8 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="repetition">Field repetition index.</param>
         /// <param name="components">Values to replace with.</param>
         /// <returns>This MessageBuilder, for chaining purposes.</returns>
-        public IMessageBuilder SetComponents(int segmentIndex, int fieldIndex, int repetition, params string[] components)
+        public IMessageBuilder SetComponents(int segmentIndex, int fieldIndex, int repetition,
+            params string[] components)
         {
             _segments[segmentIndex].SetComponents(fieldIndex, repetition, components);
             return this;
@@ -250,7 +241,7 @@ namespace NextLevelSeven.Building.Elements
             {
                 throw new BuilderException(ErrorCode.MessageDataMustNotBeNull);
             }
-            
+
             var length = value.Length;
             if (length < 8)
             {
@@ -461,11 +452,6 @@ namespace NextLevelSeven.Building.Elements
             get { return new MessageDetails(this); }
         }
 
-        protected override IElement GetGenericElement(int index)
-        {
-            return _segments[index];
-        }
-
 
         IEnumerable<ISegment> IMessage.Segments
         {
@@ -474,8 +460,23 @@ namespace NextLevelSeven.Building.Elements
                 return new WrapperEnumerable<ISegment>(index => this[index],
                     (index, data) => { },
                     () => ValueCount,
-                    1);                
+                    1);
             }
+        }
+
+        /// <summary>
+        ///     Create a segment builder object.
+        /// </summary>
+        /// <param name="index">Index to create the object for.</param>
+        /// <returns>Segment builder object.</returns>
+        private SegmentBuilder CreateSegmentBuilder(int index)
+        {
+            return new SegmentBuilder(this, index);
+        }
+
+        protected override IElement GetGenericElement(int index)
+        {
+            return _segments[index];
         }
     }
 }

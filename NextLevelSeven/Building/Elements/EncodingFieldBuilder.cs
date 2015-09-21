@@ -28,16 +28,6 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>
-        ///     Encoding character fields cannot have repetitions; this method throws unconditionally.
-        /// </summary>
-        /// <param name="index">Not used.</param>
-        /// <returns>Nothing.</returns>
-        protected override RepetitionBuilder CreateRepetitionBuilder(int index)
-        {
-            throw new BuilderException(ErrorCode.FixedFieldsCannotBeDivided);
-        }
-
-        /// <summary>
         ///     Get the number of field repetitions in this field, including field repetitions with no content.
         /// </summary>
         public override int ValueCount
@@ -85,6 +75,16 @@ namespace NextLevelSeven.Building.Elements
                 EscapeDelimiter = _value.Length >= 3 ? _value[2] : '\\';
                 SubcomponentDelimiter = _value.Length >= 4 ? _value[3] : '&';
             }
+        }
+
+        /// <summary>
+        ///     Encoding character fields cannot have repetitions; this method throws unconditionally.
+        /// </summary>
+        /// <param name="index">Not used.</param>
+        /// <returns>Nothing.</returns>
+        protected override RepetitionBuilder CreateRepetitionBuilder(int index)
+        {
+            throw new BuilderException(ErrorCode.FixedFieldsCannotBeDivided);
         }
 
         /// <summary>

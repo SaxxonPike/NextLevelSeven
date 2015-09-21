@@ -43,11 +43,6 @@ namespace NextLevelSeven.Building.Elements
             get { return _components[index]; }
         }
 
-        private ComponentBuilder CreateComponentBuilder(int index)
-        {
-            return new ComponentBuilder(this, index);
-        }
-
         /// <summary>
         ///     Get the number of components in this field repetition, including components with no content.
         /// </summary>
@@ -266,16 +261,6 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>
-        ///     Get the descendant element at the specified index.
-        /// </summary>
-        /// <param name="index">Index of the element.</param>
-        /// <returns>Element at the index.</returns>
-        protected override IElement GetGenericElement(int index)
-        {
-            return _components[index];
-        }
-
-        /// <summary>
         ///     Get this element's components.
         /// </summary>
         IEnumerable<IComponent> IRepetition.Components
@@ -287,6 +272,21 @@ namespace NextLevelSeven.Building.Elements
                     () => ValueCount,
                     1);
             }
+        }
+
+        private ComponentBuilder CreateComponentBuilder(int index)
+        {
+            return new ComponentBuilder(this, index);
+        }
+
+        /// <summary>
+        ///     Get the descendant element at the specified index.
+        /// </summary>
+        /// <param name="index">Index of the element.</param>
+        /// <returns>Element at the index.</returns>
+        protected override IElement GetGenericElement(int index)
+        {
+            return _components[index];
         }
     }
 }

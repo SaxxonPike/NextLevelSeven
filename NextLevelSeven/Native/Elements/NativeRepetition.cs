@@ -103,6 +103,28 @@ namespace NextLevelSeven.Native.Elements
         }
 
         /// <summary>
+        ///     Get all components.
+        /// </summary>
+        public IEnumerable<INativeComponent> Components
+        {
+            get
+            {
+                return new WrapperEnumerable<INativeComponent>(i => _cache[i],
+                    (i, v) => { },
+                    () => ValueCount,
+                    1);
+            }
+        }
+
+        /// <summary>
+        ///     Get all components.
+        /// </summary>
+        IEnumerable<IComponent> IRepetition.Components
+        {
+            get { return Components; }
+        }
+
+        /// <summary>
         ///     Get the descendant element at the specified index.
         /// </summary>
         /// <param name="index">Desired index.</param>
@@ -145,31 +167,6 @@ namespace NextLevelSeven.Native.Elements
         private NativeRepetition CloneInternal()
         {
             return new NativeRepetition(Value, EncodingConfiguration) {Index = Index};
-        }
-
-        /// <summary>
-        ///     Get all components.
-        /// </summary>
-        public IEnumerable<INativeComponent> Components
-        {
-            get
-            {
-                return new WrapperEnumerable<INativeComponent>(i => _cache[i],
-                    (i, v) => { },
-                    () => ValueCount,
-                    1);
-            }
-        }
-
-        /// <summary>
-        ///     Get all components.
-        /// </summary>
-        IEnumerable<IComponent> IRepetition.Components
-        {
-            get
-            {
-                return Components;
-            }
         }
     }
 }

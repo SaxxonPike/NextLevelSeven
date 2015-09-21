@@ -3,32 +3,32 @@
     /// <summary>
     ///     Provides information about the characters used to encode an HL7 message.
     /// </summary>
-    abstract internal class EncodingConfigurationBase
+    internal abstract class EncodingConfigurationBase
     {
         /// <summary>
         ///     Get the delimiter character used to split components.
         /// </summary>
-        abstract public char ComponentDelimiter { get; protected set; }
+        public abstract char ComponentDelimiter { get; protected set; }
 
         /// <summary>
         ///     Get the escape character used to mark encoded sequences.
         /// </summary>
-        abstract public char EscapeDelimiter { get; protected set; }
+        public abstract char EscapeDelimiter { get; protected set; }
 
         /// <summary>
         ///     Get the escape character used to separate fields.
         /// </summary>
-        abstract public char FieldDelimiter { get; protected set; }
+        public abstract char FieldDelimiter { get; protected set; }
 
         /// <summary>
         ///     Get the repetition character used to separate multiple data in the same field.
         /// </summary>
-        abstract public char RepetitionDelimiter { get; protected set; }
+        public abstract char RepetitionDelimiter { get; protected set; }
 
         /// <summary>
         ///     Get the delimiter character used to split subcomponents.
         /// </summary>
-        abstract public char SubcomponentDelimiter { get; protected set; }
+        public abstract char SubcomponentDelimiter { get; protected set; }
 
         /// <summary>
         ///     Initialize defaults.

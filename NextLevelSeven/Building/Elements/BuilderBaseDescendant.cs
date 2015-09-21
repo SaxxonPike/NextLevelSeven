@@ -27,7 +27,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>
         ///     Get or set the component delimiter character.
         /// </summary>
-        sealed public override char ComponentDelimiter
+        public override sealed char ComponentDelimiter
         {
             get { return Ancestor.ComponentDelimiter; }
             set { Ancestor.ComponentDelimiter = value; }
@@ -36,7 +36,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>
         ///     Get or set the escape delimiter character.
         /// </summary>
-        sealed public override char EscapeDelimiter
+        public override sealed char EscapeDelimiter
         {
             get { return Ancestor.EscapeDelimiter; }
             set { Ancestor.EscapeDelimiter = value; }
@@ -45,7 +45,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>
         ///     Get or set the field delimiter character.
         /// </summary>
-        sealed public override char FieldDelimiter
+        public override sealed char FieldDelimiter
         {
             get { return Ancestor.FieldDelimiter; }
             set { Ancestor.FieldDelimiter = value; }
@@ -54,7 +54,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>
         ///     Get or set the repetition delimiter character.
         /// </summary>
-        sealed public override char RepetitionDelimiter
+        public override sealed char RepetitionDelimiter
         {
             get { return Ancestor.RepetitionDelimiter; }
             set { Ancestor.RepetitionDelimiter = value; }
@@ -63,11 +63,21 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>
         ///     Get or set the subcomponent delimiter character.
         /// </summary>
-        sealed public override char SubcomponentDelimiter
+        public override sealed char SubcomponentDelimiter
         {
             get { return Ancestor.SubcomponentDelimiter; }
             set { Ancestor.SubcomponentDelimiter = value; }
         }
+
+        /// <summary>
+        ///     Get or set the builder's value.
+        /// </summary>
+        public abstract override string Value { get; set; }
+
+        /// <summary>
+        ///     Get or set the builder's sub-values.
+        /// </summary>
+        public abstract override IEnumerable<string> Values { get; set; }
 
         /// <summary>
         ///     Get the ancestor element.
@@ -77,16 +87,6 @@ namespace NextLevelSeven.Building.Elements
         {
             return Ancestor;
         }
-
-        /// <summary>
-        ///     Get or set the builder's value.
-        /// </summary>
-        public abstract override string Value { get; set; }
-        
-        /// <summary>
-        ///     Get or set the builder's sub-values.
-        /// </summary>
-        public abstract override IEnumerable<string> Values { get; set; }
 
         /// <summary>
         ///     Deep clone this builder.

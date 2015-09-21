@@ -143,8 +143,17 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         public string TextField
         {
-            get { return string.Join(Environment.NewLine, TextConverter.ConvertToFormattedText(BaseElement.Value, BaseElement.Delimiter)); }
-            set { BaseElement.Value = TextConverter.ConvertFromFormattedText(value.Replace(Environment.NewLine, "\xD").Split('\xD'), BaseElement.Delimiter); }
+            get
+            {
+                return string.Join(Environment.NewLine,
+                    TextConverter.ConvertToFormattedText(BaseElement.Value, BaseElement.Delimiter));
+            }
+            set
+            {
+                BaseElement.Value =
+                    TextConverter.ConvertFromFormattedText(value.Replace(Environment.NewLine, "\xD").Split('\xD'),
+                        BaseElement.Delimiter);
+            }
         }
 
         /// <summary>

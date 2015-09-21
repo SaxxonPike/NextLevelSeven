@@ -12,6 +12,8 @@ namespace NextLevelSeven.Native.Dividers
         /// </summary>
         private IReadOnlyList<StringDivision> _divisions;
 
+        private bool _isNull;
+
         private char[] _valueChars;
 
         /// <summary>
@@ -94,6 +96,11 @@ namespace NextLevelSeven.Native.Dividers
             set { Initialize(value); }
         }
 
+        public override bool IsNull
+        {
+            get { return _isNull; }
+        }
+
         private void SetValue(int index, string value)
         {
             if (index < 0)
@@ -130,13 +137,6 @@ namespace NextLevelSeven.Native.Dividers
             Version++;
 
             RaiseValueChanged();
-        }
-
-        private bool _isNull;
-
-        public override bool IsNull
-        {
-            get { return _isNull; }
         }
 
         /// <summary>

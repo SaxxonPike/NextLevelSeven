@@ -90,7 +90,7 @@ namespace NextLevelSeven.Native.Elements
         ///     Deep clone this field.
         /// </summary>
         /// <returns>Clone of the field.</returns>
-        sealed public override IElement Clone()
+        public override sealed IElement Clone()
         {
             return CloneInternal();
         }
@@ -105,11 +105,33 @@ namespace NextLevelSeven.Native.Elements
         }
 
         /// <summary>
+        ///     Get all field repetitions.
+        /// </summary>
+        public IEnumerable<INativeRepetition> Repetitions
+        {
+            get
+            {
+                return new WrapperEnumerable<INativeRepetition>(i => _cache[i],
+                    (i, v) => { },
+                    () => ValueCount,
+                    1);
+            }
+        }
+
+        /// <summary>
+        ///     Get all field repetitions.
+        /// </summary>
+        IEnumerable<IRepetition> IField.Repetitions
+        {
+            get { return Repetitions; }
+        }
+
+        /// <summary>
         ///     Get the descendant element at the specified index.
         /// </summary>
         /// <param name="index">Desired index.</param>
         /// <returns>Element at the specified index.</returns>
-        sealed public override INativeElement GetDescendant(int index)
+        public override sealed INativeElement GetDescendant(int index)
         {
             return GetRepetition(index);
         }
@@ -148,31 +170,6 @@ namespace NextLevelSeven.Native.Elements
         protected virtual NativeField CloneInternal()
         {
             return new NativeField(Value, EncodingConfiguration) {Index = Index};
-        }
-
-        /// <summary>
-        ///     Get all field repetitions.
-        /// </summary>
-        public IEnumerable<INativeRepetition> Repetitions
-        {
-            get
-            {
-                return new WrapperEnumerable<INativeRepetition>(i => _cache[i],
-                    (i, v) => { },
-                    () => ValueCount,
-                    1);
-            }
-        }
-
-        /// <summary>
-        ///     Get all field repetitions.
-        /// </summary>
-        IEnumerable<IRepetition> IField.Repetitions
-        {
-            get
-            {
-                return Repetitions;
-            }
         }
     }
 }

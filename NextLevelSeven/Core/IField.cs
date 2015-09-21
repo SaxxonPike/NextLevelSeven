@@ -8,6 +8,11 @@ namespace NextLevelSeven.Core
     public interface IField : IElement
     {
         /// <summary>
+        ///     Get this element's repetitions.
+        /// </summary>
+        IEnumerable<IRepetition> Repetitions { get; }
+
+        /// <summary>
         ///     Get a copy of the segment.
         /// </summary>
         new IField Clone();
@@ -29,10 +34,5 @@ namespace NextLevelSeven.Core
         /// <param name="subcomponent">Subcomponent index.</param>
         /// <returns>The occurrences of the specified element.</returns>
         IEnumerable<string> GetValues(int repetition = -1, int component = -1, int subcomponent = -1);
-
-        /// <summary>
-        ///     Get this element's repetitions.
-        /// </summary>
-        IEnumerable<IRepetition> Repetitions { get; }
     }
 }

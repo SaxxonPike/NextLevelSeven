@@ -14,6 +14,11 @@ namespace NextLevelSeven.Core
         IMessageDetails Details { get; }
 
         /// <summary>
+        ///     Get this message's segments.
+        /// </summary>
+        IEnumerable<ISegment> Segments { get; }
+
+        /// <summary>
         ///     Get a copy of the message.
         /// </summary>
         new IMessage Clone();
@@ -41,10 +46,5 @@ namespace NextLevelSeven.Core
         /// <returns>The occurrences of the specified element.</returns>
         IEnumerable<string> GetValues(int segment = -1, int field = -1, int repetition = -1, int component = -1,
             int subcomponent = -1);
-
-        /// <summary>
-        ///     Get this message's segments.
-        /// </summary>
-        IEnumerable<ISegment> Segments { get; }
     }
 }

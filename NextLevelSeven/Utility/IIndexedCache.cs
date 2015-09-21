@@ -17,16 +17,16 @@ namespace NextLevelSeven.Utility
         TValue this[TKey index] { get; set; }
 
         /// <summary>
+        ///     Get the number of items in the cache.
+        /// </summary>
+        int Count { get; }
+
+        /// <summary>
         ///     Determine if the specified key is in the cache.
         /// </summary>
         /// <param name="index">Key.</param>
         /// <returns>True, if the key is present.</returns>
         bool Contains(TKey index);
-
-        /// <summary>
-        ///     Get the number of items in the cache.
-        /// </summary>
-        int Count { get; }
 
         /// <summary>
         ///     Clear the cache.

@@ -6,7 +6,6 @@ using NextLevelSeven.Conversion;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Codec;
 using NextLevelSeven.Core.Encoding;
-using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Native.Dividers;
 using NextLevelSeven.Utility;
 
@@ -15,7 +14,8 @@ namespace NextLevelSeven.Native.Elements
     /// <summary>
     ///     Represents a generic HL7 message element, which may contain other elements.
     /// </summary>
-    internal abstract class NativeElement : INativeElement, IComparable, IComparable<IElement>, IComparable<string>, IEquatable<IElement>, IEquatable<string>, IDividable
+    internal abstract class NativeElement : INativeElement, IComparable, IComparable<IElement>, IComparable<string>,
+        IEquatable<IElement>, IEquatable<string>, IDividable
     {
         /// <summary>
         ///     Encoding configuration override.
@@ -81,6 +81,54 @@ namespace NextLevelSeven.Native.Elements
         }
 
         /// <summary>
+        ///     Get the encoding configuration.
+        /// </summary>
+        public virtual EncodingConfigurationBase EncodingConfiguration
+        {
+            get { return EncodingConfigurationOverride ?? Ancestor.EncodingConfiguration; }
+            set { EncodingConfigurationOverride = value; }
+        }
+
+        /// <summary>
+        ///     Zero-based index within the parent element's raw data.
+        /// </summary>
+        protected int ParentIndex { get; set; }
+
+        /// <summary>
+        ///     Compare this builder's value with another object's value. (IComparable support)
+        /// </summary>
+        /// <param name="obj">Other BuilderBase.</param>
+        /// <returns></returns>
+        public int CompareTo(object obj)
+        {
+            return obj == null
+                ? 1
+                : CompareTo(obj.ToString());
+        }
+
+        /// <summary>
+        ///     Compare this builder's value with another element's value. (element IComparable support)
+        /// </summary>
+        /// <param name="other">Other element to compare to.</param>
+        /// <returns></returns>
+        public int CompareTo(IElement other)
+        {
+            return other == null
+                ? 1
+                : CompareTo(other.Value);
+        }
+
+        /// <summary>
+        ///     Compare this builder's value with another string. (generic IComparable support)
+        /// </summary>
+        /// <param name="other">Other string to compare to.</param>
+        /// <returns></returns>
+        public int CompareTo(string other)
+        {
+            return string.Compare(Value, other, StringComparison.CurrentCulture);
+        }
+
+        /// <summary>
         ///     Ancestor element. Null if this element is a root element.
         /// </summary>
         public NativeElement Ancestor { get; private set; }
@@ -106,18 +154,14 @@ namespace NextLevelSeven.Native.Elements
         }
 
         /// <summary>
-        ///     Get the encoding configuration.
+        ///     Determines whether this builder's value is equivalent to another element's value. (element IEquatable support)
         /// </summary>
-        public virtual EncodingConfigurationBase EncodingConfiguration
+        /// <param name="other">Object to compare to.</param>
+        /// <returns>True, if objects are considered to be equivalent.</returns>
+        public bool Equals(IElement other)
         {
-            get { return EncodingConfigurationOverride ?? Ancestor.EncodingConfiguration; }
-            set { EncodingConfigurationOverride = value; }
+            return string.Equals(Value, other.Value, StringComparison.Ordinal);
         }
-
-        /// <summary>
-        ///     Zero-based index within the parent element's raw data.
-        /// </summary>
-        protected int ParentIndex { get; set; }
 
         /// <summary>
         ///     Determine equality with a string.
@@ -176,7 +220,7 @@ namespace NextLevelSeven.Native.Elements
         /// <summary>
         ///     Get descendant elements as an enumerable set.
         /// </summary>
-        virtual public IEnumerable<INativeElement> DescendantElements
+        public virtual IEnumerable<INativeElement> DescendantElements
         {
             get
             {
@@ -278,7 +322,7 @@ namespace NextLevelSeven.Native.Elements
         /// <summary>
         ///     Get or set the descendant raw values of this element.
         /// </summary>
-        virtual public IEnumerable<string> Values
+        public virtual IEnumerable<string> Values
         {
             get
             {
@@ -308,6 +352,25 @@ namespace NextLevelSeven.Native.Elements
         IElement IElement.this[int index]
         {
             get { return GetDescendant(index); }
+        }
+
+        /// <summary>
+        ///     Get or set the value as a formatted string.
+        /// </summary>
+        public string FormattedValue
+        {
+            get { return TextConverter.ConvertToString(Value); }
+            set { Value = TextConverter.ConvertFromString(value); }
+        }
+
+        IElement IElement.Ancestor
+        {
+            get { return AncestorElement; }
+        }
+
+        IEnumerable<IElement> IElement.Descendants
+        {
+            get { return DescendantElements; }
         }
 
         /// <summary>
@@ -369,66 +432,9 @@ namespace NextLevelSeven.Native.Elements
         ///     Copy the contents of this element to a string.
         /// </summary>
         /// <returns>Copied string.</returns>
-        sealed public override string ToString()
+        public override sealed string ToString()
         {
             return Value;
         }
-
-        /// <summary>
-        ///     Compare this builder's value with another object's value. (IComparable support)
-        /// </summary>
-        /// <param name="obj">Other BuilderBase.</param>
-        /// <returns></returns>
-        public int CompareTo(object obj)
-        {
-            return obj == null
-                ? 1
-                : CompareTo(obj.ToString());
-        }
-
-        /// <summary>
-        ///     Compare this builder's value with another string. (generic IComparable support)
-        /// </summary>
-        /// <param name="other">Other string to compare to.</param>
-        /// <returns></returns>
-        public int CompareTo(string other)
-        {
-            return string.Compare(Value, other, StringComparison.CurrentCulture);
-        }
-
-        /// <summary>
-        ///     Compare this builder's value with another element's value. (element IComparable support)
-        /// </summary>
-        /// <param name="other">Other element to compare to.</param>
-        /// <returns></returns>
-        public int CompareTo(IElement other)
-        {
-            return other == null
-                ? 1
-                : CompareTo(other.Value);
-        }
-
-        /// <summary>
-        ///     Determines whether this builder's value is equivalent to another element's value. (element IEquatable support)
-        /// </summary>
-        /// <param name="other">Object to compare to.</param>
-        /// <returns>True, if objects are considered to be equivalent.</returns>
-        public bool Equals(IElement other)
-        {
-            return string.Equals(Value, other.Value, StringComparison.Ordinal);
-        }
-
-        /// <summary>
-        ///     Get or set the value as a formatted string.
-        /// </summary>
-        public string FormattedValue
-        {
-            get { return TextConverter.ConvertToString(Value); }
-            set { Value = TextConverter.ConvertFromString(value); }
-        }
-
-        IElement IElement.Ancestor { get { return AncestorElement; } }
-
-        IEnumerable<IElement> IElement.Descendants { get { return DescendantElements; } } 
     }
 }

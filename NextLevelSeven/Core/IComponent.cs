@@ -8,6 +8,11 @@ namespace NextLevelSeven.Core
     public interface IComponent : IElement
     {
         /// <summary>
+        ///     Get this element's subcomponents.
+        /// </summary>
+        IEnumerable<ISubcomponent> Subcomponents { get; }
+
+        /// <summary>
         ///     Get a copy of the segment.
         /// </summary>
         new IComponent Clone();
@@ -25,10 +30,5 @@ namespace NextLevelSeven.Core
         /// <param name="subcomponent">Subcomponent index.</param>
         /// <returns>The occurrences of the specified element.</returns>
         IEnumerable<string> GetValues(int subcomponent = -1);
-
-        /// <summary>
-        ///     Get this element's subcomponents.
-        /// </summary>
-        IEnumerable<ISubcomponent> Subcomponents { get; }
     }
 }
