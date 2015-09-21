@@ -7,13 +7,13 @@ namespace NextLevelSeven.Streaming
     ///     Represents an exception that would be raised when an MLP-specific error occurs.
     /// </summary>
     [Serializable]
-    public class MlpStreamException : Exception
+    public class MlpStreamException : StreamException
     {
         /// <summary>
         ///     Create an MLP stream exception.
         /// </summary>
         internal MlpStreamException(ErrorCode code)
-            : base(ErrorMessages.Get(code))
+            : base(code)
         {
         }
     }

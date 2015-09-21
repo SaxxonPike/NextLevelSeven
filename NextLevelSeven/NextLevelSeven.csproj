@@ -75,6 +75,7 @@
     <Compile Include="Core\Properties\IMessageDetails.cs" />
     <Compile Include="Core\Properties\MessageDetails.cs" />
     <Compile Include="Parsing\ParserException.cs" />
+    <Compile Include="Streaming\StreamException.cs" />
     <Compile Include="Utility\ProxyDelegates.cs" />
     <Compile Include="Parsing\Elements\ParserCodec.cs" />
     <Compile Include="Core\Codec\IndexedEncodedTypeConverter.cs" />
