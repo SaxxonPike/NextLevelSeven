@@ -152,9 +152,11 @@
     <Compile Include="Streaming\StreamReaderExtensions.cs" />
     <Compile Include="Streaming\StreamWrapperBase.cs" />
     <Compile Include="Generation\AckMessageGenerator.cs" />
+    <Compile Include="Test\UtilityMocks.cs" />
     <Compile Include="Utility\EnumerableExtensions.cs" />
     <Compile Include="Utility\IEnumerableIndexable.cs" />
     <Compile Include="Utility\IIndexable.cs" />
+    <Compile Include="Utility\IIndexedCache.cs" />
     <Compile Include="Utility\IndexedCache.cs" />
     <Compile Include="Utility\WrapperEnumerable.cs" />
   </ItemGroup>

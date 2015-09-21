@@ -9,7 +9,7 @@ namespace NextLevelSeven.Utility
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    internal sealed class IndexedCache<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
+    internal sealed class IndexedCache<TKey, TValue> : IIndexedCache<TKey, TValue>
     {
         /// <summary>
         ///     Internal cache.
@@ -74,6 +74,7 @@ namespace NextLevelSeven.Utility
         /// </summary>
         public void Clear()
         {
+            _cache.Clear();
         }
 
         /// <summary>

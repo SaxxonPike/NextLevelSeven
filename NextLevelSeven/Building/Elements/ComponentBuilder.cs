@@ -187,6 +187,11 @@ namespace NextLevelSeven.Building.Elements
                 : this[subcomponent].Value;
         }
 
+        /// <summary>
+        ///     Get the values at the specified index.
+        /// </summary>
+        /// <param name="subcomponent">Subcomponent to get values from.</param>
+        /// <returns>Value at index. Empty if not present.</returns>
         public IEnumerable<string> GetValues(int subcomponent = -1)
         {
             return subcomponent < 0
@@ -194,26 +199,45 @@ namespace NextLevelSeven.Building.Elements
                 : this[subcomponent].Value.Yield();
         }
 
+        /// <summary>
+        ///     Deep clone this element.
+        /// </summary>
+        /// <returns>Clone of the element.</returns>
         public override IElement Clone()
         {
             return new ComponentBuilder(Ancestor, Index, Value);
         }
 
+        /// <summary>
+        ///     Deep clone this component.
+        /// </summary>
+        /// <returns>Clone of the component.</returns>
         IComponent IComponent.Clone()
         {
             return new ComponentBuilder(Ancestor, Index, Value);
         }
 
+        /// <summary>
+        ///     Get a codec which can be used to interpret this element's value as other types.
+        /// </summary>
         public override IEncodedTypeConverter As
         {
             get { return new BuilderCodec(this); }
         }
 
+        /// <summary>
+        ///     Get the subcomponent delimiter.
+        /// </summary>
         public override char Delimiter
         {
             get { return SubcomponentDelimiter; }
         }
 
+        /// <summary>
+        ///     Get the element at the specified index.
+        /// </summary>
+        /// <param name="index">Index to reference.</param>
+        /// <returns>Element at index.</returns>
         protected override IElement GetGenericElement(int index)
         {
             return _cache[index];

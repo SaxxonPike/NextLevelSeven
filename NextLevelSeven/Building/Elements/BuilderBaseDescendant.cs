@@ -78,8 +78,20 @@ namespace NextLevelSeven.Building.Elements
             return Ancestor;
         }
 
+        /// <summary>
+        ///     Get or set the builder's value.
+        /// </summary>
         public abstract override string Value { get; set; }
+        
+        /// <summary>
+        ///     Get or set the builder's sub-values.
+        /// </summary>
         public abstract override IEnumerable<string> Values { get; set; }
+
+        /// <summary>
+        ///     Deep clone this builder.
+        /// </summary>
+        /// <returns>Cloned builder.</returns>
         public abstract override IElement Clone();
     }
 }

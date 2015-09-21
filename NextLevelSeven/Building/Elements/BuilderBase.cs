@@ -4,7 +4,6 @@ using NextLevelSeven.Conversion;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Codec;
 using NextLevelSeven.Core.Encoding;
-using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building.Elements
@@ -64,20 +63,47 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         public virtual char SubcomponentDelimiter { get; set; }
 
+        /// <summary>
+        ///     Get the index at which this builder is located in its descendant.
+        /// </summary>
         public int Index { get; private set; }
 
+        /// <summary>
+        ///     Deep clone this element.
+        /// </summary>
+        /// <returns>Cloned element.</returns>
         public abstract IElement Clone();
 
+        /// <summary>
+        ///     Get or set this element's value.
+        /// </summary>
         public abstract string Value { get; set; }
 
+        /// <summary>
+        ///     Get or set this element's sub-values.
+        /// </summary>
         public abstract IEnumerable<string> Values { get; set; }
 
+        /// <summary>
+        ///     Get a converter which will interpret this element's value as other types.
+        /// </summary>
         public abstract IEncodedTypeConverter As { get; }
 
+        /// <summary>
+        ///     Get the number of sub-values in this element.
+        /// </summary>
         public abstract int ValueCount { get; }
 
+        /// <summary>
+        ///     Get this element's section delimiter.
+        /// </summary>
         public abstract char Delimiter { get; }
 
+        /// <summary>
+        ///     Get the descendant builder at the specified index.
+        /// </summary>
+        /// <param name="index">Index to reference.</param>
+        /// <returns>Descendant builder.</returns>
         public IElement this[int index]
         {
             get { return GetGenericElement(index); }

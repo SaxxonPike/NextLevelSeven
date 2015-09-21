@@ -69,13 +69,13 @@
     <Compile Include="Conversion\DateTimeConverterTests.cs" />
     <Compile Include="Conversion\NumberConverterTests.cs" />
     <Compile Include="Core\CoreTestFixture.cs" />
+    <Compile Include="Core\ElementExtensionTests.cs" />
     <Compile Include="Diagnostics\DiagnosticsTestFixture.cs" />
     <Compile Include="Generation\GenerationTestFixture.cs" />
     <Compile Include="Native\NativeComponentTests.cs" />
     <Compile Include="Native\NativeEscapeTests.cs" />
     <Compile Include="Diagnostics\ErrorMessageTests.cs" />
     <Compile Include="It.cs" />
-    <Compile Include="Native\NativeElementExtensionsTests.cs" />
     <Compile Include="ExampleMessages.cs" />
     <Compile Include="Native\NativeFieldTests.cs" />
     <Compile Include="Native\NativeMessageExtensionsTests.cs" />
@@ -106,6 +106,8 @@
     <Compile Include="Streaming\MlpStreamWriterTests.cs" />
     <Compile Include="Streaming\StreamingTestFixture.cs" />
     <Compile Include="PerformanceTestFixture.cs" />
+    <Compile Include="Utility\IndexedCacheTests.cs" />
+    <Compile Include="Utility\UtilityTestFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NextLevelSeven\NextLevelSeven.csproj">
