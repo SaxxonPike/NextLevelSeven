@@ -78,7 +78,7 @@ namespace NextLevelSeven.Conversion
             var length = input.Length;
             if (length < 4)
             {
-                throw new ArgumentException(ErrorMessages.Get(ErrorCode.UnableToParseDate));
+                throw new ConversionException(ErrorCode.UnableToParseDate);
             }
 
             var year = int.Parse(input.Substring(0, 4));

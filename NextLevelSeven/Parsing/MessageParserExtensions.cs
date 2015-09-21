@@ -6,7 +6,7 @@ namespace NextLevelSeven.Parsing
     /// <summary>
     ///     Extends the functionality of top-level HL7 message elements.
     /// </summary>
-    public static class NativeMessageExtensions
+    public static class MessageParserExtensions
     {
         /// <summary>
         ///     Get segments that start with the specified segment type, and include all segments below until the next split.

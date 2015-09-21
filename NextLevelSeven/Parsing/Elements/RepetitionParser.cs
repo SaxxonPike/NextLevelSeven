@@ -109,9 +109,9 @@ namespace NextLevelSeven.Parsing.Elements
         {
             get
             {
-                return new WrapperEnumerable<IComponentParser>(i => _components[i],
-                    (i, v) => { },
-                    () => ValueCount,
+                return new ProxyEnumerable<IComponentParser>(i => _components[i],
+                    null,
+                    GetValueCount,
                     1);
             }
         }
@@ -153,7 +153,7 @@ namespace NextLevelSeven.Parsing.Elements
         {
             if (index < 1)
             {
-                throw new ArgumentException(ErrorMessages.Get(ErrorCode.ComponentIndexMustBeGreaterThanZero));
+                throw new ParserException(ErrorCode.ComponentIndexMustBeGreaterThanZero);
             }
 
             var result = new ComponentParser(this, index - 1, index);

@@ -200,7 +200,6 @@ namespace NextLevelSeven.Test
 
         public void Delete()
         {
-            throw new NotImplementedException();
         }
 
         public void Erase()

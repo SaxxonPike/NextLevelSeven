@@ -35,7 +35,7 @@ namespace NextLevelSeven.Test
             Action<int, TItem> setter,
             Func<int> count, int startIndex = 0)
         {
-            return new WrapperEnumerable<TItem>(new ProxyGetter<int, TItem>(getter), new ProxySetter<int, TItem>(setter),
+            return new ProxyEnumerable<TItem>(new ProxyGetter<int, TItem>(getter), new ProxySetter<int, TItem>(setter),
                 new ProxyGetter<int>(count), startIndex);
         }
     }

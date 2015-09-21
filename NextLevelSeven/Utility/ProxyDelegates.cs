@@ -1,4 +1,4 @@
-﻿namespace NextLevelSeven.Core
+﻿namespace NextLevelSeven.Utility
 {
     /// <summary>
     ///     Represents a proxy that is triggered when a value attempts to change.

@@ -204,9 +204,9 @@ namespace NextLevelSeven.Parsing.Elements
         {
             get
             {
-                return new WrapperEnumerable<IElementParser>(i => this[i],
-                    (i, v) => { },
-                    () => ValueCount,
+                return new ProxyEnumerable<IElementParser>(GetDescendant,
+                    null,
+                    GetValueCount,
                     1);
             }
         }
@@ -398,6 +398,15 @@ namespace NextLevelSeven.Parsing.Elements
         public override int GetHashCode()
         {
             return ToString().GetHashCode();
+        }
+
+        /// <summary>
+        ///     Get the number of values in the element.
+        /// </summary>
+        /// <returns>Number of values in the element.</returns>
+        protected int GetValueCount()
+        {
+            return ValueCount;
         }
 
         /// <summary>

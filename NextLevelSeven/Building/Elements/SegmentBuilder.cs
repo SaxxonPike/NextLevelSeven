@@ -73,7 +73,7 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         public string Type
         {
-            get { return this[0].Value; }
+            get { return _fields[0].Value; }
             set { SetField(0, value); }
         }
 
@@ -84,9 +84,9 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                return new WrapperEnumerable<string>(index => this[index].Value,
+                return new ProxyEnumerable<string>(index => _fields[index].Value,
                     (index, data) => SetField(index, data),
-                    () => ValueCount);
+                    GetValueCount);
             }
             set { SetFields(value.ToArray()); }
         }
@@ -140,7 +140,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
         public ISegmentBuilder SetComponent(int fieldIndex, int repetition, int componentIndex, string value)
         {
-            this[fieldIndex].SetComponent(repetition, componentIndex, value);
+            _fields[fieldIndex].SetComponent(repetition, componentIndex, value);
             return this;
         }
 
@@ -153,7 +153,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
         public ISegmentBuilder SetComponents(int fieldIndex, int repetition, params string[] components)
         {
-            this[fieldIndex].SetComponents(repetition, components);
+            _fields[fieldIndex].SetComponents(repetition, components);
             return this;
         }
 
@@ -167,7 +167,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
         public ISegmentBuilder SetComponents(int fieldIndex, int repetition, int startIndex, params string[] components)
         {
-            this[fieldIndex].SetComponents(repetition, startIndex, components);
+            _fields[fieldIndex].SetComponents(repetition, startIndex, components);
             return this;
         }
 
@@ -179,7 +179,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
         public ISegmentBuilder SetField(int fieldIndex, string value)
         {
-            this[fieldIndex].SetField(value);
+            _fields[fieldIndex].SetField(value);
             return this;
         }
 
@@ -219,7 +219,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
         public ISegmentBuilder SetFieldRepetition(int fieldIndex, int repetition, string value)
         {
-            this[fieldIndex].SetFieldRepetition(repetition, value);
+            _fields[fieldIndex].SetFieldRepetition(repetition, value);
             return this;
         }
 
@@ -231,7 +231,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
         public ISegmentBuilder SetFieldRepetitions(int fieldIndex, params string[] repetitions)
         {
-            this[fieldIndex].SetFieldRepetitions(repetitions);
+            _fields[fieldIndex].SetFieldRepetitions(repetitions);
             return this;
         }
 
@@ -244,7 +244,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
         public ISegmentBuilder SetFieldRepetitions(int fieldIndex, int startIndex, params string[] repetitions)
         {
-            this[fieldIndex].SetFieldRepetitions(startIndex, repetitions);
+            _fields[fieldIndex].SetFieldRepetitions(startIndex, repetitions);
             return this;
         }
 
@@ -298,7 +298,7 @@ namespace NextLevelSeven.Building.Elements
         public ISegmentBuilder SetSubcomponent(int fieldIndex, int repetition, int componentIndex, int subcomponentIndex,
             string value)
         {
-            this[fieldIndex].SetSubcomponent(repetition, componentIndex, subcomponentIndex, value);
+            _fields[fieldIndex].SetSubcomponent(repetition, componentIndex, subcomponentIndex, value);
             return this;
         }
 
@@ -313,7 +313,7 @@ namespace NextLevelSeven.Building.Elements
         public ISegmentBuilder SetSubcomponents(int fieldIndex, int repetition, int componentIndex,
             params string[] subcomponents)
         {
-            this[fieldIndex].SetSubcomponents(repetition, componentIndex, subcomponents);
+            _fields[fieldIndex].SetSubcomponents(repetition, componentIndex, subcomponents);
             return this;
         }
 
@@ -329,7 +329,7 @@ namespace NextLevelSeven.Building.Elements
         public ISegmentBuilder SetSubcomponents(int fieldIndex, int repetition, int componentIndex, int startIndex,
             params string[] subcomponents)
         {
-            this[fieldIndex].SetSubcomponents(repetition, componentIndex, startIndex, subcomponents);
+            _fields[fieldIndex].SetSubcomponents(repetition, componentIndex, startIndex, subcomponents);
             return this;
         }
 
@@ -345,7 +345,7 @@ namespace NextLevelSeven.Building.Elements
         {
             return field < 0
                 ? Value
-                : this[field].GetValue(repetition, component, subcomponent);
+                : _fields[field].GetValue(repetition, component, subcomponent);
         }
 
         /// <summary>
@@ -361,7 +361,7 @@ namespace NextLevelSeven.Building.Elements
         {
             return field < 0
                 ? Values
-                : this[field].GetValues(repetition, component, subcomponent);
+                : _fields[field].GetValues(repetition, component, subcomponent);
         }
 
         /// <summary>
@@ -405,9 +405,9 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                return new WrapperEnumerable<IField>(index => this[index],
+                return new ProxyEnumerable<IField>(index => _fields[index],
                     (index, data) => { },
-                    () => ValueCount);
+                    GetValueCount);
             }
         }
 
@@ -460,7 +460,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Element at the index.</returns>
         protected override IElement GetGenericElement(int index)
         {
-            return this[index];
+            return _fields[index];
         }
     }
 }

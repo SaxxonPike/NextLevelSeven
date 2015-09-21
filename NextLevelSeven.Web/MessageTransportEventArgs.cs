@@ -1,5 +1,5 @@
 ﻿using System;
-using NextLevelSeven.Parsing;
+using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Web
 {
@@ -29,7 +29,7 @@ namespace NextLevelSeven.Web
             ReceivedMessage = receivedMessage;
         }
 
-        public MessageTransportEventArgs(IMessageParser sentMessage, IMessageParser receivedMessage)
+        public MessageTransportEventArgs(IMessage sentMessage, IMessage receivedMessage)
         {
             SentMessage = sentMessage.Value;
             ReceivedMessage = receivedMessage.Value;

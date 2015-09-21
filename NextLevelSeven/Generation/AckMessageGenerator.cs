@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Linq;
 using NextLevelSeven.Building;
-using NextLevelSeven.Building.Elements;
 using NextLevelSeven.Core;
-using NextLevelSeven.Parsing;
-using NextLevelSeven.Parsing.Elements;
 
 namespace NextLevelSeven.Generation
 {

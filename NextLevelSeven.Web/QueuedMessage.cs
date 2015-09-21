@@ -1,4 +1,4 @@
-﻿using NextLevelSeven.Parsing;
+﻿using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Web
 {
@@ -10,7 +10,7 @@ namespace NextLevelSeven.Web
         /// <summary>
         ///     Get the message contents.
         /// </summary>
-        public readonly IMessageParser Contents;
+        public readonly IMessage Contents;
 
         /// <summary>
         ///     Get or set the number of previous attempts to process this message.
@@ -22,7 +22,7 @@ namespace NextLevelSeven.Web
         /// </summary>
         /// <param name="contents">Message contents.</param>
         /// <param name="retries">Number of previous attempts at processing this message.</param>
-        public QueuedMessage(IMessageParser contents, int retries = 0)
+        public QueuedMessage(IMessage contents, int retries = 0)
         {
             Contents = contents;
             Retries = retries;

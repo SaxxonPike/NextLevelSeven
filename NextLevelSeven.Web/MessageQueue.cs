@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NextLevelSeven.Core;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Parsing;
 
@@ -34,7 +35,7 @@ namespace NextLevelSeven.Web
         ///     Remove an item from the front of the queue and get its message.
         /// </summary>
         /// <returns>Message that came from the dequeued item.</returns>
-        public IMessageParser Dequeue()
+        public IMessage Dequeue()
         {
             if (Messages.Count > 0)
             {
@@ -47,7 +48,7 @@ namespace NextLevelSeven.Web
         ///     Add an item to the back of the queue.
         /// </summary>
         /// <param name="message">Message to add to the queue.</param>
-        public void Enqueue(IMessageParser message)
+        public void Enqueue(IMessage message)
         {
             var queuedMessage = new QueuedMessage(message);
             Messages.Enqueue(queuedMessage);

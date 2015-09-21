@@ -58,7 +58,7 @@ namespace NextLevelSeven.Parsing.Elements
 
         public override IElementParser GetDescendant(int index)
         {
-            throw new ElementException(ErrorCode.SubcomponentCannotHaveDescendants);
+            throw new ParserException(ErrorCode.SubcomponentCannotHaveDescendants);
         }
 
         private SubcomponentParser CloneInternal()

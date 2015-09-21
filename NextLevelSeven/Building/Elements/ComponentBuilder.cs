@@ -58,9 +58,9 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                return new WrapperEnumerable<string>(index => this[index].Value,
+                return new ProxyEnumerable<string>(index => _subcomponents[index].Value,
                     (index, data) => SetSubcomponent(index, data),
-                    () => ValueCount,
+                    GetValueCount,
                     1);
             }
             set { SetSubcomponents(value.ToArray()); }
@@ -126,7 +126,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This ComponentBuilder, for chaining purposes.</returns>
         public IComponentBuilder SetSubcomponent(int subcomponentIndex, string value)
         {
-            this[subcomponentIndex].SetSubcomponent(value);
+            _subcomponents[subcomponentIndex].SetSubcomponent(value);
             return this;
         }
 
@@ -171,7 +171,7 @@ namespace NextLevelSeven.Building.Elements
         {
             return subcomponent < 0
                 ? Value
-                : this[subcomponent].Value;
+                : _subcomponents[subcomponent].Value;
         }
 
         /// <summary>
@@ -183,7 +183,7 @@ namespace NextLevelSeven.Building.Elements
         {
             return subcomponent < 0
                 ? Values
-                : this[subcomponent].Value.Yield();
+                : _subcomponents[subcomponent].Value.Yield();
         }
 
         /// <summary>
@@ -227,9 +227,9 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                return new WrapperEnumerable<ISubcomponent>(index => this[index],
-                    (index, data) => { },
-                    () => ValueCount,
+                return new ProxyEnumerable<ISubcomponent>(index => _subcomponents[index],
+                    null,
+                    GetValueCount,
                     1);
             }
         }

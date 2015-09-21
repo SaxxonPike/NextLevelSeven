@@ -34,7 +34,7 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         public override IEnumerable<string> Values
         {
-            get { return new WrapperEnumerable<string>(index => Value, (index, value) => Value = value, () => 1); }
+            get { return new ProxyEnumerable<string>(index => Value, (index, value) => Value = value, () => 1); }
             set { SetField(string.Concat(value)); }
         }
 

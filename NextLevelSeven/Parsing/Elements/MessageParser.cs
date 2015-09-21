@@ -45,15 +45,15 @@ namespace NextLevelSeven.Parsing.Elements
             _segments = new IndexedCache<int, SegmentParser>(CreateSegment);
             if (message == null)
             {
-                throw new MessageException(ErrorCode.MessageDataMustNotBeNull);
+                throw new ParserException(ErrorCode.MessageDataMustNotBeNull);
             }
             if (!message.StartsWith("MSH"))
             {
-                throw new MessageException(ErrorCode.MessageDataMustStartWithMsh);
+                throw new ParserException(ErrorCode.MessageDataMustStartWithMsh);
             }
             if (message.Length < 8)
             {
-                throw new MessageException(ErrorCode.MessageDataIsTooShort);
+                throw new ParserException(ErrorCode.MessageDataIsTooShort);
             }
             _encodingConfiguration = new MessageParserEncodingConfiguration(this);
             Value = SanitizeLineEndings(message);
@@ -270,9 +270,9 @@ namespace NextLevelSeven.Parsing.Elements
         {
             get
             {
-                return new WrapperEnumerable<ISegmentParser>(i => _segments[i],
-                    (i, v) => { },
-                    () => ValueCount,
+                return new ProxyEnumerable<ISegmentParser>(i => _segments[i],
+                    null,
+                    GetValueCount,
                     1);
             }
         }
@@ -376,7 +376,7 @@ namespace NextLevelSeven.Parsing.Elements
         {
             if (index < 1)
             {
-                throw new ArgumentException(ErrorMessages.Get(ErrorCode.SegmentIndexMustBeGreaterThanZero));
+                throw new ParserException(ErrorCode.SegmentIndexMustBeGreaterThanZero);
             }
 
             var result = new SegmentParser(this, index - 1, index);

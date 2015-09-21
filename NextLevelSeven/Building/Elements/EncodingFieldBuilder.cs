@@ -40,7 +40,7 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         public override IEnumerable<string> Values
         {
-            get { return new WrapperEnumerable<string>(OnReadValue, OnWriteValue, OnGetCount); }
+            get { return new ProxyEnumerable<string>(OnReadValue, OnWriteValue, OnGetCount); }
             set { SetField(string.Concat(value)); }
         }
 

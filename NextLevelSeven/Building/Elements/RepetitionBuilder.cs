@@ -58,9 +58,9 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                return new WrapperEnumerable<string>(index => _components[index].Value,
+                return new ProxyEnumerable<string>(index => _components[index].Value,
                     (index, data) => SetComponent(index, data),
-                    () => ValueCount,
+                    GetValueCount,
                     1);
             }
             set { SetComponents(value.ToArray()); }
@@ -267,9 +267,9 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                return new WrapperEnumerable<IComponent>(index => this[index],
-                    (index, data) => { },
-                    () => ValueCount,
+                return new ProxyEnumerable<IComponent>(index => _components[index],
+                    null,
+                    GetValueCount,
                     1);
             }
         }

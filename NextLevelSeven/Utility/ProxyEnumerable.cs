@@ -10,7 +10,7 @@ namespace NextLevelSeven.Utility
     ///     An IEnumerable+IIndexable wrapper around a method set, using a numeric index.
     /// </summary>
     /// <typeparam name="TItem">Type of contained items.</typeparam>
-    internal sealed class WrapperEnumerable<TItem> : IEnumerableIndexable<int, TItem>
+    internal sealed class ProxyEnumerable<TItem> : IEnumerableIndexable<int, TItem>
     {
         private readonly ProxyGetter<int> _count;
         private readonly ProxyGetter<int, TItem> _read;
@@ -24,13 +24,41 @@ namespace NextLevelSeven.Utility
         /// <param name="write">Function to write values at a specified index.</param>
         /// <param name="count">Function to get the number of items contained.</param>
         /// <param name="startIndex">Index where items begin. Defaults to zero.</param>
-        internal WrapperEnumerable(ProxyGetter<int, TItem> read, ProxySetter<int, TItem> write, ProxyGetter<int> count,
+        internal ProxyEnumerable(ProxyGetter<int, TItem> read, ProxySetter<int, TItem> write, ProxyGetter<int> count,
             int startIndex = 0)
         {
-            _count = count ?? (() => 0);
-            _read = read ?? (i => default(TItem));
+            _count = count ?? DefaultCount;
+            _read = read ?? DefaultRead;
             _startIndex = startIndex;
-            _write = write ?? ((i, v) => { });
+            _write = write ?? DefaultWrite;
+        }
+
+        /// <summary>
+        ///     Dummy count method.
+        /// </summary>
+        /// <returns>Not used.</returns>
+        static private int DefaultCount()
+        {
+            return 0;
+        }
+
+        /// <summary>
+        ///     Dummy read method.
+        /// </summary>
+        /// <param name="index">Not used.</param>
+        /// <returns>Default value of TItem.</returns>
+        static private TItem DefaultRead(int index)
+        {
+            return default(TItem);
+        }
+
+        /// <summary>
+        ///     Dummy write method.
+        /// </summary>
+        /// <param name="index">Not used.</param>
+        /// <param name="value">Not used.</param>
+        static private void DefaultWrite(int index, TItem value)
+        {
         }
 
         /// <summary>
@@ -38,7 +66,7 @@ namespace NextLevelSeven.Utility
         /// </summary>
         /// <param name="other">Other IList.</param>
         /// <param name="startIndex">Index where items begin. Defaults to zero.</param>
-        internal WrapperEnumerable(IList<TItem> other, int startIndex = 0)
+        internal ProxyEnumerable(IList<TItem> other, int startIndex = 0)
         {
             _count = () => other.Count;
             _read = i => other[i];
@@ -51,7 +79,7 @@ namespace NextLevelSeven.Utility
         /// </summary>
         /// <param name="other">Other IEnumerable.</param>
         /// <param name="startIndex">Index where items begin. Defaults to zero.</param>
-        internal WrapperEnumerable(IEnumerable<TItem> other, int startIndex = 0)
+        internal ProxyEnumerable(IEnumerable<TItem> other, int startIndex = 0)
         {
             // ReSharper disable PossibleMultipleEnumeration
             _count = other.Count;

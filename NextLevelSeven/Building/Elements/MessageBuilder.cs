@@ -76,9 +76,9 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                return new WrapperEnumerable<string>(index => _segments[index].Value,
+                return new ProxyEnumerable<string>(index => _segments[index].Value,
                     (index, data) => SetSegment(index, data),
-                    () => ValueCount,
+                    GetValueCount,
                     1);
             }
             set { SetSegments(value.ToArray()); }
@@ -427,39 +427,58 @@ namespace NextLevelSeven.Building.Elements
                 : _segments[segment][field][repetition][component][subcomponent].Value;
         }
 
+        /// <summary>
+        ///     Deep clone the message builder.
+        /// </summary>
+        /// <returns>Clone of the message builder.</returns>
         public override IElement Clone()
         {
             return new MessageBuilder(Value);
         }
 
+        /// <summary>
+        ///     Deep clone the message.
+        /// </summary>
+        /// <returns>Clone of the message.</returns>
         IMessage IMessage.Clone()
         {
             return new MessageBuilder(Value);
         }
 
+        /// <summary>
+        ///     Get a codec which can be used to interpret this element as other types.
+        /// </summary>
         public override IEncodedTypeConverter As
         {
             get { return new BuilderCodec(this); }
         }
 
+        /// <summary>
+        ///     Get the message delimiter.
+        /// </summary>
         public override char Delimiter
         {
             get { return '\xD'; }
         }
 
+        /// <summary>
+        ///     Get a wrapper which can manipulate message details.
+        /// </summary>
         public IMessageDetails Details
         {
             get { return new MessageDetails(this); }
         }
 
-
+        /// <summary>
+        ///     Get the message's segments.
+        /// </summary>
         IEnumerable<ISegment> IMessage.Segments
         {
             get
             {
-                return new WrapperEnumerable<ISegment>(index => this[index],
-                    (index, data) => { },
-                    () => ValueCount,
+                return new ProxyEnumerable<ISegment>(index => _segments[index],
+                    null,
+                    GetValueCount,
                     1);
             }
         }
@@ -474,6 +493,11 @@ namespace NextLevelSeven.Building.Elements
             return new SegmentBuilder(this, index);
         }
 
+        /// <summary>
+        ///     Get the element at the specified index.
+        /// </summary>
+        /// <param name="index">Desired index.</param>
+        /// <returns>Element at the index.</returns>
         protected override IElement GetGenericElement(int index)
         {
             return _segments[index];

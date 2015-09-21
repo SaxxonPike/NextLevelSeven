@@ -107,9 +107,9 @@ namespace NextLevelSeven.Parsing.Elements
         {
             get
             {
-                return new WrapperEnumerable<ISubcomponentParser>(i => _subcomponents[i],
-                    (i, v) => { },
-                    () => ValueCount,
+                return new ProxyEnumerable<ISubcomponentParser>(i => _subcomponents[i],
+                    null,
+                    GetValueCount,
                     1);
             }
         }
@@ -141,7 +141,7 @@ namespace NextLevelSeven.Parsing.Elements
         {
             if (index < 1)
             {
-                throw new ArgumentException(ErrorMessages.Get(ErrorCode.SubcomponentIndexMustBeGreaterThanZero));
+                throw new ParserException(ErrorCode.SubcomponentIndexMustBeGreaterThanZero);
             }
 
             return new SubcomponentParser(this, index - 1, index);

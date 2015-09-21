@@ -63,9 +63,9 @@ namespace NextLevelSeven.Parsing.Elements
         {
             get
             {
-                return new WrapperEnumerable<IElementParser>(i => this[i],
-                    (i, v) => { },
-                    () => ValueCount);
+                return new ProxyEnumerable<IElementParser>(GetDescendant,
+                    null,
+                    GetValueCount);
             }
         }
 
@@ -150,9 +150,9 @@ namespace NextLevelSeven.Parsing.Elements
         {
             get
             {
-                return new WrapperEnumerable<IFieldParser>(i => _fields[i],
-                    (i, v) => { },
-                    () => ValueCount,
+                return new ProxyEnumerable<IFieldParser>(i => _fields[i],
+                    null,
+                    GetValueCount,
                     1);
             }
         }
@@ -179,7 +179,7 @@ namespace NextLevelSeven.Parsing.Elements
         {
             if (index < 0)
             {
-                throw new ArgumentException(ErrorMessages.Get(ErrorCode.FieldIndexMustBeZeroOrGreater));
+                throw new ParserException(ErrorCode.FieldIndexMustBeZeroOrGreater);
             }
 
             if (IsMsh)

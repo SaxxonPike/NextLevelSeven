@@ -111,9 +111,9 @@ namespace NextLevelSeven.Parsing.Elements
         {
             get
             {
-                return new WrapperEnumerable<IRepetitionParser>(i => _repetitions[i],
-                    (i, v) => { },
-                    () => ValueCount,
+                return new ProxyEnumerable<IRepetitionParser>(i => _repetitions[i],
+                    null,
+                    GetValueCount,
                     1);
             }
         }
@@ -155,7 +155,7 @@ namespace NextLevelSeven.Parsing.Elements
         {
             if (index < 0)
             {
-                throw new ArgumentException(ErrorMessages.Get(ErrorCode.RepetitionIndexMustBeZeroOrGreater));
+                throw new ParserException(ErrorCode.RepetitionIndexMustBeZeroOrGreater);
             }
 
             return new RepetitionParser(this, index - 1, index);

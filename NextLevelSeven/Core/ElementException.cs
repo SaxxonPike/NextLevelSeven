@@ -4,7 +4,7 @@ using NextLevelSeven.Diagnostics;
 namespace NextLevelSeven.Core
 {
     /// <summary>
-    ///     Represents an exception that would be raised for HL7 element specific errors.
+    ///     Represents an exception that would be raised for HL7 element errors.
     /// </summary>
     [Serializable]
     public class ElementException : Exception

@@ -58,7 +58,7 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                return new WrapperEnumerable<string>(index => _repetitions[index].Value,
+                return new ProxyEnumerable<string>(index => _repetitions[index].Value,
                     (index, data) => SetFieldRepetition(index, data),
                     () => ValueCount,
                     1);
@@ -324,9 +324,9 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                return new WrapperEnumerable<IRepetition>(index => this[index],
-                    (index, data) => { },
-                    () => ValueCount,
+                return new ProxyEnumerable<IRepetition>(index => _repetitions[index],
+                    null,
+                    GetValueCount,
                     1);
             }
         }
