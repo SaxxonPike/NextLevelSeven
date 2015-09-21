@@ -174,14 +174,6 @@ namespace NextLevelSeven.Native.Elements
         }
 
         /// <summary>
-        ///     Get all segments in the message.
-        /// </summary>
-        public IEnumerable<INativeSegment> Segments
-        {
-            get { return new NativeSegmentEnumerable(this); }
-        }
-
-        /// <summary>
         ///     Check for validity of the message. Returns true if the message can reasonably be parsed.
         /// </summary>
         /// <returns>True if the message can be parsed, false otherwise.</returns>
@@ -416,5 +408,31 @@ namespace NextLevelSeven.Native.Elements
         {
             return new NativeMessage(Value) {Index = Index};
         }
+
+        /// <summary>
+        ///     Get all segments.
+        /// </summary>
+        public IEnumerable<INativeSegment> Segments
+        {
+            get
+            {
+                return new WrapperEnumerable<INativeSegment>(i => _cache[i],
+                    (i, v) => { },
+                    () => ValueCount,
+                    1);
+            }
+        }
+
+        /// <summary>
+        ///     Get all segments.
+        /// </summary>
+        IEnumerable<ISegment> IMessage.Segments
+        {
+            get
+            {
+                return Segments;
+            }
+        }
+
     }
 }

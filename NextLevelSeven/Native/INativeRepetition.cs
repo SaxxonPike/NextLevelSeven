@@ -1,4 +1,5 @@
-﻿using NextLevelSeven.Core;
+﻿using System.Collections.Generic;
+using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Native
 {
@@ -11,5 +12,10 @@ namespace NextLevelSeven.Native
         /// <param name="index">Index to query.</param>
         /// <returns>Element that was found at the index.</returns>
         new INativeComponent this[int index] { get; }
+
+        /// <summary>
+        ///     Get all components.
+        /// </summary>
+        new IEnumerable<INativeComponent> Components { get; }
     }
 }

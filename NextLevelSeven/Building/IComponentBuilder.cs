@@ -19,7 +19,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="value">New value.</param>
         /// <returns>This IComponentBuilder, for chaining purposes.</returns>
-        IComponentBuilder Component(string value);
+        IComponentBuilder SetComponent(string value);
 
         /// <summary>
         ///     Set a subcomponent's content.
@@ -27,14 +27,14 @@ namespace NextLevelSeven.Building
         /// <param name="subcomponentIndex">Subcomponent index.</param>
         /// <param name="value">New value.</param>
         /// <returns>This IComponentBuilder, for chaining purposes.</returns>
-        IComponentBuilder Subcomponent(int subcomponentIndex, string value);
+        IComponentBuilder SetSubcomponent(int subcomponentIndex, string value);
 
         /// <summary>
         ///     Replace all subcomponents within this component.
         /// </summary>
         /// <param name="subcomponents">Subcomponent index.</param>
         /// <returns>This ComponentBuilder, for chaining purposes.</returns>
-        IComponentBuilder Subcomponents(params string[] subcomponents);
+        IComponentBuilder SetSubcomponents(params string[] subcomponents);
 
         /// <summary>
         ///     Set a sequence of subcomponents within this component, beginning at the specified start index.
@@ -42,6 +42,6 @@ namespace NextLevelSeven.Building
         /// <param name="startIndex">Subcomponent index to begin replacing at.</param>
         /// <param name="subcomponents">Values to replace with.</param>
         /// <returns>This ComponentBuilder, for chaining purposes.</returns>
-        IComponentBuilder Subcomponents(int startIndex, params string[] subcomponents);
+        IComponentBuilder SetSubcomponents(int startIndex, params string[] subcomponents);
     }
 }

@@ -75,12 +75,7 @@ namespace NextLevelSeven.Core
             if (index >= 1 && index <= target.ValueCount)
             {
                 var values = new List<string>();
-                var segment = target as ISegment;
-                var indexMap = index - 1;
-                if (segment != null)
-                {
-                    values.Add(segment.Type);
-                }
+                var indexMap = (target is ISegment) ? index : index - 1;
                 values.AddRange(target.Descendants.Where((d, i) => i != indexMap).Select(d => d.Value));
                 target.Values = values;
             }
@@ -106,7 +101,7 @@ namespace NextLevelSeven.Core
 
             // delete them in reverse order so that the parent isn't removed out
             // from under the values we're deleting.
-            foreach (var element in elements.Select(e => e.Index).Distinct().OrderByDescending(i => i))
+            foreach (var element in elements.Select(e => e.Index).Distinct().OrderByDescending(i => i).ToList())
             {
                 ancestor.Delete(element);
             }

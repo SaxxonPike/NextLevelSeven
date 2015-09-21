@@ -8,6 +8,7 @@ using NextLevelSeven.Core.Codec;
 using NextLevelSeven.Core.Encoding;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Native.Dividers;
+using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Native.Elements
 {
@@ -175,9 +176,15 @@ namespace NextLevelSeven.Native.Elements
         /// <summary>
         ///     Get descendant elements as an enumerable set.
         /// </summary>
-        public IEnumerable<INativeElement> DescendantElements
+        virtual public IEnumerable<INativeElement> DescendantElements
         {
-            get { return new NativeElementEnumerable(this); }
+            get
+            {
+                return new WrapperEnumerable<INativeElement>(i => this[i],
+                    (i, v) => { },
+                    () => ValueCount,
+                    1);
+            }
         }
 
         /// <summary>

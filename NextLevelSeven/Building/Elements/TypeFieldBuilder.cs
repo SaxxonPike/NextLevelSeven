@@ -61,7 +61,7 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         /// <param name="value">New value.</param>
         /// <returns>This TypeFieldBuilder.</returns>
-        public override IFieldBuilder Field(string value)
+        public override IFieldBuilder SetField(string value)
         {
             Value = value;
             return this;
@@ -73,7 +73,7 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="repetition">Repetition number. All values greater than one are invalid.</param>
         /// <param name="value">New value.</param>
         /// <returns>This TypeFieldBuilder.</returns>
-        public override IFieldBuilder FieldRepetition(int repetition, string value)
+        public override IFieldBuilder SetFieldRepetition(int repetition, string value)
         {
             if (repetition > 1)
             {

@@ -54,15 +54,25 @@ namespace NextLevelSeven.Native.Elements
             }
         }
 
+        public override IEnumerable<INativeElement> DescendantElements
+        {
+            get
+            {
+                return new WrapperEnumerable<INativeElement>(i => this[i],
+                    (i, v) => { },
+                    () => ValueCount);
+            }
+        }
+
         public override int ValueCount
         {
             get
             {
                 if (IsMsh)
                 {
-                    return DescendantDivider.Count;
+                    return DescendantDivider.Count + 1;
                 }
-                return DescendantDivider.Count - 1;
+                return DescendantDivider.Count;
             }
         }
 
@@ -177,6 +187,31 @@ namespace NextLevelSeven.Native.Elements
                     return;
                 }
                 base.Values = value;
+            }
+        }
+
+        /// <summary>
+        ///     Get all components.
+        /// </summary>
+        public IEnumerable<INativeField> Fields
+        {
+            get
+            {
+                return new WrapperEnumerable<INativeField>(i => _cache[i],
+                    (i, v) => { },
+                    () => ValueCount,
+                    1);
+            }
+        }
+
+        /// <summary>
+        ///     Get all components.
+        /// </summary>
+        IEnumerable<IField> ISegment.Fields
+        {
+            get
+            {
+                return Fields;
             }
         }
     }

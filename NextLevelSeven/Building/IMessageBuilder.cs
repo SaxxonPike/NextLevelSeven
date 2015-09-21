@@ -23,7 +23,7 @@ namespace NextLevelSeven.Building
         /// <param name="componentIndex">Component index.</param>
         /// <param name="value">New value.</param>
         /// <returns>This IMessageBuilder, for chaining purposes.</returns>
-        IMessageBuilder Component(int segmentIndex, int fieldIndex, int repetition, int componentIndex,
+        IMessageBuilder SetComponent(int segmentIndex, int fieldIndex, int repetition, int componentIndex,
             string value);
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace NextLevelSeven.Building
         /// <param name="repetition">Field repetition index.</param>
         /// <param name="components">Values to replace with.</param>
         /// <returns>This IMessageBuilder, for chaining purposes.</returns>
-        IMessageBuilder Components(int segmentIndex, int fieldIndex, int repetition, params string[] components);
+        IMessageBuilder SetComponents(int segmentIndex, int fieldIndex, int repetition, params string[] components);
 
         /// <summary>
         ///     Set a sequence of components within a field repetition, beginning at the specified start index.
@@ -45,7 +45,7 @@ namespace NextLevelSeven.Building
         /// <param name="startIndex">Component index to begin replacing at.</param>
         /// <param name="components">Values to replace with.</param>
         /// <returns>This IMessageBuilder, for chaining purposes.</returns>
-        IMessageBuilder Components(int segmentIndex, int fieldIndex, int repetition, int startIndex,
+        IMessageBuilder SetComponents(int segmentIndex, int fieldIndex, int repetition, int startIndex,
             params string[] components);
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace NextLevelSeven.Building
         /// <param name="fieldIndex">Field index.</param>
         /// <param name="value">New value.</param>
         /// <returns>This IMessageBuilder, for chaining purposes.</returns>
-        IMessageBuilder Field(int segmentIndex, int fieldIndex, string value);
+        IMessageBuilder SetField(int segmentIndex, int fieldIndex, string value);
 
         /// <summary>
         ///     Replace all field values within a segment.
@@ -63,7 +63,7 @@ namespace NextLevelSeven.Building
         /// <param name="segmentIndex">Segment index.</param>
         /// <param name="fields">Values to replace with.</param>
         /// <returns>This IMessageBuilder, for chaining purposes.</returns>
-        IMessageBuilder Fields(int segmentIndex, params string[] fields);
+        IMessageBuilder SetFields(int segmentIndex, params string[] fields);
 
         /// <summary>
         ///     Set a sequence of fields within a segment, beginning at the specified start index.
@@ -72,7 +72,7 @@ namespace NextLevelSeven.Building
         /// <param name="startIndex">Field index to begin replacing at.</param>
         /// <param name="fields">Values to replace with.</param>
         /// <returns>This IMessageBuilder, for chaining purposes.</returns>
-        IMessageBuilder Fields(int segmentIndex, int startIndex, params string[] fields);
+        IMessageBuilder SetFields(int segmentIndex, int startIndex, params string[] fields);
 
         /// <summary>
         ///     Set a field repetition's content.
@@ -82,7 +82,7 @@ namespace NextLevelSeven.Building
         /// <param name="repetition">Field repetition index.</param>
         /// <param name="value">New value.</param>
         /// <returns>This IMessageBuilder, for chaining purposes.</returns>
-        IMessageBuilder FieldRepetition(int segmentIndex, int fieldIndex, int repetition, string value);
+        IMessageBuilder SetFieldRepetition(int segmentIndex, int fieldIndex, int repetition, string value);
 
         /// <summary>
         ///     Replace all field repetitions within a field.
@@ -91,7 +91,7 @@ namespace NextLevelSeven.Building
         /// <param name="fieldIndex">Field index.</param>
         /// <param name="repetitions">Values to replace with.</param>
         /// <returns>This IMessageBuilder, for chaining purposes.</returns>
-        IMessageBuilder FieldRepetitions(int segmentIndex, int fieldIndex, params string[] repetitions);
+        IMessageBuilder SetFieldRepetitions(int segmentIndex, int fieldIndex, params string[] repetitions);
 
         /// <summary>
         ///     Set a sequence of field repetitions within a field, beginning at the specified start index.
@@ -101,7 +101,7 @@ namespace NextLevelSeven.Building
         /// <param name="startIndex">Field repetition index to begin replacing at.</param>
         /// <param name="repetitions">Values to replace with.</param>
         /// <returns>This IMessageBuilder, for chaining purposes.</returns>
-        IMessageBuilder FieldRepetitions(int segmentIndex, int fieldIndex, int startIndex,
+        IMessageBuilder SetFieldRepetitions(int segmentIndex, int fieldIndex, int startIndex,
             params string[] repetitions);
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace NextLevelSeven.Building
         /// </summary>
         /// <param name="value">New value.</param>
         /// <returns>This IMessageBuilder, for chaining purposes.</returns>
-        IMessageBuilder Message(string value);
+        IMessageBuilder SetMessage(string value);
 
         /// <summary>
         ///     Set a segment's content.
@@ -117,14 +117,14 @@ namespace NextLevelSeven.Building
         /// <param name="segmentIndex">Segment index.</param>
         /// <param name="value">New value.</param>
         /// <returns>This IMessageBuilder, for chaining purposes.</returns>
-        IMessageBuilder Segment(int segmentIndex, string value);
+        IMessageBuilder SetSegment(int segmentIndex, string value);
 
         /// <summary>
         ///     Replace all segments within this message.
         /// </summary>
         /// <param name="segments">Values to replace with.</param>
         /// <returns>This IMessageBuilder, for chaining purposes.</returns>
-        IMessageBuilder Segments(params string[] segments);
+        IMessageBuilder SetSegments(params string[] segments);
 
         /// <summary>
         ///     Set a sequence of segments within this message, beginning at the specified start index.
@@ -132,7 +132,7 @@ namespace NextLevelSeven.Building
         /// <param name="startIndex">Segment index to begin replacing at.</param>
         /// <param name="segments">Values to replace with.</param>
         /// <returns>This IMessageBuilder, for chaining purposes.</returns>
-        IMessageBuilder Segments(int startIndex, params string[] segments);
+        IMessageBuilder SetSegments(int startIndex, params string[] segments);
 
         /// <summary>
         ///     Set a subcomponent's content.
@@ -144,7 +144,7 @@ namespace NextLevelSeven.Building
         /// <param name="subcomponentIndex">Subcomponent index.</param>
         /// <param name="value">New value.</param>
         /// <returns>This IMessageBuilder, for chaining purposes.</returns>
-        IMessageBuilder Subcomponent(int segmentIndex, int fieldIndex, int repetition, int componentIndex,
+        IMessageBuilder SetSubcomponent(int segmentIndex, int fieldIndex, int repetition, int componentIndex,
             int subcomponentIndex,
             string value);
 
@@ -157,7 +157,7 @@ namespace NextLevelSeven.Building
         /// <param name="componentIndex">Component index.</param>
         /// <param name="subcomponents">Subcomponent index.</param>
         /// <returns>This IMessageBuilder, for chaining purposes.</returns>
-        IMessageBuilder Subcomponents(int segmentIndex, int fieldIndex, int repetition, int componentIndex,
+        IMessageBuilder SetSubcomponents(int segmentIndex, int fieldIndex, int repetition, int componentIndex,
             params string[] subcomponents);
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace NextLevelSeven.Building
         /// <param name="startIndex">Subcomponent index to begin replacing at.</param>
         /// <param name="subcomponents">Values to replace with.</param>
         /// <returns>This IMessageBuilder, for chaining purposes.</returns>
-        IMessageBuilder Subcomponents(int segmentIndex, int fieldIndex, int repetition, int componentIndex,
+        IMessageBuilder SetSubcomponents(int segmentIndex, int fieldIndex, int repetition, int componentIndex,
             int startIndex, params string[] subcomponents);
     }
 }

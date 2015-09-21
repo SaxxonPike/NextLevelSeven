@@ -37,5 +37,10 @@ namespace NextLevelSeven.Core
         /// <param name="subcomponent">Subcomponent index.</param>
         /// <returns>The occurrences of the specified element.</returns>
         IEnumerable<string> GetValues(int field = -1, int repetition = -1, int component = -1, int subcomponent = -1);
+
+        /// <summary>
+        ///     Get this element's fields.
+        /// </summary>
+        IEnumerable<IField> Fields { get; }
     }
 }

@@ -46,8 +46,8 @@ namespace NextLevelSeven.Test.Building
             var field5 = Randomized.String();
 
             builder
-                .Field(1, 3, field3)
-                .Field(1, 5, field5);
+                .SetField(1, 3, field3)
+                .SetField(1, 5, field5);
             Assert.AreEqual(string.Format("MSH|^~\\&|{0}||{1}", field3, field5), builder.Value,
                 @"Unexpected result.");
         }
@@ -60,8 +60,8 @@ namespace NextLevelSeven.Test.Building
             var field5 = Randomized.String();
 
             builder
-                .Field(1, 5, field5)
-                .Field(1, 3, field3);
+                .SetField(1, 5, field5)
+                .SetField(1, 3, field3);
             Assert.AreEqual(string.Format("MSH|^~\\&|{0}||{1}", field3, field5), builder.Value,
                 @"Unexpected result.");
         }
@@ -74,7 +74,7 @@ namespace NextLevelSeven.Test.Building
             var field5 = Randomized.String();
 
             builder
-                .Fields(1, 3, field3, null, field5);
+                .SetFields(1, 3, field3, null, field5);
             Assert.AreEqual(string.Format("MSH|^~\\&|{0}||{1}", field3, field5), builder.Value,
                 @"Unexpected result.");
         }
@@ -87,8 +87,8 @@ namespace NextLevelSeven.Test.Building
             var repetition2 = Randomized.String();
 
             builder
-                .FieldRepetition(1, 3, 1, repetition1)
-                .FieldRepetition(1, 3, 2, repetition2);
+                .SetFieldRepetition(1, 3, 1, repetition1)
+                .SetFieldRepetition(1, 3, 2, repetition2);
             Assert.AreEqual(string.Format("MSH|^~\\&|{0}~{1}", repetition1, repetition2), builder.Value,
                 @"Unexpected result.");
         }
@@ -101,8 +101,8 @@ namespace NextLevelSeven.Test.Building
             var repetition2 = Randomized.String();
 
             builder
-                .FieldRepetition(1, 3, 2, repetition2)
-                .FieldRepetition(1, 3, 1, repetition1);
+                .SetFieldRepetition(1, 3, 2, repetition2)
+                .SetFieldRepetition(1, 3, 1, repetition1);
             Assert.AreEqual(string.Format("MSH|^~\\&|{0}~{1}", repetition1, repetition2), builder.Value,
                 @"Unexpected result.");
         }
@@ -115,7 +115,7 @@ namespace NextLevelSeven.Test.Building
             var repetition2 = Randomized.String();
 
             builder
-                .FieldRepetitions(1, 3, repetition1, repetition2);
+                .SetFieldRepetitions(1, 3, repetition1, repetition2);
             Assert.AreEqual(string.Format("MSH|^~\\&|{0}~{1}", repetition1, repetition2), builder.Value,
                 @"Unexpected result.");
         }
@@ -128,8 +128,8 @@ namespace NextLevelSeven.Test.Building
             var segment3 = "ZAA|" + Randomized.String();
 
             builder
-                .Segment(2, segment2)
-                .Segment(3, segment3);
+                .SetSegment(2, segment2)
+                .SetSegment(3, segment3);
             Assert.AreEqual(string.Format("MSH|^~\\&\xD{0}\xD{1}", segment2, segment3), builder.Value,
                 @"Unexpected result.");
         }
@@ -142,8 +142,8 @@ namespace NextLevelSeven.Test.Building
             var segment3 = "ZED|" + Randomized.String();
 
             builder
-                .Segment(4, segment3)
-                .Segment(2, segment2);
+                .SetSegment(4, segment3)
+                .SetSegment(2, segment2);
             Assert.AreEqual(string.Format("MSH|^~\\&\xD{0}\xD{1}", segment2, segment3), builder.Value,
                 @"Unexpected result.");
         }
@@ -156,7 +156,7 @@ namespace NextLevelSeven.Test.Building
             var segment3 = "ZAP|" + Randomized.String();
 
             builder
-                .Segments(2, segment2, segment3);
+                .SetSegments(2, segment2, segment3);
             Assert.AreEqual(string.Format("MSH|^~\\&\xD{0}\xD{1}", segment2, segment3), builder.Value,
                 @"Unexpected result.");
         }
@@ -169,8 +169,8 @@ namespace NextLevelSeven.Test.Building
             var component2 = Randomized.String();
 
             builder
-                .Component(1, 3, 1, 1, component1)
-                .Component(1, 3, 1, 2, component2);
+                .SetComponent(1, 3, 1, 1, component1)
+                .SetComponent(1, 3, 1, 2, component2);
             Assert.AreEqual(string.Format("MSH|^~\\&|{0}^{1}", component1, component2), builder.Value,
                 @"Unexpected result.");
         }
@@ -183,8 +183,8 @@ namespace NextLevelSeven.Test.Building
             var component2 = Randomized.String();
 
             builder
-                .Component(1, 3, 1, 2, component2)
-                .Component(1, 3, 1, 1, component1);
+                .SetComponent(1, 3, 1, 2, component2)
+                .SetComponent(1, 3, 1, 1, component1);
             Assert.AreEqual(string.Format("MSH|^~\\&|{0}^{1}", component1, component2), builder.Value,
                 @"Unexpected result.");
         }
@@ -197,7 +197,7 @@ namespace NextLevelSeven.Test.Building
             var component2 = Randomized.String();
 
             builder
-                .Components(1, 3, 1, component1, component2);
+                .SetComponents(1, 3, 1, component1, component2);
             Assert.AreEqual(string.Format("MSH|^~\\&|{0}^{1}", component1, component2), builder.Value,
                 @"Unexpected result.");
         }
@@ -210,8 +210,8 @@ namespace NextLevelSeven.Test.Building
             var subcomponent2 = Randomized.String();
 
             builder
-                .Subcomponent(1, 3, 1, 1, 1, subcomponent1)
-                .Subcomponent(1, 3, 1, 1, 2, subcomponent2);
+                .SetSubcomponent(1, 3, 1, 1, 1, subcomponent1)
+                .SetSubcomponent(1, 3, 1, 1, 2, subcomponent2);
             Assert.AreEqual(string.Format("MSH|^~\\&|{0}&{1}", subcomponent1, subcomponent2), builder.Value,
                 @"Unexpected result.");
         }
@@ -224,8 +224,8 @@ namespace NextLevelSeven.Test.Building
             var subcomponent2 = Randomized.String();
 
             builder
-                .Subcomponent(1, 3, 1, 1, 2, subcomponent2)
-                .Subcomponent(1, 3, 1, 1, 1, subcomponent1);
+                .SetSubcomponent(1, 3, 1, 1, 2, subcomponent2)
+                .SetSubcomponent(1, 3, 1, 1, 1, subcomponent1);
             Assert.AreEqual(string.Format("MSH|^~\\&|{0}&{1}", subcomponent1, subcomponent2), builder.Value,
                 @"Unexpected result.");
         }
@@ -238,7 +238,7 @@ namespace NextLevelSeven.Test.Building
             var subcomponent2 = Randomized.String();
 
             builder
-                .Subcomponents(1, 3, 1, 1, 1, subcomponent1, subcomponent2);
+                .SetSubcomponents(1, 3, 1, 1, 1, subcomponent1, subcomponent2);
             Assert.AreEqual(string.Format("MSH|^~\\&|{0}&{1}", subcomponent1, subcomponent2), builder.Value,
                 @"Unexpected result.");
         }
@@ -273,7 +273,7 @@ namespace NextLevelSeven.Test.Building
         {
             var before = GC.GetTotalMemory(true);
             var message = Message.Build();
-            message.Field(1000000, 1000000, Randomized.String());
+            message.SetField(1000000, 1000000, Randomized.String());
             var messageString = message.Value;
             var usage = GC.GetTotalMemory(false) - before;
             var overhead = usage - (messageString.Length << 1);
@@ -349,7 +349,7 @@ namespace NextLevelSeven.Test.Building
         public void MessageBuilder_CanSetMsh1()
         {
             var builder = Message.Build(ExampleMessages.Minimum + "|");
-            builder.Field(1, 1, ":");
+            builder.SetField(1, 1, ":");
             Assert.AreEqual("MSH:^~\\&:", builder.Value);
         }
 
@@ -357,7 +357,7 @@ namespace NextLevelSeven.Test.Building
         public void MessageBuilder_CanSetMsh1ToDefaultWithNull()
         {
             var builder = Message.Build(ExampleMessages.Minimum + "|");
-            builder.Field(1, 1, null);
+            builder.SetField(1, 1, null);
             Assert.AreEqual("MSH|^~\\&|", builder.Value);
         }
 
@@ -365,7 +365,7 @@ namespace NextLevelSeven.Test.Building
         public void MessageBuilder_CanSetMsh2()
         {
             var builder = Message.Build(ExampleMessages.Minimum + "|");
-            builder.Field(1, 2, "@#$%");
+            builder.SetField(1, 2, "@#$%");
             Assert.AreEqual("MSH|@#$%|", builder.Value);
         }
 
@@ -373,7 +373,7 @@ namespace NextLevelSeven.Test.Building
         public void MessageBuilder_CanSetTypeToMsh()
         {
             var builder = Message.Build();
-            builder.Field(2, 0, "MSH");
+            builder.SetField(2, 0, "MSH");
         }
 
         [TestMethod]
@@ -382,7 +382,7 @@ namespace NextLevelSeven.Test.Building
             // NOTE: by design.
             // (change this test if the design changes.)
             var builder = Message.Build();
-            It.Throws<BuilderException>(() => builder.Field(1, 0, "PID"));
+            It.Throws<BuilderException>(() => builder.SetField(1, 0, "PID"));
         }
 
         [TestMethod]
@@ -391,8 +391,8 @@ namespace NextLevelSeven.Test.Building
             // NOTE: by design.
             // (change this test if the design changes.)
             var builder = Message.Build();
-            builder.Field(2, 0, "PID");
-            It.Throws<BuilderException>(() => builder.Field(2, 0, "MSH"));
+            builder.SetField(2, 0, "PID");
+            It.Throws<BuilderException>(() => builder.SetField(2, 0, "MSH"));
         }
 
         [TestMethod]
@@ -401,7 +401,7 @@ namespace NextLevelSeven.Test.Building
             var id1 = Randomized.String();
             var id2 = Randomized.String();
             var builder = Message.Build(string.Format("MSH|^~\\&|{0}^{1}", id1, id2));
-            builder.Field(1, 2, "$~\\&");
+            builder.SetField(1, 2, "$~\\&");
             Assert.AreEqual(string.Format("MSH|$~\\&|{0}${1}", id1, id2), builder.Value);
         }
 
@@ -411,7 +411,7 @@ namespace NextLevelSeven.Test.Building
             var id1 = Randomized.String();
             var id2 = Randomized.String();
             var builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}", id1, id2));
-            builder.Field(1, 2, "^$\\&");
+            builder.SetField(1, 2, "^$\\&");
             Assert.AreEqual(string.Format("MSH|^$\\&|{0}${1}", id1, id2), builder.Value);
         }
 
@@ -423,7 +423,7 @@ namespace NextLevelSeven.Test.Building
             var id1 = Randomized.String();
             var id2 = Randomized.String();
             var builder = Message.Build(string.Format("MSH|^~\\&|\\H\\{0}\\N\\{1}", id1, id2));
-            builder.Field(1, 2, "^~$&");
+            builder.SetField(1, 2, "^~$&");
             Assert.AreEqual(string.Format("MSH|^~$&|\\H\\{0}\\N\\{1}", id1, id2), builder.Value);
         }
 
@@ -433,7 +433,7 @@ namespace NextLevelSeven.Test.Building
             var id1 = Randomized.String();
             var id2 = Randomized.String();
             var builder = Message.Build(string.Format("MSH|^~\\&|{0}&{1}", id1, id2));
-            builder.Field(1, 2, "^~\\$");
+            builder.SetField(1, 2, "^~\\$");
             Assert.AreEqual(string.Format("MSH|^~\\$|{0}${1}", id1, id2), builder.Value);
         }
 
@@ -441,7 +441,7 @@ namespace NextLevelSeven.Test.Building
         public void MessageBuilder_CanSetMsh2ToDefaultWithNull()
         {
             var builder = Message.Build(ExampleMessages.Minimum + "|");
-            builder.Field(1, 2, null);
+            builder.SetField(1, 2, null);
             Assert.AreEqual("MSH|^~\\&|", builder.Value);
         }
 
@@ -449,7 +449,7 @@ namespace NextLevelSeven.Test.Building
         public void MessageBuilder_CanSetMsh2Partially()
         {
             var builder = Message.Build(ExampleMessages.Minimum + "|");
-            builder.Field(1, 2, "$");
+            builder.SetField(1, 2, "$");
             Assert.AreEqual("MSH|$~\\&|", builder.Value);
         }
 

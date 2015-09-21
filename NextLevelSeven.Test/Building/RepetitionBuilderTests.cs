@@ -45,8 +45,8 @@ namespace NextLevelSeven.Test.Building
             var component2 = Randomized.String();
 
             builder
-                .Component(1, component1)
-                .Component(2, component2);
+                .SetComponent(1, component1)
+                .SetComponent(2, component2);
             Assert.AreEqual(string.Format("{0}^{1}", component1, component2), builder.Value,
                 @"Unexpected result.");
         }
@@ -59,8 +59,8 @@ namespace NextLevelSeven.Test.Building
             var component2 = Randomized.String();
 
             builder
-                .Component(2, component2)
-                .Component(1, component1);
+                .SetComponent(2, component2)
+                .SetComponent(1, component1);
             Assert.AreEqual(string.Format("{0}^{1}", component1, component2), builder.Value,
                 @"Unexpected result.");
         }
@@ -73,7 +73,7 @@ namespace NextLevelSeven.Test.Building
             var component2 = Randomized.String();
 
             builder
-                .Components(3, component1, component2);
+                .SetComponents(3, component1, component2);
             Assert.AreEqual(string.Format("^^{0}^{1}", component1, component2), builder.Value,
                 @"Unexpected result.");
         }
@@ -86,8 +86,8 @@ namespace NextLevelSeven.Test.Building
             var subcomponent2 = Randomized.String();
 
             builder
-                .Subcomponent(1, 1, subcomponent1)
-                .Subcomponent(1, 2, subcomponent2);
+                .SetSubcomponent(1, 1, subcomponent1)
+                .SetSubcomponent(1, 2, subcomponent2);
             Assert.AreEqual(string.Format("{0}&{1}", subcomponent1, subcomponent2), builder.Value,
                 @"Unexpected result.");
         }
@@ -100,8 +100,8 @@ namespace NextLevelSeven.Test.Building
             var subcomponent2 = Randomized.String();
 
             builder
-                .Subcomponent(1, 2, subcomponent2)
-                .Subcomponent(1, 1, subcomponent1);
+                .SetSubcomponent(1, 2, subcomponent2)
+                .SetSubcomponent(1, 1, subcomponent1);
             Assert.AreEqual(string.Format("{0}&{1}", subcomponent1, subcomponent2), builder.Value,
                 @"Unexpected result.");
         }
@@ -114,7 +114,7 @@ namespace NextLevelSeven.Test.Building
             var subcomponent2 = Randomized.String();
 
             builder
-                .Subcomponents(3, 1, subcomponent1, subcomponent2);
+                .SetSubcomponents(3, 1, subcomponent1, subcomponent2);
             Assert.AreEqual(string.Format("^^{0}&{1}", subcomponent1, subcomponent2), builder.Value,
                 @"Unexpected result.");
         }

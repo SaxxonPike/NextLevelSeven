@@ -16,20 +16,20 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>
         ///     Descendant segments.
         /// </summary>
-        private readonly IndexedCache<int, SegmentBuilder> _cache;
+        private readonly IndexedCache<int, SegmentBuilder> _segments;
 
         /// <summary>
         ///     Create a message builder with default MSH segment containing only encoding characters.
         /// </summary>
         public MessageBuilder()
         {
-            _cache = new IndexedCache<int, SegmentBuilder>(CreateSegmentBuilder);
+            _segments = new IndexedCache<int, SegmentBuilder>(CreateSegmentBuilder);
             ComponentDelimiter = '^';
             EscapeDelimiter = '\\';
             RepetitionDelimiter = '~';
             SubcomponentDelimiter = '&';
             FieldDelimiter = '|';
-            Fields(1, "MSH", new string(FieldDelimiter, 1),
+            SetFields(1, "MSH", new string(FieldDelimiter, 1),
                 new string(new[] {ComponentDelimiter, RepetitionDelimiter, EscapeDelimiter, SubcomponentDelimiter}));
         }
 
@@ -39,8 +39,8 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="baseMessage">Content to initialize with.</param>
         public MessageBuilder(string baseMessage)
         {
-            _cache = new IndexedCache<int, SegmentBuilder>(CreateSegmentBuilder);
-            Message(baseMessage);
+            _segments = new IndexedCache<int, SegmentBuilder>(CreateSegmentBuilder);
+            SetMessage(baseMessage);
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Segment builder for the specified index.</returns>
         public new ISegmentBuilder this[int index]
         {
-            get { return _cache[index]; }
+            get { return _segments[index]; }
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         public override int ValueCount
         {
-            get { return _cache.Max(kv => kv.Key); }
+            get { return _segments.Max(kv => kv.Key); }
         }
 
         /// <summary>
@@ -86,12 +86,12 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                return new WrapperEnumerable<string>(index => _cache[index].Value,
-                    (index, data) => Segment(index, data),
+                return new WrapperEnumerable<string>(index => _segments[index].Value,
+                    (index, data) => SetSegment(index, data),
                     () => ValueCount,
                     1);
             }
-            set { Segments(value.ToArray()); }
+            set { SetSegments(value.ToArray()); }
         }
 
         /// <summary>
@@ -101,16 +101,16 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                if (_cache.Count == 0)
+                if (_segments.Count == 0)
                 {
                     return null;
                 }
 
                 var result = string.Join("\xD",
-                    _cache.OrderBy(i => i.Key).Select(i => i.Value.Value));
+                    _segments.OrderBy(i => i.Key).Select(i => i.Value.Value));
                 return result;
             }
-            set { Message(value); }
+            set { SetMessage(value); }
         }
 
         /// <summary>
@@ -122,10 +122,10 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="componentIndex">Component index.</param>
         /// <param name="value">New value.</param>
         /// <returns>This MessageBuilder, for chaining purposes.</returns>
-        public IMessageBuilder Component(int segmentIndex, int fieldIndex, int repetition, int componentIndex,
+        public IMessageBuilder SetComponent(int segmentIndex, int fieldIndex, int repetition, int componentIndex,
             string value)
         {
-            _cache[segmentIndex].Component(fieldIndex, repetition, componentIndex, value);
+            _segments[segmentIndex].SetComponent(fieldIndex, repetition, componentIndex, value);
             return this;
         }
 
@@ -137,9 +137,9 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="repetition">Field repetition index.</param>
         /// <param name="components">Values to replace with.</param>
         /// <returns>This MessageBuilder, for chaining purposes.</returns>
-        public IMessageBuilder Components(int segmentIndex, int fieldIndex, int repetition, params string[] components)
+        public IMessageBuilder SetComponents(int segmentIndex, int fieldIndex, int repetition, params string[] components)
         {
-            _cache[segmentIndex].Components(fieldIndex, repetition, components);
+            _segments[segmentIndex].SetComponents(fieldIndex, repetition, components);
             return this;
         }
 
@@ -152,10 +152,10 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="startIndex">Component index to begin replacing at.</param>
         /// <param name="components">Values to replace with.</param>
         /// <returns>This MessageBuilder, for chaining purposes.</returns>
-        public IMessageBuilder Components(int segmentIndex, int fieldIndex, int repetition, int startIndex,
+        public IMessageBuilder SetComponents(int segmentIndex, int fieldIndex, int repetition, int startIndex,
             params string[] components)
         {
-            _cache[segmentIndex].Components(fieldIndex, repetition, startIndex, components);
+            _segments[segmentIndex].SetComponents(fieldIndex, repetition, startIndex, components);
             return this;
         }
 
@@ -166,9 +166,9 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="fieldIndex">Field index.</param>
         /// <param name="value">New value.</param>
         /// <returns>This MessageBuilder, for chaining purposes.</returns>
-        public IMessageBuilder Field(int segmentIndex, int fieldIndex, string value)
+        public IMessageBuilder SetField(int segmentIndex, int fieldIndex, string value)
         {
-            _cache[segmentIndex].Field(fieldIndex, value);
+            _segments[segmentIndex].SetField(fieldIndex, value);
             return this;
         }
 
@@ -178,9 +178,9 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="segmentIndex">Segment index.</param>
         /// <param name="fields">Values to replace with.</param>
         /// <returns>This MessageBuilder, for chaining purposes.</returns>
-        public IMessageBuilder Fields(int segmentIndex, params string[] fields)
+        public IMessageBuilder SetFields(int segmentIndex, params string[] fields)
         {
-            _cache[segmentIndex].Fields(fields);
+            _segments[segmentIndex].SetFields(fields);
             return this;
         }
 
@@ -191,9 +191,9 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="startIndex">Field index to begin replacing at.</param>
         /// <param name="fields">Values to replace with.</param>
         /// <returns>This MessageBuilder, for chaining purposes.</returns>
-        public IMessageBuilder Fields(int segmentIndex, int startIndex, params string[] fields)
+        public IMessageBuilder SetFields(int segmentIndex, int startIndex, params string[] fields)
         {
-            _cache[segmentIndex].Fields(startIndex, fields);
+            _segments[segmentIndex].SetFields(startIndex, fields);
             return this;
         }
 
@@ -205,9 +205,9 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="repetition">Field repetition index.</param>
         /// <param name="value">New value.</param>
         /// <returns>This MessageBuilder, for chaining purposes.</returns>
-        public IMessageBuilder FieldRepetition(int segmentIndex, int fieldIndex, int repetition, string value)
+        public IMessageBuilder SetFieldRepetition(int segmentIndex, int fieldIndex, int repetition, string value)
         {
-            _cache[segmentIndex].FieldRepetition(fieldIndex, repetition, value);
+            _segments[segmentIndex].SetFieldRepetition(fieldIndex, repetition, value);
             return this;
         }
 
@@ -218,9 +218,9 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="fieldIndex">Field index.</param>
         /// <param name="repetitions">Values to replace with.</param>
         /// <returns>This MessageBuilder, for chaining purposes.</returns>
-        public IMessageBuilder FieldRepetitions(int segmentIndex, int fieldIndex, params string[] repetitions)
+        public IMessageBuilder SetFieldRepetitions(int segmentIndex, int fieldIndex, params string[] repetitions)
         {
-            _cache[segmentIndex].FieldRepetitions(fieldIndex, repetitions);
+            _segments[segmentIndex].SetFieldRepetitions(fieldIndex, repetitions);
             return this;
         }
 
@@ -232,10 +232,10 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="startIndex">Field repetition index to begin replacing at.</param>
         /// <param name="repetitions">Values to replace with.</param>
         /// <returns>This MessageBuilder, for chaining purposes.</returns>
-        public IMessageBuilder FieldRepetitions(int segmentIndex, int fieldIndex, int startIndex,
+        public IMessageBuilder SetFieldRepetitions(int segmentIndex, int fieldIndex, int startIndex,
             params string[] repetitions)
         {
-            _cache[segmentIndex].FieldRepetitions(fieldIndex, startIndex, repetitions);
+            _segments[segmentIndex].SetFieldRepetitions(fieldIndex, startIndex, repetitions);
             return this;
         }
 
@@ -244,7 +244,7 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         /// <param name="value">New value.</param>
         /// <returns>This MessageBuilder, for chaining purposes.</returns>
-        public IMessageBuilder Message(string value)
+        public IMessageBuilder SetMessage(string value)
         {
             if (value == null)
             {
@@ -268,13 +268,13 @@ namespace NextLevelSeven.Building.Elements
             RepetitionDelimiter = (length >= 7) ? value[6] : '~';
             SubcomponentDelimiter = (length >= 8) ? value[7] : '&';
 
-            _cache.Clear();
+            _segments.Clear();
             value = value.Replace("\r\n", "\xD");
             var index = 1;
 
             foreach (var segment in value.Split('\xD'))
             {
-                Segment(index++, segment);
+                SetSegment(index++, segment);
             }
 
             return this;
@@ -286,9 +286,9 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="segmentIndex">Segment index.</param>
         /// <param name="value">New value.</param>
         /// <returns>This MessageBuilder, for chaining purposes.</returns>
-        public IMessageBuilder Segment(int segmentIndex, string value)
+        public IMessageBuilder SetSegment(int segmentIndex, string value)
         {
-            _cache[segmentIndex].Segment(value);
+            _segments[segmentIndex].SetSegment(value);
             return this;
         }
 
@@ -297,9 +297,9 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         /// <param name="segments">Values to replace with.</param>
         /// <returns>This MessageBuilder, for chaining purposes.</returns>
-        public IMessageBuilder Segments(params string[] segments)
+        public IMessageBuilder SetSegments(params string[] segments)
         {
-            Message(string.Join("\xD", segments));
+            SetMessage(string.Join("\xD", segments));
             return this;
         }
 
@@ -309,12 +309,12 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="startIndex">Segment index to begin replacing at.</param>
         /// <param name="segments">Values to replace with.</param>
         /// <returns>This MessageBuilder, for chaining purposes.</returns>
-        public IMessageBuilder Segments(int startIndex, params string[] segments)
+        public IMessageBuilder SetSegments(int startIndex, params string[] segments)
         {
             var index = startIndex;
             foreach (var segment in segments)
             {
-                Segment(index++, segment);
+                SetSegment(index++, segment);
             }
             return this;
         }
@@ -329,11 +329,11 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="subcomponentIndex">Subcomponent index.</param>
         /// <param name="value">New value.</param>
         /// <returns>This MessageBuilder, for chaining purposes.</returns>
-        public IMessageBuilder Subcomponent(int segmentIndex, int fieldIndex, int repetition, int componentIndex,
+        public IMessageBuilder SetSubcomponent(int segmentIndex, int fieldIndex, int repetition, int componentIndex,
             int subcomponentIndex,
             string value)
         {
-            _cache[segmentIndex].Subcomponent(fieldIndex, repetition, componentIndex, subcomponentIndex, value);
+            _segments[segmentIndex].SetSubcomponent(fieldIndex, repetition, componentIndex, subcomponentIndex, value);
             return this;
         }
 
@@ -346,10 +346,10 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="componentIndex">Component index.</param>
         /// <param name="subcomponents">Subcomponent index.</param>
         /// <returns>This MessageBuilder, for chaining purposes.</returns>
-        public IMessageBuilder Subcomponents(int segmentIndex, int fieldIndex, int repetition, int componentIndex,
+        public IMessageBuilder SetSubcomponents(int segmentIndex, int fieldIndex, int repetition, int componentIndex,
             params string[] subcomponents)
         {
-            _cache[segmentIndex].Subcomponents(fieldIndex, repetition, componentIndex, subcomponents);
+            _segments[segmentIndex].SetSubcomponents(fieldIndex, repetition, componentIndex, subcomponents);
             return this;
         }
 
@@ -363,10 +363,10 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="startIndex">Subcomponent index to begin replacing at.</param>
         /// <param name="subcomponents">Values to replace with.</param>
         /// <returns>This MessageBuilder, for chaining purposes.</returns>
-        public IMessageBuilder Subcomponents(int segmentIndex, int fieldIndex, int repetition, int componentIndex,
+        public IMessageBuilder SetSubcomponents(int segmentIndex, int fieldIndex, int repetition, int componentIndex,
             int startIndex, params string[] subcomponents)
         {
-            _cache[segmentIndex].Subcomponents(fieldIndex, repetition, componentIndex, startIndex, subcomponents);
+            _segments[segmentIndex].SetSubcomponents(fieldIndex, repetition, componentIndex, startIndex, subcomponents);
             return this;
         }
 
@@ -388,19 +388,19 @@ namespace NextLevelSeven.Building.Elements
             }
             if (field < 0)
             {
-                return _cache[segment].Values;
+                return _segments[segment].Values;
             }
             if (repetition < 0)
             {
-                return _cache[segment][field].Values;
+                return _segments[segment][field].Values;
             }
             if (component < 0)
             {
-                return _cache[segment][field][repetition].Values;
+                return _segments[segment][field][repetition].Values;
             }
             return (subcomponent < 0)
-                ? _cache[segment][field][repetition][component].Values
-                : _cache[segment][field][repetition][component][subcomponent].Value.Yield();
+                ? _segments[segment][field][repetition][component].Values
+                : _segments[segment][field][repetition][component][subcomponent].Value.Yield();
         }
 
         /// <summary>
@@ -421,19 +421,19 @@ namespace NextLevelSeven.Building.Elements
             }
             if (field < 0)
             {
-                return _cache[segment].Value;
+                return _segments[segment].Value;
             }
             if (repetition < 0)
             {
-                return _cache[segment][field].Value;
+                return _segments[segment][field].Value;
             }
             if (component < 0)
             {
-                return _cache[segment][field][repetition].Value;
+                return _segments[segment][field][repetition].Value;
             }
             return (subcomponent < 0)
-                ? _cache[segment][field][repetition][component].Value
-                : _cache[segment][field][repetition][component][subcomponent].Value;
+                ? _segments[segment][field][repetition][component].Value
+                : _segments[segment][field][repetition][component][subcomponent].Value;
         }
 
         public override IElement Clone()
@@ -463,7 +463,19 @@ namespace NextLevelSeven.Building.Elements
 
         protected override IElement GetGenericElement(int index)
         {
-            return _cache[index];
+            return _segments[index];
+        }
+
+
+        IEnumerable<ISegment> IMessage.Segments
+        {
+            get
+            {
+                return new WrapperEnumerable<ISegment>(index => this[index],
+                    (index, data) => { },
+                    () => ValueCount,
+                    1);                
+            }
         }
     }
 }

@@ -222,6 +222,11 @@ namespace NextLevelSeven.Test
         {
             get { return Enumerable.Empty<IElement>(); }
         }
+
+        IEnumerable<ISegment> IMessage.Segments
+        {
+            get { return Enumerable.Empty<ISegment>(); }
+        }
     }
 }
 

@@ -34,7 +34,7 @@ namespace NextLevelSeven.Native
         /// <summary>
         ///     Get all segments in the message.
         /// </summary>
-        IEnumerable<INativeSegment> Segments { get; }
+        new IEnumerable<INativeSegment> Segments { get; }
 
         /// <summary>
         ///     Get an escaped version of the string, using encoding characters from this message.

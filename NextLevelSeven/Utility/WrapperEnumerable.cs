@@ -26,10 +26,10 @@ namespace NextLevelSeven.Utility
         /// <param name="startIndex">Index where items begin. Defaults to zero.</param>
         internal WrapperEnumerable(ProxyGetter<int, TItem> read, ProxySetter<int, TItem> write, ProxyGetter<int> count, int startIndex = 0)
         {
-            _count = count;
-            _read = read;
+            _count = count ?? (() => 0);
+            _read = read ?? (i => default(TItem));
             _startIndex = startIndex;
-            _write = write;
+            _write = write ?? ((i, v) => { });
         }
 
         /// <summary>

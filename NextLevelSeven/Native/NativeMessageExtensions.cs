@@ -2,6 +2,7 @@
 using System.Linq;
 using NextLevelSeven.Building;
 using NextLevelSeven.Building.Elements;
+using NextLevelSeven.Core;
 using NextLevelSeven.Routing;
 
 namespace NextLevelSeven.Native
@@ -17,7 +18,7 @@ namespace NextLevelSeven.Native
         /// <param name="message">Message to get segments from.</param>
         /// <param name="segmentType">Segment type to filter out.</param>
         /// <returns>Segments that do not match the filtered segment type.</returns>
-        public static IEnumerable<INativeSegment> ExcludeSegments(this INativeMessage message, string segmentType)
+        public static IEnumerable<ISegment> ExcludeSegments(this IMessage message, string segmentType)
         {
             return message.Segments.Where(s => s.Type != segmentType);
         }
@@ -123,15 +124,6 @@ namespace NextLevelSeven.Native
             IEnumerable<string> segmentTypes, bool includeExtras = false)
         {
             return segmentTypes.SelectMany(s => SplitSegments(message, s, includeExtras));
-        }
-
-        /// <summary>
-        ///     Create a message builder with the contents of this message.
-        /// </summary>
-        /// <returns>New message builder.</returns>
-        public static IMessageBuilder ToMessageBuilder(this INativeMessage message)
-        {
-            return new MessageBuilder(message);
         }
     }
 }

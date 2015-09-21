@@ -18,7 +18,7 @@ namespace NextLevelSeven.Test.Building
                 var builder = Message.Build();
                 for (var i = 0; i < 9; i++)
                 {
-                    builder.Segment(i + 2, testString);
+                    builder.SetSegment(i + 2, testString);
                 }
                 Assert.AreEqual(expectedString, builder.Value);
             }, 3000);
@@ -36,7 +36,7 @@ namespace NextLevelSeven.Test.Building
                 var builder = Message.Build();
                 for (var i = 0; i < 99; i++)
                 {
-                    builder.Segment(i + 2, testString);
+                    builder.SetSegment(i + 2, testString);
                 }
                 Assert.AreEqual(expectedString, builder.Value);
             }, 300);
@@ -48,7 +48,7 @@ namespace NextLevelSeven.Test.Building
         {
             var builder = Message.Build();
             var segment = Randomized.StringLetters(3) + "|" + Randomized.String();
-            var time = Measure.ExecutionTime(() => builder.Segment(2, segment), 10000);
+            var time = Measure.ExecutionTime(() => builder.SetSegment(2, segment), 10000);
             AssertTime.IsWithin(1000, time);
         }
 
@@ -57,7 +57,7 @@ namespace NextLevelSeven.Test.Building
         {
             var builder = Message.Build();
             var field = Randomized.String();
-            var time = Measure.ExecutionTime(() => builder.Field(2, 2, field), 10000);
+            var time = Measure.ExecutionTime(() => builder.SetField(2, 2, field), 10000);
             AssertTime.IsWithin(500, time);
         }
 
@@ -66,7 +66,7 @@ namespace NextLevelSeven.Test.Building
         {
             var builder = Message.Build();
             var value = Randomized.String();
-            var time = Measure.ExecutionTime(() => builder.FieldRepetition(2, 2, 2, value), 10000);
+            var time = Measure.ExecutionTime(() => builder.SetFieldRepetition(2, 2, 2, value), 10000);
             AssertTime.IsWithin(500, time);
         }
 
@@ -75,7 +75,7 @@ namespace NextLevelSeven.Test.Building
         {
             var builder = Message.Build();
             var value = Randomized.String();
-            var time = Measure.ExecutionTime(() => builder.Component(2, 2, 2, 2, value), 10000);
+            var time = Measure.ExecutionTime(() => builder.SetComponent(2, 2, 2, 2, value), 10000);
             AssertTime.IsWithin(500, time);
         }
 
@@ -84,7 +84,7 @@ namespace NextLevelSeven.Test.Building
         {
             var builder = Message.Build();
             var value = Randomized.String();
-            var time = Measure.ExecutionTime(() => builder.Subcomponent(2, 2, 2, 2, 2, value), 10000);
+            var time = Measure.ExecutionTime(() => builder.SetSubcomponent(2, 2, 2, 2, 2, value), 10000);
             AssertTime.IsWithin(500, time);
         }
     }

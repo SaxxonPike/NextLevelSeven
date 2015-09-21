@@ -38,7 +38,7 @@ namespace NextLevelSeven.Test.Native
             var segment = Message.Create(ExampleMessages.Standard)[2];
             var fieldCount = segment.ValueCount;
             var id = Randomized.String();
-            segment[fieldCount + 1].Value = id;
+            segment[fieldCount].Value = id;
             Assert.AreEqual(fieldCount + 1, segment.ValueCount,
                 @"Number of elements after appending at the end is incorrect.");
         }

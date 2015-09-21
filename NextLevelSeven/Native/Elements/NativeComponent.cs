@@ -133,5 +133,30 @@ namespace NextLevelSeven.Native.Elements
         {
             return new NativeComponent(Value, EncodingConfiguration) {Index = Index};
         }
+
+        /// <summary>
+        ///     Get all subcomponents.
+        /// </summary>
+        public IEnumerable<INativeSubcomponent> Subcomponents
+        {
+            get
+            {
+                return new WrapperEnumerable<INativeSubcomponent>(i => _cache[i],
+                    (i, v) => { },
+                    () => ValueCount,
+                    1);
+            }
+        }
+
+        /// <summary>
+        ///     Get all subcomponents.
+        /// </summary>
+        IEnumerable<ISubcomponent> IComponent.Subcomponents
+        {
+            get
+            {
+                return Subcomponents;
+            }
+        }
     }
 }

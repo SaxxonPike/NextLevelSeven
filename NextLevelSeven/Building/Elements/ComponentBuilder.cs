@@ -15,7 +15,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>
         ///     Descendant builders.
         /// </summary>
-        private readonly IndexedCache<int, SubcomponentBuilder> _cache;
+        private readonly IndexedCache<int, SubcomponentBuilder> _subcomponents;
 
         /// <summary>
         ///     Create a component builder using the specified encoding configuration.
@@ -26,7 +26,7 @@ namespace NextLevelSeven.Building.Elements
         internal ComponentBuilder(BuilderBase builder, int index, string value = null)
             : base(builder, index)
         {
-            _cache = new IndexedCache<int, SubcomponentBuilder>(CreateSubcomponentBuilder);
+            _subcomponents = new IndexedCache<int, SubcomponentBuilder>(CreateSubcomponentBuilder);
             if (value != null)
             {
                 Value = value;
@@ -42,7 +42,7 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                return _cache[index];
+                return _subcomponents[index];
             }
         }
 
@@ -61,7 +61,7 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         public override int ValueCount
         {
-            get { return _cache.Max(kv => kv.Key); }
+            get { return _subcomponents.Max(kv => kv.Key); }
         }
 
         /// <summary>
@@ -72,11 +72,11 @@ namespace NextLevelSeven.Building.Elements
             get
             {
                 return new WrapperEnumerable<string>(index => this[index].Value,
-                    (index, data) => Subcomponent(index, data),
+                    (index, data) => SetSubcomponent(index, data),
                     () => ValueCount,
                     1);
             }
-            set { Subcomponents(value.ToArray()); }
+            set { SetSubcomponents(value.ToArray()); }
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                if (_cache.Count == 0)
+                if (_subcomponents.Count == 0)
                 {
                     return null;
                 }
@@ -94,7 +94,7 @@ namespace NextLevelSeven.Building.Elements
                 var index = 1;
                 var result = new StringBuilder();
 
-                foreach (var subcomponent in _cache.OrderBy(i => i.Key))
+                foreach (var subcomponent in _subcomponents.OrderBy(i => i.Key))
                 {
                     while (index < subcomponent.Key)
                     {
@@ -110,7 +110,7 @@ namespace NextLevelSeven.Building.Elements
 
                 return result.ToString();
             }
-            set { Component(value); }
+            set { SetComponent(value); }
         }
 
         /// <summary>
@@ -118,14 +118,14 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         /// <param name="value">New value.</param>
         /// <returns>This ComponentBuilder, for chaining purposes.</returns>
-        public IComponentBuilder Component(string value)
+        public IComponentBuilder SetComponent(string value)
         {
-            _cache.Clear();
+            _subcomponents.Clear();
             var index = 1;
 
             foreach (var subcomponent in value.Split(EncodingConfiguration.SubcomponentDelimiter))
             {
-                Subcomponent(index++, subcomponent);
+                SetSubcomponent(index++, subcomponent);
             }
 
             return this;
@@ -137,7 +137,7 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="subcomponentIndex">Subcomponent index.</param>
         /// <param name="value">New value.</param>
         /// <returns>This ComponentBuilder, for chaining purposes.</returns>
-        public IComponentBuilder Subcomponent(int subcomponentIndex, string value)
+        public IComponentBuilder SetSubcomponent(int subcomponentIndex, string value)
         {
             this[subcomponentIndex].Subcomponent(value);
             return this;
@@ -148,13 +148,13 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         /// <param name="subcomponents">Subcomponent index.</param>
         /// <returns>This ComponentBuilder, for chaining purposes.</returns>
-        public IComponentBuilder Subcomponents(params string[] subcomponents)
+        public IComponentBuilder SetSubcomponents(params string[] subcomponents)
         {
-            _cache.Clear();
+            _subcomponents.Clear();
             var index = 1;
             foreach (var subcomponent in subcomponents)
             {
-                Subcomponent(index++, subcomponent);
+                SetSubcomponent(index++, subcomponent);
             }
             return this;
         }
@@ -165,12 +165,12 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="startIndex">Subcomponent index to begin replacing at.</param>
         /// <param name="subcomponents">Values to replace with.</param>
         /// <returns>This ComponentBuilder, for chaining purposes.</returns>
-        public IComponentBuilder Subcomponents(int startIndex, params string[] subcomponents)
+        public IComponentBuilder SetSubcomponents(int startIndex, params string[] subcomponents)
         {
             var index = startIndex;
             foreach (var subcomponent in subcomponents)
             {
-                Subcomponent(index++, subcomponent);
+                SetSubcomponent(index++, subcomponent);
             }
             return this;
         }
@@ -240,7 +240,21 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Element at index.</returns>
         protected override IElement GetGenericElement(int index)
         {
-            return _cache[index];
+            return _subcomponents[index];
+        }
+
+        /// <summary>
+        ///     Get this element's subcomponents.
+        /// </summary>
+        IEnumerable<ISubcomponent> IComponent.Subcomponents
+        {
+            get
+            {
+                return new WrapperEnumerable<ISubcomponent>(index => this[index],
+                    (index, data) => { },
+                    () => ValueCount,
+                    1);
+            }
         }
     }
 }

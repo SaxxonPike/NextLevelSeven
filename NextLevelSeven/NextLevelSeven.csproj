@@ -106,8 +106,6 @@
     <Compile Include="Native\Dividers\StringDividerEnumerator.cs" />
     <Compile Include="Native\Dividers\StringDividerOperations.cs" />
     <Compile Include="Native\Elements\NativeElement.cs" />
-    <Compile Include="Native\Elements\NativeElementEnumerable.cs" />
-    <Compile Include="Native\Elements\NativeElementEnumerator.cs" />
     <Compile Include="Core\Encoding\EncodingConfigurationBase.cs" />
     <Compile Include="Native\Elements\NativeEncodingField.cs" />
     <Compile Include="Native\Elements\NativeField.cs" />
@@ -124,7 +122,6 @@
     <Compile Include="Native\Dividers\StringDivider.cs" />
     <Compile Include="Native\Dividers\StringDivision.cs" />
     <Compile Include="Native\Dividers\StringSubDivider.cs" />
-    <Compile Include="Native\Elements\NativeSegmentEnumerable.cs" />
     <Compile Include="Native\Elements\NativeSubcomponent.cs" />
     <Compile Include="Native\Dividers\ProxyStringDivider.cs" />
     <Compile Include="Diagnostics\ErrorMessages.cs" />

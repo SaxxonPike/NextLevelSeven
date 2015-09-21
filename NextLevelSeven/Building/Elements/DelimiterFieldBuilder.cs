@@ -45,7 +45,7 @@ namespace NextLevelSeven.Building.Elements
         public override IEnumerable<string> Values
         {
             get { return new WrapperEnumerable<string>(index => Value, (index, value) => Value = value, () => 1); }
-            set { Field(string.Concat(value)); }
+            set { SetField(string.Concat(value)); }
         }
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         /// <param name="value">New value.</param>
         /// <returns>This FieldBuilder, for chaining purposes.</returns>
-        public override IFieldBuilder Field(string value)
+        public override IFieldBuilder SetField(string value)
         {
             Value = value;
             return this;
@@ -82,7 +82,7 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="repetition"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public override IFieldBuilder FieldRepetition(int repetition, string value)
+        public override IFieldBuilder SetFieldRepetition(int repetition, string value)
         {
             if (repetition > 1)
             {

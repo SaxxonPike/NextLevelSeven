@@ -15,7 +15,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>
         ///     Descendant builders.
         /// </summary>
-        private readonly IndexedCache<int, ComponentBuilder> _cache;
+        private readonly IndexedCache<int, ComponentBuilder> _components;
 
         /// <summary>
         ///     Create a repetition builder using the specified encoding configuration.
@@ -26,7 +26,7 @@ namespace NextLevelSeven.Building.Elements
         internal RepetitionBuilder(BuilderBase builder, int index, string value = null)
             : base(builder, index)
         {
-            _cache = new IndexedCache<int, ComponentBuilder>(CreateComponentBuilder);
+            _components = new IndexedCache<int, ComponentBuilder>(CreateComponentBuilder);
             if (value != null)
             {
                 Value = value;
@@ -40,7 +40,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Component builder for the specified index.</returns>
         public new IComponentBuilder this[int index]
         {
-            get { return _cache[index]; }
+            get { return _components[index]; }
         }
 
         private ComponentBuilder CreateComponentBuilder(int index)
@@ -53,7 +53,7 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         public override int ValueCount
         {
-            get { return _cache.Max(kv => kv.Key); }
+            get { return _components.Max(kv => kv.Key); }
         }
 
         /// <summary>
@@ -63,12 +63,12 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                return new WrapperEnumerable<string>(index => _cache[index].Value,
-                    (index, data) => Component(index, data),
+                return new WrapperEnumerable<string>(index => _components[index].Value,
+                    (index, data) => SetComponent(index, data),
                     () => ValueCount,
                     1);
             }
-            set { Components(value.ToArray()); }
+            set { SetComponents(value.ToArray()); }
         }
 
         /// <summary>
@@ -78,7 +78,7 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                if (_cache.Count == 0)
+                if (_components.Count == 0)
                 {
                     return null;
                 }
@@ -86,7 +86,7 @@ namespace NextLevelSeven.Building.Elements
                 var index = 1;
                 var result = new StringBuilder();
 
-                foreach (var component in _cache.OrderBy(i => i.Key))
+                foreach (var component in _components.OrderBy(i => i.Key))
                 {
                     while (index < component.Key)
                     {
@@ -102,7 +102,7 @@ namespace NextLevelSeven.Building.Elements
 
                 return result.ToString();
             }
-            set { FieldRepetition(value); }
+            set { SetFieldRepetition(value); }
         }
 
         /// <summary>
@@ -111,9 +111,9 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="componentIndex">Component index.</param>
         /// <param name="value">New value.</param>
         /// <returns>This RepetitionBuilder, for chaining purposes.</returns>
-        public IRepetitionBuilder Component(int componentIndex, string value)
+        public IRepetitionBuilder SetComponent(int componentIndex, string value)
         {
-            _cache[componentIndex].Component(value);
+            _components[componentIndex].SetComponent(value);
             return this;
         }
 
@@ -122,13 +122,13 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         /// <param name="components">Values to replace with.</param>
         /// <returns>This RepetitionBuilder, for chaining purposes.</returns>
-        public IRepetitionBuilder Components(params string[] components)
+        public IRepetitionBuilder SetComponents(params string[] components)
         {
-            _cache.Clear();
+            _components.Clear();
             var index = 1;
             foreach (var component in components)
             {
-                Component(index++, component);
+                SetComponent(index++, component);
             }
             return this;
         }
@@ -139,12 +139,12 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="startIndex">Component index to begin replacing at.</param>
         /// <param name="components">Values to replace with.</param>
         /// <returns>This RepetitionBuilder, for chaining purposes.</returns>
-        public IRepetitionBuilder Components(int startIndex, params string[] components)
+        public IRepetitionBuilder SetComponents(int startIndex, params string[] components)
         {
             var index = startIndex;
             foreach (var component in components)
             {
-                Component(index++, component);
+                SetComponent(index++, component);
             }
             return this;
         }
@@ -154,15 +154,15 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         /// <param name="value"></param>
         /// <returns>This RepetitionBuilder, for chaining purposes.</returns>
-        public IRepetitionBuilder FieldRepetition(string value)
+        public IRepetitionBuilder SetFieldRepetition(string value)
         {
             if (value == null)
             {
-                _cache.Clear();
+                _components.Clear();
             }
             else
             {
-                Components(value.Split(ComponentDelimiter));
+                SetComponents(value.Split(ComponentDelimiter));
             }
             return this;
         }
@@ -174,9 +174,9 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="subcomponentIndex">Subcomponent index.</param>
         /// <param name="value">New value.</param>
         /// <returns>This RepetitionBuilder, for chaining purposes.</returns>
-        public IRepetitionBuilder Subcomponent(int componentIndex, int subcomponentIndex, string value)
+        public IRepetitionBuilder SetSubcomponent(int componentIndex, int subcomponentIndex, string value)
         {
-            _cache[componentIndex].Subcomponent(subcomponentIndex, value);
+            _components[componentIndex].SetSubcomponent(subcomponentIndex, value);
             return this;
         }
 
@@ -186,9 +186,9 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="componentIndex">Component index.</param>
         /// <param name="subcomponents">Subcomponent index.</param>
         /// <returns>This RepetitionBuilder, for chaining purposes.</returns>
-        public IRepetitionBuilder Subcomponents(int componentIndex, params string[] subcomponents)
+        public IRepetitionBuilder SetSubcomponents(int componentIndex, params string[] subcomponents)
         {
-            _cache[componentIndex].Subcomponents(subcomponents);
+            _components[componentIndex].SetSubcomponents(subcomponents);
             return this;
         }
 
@@ -199,9 +199,9 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="startIndex">Subcomponent index to begin replacing at.</param>
         /// <param name="subcomponents">Values to replace with.</param>
         /// <returns>This RepetitionBuilder, for chaining purposes.</returns>
-        public IRepetitionBuilder Subcomponents(int componentIndex, int startIndex, params string[] subcomponents)
+        public IRepetitionBuilder SetSubcomponents(int componentIndex, int startIndex, params string[] subcomponents)
         {
-            _cache[componentIndex].Subcomponents(startIndex, subcomponents);
+            _components[componentIndex].SetSubcomponents(startIndex, subcomponents);
             return this;
         }
 
@@ -215,7 +215,7 @@ namespace NextLevelSeven.Building.Elements
         {
             return component < 0
                 ? Value
-                : _cache[component].GetValue(subcomponent);
+                : _components[component].GetValue(subcomponent);
         }
 
         /// <summary>
@@ -228,32 +228,65 @@ namespace NextLevelSeven.Building.Elements
         {
             return component < 0
                 ? Values
-                : _cache[component].GetValues(subcomponent);
+                : _components[component].GetValues(subcomponent);
         }
 
+        /// <summary>
+        ///     Deep clone this element.
+        /// </summary>
+        /// <returns>Clone of the element.</returns>
         public override IElement Clone()
         {
             return new RepetitionBuilder(Ancestor, Index, Value);
         }
 
+        /// <summary>
+        ///     Deep clone this field repetition.
+        /// </summary>
+        /// <returns>Clone of the repetition.</returns>
         IRepetition IRepetition.Clone()
         {
             return new RepetitionBuilder(Ancestor, Index, Value);
         }
 
+        /// <summary>
+        ///     Get a codec which allows interpretation of the value as other types.
+        /// </summary>
         public override IEncodedTypeConverter As
         {
             get { return new BuilderCodec(this); }
         }
 
+        /// <summary>
+        ///     Get this element's value delimiter.
+        /// </summary>
         public override char Delimiter
         {
             get { return ComponentDelimiter; }
         }
 
+        /// <summary>
+        ///     Get the descendant element at the specified index.
+        /// </summary>
+        /// <param name="index">Index of the element.</param>
+        /// <returns>Element at the index.</returns>
         protected override IElement GetGenericElement(int index)
         {
-            return _cache[index];
+            return _components[index];
+        }
+
+        /// <summary>
+        ///     Get this element's components.
+        /// </summary>
+        IEnumerable<IComponent> IRepetition.Components
+        {
+            get
+            {
+                return new WrapperEnumerable<IComponent>(index => this[index],
+                    (index, data) => { },
+                    () => ValueCount,
+                    1);
+            }
         }
     }
 }

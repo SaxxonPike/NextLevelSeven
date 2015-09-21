@@ -146,5 +146,30 @@ namespace NextLevelSeven.Native.Elements
         {
             return new NativeRepetition(Value, EncodingConfiguration) {Index = Index};
         }
+
+        /// <summary>
+        ///     Get all components.
+        /// </summary>
+        public IEnumerable<INativeComponent> Components
+        {
+            get
+            {
+                return new WrapperEnumerable<INativeComponent>(i => _cache[i],
+                    (i, v) => { },
+                    () => ValueCount,
+                    1);
+            }
+        }
+
+        /// <summary>
+        ///     Get all components.
+        /// </summary>
+        IEnumerable<IComponent> IRepetition.Components
+        {
+            get
+            {
+                return Components;
+            }
+        }
     }
 }

@@ -149,5 +149,30 @@ namespace NextLevelSeven.Native.Elements
         {
             return new NativeField(Value, EncodingConfiguration) {Index = Index};
         }
+
+        /// <summary>
+        ///     Get all field repetitions.
+        /// </summary>
+        public IEnumerable<INativeRepetition> Repetitions
+        {
+            get
+            {
+                return new WrapperEnumerable<INativeRepetition>(i => _cache[i],
+                    (i, v) => { },
+                    () => ValueCount,
+                    1);
+            }
+        }
+
+        /// <summary>
+        ///     Get all field repetitions.
+        /// </summary>
+        IEnumerable<IRepetition> IField.Repetitions
+        {
+            get
+            {
+                return Repetitions;
+            }
+        }
     }
 }
