@@ -352,7 +352,7 @@ namespace NextLevelSeven.Native.Elements
         /// <returns>Descendant string divider.</returns>
         protected virtual IStringDivider GetDescendantDivider(NativeElement ancestor, int index)
         {
-            return new StringSubDivider((StringDividerBase)ancestor.DescendantDivider, Delimiter, index);
+            return new StringSubDivider(ancestor.DescendantDivider, Delimiter, index);
         }
 
         /// <summary>

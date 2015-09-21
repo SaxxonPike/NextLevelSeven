@@ -18,7 +18,7 @@ namespace NextLevelSeven.Native.Dividers
         /// <param name="baseDivider">Divider to reference.</param>
         /// <param name="delimiter">Delimiter to search for.</param>
         /// <param name="parentIndex">Index within the parent to reference.</param>
-        public StringSubDivider(StringDividerBase baseDivider, char delimiter, int parentIndex)
+        public StringSubDivider(IStringDivider baseDivider, char delimiter, int parentIndex)
         {
             BaseDivider = baseDivider;
             Index = parentIndex;
@@ -31,7 +31,7 @@ namespace NextLevelSeven.Native.Dividers
         /// <param name="baseDivider">Divider to reference.</param>
         /// <param name="baseDividerOffset">Index of the character to use as the delimiter from the subdivided value.</param>
         /// <param name="parentIndex">Index within the parent to reference.</param>
-        public StringSubDivider(StringDividerBase baseDivider, int baseDividerOffset, int parentIndex)
+        public StringSubDivider(IStringDivider baseDivider, int baseDividerOffset, int parentIndex)
         {
             BaseDivider = baseDivider;
             Index = parentIndex;
@@ -41,7 +41,7 @@ namespace NextLevelSeven.Native.Dividers
         /// <summary>
         ///     Parent divider.
         /// </summary>
-        private StringDividerBase BaseDivider { get; set; }
+        private IStringDivider BaseDivider { get; set; }
 
         /// <summary>
         ///     Get or set the substring at the specified index.
