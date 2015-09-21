@@ -33,19 +33,19 @@ namespace NextLevelSeven.Test.Parsing
         [TestMethod]
         public void Message_ThrowsOnNullData()
         {
-            It.Throws<MessageException>(() => Message.Parse((string) null));
+            It.Throws<ElementException>(() => Message.Parse((string)null));
         }
 
         [TestMethod]
         public void Message_ThrowsOnEmptyData()
         {
-            It.Throws<MessageException>(() => Message.Parse(string.Empty));
+            It.Throws<ElementException>(() => Message.Parse(string.Empty));
         }
 
         [TestMethod]
         public void Message_ThrowsOnShortData()
         {
-            It.Throws<MessageException>(() => Message.Parse("MSH|123"));
+            It.Throws<ElementException>(() => Message.Parse("MSH|123"));
         }
 
         [TestMethod]

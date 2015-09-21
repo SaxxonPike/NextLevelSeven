@@ -99,7 +99,6 @@
     <Compile Include="Core\Properties\IIdentity.cs" />
     <Compile Include="Parsing\ISegmentParser.cs" />
     <Compile Include="Parsing\Elements\MessageParserEncodingConfiguration.cs" />
-    <Compile Include="Core\MessageException.cs" />
     <Compile Include="Parsing\MessageParserExtensions.cs" />
     <Compile Include="Core\Encoding\ProxyEncodingConfiguration.cs" />
     <Compile Include="Building\Elements\BuilderEncodingConfiguration.cs" />

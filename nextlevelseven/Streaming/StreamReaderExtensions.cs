@@ -23,7 +23,7 @@ namespace NextLevelSeven.Streaming
             }
             catch (Exception ex)
             {
-                if (ex is MessageException || ex is ElementException)
+                if (ex is ElementException)
                 {
                     return null;
                 }
@@ -53,7 +53,7 @@ namespace NextLevelSeven.Streaming
                 }
                 catch (Exception ex)
                 {
-                    if (ex is MessageException || ex is ElementException)
+                    if (ex is ElementException)
                     {
                         messages.Add(null);
                     }

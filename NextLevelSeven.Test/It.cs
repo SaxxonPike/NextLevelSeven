@@ -13,7 +13,7 @@ namespace NextLevelSeven.Test
             }
             catch (Exception ex)
             {
-                if (ex.GetType() == typeof (TException))
+                if (ex is TException)
                 {
                     return;
                 }

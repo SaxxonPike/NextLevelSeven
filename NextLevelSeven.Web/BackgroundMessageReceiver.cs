@@ -121,7 +121,7 @@ namespace NextLevelSeven.Web
                             }
                             catch (Exception ex)
                             {
-                                if (!(ex is MessageException || ex is ElementException))
+                                if (!(ex is ElementException))
                                 {
                                     throw;
                                 }
