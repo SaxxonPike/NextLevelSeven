@@ -11,6 +11,11 @@ namespace NextLevelSeven.Native.Dividers
         /// </summary>
         public event EventHandler ValueChanged;
 
+        /// <summary>
+        ///     Get or set the string division at the specified index.
+        /// </summary>
+        /// <param name="index">Index of the string.</param>
+        /// <returns></returns>
         public abstract string this[int index] { get; set; }
 
         public abstract char[] BaseValue { get; }

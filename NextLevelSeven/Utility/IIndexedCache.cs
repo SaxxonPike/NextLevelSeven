@@ -7,7 +7,7 @@ namespace NextLevelSeven.Utility
     /// </summary>
     /// <typeparam name="TKey">Type of key.</typeparam>
     /// <typeparam name="TValue">Type of value.</typeparam>
-    public interface IIndexedCache<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>>
+    public interface IIndexedCache<TKey, TValue> : IEnumerable<KeyValuePair<TKey, TValue>> where TValue : class
     {
         /// <summary>
         ///     Get or set an item with the specified key.

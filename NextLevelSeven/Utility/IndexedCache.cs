@@ -9,7 +9,7 @@ namespace NextLevelSeven.Utility
     /// </summary>
     /// <typeparam name="TKey"></typeparam>
     /// <typeparam name="TValue"></typeparam>
-    internal sealed class IndexedCache<TKey, TValue> : IIndexedCache<TKey, TValue>
+    internal sealed class IndexedCache<TKey, TValue> : IIndexedCache<TKey, TValue> where TValue : class
     {
         /// <summary>
         ///     Internal cache.

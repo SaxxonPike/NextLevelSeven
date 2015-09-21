@@ -16,7 +16,7 @@ namespace NextLevelSeven.Test
         /// <typeparam name="TValue">Type of value.</typeparam>
         /// <param name="factoryMethod">Method that will create new values.</param>
         /// <returns>Indexed cache of the specified types and the specified factory.</returns>
-        static public IIndexedCache<TKey, TValue> GetIndexedCache<TKey, TValue>(Func<TKey, TValue> factoryMethod)
+        static public IIndexedCache<TKey, TValue> GetIndexedCache<TKey, TValue>(Func<TKey, TValue> factoryMethod) where TValue : class
         {
             return new IndexedCache<TKey, TValue>(new ProxyFactory<TKey, TValue>(factoryMethod));
         }
