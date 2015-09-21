@@ -83,15 +83,13 @@ namespace NextLevelSeven.Web
         /// <param name="disposeAll">If true, clean up managed resources also.</param>
         protected virtual void Dispose(bool disposeAll)
         {
-            if (disposeAll)
+            if (!disposeAll) return;
+            if (Task != null)
             {
-                if (Task != null)
-                {
-                    Stop();
-                    Task = null;
-                }
-                Disposed = true;
+                Stop();
+                Task = null;
             }
+            Disposed = true;
         }
 
         /// <summary>

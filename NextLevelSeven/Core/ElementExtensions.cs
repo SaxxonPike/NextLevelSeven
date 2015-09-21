@@ -376,7 +376,7 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        ///     Copy the contents of this message to a new native HL7 message.
+        ///     Copy the contents of this message to a new HL7 message parser.
         /// </summary>
         /// <param name="message">Message to get data from.</param>
         /// <returns>Converted message.</returns>

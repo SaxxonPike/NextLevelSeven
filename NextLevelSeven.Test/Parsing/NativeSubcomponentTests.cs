@@ -1,7 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
 
-namespace NextLevelSeven.Test.Native
+namespace NextLevelSeven.Test.Parsing
 {
     [TestClass]
     public class NativeSubcomponentTests : NativeTestFixture

@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
 using NextLevelSeven.Parsing;
 
-namespace NextLevelSeven.Test.Native
+namespace NextLevelSeven.Test.Parsing
 {
     [TestClass]
     public class NativeMessageExtensionsTests : NativeTestFixture

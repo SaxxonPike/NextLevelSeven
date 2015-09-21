@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NextLevelSeven.Test.Native
+namespace NextLevelSeven.Test.Parsing
 {
     [TestClass]
     public class NativeTestFixture : PerformanceTestFixture
