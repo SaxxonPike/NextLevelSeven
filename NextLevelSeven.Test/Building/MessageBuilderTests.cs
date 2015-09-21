@@ -7,7 +7,7 @@ using NextLevelSeven.Core;
 namespace NextLevelSeven.Test.Building
 {
     [TestClass]
-    sealed public class MessageBuilderTests : BuildingTestFixture
+    public sealed class MessageBuilderTests : BuildingTestFixture
     {
         [TestMethod]
         public void MessageBuilder_CanGetValue()

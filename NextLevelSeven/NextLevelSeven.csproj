@@ -116,7 +116,6 @@
     <Compile Include="Core\Codec\IIndexedEncodedTypeConverter.cs" />
     <Compile Include="Parsing\IMessageParser.cs" />
     <Compile Include="Parsing\Elements\MessageParser.cs" />
-    <Compile Include="Parsing\Elements\FieldParserWithoutRepetitions.cs" />
     <Compile Include="Parsing\Elements\RepetitionParser.cs" />
     <Compile Include="Parsing\Elements\SegmentParser.cs" />
     <Compile Include="Parsing\Dividers\StringDivider.cs" />

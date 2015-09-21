@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace NextLevelSeven.Native.Dividers
+namespace NextLevelSeven.Parsing.Dividers
 {
     /// <summary>
     ///     Common interface for string dividers.

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using NextLevelSeven.Native;
-using NextLevelSeven.Native.Elements;
+using NextLevelSeven.Parsing;
+using NextLevelSeven.Parsing.Elements;
 
 namespace NextLevelSeven.Streaming
 {

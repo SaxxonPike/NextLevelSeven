@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using NextLevelSeven.Core;
-using NextLevelSeven.Routing;
 
-namespace NextLevelSeven.Native
+namespace NextLevelSeven.Parsing
 {
     /// <summary>
     ///     Extends the functionality of top-level HL7 message elements.

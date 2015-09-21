@@ -4,7 +4,7 @@ using NextLevelSeven.Core.Encoding;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Utility;
 
-namespace NextLevelSeven.Native.Elements
+namespace NextLevelSeven.Parsing.Elements
 {
     /// <summary>
     ///     Represents a subcomponent-level element in an HL7 message.

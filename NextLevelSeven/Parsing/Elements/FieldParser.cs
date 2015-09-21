@@ -5,7 +5,7 @@ using NextLevelSeven.Core.Encoding;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Utility;
 
-namespace NextLevelSeven.Native.Elements
+namespace NextLevelSeven.Parsing.Elements
 {
     /// <summary>
     ///     Represents a field-level element in an HL7 message.
@@ -15,7 +15,7 @@ namespace NextLevelSeven.Native.Elements
         /// <summary>
         ///     Internal repetition cache.
         /// </summary>
-        private readonly IndexedCache<int, RepetitionParser> _cache;
+        private readonly IndexedCache<int, RepetitionParser> _repetitions;
 
         /// <summary>
         ///     Create a field with the specified ancestor and indices.
@@ -26,7 +26,7 @@ namespace NextLevelSeven.Native.Elements
         public FieldParser(ElementParser ancestor, int parentIndex, int externalIndex)
             : base(ancestor, parentIndex, externalIndex)
         {
-            _cache = new IndexedCache<int, RepetitionParser>(CreateRepetition);
+            _repetitions = new IndexedCache<int, RepetitionParser>(CreateRepetition);
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace NextLevelSeven.Native.Elements
         public FieldParser(string value, EncodingConfigurationBase config)
             : base(value, config)
         {
-            _cache = new IndexedCache<int, RepetitionParser>(CreateRepetition);
+            _repetitions = new IndexedCache<int, RepetitionParser>(CreateRepetition);
         }
 
         /// <summary>
@@ -111,7 +111,7 @@ namespace NextLevelSeven.Native.Elements
         {
             get
             {
-                return new WrapperEnumerable<IRepetitionParser>(i => _cache[i],
+                return new WrapperEnumerable<IRepetitionParser>(i => _repetitions[i],
                     (i, v) => { },
                     () => ValueCount,
                     1);
@@ -143,7 +143,7 @@ namespace NextLevelSeven.Native.Elements
         /// <returns>Element at the specified index.</returns>
         protected IRepetitionParser GetRepetition(int index)
         {
-            return _cache[index];
+            return _repetitions[index];
         }
 
         /// <summary>
@@ -158,9 +158,7 @@ namespace NextLevelSeven.Native.Elements
                 throw new ArgumentException(ErrorMessages.Get(ErrorCode.RepetitionIndexMustBeZeroOrGreater));
             }
 
-            return index == 0
-                ? new RepetitionParser(new FieldParserWithoutRepetitions(Ancestor, ParentIndex, Index), 0, 0)
-                : new RepetitionParser(this, index - 1, index);
+            return new RepetitionParser(this, index - 1, index);
         }
 
         /// <summary>

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Security.Principal;
+﻿using System.Security.Principal;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NextLevelSeven.Test.Web
@@ -20,7 +19,7 @@ namespace NextLevelSeven.Test.Web
         {
             // ReSharper disable AssignNullToNotNullAttribute
             return (new WindowsPrincipal(WindowsIdentity.GetCurrent()))
-                    .IsInRole(WindowsBuiltInRole.Administrator);
+                .IsInRole(WindowsBuiltInRole.Administrator);
             // ReSharper restore AssignNullToNotNullAttribute
         }
     }

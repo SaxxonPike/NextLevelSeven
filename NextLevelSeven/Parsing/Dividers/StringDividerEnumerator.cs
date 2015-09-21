@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace NextLevelSeven.Native.Dividers
+namespace NextLevelSeven.Parsing.Dividers
 {
     /// <summary>
     ///     An enumerator for implementations of IStringDivider.

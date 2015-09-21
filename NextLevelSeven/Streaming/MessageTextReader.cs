@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
-using NextLevelSeven.Native;
+using NextLevelSeven.Parsing;
 
 namespace NextLevelSeven.Streaming
 {

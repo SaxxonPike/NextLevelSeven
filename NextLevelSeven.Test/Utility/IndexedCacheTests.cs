@@ -7,7 +7,7 @@ namespace NextLevelSeven.Test.Utility
     [TestClass]
     public class IndexedCacheTests : UtilityTestFixture
     {
-        static private IIndexedCache<int, string> InitializeCache(Func<int, string> factory)
+        private static IIndexedCache<int, string> InitializeCache(Func<int, string> factory)
         {
             return UtilityMocks.GetIndexedCache(factory);
         }
@@ -23,7 +23,8 @@ namespace NextLevelSeven.Test.Utility
         public void IndexedCache_RunsFactoryWhenNeeded()
         {
             var factoryHits = 0;
-            var cache = InitializeCache(i => {
+            var cache = InitializeCache(i =>
+            {
                 factoryHits++;
                 return factoryHits.ToString();
             });
@@ -98,6 +99,5 @@ namespace NextLevelSeven.Test.Utility
             Assert.IsFalse(cache.Remove(3));
             Assert.AreEqual(cache.Count, 3);
         }
-
     }
 }

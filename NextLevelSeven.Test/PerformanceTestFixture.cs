@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace NextLevelSeven.Test
 {
     [TestClass]
-    abstract public class PerformanceTestFixture
+    public abstract class PerformanceTestFixture
     {
         private long _frequency;
         private Stopwatch _stopwatch;
@@ -40,7 +40,7 @@ namespace NextLevelSeven.Test
 
         private static void WaitForGarbageCollection()
         {
-            GC.WaitForPendingFinalizers();            
+            GC.WaitForPendingFinalizers();
         }
     }
 }

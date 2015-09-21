@@ -1,7 +1,8 @@
 ﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NextLevelSeven.Core;
 using NextLevelSeven.Generation;
-using NextLevelSeven.Native;
+using NextLevelSeven.Parsing;
 
 namespace NextLevelSeven.Test.Generation
 {
@@ -9,7 +10,7 @@ namespace NextLevelSeven.Test.Generation
     public class AckMessageGeneratorTests : GenerationTestFixture
     {
         private string _controlId;
-        private IMessageParser _message;
+        private IMessage _message;
         private string _trigger;
         private string _type;
 
@@ -61,7 +62,7 @@ namespace NextLevelSeven.Test.Generation
         public void AckMessageGenerator_ContainsMsa()
         {
             var ack = AckMessageGenerator.GenerateSuccess(_message);
-            Assert.IsNotNull(ack["MSA"].FirstOrDefault());
+            Assert.IsNotNull(ack.Segments.OfType("MSA").FirstOrDefault());
         }
 
         [TestMethod]
@@ -82,7 +83,7 @@ namespace NextLevelSeven.Test.Generation
         public void AckMessageGenerator_MatchesControlId()
         {
             var ack = AckMessageGenerator.GenerateSuccess(_message);
-            Assert.AreEqual(_controlId, ack["MSA"].First()[2].Value);
+            Assert.AreEqual(_controlId, ack.Segments.OfType("MSA").First()[2].Value);
         }
     }
 }

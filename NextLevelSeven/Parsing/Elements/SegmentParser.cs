@@ -6,7 +6,7 @@ using NextLevelSeven.Core.Encoding;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Utility;
 
-namespace NextLevelSeven.Native.Elements
+namespace NextLevelSeven.Parsing.Elements
 {
     /// <summary>
     ///     Represents a segment-level element in an HL7 message.
@@ -16,18 +16,18 @@ namespace NextLevelSeven.Native.Elements
         /// <summary>
         ///     Internal component cache.
         /// </summary>
-        private readonly IndexedCache<int, FieldParser> _cache;
+        private readonly IndexedCache<int, FieldParser> _fields;
 
         public SegmentParser(ElementParser ancestor, int parentIndex, int externalIndex)
             : base(ancestor, parentIndex, externalIndex)
         {
-            _cache = new IndexedCache<int, FieldParser>(CreateField);
+            _fields = new IndexedCache<int, FieldParser>(CreateField);
         }
 
         private SegmentParser(string value, EncodingConfigurationBase config)
             : base(value, config)
         {
-            _cache = new IndexedCache<int, FieldParser>(CreateField);
+            _fields = new IndexedCache<int, FieldParser>(CreateField);
         }
 
         private bool IsMsh
@@ -37,7 +37,7 @@ namespace NextLevelSeven.Native.Elements
 
         IFieldParser ISegmentParser.this[int index]
         {
-            get { return _cache[index]; }
+            get { return _fields[index]; }
         }
 
         public override char Delimiter
@@ -104,7 +104,7 @@ namespace NextLevelSeven.Native.Elements
         {
             return field < 0
                 ? Value
-                : _cache[field].GetValue(repetition, component, subcomponent);
+                : _fields[field].GetValue(repetition, component, subcomponent);
         }
 
         public IEnumerable<string> GetValues(int field = -1, int repetition = -1, int component = -1,
@@ -112,7 +112,7 @@ namespace NextLevelSeven.Native.Elements
         {
             return field < 0
                 ? Values
-                : _cache[field].GetValues(repetition, component, subcomponent);
+                : _fields[field].GetValues(repetition, component, subcomponent);
         }
 
         public override IElement Clone()
@@ -150,7 +150,7 @@ namespace NextLevelSeven.Native.Elements
         {
             get
             {
-                return new WrapperEnumerable<IFieldParser>(i => _cache[i],
+                return new WrapperEnumerable<IFieldParser>(i => _fields[i],
                     (i, v) => { },
                     () => ValueCount,
                     1);
@@ -167,7 +167,7 @@ namespace NextLevelSeven.Native.Elements
 
         public override IElementParser GetDescendant(int index)
         {
-            return _cache[index];
+            return _fields[index];
         }
 
         /// <summary>

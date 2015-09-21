@@ -2,7 +2,7 @@
 using System.IO;
 using System.Net;
 using System.Text;
-using NextLevelSeven.Native;
+using NextLevelSeven.Parsing;
 using NextLevelSeven.Web;
 
 namespace NextLevelSeven.Test.Web

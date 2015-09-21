@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using NextLevelSeven.Core;
 
-namespace NextLevelSeven.Native
+namespace NextLevelSeven.Parsing
 {
     public interface IFieldParser : IElementParser, IField
     {

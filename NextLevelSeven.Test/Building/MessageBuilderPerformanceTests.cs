@@ -5,7 +5,7 @@ using NextLevelSeven.Core;
 namespace NextLevelSeven.Test.Building
 {
     [TestClass]
-    sealed public class MessageBuilderPerformanceTests : BuildingTestFixture
+    public sealed class MessageBuilderPerformanceTests : BuildingTestFixture
     {
         [TestMethod]
         public void MessageBuilder_Timely_CanBuildSmallMessages()

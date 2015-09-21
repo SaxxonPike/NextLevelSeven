@@ -4,7 +4,7 @@ using NextLevelSeven.Core;
 namespace NextLevelSeven.Test.Building
 {
     [TestClass]
-    sealed public class ComponentBuilderTests : BuildingTestFixture
+    public sealed class ComponentBuilderTests : BuildingTestFixture
     {
         [TestMethod]
         public void ComponentBuilder_CanGetValue()

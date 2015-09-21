@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using NextLevelSeven.Conversion;
 using NextLevelSeven.Core.Codec;
 
-namespace NextLevelSeven.Native.Elements
+namespace NextLevelSeven.Parsing.Elements
 {
     /// <summary>
     ///     Provides HL7 value conversion.

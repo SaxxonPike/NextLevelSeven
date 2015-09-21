@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using NextLevelSeven.Core;
 
-namespace NextLevelSeven.Native
+namespace NextLevelSeven.Parsing
 {
     /// <summary>
     ///     Common interface for the second depth level of an HL7 message, which contains segment type information.

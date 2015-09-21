@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace NextLevelSeven.Native.Elements
+namespace NextLevelSeven.Parsing.Elements
 {
     /// <summary>
     ///     Represents the special field at MSH-2, which contains encoding characters for a message.

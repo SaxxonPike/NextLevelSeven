@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
-using NextLevelSeven.Native;
+using NextLevelSeven.Parsing;
 
 namespace NextLevelSeven.Test.Native
 {
@@ -33,7 +33,7 @@ namespace NextLevelSeven.Test.Native
         [TestMethod]
         public void Message_ThrowsOnNullData()
         {
-            It.Throws<MessageException>(() => Message.Parse((string)null));
+            It.Throws<MessageException>(() => Message.Parse((string) null));
         }
 
         [TestMethod]
@@ -76,7 +76,7 @@ namespace NextLevelSeven.Test.Native
         {
             var message = Message.Parse(ExampleMessages.Standard);
             var pid = message["PID"].First();
-            Assert.AreEqual("Colon", pid[5][0][1].Value, "Patient name is incorrect.");
+            Assert.AreEqual("Colon", pid[5][1][1].Value, "Patient name is incorrect.");
         }
 
         [TestMethod]
@@ -91,8 +91,6 @@ namespace NextLevelSeven.Test.Native
         {
             var message = Message.Parse(ExampleMessages.RepeatingName);
             var pid = message["PID"].First();
-            Assert.AreEqual("Lincoln^Abe~Bro~Dude", pid[5][0].Value,
-                "Retrieving full field data using index 0 returned incorrect data.");
             Assert.AreEqual("Lincoln^Abe", pid[5][1].Value, "Retrieving first repetition returned incorrect data.");
             Assert.AreEqual("Bro", pid[5][2].Value, "Retrieving second repetition returned incorrect data.");
             Assert.AreEqual("Dude", pid[5][3].Value, "Retrieving third repetition returned incorrect data.");
@@ -102,15 +100,15 @@ namespace NextLevelSeven.Test.Native
         public void Message_RetrievalMethodsAreIdentical()
         {
             var message = Message.Parse(ExampleMessages.Standard);
-            Assert.AreEqual(message.GetField(1).Value, message[1].Value,
+            Assert.AreEqual(message.GetValue(1), message[1].Value,
                 "Retrieval methods differ at the segment level.");
-            Assert.AreEqual(message.GetField(1, 3).Value, message[1][3].Value,
+            Assert.AreEqual(message.GetValue(1, 3), message[1][3].Value,
                 "Retrieval methods differ at the field level.");
-            Assert.AreEqual(message.GetField(1, 3, 1).Value, message[1][3][1].Value,
+            Assert.AreEqual(message.GetValue(1, 3, 1), message[1][3][1].Value,
                 "Retrieval methods differ at the repetition level.");
-            Assert.AreEqual(message.GetField(1, 3, 1, 1).Value, message[1][3][1][1].Value,
+            Assert.AreEqual(message.GetValue(1, 3, 1, 1), message[1][3][1][1].Value,
                 "Retrieval methods differ at the component level.");
-            Assert.AreEqual(message.GetField(1, 3, 1, 1, 1).Value, message[1][3][1][1][1].Value,
+            Assert.AreEqual(message.GetValue(1, 3, 1, 1, 1), message[1][3][1][1][1].Value,
                 "Retrieval methods differ at the component level.");
         }
 
@@ -328,7 +326,7 @@ namespace NextLevelSeven.Test.Native
             var time = Measure.ExecutionTime(() =>
             {
                 var message = Message.Parse(ExampleMessages.A04);
-                var dataField = message["IN1"].First()[7][0][1];
+                var dataField = message["IN1"].First()[7][1][1];
                 Assert.AreEqual("MUTUAL OF OMAHA", dataField.Value, @"Parsing IN1-7-1 failed.");
             }, 10000);
             AssertTime.IsWithin(1000, time);
@@ -340,7 +338,7 @@ namespace NextLevelSeven.Test.Native
             var time = Measure.ExecutionTime(() =>
             {
                 var message = Message.Parse(ExampleMessages.MultipleObr);
-                var dataField = message["OBR"].First(s => s[1].Value == "4")[16][0][2];
+                var dataField = message["OBR"].First(s => s[1].Value == "4")[16][1][2];
                 Assert.AreEqual("OLSTAD", dataField.Value, @"Parsing OBR4-16-2 failed.");
             }, 1000);
             AssertTime.IsWithin(1000, time);

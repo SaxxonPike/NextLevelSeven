@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NextLevelSeven.Core;
 
-namespace NextLevelSeven.Native.Dividers
+namespace NextLevelSeven.Parsing.Dividers
 {
     /// <summary>
     ///     A string divider that passes its value through rather than doing any splitting.

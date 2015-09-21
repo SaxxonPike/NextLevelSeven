@@ -1,4 +1,4 @@
-﻿namespace NextLevelSeven.Native.Elements
+﻿namespace NextLevelSeven.Parsing.Elements
 {
     /// <summary>
     ///     Represents the special MSH-1 field, which contains the field delimiter for the rest of the segment.

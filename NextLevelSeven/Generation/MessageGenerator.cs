@@ -1,7 +1,8 @@
 ﻿using System;
+using NextLevelSeven.Building;
 using NextLevelSeven.Core;
-using NextLevelSeven.Native;
-using NextLevelSeven.Native.Elements;
+using NextLevelSeven.Parsing;
+using NextLevelSeven.Parsing.Elements;
 
 namespace NextLevelSeven.Generation
 {
@@ -24,12 +25,12 @@ namespace NextLevelSeven.Generation
         /// <param name="sendingFacility">Sending facility. (MSH-4 app-specific)</param>
         /// <param name="version">Version number. Defaults to 2.3 since statistically it is the most used version. (MSH-12)</param>
         /// <returns></returns>
-        public static IMessageParser Generate(string type, string triggerEvent, string controlId,
+        public static IMessageBuilder Generate(string type, string triggerEvent, string controlId,
             string processingId = "P",
             string receivingApplication = null, string receivingFacility = null, string sendingApplication = null,
             string sendingFacility = null, string version = "2.3")
         {
-            var message = new MessageParser();
+            var message = Message.Build();
             var details = message.Details;
             details.Type = type;
             details.TriggerEvent = triggerEvent;

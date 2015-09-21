@@ -7,14 +7,14 @@ using NextLevelSeven.Core.Properties;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Utility;
 
-namespace NextLevelSeven.Native.Elements
+namespace NextLevelSeven.Parsing.Elements
 {
     /// <summary>
     ///     Represents a textual HL7v2 message.
     /// </summary>
     internal sealed class MessageParser : ElementParser, IMessageParser
     {
-        private readonly IndexedCache<int, SegmentParser> _cache;
+        private readonly IndexedCache<int, SegmentParser> _segments;
 
         /// <summary>
         ///     Internal backing field for encoding configuration.
@@ -31,7 +31,7 @@ namespace NextLevelSeven.Native.Elements
         /// </summary>
         public MessageParser()
         {
-            _cache = new IndexedCache<int, SegmentParser>(CreateSegment);
+            _segments = new IndexedCache<int, SegmentParser>(CreateSegment);
             _encodingConfiguration = new MessageParserEncodingConfiguration(this);
             Value = @"MSH|^~\&|";
         }
@@ -42,7 +42,7 @@ namespace NextLevelSeven.Native.Elements
         /// <param name="message">Message data to interpret.</param>
         public MessageParser(string message)
         {
-            _cache = new IndexedCache<int, SegmentParser>(CreateSegment);
+            _segments = new IndexedCache<int, SegmentParser>(CreateSegment);
             if (message == null)
             {
                 throw new MessageException(ErrorCode.MessageDataMustNotBeNull);
@@ -129,7 +129,7 @@ namespace NextLevelSeven.Native.Elements
         /// <param name="component">Component index.</param>
         /// <param name="subcomponent">Subcomponent index.</param>
         /// <returns>The first occurrence of the specified element.</returns>
-        public IElementParser GetField(int segment, int field = -1, int repetition = -1, int component = -1,
+        public IElementParser GetElement(int segment, int field = -1, int repetition = -1, int component = -1,
             int subcomponent = -1)
         {
             if (field < 0)
@@ -270,7 +270,7 @@ namespace NextLevelSeven.Native.Elements
         {
             get
             {
-                return new WrapperEnumerable<ISegmentParser>(i => _cache[i],
+                return new WrapperEnumerable<ISegmentParser>(i => _segments[i],
                     (i, v) => { },
                     () => ValueCount,
                     1);
@@ -364,7 +364,7 @@ namespace NextLevelSeven.Native.Elements
         /// <returns></returns>
         public ISegmentParser GetSegment(int index)
         {
-            return _cache[index];
+            return _segments[index];
         }
 
         /// <summary>

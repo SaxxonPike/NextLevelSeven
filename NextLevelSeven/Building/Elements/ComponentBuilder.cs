@@ -126,7 +126,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This ComponentBuilder, for chaining purposes.</returns>
         public IComponentBuilder SetSubcomponent(int subcomponentIndex, string value)
         {
-            this[subcomponentIndex].Subcomponent(value);
+            this[subcomponentIndex].SetSubcomponent(value);
             return this;
         }
 

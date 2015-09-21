@@ -1,4 +1,4 @@
-﻿namespace NextLevelSeven.Native.Dividers
+﻿namespace NextLevelSeven.Parsing.Dividers
 {
     /// <summary>
     ///     Contains information about a delimited piece of a string.

@@ -1,7 +1,6 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
-using NextLevelSeven.Native;
 
 namespace NextLevelSeven.Test.Native
 {
@@ -80,7 +79,8 @@ namespace NextLevelSeven.Test.Native
         {
             var message = Message.Parse();
             message[1][3].Value = "\"\"";
-            Assert.AreEqual(null, message[1][3].FormattedValue, @"Value of two double quotes was not interpreted as null.");
+            Assert.AreEqual(null, message[1][3].FormattedValue,
+                @"Value of two double quotes was not interpreted as null.");
             Assert.IsTrue(message[1][3].Exists, @"Explicitly set null value must appear to exist.");
         }
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using NextLevelSeven.Core;
 
-namespace NextLevelSeven.Native
+namespace NextLevelSeven.Parsing
 {
     /// <summary>
     ///     Common interface that represents any one of the HL7v2 message constructs that holds data.

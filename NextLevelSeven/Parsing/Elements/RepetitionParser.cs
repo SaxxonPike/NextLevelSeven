@@ -5,7 +5,7 @@ using NextLevelSeven.Core.Encoding;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Utility;
 
-namespace NextLevelSeven.Native.Elements
+namespace NextLevelSeven.Parsing.Elements
 {
     /// <summary>
     ///     Represents a repetition-level element in an HL7 message.
@@ -15,7 +15,7 @@ namespace NextLevelSeven.Native.Elements
         /// <summary>
         ///     Internal component cache.
         /// </summary>
-        private readonly IndexedCache<int, ComponentParser> _cache;
+        private readonly IndexedCache<int, ComponentParser> _components;
 
         /// <summary>
         ///     Create a repetition with the specified ancestor, ancestor index, and exposed index.
@@ -26,7 +26,7 @@ namespace NextLevelSeven.Native.Elements
         public RepetitionParser(ElementParser ancestor, int parentIndex, int externalIndex)
             : base(ancestor, parentIndex, externalIndex)
         {
-            _cache = new IndexedCache<int, ComponentParser>(CreateComponent);
+            _components = new IndexedCache<int, ComponentParser>(CreateComponent);
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace NextLevelSeven.Native.Elements
         private RepetitionParser(string value, EncodingConfigurationBase config)
             : base(value, config)
         {
-            _cache = new IndexedCache<int, ComponentParser>(CreateComponent);
+            _components = new IndexedCache<int, ComponentParser>(CreateComponent);
         }
 
         /// <summary>
@@ -81,7 +81,7 @@ namespace NextLevelSeven.Native.Elements
         /// <returns>Descendant component at the specified index.</returns>
         public new IComponentParser this[int index]
         {
-            get { return _cache[index]; }
+            get { return _components[index]; }
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace NextLevelSeven.Native.Elements
         {
             get
             {
-                return new WrapperEnumerable<IComponentParser>(i => _cache[i],
+                return new WrapperEnumerable<IComponentParser>(i => _components[i],
                     (i, v) => { },
                     () => ValueCount,
                     1);
@@ -131,7 +131,7 @@ namespace NextLevelSeven.Native.Elements
         /// <returns>Descendant element at the specified index.</returns>
         public override IElementParser GetDescendant(int index)
         {
-            return _cache[index];
+            return _components[index];
         }
 
         /// <summary>
@@ -141,7 +141,7 @@ namespace NextLevelSeven.Native.Elements
         /// <returns>Descendant component at the specified index.</returns>
         private IComponentParser GetComponent(int index)
         {
-            return _cache[index];
+            return _components[index];
         }
 
         /// <summary>

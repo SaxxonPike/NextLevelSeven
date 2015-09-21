@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
-using NextLevelSeven.Native;
+using NextLevelSeven.Parsing;
 
 namespace NextLevelSeven.Test.Native
 {
@@ -13,7 +13,8 @@ namespace NextLevelSeven.Test.Native
         {
             var message = Message.Parse(ExampleMessages.MultiplePid);
             Assert.IsTrue(message.Segments.ExceptType("PID").Any(), "Only PIDs are to be filtered.");
-            Assert.IsTrue(message.Segments.ExceptType("PID").All(s => s.Type != "PID"), "PIDs were not completely filtered.");
+            Assert.IsTrue(message.Segments.ExceptType("PID").All(s => s.Type != "PID"),
+                "PIDs were not completely filtered.");
         }
 
         [TestMethod]

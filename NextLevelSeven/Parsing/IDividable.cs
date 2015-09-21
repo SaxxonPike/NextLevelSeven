@@ -1,7 +1,7 @@
-﻿using NextLevelSeven.Native.Dividers;
-using NextLevelSeven.Native.Elements;
+﻿using NextLevelSeven.Parsing.Dividers;
+using NextLevelSeven.Parsing.Elements;
 
-namespace NextLevelSeven.Native
+namespace NextLevelSeven.Parsing
 {
     internal interface IDividable
     {

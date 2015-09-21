@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using NextLevelSeven.Native.Dividers;
+using NextLevelSeven.Parsing.Dividers;
 using NextLevelSeven.Utility;
 
-namespace NextLevelSeven.Native.Elements
+namespace NextLevelSeven.Parsing.Elements
 {
     internal abstract class FieldParserWithStaticValue : FieldParser
     {

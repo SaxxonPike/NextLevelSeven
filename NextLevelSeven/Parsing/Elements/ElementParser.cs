@@ -6,10 +6,10 @@ using NextLevelSeven.Conversion;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Codec;
 using NextLevelSeven.Core.Encoding;
-using NextLevelSeven.Native.Dividers;
+using NextLevelSeven.Parsing.Dividers;
 using NextLevelSeven.Utility;
 
-namespace NextLevelSeven.Native.Elements
+namespace NextLevelSeven.Parsing.Elements
 {
     /// <summary>
     ///     Represents a generic HL7 message element, which may contain other elements.
@@ -151,26 +151,6 @@ namespace NextLevelSeven.Native.Elements
                     : GetDescendantDivider(Ancestor, ParentIndex);
                 return _descendantDivider;
             }
-        }
-
-        /// <summary>
-        ///     Determines whether this builder's value is equivalent to another element's value. (element IEquatable support)
-        /// </summary>
-        /// <param name="other">Object to compare to.</param>
-        /// <returns>True, if objects are considered to be equivalent.</returns>
-        public bool Equals(IElement other)
-        {
-            return string.Equals(Value, other.Value, StringComparison.Ordinal);
-        }
-
-        /// <summary>
-        ///     Determine equality with a string.
-        /// </summary>
-        /// <param name="other">String to compare to.</param>
-        /// <returns>True, if the element's raw value and the specified string are equivalent.</returns>
-        public bool Equals(string other)
-        {
-            return ToString() == other;
         }
 
         /// <summary>
@@ -371,6 +351,26 @@ namespace NextLevelSeven.Native.Elements
         IEnumerable<IElement> IElement.Descendants
         {
             get { return DescendantElements; }
+        }
+
+        /// <summary>
+        ///     Determines whether this builder's value is equivalent to another element's value. (element IEquatable support)
+        /// </summary>
+        /// <param name="other">Object to compare to.</param>
+        /// <returns>True, if objects are considered to be equivalent.</returns>
+        public bool Equals(IElement other)
+        {
+            return string.Equals(Value, other.Value, StringComparison.Ordinal);
+        }
+
+        /// <summary>
+        ///     Determine equality with a string.
+        /// </summary>
+        /// <param name="other">String to compare to.</param>
+        /// <returns>True, if the element's raw value and the specified string are equivalent.</returns>
+        public bool Equals(string other)
+        {
+            return ToString() == other;
         }
 
         /// <summary>

@@ -5,7 +5,7 @@ using NextLevelSeven.Core.Encoding;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Utility;
 
-namespace NextLevelSeven.Native.Elements
+namespace NextLevelSeven.Parsing.Elements
 {
     /// <summary>
     ///     Represents a component level element of an HL7 message.
@@ -15,7 +15,7 @@ namespace NextLevelSeven.Native.Elements
         /// <summary>
         ///     Internal subcomponent cache.
         /// </summary>
-        private readonly IndexedCache<int, SubcomponentParser> _cache;
+        private readonly IndexedCache<int, SubcomponentParser> _subcomponents;
 
         /// <summary>
         ///     Create a component.
@@ -26,7 +26,7 @@ namespace NextLevelSeven.Native.Elements
         public ComponentParser(ElementParser ancestor, int parentIndex, int externalIndex)
             : base(ancestor, parentIndex, externalIndex)
         {
-            _cache = new IndexedCache<int, SubcomponentParser>(CreateSubcomponent);
+            _subcomponents = new IndexedCache<int, SubcomponentParser>(CreateSubcomponent);
         }
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace NextLevelSeven.Native.Elements
         private ComponentParser(string value, EncodingConfigurationBase config)
             : base(value, config)
         {
-            _cache = new IndexedCache<int, SubcomponentParser>(CreateSubcomponent);
+            _subcomponents = new IndexedCache<int, SubcomponentParser>(CreateSubcomponent);
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace NextLevelSeven.Native.Elements
         {
             return subcomponent < 0
                 ? Value
-                : _cache[subcomponent].Value;
+                : _subcomponents[subcomponent].Value;
         }
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace NextLevelSeven.Native.Elements
         {
             return subcomponent < 0
                 ? Values
-                : _cache[subcomponent].Value.Yield();
+                : _subcomponents[subcomponent].Value.Yield();
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace NextLevelSeven.Native.Elements
         /// <returns>Element at the specified index.</returns>
         public new ISubcomponentParser this[int index]
         {
-            get { return _cache[index]; }
+            get { return _subcomponents[index]; }
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace NextLevelSeven.Native.Elements
         {
             get
             {
-                return new WrapperEnumerable<ISubcomponentParser>(i => _cache[i],
+                return new WrapperEnumerable<ISubcomponentParser>(i => _subcomponents[i],
                     (i, v) => { },
                     () => ValueCount,
                     1);
@@ -129,7 +129,7 @@ namespace NextLevelSeven.Native.Elements
         /// <returns>Element at the specified index.</returns>
         public override IElementParser GetDescendant(int index)
         {
-            return _cache[index];
+            return _subcomponents[index];
         }
 
         /// <summary>

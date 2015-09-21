@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Linq;
-using NextLevelSeven.Native;
-using NextLevelSeven.Native.Elements;
+using NextLevelSeven.Building;
+using NextLevelSeven.Building.Elements;
+using NextLevelSeven.Core;
+using NextLevelSeven.Parsing;
+using NextLevelSeven.Parsing.Elements;
 
 namespace NextLevelSeven.Generation
 {
@@ -19,12 +22,12 @@ namespace NextLevelSeven.Generation
         /// <param name="facility">Facility name for MSH-3.</param>
         /// <param name="application">Application name for MSH-4.</param>
         /// <returns>A complete ACK message.</returns>
-        private static IMessageParser Generate(IMessageParser message, string code, string reason = null,
+        private static IMessageBuilder Generate(IMessage message, string code, string reason = null,
             string facility = null,
             string application = null)
         {
-            var sourceMsh = message["MSH"].First();
-            var result = new MessageParser(sourceMsh.Value);
+            var sourceMsh = message.Segments.OfType("MSH").First();
+            var result = Message.Build(sourceMsh.Value);
             var targetMsh = result[1];
             var msa = result[2];
 
@@ -33,7 +36,7 @@ namespace NextLevelSeven.Generation
             targetMsh[3].Value = application ?? sourceMsh[5].Value;
             targetMsh[4].Value = facility ?? sourceMsh[6].Value;
             targetMsh[7].As.DateTime = DateTime.Now;
-            targetMsh[9][0][1].Value = "ACK";
+            targetMsh[9][1][1].Value = "ACK";
 
             msa[0].Value = "MSA";
             msa[1].Value = code;
@@ -54,7 +57,7 @@ namespace NextLevelSeven.Generation
         /// <param name="facility">Facility name for MSH-3.</param>
         /// <param name="application">Application name for MSH-4.</param>
         /// <returns>Complete HL7 ACK message.</returns>
-        public static IMessageParser GenerateError(IMessageParser message, string reason = null, string facility = null,
+        public static IMessageBuilder GenerateError(IMessage message, string reason = null, string facility = null,
             string application = null)
         {
             return Generate(message, "AE", reason, facility, application);
@@ -68,7 +71,7 @@ namespace NextLevelSeven.Generation
         /// <param name="facility">Facility name for MSH-3.</param>
         /// <param name="application">Application name for MSH-4.</param>
         /// <returns>Complete HL7 ACK message.</returns>
-        public static IMessageParser GenerateReject(IMessageParser message, string reason = null, string facility = null,
+        public static IMessageBuilder GenerateReject(IMessage message, string reason = null, string facility = null,
             string application = null)
         {
             return Generate(message, "AR", reason, facility, application);
@@ -82,7 +85,7 @@ namespace NextLevelSeven.Generation
         /// <param name="facility">Facility name for MSH-3.</param>
         /// <param name="application">Application name for MSH-4.</param>
         /// <returns>Complete HL7 ACK message.</returns>
-        public static IMessageParser GenerateSuccess(IMessageParser message, string reason = null,
+        public static IMessageBuilder GenerateSuccess(IMessage message, string reason = null,
             string facility = null,
             string application = null)
         {

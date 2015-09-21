@@ -8,7 +8,7 @@ namespace NextLevelSeven.Test.Core
     {
         // Delete Element
 
-        static void ElementExtensions_CanDelete(IElement element)
+        private static void ElementExtensions_CanDelete(IElement element)
         {
             var modifiedElement = element.Clone();
             modifiedElement.Delete(2);
@@ -30,11 +30,12 @@ namespace NextLevelSeven.Test.Core
 
         // Insert Element After
 
-        static void ElementExtensions_CanInsertElementAfter(IElement element)
+        private static void ElementExtensions_CanInsertElementAfter(IElement element)
         {
             var modifiedElement = element.Clone();
             modifiedElement.InsertAfter(2, element[2]);
-            Assert.AreEqual(modifiedElement[3].Value, element[2].Value, "Element insertion (after) failed: duplication didn't work.");
+            Assert.AreEqual(modifiedElement[3].Value, element[2].Value,
+                "Element insertion (after) failed: duplication didn't work.");
             Assert.AreEqual(modifiedElement[4].Value, element[3].Value,
                 "Element insertion (after) failed: shifted segments weren't in order.");
         }
@@ -53,7 +54,7 @@ namespace NextLevelSeven.Test.Core
 
         // Insert String After
 
-        static void ElementExtensions_CanInsertStringAfter(IElement element)
+        private static void ElementExtensions_CanInsertStringAfter(IElement element)
         {
             const string testSegment = @"TST|0|";
 
@@ -76,6 +77,5 @@ namespace NextLevelSeven.Test.Core
         {
             ElementExtensions_CanInsertStringAfter(Message.Parse(ExampleMessages.Standard));
         }
-
     }
 }

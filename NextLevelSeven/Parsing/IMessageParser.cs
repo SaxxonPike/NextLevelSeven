@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using NextLevelSeven.Core;
 
-namespace NextLevelSeven.Native
+namespace NextLevelSeven.Parsing
 {
     /// <summary>
     ///     Common interface for the highest level element in an HL7 message: the message itself.
@@ -59,7 +59,7 @@ namespace NextLevelSeven.Native
         /// <param name="component">Component index.</param>
         /// <param name="subcomponent">Subcomponent index.</param>
         /// <returns>The first occurrence of the specified element.</returns>
-        IElementParser GetField(int segment = -1, int field = -1, int repetition = -1, int component = -1,
+        IElementParser GetElement(int segment = -1, int field = -1, int repetition = -1, int component = -1,
             int subcomponent = -1);
 
         /// <summary>

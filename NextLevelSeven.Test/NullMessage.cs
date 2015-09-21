@@ -5,7 +5,7 @@ using System.Linq;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Codec;
 using NextLevelSeven.Core.Properties;
-using NextLevelSeven.Native;
+using NextLevelSeven.Parsing;
 
 #pragma warning disable 0067
 
@@ -26,6 +26,12 @@ namespace NextLevelSeven.Test
             get { return 0; }
         }
 
+        public string ControlId
+        {
+            get { return null; }
+            set { Debug.WriteLine("Write to ControlId: {0}", value); }
+        }
+
         public ISegmentParser this[int index]
         {
             get { return null; }
@@ -39,12 +45,6 @@ namespace NextLevelSeven.Test
         public IEnumerable<ISegmentParser> this[IEnumerable<string> segmentTypes]
         {
             get { return Enumerable.Empty<ISegmentParser>(); }
-        }
-
-        public string ControlId
-        {
-            get { return null; }
-            set { Debug.WriteLine("Write to ControlId: {0}", value); }
         }
 
         public string Escape(string data)
@@ -62,7 +62,7 @@ namespace NextLevelSeven.Test
             return data;
         }
 
-        public IElementParser GetField(int segment, int field = -1, int repetition = -1, int component = -1,
+        public IElementParser GetElement(int segment, int field = -1, int repetition = -1, int component = -1,
             int subcomponent = -1)
         {
             return null;
@@ -137,19 +137,6 @@ namespace NextLevelSeven.Test
 
         public event EventHandler ValueChanged;
 
-        public void Delete()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Erase()
-        {
-        }
-
-        public void Nullify()
-        {
-        }
-
         public IEnumerable<string> GetValues(int segment = -1, int field = -1, int repetition = -1, int component = -1,
             int subcomponent = -1)
         {
@@ -183,23 +170,6 @@ namespace NextLevelSeven.Test
             get { return 0; }
         }
 
-        public IMessageParser Clone()
-        {
-            return CloneInternal();
-        }
-
-        public IElementParser GetField(string segmentName, int field = -1, int repetition = -1, int component = -1,
-            int subcomponent = -1)
-        {
-            return null;
-        }
-
-        private static NullMessage CloneInternal()
-        {
-            var result = new NullMessage();
-            return result;
-        }
-
 
         public IMessageDetails Details
         {
@@ -226,6 +196,36 @@ namespace NextLevelSeven.Test
         IEnumerable<ISegment> IMessage.Segments
         {
             get { return Enumerable.Empty<ISegment>(); }
+        }
+
+        public void Delete()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Erase()
+        {
+        }
+
+        public void Nullify()
+        {
+        }
+
+        public IMessageParser Clone()
+        {
+            return CloneInternal();
+        }
+
+        public IElementParser GetField(string segmentName, int field = -1, int repetition = -1, int component = -1,
+            int subcomponent = -1)
+        {
+            return null;
+        }
+
+        private static NullMessage CloneInternal()
+        {
+            var result = new NullMessage();
+            return result;
         }
     }
 }

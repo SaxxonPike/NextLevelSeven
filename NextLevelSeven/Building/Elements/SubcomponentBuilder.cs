@@ -37,7 +37,7 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         /// <param name="value">New value.</param>
         /// <returns>This SubcomponentBuilder, for chaining purposes.</returns>
-        public ISubcomponentBuilder Subcomponent(string value)
+        public ISubcomponentBuilder SetSubcomponent(string value)
         {
             _value = value;
             return this;
@@ -54,7 +54,7 @@ namespace NextLevelSeven.Building.Elements
                     ? null
                     : _value;
             }
-            set { Subcomponent(value); }
+            set { SetSubcomponent(value); }
         }
 
         /// <summary>

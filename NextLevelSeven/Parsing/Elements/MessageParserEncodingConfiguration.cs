@@ -1,7 +1,7 @@
 ﻿using NextLevelSeven.Core;
 using NextLevelSeven.Core.Encoding;
 
-namespace NextLevelSeven.Native.Elements
+namespace NextLevelSeven.Parsing.Elements
 {
     /// <summary>
     ///     An encoding configuration that gets its values from an HL7 message.

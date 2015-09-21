@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace NextLevelSeven.Native.Dividers
+namespace NextLevelSeven.Parsing.Dividers
 {
     /// <summary>
     ///     Common string and char[] splitting operations used by StringDivider and StringSubDivider classes.

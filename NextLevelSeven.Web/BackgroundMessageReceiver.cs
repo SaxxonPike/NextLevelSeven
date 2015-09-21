@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading;
 using NextLevelSeven.Core;
 using NextLevelSeven.Generation;
-using NextLevelSeven.Native;
+using NextLevelSeven.Parsing;
 using NextLevelSeven.Streaming;
 
 namespace NextLevelSeven.Web
@@ -150,7 +150,7 @@ namespace NextLevelSeven.Web
                         }
                     }
 
-                    IMessageParser responseMessage;
+                    IMessage responseMessage;
                     if (request != null)
                     {
                         responseMessage = AckMessageGenerator.GenerateSuccess(request, null, config.OwnFacility,

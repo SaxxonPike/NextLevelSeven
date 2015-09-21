@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NextLevelSeven.Native.Dividers
+namespace NextLevelSeven.Parsing.Dividers
 {
     /// <summary>
     ///     A splitter which handles getting and setting delimited substrings within a parent string divider.

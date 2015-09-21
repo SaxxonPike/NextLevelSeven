@@ -1,6 +1,6 @@
 ﻿using NextLevelSeven.Core;
 
-namespace NextLevelSeven.Native
+namespace NextLevelSeven.Parsing
 {
     public interface ISubcomponentParser : IElementParser, ISubcomponent
     {
