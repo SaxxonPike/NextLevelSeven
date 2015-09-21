@@ -38,25 +38,6 @@ namespace NextLevelSeven.Native.Dividers
         public int Version { get; protected set; }
 
         /// <summary>
-        ///     Delete descendant text.
-        /// </summary>
-        /// <param name="index">Index to delete.</param>
-        public void Delete(int index)
-        {
-            var d = GetSubDivision(index);
-            if (!d.Valid)
-            {
-                return;
-            }
-
-            Delete((d.Offset + d.Length >= BaseValue.Length)
-                ? d
-                : new StringDivision(d.Offset, d.Length + 1));
-        }
-
-        public abstract void Delete(StringDivision division);
-
-        /// <summary>
         ///     Create a subdivision.
         /// </summary>
         /// <param name="index">Index of the subdivider in the parent divider.</param>

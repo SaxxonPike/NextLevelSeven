@@ -6,15 +6,36 @@ namespace NextLevelSeven.Test.Core
     [TestClass]
     public class ElementExtensionTests : CoreTestFixture
     {
+        // Delete Element
+
+        static void ElementExtensions_CanDelete(IElement element)
+        {
+            var modifiedElement = element.Clone();
+            modifiedElement.Delete(2);
+            Assert.AreEqual(modifiedElement[2].Value, element[3].Value);
+            Assert.AreEqual(modifiedElement[3].Value, element[4].Value);
+        }
+
+        [TestMethod]
+        public void ElementExtensions_Builder_CanDelete()
+        {
+            ElementExtensions_CanDelete(Message.Build(ExampleMessages.Standard));
+        }
+
+        [TestMethod]
+        public void ElementExtensions_Native_CanDelete()
+        {
+            ElementExtensions_CanDelete(Message.Create(ExampleMessages.Standard));
+        }
+
         // Insert Element After
 
         static void ElementExtensions_CanInsertElementAfter(IElement element)
         {
-            var message = element;
-            var modifiedMessage = element.Clone();
-            modifiedMessage.InsertAfter(2, message[2]);
-            Assert.AreEqual(modifiedMessage[3].Value, message[2].Value, "Element insertion (after) failed: duplication didn't work.");
-            Assert.AreEqual(modifiedMessage[4].Value, message[3].Value,
+            var modifiedElement = element.Clone();
+            modifiedElement.InsertAfter(2, element[2]);
+            Assert.AreEqual(modifiedElement[3].Value, element[2].Value, "Element insertion (after) failed: duplication didn't work.");
+            Assert.AreEqual(modifiedElement[4].Value, element[3].Value,
                 "Element insertion (after) failed: shifted segments weren't in order.");
         }
 
@@ -36,12 +57,11 @@ namespace NextLevelSeven.Test.Core
         {
             const string testSegment = @"TST|0|";
 
-            var message = element;
-            var modifiedMessage = element.Clone();
-            modifiedMessage[1].InsertAfter(testSegment);
-            Assert.AreEqual(modifiedMessage[2].Value, testSegment,
+            var modifiedElement = element.Clone();
+            modifiedElement[1].InsertAfter(testSegment);
+            Assert.AreEqual(modifiedElement[2].Value, testSegment,
                 "Text insertion (after) failed: expected string didn't appear in modified message.");
-            Assert.AreEqual(modifiedMessage[3].Value, message[2].Value,
+            Assert.AreEqual(modifiedElement[3].Value, element[2].Value,
                 "Text insertion (after) failed: shifted segments weren't in order.");
         }
 

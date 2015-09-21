@@ -119,16 +119,6 @@ namespace NextLevelSeven.Native.Dividers
         }
 
         /// <summary>
-        ///     Delete a division of text.
-        /// </summary>
-        /// <param name="division"></param>
-        public override void Delete(StringDivision division)
-        {
-            ValueChars = StringDividerOperations.GetSplicedString(ValueChars, division.Offset, division.Length,
-                new char[0]);
-        }
-
-        /// <summary>
         ///     Initialize the divider's value with the specified characters.
         /// </summary>
         /// <param name="s">Characters to set the value to.</param>
