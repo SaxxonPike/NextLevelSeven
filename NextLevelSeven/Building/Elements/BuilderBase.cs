@@ -5,6 +5,7 @@ using NextLevelSeven.Core;
 using NextLevelSeven.Core.Codec;
 using NextLevelSeven.Core.Encoding;
 using NextLevelSeven.Diagnostics;
+using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building.Elements
 {
@@ -206,6 +207,43 @@ namespace NextLevelSeven.Building.Elements
         {
             get { return TextConverter.ConvertToString(Value); }
             set { Value = TextConverter.ConvertFromString(value); }
+        }
+
+        /// <summary>
+        ///     Get the ancestor element. Null if it's a root element.
+        /// </summary>
+        IElement IElement.Ancestor
+        {
+            get { return GetAncestor(); }
+        }
+
+        /// <summary>
+        ///     Get the ancestor element.
+        /// </summary>
+        /// <returns>Ancestor element.</returns>
+        virtual protected IElement GetAncestor()
+        {
+            return null;
+        }
+
+        /// <summary>
+        ///     Get descendant elements. For subcomponents, this will be empty.
+        /// </summary>
+        IEnumerable<IElement> IElement.Descendants
+        {
+            get { return GetDescendants(); }
+        }
+
+        /// <summary>
+        ///     Get descendant elements.
+        /// </summary>
+        /// <returns>Descendant elements.</returns>
+        virtual protected IEnumerable<IElement> GetDescendants()
+        {
+            return new WrapperEnumerable<IElement>(index => this[index],
+                (index, data) => { },
+                () => ValueCount,
+                1);
         }
     }
 }

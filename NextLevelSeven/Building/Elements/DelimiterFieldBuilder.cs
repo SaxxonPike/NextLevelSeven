@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using NextLevelSeven.Core;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Utility;
 
@@ -88,6 +90,15 @@ namespace NextLevelSeven.Building.Elements
             }
             Value = value;
             return this;
+        }
+
+        /// <summary>
+        ///     Get descendant elements.
+        /// </summary>
+        /// <returns>Descendant elements.</returns>
+        protected override IEnumerable<IElement> GetDescendants()
+        {
+            return Enumerable.Empty<IElement>();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Codec;
 using NextLevelSeven.Utility;
@@ -106,6 +107,11 @@ namespace NextLevelSeven.Building.Elements
         protected override IElement GetGenericElement(int index)
         {
             return this[index];
+        }
+
+        protected override IEnumerable<IElement> GetDescendants()
+        {
+            return Enumerable.Empty<IElement>();
         }
     }
 }

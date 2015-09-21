@@ -16,6 +16,11 @@ namespace NextLevelSeven.Core
         IElement this[int index] { get; }
 
         /// <summary>
+        ///     Get the ancestor element. Null if the element is a root element.
+        /// </summary>
+        IElement Ancestor { get; }
+
+        /// <summary>
         ///     Interpret the stored value as other types.
         /// </summary>
         IEncodedTypeConverter As { get; }
@@ -24,6 +29,11 @@ namespace NextLevelSeven.Core
         ///     Get the delimiter character of the element. This will be zero if there are no sub-elements.
         /// </summary>
         char Delimiter { get; }
+
+        /// <summary>
+        ///     Get the descendant elements within this element.
+        /// </summary>
+        IEnumerable<IElement> Descendants { get; }
 
         /// <summary>
         ///     Get or set the formatted value of the element.

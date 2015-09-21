@@ -212,6 +212,16 @@ namespace NextLevelSeven.Test
             get { return null; }
             set { }
         }
+
+        IElement IElement.Ancestor
+        {
+            get { return null; }
+        }
+
+        IEnumerable<IElement> IElement.Descendants
+        {
+            get { return Enumerable.Empty<IElement>(); }
+        }
     }
 }
 

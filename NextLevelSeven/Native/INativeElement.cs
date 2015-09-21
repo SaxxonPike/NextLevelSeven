@@ -51,20 +51,5 @@ namespace NextLevelSeven.Native
         ///     Event that is triggered whenever either this element's value
         /// </summary>
         event EventHandler ValueChanged;
-
-        /// <summary>
-        ///     Delete the element from its ancestor. This cannot be performed on the root element (message).
-        /// </summary>
-        void Delete();
-
-        /// <summary>
-        ///     Erase the element data. This does not delete the element, but does mark it as non-existant.
-        /// </summary>
-        void Erase();
-
-        /// <summary>
-        ///     Set the element data to null.
-        /// </summary>
-        void Nullify();
     }
 }

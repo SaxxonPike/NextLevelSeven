@@ -58,7 +58,7 @@ namespace NextLevelSeven.Native.Elements
         {
             get
             {
-                if (string.Equals(Type, "MSH", StringComparison.Ordinal))
+                if (IsMsh)
                 {
                     return DescendantDivider.Count;
                 }
@@ -127,7 +127,7 @@ namespace NextLevelSeven.Native.Elements
                 throw new ArgumentException(ErrorMessages.Get(ErrorCode.FieldIndexMustBeZeroOrGreater));
             }
 
-            if (string.Equals(Type, "MSH", StringComparison.Ordinal))
+            if (IsMsh)
             {
                 if (index == 1)
                 {
@@ -152,9 +152,32 @@ namespace NextLevelSeven.Native.Elements
             return result;
         }
 
+        private bool IsMsh
+        {
+            get { return (string.Equals(Type, "MSH", StringComparison.Ordinal)); }
+        }
+
         private NativeSegment CloneInternal()
         {
             return new NativeSegment(Value, EncodingConfiguration) {Index = Index};
+        }
+
+        public override IEnumerable<string> Values
+        {
+            get { return base.Values; }
+            set
+            {
+                if (IsMsh)
+                {
+                    // MSH changes how indices work
+                    var values = value.ToList();
+                    var delimiter = values[1];
+                    values.RemoveAt(1);
+                    DescendantDivider.Value = string.Join(delimiter, values);
+                    return;
+                }
+                base.Values = value;
+            }
         }
     }
 }

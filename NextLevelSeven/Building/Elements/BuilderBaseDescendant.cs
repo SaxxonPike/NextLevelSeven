@@ -69,6 +69,15 @@ namespace NextLevelSeven.Building.Elements
             set { Ancestor.SubcomponentDelimiter = value; }
         }
 
+        /// <summary>
+        ///     Get the ancestor element.
+        /// </summary>
+        /// <returns></returns>
+        protected override IElement GetAncestor()
+        {
+            return Ancestor;
+        }
+
         public abstract override string Value { get; set; }
         public abstract override IEnumerable<string> Values { get; set; }
         public abstract override IElement Clone();

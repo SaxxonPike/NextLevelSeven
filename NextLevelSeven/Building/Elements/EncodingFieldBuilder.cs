@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using NextLevelSeven.Core;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Utility;
 
@@ -147,6 +149,15 @@ namespace NextLevelSeven.Building.Elements
         private static void OnWriteValue(int index, string value)
         {
             throw new BuilderException(ErrorCode.DescendantElementsCannotBeModified);
+        }
+
+        /// <summary>
+        ///     Get descendant elements.
+        /// </summary>
+        /// <returns>Descendant elements.</returns>
+        protected override IEnumerable<IElement> GetDescendants()
+        {
+            return Enumerable.Empty<IElement>();
         }
     }
 }

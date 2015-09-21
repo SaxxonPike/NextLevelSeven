@@ -160,18 +160,6 @@ namespace NextLevelSeven.Native.Elements
         }
 
         /// <summary>
-        ///     Delete this element from its ancestor.
-        /// </summary>
-        public void Delete()
-        {
-            if (Ancestor == null)
-            {
-                throw new ElementException(ErrorCode.AncestorDoesNotExist);
-            }
-            Ancestor.DescendantDivider.Delete(ParentIndex);
-        }
-
-        /// <summary>
         ///     Delimiter character to be used when locating sub-elements.
         /// </summary>
         public abstract char Delimiter { get; }
@@ -190,15 +178,6 @@ namespace NextLevelSeven.Native.Elements
         public IEnumerable<INativeElement> DescendantElements
         {
             get { return new NativeElementEnumerable(this); }
-        }
-
-        /// <summary>
-        ///     Mark the element as not present, and set the value to null.
-        /// </summary>
-        public void Erase()
-        {
-            // TODO: actually mark as nonexistant
-            Nullify();
         }
 
         /// <summary>
@@ -269,14 +248,6 @@ namespace NextLevelSeven.Native.Elements
         }
 
         /// <summary>
-        ///     Set the value to null.
-        /// </summary>
-        public void Nullify()
-        {
-            Value = null;
-        }
-
-        /// <summary>
         ///     Get or set the raw value of this element.
         /// </summary>
         public virtual string Value
@@ -300,7 +271,7 @@ namespace NextLevelSeven.Native.Elements
         /// <summary>
         ///     Get or set the descendant raw values of this element.
         /// </summary>
-        public IEnumerable<string> Values
+        virtual public IEnumerable<string> Values
         {
             get
             {
@@ -448,5 +419,9 @@ namespace NextLevelSeven.Native.Elements
             get { return TextConverter.ConvertToString(Value); }
             set { Value = TextConverter.ConvertFromString(value); }
         }
+
+        IElement IElement.Ancestor { get { return AncestorElement; } }
+
+        IEnumerable<IElement> IElement.Descendants { get { return DescendantElements; } } 
     }
 }
