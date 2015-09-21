@@ -43,7 +43,7 @@ namespace NextLevelSeven.Test.Building
         public void Builders_AreElementEquivalent()
         {
             var message = ExampleMessages.Minimum;
-            IElement element = Message.Create(message);
+            IElement element = Message.Parse(message);
             var builder = (IEquatable<IElement>) Message.Build(message);
             Assert.IsTrue(builder.Equals(element));
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using NextLevelSeven.Core;
 using NextLevelSeven.Native;
 
 namespace NextLevelSeven.Routing
@@ -11,19 +12,19 @@ namespace NextLevelSeven.Routing
         /// <summary>
         ///     Method to route messages to if the condition is met.
         /// </summary>
-        public readonly Action<INativeMessage> Action;
+        public readonly Action<IMessage> Action;
 
         /// <summary>
         ///     Condition to check messages against. Returns true if met.
         /// </summary>
-        public readonly Func<INativeMessage, bool> Condition;
+        public readonly Func<IMessage, bool> Condition;
 
         /// <summary>
         ///     Create a conditional router targeting the specified method.
         /// </summary>
         /// <param name="condition">Condition that must be met for messages to be routed.</param>
         /// <param name="action">Action to run if the condition is met.</param>
-        public ConditionalMethodRouter(Func<INativeMessage, bool> condition, Action<INativeMessage> action)
+        public ConditionalMethodRouter(Func<IMessage, bool> condition, Action<IMessage> action)
         {
             Action = action;
             Condition = condition;
@@ -34,7 +35,7 @@ namespace NextLevelSeven.Routing
         /// </summary>
         /// <param name="message">Message to route.</param>
         /// <returns>True if the message was handled.</returns>
-        public bool Route(INativeMessage message)
+        public bool Route(IMessage message)
         {
             if (Condition(message))
             {

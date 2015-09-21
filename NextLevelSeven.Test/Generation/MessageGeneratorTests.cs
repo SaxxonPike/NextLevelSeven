@@ -9,7 +9,7 @@ namespace NextLevelSeven.Test.Generation
     public class MessageGeneratorTests : GenerationTestFixture
     {
         private string _controlId;
-        private INativeMessage _message;
+        private IMessageParser _message;
         private string _processingId;
         private string _receivingApplication;
         private string _receivingFacility;

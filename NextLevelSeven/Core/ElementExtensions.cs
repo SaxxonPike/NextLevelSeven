@@ -1,6 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using NextLevelSeven.Building;
+using NextLevelSeven.Building.Elements;
 using NextLevelSeven.Diagnostics;
+using NextLevelSeven.Native;
+using NextLevelSeven.Native.Elements;
+using NextLevelSeven.Routing;
 
 namespace NextLevelSeven.Core
 {
@@ -17,7 +23,7 @@ namespace NextLevelSeven.Core
         /// <returns>The newly added element.</returns>
         public static void Add(this IElement target, string elementToAdd)
         {
-            target.Value = string.Join(new string(target.Delimiter, 1), target.Value, elementToAdd);
+            target.Value = String.Join(new string(target.Delimiter, 1), target.Value, elementToAdd);
         }
 
         /// <summary>
@@ -28,7 +34,7 @@ namespace NextLevelSeven.Core
         /// <returns>The newly added element.</returns>
         public static void Add(this IElement target, IElement elementToAdd)
         {
-            target.Value = string.Join(new string(target.Delimiter, 1), target.Value, elementToAdd.ToString());
+            target.Value = String.Join(new string(target.Delimiter, 1), target.Value, elementToAdd.ToString());
         }
 
         /// <summary>
@@ -38,7 +44,7 @@ namespace NextLevelSeven.Core
         /// <param name="elementsToAdd">Elements to be added.</param>
         public static void AddRange(this IElement target, IEnumerable<string> elementsToAdd)
         {
-            target.Value = string.Join(new string(target.Delimiter, 1), (new[] {target.Value}).Concat(elementsToAdd));
+            target.Value = String.Join(new string(target.Delimiter, 1), (new[] {target.Value}).Concat(elementsToAdd));
         }
 
         /// <summary>
@@ -48,7 +54,7 @@ namespace NextLevelSeven.Core
         /// <param name="elementsToAdd">Elements to be added.</param>
         public static void AddRange(this IElement target, IEnumerable<IElement> elementsToAdd)
         {
-            target.Value = string.Join(new string(target.Delimiter, 1),
+            target.Value = String.Join(new string(target.Delimiter, 1),
                 (new[] {target.Value}).Concat(elementsToAdd.Select(e => e.ToString())));
         }
 
@@ -105,6 +111,29 @@ namespace NextLevelSeven.Core
             {
                 ancestor.Delete(element);
             }
+        }
+
+        /// <summary>
+        ///     Get segments that do not match a specific segment type.
+        /// </summary>
+        /// <param name="segments">Segments to query.</param>
+        /// <param name="segmentType">Segment type to filter out.</param>
+        /// <returns>Segments that do not match the filtered segment type.</returns>
+        public static IEnumerable<ISegment> ExceptType(this IEnumerable<ISegment> segments, string segmentType)
+        {
+            return segments.Where(s => s.Type != segmentType);
+        }
+
+        /// <summary>
+        ///     Get segments that do not match any of the specified segment types.
+        /// </summary>
+        /// <param name="segments">Segments to query.</param>
+        /// <param name="segmentTypes">Segment types to filter out.</param>
+        /// <returns>Segments that do not match the filtered segment types.</returns>
+        public static IEnumerable<ISegment> ExceptTypes(this IEnumerable<ISegment> segments,
+            IEnumerable<string> segmentTypes)
+        {
+            return segments.Where(s => !segmentTypes.Contains(s.Type));
         }
 
         /// <summary>
@@ -302,6 +331,60 @@ namespace NextLevelSeven.Core
         public static void Nullify(this IElement target)
         {
             target.Value = null;
+        }
+
+        /// <summary>
+        ///     Get only segments that match the specified segment type.
+        /// </summary>
+        /// <param name="segments">Segments to query.</param>
+        /// <param name="segmentType">Segment type to get.</param>
+        /// <returns>Segments that match the specified segment type.</returns>
+        public static IEnumerable<ISegment> OfType(this IEnumerable<ISegment> segments, string segmentType)
+        {
+            return segments.Where(s => s.Type == segmentType);
+        }
+
+        /// <summary>
+        ///     Get only segments that match any of the specified segment types.
+        /// </summary>
+        /// <param name="segments">Segments to query.</param>
+        /// <param name="segmentTypes">Segment types to get.</param>
+        /// <returns>Segments that match one of the specified segment types.</returns>
+        public static IEnumerable<ISegment> OfTypes(this IEnumerable<ISegment> segments,
+            IEnumerable<string> segmentTypes)
+        {
+            return segments.Where(s => !segmentTypes.Contains(s.Type));
+        }
+
+        /// <summary>
+        ///     Send the message to a router.
+        /// </summary>
+        /// <param name="message">Message to route.</param>
+        /// <param name="router">Router to route the message through.</param>
+        /// <returns>If true, the router has successfully routed the message.</returns>
+        public static bool RouteTo(this IMessage message, IRouter router)
+        {
+            return router.Route(message);
+        }
+
+        /// <summary>
+        ///     Copy the contents of this message to a new message builder.
+        /// </summary>
+        /// <param name="message">Message to get data from.</param>
+        /// <returns>Converted message.</returns>
+        public static IMessageBuilder ToBuilder(this IMessage message)
+        {
+            return Message.Build(message.Value);
+        }
+
+        /// <summary>
+        ///     Copy the contents of this message to a new native HL7 message.
+        /// </summary>
+        /// <param name="message">Message to get data from.</param>
+        /// <returns>Converted message.</returns>
+        public static IMessageParser ToParser(this IMessage message)
+        {
+            return Message.Parse(message.Value);
         }
     }
 }

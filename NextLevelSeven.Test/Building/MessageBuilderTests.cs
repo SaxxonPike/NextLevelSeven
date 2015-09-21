@@ -248,14 +248,14 @@ namespace NextLevelSeven.Test.Building
         {
             var builder = Message.Build(ExampleMessages.Standard);
             var beforeMessageString = builder.Value;
-            var message = builder.ToNativeMessage();
+            var message = builder.ToParser();
             Assert.AreEqual(beforeMessageString, message.Value, "Conversion from builder to message failed.");
         }
 
         [TestMethod]
         public void MessageBuilder_ConvertsFromMessage()
         {
-            var message = Message.Create(ExampleMessages.Standard);
+            var message = Message.Parse(ExampleMessages.Standard);
             var beforeBuilderString = message.Value;
             var afterBuilder = Message.Build(message);
             Assert.AreEqual(beforeBuilderString, afterBuilder.Value, "Conversion from message to builder failed.");

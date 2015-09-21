@@ -9,7 +9,7 @@ namespace NextLevelSeven.Test.Generation
     public class AckMessageGeneratorTests : GenerationTestFixture
     {
         private string _controlId;
-        private INativeMessage _message;
+        private IMessageParser _message;
         private string _trigger;
         private string _type;
 

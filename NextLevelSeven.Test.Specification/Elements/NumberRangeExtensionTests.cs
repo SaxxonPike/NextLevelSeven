@@ -27,7 +27,7 @@ namespace NextLevelSeven.Test.Specification.Elements
 
         private static INumberRange GetNumberRange(decimal? low, decimal? high)
         {
-            var range = Message.Create()[1][3][1].AsNumberRange();
+            var range = Message.Parse()[1][3][1].AsNumberRange();
             range.LowValue = low;
             range.HighValue = high;
             return range;

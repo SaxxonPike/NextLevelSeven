@@ -22,7 +22,7 @@ namespace NextLevelSeven.Streaming
         ///     Read one MLP-encoded message. Returns null if no messages are available.
         /// </summary>
         /// <returns>Message that was read.</returns>
-        public override INativeMessage Read()
+        public override IMessageParser Read()
         {
             int vtByte = BaseStream.ReadByte();
             if (vtByte == -1)
@@ -70,9 +70,9 @@ namespace NextLevelSeven.Streaming
         ///     Read all messages in the stream. If empty, there were no more messages.
         /// </summary>
         /// <returns>Messages that were read.</returns>
-        public override IEnumerable<INativeMessage> ReadAll()
+        public override IEnumerable<IMessageParser> ReadAll()
         {
-            var messages = new List<INativeMessage>();
+            var messages = new List<IMessageParser>();
             while (true)
             {
                 var message = Read();

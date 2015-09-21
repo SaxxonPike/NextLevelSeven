@@ -36,7 +36,7 @@ namespace NextLevelSeven.Test.Routing
         [TestMethod]
         public void NullRouter_RetainsLastMessage()
         {
-            var message = Message.Create(ExampleMessages.Standard);
+            var message = Message.Parse(ExampleMessages.Standard);
             var router = new NullRouter(true);
             router.Route(message);
             Assert.AreEqual(message.Value, router.LastMessage.Value, "Message mismatch.");

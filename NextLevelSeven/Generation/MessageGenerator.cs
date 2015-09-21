@@ -24,12 +24,12 @@ namespace NextLevelSeven.Generation
         /// <param name="sendingFacility">Sending facility. (MSH-4 app-specific)</param>
         /// <param name="version">Version number. Defaults to 2.3 since statistically it is the most used version. (MSH-12)</param>
         /// <returns></returns>
-        public static INativeMessage Generate(string type, string triggerEvent, string controlId,
+        public static IMessageParser Generate(string type, string triggerEvent, string controlId,
             string processingId = "P",
             string receivingApplication = null, string receivingFacility = null, string sendingApplication = null,
             string sendingFacility = null, string version = "2.3")
         {
-            var message = new NativeMessage();
+            var message = new MessageParser();
             var details = message.Details;
             details.Type = type;
             details.TriggerEvent = triggerEvent;

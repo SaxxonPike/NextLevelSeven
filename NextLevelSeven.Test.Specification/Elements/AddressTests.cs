@@ -34,7 +34,7 @@ namespace NextLevelSeven.Test.Specification.Elements
                 _streetAddress, _otherDesignation, _city, _stateOrProvince,
                 _zipOrPostalCode, _country, _addressType, _otherGeographicDesignation,
                 Randomized.String());
-            _address = Message.Create(_message)[1][3][1].AsAddress();
+            _address = Message.Parse(_message)[1][3][1].AsAddress();
         }
 
         [TestMethod]

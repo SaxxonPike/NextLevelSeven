@@ -23,7 +23,7 @@ namespace NextLevelSeven.Streaming
         ///     Read the next message in the stream.
         /// </summary>
         /// <returns>Message that was read, or null if there were no more.</returns>
-        public virtual INativeMessage Read()
+        public virtual IMessageParser Read()
         {
             return Process(BaseStream);
         }
@@ -33,14 +33,14 @@ namespace NextLevelSeven.Streaming
         ///     stream will be read as one message.)
         /// </summary>
         /// <returns>Messages that were read.</returns>
-        public virtual IEnumerable<INativeMessage> ReadAll()
+        public virtual IEnumerable<IMessageParser> ReadAll()
         {
             var message = Read();
             if (message != null)
             {
                 return new[] {message};
             }
-            return new INativeMessage[] {};
+            return new IMessageParser[] {};
         }
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace NextLevelSeven.Streaming
         /// </summary>
         /// <param name="data">Data to decode.</param>
         /// <returns>Decoded message.</returns>
-        protected virtual INativeMessage Decode(byte[] data)
+        protected virtual IMessageParser Decode(byte[] data)
         {
             return Interpret(Encoding.UTF8.GetString(data));
         }
@@ -58,9 +58,9 @@ namespace NextLevelSeven.Streaming
         /// </summary>
         /// <param name="data">Text to interpret.</param>
         /// <returns>Interpreted message.</returns>
-        protected virtual INativeMessage Interpret(string data)
+        protected virtual IMessageParser Interpret(string data)
         {
-            return new NativeMessage(data);
+            return new MessageParser(data);
         }
 
         /// <summary>
@@ -68,7 +68,7 @@ namespace NextLevelSeven.Streaming
         /// </summary>
         /// <param name="stream">Stream to read from.</param>
         /// <returns>Processed message.</returns>
-        protected virtual INativeMessage Process(Stream stream)
+        protected virtual IMessageParser Process(Stream stream)
         {
             var length = (int) (stream.Length - stream.Position);
             var buffer = new byte[length];

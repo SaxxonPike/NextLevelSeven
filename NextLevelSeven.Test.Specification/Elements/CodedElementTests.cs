@@ -29,7 +29,7 @@ namespace NextLevelSeven.Test.Specification.Elements
                 _identifier, _text, _codingSystemName, _alternateIdentifier,
                 _alternateText, _alternateCodingSystemName,
                 Randomized.String());
-            _element = Message.Create(_message)[1][3][1].AsCodedElement();
+            _element = Message.Parse(_message)[1][3][1].AsCodedElement();
         }
 
         [TestMethod]

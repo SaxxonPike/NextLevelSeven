@@ -25,7 +25,7 @@ namespace NextLevelSeven.Test.Core
         [TestMethod]
         public void ElementExtensions_Native_CanDelete()
         {
-            ElementExtensions_CanDelete(Message.Create(ExampleMessages.Standard));
+            ElementExtensions_CanDelete(Message.Parse(ExampleMessages.Standard));
         }
 
         // Insert Element After
@@ -48,7 +48,7 @@ namespace NextLevelSeven.Test.Core
         [TestMethod]
         public void ElementExtensions_Native_CanInsertElementAfter()
         {
-            ElementExtensions_CanInsertElementAfter(Message.Create(ExampleMessages.Standard));
+            ElementExtensions_CanInsertElementAfter(Message.Parse(ExampleMessages.Standard));
         }
 
         // Insert String After
@@ -74,7 +74,7 @@ namespace NextLevelSeven.Test.Core
         [TestMethod]
         public void ElementExtensions_Native_CanInsertStringAfter()
         {
-            ElementExtensions_CanInsertStringAfter(Message.Create(ExampleMessages.Standard));
+            ElementExtensions_CanInsertStringAfter(Message.Parse(ExampleMessages.Standard));
         }
 
     }

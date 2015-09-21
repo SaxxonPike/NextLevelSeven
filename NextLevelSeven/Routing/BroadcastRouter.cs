@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NextLevelSeven.Core;
 using NextLevelSeven.Native;
 
 namespace NextLevelSeven.Routing
@@ -49,7 +50,7 @@ namespace NextLevelSeven.Routing
         /// </summary>
         /// <param name="message">Message to route.</param>
         /// <returns>True, if any of the routes are successful.</returns>
-        public bool Route(INativeMessage message)
+        public bool Route(IMessage message)
         {
             return Routers.Aggregate(false, (current, router) => current | router.Route(message));
         }

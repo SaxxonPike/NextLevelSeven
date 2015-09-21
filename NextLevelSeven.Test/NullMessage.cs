@@ -14,7 +14,7 @@ namespace NextLevelSeven.Test
     /// <summary>
     ///     A null message that contains nothing. This exists solely to implement IMessage without extra plumbing.
     /// </summary>
-    public sealed class NullMessage : INativeMessage
+    public sealed class NullMessage : IMessageParser
     {
         /// <summary>
         ///     Get the singleton instance of NullMessage.
@@ -26,19 +26,19 @@ namespace NextLevelSeven.Test
             get { return 0; }
         }
 
-        public INativeSegment this[int index]
+        public ISegmentParser this[int index]
         {
             get { return null; }
         }
 
-        public IEnumerable<INativeSegment> this[string segmentType]
+        public IEnumerable<ISegmentParser> this[string segmentType]
         {
-            get { return Enumerable.Empty<INativeSegment>(); }
+            get { return Enumerable.Empty<ISegmentParser>(); }
         }
 
-        public IEnumerable<INativeSegment> this[IEnumerable<string> segmentTypes]
+        public IEnumerable<ISegmentParser> this[IEnumerable<string> segmentTypes]
         {
-            get { return Enumerable.Empty<INativeSegment>(); }
+            get { return Enumerable.Empty<ISegmentParser>(); }
         }
 
         public string ControlId
@@ -52,9 +52,9 @@ namespace NextLevelSeven.Test
             return data;
         }
 
-        public IEnumerable<INativeSegment> Segments
+        public IEnumerable<ISegmentParser> Segments
         {
-            get { return Enumerable.Empty<INativeSegment>(); }
+            get { return Enumerable.Empty<ISegmentParser>(); }
         }
 
         public string UnEscape(string data)
@@ -62,7 +62,7 @@ namespace NextLevelSeven.Test
             return data;
         }
 
-        public INativeElement GetField(int segment, int field = -1, int repetition = -1, int component = -1,
+        public IElementParser GetField(int segment, int field = -1, int repetition = -1, int component = -1,
             int subcomponent = -1)
         {
             return null;
@@ -73,12 +73,12 @@ namespace NextLevelSeven.Test
             return true;
         }
 
-        INativeElement INativeElement.this[int index]
+        IElementParser IElementParser.this[int index]
         {
             get { return null; }
         }
 
-        public INativeElement AncestorElement
+        public IElementParser AncestorElement
         {
             get { return null; }
         }
@@ -93,9 +93,9 @@ namespace NextLevelSeven.Test
             get { return '\0'; }
         }
 
-        public IEnumerable<INativeElement> DescendantElements
+        public IEnumerable<IElementParser> DescendantElements
         {
-            get { return Enumerable.Empty<INativeElement>(); }
+            get { return Enumerable.Empty<IElementParser>(); }
         }
 
         public bool Exists
@@ -118,7 +118,7 @@ namespace NextLevelSeven.Test
             get { return null; }
         }
 
-        public INativeMessage Message
+        public IMessageParser Message
         {
             get { return this; }
         }
@@ -183,12 +183,12 @@ namespace NextLevelSeven.Test
             get { return 0; }
         }
 
-        public INativeMessage Clone()
+        public IMessageParser Clone()
         {
             return CloneInternal();
         }
 
-        public INativeElement GetField(string segmentName, int field = -1, int repetition = -1, int component = -1,
+        public IElementParser GetField(string segmentName, int field = -1, int repetition = -1, int component = -1,
             int subcomponent = -1)
         {
             return null;

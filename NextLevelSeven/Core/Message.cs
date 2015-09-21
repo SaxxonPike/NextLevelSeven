@@ -54,9 +54,9 @@ namespace NextLevelSeven.Core
         ///     Create a new message with a default MSH.
         /// </summary>
         /// <returns>New message.</returns>
-        public static INativeMessage Create()
+        public static IMessageParser Parse()
         {
-            return new NativeMessage();
+            return new MessageParser();
         }
 
         /// <summary>
@@ -64,9 +64,9 @@ namespace NextLevelSeven.Core
         /// </summary>
         /// <param name="message">Message data.</param>
         /// <returns>New message builder.</returns>
-        public static INativeMessage Create(string message)
+        public static IMessageParser Parse(string message)
         {
-            return new NativeMessage(message);
+            return new MessageParser(message);
         }
 
         /// <summary>
@@ -74,9 +74,9 @@ namespace NextLevelSeven.Core
         /// </summary>
         /// <param name="message">Message or other element data.</param>
         /// <returns>New message builder.</returns>
-        public static INativeMessage Create(IElement message)
+        public static IMessageParser Parse(IElement message)
         {
-            return new NativeMessage(message);
+            return new MessageParser(message);
         }
 
         /// <summary>
@@ -85,9 +85,9 @@ namespace NextLevelSeven.Core
         /// <param name="message">Formatted string.</param>
         /// <param name="args">Arguments for the format.</param>
         /// <returns>New message builder.</returns>
-        public static INativeMessage CreateFormat(string message, params object[] args)
+        public static IMessageParser ParseFormat(string message, params object[] args)
         {
-            return new NativeMessage(string.Format(message, args));
+            return new MessageParser(string.Format(message, args));
         }
     }
 }

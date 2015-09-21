@@ -66,7 +66,7 @@ namespace NextLevelSeven.Test.Web
         /// <param name="message">Message to send.</param>
         /// <param name="receivedHandler">Event handler for when a message is received.</param>
         /// <returns>Response from the receiver.</returns>
-        public static string SendMessage(INativeMessage message, MessageTransportEventHandler receivedHandler = null)
+        public static string SendMessage(IMessageParser message, MessageTransportEventHandler receivedHandler = null)
         {
             return SendData(message.Value, receivedHandler: receivedHandler);
         }

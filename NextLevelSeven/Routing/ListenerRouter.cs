@@ -1,4 +1,5 @@
 ﻿using System;
+using NextLevelSeven.Core;
 using NextLevelSeven.Native;
 
 namespace NextLevelSeven.Routing
@@ -11,7 +12,7 @@ namespace NextLevelSeven.Routing
         /// <summary>
         ///     Method to relay messages to.
         /// </summary>
-        public readonly Action<INativeMessage> Action;
+        public readonly Action<IMessage> Action;
 
         /// <summary>
         ///     Router to route messages to when the condition is met.
@@ -23,7 +24,7 @@ namespace NextLevelSeven.Routing
         /// </summary>
         /// <param name="action"></param>
         /// <param name="targetRouter"></param>
-        public ListenerRouter(Action<INativeMessage> action, IRouter targetRouter = null)
+        public ListenerRouter(Action<IMessage> action, IRouter targetRouter = null)
         {
             Action = action;
             TargetRouter = targetRouter;
@@ -34,7 +35,7 @@ namespace NextLevelSeven.Routing
         /// </summary>
         /// <param name="message">Message to route.</param>
         /// <returns></returns>
-        public bool Route(INativeMessage message)
+        public bool Route(IMessage message)
         {
             Action(message);
             return TargetRouter == null || TargetRouter.Route(message);
