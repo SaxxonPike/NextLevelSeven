@@ -249,7 +249,7 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         public override IEncodedTypeConverter As
         {
-            get { return new BuilderCodec(this); }
+            get { return new EncodedTypeConverter(this); }
         }
 
         /// <summary>

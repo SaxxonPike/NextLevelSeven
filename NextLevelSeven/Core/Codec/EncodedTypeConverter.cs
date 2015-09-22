@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using NextLevelSeven.Conversion;
-using NextLevelSeven.Core.Codec;
 
-namespace NextLevelSeven.Building.Elements
+namespace NextLevelSeven.Core.Codec
 {
     /// <summary>
     ///     Provides HL7 value conversion.
     /// </summary>
-    internal sealed class BuilderCodec : IEncodedTypeConverter
+    internal sealed class EncodedTypeConverter : IEncodedTypeConverter
     {
         /// <summary>
         ///     Create a codec that references the specified element's data.
         /// </summary>
         /// <param name="baseElement">Element to reference.</param>
-        public BuilderCodec(BuilderBase baseElement)
+        public EncodedTypeConverter(IElement baseElement)
         {
             BaseElement = baseElement;
         }
@@ -22,7 +21,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>
         ///     Referenced element.
         /// </summary>
-        private BuilderBase BaseElement { get; set; }
+        private IElement BaseElement { get; set; }
 
         /// <summary>
         ///     Get or set the element's value as a date.

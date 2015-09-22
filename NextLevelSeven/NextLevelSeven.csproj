@@ -45,7 +45,6 @@
   <ItemGroup>
     <Compile Include="Building\Elements\BuilderBase.cs" />
     <Compile Include="Building\Elements\BuilderBaseDescendant.cs" />
-    <Compile Include="Building\Elements\BuilderCodec.cs" />
     <Compile Include="Building\BuilderException.cs" />
     <Compile Include="Building\Elements\ComponentBuilder.cs" />
     <Compile Include="Building\Elements\DelimiterFieldBuilder.cs" />
@@ -77,7 +76,7 @@
     <Compile Include="Parsing\ParserException.cs" />
     <Compile Include="Streaming\StreamException.cs" />
     <Compile Include="Utility\ProxyDelegates.cs" />
-    <Compile Include="Parsing\Elements\ParserCodec.cs" />
+    <Compile Include="Core\Codec\EncodedTypeConverter.cs" />
     <Compile Include="Core\Codec\IndexedEncodedTypeConverter.cs" />
     <Compile Include="Core\ElementException.cs" />
     <Compile Include="Core\IComponent.cs" />

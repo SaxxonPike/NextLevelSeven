@@ -181,7 +181,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// </summary>
         public IEncodedTypeConverter As
         {
-            get { return new ParserCodec(this); }
+            get { return new EncodedTypeConverter(this); }
         }
 
         /// <summary>
