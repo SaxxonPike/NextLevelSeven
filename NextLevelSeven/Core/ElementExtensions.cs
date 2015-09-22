@@ -32,7 +32,7 @@ namespace NextLevelSeven.Core
         /// <returns>The newly added element.</returns>
         public static void Add(this IElement target, IElement elementToAdd)
         {
-            target.Value = String.Join(new string(target.Delimiter, 1), target.Value, elementToAdd.ToString());
+            target.Value = String.Join(new string(target.Delimiter, 1), target.Value ?? string.Empty, elementToAdd.Value ?? string.Empty);
         }
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace NextLevelSeven.Core
         public static void AddRange(this IElement target, IEnumerable<IElement> elementsToAdd)
         {
             target.Value = String.Join(new string(target.Delimiter, 1),
-                (new[] {target.Value}).Concat(elementsToAdd.Select(e => e.ToString())));
+                (new[] {target.Value}).Concat(elementsToAdd.Select(e => e.Value ?? string.Empty)));
         }
 
         /// <summary>

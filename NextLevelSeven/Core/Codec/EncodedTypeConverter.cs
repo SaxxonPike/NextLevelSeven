@@ -13,7 +13,7 @@ namespace NextLevelSeven.Core.Codec
         ///     Create a codec that references the specified element's data.
         /// </summary>
         /// <param name="baseElement">Element to reference.</param>
-        public EncodedTypeConverter(IElement baseElement)
+        public EncodedTypeConverter(IEncodedElement baseElement)
         {
             BaseElement = baseElement;
         }
@@ -21,7 +21,7 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>
         ///     Referenced element.
         /// </summary>
-        private IElement BaseElement { get; set; }
+        private IEncodedElement BaseElement { get; set; }
 
         /// <summary>
         ///     Get or set the element's value as a date.
@@ -91,8 +91,8 @@ namespace NextLevelSeven.Core.Codec
         /// </summary>
         public IEnumerable<string> FormattedText
         {
-            get { return TextConverter.ConvertToFormattedText(BaseElement.Value, BaseElement.Delimiter); }
-            set { BaseElement.Value = TextConverter.ConvertFromFormattedText(value, BaseElement.Delimiter); }
+            get { return TextConverter.ConvertToFormattedText(BaseElement.Value, BaseElement.Delimiter, BaseElement.EncodingConfiguration); }
+            set { BaseElement.Value = TextConverter.ConvertFromFormattedText(value, BaseElement.Delimiter, BaseElement.EncodingConfiguration); }
         }
 
         /// <summary>
@@ -145,13 +145,13 @@ namespace NextLevelSeven.Core.Codec
             get
             {
                 return string.Join(Environment.NewLine,
-                    TextConverter.ConvertToFormattedText(BaseElement.Value, BaseElement.Delimiter));
+                    TextConverter.ConvertToFormattedText(BaseElement.Value, BaseElement.Delimiter, BaseElement.EncodingConfiguration));
             }
             set
             {
                 BaseElement.Value =
                     TextConverter.ConvertFromFormattedText(value.Replace(Environment.NewLine, "\xD").Split('\xD'),
-                        BaseElement.Delimiter);
+                        BaseElement.Delimiter, BaseElement.EncodingConfiguration);
             }
         }
 

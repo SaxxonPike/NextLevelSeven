@@ -66,7 +66,7 @@ namespace NextLevelSeven.Streaming
         /// <returns>Converted message.</returns>
         protected virtual string Interpret(IMessage message)
         {
-            return message.ToString();
+            return message.Value;
         }
 
         /// <summary>

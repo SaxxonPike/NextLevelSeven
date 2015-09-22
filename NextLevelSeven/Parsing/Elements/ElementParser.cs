@@ -15,7 +15,7 @@ namespace NextLevelSeven.Parsing.Elements
     ///     Represents a generic HL7 message element, which may contain other elements.
     /// </summary>
     internal abstract class ElementParser : IElementParser, IComparable, IComparable<IElement>, IComparable<string>,
-        IEquatable<IElement>, IEquatable<string>, IDividable
+        IEquatable<IElement>, IEquatable<string>, IDividable, IEncodedElement
     {
         /// <summary>
         ///     Encoding configuration override.
@@ -267,11 +267,6 @@ namespace NextLevelSeven.Parsing.Elements
         {
             get
             {
-                if (Ancestor is MessageParser)
-                {
-                    return new MessageParser(Ancestor.ToString());
-                }
-
                 return (Ancestor != null)
                     ? Ancestor.Message
                     : null;
@@ -286,7 +281,7 @@ namespace NextLevelSeven.Parsing.Elements
             get
             {
                 return (DescendantDivider == null)
-                    ? null
+                    ? string.Empty
                     : DescendantDivider.Value;
             }
             set

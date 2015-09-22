@@ -11,13 +11,13 @@ namespace NextLevelSeven.Building.Elements
     /// <summary>
     ///     Base class for message builders.
     /// </summary>
-    internal abstract class BuilderBase : IElement, IComparable, IComparable<IElement>, IComparable<string>,
-        IEquatable<IElement>, IEquatable<string>
+    internal abstract class BuilderBase : IComparable, IComparable<IElement>, IComparable<string>,
+        IEquatable<IElement>, IEquatable<string>, IEncodedElement
     {
         /// <summary>
         ///     Encoding configuration for this message.
         /// </summary>
-        internal readonly EncodingConfigurationBase EncodingConfiguration;
+        public EncodingConfigurationBase EncodingConfiguration { get; private set; }
 
         /// <summary>
         ///     Initialize the message builder base class.
@@ -258,7 +258,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Builder's contents.</returns>
         public override sealed string ToString()
         {
-            return Value;
+            return Value ?? string.Empty;
         }
 
         /// <summary>

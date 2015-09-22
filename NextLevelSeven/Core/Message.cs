@@ -26,7 +26,7 @@ namespace NextLevelSeven.Core
         /// <returns>New message builder.</returns>
         public static IMessageBuilder Build(string message)
         {
-            return new MessageBuilder(message);
+            return new MessageBuilder { Value = message };
         }
 
         /// <summary>
@@ -36,7 +36,7 @@ namespace NextLevelSeven.Core
         /// <returns>New message builder.</returns>
         public static IMessageBuilder Build(IElement message)
         {
-            return new MessageBuilder(message);
+            return new MessageBuilder { Value = message.Value };
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace NextLevelSeven.Core
         /// <returns>New message builder.</returns>
         public static IMessageBuilder BuildFormat(string message, params object[] args)
         {
-            return new MessageBuilder(string.Format(message, args));
+            return new MessageBuilder { Value = string.Format(message, args) };
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace NextLevelSeven.Core
         /// <returns>New message builder.</returns>
         public static IMessageParser Parse(string message)
         {
-            return new MessageParser(message);
+            return new MessageParser { Value = message };
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace NextLevelSeven.Core
         /// <returns>New message builder.</returns>
         public static IMessageParser Parse(IElement message)
         {
-            return new MessageParser(message);
+            return new MessageParser { Value = message.Value };
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace NextLevelSeven.Core
         /// <returns>New message builder.</returns>
         public static IMessageParser ParseFormat(string message, params object[] args)
         {
-            return new MessageParser(string.Format(message, args));
+            return new MessageParser { Value = string.Format(message, args) };
         }
     }
 }

@@ -41,14 +41,29 @@
             InitializeWith(field, repetition, component, subcomponent, escape);
         }
 
+        /// <summary>
+        ///     Get the component delimiter.
+        /// </summary>
         public override char ComponentDelimiter { get; protected set; }
 
+        /// <summary>
+        ///     Get the escape character.
+        /// </summary>
         public override char EscapeDelimiter { get; protected set; }
 
+        /// <summary>
+        ///     Get the field delimiter.
+        /// </summary>
         public override char FieldDelimiter { get; protected set; }
 
+        /// <summary>
+        ///     Get the repetition delimiter.
+        /// </summary>
         public override char RepetitionDelimiter { get; protected set; }
 
+        /// <summary>
+        ///     Get the subcomponent delimiter.
+        /// </summary>
         public override char SubcomponentDelimiter { get; protected set; }
     }
 }

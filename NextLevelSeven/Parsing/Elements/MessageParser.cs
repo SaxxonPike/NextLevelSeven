@@ -37,38 +37,6 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>
-        ///     Create a message using an HL7 data string.
-        /// </summary>
-        /// <param name="message">Message data to interpret.</param>
-        public MessageParser(string message)
-        {
-            _segments = new IndexedCache<int, SegmentParser>(CreateSegment);
-            if (message == null)
-            {
-                throw new ParserException(ErrorCode.MessageDataMustNotBeNull);
-            }
-            if (!message.StartsWith("MSH"))
-            {
-                throw new ParserException(ErrorCode.MessageDataMustStartWithMsh);
-            }
-            if (message.Length < 8)
-            {
-                throw new ParserException(ErrorCode.MessageDataIsTooShort);
-            }
-            _encodingConfiguration = new MessageParserEncodingConfiguration(this);
-            Value = message;
-        }
-
-        /// <summary>
-        ///     Create a message using an HL7 element's content.
-        /// </summary>
-        /// <param name="message">Message or other element data to interpret.</param>
-        public MessageParser(IElement message)
-            : this(message.Value)
-        {
-        }
-
-        /// <summary>
         ///     Get the encoding configuration for the message.
         /// </summary>
         public override EncodingConfigurationBase EncodingConfiguration
@@ -299,7 +267,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <param name="message">Message data to interpret.</param>
         public static MessageParser Create(string message)
         {
-            return new MessageParser(message);
+            return new MessageParser { Value = message };
         }
 
         /// <summary>
@@ -415,11 +383,11 @@ namespace NextLevelSeven.Parsing.Elements
         /// </summary>
         /// <param name="message">String to transform.</param>
         /// <returns>Sanitized string.</returns>
-        private static string SanitizeLineEndings(string message)
+        private string SanitizeLineEndings(string message)
         {
             return message == null
                 ? null
-                : message.Replace(Environment.NewLine, "\xD");
+                : message.Replace(Environment.NewLine, EncodingConfiguration.SegmentDelimiterString);
         }
 
         /// <summary>
@@ -428,7 +396,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Clone of the message.</returns>
         private MessageParser CloneInternal()
         {
-            return new MessageParser(Value) {Index = Index};
+            return new MessageParser { Value = Value, Index = Index };
         }
 
         /// <summary>
@@ -437,7 +405,22 @@ namespace NextLevelSeven.Parsing.Elements
         public override string Value
         {
             get { return base.Value; }
-            set { base.Value = SanitizeLineEndings(value); }
+            set
+            {
+                if (value == null)
+                {
+                    throw new ParserException(ErrorCode.MessageDataMustNotBeNull);
+                }
+                if (value.Length < 8)
+                {
+                    throw new ParserException(ErrorCode.MessageDataIsTooShort);
+                }
+                if (!value.StartsWith("MSH"))
+                {
+                    throw new ParserException(ErrorCode.MessageDataMustStartWithMsh);
+                }
+                base.Value = SanitizeLineEndings(value);
+            }
         }
     }
 }

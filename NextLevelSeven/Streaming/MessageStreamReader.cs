@@ -60,7 +60,7 @@ namespace NextLevelSeven.Streaming
         /// <returns>Interpreted message.</returns>
         protected virtual IMessageParser Interpret(string data)
         {
-            return new MessageParser(data);
+            return new MessageParser { Value = data };
         }
 
         /// <summary>

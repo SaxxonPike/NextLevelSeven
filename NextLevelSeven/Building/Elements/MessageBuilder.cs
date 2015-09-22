@@ -35,24 +35,6 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>
-        ///     Create a message builder initialized with the specified message content.
-        /// </summary>
-        /// <param name="baseMessage">Content to initialize with.</param>
-        public MessageBuilder(string baseMessage)
-        {
-            _segments = new IndexedCache<int, SegmentBuilder>(CreateSegmentBuilder);
-            SetMessage(baseMessage);
-        }
-
-        /// <summary>
-        ///     Create a message builder initialized with the copied content of the specified element.
-        /// </summary>
-        /// <param name="message">Message or other element to copy content from.</param>
-        public MessageBuilder(IElement message) : this(message.Value)
-        {
-        }
-
-        /// <summary>
         ///     Get a descendant segment builder.
         /// </summary>
         /// <param name="index">Index within the message to get the builder from.</param>
@@ -97,7 +79,7 @@ namespace NextLevelSeven.Building.Elements
                     return null;
                 }
 
-                var result = string.Join("\xD",
+                var result = string.Join(EncodingConfiguration.SegmentDelimiterString,
                     _segments.OrderBy(i => i.Key).Select(i => i.Value.Value));
                 return result;
             }
@@ -264,7 +246,7 @@ namespace NextLevelSeven.Building.Elements
             _segments.Clear();
             var index = 1;
 
-            foreach (var segment in value.Split('\xD'))
+            foreach (var segment in value.Split(EncodingConfiguration.SegmentDelimiter))
             {
                 SetSegment(index++, segment);
             }
@@ -277,11 +259,11 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         /// <param name="message">String to transform.</param>
         /// <returns>Sanitized string.</returns>
-        private static string SanitizeLineEndings(string message)
+        private string SanitizeLineEndings(string message)
         {
             return message == null
                 ? null
-                : message.Replace(Environment.NewLine, "\xD");
+                : message.Replace(Environment.NewLine, EncodingConfiguration.SegmentDelimiterString);
         }
 
         /// <summary>
@@ -303,7 +285,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This MessageBuilder, for chaining purposes.</returns>
         public IMessageBuilder SetSegments(params string[] segments)
         {
-            SetMessage(string.Join("\xD", segments));
+            SetMessage(string.Join(EncodingConfiguration.SegmentDelimiterString, segments));
             return this;
         }
 
@@ -446,7 +428,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Clone of the message builder.</returns>
         public override IElement Clone()
         {
-            return new MessageBuilder(Value);
+            return new MessageBuilder { Value = Value };
         }
 
         /// <summary>
@@ -455,7 +437,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Clone of the message.</returns>
         IMessage IMessage.Clone()
         {
-            return new MessageBuilder(Value);
+            return new MessageBuilder { Value = Value };
         }
 
         /// <summary>
@@ -471,7 +453,7 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         public override char Delimiter
         {
-            get { return '\xD'; }
+            get { return EncodingConfiguration.SegmentDelimiter; }
         }
 
         /// <summary>
