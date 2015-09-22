@@ -14,12 +14,12 @@ namespace NextLevelSeven.Parsing.Elements
     /// </summary>
     internal sealed class MessageParser : ElementParser, IMessageParser
     {
-        private readonly IndexedCache<int, SegmentParser> _segments;
-
         /// <summary>
         ///     Internal backing field for encoding configuration.
         /// </summary>
         private readonly EncodingConfigurationBase _encodingConfiguration;
+
+        private readonly IndexedCache<int, SegmentParser> _segments;
 
         /// <summary>
         ///     Cached Guid.

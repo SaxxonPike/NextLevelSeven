@@ -99,15 +99,6 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>
-        ///     Get the number of sub-values in this builder.
-        /// </summary>
-        /// <returns></returns>
-        protected int GetValueCount()
-        {
-            return ValueCount;
-        }
-
-        /// <summary>
         ///     Get the index at which this builder is located in its descendant.
         /// </summary>
         public int Index { get; private set; }
@@ -196,6 +187,15 @@ namespace NextLevelSeven.Building.Elements
         public bool Equals(string other)
         {
             return string.Equals(Value, other, StringComparison.Ordinal);
+        }
+
+        /// <summary>
+        ///     Get the number of sub-values in this builder.
+        /// </summary>
+        /// <returns></returns>
+        protected int GetValueCount()
+        {
+            return ValueCount;
         }
 
         /// <summary>

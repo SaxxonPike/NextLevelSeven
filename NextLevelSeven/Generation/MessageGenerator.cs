@@ -1,8 +1,6 @@
 ﻿using System;
 using NextLevelSeven.Building;
 using NextLevelSeven.Core;
-using NextLevelSeven.Parsing;
-using NextLevelSeven.Parsing.Elements;
 
 namespace NextLevelSeven.Generation
 {

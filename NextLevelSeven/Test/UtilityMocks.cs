@@ -1,5 +1,4 @@
 ﻿using System;
-using NextLevelSeven.Core;
 using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Test

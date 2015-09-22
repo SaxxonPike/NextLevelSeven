@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Utility
 {
@@ -31,34 +30,6 @@ namespace NextLevelSeven.Utility
             _read = read ?? DefaultRead;
             _startIndex = startIndex;
             _write = write ?? DefaultWrite;
-        }
-
-        /// <summary>
-        ///     Dummy count method.
-        /// </summary>
-        /// <returns>Not used.</returns>
-        static private int DefaultCount()
-        {
-            return 0;
-        }
-
-        /// <summary>
-        ///     Dummy read method.
-        /// </summary>
-        /// <param name="index">Not used.</param>
-        /// <returns>Default value of TItem.</returns>
-        static private TItem DefaultRead(int index)
-        {
-            return default(TItem);
-        }
-
-        /// <summary>
-        ///     Dummy write method.
-        /// </summary>
-        /// <param name="index">Not used.</param>
-        /// <param name="value">Not used.</param>
-        static private void DefaultWrite(int index, TItem value)
-        {
         }
 
         /// <summary>
@@ -146,6 +117,34 @@ namespace NextLevelSeven.Utility
             var result = new TItem[_count()];
             CopyTo(result, 0);
             return result;
+        }
+
+        /// <summary>
+        ///     Dummy count method.
+        /// </summary>
+        /// <returns>Not used.</returns>
+        private static int DefaultCount()
+        {
+            return 0;
+        }
+
+        /// <summary>
+        ///     Dummy read method.
+        /// </summary>
+        /// <param name="index">Not used.</param>
+        /// <returns>Default value of TItem.</returns>
+        private static TItem DefaultRead(int index)
+        {
+            return default(TItem);
+        }
+
+        /// <summary>
+        ///     Dummy write method.
+        /// </summary>
+        /// <param name="index">Not used.</param>
+        /// <param name="value">Not used.</param>
+        private static void DefaultWrite(int index, TItem value)
+        {
         }
     }
 }
