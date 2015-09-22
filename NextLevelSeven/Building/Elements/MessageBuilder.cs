@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Codec;
@@ -241,6 +242,7 @@ namespace NextLevelSeven.Building.Elements
             {
                 throw new BuilderException(ErrorCode.MessageDataMustNotBeNull);
             }
+            value = SanitizeLineEndings(value);
 
             var length = value.Length;
             if (length < 8)
@@ -260,7 +262,6 @@ namespace NextLevelSeven.Building.Elements
             SubcomponentDelimiter = (length >= 8) ? value[7] : '&';
 
             _segments.Clear();
-            value = value.Replace("\r\n", "\xD");
             var index = 1;
 
             foreach (var segment in value.Split('\xD'))
@@ -269,6 +270,18 @@ namespace NextLevelSeven.Building.Elements
             }
 
             return this;
+        }
+
+        /// <summary>
+        ///     Change all system line endings to HL7 line endings.
+        /// </summary>
+        /// <param name="message">String to transform.</param>
+        /// <returns>Sanitized string.</returns>
+        private static string SanitizeLineEndings(string message)
+        {
+            return message == null
+                ? null
+                : message.Replace(Environment.NewLine, "\xD");
         }
 
         /// <summary>

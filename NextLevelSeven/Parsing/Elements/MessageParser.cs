@@ -56,7 +56,7 @@ namespace NextLevelSeven.Parsing.Elements
                 throw new ParserException(ErrorCode.MessageDataIsTooShort);
             }
             _encodingConfiguration = new MessageParserEncodingConfiguration(this);
-            Value = SanitizeLineEndings(message);
+            Value = message;
         }
 
         /// <summary>
@@ -429,6 +429,15 @@ namespace NextLevelSeven.Parsing.Elements
         private MessageParser CloneInternal()
         {
             return new MessageParser(Value) {Index = Index};
+        }
+
+        /// <summary>
+        ///     Get or set the value of this message.
+        /// </summary>
+        public override string Value
+        {
+            get { return base.Value; }
+            set { base.Value = SanitizeLineEndings(value); }
         }
     }
 }

@@ -53,6 +53,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="ArrayComparer.cs" />
     <Compile Include="AssertEnumerable.cs" />
     <Compile Include="AssertIterations.cs" />
     <Compile Include="AssertTime.cs" />
@@ -70,6 +71,8 @@
     <Compile Include="Conversion\NumberConverterTests.cs" />
     <Compile Include="Core\CoreTestFixture.cs" />
     <Compile Include="Core\ElementExtensionTests.cs" />
+    <Compile Include="Core\ParserComparer.cs" />
+    <Compile Include="Core\ParserComparisonTests.cs" />
     <Compile Include="Diagnostics\DiagnosticsTestFixture.cs" />
     <Compile Include="Generation\GenerationTestFixture.cs" />
     <Compile Include="Parsing\NativeComponentTests.cs" />
