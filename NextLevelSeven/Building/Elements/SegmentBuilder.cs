@@ -23,15 +23,10 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         /// <param name="builder">Ancestor builder.</param>
         /// <param name="index">Index in the ancestor.</param>
-        /// <param name="value">Default value.</param>
-        internal SegmentBuilder(BuilderBase builder, int index, string value = null)
+        internal SegmentBuilder(BuilderBase builder, int index)
             : base(builder, index)
         {
             _fields = new IndexedCache<int, FieldBuilder>(CreateFieldBuilder);
-            if (value != null)
-            {
-                Value = value;
-            }
         }
 
         /// <summary>
@@ -370,7 +365,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Clone of the element.</returns>
         public override IElement Clone()
         {
-            return new SegmentBuilder(Ancestor, Index, Value);
+            return new SegmentBuilder(Ancestor, Index) { Value = Value };
         }
 
         /// <summary>
@@ -379,7 +374,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Clone of the segment.</returns>
         ISegment ISegment.Clone()
         {
-            return new SegmentBuilder(Ancestor, Index, Value);
+            return new SegmentBuilder(Ancestor, Index) { Value = Value };
         }
 
         /// <summary>

@@ -127,14 +127,6 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [TestMethod]
-        public void Message_HasUniqueKeys()
-        {
-            var message1 = Message.Parse(ExampleMessages.Standard);
-            var message2 = Message.Parse(ExampleMessages.Standard);
-            Assert.AreNotEqual(message1.Key, message2.Key);
-        }
-
-        [TestMethod]
         public void Message_CanBeCloned()
         {
             var message = Message.Parse(ExampleMessages.Standard);

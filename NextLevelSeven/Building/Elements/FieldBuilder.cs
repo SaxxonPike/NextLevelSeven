@@ -22,15 +22,10 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         /// <param name="builder">Ancestor builder.</param>
         /// <param name="index">Index in the ancestor.</param>
-        /// <param name="value">Default value.</param>
-        internal FieldBuilder(BuilderBase builder, int index, string value = null)
+        internal FieldBuilder(BuilderBase builder, int index)
             : base(builder, index)
         {
             _repetitions = new IndexedCache<int, RepetitionBuilder>(CreateRepetitionBuilder);
-            if (value != null)
-            {
-                InitValue(value);
-            }
         }
 
         /// <summary>
@@ -289,7 +284,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Clone of the element.</returns>
         public override sealed IElement Clone()
         {
-            return new FieldBuilder(Ancestor, Index, Value);
+            return new FieldBuilder(Ancestor, Index) { Value = Value };
         }
 
         /// <summary>
@@ -298,7 +293,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Clone of the field.</returns>
         IField IField.Clone()
         {
-            return new FieldBuilder(Ancestor, Index, Value);
+            return new FieldBuilder(Ancestor, Index) { Value = Value };
         }
 
         /// <summary>
@@ -339,15 +334,6 @@ namespace NextLevelSeven.Building.Elements
         protected virtual RepetitionBuilder CreateRepetitionBuilder(int index)
         {
             return new RepetitionBuilder(this, index);
-        }
-
-        /// <summary>
-        ///     Initialize initial value.
-        /// </summary>
-        /// <param name="value"></param>
-        private void InitValue(string value)
-        {
-            Value = value;
         }
 
         /// <summary>

@@ -11,21 +11,21 @@ namespace NextLevelSeven.Parsing.Elements
     /// <summary>
     ///     Represents a segment-level element in an HL7 message.
     /// </summary>
-    internal sealed class SegmentParser : ElementParser, ISegmentParser
+    internal sealed class SegmentParser : ParserBaseDescendant, ISegmentParser
     {
         /// <summary>
         ///     Internal component cache.
         /// </summary>
         private readonly IndexedCache<int, FieldParser> _fields;
 
-        public SegmentParser(ElementParser ancestor, int parentIndex, int externalIndex)
+        public SegmentParser(ParserBase ancestor, int parentIndex, int externalIndex)
             : base(ancestor, parentIndex, externalIndex)
         {
             _fields = new IndexedCache<int, FieldParser>(CreateField);
         }
 
-        private SegmentParser(string value, EncodingConfigurationBase config)
-            : base(value, config)
+        private SegmentParser(EncodingConfigurationBase config)
+            : base(config)
         {
             _fields = new IndexedCache<int, FieldParser>(CreateField);
         }
@@ -49,13 +49,9 @@ namespace NextLevelSeven.Parsing.Elements
                     return EncodingConfiguration.FieldDelimiter;
                 }
 
-                var value = Value;
-                if (value != null && value.Length > 3)
-                {
-                    return value[3];
-                }
-
-                return '|';
+                return DescendantStringDivider != null
+                    ? DescendantStringDivider.Delimiter
+                    : '|';
             }
         }
 
@@ -78,19 +74,6 @@ namespace NextLevelSeven.Parsing.Elements
                     return DescendantDivider.Count + 1;
                 }
                 return DescendantDivider.Count;
-            }
-        }
-
-        public override string Key
-        {
-            get
-            {
-                var index = ((MessageParser) Ancestor).Segments
-                    .Where(s => s.Type == Type)
-                    .Select(e => e.Index)
-                    .ToList()
-                    .IndexOf(Index) + 1;
-                return Type + index;
             }
         }
 
@@ -209,7 +192,7 @@ namespace NextLevelSeven.Parsing.Elements
 
         private SegmentParser CloneInternal()
         {
-            return new SegmentParser(Value, EncodingConfiguration) {Index = Index};
+            return new SegmentParser(EncodingConfiguration) { Index = Index, Value = Value };
         }
     }
 }

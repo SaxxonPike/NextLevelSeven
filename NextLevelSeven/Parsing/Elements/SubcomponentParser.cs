@@ -9,15 +9,15 @@ namespace NextLevelSeven.Parsing.Elements
     /// <summary>
     ///     Represents a subcomponent-level element in an HL7 message.
     /// </summary>
-    internal sealed class SubcomponentParser : ElementParser, ISubcomponentParser
+    internal sealed class SubcomponentParser : ParserBaseDescendant, ISubcomponentParser
     {
-        public SubcomponentParser(ElementParser ancestor, int index, int externalIndex)
+        public SubcomponentParser(ParserBase ancestor, int index, int externalIndex)
             : base(ancestor, index, externalIndex)
         {
         }
 
-        private SubcomponentParser(string value, EncodingConfigurationBase config)
-            : base(value, config)
+        private SubcomponentParser(EncodingConfigurationBase config)
+            : base(config)
         {
         }
 
@@ -63,7 +63,7 @@ namespace NextLevelSeven.Parsing.Elements
 
         private SubcomponentParser CloneInternal()
         {
-            return new SubcomponentParser(Value, EncodingConfiguration) {Index = Index};
+            return new SubcomponentParser(EncodingConfiguration) { Index = Index, Value = Value };
         }
     }
 }

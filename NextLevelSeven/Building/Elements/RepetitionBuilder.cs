@@ -22,15 +22,10 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         /// <param name="builder">Ancestor builder.</param>
         /// <param name="index">Index in the ancestor.</param>
-        /// <param name="value">Default value.</param>
-        internal RepetitionBuilder(BuilderBase builder, int index, string value = null)
+        internal RepetitionBuilder(BuilderBase builder, int index)
             : base(builder, index)
         {
             _components = new IndexedCache<int, ComponentBuilder>(CreateComponentBuilder);
-            if (value != null)
-            {
-                Value = value;
-            }
         }
 
         /// <summary>
@@ -232,7 +227,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Clone of the element.</returns>
         public override IElement Clone()
         {
-            return new RepetitionBuilder(Ancestor, Index, Value);
+            return new RepetitionBuilder(Ancestor, Index) { Value = Value };
         }
 
         /// <summary>
@@ -241,7 +236,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Clone of the repetition.</returns>
         IRepetition IRepetition.Clone()
         {
-            return new RepetitionBuilder(Ancestor, Index, Value);
+            return new RepetitionBuilder(Ancestor, Index) { Value = Value };
         }
 
         /// <summary>

@@ -9,7 +9,7 @@ namespace NextLevelSeven.Parsing.Elements
     /// <summary>
     ///     Represents a repetition-level element in an HL7 message.
     /// </summary>
-    internal sealed class RepetitionParser : ElementParser, IRepetitionParser
+    internal sealed class RepetitionParser : ParserBaseDescendant, IRepetitionParser
     {
         /// <summary>
         ///     Internal component cache.
@@ -22,8 +22,21 @@ namespace NextLevelSeven.Parsing.Elements
         /// <param name="ancestor">Ancestor element.</param>
         /// <param name="parentIndex">Index in the parent splitter.</param>
         /// <param name="externalIndex">Exposed index.</param>
-        public RepetitionParser(ElementParser ancestor, int parentIndex, int externalIndex)
+        public RepetitionParser(ParserBase ancestor, int parentIndex, int externalIndex)
             : base(ancestor, parentIndex, externalIndex)
+        {
+            _components = new IndexedCache<int, ComponentParser>(CreateComponent);
+        }
+
+        /// <summary>
+        ///     Create a repetition with the specified ancestor, ancestor index, and exposed index, with an alternative encoding configuration.
+        /// </summary>
+        /// <param name="ancestor">Ancestor element.</param>
+        /// <param name="parentIndex">Index in the parent splitter.</param>
+        /// <param name="externalIndex">Exposed index.</param>
+        /// <param name="config">Encoding configuration to use.</param>
+        public RepetitionParser(ParserBase ancestor, int parentIndex, int externalIndex, EncodingConfigurationBase config)
+            : base(ancestor, parentIndex, externalIndex, config)
         {
             _components = new IndexedCache<int, ComponentParser>(CreateComponent);
         }
@@ -31,10 +44,9 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>
         ///     Create a detached repetition with the specified initial value and encoding configuration.
         /// </summary>
-        /// <param name="value">Initial value.</param>
         /// <param name="config">Encoding configuration.</param>
-        private RepetitionParser(string value, EncodingConfigurationBase config)
-            : base(value, config)
+        private RepetitionParser(EncodingConfigurationBase config)
+            : base(config)
         {
             _components = new IndexedCache<int, ComponentParser>(CreateComponent);
         }
@@ -165,7 +177,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Clone of this repetition.</returns>
         private RepetitionParser CloneInternal()
         {
-            return new RepetitionParser(Value, EncodingConfiguration) {Index = Index};
+            return new RepetitionParser(EncodingConfiguration) { Index = Index, Value = Value };
         }
     }
 }

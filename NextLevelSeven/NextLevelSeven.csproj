@@ -68,12 +68,14 @@
     <Compile Include="Conversion\NumberConverter.cs" />
     <Compile Include="Conversion\TextConverter.cs" />
     <Compile Include="Core\ElementExtensions.cs" />
+    <Compile Include="Core\ElementOperations.cs" />
     <Compile Include="Core\Encoding\EncodingConfiguration.cs" />
     <Compile Include="Core\IEncodedElement.cs" />
     <Compile Include="Core\MessageExtensions.cs" />
     <Compile Include="Core\Properties\ProxyIdentity.cs" />
     <Compile Include="Core\Properties\IMessageDetails.cs" />
     <Compile Include="Core\Properties\MessageDetails.cs" />
+    <Compile Include="Parsing\Elements\ParserBaseDescendant.cs" />
     <Compile Include="Parsing\ParserException.cs" />
     <Compile Include="Streaming\StreamException.cs" />
     <Compile Include="Utility\ProxyDelegates.cs" />
@@ -89,7 +91,6 @@
     <Compile Include="Core\Message.cs" />
     <Compile Include="Parsing\Elements\FieldParserWithStaticValue.cs" />
     <Compile Include="Parsing\IComponentParser.cs" />
-    <Compile Include="Parsing\IDividable.cs" />
     <Compile Include="Parsing\IFieldParser.cs" />
     <Compile Include="Parsing\IRepetitionParser.cs" />
     <Compile Include="Parsing\ISubcomponentParser.cs" />
@@ -106,7 +107,7 @@
     <Compile Include="Parsing\Dividers\StringDividerBase.cs" />
     <Compile Include="Parsing\Dividers\StringDividerEnumerator.cs" />
     <Compile Include="Parsing\Dividers\StringDividerOperations.cs" />
-    <Compile Include="Parsing\Elements\ElementParser.cs" />
+    <Compile Include="Parsing\Elements\ParserBase.cs" />
     <Compile Include="Core\Encoding\EncodingConfigurationBase.cs" />
     <Compile Include="Parsing\Elements\EncodingFieldParser.cs" />
     <Compile Include="Parsing\Elements\FieldParser.cs" />

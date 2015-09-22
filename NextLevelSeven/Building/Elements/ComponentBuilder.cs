@@ -22,15 +22,10 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         /// <param name="builder">Ancestor builder.</param>
         /// <param name="index">Index of the component.</param>
-        /// <param name="value">Default value of the component.</param>
-        internal ComponentBuilder(BuilderBase builder, int index, string value = null)
+        internal ComponentBuilder(BuilderBase builder, int index)
             : base(builder, index)
         {
             _subcomponents = new IndexedCache<int, SubcomponentBuilder>(CreateSubcomponentBuilder);
-            if (value != null)
-            {
-                Value = value;
-            }
         }
 
         /// <summary>
@@ -192,7 +187,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Clone of the element.</returns>
         public override IElement Clone()
         {
-            return new ComponentBuilder(Ancestor, Index, Value);
+            return new ComponentBuilder(Ancestor, Index) { Value = Value };
         }
 
         /// <summary>
@@ -201,7 +196,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Clone of the component.</returns>
         IComponent IComponent.Clone()
         {
-            return new ComponentBuilder(Ancestor, Index, Value);
+            return new ComponentBuilder(Ancestor, Index) { Value = Value };
         }
 
         /// <summary>

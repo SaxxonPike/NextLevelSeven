@@ -12,19 +12,9 @@ namespace NextLevelSeven.Parsing.Elements
     /// <summary>
     ///     Represents a textual HL7v2 message.
     /// </summary>
-    internal sealed class MessageParser : ElementParser, IMessageParser
+    internal sealed class MessageParser : ParserBase, IMessageParser
     {
-        /// <summary>
-        ///     Internal backing field for encoding configuration.
-        /// </summary>
-        private readonly EncodingConfigurationBase _encodingConfiguration;
-
         private readonly IndexedCache<int, SegmentParser> _segments;
-
-        /// <summary>
-        ///     Cached Guid.
-        /// </summary>
-        private Guid _keyGuid;
 
         /// <summary>
         ///     Create a message with a default MSH segment.
@@ -32,31 +22,7 @@ namespace NextLevelSeven.Parsing.Elements
         public MessageParser()
         {
             _segments = new IndexedCache<int, SegmentParser>(CreateSegment);
-            _encodingConfiguration = new MessageParserEncodingConfiguration(this);
             Value = @"MSH|^~\&|";
-        }
-
-        /// <summary>
-        ///     Get the encoding configuration for the message.
-        /// </summary>
-        public override EncodingConfigurationBase EncodingConfiguration
-        {
-            get { return _encodingConfiguration; }
-        }
-
-        /// <summary>
-        ///     Get the key GUID.
-        /// </summary>
-        private Guid KeyGuid
-        {
-            get
-            {
-                if (_keyGuid == Guid.Empty)
-                {
-                    _keyGuid = Guid.NewGuid();
-                }
-                return _keyGuid;
-            }
         }
 
         /// <summary>
@@ -118,22 +84,6 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>
-        ///     Returns a unique identifier for the message.
-        /// </summary>
-        public override string Key
-        {
-            get { return KeyGuid.ToString(); }
-        }
-
-        /// <summary>
-        ///     Get the root message for this element.
-        /// </summary>
-        public override IMessageParser Message
-        {
-            get { return this; }
-        }
-
-        /// <summary>
         ///     Get the root message for this element.
         /// </summary>
         ISegmentParser IMessageParser.this[int index]
@@ -158,7 +108,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Escaped data.</returns>
         public string Escape(string data)
         {
-            return _encodingConfiguration.Escape(data);
+            return EncodingConfiguration.Escape(data);
         }
 
         /// <summary>
@@ -168,7 +118,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Unescaped string.</returns>
         public string UnEscape(string data)
         {
-            return _encodingConfiguration.UnEscape(data);
+            return EncodingConfiguration.UnEscape(data);
         }
 
         /// <summary>

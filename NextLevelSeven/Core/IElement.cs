@@ -46,6 +46,11 @@ namespace NextLevelSeven.Core
         int Index { get; }
 
         /// <summary>
+        ///     Unique key of the element within the message.
+        /// </summary>
+        string Key { get; }
+
+        /// <summary>
         ///     Get or set the complete value of the element.
         /// </summary>
         string Value { get; set; }

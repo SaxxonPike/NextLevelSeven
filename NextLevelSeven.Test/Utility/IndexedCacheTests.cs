@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Utility;
 
@@ -26,7 +27,7 @@ namespace NextLevelSeven.Test.Utility
             var cache = InitializeCache(i =>
             {
                 factoryHits++;
-                return factoryHits.ToString();
+                return factoryHits.ToString(CultureInfo.InvariantCulture);
             });
             Assert.IsNotNull(cache[0]);
             Assert.AreEqual(1, cache.Count);
@@ -40,7 +41,7 @@ namespace NextLevelSeven.Test.Utility
             var cache = InitializeCache(i =>
             {
                 factoryHits++;
-                return factoryHits.ToString();
+                return factoryHits.ToString(CultureInfo.InvariantCulture);
             });
             Assert.AreEqual(cache[0], "1");
             cache[0] = Randomized.String();

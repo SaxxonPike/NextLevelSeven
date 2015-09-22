@@ -9,7 +9,7 @@ namespace NextLevelSeven.Parsing.Elements
     /// <summary>
     ///     Represents a component level element of an HL7 message.
     /// </summary>
-    internal sealed class ComponentParser : ElementParser, IComponentParser
+    internal sealed class ComponentParser : ParserBaseDescendant, IComponentParser
     {
         /// <summary>
         ///     Internal subcomponent cache.
@@ -22,7 +22,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <param name="ancestor">Ancestor element to pull encoding information from.</param>
         /// <param name="parentIndex">Zero-based index within the parent divider.</param>
         /// <param name="externalIndex">HL7 index to identify as.</param>
-        public ComponentParser(ElementParser ancestor, int parentIndex, int externalIndex)
+        public ComponentParser(ParserBase ancestor, int parentIndex, int externalIndex)
             : base(ancestor, parentIndex, externalIndex)
         {
             _subcomponents = new IndexedCache<int, SubcomponentParser>(CreateSubcomponent);
@@ -31,10 +31,9 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>
         ///     Create a detached component.
         /// </summary>
-        /// <param name="value">Initial value.</param>
         /// <param name="config">Encoding configuration.</param>
-        private ComponentParser(string value, EncodingConfigurationBase config)
-            : base(value, config)
+        private ComponentParser(EncodingConfigurationBase config)
+            : base(config)
         {
             _subcomponents = new IndexedCache<int, SubcomponentParser>(CreateSubcomponent);
         }
@@ -152,7 +151,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Cloned component.</returns>
         private ComponentParser CloneInternal()
         {
-            return new ComponentParser(Value, EncodingConfiguration) {Index = Index};
+            return new ComponentParser(EncodingConfiguration) { Index = Index, Value = Value };
         }
     }
 }

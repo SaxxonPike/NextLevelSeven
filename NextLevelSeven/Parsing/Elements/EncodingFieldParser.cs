@@ -11,7 +11,7 @@ namespace NextLevelSeven.Parsing.Elements
         ///     Create an encoding field.
         /// </summary>
         /// <param name="ancestor"></param>
-        public EncodingFieldParser(ElementParser ancestor)
+        public EncodingFieldParser(ParserBase ancestor)
             : base(ancestor, 1, 2)
         {
         }

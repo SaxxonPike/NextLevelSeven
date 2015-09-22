@@ -17,5 +17,10 @@ namespace NextLevelSeven.Core
         ///     Default "HD" Facility when sending messages.
         /// </summary>
         public static readonly string Facility = Environment.UserDomainName;
+
+        /// <summary>
+        ///     If an element is a root element, this is the key that will be returned.
+        /// </summary>
+        public static readonly string RootElementKey = "*";
     }
 }

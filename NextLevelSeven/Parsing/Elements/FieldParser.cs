@@ -9,7 +9,7 @@ namespace NextLevelSeven.Parsing.Elements
     /// <summary>
     ///     Represents a field-level element in an HL7 message.
     /// </summary>
-    internal class FieldParser : ElementParser, IFieldParser
+    internal class FieldParser : ParserBaseDescendant, IFieldParser
     {
         /// <summary>
         ///     Internal repetition cache.
@@ -22,7 +22,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <param name="ancestor">Ancestor element.</param>
         /// <param name="parentIndex">Zero-based index within the parent's raw data.</param>
         /// <param name="externalIndex">Exposed index.</param>
-        public FieldParser(ElementParser ancestor, int parentIndex, int externalIndex)
+        public FieldParser(ParserBase ancestor, int parentIndex, int externalIndex)
             : base(ancestor, parentIndex, externalIndex)
         {
             _repetitions = new IndexedCache<int, RepetitionParser>(CreateRepetition);
@@ -31,10 +31,9 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>
         ///     Create a detached field with the specified initial value and configuration.
         /// </summary>
-        /// <param name="value">Initial value.</param>
         /// <param name="config">Encoding configuration.</param>
-        public FieldParser(string value, EncodingConfigurationBase config)
-            : base(value, config)
+        public FieldParser(EncodingConfigurationBase config)
+            : base(config)
         {
             _repetitions = new IndexedCache<int, RepetitionParser>(CreateRepetition);
         }
@@ -166,7 +165,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Clone of the field.</returns>
         protected virtual FieldParser CloneInternal()
         {
-            return new FieldParser(Value, EncodingConfiguration) {Index = Index};
+            return new FieldParser(EncodingConfiguration) { Index = Index, Value = Value };
         }
     }
 }

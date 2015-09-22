@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NextLevelSeven.Core.Encoding;
 using NextLevelSeven.Parsing.Dividers;
 using NextLevelSeven.Utility;
 
@@ -12,7 +13,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <param name="ancestor">Ancestor element.</param>
         /// <param name="index">Index within the ancestor.</param>
         /// <param name="externalIndex">Exposed index.</param>
-        protected FieldParserWithStaticValue(ElementParser ancestor, int index, int externalIndex)
+        protected FieldParserWithStaticValue(ParserBase ancestor, int index, int externalIndex)
             : base(ancestor, index, externalIndex)
         {
         }
@@ -64,7 +65,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <param name="ancestor">Ancestor element.</param>
         /// <param name="index">Index of the raw value.</param>
         /// <returns>Descendant divider within the specified index.</returns>
-        protected override sealed IStringDivider GetDescendantDivider(ElementParser ancestor, int index)
+        protected override sealed IStringDivider GetDescendantDivider(ParserBase ancestor, int index)
         {
             return index <= 1
                 ? new ProxyStringDivider(() => Value, v => Value = v)
@@ -77,10 +78,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Repetition descendant.</returns>
         protected override sealed RepetitionParser CreateRepetition(int index)
         {
-            return new RepetitionParser(this, index - 1, index)
-            {
-                EncodingConfiguration = Core.Encoding.EncodingConfiguration.Empty
-            };
+            return new RepetitionParser(this, index - 1, index, Core.Encoding.EncodingConfiguration.Empty);
         }
 
         /// <summary>
@@ -89,7 +87,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Cloned field.</returns>
         protected override sealed FieldParser CloneInternal()
         {
-            return new FieldParser(Value, EncodingConfiguration) {Index = Index};
+            return new FieldParser(EncodingConfiguration) { Index = Index, Value = Value };
         }
     }
 }

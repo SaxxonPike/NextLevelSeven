@@ -18,11 +18,6 @@ namespace NextLevelSeven.Parsing
         new IElementParser this[int index] { get; }
 
         /// <summary>
-        ///     Get the ancestor (higher level in the heirarchy) element.
-        /// </summary>
-        IElementParser AncestorElement { get; }
-
-        /// <summary>
         ///     Get all descendant elements.
         /// </summary>
         IEnumerable<IElementParser> DescendantElements { get; }
@@ -36,16 +31,6 @@ namespace NextLevelSeven.Parsing
         ///     If true, the element has meaningful descendants (not necessarily direct ones.)
         /// </summary>
         bool HasSignificantDescendants { get; }
-
-        /// <summary>
-        ///     Unique key of the element within the message.
-        /// </summary>
-        string Key { get; }
-
-        /// <summary>
-        ///     Get the root message for this element.
-        /// </summary>
-        IMessageParser Message { get; }
 
         /// <summary>
         ///     Event that is triggered whenever either this element's value

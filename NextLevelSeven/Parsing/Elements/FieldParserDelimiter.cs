@@ -9,7 +9,7 @@
         ///     Create a field delimiter descendant.
         /// </summary>
         /// <param name="ancestor">Ancestor element.</param>
-        public FieldParserDelimiter(ElementParser ancestor)
+        public FieldParserDelimiter(ParserBase ancestor)
             : base(ancestor, 0, 1)
         {
         }

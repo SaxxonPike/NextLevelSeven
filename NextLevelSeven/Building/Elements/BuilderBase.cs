@@ -281,5 +281,10 @@ namespace NextLevelSeven.Building.Elements
                 GetValueCount,
                 1);
         }
+
+        /// <summary>
+        ///     Unique key of the element within the message.
+        /// </summary>
+        public string Key { get { return ElementOperations.GetKey(this); } }
     }
 }
