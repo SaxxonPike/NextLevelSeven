@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NextLevelSeven.Test
 {
-    static public class ArrayComparer
+    public static class ArrayComparer
     {
-        static public void AssertCompare(params Array[] arrays)
+        public static void AssertCompare(params Array[] arrays)
         {
             if (arrays.Length <= 0)
             {
@@ -33,11 +30,13 @@ namespace NextLevelSeven.Test
 
                     // verify types are identical
                     Assert.AreEqual(referenceType, observedType, string.Format(
-                        "Value type mismatch at index {0} of {1}.\r\nReference:\r\n{2}\r\n\r\nObserved:\r\n{3}", i, length, referenceType, observedType));
+                        "Value type mismatch at index {0} of {1}.\r\nReference:\r\n{2}\r\n\r\nObserved:\r\n{3}", i,
+                        length, referenceType, observedType));
 
                     // verify values are identical
                     Assert.IsTrue(referenceValue.Equals(observedValue), string.Format(
-                        "Mismatch between arrays at index {0} of {1}.\r\nReference:\r\n{2}\r\n\r\nObserved:\r\n{3}", i, length, referenceValue, observedValue));
+                        "Mismatch between arrays at index {0} of {1}.\r\nReference:\r\n{2}\r\n\r\nObserved:\r\n{3}", i,
+                        length, referenceValue, observedValue));
                 }
             }
         }

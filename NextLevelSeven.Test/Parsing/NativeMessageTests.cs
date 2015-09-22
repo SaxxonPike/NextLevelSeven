@@ -33,7 +33,7 @@ namespace NextLevelSeven.Test.Parsing
         [TestMethod]
         public void Message_ThrowsOnNullData()
         {
-            It.Throws<ElementException>(() => Message.Parse((string)null));
+            It.Throws<ElementException>(() => Message.Parse((string) null));
         }
 
         [TestMethod]

@@ -2,7 +2,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
 using NextLevelSeven.Generation;
-using NextLevelSeven.Parsing;
 
 namespace NextLevelSeven.Test.Generation
 {

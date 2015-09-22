@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NextLevelSeven.Building;
 using NextLevelSeven.Core;
-using NextLevelSeven.Parsing;
 
 namespace NextLevelSeven.Test.Core
 {
@@ -44,14 +41,14 @@ namespace NextLevelSeven.Test.Core
             }
 
             // begin parsing at the top level.
-            AssertParseEquivalent(_parsers.Select(p => (IElement)p).ToArray());
+            AssertParseEquivalent(_parsers.Select(p => (IElement) p).ToArray());
         }
 
         /// <summary>
         ///     Assert that all elements parse identically.
         /// </summary>
         /// <param name="elements"></param>
-        void AssertParseEquivalent(params IElement[] elements)
+        private void AssertParseEquivalent(params IElement[] elements)
         {
             if (elements.Count() <= 1)
             {
@@ -72,21 +69,20 @@ namespace NextLevelSeven.Test.Core
 
             // verify descendants are also individually equivalent
             var referenceAncestor = elements.First();
-            if (!(referenceAncestor is ISubcomponent))
+            if (referenceAncestor is ISubcomponent) return;
+
+            var referenceDescendants = referenceAncestor.Descendants.ToList();
+            for (var i = 0; i < referenceDescendants.Count; i++)
             {
-                var referenceDescendants = referenceAncestor.Descendants.ToList();
-                for (var i = 0; i < referenceDescendants.Count; i++)
+                try
                 {
-                    try
-                    {
-                        AssertParseEquivalent(elements.Skip(1).Select(e => e.Descendants.Skip(i).Take(1).First()).ToArray());
-                    }
-                    catch (Exception)
-                    {
-                        Debug.WriteLine("Failed at a descendant of {0} ({1}).", GetElementLevel(referenceAncestor),
-                            GetElementLocation(referenceAncestor));
-                        throw;
-                    }
+                    AssertParseEquivalent(elements.Skip(1).Select(e => e.Descendants.Skip(i).Take(1).First()).ToArray());
+                }
+                catch (Exception)
+                {
+                    Debug.WriteLine("Failed at a descendant of {0} ({1}).", GetElementLevel(referenceAncestor),
+                        GetElementLocation(referenceAncestor));
+                    throw;
                 }
             }
         }
@@ -94,21 +90,39 @@ namespace NextLevelSeven.Test.Core
         /// <summary>
         ///     Get a string representation of the HL7 element level.
         /// </summary>
-        static string GetElementLevel(IElement element)
+        private static string GetElementLevel(IElement element)
         {
-            if (element is IMessage) { return "Message"; }
-            if (element is ISegment) { return "Segment"; }
-            if (element is IField) { return "Field"; }
-            if (element is IRepetition) { return "Repetition"; }
-            if (element is IComponent) { return "Component"; }
-            if (element is ISubcomponent) { return "Subcomponent"; }
+            if (element is IMessage)
+            {
+                return "Message";
+            }
+            if (element is ISegment)
+            {
+                return "Segment";
+            }
+            if (element is IField)
+            {
+                return "Field";
+            }
+            if (element is IRepetition)
+            {
+                return "Repetition";
+            }
+            if (element is IComponent)
+            {
+                return "Component";
+            }
+            if (element is ISubcomponent)
+            {
+                return "Subcomponent";
+            }
             return "Element";
         }
 
         /// <summary>
         ///     Get a string representation of the HL7 element location.
         /// </summary>
-        static string GetElementLocation(IElement element)
+        private static string GetElementLocation(IElement element)
         {
             var result = new StringBuilder();
             var cursor = element;
@@ -127,21 +141,13 @@ namespace NextLevelSeven.Test.Core
         /// <summary>
         ///     Assert values are equal and print detailed report.
         /// </summary>
-        static void AssertEqual<T>(string errorMessage = null, params T[] values)
+        private static void AssertEqual<T>(string errorMessage = null, params T[] values)
         {
             Assert.AreEqual(1, values.Distinct().Count(), string.Format(
                 "{2}{1}{1}{0}", string.Join(Environment.NewLine, values.Select((p, i) => string.Format(
-                    "{0}:{2}{1}{2}", i, p.ToString().Replace("\n", "\\n").Replace("\r", "\\r"), Environment.NewLine))), Environment.NewLine,
-                    errorMessage ?? "Values differ."));
-        }
-
-        /// <summary>
-        ///     Assert that an element parses identically on all parsers.
-        /// </summary>
-        /// <param name="element"></param>
-        void AssertParseEquivalentChild(IElement element)
-        {
-            
+                    "{0}:{2}{1}{2}", i, p.ToString().Replace("\n", "\\n").Replace("\r", "\\r"), Environment.NewLine))),
+                Environment.NewLine,
+                errorMessage ?? "Values differ."));
         }
 
         /// <summary>

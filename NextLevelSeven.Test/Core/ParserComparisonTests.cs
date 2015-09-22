@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Test.Core
@@ -62,6 +61,5 @@ namespace NextLevelSeven.Test.Core
         {
             _comparer.AssertParseEquivalent(ExampleMessages.VersionlessMessage);
         }
-
     }
 }
