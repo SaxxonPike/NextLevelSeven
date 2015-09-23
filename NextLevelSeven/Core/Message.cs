@@ -1,7 +1,9 @@
-﻿using NextLevelSeven.Building;
+﻿using System.Xml;
+using NextLevelSeven.Building;
 using NextLevelSeven.Building.Elements;
 using NextLevelSeven.Parsing;
 using NextLevelSeven.Parsing.Elements;
+using NextLevelSeven.Xml;
 
 namespace NextLevelSeven.Core
 {
@@ -51,6 +53,16 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
+        ///     Create a message builder, initialized with contents from an XML document.
+        /// </summary>
+        /// <param name="document">XML document.</param>
+        /// <returns>New message builder.</returns>
+        public static IMessageBuilder BuildXml(XmlDocument document)
+        {
+            return V2Xml.ConvertToBuilder(document);
+        }
+
+        /// <summary>
         ///     Create a new message with a default MSH.
         /// </summary>
         /// <returns>New message.</returns>
@@ -63,7 +75,7 @@ namespace NextLevelSeven.Core
         ///     Create a new message, initialized with the specified message data.
         /// </summary>
         /// <param name="message">Message data.</param>
-        /// <returns>New message builder.</returns>
+        /// <returns>New message parser.</returns>
         public static IMessageParser Parse(string message)
         {
             return new MessageParser { Value = message };
@@ -73,7 +85,7 @@ namespace NextLevelSeven.Core
         ///     Create a new message, initialized with the content of the specified message or other element.
         /// </summary>
         /// <param name="message">Message or other element data.</param>
-        /// <returns>New message builder.</returns>
+        /// <returns>New message parser.</returns>
         public static IMessageParser Parse(IElement message)
         {
             return new MessageParser { Value = message.Value };
@@ -84,10 +96,20 @@ namespace NextLevelSeven.Core
         /// </summary>
         /// <param name="message">Formatted string.</param>
         /// <param name="args">Arguments for the format.</param>
-        /// <returns>New message builder.</returns>
+        /// <returns>New message parser.</returns>
         public static IMessageParser ParseFormat(string message, params object[] args)
         {
             return new MessageParser { Value = string.Format(message, args) };
+        }
+
+        /// <summary>
+        ///     Create a new message, initialized with contents from an XML document.
+        /// </summary>
+        /// <param name="document">XML document.</param>
+        /// <returns>New message parser.</returns>
+        public static IMessageParser ParseXml(XmlDocument document)
+        {
+            return V2Xml.ConvertToParser(document);
         }
     }
 }

@@ -81,5 +81,9 @@
         SegmentDataIsTooShort,
         /* 0035 */
         InvalidCompare,
+        /* 0036 */
+        MessageTypeIsInvalid,
+        /* 0037 */
+        MessageTriggerEventIsInvalid,
     }
 }

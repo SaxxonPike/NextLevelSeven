@@ -154,7 +154,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Message_WithOnlyOneSegment_WillClaimToHaveSignificantDescendants()
         {
             var message = Message.Parse();
-            Assert.IsTrue(message.HasSignificantDescendants,
+            Assert.IsTrue(message.HasSignificantDescendants(),
                 @"Message should claim to have significant descendants if any segments do.");
         }
 

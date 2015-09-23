@@ -51,6 +51,10 @@
                         return "Message data must not be null.";
                     case ErrorCode.MessageDataMustStartWithMsh:
                         return "Message data must start with 'MSH'.";
+                    case ErrorCode.MessageTriggerEventIsInvalid:
+                        return "Message MSH.9.2 trigger event is invalid.";
+                    case ErrorCode.MessageTypeIsInvalid:
+                        return "Message MSH.9.1 type is invalid.";
                     case ErrorCode.MlpDataEndedPrematurely:
                         return "Reached end of stream before MLP end-of-message was found.";
                     case ErrorCode.ReachedEndOfMlpStream:

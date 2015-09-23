@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml;
 using NextLevelSeven.Building;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Parsing;
@@ -131,6 +132,36 @@ namespace NextLevelSeven.Core
             IEnumerable<string> segmentTypes)
         {
             return segments.Where(s => !segmentTypes.Contains(s.Type));
+        }
+
+        /// <summary>
+        ///     Get meaningful content from descendants, excluding null/empty fields and segment type.
+        /// </summary>
+        public static IEnumerable<IElement> GetDescendantContent(this IElement element)
+        {
+            return element.Descendants.Where(d => d.Index > 0 && !string.IsNullOrEmpty(d.Value));
+        }
+
+        /// <summary>
+        ///     If true, the element has meaningful descendants (not necessarily direct ones.)
+        /// </summary>
+        public static bool HasSignificantDescendants(this IElement element)
+        {
+            if (element is ISubcomponent)
+            {
+                return false;
+            }
+
+            if (element is IField && element.Ancestor != null)
+            {
+                var segment = (element as IField).Ancestor as ISegment;
+                if (segment != null && segment.Type == "MSH" && element.Index >= 1 && element.Index <= 2)
+                {
+                    return false;
+                }
+            }
+
+            return (element.ValueCount > 1) || element.Descendants.Any(HasSignificantDescendants);
         }
 
         /// <summary>
@@ -438,6 +469,5 @@ namespace NextLevelSeven.Core
         {
             return (ISubcomponent)ancestor[index];
         }
-
     }
 }

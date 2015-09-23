@@ -103,11 +103,6 @@ namespace NextLevelSeven.Test
             get { return false; }
         }
 
-        public bool HasSignificantDescendants
-        {
-            get { return false; }
-        }
-
         public int Index
         {
             get { return 0; }

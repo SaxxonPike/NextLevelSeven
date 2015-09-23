@@ -28,11 +28,6 @@ namespace NextLevelSeven.Parsing
         bool Exists { get; }
 
         /// <summary>
-        ///     If true, the element has meaningful descendants (not necessarily direct ones.)
-        /// </summary>
-        bool HasSignificantDescendants { get; }
-
-        /// <summary>
         ///     Event that is triggered whenever either this element's value
         /// </summary>
         event EventHandler ValueChanged;

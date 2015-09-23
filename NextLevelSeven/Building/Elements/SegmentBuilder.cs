@@ -407,6 +407,17 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>
+        ///     Get descendant elements.
+        /// </summary>
+        /// <returns>Descendant elements.</returns>
+        protected override IEnumerable<IElement> GetDescendants()
+        {
+            return new ProxyEnumerable<IElement>(index => _fields[index],
+                (index, data) => { },
+                GetValueCount);
+        }
+
+        /// <summary>
         ///     Create a field builder object.
         /// </summary>
         /// <param name="index">Index of the object to create.</param>

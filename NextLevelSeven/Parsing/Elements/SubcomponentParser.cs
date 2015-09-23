@@ -31,11 +31,6 @@ namespace NextLevelSeven.Parsing.Elements
             get { return 0; }
         }
 
-        public override bool HasSignificantDescendants
-        {
-            get { return false; }
-        }
-
         public string GetValue()
         {
             return Value;

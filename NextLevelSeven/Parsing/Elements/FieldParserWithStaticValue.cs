@@ -26,14 +26,6 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>
-        ///     False, as MSH-1 cannot have descendants.
-        /// </summary>
-        public override sealed bool HasSignificantDescendants
-        {
-            get { return false; }
-        }
-
-        /// <summary>
         ///     Get the field delimiter value.
         /// </summary>
         /// <param name="repetition">Not used.</param>

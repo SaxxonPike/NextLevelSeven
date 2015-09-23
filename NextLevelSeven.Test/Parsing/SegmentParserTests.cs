@@ -166,7 +166,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Segment_WithSignificantDescendants_ShouldClaimToHaveSignificantDescendants()
         {
             var message = Message.Parse();
-            Assert.IsTrue(message[1].HasSignificantDescendants,
+            Assert.IsTrue(message[1].HasSignificantDescendants(),
                 @"Segment claims to not have descendants when it should.");
         }
 

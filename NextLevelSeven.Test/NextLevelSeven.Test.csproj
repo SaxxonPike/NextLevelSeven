@@ -37,6 +37,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Xml" />
   </ItemGroup>
   <Choose>
     <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
@@ -98,6 +99,8 @@
     <Compile Include="PerformanceTestFixture.cs" />
     <Compile Include="Utility\IndexedCacheTests.cs" />
     <Compile Include="Utility\UtilityTestFixture.cs" />
+    <Compile Include="Xml\V2XmlTests.cs" />
+    <Compile Include="Xml\XmlTestFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NextLevelSeven\NextLevelSeven.csproj">

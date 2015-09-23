@@ -214,22 +214,6 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>
-        ///     If true, meaningful subdivisions of the element's raw value exist.
-        /// </summary>
-        public virtual bool HasSignificantDescendants
-        {
-            get
-            {
-                if (!Exists || ValueCount == 0 || Delimiter == '\0')
-                {
-                    return false;
-                }
-
-                return (ValueCount > 1) || DescendantElements.Any(d => d.HasSignificantDescendants);
-            }
-        }
-
-        /// <summary>
         ///     Get or set the exposed index.
         /// </summary>
         public int Index { get; set; }

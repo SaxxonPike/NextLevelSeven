@@ -8,6 +8,20 @@ namespace NextLevelSeven.Test.Parsing
     public class FieldParserTests : ParsingTestFixture
     {
         [TestMethod]
+        public void Field_HasCorrectIndex()
+        {
+            var field = Message.Parse(ExampleMessages.Standard)[1][3];
+            Assert.AreEqual(3, field.Index, "Index doesn't match.");
+        }
+
+        [TestMethod]
+        public void Field_HasCorrectIndex_ByExtension()
+        {
+            var field = Message.Parse(ExampleMessages.Standard)[1].Field(3);
+            Assert.AreEqual(3, field.Index, "Index doesn't match.");
+        }
+
+        [TestMethod]
         public void Field_CanBeCloned()
         {
             var field = Message.Parse(ExampleMessages.Standard)[1][3];
@@ -61,7 +75,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Field_WithNoSignificantDescendants_ShouldNotClaimToHaveSignificantDescendants()
         {
             var message = Message.Parse();
-            Assert.IsFalse(message[1][3].HasSignificantDescendants,
+            Assert.IsFalse(message[1][3].HasSignificantDescendants(),
                 @"Element claims to have descendants when it should not.");
         }
 

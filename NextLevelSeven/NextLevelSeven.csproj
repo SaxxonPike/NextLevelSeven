@@ -137,6 +137,8 @@
     <Compile Include="Utility\IIndexedCache.cs" />
     <Compile Include="Utility\IndexedCache.cs" />
     <Compile Include="Utility\ProxyEnumerable.cs" />
+    <Compile Include="Xml\V2Xml.cs" />
+    <Compile Include="Xml\V2XmlException.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
