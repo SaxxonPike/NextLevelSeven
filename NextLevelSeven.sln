@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextLevelSeven.Specificatio
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextLevelSeven.Test.Specification", "NextLevelSeven.Test.Specification\NextLevelSeven.Test.Specification.csproj", "{C9DCF7EC-595C-41B8-B2BD-AA5EAAC6F711}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextLevelSeven.Streaming", "NextLevelSeven.Streaming\NextLevelSeven.Streaming.csproj", "{E08CEAA1-3FBE-4B70-A4CD-66FECB81E87D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextLevelSeven.Test.Streaming", "NextLevelSeven.Test.Streaming\NextLevelSeven.Test.Streaming.csproj", "{3A756A42-57B0-42E3-A162-2F31C070FAEC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +53,14 @@ Global
 		{C9DCF7EC-595C-41B8-B2BD-AA5EAAC6F711}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9DCF7EC-595C-41B8-B2BD-AA5EAAC6F711}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9DCF7EC-595C-41B8-B2BD-AA5EAAC6F711}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E08CEAA1-3FBE-4B70-A4CD-66FECB81E87D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E08CEAA1-3FBE-4B70-A4CD-66FECB81E87D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E08CEAA1-3FBE-4B70-A4CD-66FECB81E87D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E08CEAA1-3FBE-4B70-A4CD-66FECB81E87D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A756A42-57B0-42E3-A162-2F31C070FAEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A756A42-57B0-42E3-A162-2F31C070FAEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A756A42-57B0-42E3-A162-2F31C070FAEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A756A42-57B0-42E3-A162-2F31C070FAEC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -60,5 +72,7 @@ Global
 		{DED9F009-B1D8-4938-BEE5-0A8DA66B8976} = {83F1BAF6-66DA-40C1-8384-19FE227C194D}
 		{6BD62EE0-1254-4517-B5CC-978ED66C300A} = {9ECA6C16-85D9-4D67-95DD-90A91D8CC55D}
 		{C9DCF7EC-595C-41B8-B2BD-AA5EAAC6F711} = {83F1BAF6-66DA-40C1-8384-19FE227C194D}
+		{E08CEAA1-3FBE-4B70-A4CD-66FECB81E87D} = {9ECA6C16-85D9-4D67-95DD-90A91D8CC55D}
+		{3A756A42-57B0-42E3-A162-2F31C070FAEC} = {83F1BAF6-66DA-40C1-8384-19FE227C194D}
 	EndGlobalSection
 EndGlobal

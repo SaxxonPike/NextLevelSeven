@@ -77,7 +77,6 @@
     <Compile Include="Core\Properties\MessageDetails.cs" />
     <Compile Include="Parsing\Elements\ParserBaseDescendant.cs" />
     <Compile Include="Parsing\ParserException.cs" />
-    <Compile Include="Streaming\StreamException.cs" />
     <Compile Include="Utility\ProxyDelegates.cs" />
     <Compile Include="Core\Codec\EncodedTypeConverter.cs" />
     <Compile Include="Core\Codec\IndexedEncodedTypeConverter.cs" />
@@ -130,18 +129,6 @@
     <Compile Include="Diagnostics\ErrorCode.cs" />
     <Compile Include="Generation\MessageGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Streaming\MessageStreamException.cs" />
-    <Compile Include="Streaming\MessageStreamReader.cs" />
-    <Compile Include="Streaming\MessageStreamWriter.cs" />
-    <Compile Include="Streaming\MessageTextReader.cs" />
-    <Compile Include="Streaming\MessageTextWriter.cs" />
-    <Compile Include="Streaming\IMessageReader.cs" />
-    <Compile Include="Streaming\IMessageWriter.cs" />
-    <Compile Include="Streaming\MlpStreamException.cs" />
-    <Compile Include="Streaming\MlpStreamReader.cs" />
-    <Compile Include="Streaming\MlpStreamWriter.cs" />
-    <Compile Include="Streaming\StreamReaderExtensions.cs" />
-    <Compile Include="Streaming\StreamWrapperBase.cs" />
     <Compile Include="Generation\AckMessageGenerator.cs" />
     <Compile Include="Test\UtilityMocks.cs" />
     <Compile Include="Utility\EnumerableExtensions.cs" />

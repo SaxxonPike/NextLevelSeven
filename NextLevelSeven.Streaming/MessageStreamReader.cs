@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using NextLevelSeven.Core;
 using NextLevelSeven.Parsing;
 using NextLevelSeven.Parsing.Elements;
 
@@ -60,7 +61,7 @@ namespace NextLevelSeven.Streaming
         /// <returns>Interpreted message.</returns>
         protected virtual IMessageParser Interpret(string data)
         {
-            return new MessageParser { Value = data };
+            return Message.Parse(data);
         }
 
         /// <summary>
