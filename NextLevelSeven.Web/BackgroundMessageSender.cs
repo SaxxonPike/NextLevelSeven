@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
+using NextLevelSeven.Core;
 using NextLevelSeven.Streaming;
 
 namespace NextLevelSeven.Web
@@ -92,12 +93,7 @@ namespace NextLevelSeven.Web
 
                             var messageReader = new MessageStreamReader(messageStream);
                             var responseMessage = messageReader.Read();
-                            var responseMsa = responseMessage["MSA"].FirstOrDefault();
-
-                            if (config.ResponseMessageRouter != null)
-                            {
-                                config.ResponseMessageRouter.Route(responseMessage);
-                            }
+                            var responseMsa = responseMessage.Segments.OfType("MSA").FirstOrDefault();
 
                             if (responseMsa == null)
                             {

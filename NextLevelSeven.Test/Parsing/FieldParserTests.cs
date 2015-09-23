@@ -5,7 +5,7 @@ using NextLevelSeven.Core;
 namespace NextLevelSeven.Test.Parsing
 {
     [TestClass]
-    public class NativeFieldTests : NativeTestFixture
+    public class FieldParserTests : ParsingTestFixture
     {
         [TestMethod]
         public void Field_CanBeCloned()

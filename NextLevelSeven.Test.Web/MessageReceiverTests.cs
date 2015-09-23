@@ -27,7 +27,7 @@ namespace NextLevelSeven.Test.Web
                 @"Application field doesn't match what was sent.");
             Assert.AreEqual(request.Details.Sender.Facility, response.Details.Receiver.Facility,
                 @"Facility field doesn't match what was sent.");
-            Assert.AreEqual(request.Details.ControlId, response["MSA"].First()[2].Value,
+            Assert.AreEqual(request.Details.ControlId, response.Segments.OfType("MSA").First()[2].Value,
                 @"MSA-2 doesn't match what was sent in MSH-10.");
             Assert.IsTrue(responseTime.HasValue, @"Message date cannot be null.");
             Assert.AreEqual(responseTime.Value.Date, DateTime.Now.Date, @"Message date of response isn't today.");
@@ -41,7 +41,7 @@ namespace NextLevelSeven.Test.Web
             var response = Message.Parse(responseData);
 
             Assert.AreEqual(2, response.ValueCount, @"ACK must consist of exactly two segments.");
-            Assert.AreEqual("AR", response["MSA"].First()[1].Value, @"MSA-1 must be 'AR' when rejecting bad messages.");
+            Assert.AreEqual("AR", response.Segments.OfType("MSA").First()[1].Value, @"MSA-1 must be 'AR' when rejecting bad messages.");
             Assert.AreEqual("ACK", response.Details.Type, "MSH-9-1 should be ACK.");
         }
     }

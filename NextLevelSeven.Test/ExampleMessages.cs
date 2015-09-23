@@ -102,6 +102,8 @@ OBX|1|NM|1010.3^Height^AS4^3137-7^Height^LN|1|165.1|cm^""^""^""^""^""|||||P|||||
 Z10|||MED|1^0^00^00
 ZCQ|1|1|CE|HOME^HOMELESS?|280005055^NH^NOT HOMELESS|||";
 
+        public static readonly string Variety = @"MSH|^~\&|a&b^c&d~e&f^g&h~q&r^s&t|i&j^k&l~m&n^o&p~u&v^w&x";
+
         public static readonly string VersionlessMessage =
             @"MSH|^~\&|SENDER|DEV|RECEIVER|SYSTEM|20140522103041||ADT^A60||P||
 PID|1|SSD0201941|SA0062046||Lincoln^Abe||19231214|M||C|^Some Rd.^Somewhere^IL^68763|||||M||SA0003176321|000-00-0000

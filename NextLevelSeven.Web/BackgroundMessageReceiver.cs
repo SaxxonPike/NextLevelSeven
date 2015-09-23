@@ -143,10 +143,7 @@ namespace NextLevelSeven.Web
                                 break;
                             }
 
-                            if (config.ReceivedMessageRouter == null || !config.ReceivedMessageRouter.Route(message))
-                            {
-                                innerQueue.Add(message);
-                            }
+                            innerQueue.Add(message);
                         }
                     }
 

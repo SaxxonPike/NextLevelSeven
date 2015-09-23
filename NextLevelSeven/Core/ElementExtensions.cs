@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using NextLevelSeven.Building;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Parsing;
-using NextLevelSeven.Routing;
 
 namespace NextLevelSeven.Core
 {
@@ -356,17 +354,6 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        ///     Send the message to a router.
-        /// </summary>
-        /// <param name="message">Message to route.</param>
-        /// <param name="router">Router to route the message through.</param>
-        /// <returns>If true, the router has successfully routed the message.</returns>
-        public static bool RouteTo(this IMessage message, IRouter router)
-        {
-            return router.Route(message);
-        }
-
-        /// <summary>
         ///     Copy the contents of this message to a new message builder.
         /// </summary>
         /// <param name="message">Message to get data from.</param>
@@ -385,5 +372,72 @@ namespace NextLevelSeven.Core
         {
             return Message.Parse(message.Value);
         }
+
+        /// <summary>
+        ///     Get the segment at the specified index.
+        /// </summary>
+        /// <param name="ancestor">Ancestor element.</param>
+        /// <param name="index">Index of the descendant.</param>
+        /// <returns>Descendant element.</returns>
+        public static ISegment Segment(this IMessage ancestor, int index)
+        {
+            return (ISegment)ancestor[index];
+        }
+
+        /// <summary>
+        ///     Get the field at the specified index.
+        /// </summary>
+        /// <param name="ancestor">Ancestor element.</param>
+        /// <param name="index">Index of the descendant.</param>
+        /// <returns>Descendant element.</returns>
+        public static IField Field(this ISegment ancestor, int index)
+        {
+            return (IField)ancestor[index];
+        }
+
+        /// <summary>
+        ///     Get the field repetition at the specified index.
+        /// </summary>
+        /// <param name="ancestor">Ancestor element.</param>
+        /// <param name="index">Index of the descendant.</param>
+        /// <returns>Descendant element.</returns>
+        public static IRepetition Repetition(this IField ancestor, int index)
+        {
+            return (IRepetition)ancestor[index];
+        }
+
+        /// <summary>
+        ///     Get the component at the specified index, assuming repetition 1.
+        /// </summary>
+        /// <param name="ancestor">Ancestor element.</param>
+        /// <param name="index">Index of the descendant.</param>
+        /// <returns>Descendant element.</returns>
+        public static IComponent Component(this IField ancestor, int index)
+        {
+            return (IComponent)ancestor[1][index];
+        }
+
+        /// <summary>
+        ///     Get the component at the specified index.
+        /// </summary>
+        /// <param name="ancestor">Ancestor element.</param>
+        /// <param name="index">Index of the descendant.</param>
+        /// <returns>Descendant element.</returns>
+        public static IComponent Component(this IRepetition ancestor, int index)
+        {
+            return (IComponent)ancestor[index];
+        }
+
+        /// <summary>
+        ///     Get the subcomponent at the specified index.
+        /// </summary>
+        /// <param name="ancestor">Ancestor element.</param>
+        /// <param name="index">Index of the descendant.</param>
+        /// <returns>Descendant element.</returns>
+        public static ISubcomponent Subcomponent(this IComponent ancestor, int index)
+        {
+            return (ISubcomponent)ancestor[index];
+        }
+
     }
 }

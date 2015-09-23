@@ -5,7 +5,7 @@ using NextLevelSeven.Core;
 namespace NextLevelSeven.Test.Parsing
 {
     [TestClass]
-    public class NativeSegmentTests : NativeTestFixture
+    public class SegmentParserTests : ParsingTestFixture
     {
         [TestMethod]
         public void Segment_WithIdenticalValueToAnotherSegment_IsEquivalent()

@@ -9,7 +9,7 @@ using NextLevelSeven.Parsing;
 namespace NextLevelSeven.Test.Parsing
 {
     [TestClass]
-    public class NativeMessageTests : NativeTestFixture
+    public class MessageParserTests : ParsingTestFixture
     {
         [TestMethod]
         public void Message_ConvertsMshCorrectly()
@@ -75,7 +75,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Message_CanRetrievePatientId()
         {
             var message = Message.Parse(ExampleMessages.Standard);
-            var pid = message["PID"].First();
+            var pid = message.Segments.OfType("PID").First();
             Assert.AreEqual("Colon", pid[5][1][1].Value, "Patient name is incorrect.");
         }
 
@@ -83,14 +83,14 @@ namespace NextLevelSeven.Test.Parsing
         public void Message_CanRetrieveMultipleSegments()
         {
             var message = Message.Parse(ExampleMessages.Standard);
-            Assert.AreEqual(3, message["OBX"].Count(), "Incorrect number of segments were found.");
+            Assert.AreEqual(3, message.Segments.OfType("OBX").Count(), "Incorrect number of segments were found.");
         }
 
         [TestMethod]
         public void Message_CanRetrieveRepetitions()
         {
             var message = Message.Parse(ExampleMessages.RepeatingName);
-            var pid = message["PID"].First();
+            var pid = message.Segments.OfType("PID").First();
             Assert.AreEqual("Lincoln^Abe", pid[5][1].Value, "Retrieving first repetition returned incorrect data.");
             Assert.AreEqual("Bro", pid[5][2].Value, "Retrieving second repetition returned incorrect data.");
             Assert.AreEqual("Dude", pid[5][3].Value, "Retrieving third repetition returned incorrect data.");
@@ -318,7 +318,7 @@ namespace NextLevelSeven.Test.Parsing
             var time = Measure.ExecutionTime(() =>
             {
                 var message = Message.Parse(ExampleMessages.A04);
-                var dataField = message["IN1"].First()[7][1][1];
+                var dataField = message.Segments.OfType("IN1").First()[7][1][1];
                 Assert.AreEqual("MUTUAL OF OMAHA", dataField.Value, @"Parsing IN1-7-1 failed.");
             }, 10000);
             AssertTime.IsWithin(1000, time);
@@ -330,7 +330,7 @@ namespace NextLevelSeven.Test.Parsing
             var time = Measure.ExecutionTime(() =>
             {
                 var message = Message.Parse(ExampleMessages.MultipleObr);
-                var dataField = message["OBR"].First(s => s[1].Value == "4")[16][1][2];
+                var dataField = message.Segments.OfType("OBR").First(s => s[1].Value == "4")[16][1][2];
                 Assert.AreEqual("OLSTAD", dataField.Value, @"Parsing OBR4-16-2 failed.");
             }, 1000);
             AssertTime.IsWithin(1000, time);

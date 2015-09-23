@@ -1,16 +1,19 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
+using NextLevelSeven.Test.Parsing;
 
-namespace NextLevelSeven.Test.Parsing
+namespace NextLevelSeven.Test.Core
 {
     [TestClass]
-    public class NativeEscapeTests : NativeTestFixture
+    public class ParserEscapeTests : ParsingTestFixture
     {
         private static void Test_Escape(string expected, string test)
         {
-            var message = Message.Parse();
-            Assert.AreEqual(expected, message.Escape(test));
+            var messageParser = Message.Parse();
+            var messageBuilder = Message.Build();
+            Assert.AreEqual(expected, messageParser.Escape(test));
+            Assert.AreEqual(expected, messageBuilder.Escape(test));
         }
 
         private static void Test_SingleDelimiterEscape(string delimiter, string escapeCode)

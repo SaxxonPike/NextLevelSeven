@@ -4,7 +4,7 @@ using NextLevelSeven.Core;
 namespace NextLevelSeven.Test.Parsing
 {
     [TestClass]
-    public class NativeSubcomponentTests : NativeTestFixture
+    public class SubcomponentParserTests : ParsingTestFixture
     {
         [TestMethod]
         public void Subcomponent_CanBeCloned()

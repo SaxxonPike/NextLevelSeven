@@ -26,27 +26,6 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>
-        ///     Get segments of a specific segment type.
-        /// </summary>
-        /// <param name="segmentType">The 3-character segment type to query for.</param>
-        /// <returns>Segments that match the query.</returns>
-        public IEnumerable<ISegmentParser> this[string segmentType]
-        {
-            get { return Segments.Where(s => s.Type == segmentType); }
-        }
-
-        /// <summary>
-        ///     Get segments of a type that matches one of the specified segment types. They are returned in the order they are
-        ///     found in the message.
-        /// </summary>
-        /// <param name="segmentTypes">The 3-character segment types to query for.</param>
-        /// <returns>Segments that match the query.</returns>
-        public IEnumerable<ISegmentParser> this[IEnumerable<string> segmentTypes]
-        {
-            get { return Segments.Where(s => segmentTypes.Contains(s.Type)); }
-        }
-
-        /// <summary>
         ///     Get the segment delimiter.
         /// </summary>
         public override char Delimiter

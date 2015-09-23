@@ -9,6 +9,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// </summary>
         /// <param name="config">Encoding configuration for the element.</param>
         protected ParserBaseDescendant(EncodingConfigurationBase config)
+            : base(config)
         {
         }
 

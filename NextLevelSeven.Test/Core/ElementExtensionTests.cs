@@ -6,6 +6,102 @@ namespace NextLevelSeven.Test.Core
     [TestClass]
     public class ElementExtensionTests : CoreTestFixture
     {
+        [TestMethod]
+        public void ElementExtensions_Builder_CanGetSegment()
+        {
+            var builder = Message.Build(ExampleMessages.Variety);
+            Assert.IsNotNull(builder[1].Value);
+            Assert.AreEqual(builder[1].Value, builder.Segment(1).Value, "Segments returned differ.");
+        }
+
+        [TestMethod]
+        public void ElementExtensions_Parser_CanGetSegment()
+        {
+            var parser = Message.Parse(ExampleMessages.Variety);
+            Assert.IsNotNull(parser[1].Value);
+            Assert.AreEqual(parser[1].Value, parser.Segment(1).Value, "Segments returned differ.");
+        }
+
+        [TestMethod]
+        public void ElementExtensions_Builder_CanGetField()
+        {
+            var builder = Message.Build(ExampleMessages.Variety);
+            Assert.IsNotNull(builder[1][3].Value);
+            Assert.AreEqual(builder[1][3].Value, builder.Segment(1).Field(3).Value, "Fields returned differ.");
+        }
+
+        [TestMethod]
+        public void ElementExtensions_Parser_CanGetField()
+        {
+            var parser = Message.Parse(ExampleMessages.Variety);
+            Assert.IsNotNull(parser[1][3].Value);
+            Assert.AreEqual(parser[1][3].Value, parser.Segment(1).Field(3).Value, "Fields returned differ.");
+        }
+
+        [TestMethod]
+        public void ElementExtensions_Builder_CanGetRepetition()
+        {
+            var builder = Message.Build(ExampleMessages.Variety);
+            Assert.IsNotNull(builder[1][3][2].Value);
+            Assert.AreEqual(builder[1][3][2].Value, builder.Segment(1).Field(3).Repetition(2).Value, "Repetitions returned differ.");
+        }
+
+        [TestMethod]
+        public void ElementExtensions_Parser_CanGetRepetition()
+        {
+            var parser = Message.Parse(ExampleMessages.Variety);
+            Assert.IsNotNull(parser[1][3][2].Value);
+            Assert.AreEqual(parser[1][3][2].Value, parser.Segment(1).Field(3).Repetition(2).Value, "Repetitions returned differ.");
+        }
+
+        [TestMethod]
+        public void ElementExtensions_Builder_CanGetComponent()
+        {
+            var builder = Message.Build(ExampleMessages.Variety);
+            Assert.IsNotNull(builder[1][3][2][2].Value);
+            Assert.AreEqual(builder[1][3][2][2].Value, builder.Segment(1).Field(3).Repetition(2).Component(2).Value, "Components returned differ.");
+        }
+
+        [TestMethod]
+        public void ElementExtensions_Parser_CanGetComponent()
+        {
+            var parser = Message.Parse(ExampleMessages.Variety);
+            Assert.IsNotNull(parser[1][3][2][2].Value);
+            Assert.AreEqual(parser[1][3][2][2].Value, parser.Segment(1).Field(3).Repetition(2).Component(2).Value, "Components returned differ.");
+        }
+
+        [TestMethod]
+        public void ElementExtensions_Builder_CanGetComponent_ThroughField()
+        {
+            var builder = Message.Build(ExampleMessages.Variety);
+            Assert.IsNotNull(builder[1][3][1][2].Value);
+            Assert.AreEqual(builder[1][3][1][2].Value, builder.Segment(1).Field(3).Component(2).Value, "Components returned differ.");
+        }
+
+        [TestMethod]
+        public void ElementExtensions_Parser_CanGetComponent_ThroughField()
+        {
+            var parser = Message.Parse(ExampleMessages.Variety);
+            Assert.IsNotNull(parser[1][3][1][2].Value);
+            Assert.AreEqual(parser[1][3][1][2].Value, parser.Segment(1).Field(3).Component(2).Value, "Components returned differ.");
+        }
+
+        [TestMethod]
+        public void ElementExtensions_Builder_CanGetSubcomponent()
+        {
+            var builder = Message.Build(ExampleMessages.Variety);
+            Assert.IsNotNull(builder[1][3][2][2][2].Value);
+            Assert.AreEqual(builder[1][3][2][2][2].Value, builder.Segment(1).Field(3).Repetition(2).Component(2).Subcomponent(2).Value, "Subcomponents returned differ.");
+        }
+
+        [TestMethod]
+        public void ElementExtensions_Parser_CanGetSubcomponent()
+        {
+            var parser = Message.Parse(ExampleMessages.Variety);
+            Assert.IsNotNull(parser[1][3][2][2][2].Value);
+            Assert.AreEqual(parser[1][3][2][2][2].Value, parser.Segment(1).Field(3).Repetition(2).Component(2).Subcomponent(2).Value, "Subcomponents returned differ.");
+        }
+
         // Delete Element
 
         private static void ElementExtensions_CanDelete(IElement element)
@@ -23,7 +119,7 @@ namespace NextLevelSeven.Test.Core
         }
 
         [TestMethod]
-        public void ElementExtensions_Native_CanDelete()
+        public void ElementExtensions_Parser_CanDelete()
         {
             ElementExtensions_CanDelete(Message.Parse(ExampleMessages.Standard));
         }
@@ -47,7 +143,7 @@ namespace NextLevelSeven.Test.Core
         }
 
         [TestMethod]
-        public void ElementExtensions_Native_CanInsertElementAfter()
+        public void ElementExtensions_Parser_CanInsertElementAfter()
         {
             ElementExtensions_CanInsertElementAfter(Message.Parse(ExampleMessages.Standard));
         }
@@ -73,7 +169,7 @@ namespace NextLevelSeven.Test.Core
         }
 
         [TestMethod]
-        public void ElementExtensions_Native_CanInsertStringAfter()
+        public void ElementExtensions_Parser_CanInsertStringAfter()
         {
             ElementExtensions_CanInsertStringAfter(Message.Parse(ExampleMessages.Standard));
         }

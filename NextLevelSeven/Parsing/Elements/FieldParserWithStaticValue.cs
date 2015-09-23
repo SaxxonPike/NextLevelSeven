@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using NextLevelSeven.Core.Encoding;
 using NextLevelSeven.Parsing.Dividers;
 using NextLevelSeven.Utility;
 

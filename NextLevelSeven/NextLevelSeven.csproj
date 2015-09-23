@@ -100,7 +100,6 @@
     <Compile Include="Core\Properties\IIdentity.cs" />
     <Compile Include="Parsing\ISegmentParser.cs" />
     <Compile Include="Parsing\Elements\MessageParserEncodingConfiguration.cs" />
-    <Compile Include="Parsing\MessageParserExtensions.cs" />
     <Compile Include="Core\Encoding\ProxyEncodingConfiguration.cs" />
     <Compile Include="Building\Elements\BuilderEncodingConfiguration.cs" />
     <Compile Include="Parsing\Elements\ComponentParser.cs" />
@@ -131,12 +130,6 @@
     <Compile Include="Diagnostics\ErrorCode.cs" />
     <Compile Include="Generation\MessageGenerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Routing\BroadcastRouter.cs" />
-    <Compile Include="Routing\ConditionalMethodRouter.cs" />
-    <Compile Include="Routing\IRouter.cs" />
-    <Compile Include="Routing\ListenerRouter.cs" />
-    <Compile Include="Routing\RouteFinder.cs" />
-    <Compile Include="Routing\ConditionalRouter.cs" />
     <Compile Include="Streaming\MessageStreamException.cs" />
     <Compile Include="Streaming\MessageStreamReader.cs" />
     <Compile Include="Streaming\MessageStreamWriter.cs" />
