@@ -365,7 +365,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Clone of the element.</returns>
         public override IElement Clone()
         {
-            return new SegmentBuilder(Ancestor, Index) { Value = Value };
+            return new SegmentBuilder(Ancestor, Index) {Value = Value};
         }
 
         /// <summary>
@@ -374,7 +374,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Clone of the segment.</returns>
         ISegment ISegment.Clone()
         {
-            return new SegmentBuilder(Ancestor, Index) { Value = Value };
+            return new SegmentBuilder(Ancestor, Index) {Value = Value};
         }
 
         /// <summary>

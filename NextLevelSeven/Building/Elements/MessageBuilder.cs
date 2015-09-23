@@ -255,18 +255,6 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>
-        ///     Change all system line endings to HL7 line endings.
-        /// </summary>
-        /// <param name="message">String to transform.</param>
-        /// <returns>Sanitized string.</returns>
-        private string SanitizeLineEndings(string message)
-        {
-            return message == null
-                ? null
-                : message.Replace(Environment.NewLine, EncodingConfiguration.SegmentDelimiterString);
-        }
-
-        /// <summary>
         ///     Set a segment's content.
         /// </summary>
         /// <param name="segmentIndex">Segment index.</param>
@@ -428,7 +416,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Clone of the message builder.</returns>
         public override IElement Clone()
         {
-            return new MessageBuilder { Value = Value };
+            return new MessageBuilder {Value = Value};
         }
 
         /// <summary>
@@ -437,7 +425,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Clone of the message.</returns>
         IMessage IMessage.Clone()
         {
-            return new MessageBuilder { Value = Value };
+            return new MessageBuilder {Value = Value};
         }
 
         /// <summary>
@@ -476,6 +464,18 @@ namespace NextLevelSeven.Building.Elements
                     GetValueCount,
                     1);
             }
+        }
+
+        /// <summary>
+        ///     Change all system line endings to HL7 line endings.
+        /// </summary>
+        /// <param name="message">String to transform.</param>
+        /// <returns>Sanitized string.</returns>
+        private string SanitizeLineEndings(string message)
+        {
+            return message == null
+                ? null
+                : message.Replace(Environment.NewLine, EncodingConfiguration.SegmentDelimiterString);
         }
 
         /// <summary>

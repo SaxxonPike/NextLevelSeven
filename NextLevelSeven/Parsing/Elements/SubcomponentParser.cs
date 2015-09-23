@@ -58,7 +58,7 @@ namespace NextLevelSeven.Parsing.Elements
 
         private SubcomponentParser CloneInternal()
         {
-            return new SubcomponentParser(EncodingConfiguration) { Index = Index, Value = Value };
+            return new SubcomponentParser(EncodingConfiguration) {Index = Index, Value = Value};
         }
     }
 }

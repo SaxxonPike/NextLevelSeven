@@ -78,7 +78,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Cloned field.</returns>
         protected override sealed FieldParser CloneInternal()
         {
-            return new FieldParser(EncodingConfiguration) { Index = Index, Value = Value };
+            return new FieldParser(EncodingConfiguration) {Index = Index, Value = Value};
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using NextLevelSeven.Conversion;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Codec;
@@ -16,11 +15,6 @@ namespace NextLevelSeven.Parsing.Elements
     internal abstract class ParserBase : IElementParser, IComparable, IComparable<IElement>, IComparable<string>,
         IEquatable<IElement>, IEquatable<string>, IEncodedElement
     {
-        /// <summary>
-        ///     String divider used to split the element's raw value.
-        /// </summary>
-        protected IStringDivider DescendantStringDivider { get; private set; }
-
         /// <summary>
         ///     Base encoding configuration.
         /// </summary>
@@ -62,33 +56,38 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>
-        ///     Get the encoding configuration.
+        ///     String divider used to split the element's raw value.
         /// </summary>
-        public EncodingConfigurationBase EncodingConfiguration
-        {
-            get
-            {
-                if (_encodingConfiguration != null)
-                {
-                    return _encodingConfiguration;
-                }
-                if (Ancestor != null)
-                {
-                    return Ancestor.EncodingConfiguration;
-                }
-                if (!(this is MessageParser))
-                {
-                    return new EncodingConfiguration();
-                }
-                _encodingConfiguration = new MessageParserEncodingConfiguration(this);
-                return _encodingConfiguration;
-            }
-        }
+        protected IStringDivider DescendantStringDivider { get; private set; }
 
         /// <summary>
         ///     Zero-based index within the parent element's raw data.
         /// </summary>
         protected int ParentIndex { get; set; }
+
+        /// <summary>
+        ///     Ancestor element. Null if this element is a root element.
+        /// </summary>
+        protected ParserBase Ancestor { get; private set; }
+
+        /// <summary>
+        ///     Get the string divider used to find descendant values.
+        /// </summary>
+        public IStringDivider DescendantDivider
+        {
+            get
+            {
+                if (DescendantStringDivider != null)
+                {
+                    return DescendantStringDivider;
+                }
+
+                DescendantStringDivider = (Ancestor == null)
+                    ? GetDescendantDividerRoot(string.Empty)
+                    : GetDescendantDivider(Ancestor, ParentIndex);
+                return DescendantStringDivider;
+            }
+        }
 
         /// <summary>
         ///     Compare this builder's value with another object's value. (IComparable support)
@@ -122,30 +121,6 @@ namespace NextLevelSeven.Parsing.Elements
         public int CompareTo(string other)
         {
             return string.Compare(Value, other, StringComparison.CurrentCulture);
-        }
-
-        /// <summary>
-        ///     Ancestor element. Null if this element is a root element.
-        /// </summary>
-        protected ParserBase Ancestor { get; private set; }
-
-        /// <summary>
-        ///     Get the string divider used to find descendant values.
-        /// </summary>
-        public IStringDivider DescendantDivider
-        {
-            get
-            {
-                if (DescendantStringDivider != null)
-                {
-                    return DescendantStringDivider;
-                }
-
-                DescendantStringDivider = (Ancestor == null)
-                    ? GetDescendantDividerRoot(string.Empty)
-                    : GetDescendantDivider(Ancestor, ParentIndex);
-                return DescendantStringDivider;
-            }
         }
 
         /// <summary>
@@ -294,6 +269,38 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>
+        ///     Unique key of the element within the message.
+        /// </summary>
+        public string Key
+        {
+            get { return ElementOperations.GetKey(this); }
+        }
+
+        /// <summary>
+        ///     Get the encoding configuration.
+        /// </summary>
+        public EncodingConfigurationBase EncodingConfiguration
+        {
+            get
+            {
+                if (_encodingConfiguration != null)
+                {
+                    return _encodingConfiguration;
+                }
+                if (Ancestor != null)
+                {
+                    return Ancestor.EncodingConfiguration;
+                }
+                if (!(this is MessageParser))
+                {
+                    return new EncodingConfiguration();
+                }
+                _encodingConfiguration = new MessageParserEncodingConfiguration(this);
+                return _encodingConfiguration;
+            }
+        }
+
+        /// <summary>
         ///     Determines whether this builder's value is equivalent to another element's value. (element IEquatable support)
         /// </summary>
         /// <param name="other">Object to compare to.</param>
@@ -385,10 +392,5 @@ namespace NextLevelSeven.Parsing.Elements
         {
             return new StringDivider(value, Delimiter);
         }
-
-        /// <summary>
-        ///     Unique key of the element within the message.
-        /// </summary>
-        public string Key { get { return ElementOperations.GetKey(this); } }
     }
 }

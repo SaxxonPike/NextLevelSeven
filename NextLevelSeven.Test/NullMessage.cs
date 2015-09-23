@@ -32,11 +32,6 @@ namespace NextLevelSeven.Test
             set { Debug.WriteLine("Write to ControlId: {0}", value); }
         }
 
-        public ISegmentParser this[int index]
-        {
-            get { return null; }
-        }
-
         public IEnumerable<ISegmentParser> this[string segmentType]
         {
             get { return Enumerable.Empty<ISegmentParser>(); }
@@ -45,6 +40,21 @@ namespace NextLevelSeven.Test
         public IEnumerable<ISegmentParser> this[IEnumerable<string> segmentTypes]
         {
             get { return Enumerable.Empty<ISegmentParser>(); }
+        }
+
+        public IElementParser AncestorElement
+        {
+            get { return null; }
+        }
+
+        public IMessageParser Message
+        {
+            get { return this; }
+        }
+
+        public ISegmentParser this[int index]
+        {
+            get { return null; }
         }
 
         public string Escape(string data)
@@ -78,11 +88,6 @@ namespace NextLevelSeven.Test
             get { return null; }
         }
 
-        public IElementParser AncestorElement
-        {
-            get { return null; }
-        }
-
         public IEncodedTypeConverter As
         {
             get { return null; }
@@ -111,11 +116,6 @@ namespace NextLevelSeven.Test
         public string Key
         {
             get { return null; }
-        }
-
-        public IMessageParser Message
-        {
-            get { return this; }
         }
 
         public string Value

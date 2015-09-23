@@ -43,7 +43,8 @@ namespace NextLevelSeven.Test.Core
         {
             var builder = Message.Build(ExampleMessages.Variety);
             Assert.IsNotNull(builder[1][3][2].Value);
-            Assert.AreEqual(builder[1][3][2].Value, builder.Segment(1).Field(3).Repetition(2).Value, "Repetitions returned differ.");
+            Assert.AreEqual(builder[1][3][2].Value, builder.Segment(1).Field(3).Repetition(2).Value,
+                "Repetitions returned differ.");
         }
 
         [TestMethod]
@@ -51,7 +52,8 @@ namespace NextLevelSeven.Test.Core
         {
             var parser = Message.Parse(ExampleMessages.Variety);
             Assert.IsNotNull(parser[1][3][2].Value);
-            Assert.AreEqual(parser[1][3][2].Value, parser.Segment(1).Field(3).Repetition(2).Value, "Repetitions returned differ.");
+            Assert.AreEqual(parser[1][3][2].Value, parser.Segment(1).Field(3).Repetition(2).Value,
+                "Repetitions returned differ.");
         }
 
         [TestMethod]
@@ -59,7 +61,8 @@ namespace NextLevelSeven.Test.Core
         {
             var builder = Message.Build(ExampleMessages.Variety);
             Assert.IsNotNull(builder[1][3][2][2].Value);
-            Assert.AreEqual(builder[1][3][2][2].Value, builder.Segment(1).Field(3).Repetition(2).Component(2).Value, "Components returned differ.");
+            Assert.AreEqual(builder[1][3][2][2].Value, builder.Segment(1).Field(3).Repetition(2).Component(2).Value,
+                "Components returned differ.");
         }
 
         [TestMethod]
@@ -67,7 +70,8 @@ namespace NextLevelSeven.Test.Core
         {
             var parser = Message.Parse(ExampleMessages.Variety);
             Assert.IsNotNull(parser[1][3][2][2].Value);
-            Assert.AreEqual(parser[1][3][2][2].Value, parser.Segment(1).Field(3).Repetition(2).Component(2).Value, "Components returned differ.");
+            Assert.AreEqual(parser[1][3][2][2].Value, parser.Segment(1).Field(3).Repetition(2).Component(2).Value,
+                "Components returned differ.");
         }
 
         [TestMethod]
@@ -75,7 +79,8 @@ namespace NextLevelSeven.Test.Core
         {
             var builder = Message.Build(ExampleMessages.Variety);
             Assert.IsNotNull(builder[1][3][1][2].Value);
-            Assert.AreEqual(builder[1][3][1][2].Value, builder.Segment(1).Field(3).Component(2).Value, "Components returned differ.");
+            Assert.AreEqual(builder[1][3][1][2].Value, builder.Segment(1).Field(3).Component(2).Value,
+                "Components returned differ.");
         }
 
         [TestMethod]
@@ -83,7 +88,8 @@ namespace NextLevelSeven.Test.Core
         {
             var parser = Message.Parse(ExampleMessages.Variety);
             Assert.IsNotNull(parser[1][3][1][2].Value);
-            Assert.AreEqual(parser[1][3][1][2].Value, parser.Segment(1).Field(3).Component(2).Value, "Components returned differ.");
+            Assert.AreEqual(parser[1][3][1][2].Value, parser.Segment(1).Field(3).Component(2).Value,
+                "Components returned differ.");
         }
 
         [TestMethod]
@@ -91,7 +97,9 @@ namespace NextLevelSeven.Test.Core
         {
             var builder = Message.Build(ExampleMessages.Variety);
             Assert.IsNotNull(builder[1][3][2][2][2].Value);
-            Assert.AreEqual(builder[1][3][2][2][2].Value, builder.Segment(1).Field(3).Repetition(2).Component(2).Subcomponent(2).Value, "Subcomponents returned differ.");
+            Assert.AreEqual(builder[1][3][2][2][2].Value,
+                builder.Segment(1).Field(3).Repetition(2).Component(2).Subcomponent(2).Value,
+                "Subcomponents returned differ.");
         }
 
         [TestMethod]
@@ -99,7 +107,9 @@ namespace NextLevelSeven.Test.Core
         {
             var parser = Message.Parse(ExampleMessages.Variety);
             Assert.IsNotNull(parser[1][3][2][2][2].Value);
-            Assert.AreEqual(parser[1][3][2][2][2].Value, parser.Segment(1).Field(3).Repetition(2).Component(2).Subcomponent(2).Value, "Subcomponents returned differ.");
+            Assert.AreEqual(parser[1][3][2][2][2].Value,
+                parser.Segment(1).Field(3).Repetition(2).Component(2).Subcomponent(2).Value,
+                "Subcomponents returned differ.");
         }
 
         // Delete Element

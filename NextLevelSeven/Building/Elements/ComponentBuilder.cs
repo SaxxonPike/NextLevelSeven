@@ -187,7 +187,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Clone of the element.</returns>
         public override IElement Clone()
         {
-            return new ComponentBuilder(Ancestor, Index) { Value = Value };
+            return new ComponentBuilder(Ancestor, Index) {Value = Value};
         }
 
         /// <summary>
@@ -196,7 +196,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Clone of the component.</returns>
         IComponent IComponent.Clone()
         {
-            return new ComponentBuilder(Ancestor, Index) { Value = Value };
+            return new ComponentBuilder(Ancestor, Index) {Value = Value};
         }
 
         /// <summary>

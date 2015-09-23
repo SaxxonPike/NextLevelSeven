@@ -2,7 +2,7 @@
 
 namespace NextLevelSeven.Parsing.Elements
 {
-    abstract internal class ParserBaseDescendant : ParserBase
+    internal abstract class ParserBaseDescendant : ParserBase
     {
         /// <summary>
         ///     Create a descendant element that is detached from an ancestor.
@@ -29,7 +29,8 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>
         ///     Create a descendant element that uses an alternative encoding configuration.
         /// </summary>
-        protected ParserBaseDescendant(ParserBase ancestor, int parentIndex, int externalIndex, EncodingConfigurationBase config)
+        protected ParserBaseDescendant(ParserBase ancestor, int parentIndex, int externalIndex,
+            EncodingConfigurationBase config)
             : base(ancestor, config)
         {
             ParentIndex = parentIndex;

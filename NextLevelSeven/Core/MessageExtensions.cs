@@ -40,7 +40,7 @@ namespace NextLevelSeven.Core
                         currentSegments = new List<ISegment>();
                         skipSegmentGroup = false;
                     }
-                    currentSegments.Add((ISegment)message[index]);
+                    currentSegments.Add((ISegment) message[index]);
                 }
                 index++;
             }

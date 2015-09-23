@@ -151,7 +151,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Cloned component.</returns>
         private ComponentParser CloneInternal()
         {
-            return new ComponentParser(EncodingConfiguration) { Index = Index, Value = Value };
+            return new ComponentParser(EncodingConfiguration) {Index = Index, Value = Value};
         }
     }
 }

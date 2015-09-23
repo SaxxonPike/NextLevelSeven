@@ -14,7 +14,7 @@ namespace NextLevelSeven.Building
         /// <returns>Clone of the builder.</returns>
         public static IMessageBuilder Clone(this IMessageBuilder builder)
         {
-            return new MessageBuilder { Value = builder.Value };
+            return new MessageBuilder {Value = builder.Value};
         }
     }
 }

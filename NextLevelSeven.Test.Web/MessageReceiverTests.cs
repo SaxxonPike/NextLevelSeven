@@ -41,7 +41,8 @@ namespace NextLevelSeven.Test.Web
             var response = Message.Parse(responseData);
 
             Assert.AreEqual(2, response.ValueCount, @"ACK must consist of exactly two segments.");
-            Assert.AreEqual("AR", response.Segments.OfType("MSA").First()[1].Value, @"MSA-1 must be 'AR' when rejecting bad messages.");
+            Assert.AreEqual("AR", response.Segments.OfType("MSA").First()[1].Value,
+                @"MSA-1 must be 'AR' when rejecting bad messages.");
             Assert.AreEqual("ACK", response.Details.Type, "MSH-9-1 should be ACK.");
         }
     }

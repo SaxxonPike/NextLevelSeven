@@ -29,13 +29,15 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>
-        ///     Create a repetition with the specified ancestor, ancestor index, and exposed index, with an alternative encoding configuration.
+        ///     Create a repetition with the specified ancestor, ancestor index, and exposed index, with an alternative encoding
+        ///     configuration.
         /// </summary>
         /// <param name="ancestor">Ancestor element.</param>
         /// <param name="parentIndex">Index in the parent splitter.</param>
         /// <param name="externalIndex">Exposed index.</param>
         /// <param name="config">Encoding configuration to use.</param>
-        public RepetitionParser(ParserBase ancestor, int parentIndex, int externalIndex, EncodingConfigurationBase config)
+        public RepetitionParser(ParserBase ancestor, int parentIndex, int externalIndex,
+            EncodingConfigurationBase config)
             : base(ancestor, parentIndex, externalIndex, config)
         {
             _components = new IndexedCache<int, ComponentParser>(CreateComponent);
@@ -177,7 +179,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Clone of this repetition.</returns>
         private RepetitionParser CloneInternal()
         {
-            return new RepetitionParser(EncodingConfiguration) { Index = Index, Value = Value };
+            return new RepetitionParser(EncodingConfiguration) {Index = Index, Value = Value};
         }
     }
 }

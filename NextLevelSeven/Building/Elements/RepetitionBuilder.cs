@@ -227,7 +227,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Clone of the element.</returns>
         public override IElement Clone()
         {
-            return new RepetitionBuilder(Ancestor, Index) { Value = Value };
+            return new RepetitionBuilder(Ancestor, Index) {Value = Value};
         }
 
         /// <summary>
@@ -236,7 +236,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Clone of the repetition.</returns>
         IRepetition IRepetition.Clone()
         {
-            return new RepetitionBuilder(Ancestor, Index) { Value = Value };
+            return new RepetitionBuilder(Ancestor, Index) {Value = Value};
         }
 
         /// <summary>

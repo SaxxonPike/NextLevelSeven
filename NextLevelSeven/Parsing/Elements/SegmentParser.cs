@@ -192,7 +192,7 @@ namespace NextLevelSeven.Parsing.Elements
 
         private SegmentParser CloneInternal()
         {
-            return new SegmentParser(EncodingConfiguration) { Index = Index, Value = Value };
+            return new SegmentParser(EncodingConfiguration) {Index = Index, Value = Value};
         }
     }
 }

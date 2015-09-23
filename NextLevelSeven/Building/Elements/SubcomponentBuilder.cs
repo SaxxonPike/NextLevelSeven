@@ -94,7 +94,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns></returns>
         public override IElement Clone()
         {
-            return new SubcomponentBuilder(Ancestor, Index) { Value = Value };
+            return new SubcomponentBuilder(Ancestor, Index) {Value = Value};
         }
 
         /// <summary>
@@ -103,7 +103,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns></returns>
         ISubcomponent ISubcomponent.Clone()
         {
-            return new SubcomponentBuilder(Ancestor, Index) { Value = Value };
+            return new SubcomponentBuilder(Ancestor, Index) {Value = Value};
         }
 
         /// <summary>

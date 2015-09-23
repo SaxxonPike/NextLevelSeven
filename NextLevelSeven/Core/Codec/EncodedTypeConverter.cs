@@ -91,8 +91,16 @@ namespace NextLevelSeven.Core.Codec
         /// </summary>
         public IEnumerable<string> FormattedText
         {
-            get { return TextConverter.ConvertToFormattedText(BaseElement.Value, BaseElement.Delimiter, BaseElement.EncodingConfiguration); }
-            set { BaseElement.Value = TextConverter.ConvertFromFormattedText(value, BaseElement.Delimiter, BaseElement.EncodingConfiguration); }
+            get
+            {
+                return TextConverter.ConvertToFormattedText(BaseElement.Value, BaseElement.Delimiter,
+                    BaseElement.EncodingConfiguration);
+            }
+            set
+            {
+                BaseElement.Value = TextConverter.ConvertFromFormattedText(value, BaseElement.Delimiter,
+                    BaseElement.EncodingConfiguration);
+            }
         }
 
         /// <summary>
@@ -145,7 +153,8 @@ namespace NextLevelSeven.Core.Codec
             get
             {
                 return string.Join(Environment.NewLine,
-                    TextConverter.ConvertToFormattedText(BaseElement.Value, BaseElement.Delimiter, BaseElement.EncodingConfiguration));
+                    TextConverter.ConvertToFormattedText(BaseElement.Value, BaseElement.Delimiter,
+                        BaseElement.EncodingConfiguration));
             }
             set
             {

@@ -24,7 +24,8 @@ namespace NextLevelSeven.Conversion
         /// <param name="delimiter">Delimiter to use (typically component)</param>
         /// <param name="encoding">Encoding to use for escaping.</param>
         /// <returns>Converted string.</returns>
-        internal static string ConvertFromFormattedText(IEnumerable<string> input, char delimiter, EncodingConfigurationBase encoding)
+        internal static string ConvertFromFormattedText(IEnumerable<string> input, char delimiter,
+            EncodingConfigurationBase encoding)
         {
             return ConvertFromFormattedText(input.Select(encoding.Escape), delimiter);
         }
@@ -57,7 +58,8 @@ namespace NextLevelSeven.Conversion
         /// <param name="delimiter">Delimiter to use (typically component)</param>
         /// <param name="encoding">Encoding to use for escaping.</param>
         /// <returns>Converted string.</returns>
-        internal static IEnumerable<string> ConvertToFormattedText(string input, char delimiter, EncodingConfigurationBase encoding)
+        internal static IEnumerable<string> ConvertToFormattedText(string input, char delimiter,
+            EncodingConfigurationBase encoding)
         {
             return ConvertToFormattedText(encoding.UnEscape(input), delimiter);
         }

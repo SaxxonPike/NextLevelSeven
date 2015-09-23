@@ -183,6 +183,30 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>
+        ///     Get or set the value of this message.
+        /// </summary>
+        public override string Value
+        {
+            get { return base.Value; }
+            set
+            {
+                if (value == null)
+                {
+                    throw new ParserException(ErrorCode.MessageDataMustNotBeNull);
+                }
+                if (value.Length < 8)
+                {
+                    throw new ParserException(ErrorCode.MessageDataIsTooShort);
+                }
+                if (!value.StartsWith("MSH"))
+                {
+                    throw new ParserException(ErrorCode.MessageDataMustStartWithMsh);
+                }
+                base.Value = SanitizeLineEndings(value);
+            }
+        }
+
+        /// <summary>
         ///     Create a message with a default MSH segment.
         /// </summary>
         public static MessageParser Create()
@@ -196,7 +220,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <param name="message">Message data to interpret.</param>
         public static MessageParser Create(string message)
         {
-            return new MessageParser { Value = message };
+            return new MessageParser {Value = message};
         }
 
         /// <summary>
@@ -325,31 +349,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Clone of the message.</returns>
         private MessageParser CloneInternal()
         {
-            return new MessageParser { Value = Value, Index = Index };
-        }
-
-        /// <summary>
-        ///     Get or set the value of this message.
-        /// </summary>
-        public override string Value
-        {
-            get { return base.Value; }
-            set
-            {
-                if (value == null)
-                {
-                    throw new ParserException(ErrorCode.MessageDataMustNotBeNull);
-                }
-                if (value.Length < 8)
-                {
-                    throw new ParserException(ErrorCode.MessageDataIsTooShort);
-                }
-                if (!value.StartsWith("MSH"))
-                {
-                    throw new ParserException(ErrorCode.MessageDataMustStartWithMsh);
-                }
-                base.Value = SanitizeLineEndings(value);
-            }
+            return new MessageParser {Value = Value, Index = Index};
         }
     }
 }

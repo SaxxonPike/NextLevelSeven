@@ -165,7 +165,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Clone of the field.</returns>
         protected virtual FieldParser CloneInternal()
         {
-            return new FieldParser(EncodingConfiguration) { Index = Index, Value = Value };
+            return new FieldParser(EncodingConfiguration) {Index = Index, Value = Value};
         }
     }
 }

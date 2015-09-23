@@ -3,7 +3,6 @@ using System.IO;
 using System.Text;
 using NextLevelSeven.Core;
 using NextLevelSeven.Parsing;
-using NextLevelSeven.Parsing.Elements;
 
 namespace NextLevelSeven.Streaming
 {

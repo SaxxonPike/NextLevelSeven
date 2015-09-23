@@ -15,11 +15,6 @@ namespace NextLevelSeven.Building.Elements
         IEquatable<IElement>, IEquatable<string>, IEncodedElement
     {
         /// <summary>
-        ///     Encoding configuration for this message.
-        /// </summary>
-        public EncodingConfigurationBase EncodingConfiguration { get; private set; }
-
-        /// <summary>
         ///     Initialize the message builder base class.
         /// </summary>
         internal BuilderBase()
@@ -99,6 +94,11 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>
+        ///     Encoding configuration for this message.
+        /// </summary>
+        public EncodingConfigurationBase EncodingConfiguration { get; private set; }
+
+        /// <summary>
         ///     Get the index at which this builder is located in its descendant.
         /// </summary>
         public int Index { get; private set; }
@@ -167,6 +167,14 @@ namespace NextLevelSeven.Building.Elements
         IEnumerable<IElement> IElement.Descendants
         {
             get { return GetDescendants(); }
+        }
+
+        /// <summary>
+        ///     Unique key of the element within the message.
+        /// </summary>
+        public string Key
+        {
+            get { return ElementOperations.GetKey(this); }
         }
 
         /// <summary>
@@ -281,10 +289,5 @@ namespace NextLevelSeven.Building.Elements
                 GetValueCount,
                 1);
         }
-
-        /// <summary>
-        ///     Unique key of the element within the message.
-        /// </summary>
-        public string Key { get { return ElementOperations.GetKey(this); } }
     }
 }

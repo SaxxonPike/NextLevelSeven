@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml;
 using NextLevelSeven.Building;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Parsing;
@@ -32,7 +31,8 @@ namespace NextLevelSeven.Core
         /// <returns>The newly added element.</returns>
         public static void Add(this IElement target, IElement elementToAdd)
         {
-            target.Value = String.Join(new string(target.Delimiter, 1), target.Value ?? string.Empty, elementToAdd.Value ?? string.Empty);
+            target.Value = String.Join(new string(target.Delimiter, 1), target.Value ?? string.Empty,
+                elementToAdd.Value ?? string.Empty);
         }
 
         /// <summary>
@@ -412,7 +412,7 @@ namespace NextLevelSeven.Core
         /// <returns>Descendant element.</returns>
         public static ISegment Segment(this IMessage ancestor, int index)
         {
-            return (ISegment)ancestor[index];
+            return (ISegment) ancestor[index];
         }
 
         /// <summary>
@@ -423,7 +423,7 @@ namespace NextLevelSeven.Core
         /// <returns>Descendant element.</returns>
         public static IField Field(this ISegment ancestor, int index)
         {
-            return (IField)ancestor[index];
+            return (IField) ancestor[index];
         }
 
         /// <summary>
@@ -434,7 +434,7 @@ namespace NextLevelSeven.Core
         /// <returns>Descendant element.</returns>
         public static IRepetition Repetition(this IField ancestor, int index)
         {
-            return (IRepetition)ancestor[index];
+            return (IRepetition) ancestor[index];
         }
 
         /// <summary>
@@ -445,7 +445,7 @@ namespace NextLevelSeven.Core
         /// <returns>Descendant element.</returns>
         public static IComponent Component(this IField ancestor, int index)
         {
-            return (IComponent)ancestor[1][index];
+            return (IComponent) ancestor[1][index];
         }
 
         /// <summary>
@@ -456,7 +456,7 @@ namespace NextLevelSeven.Core
         /// <returns>Descendant element.</returns>
         public static IComponent Component(this IRepetition ancestor, int index)
         {
-            return (IComponent)ancestor[index];
+            return (IComponent) ancestor[index];
         }
 
         /// <summary>
@@ -467,7 +467,7 @@ namespace NextLevelSeven.Core
         /// <returns>Descendant element.</returns>
         public static ISubcomponent Subcomponent(this IComponent ancestor, int index)
         {
-            return (ISubcomponent)ancestor[index];
+            return (ISubcomponent) ancestor[index];
         }
     }
 }
