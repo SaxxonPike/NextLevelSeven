@@ -194,5 +194,14 @@ namespace NextLevelSeven.Parsing.Elements
         {
             return new SegmentParser(EncodingConfiguration) {Index = Index, Value = Value};
         }
+
+        /// <summary>
+        ///     Get the next available index.
+        /// </summary>
+        public override int NextIndex
+        {
+            get { return ValueCount; }
+        }
+
     }
 }

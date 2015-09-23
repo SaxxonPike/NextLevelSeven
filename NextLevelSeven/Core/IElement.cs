@@ -51,6 +51,11 @@ namespace NextLevelSeven.Core
         string Key { get; }
 
         /// <summary>
+        ///     Next available index for adding elements.
+        /// </summary>
+        int NextIndex { get; }
+
+        /// <summary>
         ///     Get or set the complete value of the element.
         /// </summary>
         string Value { get; set; }

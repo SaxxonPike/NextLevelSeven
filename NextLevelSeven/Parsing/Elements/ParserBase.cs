@@ -392,5 +392,13 @@ namespace NextLevelSeven.Parsing.Elements
         {
             return new StringDivider(value, Delimiter);
         }
+
+        /// <summary>
+        ///     Get the next available index.
+        /// </summary>
+        public virtual int NextIndex
+        {
+            get { return ValueCount + 1; }
+        }
     }
 }

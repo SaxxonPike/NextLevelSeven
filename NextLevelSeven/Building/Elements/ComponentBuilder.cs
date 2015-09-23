@@ -105,6 +105,11 @@ namespace NextLevelSeven.Building.Elements
             _subcomponents.Clear();
             var index = 1;
 
+            if (value == null)
+            {
+                return this;
+            }
+
             foreach (var subcomponent in value.Split(EncodingConfiguration.SubcomponentDelimiter))
             {
                 SetSubcomponent(index++, subcomponent);

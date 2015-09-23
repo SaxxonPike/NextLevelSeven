@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using NextLevelSeven.Building;
+using NextLevelSeven.Building.Elements;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Parsing;
+using NextLevelSeven.Parsing.Elements;
 
 namespace NextLevelSeven.Core
 {
@@ -20,7 +22,7 @@ namespace NextLevelSeven.Core
         /// <returns>The newly added element.</returns>
         public static void Add(this IElement target, string elementToAdd)
         {
-            target.Value = String.Join(new string(target.Delimiter, 1), target.Value, elementToAdd);
+            target[target.NextIndex].Value = elementToAdd;
         }
 
         /// <summary>
@@ -31,8 +33,7 @@ namespace NextLevelSeven.Core
         /// <returns>The newly added element.</returns>
         public static void Add(this IElement target, IElement elementToAdd)
         {
-            target.Value = String.Join(new string(target.Delimiter, 1), target.Value ?? string.Empty,
-                elementToAdd.Value ?? string.Empty);
+            CopyOver(elementToAdd, target[target.NextIndex]);
         }
 
         /// <summary>
@@ -42,7 +43,10 @@ namespace NextLevelSeven.Core
         /// <param name="elementsToAdd">Elements to be added.</param>
         public static void AddRange(this IElement target, IEnumerable<string> elementsToAdd)
         {
-            target.Value = String.Join(new string(target.Delimiter, 1), (new[] {target.Value}).Concat(elementsToAdd));
+            foreach (var element in elementsToAdd)
+            {
+                target.Add(element);
+            }
         }
 
         /// <summary>
@@ -52,9 +56,32 @@ namespace NextLevelSeven.Core
         /// <param name="elementsToAdd">Elements to be added.</param>
         public static void AddRange(this IElement target, IEnumerable<IElement> elementsToAdd)
         {
-            target.Value = String.Join(new string(target.Delimiter, 1),
-                (new[] {target.Value}).Concat(elementsToAdd.Select(e => e.Value ?? string.Empty)));
+            foreach (var element in elementsToAdd)
+            {
+                target.Add(element);
+            }
         }
+
+        /// <summary>
+        ///     Copy elements and sub-elements one by one into the target.
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        static void CopyOver(IElement source, IElement target)
+        {
+            if (!(target is ISubcomponent) && source.HasSignificantDescendants())
+            {
+                foreach (var descendant in source.Descendants.ToList())
+                {
+                    CopyOver(descendant, target[descendant.Index]);
+                }
+            }
+            else
+            {
+                target.Value = source.Value;
+            }
+        }
+
 
         /// <summary>
         ///     Delete an element from its ancestor. Throws an exception if the element is a root element.
@@ -76,13 +103,14 @@ namespace NextLevelSeven.Core
         /// <param name="index">Index of descendant to delete.</param>
         public static void Delete(this IElement target, int index)
         {
-            if (index >= 1 && index <= target.ValueCount)
+            if (index < 1 || index > target.ValueCount)
             {
-                var values = new List<string>();
-                var indexMap = (target is ISegment) ? index : index - 1;
-                values.AddRange(target.Descendants.Where((d, i) => i != indexMap).Select(d => d.Value));
-                target.Values = values;
+                return;
             }
+            var values = new List<string>();
+            var indexMap = (target is ISegment) ? index : index - 1;
+            values.AddRange(target.Descendants.Where((d, i) => i != indexMap).Select(d => d.Value));
+            target.Values = values;
         }
 
         /// <summary>
@@ -468,6 +496,60 @@ namespace NextLevelSeven.Core
         public static ISubcomponent Subcomponent(this IComponent ancestor, int index)
         {
             return (ISubcomponent) ancestor[index];
+        }
+
+        /// <summary>
+        ///     Create a new message.
+        /// </summary>
+        /// <typeparam name="T">Any IMessage type.</typeparam>
+        /// <returns>New message builder/parser.</returns>
+        private static T ToNewMessage<T>(IEnumerable<ISegment> segments) where T : IMessage, new()
+        {
+            // build empty message when there are no segments
+            var sourceSegments = segments.ToList();
+            if (sourceSegments.Count == 0)
+            {
+                return new T();
+            }
+
+            // for message metadata
+            var newMessage = new T();
+
+            // determine where to pull message metadata from
+            var childSegment = sourceSegments.FirstOrDefault(s => s.Type == "MSH")
+                ?? sourceSegments.Where(s => s.Ancestor is IMessage).Select(s => (ISegment)(s.Ancestor[1])).FirstOrDefault();
+            if (childSegment != null)
+            {
+                CopyOver(childSegment, newMessage[1]);
+            }
+
+            // build message
+            foreach (var segment in sourceSegments)
+            {
+                newMessage.Add(segment);
+            }
+
+            return newMessage;
+        }
+
+        /// <summary>
+        ///     Create a new message builder with the selected segments.
+        /// </summary>
+        /// <param name="segments">Segments to make a new message for.</param>
+        /// <returns>New message builder.</returns>
+        public static IMessageBuilder ToNewBuilder(this IEnumerable<ISegment> segments)
+        {
+            return ToNewMessage<MessageBuilder>(segments);
+        }
+
+        /// <summary>
+        ///     Create a new message parser with the selected segments.
+        /// </summary>
+        /// <param name="segments">Segments to make a new message for.</param>
+        /// <returns>New message parser.</returns>
+        public static IMessageParser ToNewParser(this IEnumerable<ISegment> segments)
+        {
+            return ToNewMessage<MessageParser>(segments);
         }
     }
 }

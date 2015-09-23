@@ -92,7 +92,6 @@
     <Compile Include="Parsing\SegmentParserTests.cs" />
     <Compile Include="Parsing\SubcomponentParserTests.cs" />
     <Compile Include="Parsing\ParsingTestFixture.cs" />
-    <Compile Include="NullMessage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Race.cs" />
     <Compile Include="Randomized.cs" />

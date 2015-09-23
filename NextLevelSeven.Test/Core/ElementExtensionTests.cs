@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Test.Core
@@ -6,6 +7,26 @@ namespace NextLevelSeven.Test.Core
     [TestClass]
     public class ElementExtensionTests : CoreTestFixture
     {
+        [TestMethod]
+        public void ElementExtensions_Builder_CanCreateNewMessageFromSegments()
+        {
+            var message = Message.Parse(ExampleMessages.Standard);
+            var builder = message.Segments.OfType("PID").ToNewBuilder();
+            Assert.AreEqual(3, builder.ValueCount);
+            Assert.AreEqual(message[1].Value, builder[1].Value);
+            Assert.AreEqual(message.Segments.OfType("PID").First().Value, builder[2].Value);
+        }
+
+        [TestMethod]
+        public void ElementExtensions_Parser_CanCreateNewMessageFromSegments()
+        {
+            var message = Message.Build(ExampleMessages.Standard);
+            var parser = message.Segments.OfType("PID").ToNewParser();
+            Assert.AreEqual(3, parser.ValueCount);
+            Assert.AreEqual(message[1].Value, parser[1].Value);
+            Assert.AreEqual(message.Segments.OfType("PID").First().Value, parser[2].Value);
+        }
+
         [TestMethod]
         public void ElementExtensions_Builder_CanGetSegment()
         {

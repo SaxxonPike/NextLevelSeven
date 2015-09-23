@@ -34,8 +34,9 @@
                 var s = Ancestor.DescendantDivider.Value;
                 if (s != null && s.Length >= 3)
                 {
-                    Ancestor.DescendantDivider.Value = string.Join(s.Substring(0, 3), value,
+                    var newValue = string.Concat(s.Substring(0, 3), value,
                         (s.Length > 3 ? s.Substring(4) : string.Empty));
+                    Ancestor.DescendantDivider.Value = newValue;
                 }
             }
         }

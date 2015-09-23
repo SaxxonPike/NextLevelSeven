@@ -24,11 +24,16 @@ namespace NextLevelSeven.Parsing.Elements
             get { return Ancestor.DescendantDivider[1]; }
             set
             {
+                // we are assuming MSH + MSH-1 are configured
                 var s = Ancestor.DescendantDivider.Value;
+                var length = s.IndexOf(EncodingConfiguration.FieldDelimiter, 4) - 4;
                 var builder = new StringBuilder();
-                builder.Append(s.Substring(0, 3));
+                builder.Append(s.Substring(0, 4));
                 builder.Append(value);
-                builder.Append(s.Substring(4));
+                if (length > 0)
+                {
+                    builder.Append(s.Substring(4 + length));                    
+                }
                 Ancestor.DescendantDivider.Value = builder.ToString();
             }
         }

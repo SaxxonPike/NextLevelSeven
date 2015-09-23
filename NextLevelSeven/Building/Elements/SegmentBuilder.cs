@@ -468,5 +468,13 @@ namespace NextLevelSeven.Building.Elements
         {
             return _fields[index];
         }
+
+        /// <summary>
+        ///     Get the next available index.
+        /// </summary>
+        public override int NextIndex
+        {
+            get { return ValueCount; }
+        }
     }
 }

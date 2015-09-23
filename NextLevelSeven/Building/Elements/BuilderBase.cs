@@ -289,5 +289,13 @@ namespace NextLevelSeven.Building.Elements
                 GetValueCount,
                 1);
         }
+
+        /// <summary>
+        ///     Get the next available index.
+        /// </summary>
+        public virtual int NextIndex
+        {
+            get { return ValueCount + 1; }
+        }
     }
 }
