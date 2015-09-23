@@ -178,6 +178,14 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>
+        ///     Get the next available index.
+        /// </summary>
+        public virtual int NextIndex
+        {
+            get { return ValueCount + 1; }
+        }
+
+        /// <summary>
         ///     Determines whether this builder's value is equivalent to another element's value. (element IEquatable support)
         /// </summary>
         /// <param name="other">Object to compare to.</param>
@@ -288,14 +296,6 @@ namespace NextLevelSeven.Building.Elements
                 null,
                 GetValueCount,
                 1);
-        }
-
-        /// <summary>
-        ///     Get the next available index.
-        /// </summary>
-        public virtual int NextIndex
-        {
-            get { return ValueCount + 1; }
         }
     }
 }

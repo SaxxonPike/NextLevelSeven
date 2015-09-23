@@ -277,6 +277,14 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>
+        ///     Get the next available index.
+        /// </summary>
+        public virtual int NextIndex
+        {
+            get { return ValueCount + 1; }
+        }
+
+        /// <summary>
         ///     Get the encoding configuration.
         /// </summary>
         public EncodingConfigurationBase EncodingConfiguration
@@ -391,14 +399,6 @@ namespace NextLevelSeven.Parsing.Elements
         private IStringDivider GetDescendantDividerRoot(string value)
         {
             return new StringDivider(value, Delimiter);
-        }
-
-        /// <summary>
-        ///     Get the next available index.
-        /// </summary>
-        public virtual int NextIndex
-        {
-            get { return ValueCount + 1; }
         }
     }
 }

@@ -407,6 +407,14 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>
+        ///     Get the next available index.
+        /// </summary>
+        public override int NextIndex
+        {
+            get { return ValueCount; }
+        }
+
+        /// <summary>
         ///     Get descendant elements.
         /// </summary>
         /// <returns>Descendant elements.</returns>
@@ -467,14 +475,6 @@ namespace NextLevelSeven.Building.Elements
         protected override IElement GetGenericElement(int index)
         {
             return _fields[index];
-        }
-
-        /// <summary>
-        ///     Get the next available index.
-        /// </summary>
-        public override int NextIndex
-        {
-            get { return ValueCount; }
         }
     }
 }

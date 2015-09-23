@@ -32,7 +32,7 @@ namespace NextLevelSeven.Parsing.Elements
                 builder.Append(value);
                 if (length > 0)
                 {
-                    builder.Append(s.Substring(4 + length));                    
+                    builder.Append(s.Substring(4 + length));
                 }
                 Ancestor.DescendantDivider.Value = builder.ToString();
             }

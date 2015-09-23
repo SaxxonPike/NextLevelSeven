@@ -148,6 +148,14 @@ namespace NextLevelSeven.Parsing.Elements
             get { return Fields; }
         }
 
+        /// <summary>
+        ///     Get the next available index.
+        /// </summary>
+        public override int NextIndex
+        {
+            get { return ValueCount; }
+        }
+
         public override IElementParser GetDescendant(int index)
         {
             return _fields[index];
@@ -194,14 +202,5 @@ namespace NextLevelSeven.Parsing.Elements
         {
             return new SegmentParser(EncodingConfiguration) {Index = Index, Value = Value};
         }
-
-        /// <summary>
-        ///     Get the next available index.
-        /// </summary>
-        public override int NextIndex
-        {
-            get { return ValueCount; }
-        }
-
     }
 }

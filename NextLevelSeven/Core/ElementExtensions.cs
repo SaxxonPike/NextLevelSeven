@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using NextLevelSeven.Building;
 using NextLevelSeven.Building.Elements;
@@ -67,7 +66,7 @@ namespace NextLevelSeven.Core
         /// </summary>
         /// <param name="source"></param>
         /// <param name="target"></param>
-        static void CopyOver(IElement source, IElement target)
+        private static void CopyOver(IElement source, IElement target)
         {
             if (!(target is ISubcomponent) && source.HasSignificantDescendants())
             {
@@ -517,7 +516,10 @@ namespace NextLevelSeven.Core
 
             // determine where to pull message metadata from
             var childSegment = sourceSegments.FirstOrDefault(s => s.Type == "MSH")
-                ?? sourceSegments.Where(s => s.Ancestor is IMessage).Select(s => (ISegment)(s.Ancestor[1])).FirstOrDefault();
+                               ??
+                               sourceSegments.Where(s => s.Ancestor is IMessage)
+                                   .Select(s => (ISegment) (s.Ancestor[1]))
+                                   .FirstOrDefault();
             if (childSegment != null)
             {
                 CopyOver(childSegment, newMessage[1]);
