@@ -63,7 +63,6 @@
     <Compile Include="Building\ComponentBuilderTests.cs" />
     <Compile Include="Building\FieldBuilderTests.cs" />
     <Compile Include="Building\RepetitionBuilderTests.cs" />
-    <Compile Include="Building\MessageBuilderPerformanceTests.cs" />
     <Compile Include="Building\MessageBuilderTests.cs" />
     <Compile Include="Building\SegmentBuilderTests.cs" />
     <Compile Include="Building\SubcomponentBuilderTests.cs" />
@@ -86,7 +85,6 @@
     <Compile Include="Parsing\MessageParserTests.cs" />
     <Compile Include="Measure.cs" />
     <Compile Include="Generation\AckMessageGeneratorTests.cs" />
-    <Compile Include="Generation\MessageGeneratorPerformanceTests.cs" />
     <Compile Include="Generation\MessageGeneratorTests.cs" />
     <Compile Include="Parsing\RepetitionParserTests.cs" />
     <Compile Include="Parsing\SegmentParserTests.cs" />
