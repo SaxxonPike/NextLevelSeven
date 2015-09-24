@@ -20,22 +20,5 @@ namespace NextLevelSeven.Test
         {
             return new IndexedCache<TKey, TValue>(new ProxyFactory<TKey, TValue>(factoryMethod));
         }
-
-        /// <summary>
-        ///     Create a wrapper enumerable with the specified proxy methods and start index (optional.)
-        /// </summary>
-        /// <typeparam name="TItem">Type of items referenced by the IEnumerable.</typeparam>
-        /// <param name="getter">Method to get indexed items.</param>
-        /// <param name="setter">Method to set indexed items.</param>
-        /// <param name="count">Method to get the number of items present.</param>
-        /// <param name="startIndex">Starting index of items.</param>
-        /// <returns>An enumerable that wraps an indexable interface.</returns>
-        public static IEnumerableIndexable<int, TItem> GetWrapperEnumerable<TItem>(Func<int, TItem> getter,
-            Action<int, TItem> setter,
-            Func<int> count, int startIndex = 0)
-        {
-            return new ProxyEnumerable<TItem>(new ProxyGetter<int, TItem>(getter), new ProxySetter<int, TItem>(setter),
-                new ProxyGetter<int>(count), startIndex);
-        }
     }
 }

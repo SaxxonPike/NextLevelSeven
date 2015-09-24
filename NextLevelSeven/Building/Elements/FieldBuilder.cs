@@ -53,10 +53,11 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                return new ProxyEnumerable<string>(index => _repetitions[index].Value,
-                    (index, data) => SetFieldRepetition(index, data),
-                    () => ValueCount,
-                    1);
+                var count = ValueCount;
+                for (var i = 1; i <= count; i++)
+                {
+                    yield return _repetitions[i].Value;
+                }
             }
             set { SetFieldRepetitions(value.ToArray()); }
         }
@@ -319,10 +320,11 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                return new ProxyEnumerable<IRepetition>(index => _repetitions[index],
-                    null,
-                    GetValueCount,
-                    1);
+                var count = ValueCount;
+                for (var i = 1; i <= count; i++)
+                {
+                    yield return _repetitions[i];
+                }
             }
         }
 

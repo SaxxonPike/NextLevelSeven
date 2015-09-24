@@ -81,17 +81,6 @@ namespace NextLevelSeven.Parsing.Dividers
             get { return 0; }
         }
 
-        public IEnumerator<string> GetEnumerator()
-        {
-            var value = new[] {Value};
-            return value.AsEnumerable().GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
         public StringDivision GetSubDivision(int index)
         {
             return new StringDivision(0, Value.Length);
@@ -116,6 +105,18 @@ namespace NextLevelSeven.Parsing.Dividers
 
         public void Delete(StringDivision division)
         {
+        }
+
+        public IEnumerable<string> Values
+        {
+            get { yield return GetValue(); }
+            set
+            {
+                foreach (var v in value)
+                {
+                    SetValue(v);
+                }
+            }
         }
     }
 }

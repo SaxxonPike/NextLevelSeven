@@ -50,7 +50,7 @@ namespace NextLevelSeven.Test.Core
         /// <param name="elements"></param>
         private void AssertParseEquivalent(params IElement[] elements)
         {
-            if (elements.Count() <= 1)
+            if (elements.Length <= 1)
             {
                 return;
             }

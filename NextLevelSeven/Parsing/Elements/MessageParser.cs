@@ -167,10 +167,11 @@ namespace NextLevelSeven.Parsing.Elements
         {
             get
             {
-                return new ProxyEnumerable<ISegmentParser>(i => _segments[i],
-                    null,
-                    GetValueCount,
-                    1);
+                var count = ValueCount;
+                for (var i = 1; i <= count; i++)
+                {
+                    yield return _segments[i];
+                }
             }
         }
 

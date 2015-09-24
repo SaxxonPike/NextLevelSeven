@@ -3,7 +3,6 @@ using System.Linq;
 using System.Text;
 using NextLevelSeven.Core;
 using NextLevelSeven.Diagnostics;
-using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building.Elements
 {
@@ -40,7 +39,14 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         public override IEnumerable<string> Values
         {
-            get { return new ProxyEnumerable<string>(OnReadValue, OnWriteValue, OnGetCount); }
+            get
+            {
+                var count = Value.Length;
+                for (var i = 0; i < count; i++)
+                {
+                    yield return new string(_value[i], 1);
+                }
+            }
             set { SetField(string.Concat(value)); }
         }
 
@@ -112,43 +118,6 @@ namespace NextLevelSeven.Building.Elements
             }
             Value = value;
             return this;
-        }
-
-        /// <summary>
-        ///     Get the number of encoding characters.
-        /// </summary>
-        /// <returns>Number of encoding characters.</returns>
-        private int OnGetCount()
-        {
-            if (_value == null)
-            {
-                return 4;
-            }
-
-            var valueLength = _value.Length;
-            return valueLength > 4
-                ? valueLength
-                : 4;
-        }
-
-        /// <summary>
-        ///     Get an encoding character at the specified index.
-        /// </summary>
-        /// <param name="index">Character index.</param>
-        /// <returns>Encoding character.</returns>
-        private string OnReadValue(int index)
-        {
-            return Value.Substring(index, 1);
-        }
-
-        /// <summary>
-        ///     Set an encoding character at the specified index.
-        /// </summary>
-        /// <param name="index">Character index.</param>
-        /// <param name="value">Encoding character.</param>
-        private static void OnWriteValue(int index, string value)
-        {
-            throw new BuilderException(ErrorCode.DescendantElementsCannotBeModified);
         }
 
         /// <summary>

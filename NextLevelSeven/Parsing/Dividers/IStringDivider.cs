@@ -6,7 +6,7 @@ namespace NextLevelSeven.Parsing.Dividers
     /// <summary>
     ///     Common interface for string dividers.
     /// </summary>
-    internal interface IStringDivider : IEnumerable<string>
+    internal interface IStringDivider
     {
         string this[int index] { get; set; }
         char[] BaseValue { get; }
@@ -16,6 +16,7 @@ namespace NextLevelSeven.Parsing.Dividers
         int Index { get; set; }
         bool IsNull { get; }
         string Value { get; set; }
+        IEnumerable<string> Values { get; set; }
         char[] ValueChars { get; set; }
         int Version { get; }
         event EventHandler ValueChanged;

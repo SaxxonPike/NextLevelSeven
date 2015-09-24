@@ -181,7 +181,7 @@ namespace NextLevelSeven.Core
 
             if (element is IField && element.Ancestor != null)
             {
-                var segment = (element as IField).Ancestor as ISegment;
+                var segment = ((IField) element).Ancestor as ISegment;
                 if (segment != null && segment.Type == "MSH" && element.Index >= 1 && element.Index <= 2)
                 {
                     return false;

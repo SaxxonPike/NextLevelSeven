@@ -5,7 +5,7 @@ using NextLevelSeven.Conversion;
 namespace NextLevelSeven.Test.Conversion
 {
     [TestClass]
-    public class DateTimeConverterTests
+    public class DateTimeConverterTests : ConversionTestFixture
     {
         [TestMethod]
         public void DateTimeConverter_DecodesTime()

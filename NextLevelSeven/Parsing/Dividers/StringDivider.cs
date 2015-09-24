@@ -147,5 +147,22 @@ namespace NextLevelSeven.Parsing.Dividers
         {
             return Value;
         }
+
+        public override IEnumerable<string> Values
+        {
+            get
+            {
+                var count = Divisions.Count;
+                for (var i = 0; i < count; i++)
+                {
+                    yield return this[i];
+                }
+            }
+            set {
+                Value = (Delimiter == '\0')
+                    ? string.Concat(value)
+                    : string.Join(new string(Delimiter, 1), value);
+            }
+        }
     }
 }

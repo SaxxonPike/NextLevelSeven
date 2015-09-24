@@ -109,10 +109,11 @@ namespace NextLevelSeven.Parsing.Elements
         {
             get
             {
-                return new ProxyEnumerable<IRepetitionParser>(i => _repetitions[i],
-                    null,
-                    GetValueCount,
-                    1);
+                var count = ValueCount;
+                for (var i = 1; i <= count; i++)
+                {
+                    yield return _repetitions[i];
+                }
             }
         }
 

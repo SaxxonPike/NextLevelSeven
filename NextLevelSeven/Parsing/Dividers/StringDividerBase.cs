@@ -72,24 +72,6 @@ namespace NextLevelSeven.Parsing.Dividers
         }
 
         /// <summary>
-        ///     Get an enumerator for divided strings.
-        /// </summary>
-        /// <returns>Enumerator.</returns>
-        public IEnumerator<string> GetEnumerator()
-        {
-            return new StringDividerEnumerator(this);
-        }
-
-        /// <summary>
-        ///     Get an enumerator for divided strings.
-        /// </summary>
-        /// <returns>Enumerator.</returns>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return new StringDividerEnumerator(this);
-        }
-
-        /// <summary>
         ///     Raise the ValueChanged event.
         /// </summary>
         protected void RaiseValueChanged()
@@ -99,5 +81,7 @@ namespace NextLevelSeven.Parsing.Dividers
                 ValueChanged(this, EventArgs.Empty);
             }
         }
+
+        public abstract IEnumerable<string> Values { get; set; }
     }
 }

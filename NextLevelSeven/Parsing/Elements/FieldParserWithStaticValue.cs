@@ -80,5 +80,11 @@ namespace NextLevelSeven.Parsing.Elements
         {
             return new FieldParser(EncodingConfiguration) {Index = Index, Value = Value};
         }
+
+        public override IEnumerable<string> Values
+        {
+            get { yield return Value; }
+            set { Value = string.Concat(value); }
+        }
     }
 }

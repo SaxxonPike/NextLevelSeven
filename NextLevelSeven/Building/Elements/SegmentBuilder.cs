@@ -79,9 +79,11 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                return new ProxyEnumerable<string>(index => _fields[index].Value,
-                    (index, data) => SetField(index, data),
-                    GetValueCount);
+                var count = ValueCount;
+                for (var i = 0; i < count; i++)
+                {
+                    yield return _fields[i].Value;
+                }
             }
             set { SetFields(value.ToArray()); }
         }
@@ -400,9 +402,11 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                return new ProxyEnumerable<IField>(index => _fields[index],
-                    (index, data) => { },
-                    GetValueCount);
+                var count = ValueCount;
+                for (var i = 0; i < count; i++)
+                {
+                    yield return _fields[i];
+                }
             }
         }
 
@@ -420,9 +424,11 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Descendant elements.</returns>
         protected override IEnumerable<IElement> GetDescendants()
         {
-            return new ProxyEnumerable<IElement>(index => _fields[index],
-                (index, data) => { },
-                GetValueCount);
+            var count = ValueCount;
+            for (var i = 0; i < count; i++)
+            {
+                yield return _fields[i];
+            }
         }
 
         /// <summary>

@@ -51,93 +51,17 @@ namespace NextLevelSeven.Core.Codec
         }
 
         /// <summary>
-        ///     Get .NET standard generic enumerator.
+        ///     Get the items in the element as a collection.
         /// </summary>
-        /// <returns>Enumerator.</returns>
-        public IEnumerator<TDecoded> GetEnumerator()
+        public IEnumerable<TDecoded> Items
         {
-            return new IndexedCodecEnumerator(this, BaseElement.ValueCount);
-        }
-
-        /// <summary>
-        ///     Get .NET standard object enumerator.
-        /// </summary>
-        /// <returns>Enumerator.</returns>
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        /// <summary>
-        ///     Allow for enumeration of a codec indexer's values.
-        /// </summary>
-        private sealed class IndexedCodecEnumerator : IEnumerator<TDecoded>
-        {
-            public IndexedCodecEnumerator(IIndexedEncodedTypeConverter<TDecoded> indexedCodec, int count)
+            get
             {
-                IndexedCodec = indexedCodec;
-                Count = count;
-                Reset();
-            }
-
-            /// <summary>
-            ///     Parent codec indexer.
-            /// </summary>
-            private IIndexedEncodedTypeConverter<TDecoded> IndexedCodec { get; set; }
-
-            /// <summary>
-            ///     Number of items.
-            /// </summary>
-            private int Count { get; set; }
-
-            /// <summary>
-            ///     Currently selected index.
-            /// </summary>
-            private int Index { get; set; }
-
-            /// <summary>
-            ///     Currently selected item.
-            /// </summary>
-            public TDecoded Current
-            {
-                get { return IndexedCodec[Index]; }
-            }
-
-            /// <summary>
-            ///     Unused- required by interface.
-            /// </summary>
-            public void Dispose()
-            {
-            }
-
-            /// <summary>
-            ///     Currently selected item (for old IEnumerator.)
-            /// </summary>
-            object IEnumerator.Current
-            {
-                get { return IndexedCodec[Index]; }
-            }
-
-            /// <summary>
-            ///     Move to the next index in the collection.
-            /// </summary>
-            /// <returns>True if there are more elements, false if not.</returns>
-            public bool MoveNext()
-            {
-                if (Index >= Count - 1)
+                var count = BaseElement.ValueCount;
+                for (var i = 1; i <= count; i++)
                 {
-                    return false;
+                    yield return this[i];
                 }
-                Index++;
-                return true;
-            }
-
-            /// <summary>
-            ///     Reset the index.
-            /// </summary>
-            public void Reset()
-            {
-                Index = -1;
             }
         }
     }

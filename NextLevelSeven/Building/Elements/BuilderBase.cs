@@ -4,7 +4,6 @@ using NextLevelSeven.Conversion;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Codec;
 using NextLevelSeven.Core.Encoding;
-using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building.Elements
 {
@@ -292,10 +291,11 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Descendant elements.</returns>
         protected virtual IEnumerable<IElement> GetDescendants()
         {
-            return new ProxyEnumerable<IElement>(index => this[index],
-                null,
-                GetValueCount,
-                1);
+            var count = ValueCount;
+            for (var i = 1; i <= count; i++)
+            {
+                yield return this[i];
+            }
         }
     }
 }

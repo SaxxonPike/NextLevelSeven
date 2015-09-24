@@ -66,7 +66,7 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         public override IEnumerable<string> Values
         {
-            get { return new ProxyEnumerable<string>(i => _value, null, GetValueCount, 1); }
+            get { yield return _value; }
             set { _value = string.Concat(value); }
         }
 

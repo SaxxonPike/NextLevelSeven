@@ -59,9 +59,11 @@ namespace NextLevelSeven.Parsing.Elements
         {
             get
             {
-                return new ProxyEnumerable<IElementParser>(GetDescendant,
-                    null,
-                    GetValueCount);
+                var count = ValueCount;
+                for (var i = 0; i < count; i++)
+                {
+                    yield return this[i];
+                }
             }
         }
 
@@ -127,16 +129,17 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>
-        ///     Get all components.
+        ///     Get all fields.
         /// </summary>
         public IEnumerable<IFieldParser> Fields
         {
             get
             {
-                return new ProxyEnumerable<IFieldParser>(i => _fields[i],
-                    null,
-                    GetValueCount,
-                    1);
+                var count = ValueCount;
+                for (var i = 0; i < count; i++)
+                {
+                    yield return _fields[i];
+                }
             }
         }
 

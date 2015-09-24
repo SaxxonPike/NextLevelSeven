@@ -59,10 +59,11 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                return new ProxyEnumerable<string>(index => _segments[index].Value,
-                    (index, data) => SetSegment(index, data),
-                    GetValueCount,
-                    1);
+                var count = ValueCount;
+                for (var i = 1; i <= count; i++)
+                {
+                    yield return _segments[i].Value;
+                }
             }
             set { SetSegments(value.ToArray()); }
         }
@@ -459,10 +460,11 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                return new ProxyEnumerable<ISegment>(index => _segments[index],
-                    null,
-                    GetValueCount,
-                    1);
+                var count = ValueCount;
+                for (var i = 1; i <= count; i++)
+                {
+                    yield return _segments[i];
+                }
             }
         }
 

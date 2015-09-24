@@ -2,7 +2,6 @@
 using System.Linq;
 using NextLevelSeven.Core;
 using NextLevelSeven.Diagnostics;
-using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building.Elements
 {
@@ -34,7 +33,7 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         public override IEnumerable<string> Values
         {
-            get { return new ProxyEnumerable<string>(index => Value, (index, value) => Value = value, () => 1); }
+            get { yield return Value; }
             set { SetField(string.Concat(value)); }
         }
 

@@ -5,7 +5,6 @@ using NextLevelSeven.Core;
 using NextLevelSeven.Core.Codec;
 using NextLevelSeven.Core.Encoding;
 using NextLevelSeven.Parsing.Dividers;
-using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Parsing.Elements
 {
@@ -166,10 +165,11 @@ namespace NextLevelSeven.Parsing.Elements
         {
             get
             {
-                return new ProxyEnumerable<IElementParser>(GetDescendant,
-                    null,
-                    GetValueCount,
-                    1);
+                var count = ValueCount;
+                for (var i = 1; i <= count; i++)
+                {
+                    yield return this[i];
+                }
             }
         }
 
@@ -221,15 +221,11 @@ namespace NextLevelSeven.Parsing.Elements
         {
             get
             {
-                return (ValueCount > 1)
-                    ? DescendantDivider.Value.Split(DescendantDivider.Delimiter)
-                    : new[] {DescendantDivider.Value};
+                return DescendantDivider.Values;
             }
             set
             {
-                DescendantDivider.Value = (DescendantDivider.Delimiter != '\0')
-                    ? string.Join(new string(DescendantDivider.Delimiter, 1), value)
-                    : string.Join(string.Empty, value);
+                DescendantDivider.Values = value;
             }
         }
 

@@ -53,10 +53,11 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                return new ProxyEnumerable<string>(index => _subcomponents[index].Value,
-                    (index, data) => SetSubcomponent(index, data),
-                    GetValueCount,
-                    1);
+                var count = ValueCount;
+                for (var i = 1; i <= count; i++)
+                {
+                    yield return _subcomponents[i].Value;
+                }
             }
             set { SetSubcomponents(value.ToArray()); }
         }
@@ -227,10 +228,11 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                return new ProxyEnumerable<ISubcomponent>(index => _subcomponents[index],
-                    null,
-                    GetValueCount,
-                    1);
+                var count = ValueCount;
+                for (var i = 1; i <= count; i++)
+                {
+                    yield return _subcomponents[i];
+                }
             }
         }
 

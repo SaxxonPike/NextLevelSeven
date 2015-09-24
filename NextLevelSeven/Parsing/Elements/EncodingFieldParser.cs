@@ -1,4 +1,6 @@
-﻿using System.Text;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
 namespace NextLevelSeven.Parsing.Elements
 {
@@ -35,6 +37,18 @@ namespace NextLevelSeven.Parsing.Elements
                     builder.Append(s.Substring(4 + length));
                 }
                 Ancestor.DescendantDivider.Value = builder.ToString();
+            }
+        }
+
+        public override IEnumerable<string> Values
+        {
+            get
+            {
+                return Value.Select(c => new string(c, 1));
+            }
+            set
+            {
+                Value = string.Concat(value);
             }
         }
     }
