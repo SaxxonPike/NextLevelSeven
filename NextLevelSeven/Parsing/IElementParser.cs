@@ -20,12 +20,7 @@ namespace NextLevelSeven.Parsing
         /// <summary>
         ///     Get all descendant elements.
         /// </summary>
-        IEnumerable<IElementParser> DescendantElements { get; }
-
-        /// <summary>
-        ///     If true, the element is considered to exist in the message. This is not dependent on the value being null.
-        /// </summary>
-        bool Exists { get; }
+        new IEnumerable<IElementParser> Descendants { get; }
 
         /// <summary>
         ///     Event that is triggered whenever either this element's value

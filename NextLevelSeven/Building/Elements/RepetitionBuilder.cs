@@ -116,6 +116,11 @@ namespace NextLevelSeven.Building.Elements
         public IRepetitionBuilder SetComponents(params string[] components)
         {
             _components.Clear();
+            if (components == null)
+            {
+                return this;
+            }
+
             var index = 1;
             foreach (var component in components)
             {
@@ -132,6 +137,11 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This RepetitionBuilder, for chaining purposes.</returns>
         public IRepetitionBuilder SetComponents(int startIndex, params string[] components)
         {
+            if (components == null)
+            {
+                return this;
+            }
+
             var index = startIndex;
             foreach (var component in components)
             {
@@ -289,6 +299,14 @@ namespace NextLevelSeven.Building.Elements
         protected override IElement GetGenericElement(int index)
         {
             return _components[index];
+        }
+
+        /// <summary>
+        ///     If true, the element is considered to exist.
+        /// </summary>
+        public override bool Exists
+        {
+            get { return _components.Any(s => s.Value.Exists); }
         }
     }
 }

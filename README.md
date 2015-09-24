@@ -81,13 +81,6 @@ Simply accessing HL7 message data doesn't tell you very much about the message i
 the standard also gives you some known data types. The `NextLevelSeven.Specification` module
 gives you the ability to wrap high level constructs around elements in the HL7 message easily.
 
-## Web Module
-
-The transmission of HL7 data is very important (frankly, it's the main reason the specification
-was invented.) The `NextLevelSeven.Web` module provides you with a few helpful classes that will
-get you started. A sender and receiver are both provided, which adhere to the HL7 Over HTTP
-specification. Other transmission protocols are planned for the future.
-
 ## Development
 
 Any help is greatly appreciated! Here's what you need to know...

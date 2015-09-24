@@ -36,6 +36,16 @@ namespace NextLevelSeven.Core
         IEnumerable<IElement> Descendants { get; }
 
         /// <summary>
+        ///     Erase this element's content and mark it non-existant.
+        /// </summary>
+        void Erase();
+
+        /// <summary>
+        ///     Returns true if the element is considered existant.
+        /// </summary>
+        bool Exists { get; }
+
+        /// <summary>
         ///     Get or set the formatted value of the element.
         /// </summary>
         string FormattedValue { get; set; }

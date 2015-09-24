@@ -85,5 +85,7 @@
         MessageTypeIsInvalid,
         /* 0037 */
         MessageTriggerEventIsInvalid,
+        /* 0038 */
+        SegmentDataMustNotBeNull,
     }
 }

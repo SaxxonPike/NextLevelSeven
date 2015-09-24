@@ -55,7 +55,7 @@ namespace NextLevelSeven.Parsing.Elements
             }
         }
 
-        public override IEnumerable<IElementParser> DescendantElements
+        public override IEnumerable<IElementParser> Descendants
         {
             get
             {

@@ -161,7 +161,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>
         ///     Get descendant elements as an enumerable set.
         /// </summary>
-        public virtual IEnumerable<IElementParser> DescendantElements
+        public virtual IEnumerable<IElementParser> Descendants
         {
             get
             {
@@ -180,11 +180,7 @@ namespace NextLevelSeven.Parsing.Elements
         {
             get
             {
-                if (Ancestor == null)
-                {
-                    return true;
-                }
-                return (Index <= Ancestor.ValueCount);
+                return DescendantDivider != null && !string.IsNullOrEmpty(DescendantDivider.Value);
             }
         }
 
@@ -261,7 +257,7 @@ namespace NextLevelSeven.Parsing.Elements
 
         IEnumerable<IElement> IElement.Descendants
         {
-            get { return DescendantElements; }
+            get { return Descendants; }
         }
 
         /// <summary>
@@ -395,6 +391,14 @@ namespace NextLevelSeven.Parsing.Elements
         private IStringDivider GetDescendantDividerRoot(string value)
         {
             return new StringDivider(value, Delimiter);
+        }
+
+        /// <summary>
+        ///     Erase an element from existence.
+        /// </summary>
+        public void Erase()
+        {
+            Value = null;
         }
     }
 }

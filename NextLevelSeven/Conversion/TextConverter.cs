@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NextLevelSeven.Core;
 using NextLevelSeven.Core.Encoding;
 
 namespace NextLevelSeven.Conversion
@@ -40,7 +41,7 @@ namespace NextLevelSeven.Conversion
         /// <returns>Converted string.</returns>
         public static string ConvertFromString(string input)
         {
-            return input ?? "\"\"";
+            return input ?? HL7.Null;
         }
 
         /// <summary>
@@ -74,7 +75,7 @@ namespace NextLevelSeven.Conversion
         /// <returns>Converted string.</returns>
         public static string ConvertToString(string input)
         {
-            return input == "\"\""
+            return input == HL7.Null
                 ? null
                 : input;
         }

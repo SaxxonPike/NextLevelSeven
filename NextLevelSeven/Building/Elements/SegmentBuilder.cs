@@ -60,7 +60,9 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         public override int ValueCount
         {
-            get { return (_fields.Count > 0) ? _fields.Max(kv => kv.Key) + 1 : 0; }
+            get { return (_fields.Count > 0)
+                ? (_fields.Max(kv => kv.Key) + 1)
+                : 0; }
         }
 
         /// <summary>
@@ -199,6 +201,11 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
         public ISegmentBuilder SetFields(int startIndex, params string[] fields)
         {
+            if (fields == null)
+            {
+                return this;
+            }
+
             foreach (var field in fields)
             {
                 SetField(startIndex++, field);
@@ -481,6 +488,14 @@ namespace NextLevelSeven.Building.Elements
         protected override IElement GetGenericElement(int index)
         {
             return _fields[index];
+        }
+
+        /// <summary>
+        ///     If true, the element is considered to exist.
+        /// </summary>
+        public override bool Exists
+        {
+            get { return _fields.Any(s => s.Value.Exists); }
         }
     }
 }

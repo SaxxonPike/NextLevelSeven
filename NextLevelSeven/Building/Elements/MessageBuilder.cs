@@ -274,6 +274,12 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This MessageBuilder, for chaining purposes.</returns>
         public IMessageBuilder SetSegments(params string[] segments)
         {
+            _segments.Clear();
+            if (segments == null)
+            {
+                return this;
+            }
+
             SetMessage(string.Join(EncodingConfiguration.SegmentDelimiterString, segments));
             return this;
         }
@@ -498,6 +504,14 @@ namespace NextLevelSeven.Building.Elements
         protected override IElement GetGenericElement(int index)
         {
             return _segments[index];
+        }
+
+        /// <summary>
+        ///     If true, the element is considered to exist.
+        /// </summary>
+        public override bool Exists
+        {
+            get { return _segments.Any(s => s.Value.Exists); }
         }
     }
 }

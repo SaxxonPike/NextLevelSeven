@@ -83,8 +83,8 @@ namespace NextLevelSeven.Test.Parsing
         public void Field_WillHaveValuesInterpretedAsDoubleQuotes()
         {
             var message = Message.Parse();
-            message[1][3].Value = "\"\"";
-            Assert.AreEqual("\"\"", message[1][3].Value, @"Value of two double quotes was not interpreted as null.");
+            message[1][3].Value = HL7.Null;
+            Assert.AreEqual(HL7.Null, message[1][3].Value, @"Value of two double quotes was not interpreted as null.");
             Assert.IsTrue(message[1][3].Exists, @"Explicitly set null value must appear to exist.");
         }
 
@@ -92,7 +92,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Field_WillHaveFormattedValuesInterpretedAsNull()
         {
             var message = Message.Parse();
-            message[1][3].Value = "\"\"";
+            message[1][3].Value = HL7.Null;
             Assert.AreEqual(null, message[1][3].FormattedValue,
                 @"Value of two double quotes was not interpreted as null.");
             Assert.IsTrue(message[1][3].Exists, @"Explicitly set null value must appear to exist.");

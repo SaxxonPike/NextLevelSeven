@@ -7,6 +7,15 @@ namespace NextLevelSeven.Test.Building
     public sealed class FieldBuilderTests : BuildingTestFixture
     {
         [TestMethod]
+        public void FieldBuilder_CanGetRepetition()
+        {
+            var builder = Message.Build(ExampleMessages.Variety);
+            Assert.IsNotNull(builder[1][3][2].Value);
+            Assert.AreEqual(builder[1][3][2].Value, builder.Segment(1).Field(3).Repetition(2).Value,
+                "Repetitions returned differ.");
+        }
+
+        [TestMethod]
         public void FieldBuilder_CanGetValue()
         {
             var val0 = Randomized.String();

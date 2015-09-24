@@ -36,7 +36,10 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         public override string Value
         {
-            get { return _value; }
+            get
+            {
+                return _value;
+            }
             set
             {
                 var oldValue = _value;

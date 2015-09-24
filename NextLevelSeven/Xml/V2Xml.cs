@@ -131,7 +131,7 @@ namespace NextLevelSeven.Xml
                 {
                     return;
                 }
-                if (value == "\"\"")
+                if (value == HL7.Null)
                 {
                     value = string.Empty;
                 }

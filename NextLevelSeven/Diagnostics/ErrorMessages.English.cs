@@ -69,6 +69,8 @@
                         return "Segment builder has invalid segment type. Field 0 must have a three-letter code.";
                     case ErrorCode.SegmentDataIsTooShort:
                         return "Segment data must be at least 4 characters in length.";
+                    case ErrorCode.SegmentDataMustNotBeNull:
+                        return "Segment data must not be null.";
                     case ErrorCode.SegmentIndexMustBeGreaterThanZero:
                         return "Segment index must be greater than zero.";
                     case ErrorCode.SegmentTypeCannotBeMoved:

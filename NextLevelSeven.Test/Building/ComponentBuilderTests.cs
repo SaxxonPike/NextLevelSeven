@@ -7,6 +7,16 @@ namespace NextLevelSeven.Test.Building
     public sealed class ComponentBuilderTests : BuildingTestFixture
     {
         [TestMethod]
+        public void ComponentBuilder_CanGetSubcomponent()
+        {
+            var builder = Message.Build(ExampleMessages.Variety);
+            Assert.IsNotNull(builder[1][3][2][2][2].Value);
+            Assert.AreEqual(builder[1][3][2][2][2].Value,
+                builder.Segment(1).Field(3).Repetition(2).Component(2).Subcomponent(2).Value,
+                "Subcomponents returned differ.");
+        }
+
+        [TestMethod]
         public void ComponentBuilder_CanGetValue()
         {
             var val0 = Randomized.String();

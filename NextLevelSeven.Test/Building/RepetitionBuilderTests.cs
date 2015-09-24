@@ -7,6 +7,24 @@ namespace NextLevelSeven.Test.Building
     public sealed class RepetitionBuilderTests : BuildingTestFixture
     {
         [TestMethod]
+        public void RepetitionBuilder_CanGetComponent_ThroughField()
+        {
+            var builder = Message.Build(ExampleMessages.Variety);
+            Assert.IsNotNull(builder[1][3][1][2].Value);
+            Assert.AreEqual(builder[1][3][1][2].Value, builder.Segment(1).Field(3).Component(2).Value,
+                "Components returned differ.");
+        }
+
+        [TestMethod]
+        public void RepetitionBuilder_CanGetComponent()
+        {
+            var builder = Message.Build(ExampleMessages.Variety);
+            Assert.IsNotNull(builder[1][3][2][2].Value);
+            Assert.AreEqual(builder[1][3][2][2].Value, builder.Segment(1).Field(3).Repetition(2).Component(2).Value,
+                "Components returned differ.");
+        }
+
+        [TestMethod]
         public void RepetitionBuilder_CanGetValue()
         {
             var val0 = Randomized.String();

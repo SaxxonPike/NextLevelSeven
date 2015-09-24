@@ -185,6 +185,11 @@ namespace NextLevelSeven.Building.Elements
         public IFieldBuilder SetFieldRepetitions(params string[] repetitions)
         {
             _repetitions.Clear();
+            if (repetitions == null)
+            {
+                return this;
+            }
+
             var index = 1;
             foreach (var repetition in repetitions)
             {
@@ -201,6 +206,11 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This FieldBuilder, for chaining purposes.</returns>
         public IFieldBuilder SetFieldRepetitions(int startIndex, params string[] repetitions)
         {
+            if (repetitions == null)
+            {
+                return this;
+            }
+
             var index = startIndex;
             foreach (var repetition in repetitions)
             {
@@ -346,6 +356,14 @@ namespace NextLevelSeven.Building.Elements
         protected override sealed IElement GetGenericElement(int index)
         {
             return _repetitions[index];
+        }
+
+        /// <summary>
+        ///     If true, the element is considered to exist.
+        /// </summary>
+        public override bool Exists
+        {
+            get { return _repetitions.Any(s => s.Value.Exists); }
         }
     }
 }

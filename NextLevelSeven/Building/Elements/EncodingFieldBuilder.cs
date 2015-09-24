@@ -128,5 +128,13 @@ namespace NextLevelSeven.Building.Elements
         {
             return Enumerable.Empty<IElement>();
         }
+
+        /// <summary>
+        ///     If true, the element is considered to exist.
+        /// </summary>
+        public override bool Exists
+        {
+            get { return ComponentDelimiter != '\0' || EscapeDelimiter != '\0' || RepetitionDelimiter != '\0' || SubcomponentDelimiter != '\0'; }
+        }
     }
 }

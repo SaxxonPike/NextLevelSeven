@@ -46,7 +46,7 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                return string.Equals("\"\"", _value, StringComparison.Ordinal)
+                return string.Equals(HL7.Null, _value, StringComparison.Ordinal)
                     ? null
                     : _value;
             }
@@ -139,6 +139,14 @@ namespace NextLevelSeven.Building.Elements
         protected override IEnumerable<IElement> GetDescendants()
         {
             return Enumerable.Empty<IElement>();
+        }
+
+        /// <summary>
+        ///     If true, the element is considered to exist.
+        /// </summary>
+        public override bool Exists
+        {
+            get { return _value != null; }
         }
     }
 }

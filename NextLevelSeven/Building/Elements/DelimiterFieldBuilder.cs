@@ -42,7 +42,10 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         public override string Value
         {
-            get { return new string(FieldDelimiter, 1); }
+            get
+            {
+                return new string(FieldDelimiter, 1);
+            }
             set
             {
                 if (string.IsNullOrEmpty(value))
@@ -98,6 +101,14 @@ namespace NextLevelSeven.Building.Elements
         protected override IEnumerable<IElement> GetDescendants()
         {
             return Enumerable.Empty<IElement>();
+        }
+
+        /// <summary>
+        ///     If true, the element is considered to exist.
+        /// </summary>
+        public override bool Exists
+        {
+            get { return FieldDelimiter != '\0'; }
         }
     }
 }

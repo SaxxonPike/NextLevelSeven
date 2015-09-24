@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using NextLevelSeven.Conversion;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Codec;
@@ -181,7 +182,7 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         public virtual int NextIndex
         {
-            get { return ValueCount + 1; }
+            get { return GetDescendants().Where(d => d.Exists).Max(d => d.Index) + 1; }
         }
 
         /// <summary>
@@ -297,5 +298,18 @@ namespace NextLevelSeven.Building.Elements
                 yield return this[i];
             }
         }
+
+        /// <summary>
+        ///     Erase this element's content and mark it non-existant.
+        /// </summary>
+        public void Erase()
+        {
+            Value = null;
+        }
+
+        /// <summary>
+        ///     True, if the element is considered to exist.
+        /// </summary>
+        abstract public bool Exists { get; }
     }
 }

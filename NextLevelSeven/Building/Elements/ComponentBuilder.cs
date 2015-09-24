@@ -139,6 +139,11 @@ namespace NextLevelSeven.Building.Elements
         public IComponentBuilder SetSubcomponents(params string[] subcomponents)
         {
             _subcomponents.Clear();
+            if (subcomponents == null)
+            {
+                return this;
+            }
+
             var index = 1;
             foreach (var subcomponent in subcomponents)
             {
@@ -155,6 +160,11 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This ComponentBuilder, for chaining purposes.</returns>
         public IComponentBuilder SetSubcomponents(int startIndex, params string[] subcomponents)
         {
+            if (subcomponents == null)
+            {
+                return this;
+            }
+
             var index = startIndex;
             foreach (var subcomponent in subcomponents)
             {
@@ -254,6 +264,14 @@ namespace NextLevelSeven.Building.Elements
         protected override IElement GetGenericElement(int index)
         {
             return _subcomponents[index];
+        }
+
+        /// <summary>
+        ///     If true, the element is considered to exist.
+        /// </summary>
+        public override bool Exists
+        {
+            get { return _subcomponents.Any(s => s.Value.Exists); }
         }
     }
 }

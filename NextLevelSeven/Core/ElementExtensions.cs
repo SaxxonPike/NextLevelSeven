@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using NextLevelSeven.Building;
 using NextLevelSeven.Building.Elements;
@@ -33,6 +34,16 @@ namespace NextLevelSeven.Core
         public static void Add(this IElement target, IElement elementToAdd)
         {
             CopyOver(elementToAdd, target[target.NextIndex]);
+        }
+
+        /// <summary>
+        ///     Add elements as descendants.
+        /// </summary>
+        /// <param name="target">Element to add to.</param>
+        /// <param name="elementsToAdd">Elements to be added.</param>
+        public static void AddRange(this IElement target, params string[] elementsToAdd)
+        {
+            AddRange(target, elementsToAdd.AsEnumerable());
         }
 
         /// <summary>
@@ -187,7 +198,7 @@ namespace NextLevelSeven.Core
         /// <param name="elementToInsert">Descendant data to insert.</param>
         public static void InsertAfter(this IElement target, int index, IElement elementToInsert)
         {
-            target[index].InsertAfter(elementToInsert);
+            InsertBefore(target, index + 1, elementToInsert);
         }
 
         /// <summary>
@@ -197,20 +208,7 @@ namespace NextLevelSeven.Core
         /// <param name="elementToInsert">Descendant data to insert.</param>
         public static void InsertAfter(this IElement target, IElement elementToInsert)
         {
-            if (target.Ancestor == null)
-            {
-                throw new ElementException(ErrorCode.AncestorDoesNotExist);
-            }
-
-            var index = target.Index;
-            var ancestor = target.Ancestor;
-            var strings = ancestor.Values.ToList();
-            while (strings.Count < index)
-            {
-                strings.Add(null);
-            }
-            strings.Insert(index, elementToInsert.Value);
-            ancestor.Values = strings.ToArray();
+            target.Ancestor.InsertBefore(target.Index + 1, elementToInsert);
         }
 
         /// <summary>
@@ -221,7 +219,7 @@ namespace NextLevelSeven.Core
         /// <param name="dataToInsert">Descendant string to insert.</param>
         public static void InsertAfter(this IElement target, int index, string dataToInsert)
         {
-            target[index].InsertAfter(dataToInsert);
+            InsertBefore(target, index + 1, dataToInsert);
         }
 
         /// <summary>
@@ -231,20 +229,7 @@ namespace NextLevelSeven.Core
         /// <param name="dataToInsert">Descendant string to insert.</param>
         public static void InsertAfter(this IElement target, string dataToInsert)
         {
-            if (target.Ancestor == null)
-            {
-                throw new ElementException(ErrorCode.AncestorDoesNotExist);
-            }
-
-            var index = target.Index;
-            var ancestor = target.Ancestor;
-            var strings = ancestor.Values.ToList();
-            while (strings.Count < index)
-            {
-                strings.Add(null);
-            }
-            strings.Insert(index, dataToInsert);
-            ancestor.Values = strings.ToArray();
+            target.Ancestor.InsertBefore(target.Index + 1, dataToInsert);
         }
 
         /// <summary>
@@ -255,7 +240,8 @@ namespace NextLevelSeven.Core
         /// <param name="elementToInsert">Descendant data to insert.</param>
         public static void InsertBefore(this IElement target, int index, IElement elementToInsert)
         {
-            target[index].InsertBefore(elementToInsert);
+            InsertEmpty(target, index);
+            CopyOver(elementToInsert, target[index]);
         }
 
         /// <summary>
@@ -265,20 +251,7 @@ namespace NextLevelSeven.Core
         /// <param name="elementToInsert">Descendant data to insert.</param>
         public static void InsertBefore(this IElement target, IElement elementToInsert)
         {
-            if (target.Ancestor == null)
-            {
-                throw new ElementException(ErrorCode.AncestorDoesNotExist);
-            }
-
-            var index = target.Index - 1;
-            var ancestor = target.Ancestor;
-            var strings = ancestor.Values.ToList();
-            while (strings.Count < index)
-            {
-                strings.Add(null);
-            }
-            strings.Insert(index, elementToInsert.Value);
-            ancestor.Values = strings.ToArray();
+            target.Ancestor.InsertBefore(target.Index, elementToInsert);
         }
 
         /// <summary>
@@ -289,7 +262,8 @@ namespace NextLevelSeven.Core
         /// <param name="dataToInsert">Descendant data to insert.</param>
         public static void InsertBefore(this IElement target, int index, string dataToInsert)
         {
-            target[index].InsertBefore(dataToInsert);
+            InsertEmpty(target, index);
+            target[index].Value = dataToInsert;
         }
 
         /// <summary>
@@ -299,20 +273,36 @@ namespace NextLevelSeven.Core
         /// <param name="dataToInsert">Descendant data to insert.</param>
         public static void InsertBefore(this IElement target, string dataToInsert)
         {
-            if (target.Ancestor == null)
-            {
-                throw new ElementException(ErrorCode.AncestorDoesNotExist);
-            }
+            target.Ancestor.InsertBefore(target.Index, dataToInsert);
+        }
 
-            var index = target.Index - 1;
-            var ancestor = target.Ancestor;
-            var strings = ancestor.Values.ToList();
-            while (strings.Count < index)
+        /// <summary>
+        ///     Move elements forward one index, starting at the specified index.
+        /// </summary>
+        /// <param name="target">Element to modify.</param>
+        /// <param name="index">Index to begin at.</param>
+        private static void InsertEmpty(IElement target, int index)
+        {
+            var values = target.Descendants.Where(e => e.Index >= index).ToDictionary(e => e.Index, e => e.Value);
+            foreach (var v in values.OrderByDescending(kv => kv.Key).ToList())
             {
-                strings.Add(null);
-            }
-            strings.Insert(index, dataToInsert);
-            ancestor.Values = strings.ToArray();
+                target[v.Key + 1].Nullify();
+                CopyOver(target[v.Key], target[v.Key + 1]);
+                if (!values.ContainsKey(v.Key - 1))
+                {
+                    target[v.Key].Nullify();
+                }
+            }            
+        }
+
+        /// <summary>
+        ///     Determine if the value is either not present or the HL7 standard null value.
+        /// </summary>
+        /// <param name="target">Element to verify value for.</param>
+        /// <returns>True, if the element's value is null equivalent.</returns>
+        public static bool IsNull(this IElement target)
+        {
+            return HL7.NullValues.Contains(target.Value);
         }
 
         /// <summary>
@@ -368,12 +358,32 @@ namespace NextLevelSeven.Core
         }
 
         /// <summary>
-        ///     Set the value of a field to null.
+        ///     Set the value of a field to existant null.
         /// </summary>
-        /// <param name="target"></param>
+        /// <param name="target">Element to nullify.</param>
         public static void Nullify(this IElement target)
         {
-            target.Value = null;
+            // don't change what's already null.
+            if (target == null || target.Value == null)
+            {
+                return;
+            }
+
+            // messages can't be nullified.
+            if (target is IMessage)
+            {
+                throw new ElementException(ErrorCode.MessageDataMustNotBeNull);
+            }
+
+            // segment nullability doesn't work well, so we just clear out all fields.
+            var segment = target as ISegment;
+            if (segment != null)
+            {
+                segment.Value = string.Concat(segment.Type, segment.Delimiter);
+                return;
+            }
+
+            target.Value = HL7.Null;
         }
 
         /// <summary>

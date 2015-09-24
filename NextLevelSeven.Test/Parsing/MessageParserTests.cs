@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
-using NextLevelSeven.Parsing;
 
 namespace NextLevelSeven.Test.Parsing
 {

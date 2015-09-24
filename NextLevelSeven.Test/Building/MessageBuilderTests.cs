@@ -10,6 +10,104 @@ namespace NextLevelSeven.Test.Building
     public sealed class MessageBuilderTests : BuildingTestFixture
     {
         [TestMethod]
+        public void MessageBuilder_CanGetSegment()
+        {
+            var builder = Message.Build(ExampleMessages.Variety);
+            Assert.IsNotNull(builder[1].Value);
+            Assert.AreEqual(builder[1].Value, builder.Segment(1).Value, "Segments returned differ.");
+        }
+
+        [TestMethod]
+        public void MessageBuilder_CanCreateNewMessageFromSegments()
+        {
+            var message = Message.Parse(ExampleMessages.Standard);
+            var builder = message.Segments.OfType("PID").ToNewBuilder();
+            Assert.AreEqual(3, builder.ValueCount);
+            Assert.AreEqual(message[1].Value, builder[1].Value);
+            Assert.AreEqual(message.Segments.OfType("PID").First().Value, builder[2].Value);
+        }
+
+        [TestMethod]
+        public void MessageBuilder_HasNoAncestor()
+        {
+            var builder = Message.Build();
+            Assert.IsNull(builder.Ancestor);
+        }
+
+        [TestMethod]
+        public void MessageBuilder_HasCodec()
+        {
+            var builder = Message.Build();
+            Assert.IsNotNull(builder.As);
+        }
+
+        [TestMethod]
+        public void MessageBuilder_HasDescendants()
+        {
+            var builder = Message.Build(ExampleMessages.Standard);
+            Assert.AreEqual(13, builder.Descendants.Count());
+        }
+
+        [TestMethod]
+        public void MessageBuilder_HasDetails()
+        {
+            var val0 = Randomized.String();
+            var message = string.Format("MSH|^~\\&\r{0}", val0);
+            var builder = Message.Build(message);
+            Assert.IsNotNull(builder.Details);
+            builder.Details.Sender.Facility = val0;
+            Assert.AreEqual(val0, builder.Segment(1).Field(4).Value);
+        }
+
+        [TestMethod]
+        public void MessageBuilder_CanInsertAfterDescendant()
+        {
+            var val0 = Randomized.StringCaps(3) + "|" + Randomized.String();
+            var val1 = Randomized.StringCaps(3) + "|" + Randomized.String();
+            var message = string.Format("MSH|^~\\&\r{0}", val0);
+            var builder = Message.Build(message);
+            builder.InsertAfter(1, val1);
+            Assert.AreEqual(val1, builder[2].Value);
+            Assert.AreEqual(val0, builder[3].Value);
+        }
+
+        [TestMethod]
+        public void MessageBuilder_CanInsertBeforeDescendant()
+        {
+            var val0 = Randomized.StringCaps(3) + "|" + Randomized.String();
+            var val1 = Randomized.StringCaps(3) + "|" + Randomized.String();
+            var message = string.Format("MSH|^~\\&\r{0}", val0);
+            var builder = Message.Build(message);
+            builder.InsertBefore(2, val1);
+            Assert.AreEqual(val1, builder[2].Value);
+            Assert.AreEqual(val0, builder[3].Value);
+        }
+
+        [TestMethod]
+        public void MessageBuilder_CanAddValue()
+        {
+            var val0 = Randomized.StringCaps(3) + "|" + Randomized.String();
+            var val1 = Randomized.StringCaps(3) + "|" + Randomized.String();
+            var message = string.Format("MSH|^~\\&\r{0}", val0);
+            var builder = Message.Build(message);
+            builder.Add(val1);
+            Assert.AreEqual(val0, builder[2].Value);
+            Assert.AreEqual(val1, builder[3].Value);
+        }
+
+        [TestMethod]
+        public void MessageBuilder_CanAddValues()
+        {
+            var val0 = Randomized.StringCaps(3) + "|" + Randomized.String();
+            var val1 = Randomized.StringCaps(3) + "|" + Randomized.String();
+            const string message = "MSH|^~\\&";
+            var builder = Message.Build(message);
+            builder.AddRange(val0, val1);
+            Assert.AreEqual(val0, builder[2].Value);
+            Assert.AreEqual(val1, builder[3].Value);
+        }
+
+        [TestMethod]
         public void MessageBuilder_CanGetValue()
         {
             var val0 = Randomized.StringCaps(3) + "|" + Randomized.String();

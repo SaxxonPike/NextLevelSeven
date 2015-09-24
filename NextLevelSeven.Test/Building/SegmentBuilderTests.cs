@@ -7,6 +7,14 @@ namespace NextLevelSeven.Test.Building
     public sealed class SegmentBuilderTests : BuildingTestFixture
     {
         [TestMethod]
+        public void SegmentBuilder_CanGetField()
+        {
+            var builder = Message.Build(ExampleMessages.Variety);
+            Assert.IsNotNull(builder[1][3].Value);
+            Assert.AreEqual(builder[1][3].Value, builder.Segment(1).Field(3).Value, "Fields returned differ.");
+        }
+
+        [TestMethod]
         public void SegmentBuilder_CanBeCloned()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1];
