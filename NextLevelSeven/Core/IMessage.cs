@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using NextLevelSeven.Core.Encoding;
 using NextLevelSeven.Core.Properties;
 
 namespace NextLevelSeven.Core

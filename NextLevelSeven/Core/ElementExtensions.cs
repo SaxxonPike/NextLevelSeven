@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using NextLevelSeven.Building;
 using NextLevelSeven.Building.Elements;
-using NextLevelSeven.Core.Encoding;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Parsing;
 using NextLevelSeven.Parsing.Elements;
