@@ -4,6 +4,9 @@ using NextLevelSeven.Core.Encoding;
 
 namespace NextLevelSeven.Conversion
 {
+    /// <summary>
+    ///     Conversion methods for HL7 textual types.
+    /// </summary>
     public static class TextConverter
     {
         /// <summary>

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace NextLevelSeven.Core.Codec
+﻿namespace NextLevelSeven.Core.Codec
 {
     /// <summary>
     ///     Get or set elements via an HL7 data value codec.

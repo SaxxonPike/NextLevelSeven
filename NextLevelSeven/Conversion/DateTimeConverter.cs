@@ -3,6 +3,9 @@ using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Conversion
 {
+    /// <summary>
+    ///     Conversion methods for HL7 date/time values.
+    /// </summary>
     public static class DateTimeConverter
     {
         /// <summary>

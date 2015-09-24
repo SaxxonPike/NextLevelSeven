@@ -271,6 +271,11 @@ namespace NextLevelSeven.Building.Elements
             }
         }
 
+        /// <summary>
+        ///     Create a component builder for the specified index.
+        /// </summary>
+        /// <param name="index">Index to reference.</param>
+        /// <returns>New component builder.</returns>
         private ComponentBuilder CreateComponentBuilder(int index)
         {
             return new ComponentBuilder(this, index);

@@ -99,17 +99,11 @@ namespace NextLevelSeven.Core
         ///     Delete a descendant element.
         /// </summary>
         /// <param name="target">Element to delete from.</param>
-        /// <param name="index">Index of descendant to delete.</param>
-        public static void Delete(this IElement target, int index)
+        /// <param name="indices">Indices of descendants to delete.</param>
+        public static void Delete(this IElement target, params int[] indices)
         {
-            if (index < 1 || index > target.ValueCount)
-            {
-                return;
-            }
-            var values = new List<string>();
-            var indexMap = (target is ISegment) ? index : index - 1;
-            values.AddRange(target.Descendants.Where((d, i) => i != indexMap).Select(d => d.Value));
-            target.Values = values;
+            // convert to list first so we don't squash our input values.
+            target.Values = target.Descendants.Where((d, i) => !indices.Contains(d.Index)).Select(d => d.Value).ToList();
         }
 
         /// <summary>
@@ -118,24 +112,21 @@ namespace NextLevelSeven.Core
         /// <param name="targets">Elements to delete.</param>
         public static void Delete(this IEnumerable<IElement> targets)
         {
+            // cache targets
             var elements = targets.ToList();
             if (elements.Count <= 0)
             {
                 return;
             }
 
-            var ancestor = elements.First().Ancestor;
-            if (elements.Any(e => e == null || !ReferenceEquals(e.Ancestor, ancestor)))
+            // determine if we have a single common direct ancestor
+            if (elements.Select(t => t.Ancestor).Distinct().Count() > 1)
             {
                 throw new ElementException(ErrorCode.ElementsMustShareDirectAncestors);
             }
-
-            // delete them in reverse order so that the parent isn't removed out
-            // from under the values we're deleting.
-            foreach (var element in elements.Select(e => e.Index).Distinct().OrderByDescending(i => i).ToList())
-            {
-                ancestor.Delete(element);
-            }
+            
+            // perform deletion
+            elements.First().Ancestor.Delete(elements.Select(e => e.Index).ToArray());
         }
 
         /// <summary>
@@ -179,13 +170,10 @@ namespace NextLevelSeven.Core
                 return false;
             }
 
-            if (element is IField && element.Ancestor != null)
+            // check for field delimiter and encoding character fields
+            if (ElementOperations.HasEncodingCharacters(element))
             {
-                var segment = ((IField) element).Ancestor as ISegment;
-                if (segment != null && segment.Type == "MSH" && element.Index >= 1 && element.Index <= 2)
-                {
-                    return false;
-                }
+                return false;
             }
 
             return (element.ValueCount > 1) || element.Descendants.Any(HasSignificantDescendants);

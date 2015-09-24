@@ -2,6 +2,9 @@
 
 namespace NextLevelSeven.Conversion
 {
+    /// <summary>
+    ///     Conversion methods for Integer and Decimal types.
+    /// </summary>
     public static class NumberConverter
     {
         /// <summary>

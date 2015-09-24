@@ -40,6 +40,9 @@ namespace NextLevelSeven.Parsing.Elements
             }
         }
 
+        /// <summary>
+        ///     Get or set this field's encoding characters.
+        /// </summary>
         public override IEnumerable<string> Values
         {
             get

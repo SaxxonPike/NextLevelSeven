@@ -21,36 +21,27 @@ namespace NextLevelSeven.Core
             string segmentType,
             bool includeExtras = false)
         {
-            var result = new List<IEnumerable<ISegment>>();
             var currentSegments = new List<ISegment>();
             var skipSegmentGroup = !includeExtras;
-            var index = 1;
 
-            foreach (var segment in message.Value.Split(message.Delimiter))
+            foreach (var segment in message.Segments)
             {
-                if (segment.Length > 3)
+                if (segment.Type == segmentType)
                 {
-                    var thisSegmentType = segment.Substring(0, 3);
-                    if (thisSegmentType == segmentType)
+                    if (currentSegments.Count > 0 && !skipSegmentGroup)
                     {
-                        if (currentSegments.Count > 0 && !skipSegmentGroup)
-                        {
-                            result.Add(currentSegments);
-                        }
-                        currentSegments = new List<ISegment>();
-                        skipSegmentGroup = false;
+                        yield return currentSegments;
                     }
-                    currentSegments.Add((ISegment) message[index]);
+                    currentSegments = new List<ISegment>();
+                    skipSegmentGroup = false;
                 }
-                index++;
+                currentSegments.Add(segment);
             }
 
             if (currentSegments.Count > 0)
             {
-                result.Add(currentSegments);
+                yield return currentSegments;
             }
-
-            return result;
         }
 
         /// <summary>

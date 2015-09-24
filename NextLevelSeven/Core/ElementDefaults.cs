@@ -4,10 +4,12 @@ using System.Diagnostics;
 namespace NextLevelSeven.Core
 {
     /// <summary>
-    ///     Manages default settings. TODO: convert this into local settings.
+    ///     Manages default settings.
     /// </summary>
     internal static class ElementDefaults
     {
+        // TODO: convert this into local settings.
+
         /// <summary>
         ///     Default "HD" Application when sending messages.
         /// </summary>

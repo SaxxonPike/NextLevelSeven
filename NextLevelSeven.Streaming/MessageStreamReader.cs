@@ -36,11 +36,9 @@ namespace NextLevelSeven.Streaming
         public virtual IEnumerable<IMessageParser> ReadAll()
         {
             var message = Read();
-            if (message != null)
-            {
-                return new[] {message};
-            }
-            return new IMessageParser[] {};
+            return message != null
+                ? new[] {message}
+                : new IMessageParser[] {};
         }
 
         /// <summary>
