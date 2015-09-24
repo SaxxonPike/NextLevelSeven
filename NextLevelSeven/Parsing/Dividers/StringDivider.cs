@@ -12,8 +12,14 @@ namespace NextLevelSeven.Parsing.Dividers
         /// </summary>
         private IReadOnlyList<StringDivision> _divisions;
 
+        /// <summary>
+        ///     Internally keep track if the base value is null.
+        /// </summary>
         private bool _isNull;
 
+        /// <summary>
+        ///     Internal character store.
+        /// </summary>
         private char[] _valueChars;
 
         /// <summary>
@@ -96,11 +102,19 @@ namespace NextLevelSeven.Parsing.Dividers
             set { Initialize(value); }
         }
 
+        /// <summary>
+        ///     Returns true if the divider base value is null.
+        /// </summary>
         public override bool IsNull
         {
             get { return _isNull; }
         }
 
+        /// <summary>
+        ///     Set the string value at the specified index.
+        /// </summary>
+        /// <param name="index">Index to change.</param>
+        /// <param name="value">New value.</param>
         private void SetValue(int index, string value)
         {
             if (index < 0)
@@ -148,6 +162,9 @@ namespace NextLevelSeven.Parsing.Dividers
             return Value;
         }
 
+        /// <summary>
+        ///     Get the internal values.
+        /// </summary>
         public override IEnumerable<string> Values
         {
             get

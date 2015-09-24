@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using NextLevelSeven.Parsing.Dividers;
 using NextLevelSeven.Utility;
 
@@ -51,16 +52,19 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>
-        ///     Get the descendant divider for this field.
+        ///     Returns an empty collection.
         /// </summary>
-        /// <param name="ancestor">Ancestor element.</param>
-        /// <param name="index">Index of the raw value.</param>
-        /// <returns>Descendant divider within the specified index.</returns>
-        protected override sealed IStringDivider GetDescendantDivider(ParserBase ancestor, int index)
+        public override IEnumerable<IElementParser> Descendants
         {
-            return index <= 1
-                ? new ProxyStringDivider(() => Value, v => Value = v)
-                : new ProxyStringDivider(() => null, v => { });
+            get { return Enumerable.Empty<IElementParser>(); }
+        }
+
+        /// <summary>
+        ///     Returns 1, since fields with static values cannot be divided further.
+        /// </summary>
+        public override int ValueCount
+        {
+            get { return 1; }
         }
 
         /// <summary>
@@ -81,6 +85,9 @@ namespace NextLevelSeven.Parsing.Elements
             return new FieldParser(EncodingConfiguration) {Index = Index, Value = Value};
         }
 
+        /// <summary>
+        ///     Get the value of this field wrapped in an enumerable.
+        /// </summary>
         public override IEnumerable<string> Values
         {
             get { yield return Value; }

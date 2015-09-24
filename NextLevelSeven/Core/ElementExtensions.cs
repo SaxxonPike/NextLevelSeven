@@ -341,18 +341,10 @@ namespace NextLevelSeven.Core
                 }
             }
 
-            var values = new List<string>(ancestor.Values);
-            var index = targetIndex - 1;
-            var replacedValue = (target.Index > values.Count) ? target.Value : values[target.Index - 1];
-
-            while (values.Count < targetIndex)
-            {
-                values.Add(null);
-            }
-
-            values.RemoveAt(target.Index - 1);
-            values.Insert(index, replacedValue);
-            ancestor.Values = values.ToArray();
+            var elementToMove = target.Clone();
+            ancestor.Delete(target.Index);
+            InsertEmpty(ancestor, targetIndex);
+            CopyOver(elementToMove, ancestor[targetIndex]);
             return ancestor[targetIndex];
         }
 

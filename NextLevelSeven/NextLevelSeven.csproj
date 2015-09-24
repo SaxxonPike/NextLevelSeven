@@ -80,6 +80,7 @@
     <Compile Include="Core\Properties\ProxyIdentity.cs" />
     <Compile Include="Core\Properties\IMessageDetails.cs" />
     <Compile Include="Core\Properties\MessageDetails.cs" />
+    <Compile Include="Parsing\Elements\NullParserEncodingConfiguration.cs" />
     <Compile Include="Parsing\Elements\ParserBaseDescendant.cs" />
     <Compile Include="Parsing\ParserException.cs" />
     <Compile Include="Utility\EnumerableExtensions.cs" />
@@ -103,8 +104,7 @@
     <Compile Include="Core\IMessage.cs" />
     <Compile Include="Core\Properties\IIdentity.cs" />
     <Compile Include="Parsing\ISegmentParser.cs" />
-    <Compile Include="Parsing\Elements\MessageParserEncodingConfiguration.cs" />
-    <Compile Include="Core\Encoding\ProxyEncodingConfiguration.cs" />
+    <Compile Include="Parsing\Elements\ParserEncodingConfiguration.cs" />
     <Compile Include="Parsing\Elements\ComponentParser.cs" />
     <Compile Include="Parsing\Dividers\StringDividerBase.cs" />
     <Compile Include="Parsing\Dividers\StringDividerOperations.cs" />
@@ -125,7 +125,6 @@
     <Compile Include="Parsing\Dividers\StringDivision.cs" />
     <Compile Include="Parsing\Dividers\StringSubDivider.cs" />
     <Compile Include="Parsing\Elements\SubcomponentParser.cs" />
-    <Compile Include="Parsing\Dividers\ProxyStringDivider.cs" />
     <Compile Include="Diagnostics\ErrorMessages.cs" />
     <Compile Include="Diagnostics\ErrorMessages.Deutsch.cs" />
     <Compile Include="Diagnostics\ErrorMessages.English.cs" />

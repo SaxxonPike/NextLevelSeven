@@ -250,11 +250,17 @@ namespace NextLevelSeven.Parsing.Elements
             set { Value = TextConverter.ConvertFromString(value); }
         }
 
+        /// <summary>
+        ///     Get the generic type ancestor element.
+        /// </summary>
         IElement IElement.Ancestor
         {
             get { return Ancestor; }
         }
 
+        /// <summary>
+        ///     Get the generic type descendant collection.
+        /// </summary>
         IEnumerable<IElement> IElement.Descendants
         {
             get { return Descendants; }
@@ -291,11 +297,11 @@ namespace NextLevelSeven.Parsing.Elements
                 {
                     return Ancestor.EncodingConfiguration;
                 }
-                if (!(this is MessageParser))
+                if (!(this is IMessage))
                 {
-                    return new EncodingConfiguration();
+                    return Core.Encoding.EncodingConfiguration.Default;
                 }
-                _encodingConfiguration = new MessageParserEncodingConfiguration(this);
+                _encodingConfiguration = new ParserEncodingConfiguration((ISegment)this[1]);
                 return _encodingConfiguration;
             }
         }
@@ -401,6 +407,9 @@ namespace NextLevelSeven.Parsing.Elements
             Value = null;
         }
 
+        /// <summary>
+        ///     Get the encoding configuration being used for this parser.
+        /// </summary>
         public IReadOnlyEncoding Encoding
         {
             get { return EncodingConfiguration; }

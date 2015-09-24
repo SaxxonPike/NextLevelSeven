@@ -528,19 +528,14 @@ namespace NextLevelSeven.Test.Building
         }
 
         [TestMethod]
-        public void MessageBuilder_CanSetMsh2ToDefaultWithNull()
-        {
-            var builder = Message.Build(ExampleMessages.Minimum + "|");
-            builder.SetField(1, 2, null);
-            Assert.AreEqual("MSH|^~\\&|", builder.Value);
-        }
-
-        [TestMethod]
         public void MessageBuilder_CanSetMsh2Partially()
         {
             var builder = Message.Build(ExampleMessages.Minimum + "|");
             builder.SetField(1, 2, "$");
-            Assert.AreEqual("MSH|$~\\&|", builder.Value);
+            Assert.AreEqual("MSH|$|", builder.Value);
+            Assert.AreEqual(builder.Encoding.EscapeCharacter, '\0');
+            Assert.AreEqual(builder.Encoding.RepetitionDelimiter, '\0');
+            Assert.AreEqual(builder.Encoding.SubcomponentDelimiter, '\0');
         }
 
         [TestMethod]

@@ -18,6 +18,49 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [TestMethod]
+        public void Message_CanSetMsh2Component()
+        {
+            var message = Message.Parse(ExampleMessages.Minimum);
+            message[1][2].Value = "$~\\&";
+            Assert.AreEqual('$', message.Encoding.ComponentDelimiter);
+        }
+
+        [TestMethod]
+        public void Message_CanSetMsh2Escape()
+        {
+            var message = Message.Parse(ExampleMessages.Minimum);
+            message[1][2].Value = "^~$&";
+            Assert.AreEqual('$', message.Encoding.EscapeCharacter);
+        }
+
+        [TestMethod]
+        public void Message_CanSetMsh2Repetition()
+        {
+            var message = Message.Parse(ExampleMessages.Minimum);
+            message[1][2].Value = "^$\\&";
+            Assert.AreEqual('$', message.Encoding.RepetitionDelimiter);
+        }
+
+        [TestMethod]
+        public void Message_CanSetMsh2Subcomponent()
+        {
+            var message = Message.Parse(ExampleMessages.Minimum);
+            message[1][2].Value = "^~\\$";
+            Assert.AreEqual('$', message.Encoding.SubcomponentDelimiter);
+        }
+
+        [TestMethod]
+        public void Message_CanSetMsh2Partially()
+        {
+            var parser = Message.Parse(ExampleMessages.Minimum + "|");
+            parser[1][2].Value = "$";
+            Assert.AreEqual("MSH|$|", parser.Value);
+            Assert.AreEqual(parser.Encoding.EscapeCharacter, '\0');
+            Assert.AreEqual(parser.Encoding.RepetitionDelimiter, '\0');
+            Assert.AreEqual(parser.Encoding.SubcomponentDelimiter, '\0');
+        }
+
+        [TestMethod]
         public void Message_ConvertsMshCorrectly()
         {
             var message = Message.Parse(ExampleMessages.MshOnly);

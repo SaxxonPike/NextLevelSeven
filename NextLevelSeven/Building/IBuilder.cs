@@ -4,7 +4,7 @@ using NextLevelSeven.Core.Encoding;
 namespace NextLevelSeven.Building
 {
     /// <summary>
-    ///     Base interface for element builders.
+    ///     Base interface for element builders, which expose writeable encoding configuration.
     /// </summary>
     public interface IBuilder : IElement
     {

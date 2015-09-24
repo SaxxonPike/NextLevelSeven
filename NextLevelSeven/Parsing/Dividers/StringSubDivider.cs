@@ -135,6 +135,11 @@ namespace NextLevelSeven.Parsing.Dividers
             set { BaseDivider[Index] = new string(value); }
         }
 
+        /// <summary>
+        ///     Set the value at the specified subdivision index.
+        /// </summary>
+        /// <param name="index">Index to set.</param>
+        /// <param name="value">New value.</param>
         private void SetValue(int index, string value)
         {
             if (index < 0)
@@ -188,6 +193,9 @@ namespace NextLevelSeven.Parsing.Dividers
             }
         }
 
+        /// <summary>
+        ///     Get or set the subdivided values.
+        /// </summary>
         public override IEnumerable<string> Values
         {
             get

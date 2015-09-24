@@ -78,10 +78,10 @@ namespace NextLevelSeven.Building.Elements
                     return;
                 }
 
-                ComponentDelimiter = _value.Length >= 1 ? _value[0] : '^';
-                RepetitionDelimiter = _value.Length >= 2 ? _value[1] : '~';
-                EscapeCharacter = _value.Length >= 3 ? _value[2] : '\\';
-                SubcomponentDelimiter = _value.Length >= 4 ? _value[3] : '&';
+                ComponentDelimiter = _value.Length >= 1 ? _value[0] : '\0';
+                RepetitionDelimiter = _value.Length >= 2 ? _value[1] : '\0';
+                EscapeCharacter = _value.Length >= 3 ? _value[2] : '\0';
+                SubcomponentDelimiter = _value.Length >= 4 ? _value[3] : '\0';
             }
         }
 

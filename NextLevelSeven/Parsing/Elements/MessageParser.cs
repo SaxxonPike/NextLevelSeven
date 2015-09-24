@@ -14,6 +14,9 @@ namespace NextLevelSeven.Parsing.Elements
     /// </summary>
     internal sealed class MessageParser : ParserBase, IMessageParser
     {
+        /// <summary>
+        ///     Segment cache.
+        /// </summary>
         private readonly IndexedCache<int, SegmentParser> _segments;
 
         /// <summary>
