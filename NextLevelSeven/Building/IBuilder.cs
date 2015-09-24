@@ -1,4 +1,5 @@
 ﻿using NextLevelSeven.Core;
+using NextLevelSeven.Core.Encoding;
 
 namespace NextLevelSeven.Building
 {
@@ -8,28 +9,8 @@ namespace NextLevelSeven.Building
     public interface IBuilder : IElement
     {
         /// <summary>
-        ///     Get or set the character used to separate component-level content.
+        ///     Get the encoding used by this builder.
         /// </summary>
-        char ComponentDelimiter { get; set; }
-
-        /// <summary>
-        ///     Get or set the character used to signify escape sequences.
-        /// </summary>
-        char EscapeDelimiter { get; set; }
-
-        /// <summary>
-        ///     Get or set the character used to separate fields.
-        /// </summary>
-        char FieldDelimiter { get; set; }
-
-        /// <summary>
-        ///     Get or set the character used to separate field repetition content.
-        /// </summary>
-        char RepetitionDelimiter { get; set; }
-
-        /// <summary>
-        ///     Get or set the character used to separate subcomponent-level content.
-        /// </summary>
-        char SubcomponentDelimiter { get; set; }
+        new IEncoding Encoding { get; }
     }
 }

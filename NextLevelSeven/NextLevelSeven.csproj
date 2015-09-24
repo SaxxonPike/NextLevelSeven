@@ -46,6 +46,7 @@
     <Compile Include="Building\Elements\BuilderBase.cs" />
     <Compile Include="Building\Elements\BuilderBaseDescendant.cs" />
     <Compile Include="Building\BuilderException.cs" />
+    <Compile Include="Building\Elements\BuilderEncodingConfiguration.cs" />
     <Compile Include="Building\Elements\ComponentBuilder.cs" />
     <Compile Include="Building\Elements\DelimiterFieldBuilder.cs" />
     <Compile Include="Building\Elements\EncodingFieldBuilder.cs" />
@@ -70,8 +71,11 @@
     <Compile Include="Core\ElementExtensions.cs" />
     <Compile Include="Core\ElementOperations.cs" />
     <Compile Include="Core\Encoding\EncodingConfiguration.cs" />
+    <Compile Include="Core\EncodingExtensions.cs" />
+    <Compile Include="Core\Encoding\EncodingOperations.cs" />
     <Compile Include="Core\HL7.cs" />
-    <Compile Include="Core\IEncodedElement.cs" />
+    <Compile Include="Core\Encoding\IReadOnlyEncoding.cs" />
+    <Compile Include="Core\Encoding\IEncoding.cs" />
     <Compile Include="Core\MessageExtensions.cs" />
     <Compile Include="Core\Properties\ProxyIdentity.cs" />
     <Compile Include="Core\Properties\IMessageDetails.cs" />
@@ -95,14 +99,12 @@
     <Compile Include="Parsing\IFieldParser.cs" />
     <Compile Include="Parsing\IRepetitionParser.cs" />
     <Compile Include="Parsing\ISubcomponentParser.cs" />
-    <Compile Include="Core\Encoding\EncodingConfigurationExtensions.cs" />
     <Compile Include="Core\ElementDefaults.cs" />
     <Compile Include="Core\IMessage.cs" />
     <Compile Include="Core\Properties\IIdentity.cs" />
     <Compile Include="Parsing\ISegmentParser.cs" />
     <Compile Include="Parsing\Elements\MessageParserEncodingConfiguration.cs" />
     <Compile Include="Core\Encoding\ProxyEncodingConfiguration.cs" />
-    <Compile Include="Building\Elements\BuilderEncodingConfiguration.cs" />
     <Compile Include="Parsing\Elements\ComponentParser.cs" />
     <Compile Include="Parsing\Dividers\StringDividerBase.cs" />
     <Compile Include="Parsing\Dividers\StringDividerOperations.cs" />

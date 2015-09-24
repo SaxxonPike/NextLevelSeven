@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace NextLevelSeven.Core.Encoding
 {
     /// <summary>
-    ///     Extensions for encoding configurations.
+    ///     Contains operations for escaping and unescaping HL7 strings.
     /// </summary>
-    internal static class EncodingConfigurationExtensions
+    static internal class EncodingOperations
     {
         /// <summary>
         ///     Add HL7 escape codes where necessary, according to this encoding configuration.
@@ -14,7 +17,7 @@ namespace NextLevelSeven.Core.Encoding
         /// <param name="config">Encoding configuration.</param>
         /// <param name="s">String to escape.</param>
         /// <returns>Escaped string.</returns>
-        public static string Escape(this EncodingConfigurationBase config, string s)
+        public static string Escape(IReadOnlyEncoding config, string s)
         {
             if (s == null)
             {
@@ -22,7 +25,7 @@ namespace NextLevelSeven.Core.Encoding
             }
 
             var componentDelimiter = config.ComponentDelimiter;
-            var escapeDelimiter = config.EscapeDelimiter;
+            var escapeDelimiter = config.EscapeCharacter;
             var fieldDelimiter = config.FieldDelimiter;
             var repetitionDelimiter = config.RepetitionDelimiter;
             var subcomponentDelimiter = config.SubcomponentDelimiter;
@@ -37,7 +40,7 @@ namespace NextLevelSeven.Core.Encoding
 
                 if (c == componentDelimiter)
                 {
-                    output.Append(new[] {escapeDelimiter, 'S', escapeDelimiter});
+                    output.Append(new[] { escapeDelimiter, 'S', escapeDelimiter });
                     continue;
                 }
 
@@ -51,7 +54,7 @@ namespace NextLevelSeven.Core.Encoding
                             {
                                 case 'N': // normal text
                                 case 'H': // highlight text
-                                    output.Append(new[] {escapeDelimiter, data[index + 1], escapeDelimiter});
+                                    output.Append(new[] { escapeDelimiter, data[index + 1], escapeDelimiter });
                                     index += 2;
                                     continue;
                             }
@@ -113,25 +116,25 @@ namespace NextLevelSeven.Core.Encoding
                         }
                     }
 
-                    output.Append(new[] {escapeDelimiter, 'E', escapeDelimiter});
+                    output.Append(new[] { escapeDelimiter, 'E', escapeDelimiter });
                     continue;
                 }
 
                 if (c == fieldDelimiter)
                 {
-                    output.Append(new[] {escapeDelimiter, 'F', escapeDelimiter});
+                    output.Append(new[] { escapeDelimiter, 'F', escapeDelimiter });
                     continue;
                 }
 
                 if (c == repetitionDelimiter)
                 {
-                    output.Append(new[] {escapeDelimiter, 'R', escapeDelimiter});
+                    output.Append(new[] { escapeDelimiter, 'R', escapeDelimiter });
                     continue;
                 }
 
                 if (c == subcomponentDelimiter)
                 {
-                    output.Append(new[] {escapeDelimiter, 'T', escapeDelimiter});
+                    output.Append(new[] { escapeDelimiter, 'T', escapeDelimiter });
                     continue;
                 }
 
@@ -147,7 +150,7 @@ namespace NextLevelSeven.Core.Encoding
         /// <param name="config">Encoding configuration.</param>
         /// <param name="s">String to unescape.</param>
         /// <returns>Unescaped string.</returns>
-        public static string UnEscape(this EncodingConfigurationBase config, string s)
+        public static string UnEscape(IReadOnlyEncoding config, string s)
         {
             throw new NotImplementedException();
         }

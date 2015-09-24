@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NextLevelSeven.Core.Encoding;
 using NextLevelSeven.Core.Properties;
 
 namespace NextLevelSeven.Core
@@ -46,19 +47,5 @@ namespace NextLevelSeven.Core
         /// <returns>The occurrences of the specified element.</returns>
         IEnumerable<string> GetValues(int segment = -1, int field = -1, int repetition = -1, int component = -1,
             int subcomponent = -1);
-
-        /// <summary>
-        ///     Get an escaped version of the string, using encoding characters from this message.
-        /// </summary>
-        /// <param name="data">Data to escape.</param>
-        /// <returns>Escaped data.</returns>
-        string Escape(string data);
-
-        /// <summary>
-        ///     Get a string that has been unescaped from HL7.
-        /// </summary>
-        /// <param name="data">Data to unescape.</param>
-        /// <returns>Unescaped string.</returns>
-        string UnEscape(string data);
     }
 }

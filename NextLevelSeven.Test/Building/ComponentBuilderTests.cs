@@ -93,9 +93,9 @@ namespace NextLevelSeven.Test.Building
         {
             var messageBuilder = Message.Build();
             var builder = messageBuilder[1][3][1][1];
-            Assert.AreEqual(builder.FieldDelimiter, '|');
-            messageBuilder.FieldDelimiter = ':';
-            Assert.AreEqual(builder.FieldDelimiter, ':');
+            Assert.AreEqual(builder.Encoding.FieldDelimiter, '|');
+            messageBuilder.Encoding.FieldDelimiter = ':';
+            Assert.AreEqual(builder.Encoding.FieldDelimiter, ':');
         }
     }
 }

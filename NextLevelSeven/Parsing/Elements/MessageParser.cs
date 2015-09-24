@@ -87,7 +87,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Escaped data.</returns>
         public string Escape(string data)
         {
-            return EncodingConfiguration.Escape(data);
+            return EncodingOperations.Escape(Encoding, data);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Unescaped string.</returns>
         public string UnEscape(string data)
         {
-            return EncodingConfiguration.UnEscape(data);
+            return EncodingOperations.UnEscape(Encoding, data);
         }
 
         /// <summary>

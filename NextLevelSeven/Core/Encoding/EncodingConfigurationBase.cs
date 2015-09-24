@@ -3,7 +3,7 @@
     /// <summary>
     ///     Provides information about the characters used to encode an HL7 message.
     /// </summary>
-    internal abstract class EncodingConfigurationBase
+    internal abstract class EncodingConfigurationBase : IReadOnlyEncoding
     {
         /// <summary>
         ///     Get the delimiter character used to split components.
@@ -21,14 +21,14 @@
         /// <summary>
         ///     Get the escape character used to mark encoded sequences.
         /// </summary>
-        public abstract char EscapeDelimiter { get; protected set; }
+        public abstract char EscapeCharacter { get; protected set; }
 
         /// <summary>
         ///     Get the escape character used to mark encoded sequences.
         /// </summary>
         public string EscapeDelimiterString
         {
-            get { return new string(EscapeDelimiter, 1); }
+            get { return new string(EscapeCharacter, 1); }
         }
 
         /// <summary>
@@ -100,7 +100,7 @@
             RepetitionDelimiter = repetition;
             ComponentDelimiter = component;
             SubcomponentDelimiter = subcomponent;
-            EscapeDelimiter = escape;
+            EscapeCharacter = escape;
         }
 
         /// <summary>
@@ -110,7 +110,7 @@
         protected void CopyFrom(EncodingConfigurationBase other)
         {
             ComponentDelimiter = other.ComponentDelimiter;
-            EscapeDelimiter = other.EscapeDelimiter;
+            EscapeCharacter = other.EscapeCharacter;
             FieldDelimiter = other.FieldDelimiter;
             RepetitionDelimiter = other.RepetitionDelimiter;
             SubcomponentDelimiter = other.SubcomponentDelimiter;

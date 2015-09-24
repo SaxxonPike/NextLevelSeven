@@ -12,7 +12,7 @@ namespace NextLevelSeven.Parsing.Elements
     ///     Represents a generic HL7 message element, which may contain other elements.
     /// </summary>
     internal abstract class ParserBase : IElementParser, IComparable, IComparable<IElement>, IComparable<string>,
-        IEquatable<IElement>, IEquatable<string>, IEncodedElement
+        IEquatable<IElement>, IEquatable<string>
     {
         /// <summary>
         ///     Base encoding configuration.
@@ -399,6 +399,11 @@ namespace NextLevelSeven.Parsing.Elements
         public void Erase()
         {
             Value = null;
+        }
+
+        public IReadOnlyEncoding Encoding
+        {
+            get { return EncodingConfiguration; }
         }
     }
 }

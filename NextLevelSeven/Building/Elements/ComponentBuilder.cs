@@ -81,7 +81,7 @@ namespace NextLevelSeven.Building.Elements
                 {
                     while (index < subcomponent.Key)
                     {
-                        result.Append(EncodingConfiguration.SubcomponentDelimiter);
+                        result.Append(Encoding.SubcomponentDelimiter);
                         index++;
                     }
 
@@ -111,7 +111,7 @@ namespace NextLevelSeven.Building.Elements
                 return this;
             }
 
-            foreach (var subcomponent in value.Split(EncodingConfiguration.SubcomponentDelimiter))
+            foreach (var subcomponent in value.Split(Encoding.SubcomponentDelimiter))
             {
                 SetSubcomponent(index++, subcomponent);
             }

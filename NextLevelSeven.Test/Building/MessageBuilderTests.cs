@@ -383,35 +383,35 @@ namespace NextLevelSeven.Test.Building
         public void MessageBuilder_HasProperDefaultFieldDelimiter()
         {
             var builder = Message.Build();
-            Assert.AreEqual('|', builder.FieldDelimiter);
+            Assert.AreEqual('|', builder.Encoding.FieldDelimiter);
         }
 
         [TestMethod]
         public void MessageBuilder_HasProperDefaultComponentDelimiter()
         {
             var builder = Message.Build();
-            Assert.AreEqual('^', builder.ComponentDelimiter);
+            Assert.AreEqual('^', builder.Encoding.ComponentDelimiter);
         }
 
         [TestMethod]
         public void MessageBuilder_HasProperDefaultSubcomponentDelimiter()
         {
             var builder = Message.Build();
-            Assert.AreEqual('&', builder.SubcomponentDelimiter);
+            Assert.AreEqual('&', builder.Encoding.SubcomponentDelimiter);
         }
 
         [TestMethod]
         public void MessageBuilder_HasProperDefaultEscapeDelimiter()
         {
             var builder = Message.Build();
-            Assert.AreEqual('\\', builder.EscapeDelimiter);
+            Assert.AreEqual('\\', builder.Encoding.EscapeCharacter);
         }
 
         [TestMethod]
         public void MessageBuilder_HasProperDefaultRepetitionDelimiter()
         {
             var builder = Message.Build();
-            Assert.AreEqual('~', builder.RepetitionDelimiter);
+            Assert.AreEqual('~', builder.Encoding.RepetitionDelimiter);
         }
 
         [TestMethod]
@@ -449,14 +449,6 @@ namespace NextLevelSeven.Test.Building
             var builder = Message.Build(ExampleMessages.Minimum + "|");
             builder.SetField(1, 1, ":");
             Assert.AreEqual("MSH:^~\\&:", builder.Value);
-        }
-
-        [TestMethod]
-        public void MessageBuilder_CanSetMsh1ToDefaultWithNull()
-        {
-            var builder = Message.Build(ExampleMessages.Minimum + "|");
-            builder.SetField(1, 1, null);
-            Assert.AreEqual("MSH|^~\\&|", builder.Value);
         }
 
         [TestMethod]
@@ -557,7 +549,7 @@ namespace NextLevelSeven.Test.Building
             var id = Randomized.String();
             const char delimiter = ':';
             var builder = Message.Build(string.Format("MSH{0}^~\\&{0}{1}", delimiter, id));
-            Assert.AreEqual(delimiter, builder.FieldDelimiter);
+            Assert.AreEqual(delimiter, builder.Encoding.FieldDelimiter);
             Assert.AreEqual(id, builder[1][3].Value);
         }
 
@@ -567,8 +559,8 @@ namespace NextLevelSeven.Test.Building
             var id = Randomized.String();
             const char delimiter = ':';
             var builder = Message.Build(string.Format("MSH|^~\\&|{0}", id));
-            builder.FieldDelimiter = delimiter;
-            Assert.AreEqual(delimiter, builder.FieldDelimiter);
+            builder.Encoding.FieldDelimiter = delimiter;
+            Assert.AreEqual(delimiter, builder.Encoding.FieldDelimiter);
             Assert.AreEqual(id, builder[1][3].Value);
         }
 
@@ -578,7 +570,7 @@ namespace NextLevelSeven.Test.Building
             var id = Randomized.String();
             const char delimiter = ':';
             var builder = Message.Build(string.Format("MSH|^~{0}&|{1}", delimiter, id));
-            Assert.AreEqual(delimiter, builder.EscapeDelimiter);
+            Assert.AreEqual(delimiter, builder.Encoding.EscapeCharacter);
             Assert.AreEqual(id, builder[1][3].Value);
         }
 
@@ -588,8 +580,8 @@ namespace NextLevelSeven.Test.Building
             var id = Randomized.String();
             const char delimiter = ':';
             var builder = Message.Build(string.Format("MSH|^~\\&|{0}", id));
-            builder.FieldDelimiter = delimiter;
-            Assert.AreEqual(delimiter, builder.FieldDelimiter);
+            builder.Encoding.FieldDelimiter = delimiter;
+            Assert.AreEqual(delimiter, builder.Encoding.FieldDelimiter);
             Assert.AreEqual(id, builder[1][3].Value);
         }
 

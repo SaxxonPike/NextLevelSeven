@@ -26,12 +26,12 @@ namespace NextLevelSeven.Building.Elements
         {
             _segments = new IndexedCache<int, SegmentBuilder>(CreateSegmentBuilder);
             ComponentDelimiter = '^';
-            EscapeDelimiter = '\\';
+            EscapeCharacter = '\\';
             RepetitionDelimiter = '~';
             SubcomponentDelimiter = '&';
             FieldDelimiter = '|';
             SetFields(1, "MSH", new string(FieldDelimiter, 1),
-                new string(new[] {ComponentDelimiter, RepetitionDelimiter, EscapeDelimiter, SubcomponentDelimiter}));
+                new string(new[] {ComponentDelimiter, RepetitionDelimiter, EscapeCharacter, SubcomponentDelimiter}));
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace NextLevelSeven.Building.Elements
                     return null;
                 }
 
-                var result = string.Join(EncodingConfiguration.SegmentDelimiterString,
+                var result = string.Join(Encoding.SegmentDelimiterString,
                     _segments.OrderBy(i => i.Key).Select(i => i.Value.Value));
                 return result;
             }
@@ -239,7 +239,7 @@ namespace NextLevelSeven.Building.Elements
             }
 
             ComponentDelimiter = (length >= 5) ? value[4] : '^';
-            EscapeDelimiter = (length >= 6) ? value[5] : '\\';
+            EscapeCharacter = (length >= 6) ? value[5] : '\\';
             FieldDelimiter = (length >= 3) ? value[3] : '|';
             RepetitionDelimiter = (length >= 7) ? value[6] : '~';
             SubcomponentDelimiter = (length >= 8) ? value[7] : '&';
@@ -247,7 +247,7 @@ namespace NextLevelSeven.Building.Elements
             _segments.Clear();
             var index = 1;
 
-            foreach (var segment in value.Split(EncodingConfiguration.SegmentDelimiter))
+            foreach (var segment in value.Split(Encoding.SegmentDelimiter))
             {
                 SetSegment(index++, segment);
             }
@@ -280,7 +280,7 @@ namespace NextLevelSeven.Building.Elements
                 return this;
             }
 
-            SetMessage(string.Join(EncodingConfiguration.SegmentDelimiterString, segments));
+            SetMessage(string.Join(Encoding.SegmentDelimiterString, segments));
             return this;
         }
 
@@ -448,7 +448,7 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         public override char Delimiter
         {
-            get { return EncodingConfiguration.SegmentDelimiter; }
+            get { return Encoding.SegmentDelimiter; }
         }
 
         /// <summary>
@@ -483,7 +483,7 @@ namespace NextLevelSeven.Building.Elements
         {
             return message == null
                 ? null
-                : message.Replace(Environment.NewLine, EncodingConfiguration.SegmentDelimiterString);
+                : message.Replace(Environment.NewLine, Encoding.SegmentDelimiterString);
         }
 
         /// <summary>

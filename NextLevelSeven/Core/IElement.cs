@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using NextLevelSeven.Core.Codec;
+using NextLevelSeven.Core.Encoding;
 
 namespace NextLevelSeven.Core
 {
@@ -34,6 +35,11 @@ namespace NextLevelSeven.Core
         ///     Get the descendant elements within this element.
         /// </summary>
         IEnumerable<IElement> Descendants { get; }
+
+        /// <summary>
+        ///     Get the encoding characters this element uses.
+        /// </summary>
+        IReadOnlyEncoding Encoding { get; }
 
         /// <summary>
         ///     Erase this element's content and mark it non-existant.

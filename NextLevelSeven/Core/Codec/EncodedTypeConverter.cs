@@ -13,7 +13,7 @@ namespace NextLevelSeven.Core.Codec
         ///     Create a codec that references the specified element's data.
         /// </summary>
         /// <param name="baseElement">Element to reference.</param>
-        public EncodedTypeConverter(IEncodedElement baseElement)
+        public EncodedTypeConverter(IElement baseElement)
         {
             BaseElement = baseElement;
         }
@@ -21,7 +21,7 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>
         ///     Referenced element.
         /// </summary>
-        private IEncodedElement BaseElement { get; set; }
+        private IElement BaseElement { get; set; }
 
         /// <summary>
         ///     Get or set the element's value as a date.
@@ -94,12 +94,12 @@ namespace NextLevelSeven.Core.Codec
             get
             {
                 return TextConverter.ConvertToFormattedText(BaseElement.Value, BaseElement.Delimiter,
-                    BaseElement.EncodingConfiguration);
+                    BaseElement.Encoding);
             }
             set
             {
                 BaseElement.Value = TextConverter.ConvertFromFormattedText(value, BaseElement.Delimiter,
-                    BaseElement.EncodingConfiguration);
+                    BaseElement.Encoding);
             }
         }
 
@@ -154,13 +154,13 @@ namespace NextLevelSeven.Core.Codec
             {
                 return string.Join(Environment.NewLine,
                     TextConverter.ConvertToFormattedText(BaseElement.Value, BaseElement.Delimiter,
-                        BaseElement.EncodingConfiguration));
+                        BaseElement.Encoding));
             }
             set
             {
                 BaseElement.Value =
                     TextConverter.ConvertFromFormattedText(value.Replace(Environment.NewLine, "\xD").Split('\xD'),
-                        BaseElement.Delimiter, BaseElement.EncodingConfiguration);
+                        BaseElement.Delimiter, BaseElement.Encoding);
             }
         }
 

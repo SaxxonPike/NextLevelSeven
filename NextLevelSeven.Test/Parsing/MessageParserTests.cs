@@ -10,6 +10,14 @@ namespace NextLevelSeven.Test.Parsing
     public class MessageParserTests : ParsingTestFixture
     {
         [TestMethod]
+        public void Message_CanSetMsh1()
+        {
+            var message = Message.Parse(ExampleMessages.Minimum);
+            message[1][1].Value = ":";
+            Assert.AreEqual(':', message.Encoding.FieldDelimiter);
+        }
+
+        [TestMethod]
         public void Message_ConvertsMshCorrectly()
         {
             var message = Message.Parse(ExampleMessages.MshOnly);
@@ -219,9 +227,10 @@ namespace NextLevelSeven.Test.Parsing
         public void Message_CanAddDescendantsAtEnd()
         {
             var message = Message.Parse(ExampleMessages.Standard);
+            var nextIndex = message.NextIndex;
             var count = message.ValueCount;
             var id = Randomized.String();
-            message[count + 1].Value = id;
+            message[nextIndex].Value = id;
             Assert.AreEqual(count + 1, message.ValueCount,
                 @"Number of elements after appending at the end of a message is incorrect.");
         }

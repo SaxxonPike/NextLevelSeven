@@ -174,9 +174,9 @@ namespace NextLevelSeven.Test.Building
         {
             var messageBuilder = Message.Build();
             var builder = messageBuilder[1][3];
-            Assert.AreEqual(builder.FieldDelimiter, '|');
-            messageBuilder.FieldDelimiter = ':';
-            Assert.AreEqual(builder.FieldDelimiter, ':');
+            Assert.AreEqual(builder.Encoding.FieldDelimiter, '|');
+            messageBuilder.Encoding.FieldDelimiter = ':';
+            Assert.AreEqual(builder.Encoding.FieldDelimiter, ':');
         }
 
         [TestMethod]
@@ -184,7 +184,7 @@ namespace NextLevelSeven.Test.Building
         {
             var builder = Message.Build()[1][2];
             builder.SetField("$~\\&");
-            Assert.AreEqual(builder.ComponentDelimiter, '$');
+            Assert.AreEqual(builder.Encoding.ComponentDelimiter, '$');
         }
     }
 }

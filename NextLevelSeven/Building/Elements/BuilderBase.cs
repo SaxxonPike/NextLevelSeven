@@ -12,15 +12,23 @@ namespace NextLevelSeven.Building.Elements
     ///     Base class for message builders.
     /// </summary>
     internal abstract class BuilderBase : IComparable, IComparable<IElement>, IComparable<string>,
-        IEquatable<IElement>, IEquatable<string>, IEncodedElement
+        IEquatable<IElement>, IEquatable<string>, IBuilder
     {
         /// <summary>
         ///     Initialize the message builder base class.
         /// </summary>
         internal BuilderBase()
         {
-            EncodingConfiguration = new BuilderEncodingConfiguration(this);
-            Index = 0;
+            Encoding = new BuilderEncodingConfiguration(this);
+        }
+
+        /// <summary>
+        ///     Initialize the message builder base class.
+        /// </summary>
+        /// <param name="config">Message's encoding configuration.</param>
+        internal BuilderBase(BuilderEncodingConfiguration config)
+            : this(config, 0)
+        {
         }
 
         /// <summary>
@@ -28,9 +36,9 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         /// <param name="config">Message's encoding configuration.</param>
         /// <param name="index">Index in the parent.</param>
-        internal BuilderBase(EncodingConfigurationBase config, int index)
+        internal BuilderBase(BuilderEncodingConfiguration config, int index)
         {
-            EncodingConfiguration = config;
+            Encoding = config;
             Index = index;
         }
 
@@ -42,7 +50,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>
         ///     Get or set the character used to signify escape sequences.
         /// </summary>
-        public virtual char EscapeDelimiter { get; set; }
+        public virtual char EscapeCharacter { get; set; }
 
         /// <summary>
         ///     Get or set the character used to separate fields.
@@ -92,11 +100,6 @@ namespace NextLevelSeven.Building.Elements
         {
             return string.Compare(Value, other, StringComparison.CurrentCulture);
         }
-
-        /// <summary>
-        ///     Encoding configuration for this message.
-        /// </summary>
-        public EncodingConfigurationBase EncodingConfiguration { get; private set; }
 
         /// <summary>
         ///     Get the index at which this builder is located in its descendant.
@@ -215,26 +218,6 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>
-        ///     Get an HL7 escaped string.
-        /// </summary>
-        /// <param name="s">String to escape.</param>
-        /// <returns>Escaped string.</returns>
-        public string Escape(string s)
-        {
-            return EncodingConfiguration.Escape(s);
-        }
-
-        /// <summary>
-        ///     Get an unescaped HL7 string.
-        /// </summary>
-        /// <param name="s">String to unescape.</param>
-        /// <returns>Unescaped string.</returns>
-        public string UnEscape(string s)
-        {
-            return EncodingConfiguration.UnEscape(s);
-        }
-
-        /// <summary>
         ///     Get the element at the specified index as an IElement.
         /// </summary>
         /// <param name="index">Index at which to get the element.</param>
@@ -311,5 +294,20 @@ namespace NextLevelSeven.Building.Elements
         ///     True, if the element is considered to exist.
         /// </summary>
         abstract public bool Exists { get; }
+
+        /// <summary>
+        ///     Get the encoding used by this builder.
+        /// </summary>
+        public BuilderEncodingConfiguration Encoding { get; private set; }
+
+        /// <summary>
+        ///     Get the encoding used by this builder.
+        /// </summary>
+        IReadOnlyEncoding IElement.Encoding { get { return Encoding; } }
+
+        /// <summary>
+        ///     Get the encoding used by this builder.
+        /// </summary>
+        IEncoding IBuilder.Encoding { get { return Encoding; } }
     }
 }

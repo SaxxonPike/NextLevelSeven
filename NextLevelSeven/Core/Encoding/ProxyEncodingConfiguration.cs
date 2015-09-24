@@ -44,7 +44,7 @@ namespace NextLevelSeven.Core.Encoding
         /// <summary>
         ///     Get the escape character used to mark encoded sequences.
         /// </summary>
-        public override sealed char EscapeDelimiter
+        public override sealed char EscapeCharacter
         {
             get { return _getEscape(); }
             protected set { }

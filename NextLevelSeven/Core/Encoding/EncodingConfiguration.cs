@@ -49,7 +49,7 @@
         /// <summary>
         ///     Get the escape character.
         /// </summary>
-        public override char EscapeDelimiter { get; protected set; }
+        public override char EscapeCharacter { get; protected set; }
 
         /// <summary>
         ///     Get the field delimiter.

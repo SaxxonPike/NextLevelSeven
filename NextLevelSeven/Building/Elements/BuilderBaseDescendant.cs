@@ -14,7 +14,7 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="ancestor">Ancestor from which configuration will be obtained.</param>
         /// <param name="index">Index in the parent.</param>
         internal BuilderBaseDescendant(BuilderBase ancestor, int index)
-            : base(ancestor.EncodingConfiguration, index)
+            : base(ancestor.Encoding, index)
         {
             Ancestor = ancestor;
         }
@@ -36,10 +36,10 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>
         ///     Get or set the escape delimiter character.
         /// </summary>
-        public override sealed char EscapeDelimiter
+        public override sealed char EscapeCharacter
         {
-            get { return Ancestor.EscapeDelimiter; }
-            set { Ancestor.EscapeDelimiter = value; }
+            get { return Ancestor.EscapeCharacter; }
+            set { Ancestor.EscapeCharacter = value; }
         }
 
         /// <summary>

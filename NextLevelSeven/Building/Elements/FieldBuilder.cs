@@ -81,7 +81,7 @@ namespace NextLevelSeven.Building.Elements
                 {
                     while (index < repetition.Key)
                     {
-                        result.Append(EncodingConfiguration.RepetitionDelimiter);
+                        result.Append(Encoding.RepetitionDelimiter);
                         index++;
                     }
 
@@ -149,7 +149,7 @@ namespace NextLevelSeven.Building.Elements
                 return this;
             }
 
-            foreach (var repetition in value.Split(EncodingConfiguration.RepetitionDelimiter))
+            foreach (var repetition in value.Split(Encoding.RepetitionDelimiter))
             {
                 SetFieldRepetition(index++, repetition);
             }

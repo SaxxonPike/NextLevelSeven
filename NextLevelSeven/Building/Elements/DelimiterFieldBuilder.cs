@@ -44,13 +44,15 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                return new string(FieldDelimiter, 1);
+                return FieldDelimiter == '\0'
+                    ? null
+                    : new string(FieldDelimiter, 1);
             }
             set
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    FieldDelimiter = '|';
+                    FieldDelimiter = '\0';
                     return;
                 }
                 FieldDelimiter = value[0];

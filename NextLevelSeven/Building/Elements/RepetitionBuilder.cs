@@ -81,7 +81,7 @@ namespace NextLevelSeven.Building.Elements
                 {
                     while (index < component.Key)
                     {
-                        result.Append(EncodingConfiguration.ComponentDelimiter);
+                        result.Append(Encoding.ComponentDelimiter);
                         index++;
                     }
 

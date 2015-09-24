@@ -58,10 +58,12 @@ namespace NextLevelSeven.Building.Elements
             get
             {
                 var result = new StringBuilder();
-                result.Append(ComponentDelimiter);
-                result.Append(RepetitionDelimiter);
-                result.Append(EscapeDelimiter);
-                result.Append(SubcomponentDelimiter);
+                
+                if (ComponentDelimiter != '\0') { result.Append(ComponentDelimiter); }
+                if (RepetitionDelimiter != '\0') { result.Append(RepetitionDelimiter); }
+                if (EscapeCharacter != '\0') { result.Append(EscapeCharacter); }
+                if (SubcomponentDelimiter != '\0') { result.Append(SubcomponentDelimiter); }
+
                 if (_value != null && _value.Length > 4)
                 {
                     result.Append(_value.Substring(4));
@@ -78,7 +80,7 @@ namespace NextLevelSeven.Building.Elements
 
                 ComponentDelimiter = _value.Length >= 1 ? _value[0] : '^';
                 RepetitionDelimiter = _value.Length >= 2 ? _value[1] : '~';
-                EscapeDelimiter = _value.Length >= 3 ? _value[2] : '\\';
+                EscapeCharacter = _value.Length >= 3 ? _value[2] : '\\';
                 SubcomponentDelimiter = _value.Length >= 4 ? _value[3] : '&';
             }
         }
@@ -134,7 +136,7 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         public override bool Exists
         {
-            get { return ComponentDelimiter != '\0' || EscapeDelimiter != '\0' || RepetitionDelimiter != '\0' || SubcomponentDelimiter != '\0'; }
+            get { return ComponentDelimiter != '\0' || EscapeCharacter != '\0' || RepetitionDelimiter != '\0' || SubcomponentDelimiter != '\0'; }
         }
     }
 }

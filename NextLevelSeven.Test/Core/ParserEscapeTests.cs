@@ -12,8 +12,8 @@ namespace NextLevelSeven.Test.Core
         {
             var messageParser = Message.Parse();
             var messageBuilder = Message.Build();
-            Assert.AreEqual(expected, messageParser.Escape(test));
-            Assert.AreEqual(expected, messageBuilder.Escape(test));
+            Assert.AreEqual(expected, messageParser.Encoding.Escape(test));
+            Assert.AreEqual(expected, messageBuilder.Encoding.Escape(test));
         }
 
         private static void Test_SingleDelimiterEscape(string delimiter, string escapeCode)
