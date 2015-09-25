@@ -237,5 +237,14 @@ namespace NextLevelSeven.Parsing.Elements
         {
             get { return Ancestor as IMessage; }
         }
+
+        /// <summary>
+        ///     Get this element's heirarchy-specific ancestor parser.
+        /// </summary>
+        IMessageParser ISegmentParser.Ancestor
+        {
+            get { return Ancestor as IMessageParser; }
+        }
+
     }
 }

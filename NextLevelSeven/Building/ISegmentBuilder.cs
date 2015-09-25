@@ -5,6 +5,9 @@ namespace NextLevelSeven.Building
     /// <summary>Interface for a segment element builder.</summary>
     public interface ISegmentBuilder : IBuilder, ISegment
     {
+        /// <summary>Get the ancestor builder. Null if the element is an orphan.</summary>
+        new IMessageBuilder Ancestor { get; }
+
         /// <summary>Get a descendant field builder.</summary>
         /// <param name="index">Index within the segment to get the builder from.</param>
         /// <returns>Field builder for the specified index.</returns>

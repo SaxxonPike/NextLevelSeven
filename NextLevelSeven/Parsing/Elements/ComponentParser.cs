@@ -132,5 +132,14 @@ namespace NextLevelSeven.Parsing.Elements
         {
             get { return Ancestor as IRepetition; }
         }
+
+        /// <summary>
+        ///     Get this element's heirarchy-specific ancestor parser.
+        /// </summary>
+        IRepetitionParser IComponentParser.Ancestor
+        {
+            get { return Ancestor as IRepetitionParser; }
+        }
+
     }
 }

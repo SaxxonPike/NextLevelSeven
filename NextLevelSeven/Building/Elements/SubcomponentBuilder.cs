@@ -125,5 +125,14 @@ namespace NextLevelSeven.Building.Elements
         {
             get { return Ancestor as IComponent; }
         }
+
+        /// <summary>
+        ///     Get this element's heirarchy-specific ancestor builder.
+        /// </summary>
+        IComponentBuilder ISubcomponentBuilder.Ancestor
+        {
+            get { return Ancestor as IComponentBuilder; }
+        }
+
     }
 }

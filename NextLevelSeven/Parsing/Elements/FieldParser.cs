@@ -144,5 +144,14 @@ namespace NextLevelSeven.Parsing.Elements
         {
             get { return Ancestor as ISegment; }
         }
+
+        /// <summary>
+        ///     Get this element's heirarchy-specific ancestor parser.
+        /// </summary>
+        ISegmentParser IFieldParser.Ancestor
+        {
+            get { return Ancestor as ISegmentParser; }
+        }
+
     }
 }

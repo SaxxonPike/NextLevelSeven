@@ -5,6 +5,9 @@ namespace NextLevelSeven.Building
     /// <summary>Interface for a field repetition element builder.</summary>
     public interface IRepetitionBuilder : IBuilder, IRepetition
     {
+        /// <summary>Get the ancestor builder. Null if the element is an orphan.</summary>
+        new IFieldBuilder Ancestor { get; }
+
         /// <summary>Get a descendant component builder.</summary>
         /// <param name="index">Index within the field repetition to get the builder from.</param>
         /// <returns>Component builder for the specified index.</returns>

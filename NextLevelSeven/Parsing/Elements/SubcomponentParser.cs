@@ -98,5 +98,13 @@ namespace NextLevelSeven.Parsing.Elements
         {
             get { return Ancestor as IComponent; }
         }
+
+        /// <summary>
+        ///     Get this element's heirarchy-specific ancestor parser.
+        /// </summary>
+        IComponentParser ISubcomponentParser.Ancestor
+        {
+            get { return Ancestor as IComponentParser; }
+        }
     }
 }

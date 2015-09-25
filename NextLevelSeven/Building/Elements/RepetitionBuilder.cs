@@ -270,5 +270,13 @@ namespace NextLevelSeven.Building.Elements
         {
             get { return Ancestor as IField; }
         }
+
+        /// <summary>
+        ///     Get this element's heirarchy-specific ancestor builder.
+        /// </summary>
+        IFieldBuilder IRepetitionBuilder.Ancestor
+        {
+            get { return Ancestor as IFieldBuilder; }
+        }
     }
 }
