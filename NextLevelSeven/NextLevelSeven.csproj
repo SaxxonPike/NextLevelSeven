@@ -80,7 +80,6 @@
     <Compile Include="Core\Properties\ProxyIdentity.cs" />
     <Compile Include="Core\Properties\IMessageDetails.cs" />
     <Compile Include="Core\Properties\MessageDetails.cs" />
-    <Compile Include="Parsing\Elements\NullParserEncodingConfiguration.cs" />
     <Compile Include="Parsing\Elements\ParserBaseDescendant.cs" />
     <Compile Include="Parsing\ParserException.cs" />
     <Compile Include="Utility\EnumerableExtensions.cs" />
