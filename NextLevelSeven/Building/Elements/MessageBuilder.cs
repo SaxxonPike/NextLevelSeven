@@ -35,19 +35,13 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Segment builder for the specified index.</returns>
         public new ISegmentBuilder this[int index]
         {
-            get
-            {
-                return _segments[index];
-            }
+            get { return _segments[index]; }
         }
 
         /// <summary>Get the number of segments in the message.</summary>
         public override int ValueCount
         {
-            get
-            {
-                return _segments.Max(kv => kv.Key);
-            }
+            get { return _segments.Max(kv => kv.Key); }
         }
 
         /// <summary>Get or set segment content within this message.</summary>
@@ -61,10 +55,7 @@ namespace NextLevelSeven.Building.Elements
                     yield return _segments[i].Value;
                 }
             }
-            set
-            {
-                SetSegments(value.ToArray());
-            }
+            set { SetSegments(value.ToArray()); }
         }
 
         /// <summary>Get or set the message string.</summary>
@@ -81,10 +72,7 @@ namespace NextLevelSeven.Building.Elements
                     _segments.OrderBy(i => i.Key).Select(i => i.Value.Value));
                 return result;
             }
-            set
-            {
-                SetMessage(value);
-            }
+            set { SetMessage(value); }
         }
 
         /// <summary>Set a component's content.</summary>
@@ -403,28 +391,19 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get a codec which can be used to interpret this element as other types.</summary>
         public override IEncodedTypeConverter Codec
         {
-            get
-            {
-                return new EncodedTypeConverter(this);
-            }
+            get { return new EncodedTypeConverter(this); }
         }
 
         /// <summary>Get the message delimiter.</summary>
         public override char Delimiter
         {
-            get
-            {
-                return Encoding.SegmentDelimiter;
-            }
+            get { return Encoding.SegmentDelimiter; }
         }
 
         /// <summary>Get a wrapper which can manipulate message details.</summary>
         public IMessageDetails Details
         {
-            get
-            {
-                return new MessageDetails(this);
-            }
+            get { return new MessageDetails(this); }
         }
 
         /// <summary>Get the message's segments.</summary>
@@ -443,10 +422,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>If true, the element is considered to exist.</summary>
         public override bool Exists
         {
-            get
-            {
-                return _segments.Any(s => s.Value.Exists);
-            }
+            get { return _segments.Any(s => s.Value.Exists); }
         }
 
         /// <summary>Change all system line endings to HL7 line endings.</summary>

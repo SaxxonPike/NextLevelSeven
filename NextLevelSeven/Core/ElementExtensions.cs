@@ -430,9 +430,9 @@ namespace NextLevelSeven.Core
 
             // determine where to pull message metadata from
             var childSegment = sourceSegments.FirstOrDefault(s => s.Type == "MSH") ??
-                sourceSegments.Where(s => s.Ancestor is IMessage)
-                    .Select(s => (ISegment) (s.Ancestor[1]))
-                    .FirstOrDefault();
+                               sourceSegments.Where(s => s.Ancestor is IMessage)
+                                   .Select(s => (ISegment) (s.Ancestor[1]))
+                                   .FirstOrDefault();
             if (childSegment != null)
             {
                 CopyOver(childSegment, newMessage[1]);

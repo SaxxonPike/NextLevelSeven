@@ -15,18 +15,10 @@ namespace NextLevelSeven.Streaming
         }
 
         /// <summary>If true, a blank line will be inserted before data is written.</summary>
-        protected bool WriteBlankLine
-        {
-            get;
-            private set;
-        }
+        protected bool WriteBlankLine { get; private set; }
 
         /// <summary>TextWriter that operates on the base stream.</summary>
-        protected TextWriter Writer
-        {
-            get;
-            private set;
-        }
+        protected TextWriter Writer { get; private set; }
 
         /// <summary>Write one textual HL7 message.</summary>
         /// <param name="message">Message to write.</param>

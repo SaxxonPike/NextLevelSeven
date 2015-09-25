@@ -7,16 +7,10 @@ namespace NextLevelSeven.Core
     public interface IMessage : IElement
     {
         /// <summary>Access message details as a property set.</summary>
-        IMessageDetails Details
-        {
-            get;
-        }
+        IMessageDetails Details { get; }
 
         /// <summary>Get this message's segments.</summary>
-        IEnumerable<ISegment> Segments
-        {
-            get;
-        }
+        IEnumerable<ISegment> Segments { get; }
 
         /// <summary>Get a copy of the message.</summary>
         new IMessage Clone();

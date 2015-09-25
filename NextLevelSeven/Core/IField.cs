@@ -6,10 +6,7 @@ namespace NextLevelSeven.Core
     public interface IField : IElement
     {
         /// <summary>Get this element's repetitions.</summary>
-        IEnumerable<IRepetition> Repetitions
-        {
-            get;
-        }
+        IEnumerable<IRepetition> Repetitions { get; }
 
         /// <summary>Get a copy of the segment.</summary>
         new IField Clone();

@@ -14,50 +14,26 @@
         }
 
         /// <summary>Get the application data index.</summary>
-        private int ApplicationIndex
-        {
-            get;
-            set;
-        }
+        private int ApplicationIndex { get; set; }
 
         /// <summary>Get the referenced builder.</summary>
-        private IElement Element
-        {
-            get;
-            set;
-        }
+        private IElement Element { get; set; }
 
         /// <summary>Get the facility data index.</summary>
-        private int FacilityIndex
-        {
-            get;
-            set;
-        }
+        private int FacilityIndex { get; set; }
 
         /// <summary>Get or set the application name.</summary>
         public string Application
         {
-            get
-            {
-                return Element[ApplicationIndex].Value;
-            }
-            set
-            {
-                Element[ApplicationIndex].Value = value;
-            }
+            get { return Element[ApplicationIndex].Value; }
+            set { Element[ApplicationIndex].Value = value; }
         }
 
         /// <summary>Get or set the facility name.</summary>
         public string Facility
         {
-            get
-            {
-                return Element[FacilityIndex].Value;
-            }
-            set
-            {
-                Element[FacilityIndex].Value = value;
-            }
+            get { return Element[FacilityIndex].Value; }
+            set { Element[FacilityIndex].Value = value; }
         }
     }
 }

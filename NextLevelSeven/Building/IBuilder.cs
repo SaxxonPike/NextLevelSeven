@@ -7,9 +7,6 @@ namespace NextLevelSeven.Building
     public interface IBuilder : IElement
     {
         /// <summary>Get the encoding used by this builder.</summary>
-        new IEncoding Encoding
-        {
-            get;
-        }
+        new IEncoding Encoding { get; }
     }
 }

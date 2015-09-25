@@ -4,17 +4,9 @@
     public interface IIdentity
     {
         /// <summary>Get or set the application name.</summary>
-        string Application
-        {
-            get;
-            set;
-        }
+        string Application { get; set; }
 
         /// <summary>Get or set the facility name.</summary>
-        string Facility
-        {
-            get;
-            set;
-        }
+        string Facility { get; set; }
     }
 }

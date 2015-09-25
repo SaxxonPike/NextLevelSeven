@@ -15,11 +15,7 @@ namespace NextLevelSeven.Specification.Elements
         }
 
         /// <summary>Element that is being wrapped.</summary>
-        public IElement Element
-        {
-            get;
-            private set;
-        }
+        public IElement Element { get; private set; }
 
         /// <summary>Return true if validation passes, otherwise false.</summary>
         public bool IsValid

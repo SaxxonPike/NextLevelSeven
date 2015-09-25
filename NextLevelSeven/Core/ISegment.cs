@@ -6,17 +6,10 @@ namespace NextLevelSeven.Core
     public interface ISegment : IElement
     {
         /// <summary>Get or set the three-letter type code for the segment.</summary>
-        string Type
-        {
-            get;
-            set;
-        }
+        string Type { get; set; }
 
         /// <summary>Get this element's fields.</summary>
-        IEnumerable<IField> Fields
-        {
-            get;
-        }
+        IEnumerable<IField> Fields { get; }
 
         /// <summary>Get a copy of the segment.</summary>
         new ISegment Clone();

@@ -38,10 +38,7 @@ namespace NextLevelSeven.Utility
                 _cache[index] = value;
                 return value;
             }
-            set
-            {
-                _cache[index] = value;
-            }
+            set { _cache[index] = value; }
         }
 
         /// <summary>Returns true if the specified key exists in the cache.</summary>
@@ -55,10 +52,7 @@ namespace NextLevelSeven.Utility
         /// <summary>Get the number of items in the cache.</summary>
         public int Count
         {
-            get
-            {
-                return _cache.Count;
-            }
+            get { return _cache.Count; }
         }
 
         /// <summary>Clear the cache.</summary>

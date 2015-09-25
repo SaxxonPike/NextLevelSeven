@@ -5,10 +5,6 @@
     public interface IIndexedEncodedTypeConverter<TDecoded>
     {
         /// <summary>Get or set element data at the specified index.</summary>
-        TDecoded this[int index]
-        {
-            get;
-            set;
-        }
+        TDecoded this[int index] { get; set; }
     }
 }

@@ -35,10 +35,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Returns true if the segment's type field is MSH.</summary>
         private bool IsMsh
         {
-            get
-            {
-                return (string.Equals(Type, "MSH", StringComparison.Ordinal));
-            }
+            get { return (string.Equals(Type, "MSH", StringComparison.Ordinal)); }
         }
 
         /// <summary>Get the descendant field parser at the specified index.</summary>
@@ -46,10 +43,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Field parser at the specified index.</returns>
         IFieldParser ISegmentParser.this[int index]
         {
-            get
-            {
-                return _fields[index];
-            }
+            get { return _fields[index]; }
         }
 
         /// <summary>Field delimiter.</summary>
@@ -97,14 +91,8 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Get the segment type from index 0.</summary>
         public string Type
         {
-            get
-            {
-                return DescendantDivider[0];
-            }
-            set
-            {
-                DescendantDivider[0] = value;
-            }
+            get { return DescendantDivider[0]; }
+            set { DescendantDivider[0] = value; }
         }
 
         /// <summary>Get the value at the specified indices.</summary>
@@ -147,10 +135,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Get or set all field values in this segment.</summary>
         public override IEnumerable<string> Values
         {
-            get
-            {
-                return base.Values;
-            }
+            get { return base.Values; }
             set
             {
                 if (IsMsh)
@@ -182,19 +167,13 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Get all components.</summary>
         IEnumerable<IField> ISegment.Fields
         {
-            get
-            {
-                return Fields;
-            }
+            get { return Fields; }
         }
 
         /// <summary>Get the next available index.</summary>
         public override int NextIndex
         {
-            get
-            {
-                return ValueCount;
-            }
+            get { return ValueCount; }
         }
 
         /// <summary>Get the descendant element at the specified index.</summary>

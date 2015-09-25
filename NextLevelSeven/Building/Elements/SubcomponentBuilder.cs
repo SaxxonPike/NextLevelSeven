@@ -34,36 +34,21 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get or set the component string.</summary>
         public override string Value
         {
-            get
-            {
-                return string.Equals(HL7.Null, _value, StringComparison.Ordinal) ? null : _value;
-            }
-            set
-            {
-                SetSubcomponent(value);
-            }
+            get { return string.Equals(HL7.Null, _value, StringComparison.Ordinal) ? null : _value; }
+            set { SetSubcomponent(value); }
         }
 
         /// <summary>Returns 0 if null, and 1 otherwise.</summary>
         public override int ValueCount
         {
-            get
-            {
-                return _value == null ? 0 : 1;
-            }
+            get { return _value == null ? 0 : 1; }
         }
 
         /// <summary>Return an enumerable with the content inside.</summary>
         public override IEnumerable<string> Values
         {
-            get
-            {
-                yield return _value;
-            }
-            set
-            {
-                _value = string.Concat(value);
-            }
+            get { yield return _value; }
+            set { _value = string.Concat(value); }
         }
 
         /// <summary>Get this subcomponent's value.</summary>
@@ -103,28 +88,19 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get a codec which allows interpretation of this subcomponent's value as other types.</summary>
         public override IEncodedTypeConverter Codec
         {
-            get
-            {
-                return new EncodedTypeConverter(this);
-            }
+            get { return new EncodedTypeConverter(this); }
         }
 
         /// <summary>Returns zero. Subcomponents cannot be divided any further. Therefore, they have no useful delimiter.</summary>
         public override char Delimiter
         {
-            get
-            {
-                return '\0';
-            }
+            get { return '\0'; }
         }
 
         /// <summary>If true, the element is considered to exist.</summary>
         public override bool Exists
         {
-            get
-            {
-                return _value != null;
-            }
+            get { return _value != null; }
         }
 
         /// <summary>Throws. Subcomponents cannot be divided any further.</summary>

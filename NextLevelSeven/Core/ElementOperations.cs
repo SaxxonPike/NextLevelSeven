@@ -38,7 +38,7 @@ namespace NextLevelSeven.Core
         public static bool HasEncodingCharacters(IElement element)
         {
             return (element is IField && element.Ancestor != null && ((ISegment) element.Ancestor).Type == "MSH" &&
-                element.Index >= 1 && element.Index <= 2);
+                    element.Index >= 1 && element.Index <= 2);
         }
     }
 }

@@ -27,19 +27,13 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Subcomponent builder for the specified index.</returns>
         public new ISubcomponentBuilder this[int index]
         {
-            get
-            {
-                return _subcomponents[index];
-            }
+            get { return _subcomponents[index]; }
         }
 
         /// <summary>Get the number of subcomponents in this component, including subcomponents with no content.</summary>
         public override int ValueCount
         {
-            get
-            {
-                return _subcomponents.Max(kv => kv.Key);
-            }
+            get { return _subcomponents.Max(kv => kv.Key); }
         }
 
         /// <summary>Get or set subcomponent content within this component.</summary>
@@ -53,10 +47,7 @@ namespace NextLevelSeven.Building.Elements
                     yield return _subcomponents[i].Value;
                 }
             }
-            set
-            {
-                SetSubcomponents(value.ToArray());
-            }
+            set { SetSubcomponents(value.ToArray()); }
         }
 
         /// <summary>Get or set the component string.</summary>
@@ -88,10 +79,7 @@ namespace NextLevelSeven.Building.Elements
 
                 return result.ToString();
             }
-            set
-            {
-                SetComponent(value);
-            }
+            set { SetComponent(value); }
         }
 
         /// <summary>Set this component's content.</summary>
@@ -202,19 +190,13 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get a codec which can be used to interpret this element's value as other types.</summary>
         public override IEncodedTypeConverter Codec
         {
-            get
-            {
-                return new EncodedTypeConverter(this);
-            }
+            get { return new EncodedTypeConverter(this); }
         }
 
         /// <summary>Get the subcomponent delimiter.</summary>
         public override char Delimiter
         {
-            get
-            {
-                return SubcomponentDelimiter;
-            }
+            get { return SubcomponentDelimiter; }
         }
 
         /// <summary>Get this element's subcomponents.</summary>
@@ -233,10 +215,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>If true, the element is considered to exist.</summary>
         public override bool Exists
         {
-            get
-            {
-                return _subcomponents.Any(s => s.Value.Exists);
-            }
+            get { return _subcomponents.Any(s => s.Value.Exists); }
         }
 
         /// <summary>Create a subcomponent builder object.</summary>

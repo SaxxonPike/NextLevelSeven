@@ -39,26 +39,19 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Ancestor element.</summary>
         protected override sealed Parser Ancestor
         {
-            get
-            {
-                return _ancestor;
-            }
+            get { return _ancestor; }
         }
 
         /// <summary>Zero-based index within the parent element's raw data.</summary>
-        protected int ParentIndex
-        {
-            get;
-            set;
-        }
+        protected int ParentIndex { get; set; }
 
         /// <summary>Get a string divider for this descendant element.</summary>
         /// <returns>Descendant string divider.</returns>
-        protected override sealed IStringDivider GetDescendantDivider()
+        protected override sealed StringDivider GetDescendantDivider()
         {
             return (Ancestor == null)
                 ? base.GetDescendantDivider()
-                : new StringSubDivider(Ancestor.DescendantDivider, Delimiter, ParentIndex);
+                : new DescendantStringDivider(Ancestor.DescendantDivider, Delimiter, ParentIndex);
         }
     }
 }

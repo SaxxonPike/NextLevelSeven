@@ -42,32 +42,20 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Field builder for the specified index.</returns>
         public new IFieldBuilder this[int index]
         {
-            get
-            {
-                return _fields[index];
-            }
+            get { return _fields[index]; }
         }
 
         /// <summary>Get the number of fields in this segment, including fields with no content.</summary>
         public override int ValueCount
         {
-            get
-            {
-                return (_fields.Count > 0) ? (_fields.Max(kv => kv.Key) + 1) : 0;
-            }
+            get { return (_fields.Count > 0) ? (_fields.Max(kv => kv.Key) + 1) : 0; }
         }
 
         /// <summary>Get or set the three-letter type field of this segment.</summary>
         public string Type
         {
-            get
-            {
-                return _fields[0].Value;
-            }
-            set
-            {
-                SetField(0, value);
-            }
+            get { return _fields[0].Value; }
+            set { SetField(0, value); }
         }
 
         /// <summary>Get or set field content within this segment.</summary>
@@ -81,10 +69,7 @@ namespace NextLevelSeven.Building.Elements
                     yield return _fields[i].Value;
                 }
             }
-            set
-            {
-                SetFields(value.ToArray());
-            }
+            set { SetFields(value.ToArray()); }
         }
 
         /// <summary>Get or set the segment string.</summary>
@@ -121,10 +106,7 @@ namespace NextLevelSeven.Building.Elements
 
                 return result.ToString();
             }
-            set
-            {
-                SetSegment(value);
-            }
+            set { SetSegment(value); }
         }
 
         /// <summary>Set a component's content.</summary>
@@ -355,19 +337,13 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get a codec which can be used to interpret this element's data as other types.</summary>
         public override IEncodedTypeConverter Codec
         {
-            get
-            {
-                return new EncodedTypeConverter(this);
-            }
+            get { return new EncodedTypeConverter(this); }
         }
 
         /// <summary>Get this segment's data delimiter.</summary>
         public override char Delimiter
         {
-            get
-            {
-                return FieldDelimiter;
-            }
+            get { return FieldDelimiter; }
         }
 
         /// <summary>Get this element's fields.</summary>
@@ -386,19 +362,13 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get the next available index.</summary>
         public override int NextIndex
         {
-            get
-            {
-                return ValueCount;
-            }
+            get { return ValueCount; }
         }
 
         /// <summary>If true, the element is considered to exist.</summary>
         public override bool Exists
         {
-            get
-            {
-                return _fields.Any(s => s.Value.Exists);
-            }
+            get { return _fields.Any(s => s.Value.Exists); }
         }
 
         /// <summary>Get descendant elements.</summary>

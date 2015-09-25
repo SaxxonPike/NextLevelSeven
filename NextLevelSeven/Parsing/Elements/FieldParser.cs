@@ -33,10 +33,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Field repetition delimiter.</summary>
         public override char Delimiter
         {
-            get
-            {
-                return EncodingConfiguration.RepetitionDelimiter;
-            }
+            get { return EncodingConfiguration.RepetitionDelimiter; }
         }
 
         /// <summary>Get the value at the specified indices.</summary>
@@ -64,10 +61,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Desired field repetition.</returns>
         public new IRepetitionParser this[int index]
         {
-            get
-            {
-                return GetRepetition(index);
-            }
+            get { return GetRepetition(index); }
         }
 
         /// <summary>Deep clone this field.</summary>
@@ -100,10 +94,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Get all field repetitions.</summary>
         IEnumerable<IRepetition> IField.Repetitions
         {
-            get
-            {
-                return Repetitions;
-            }
+            get { return Repetitions; }
         }
 
         /// <summary>Get the descendant element at the specified index.</summary>

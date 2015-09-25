@@ -12,7 +12,10 @@ namespace NextLevelSeven.Parsing.Dividers
         /// <returns>Extracted characters.</returns>
         public static char[] CharSubstring(char[] s, int offset)
         {
-            return CharSubstring(s, offset, s.Length - offset);
+            unchecked
+            {
+                return CharSubstring(s, offset, s.Length - offset);
+            }
         }
 
         /// <summary>Get a subset of a character array.</summary>
@@ -22,9 +25,12 @@ namespace NextLevelSeven.Parsing.Dividers
         /// <returns>Extracted characters.</returns>
         public static char[] CharSubstring(char[] s, int offset, int length)
         {
-            var result = new char[length];
-            Array.Copy(s, offset, result, 0, length);
-            return result;
+            unchecked
+            {
+                var result = new char[length];
+                Array.Copy(s, offset, result, 0, length);
+                return result;
+            }
         }
 
         /// <summary>Copy characters to a new array.</summary>
@@ -32,10 +38,13 @@ namespace NextLevelSeven.Parsing.Dividers
         /// <returns>Copied characters.</returns>
         public static char[] CopyChars(char[] s)
         {
-            var length = s.Length;
-            var result = new char[length];
-            Array.Copy(s, result, length);
-            return result;
+            unchecked
+            {
+                var length = s.Length;
+                var result = new char[length];
+                Array.Copy(s, result, length);
+                return result;
+            }
         }
 
         /// <summary>Attempts to convert a string to characters, or returns null if not possible.</summary>
@@ -43,7 +52,10 @@ namespace NextLevelSeven.Parsing.Dividers
         /// <returns>Converted characters.</returns>
         public static char[] GetChars(string s)
         {
-            return (s == null) ? null : s.ToCharArray();
+            unchecked
+            {
+                return (s == null) ? null : s.ToCharArray();
+            }
         }
 
         /// <summary>Get divisions without bounds.</summary>
@@ -52,9 +64,12 @@ namespace NextLevelSeven.Parsing.Dividers
         /// <returns>Divisions.</returns>
         public static List<StringDivision> GetDivisions(char[] s, char delimiter)
         {
-            return (s == null)
-                ? new List<StringDivision>()
-                : GetDivisions(s, delimiter, new StringDivision(0, s.Length));
+            unchecked
+            {
+                return (s == null)
+                    ? new List<StringDivision>()
+                    : GetDivisions(s, delimiter, new StringDivision(0, s.Length));
+            }
         }
 
         /// <summary>Get divisions within the specified division bounds.</summary>
@@ -139,19 +154,19 @@ namespace NextLevelSeven.Parsing.Dividers
                     stringLength++;
                 }
 
-                if (divisionsToAdd > 0)
+                if (divisionsToAdd <= 0)
                 {
-                    var appendedOffset = s.Length;
-                    var appendedValue = new char[appendedOffset + divisionsToAdd];
-                    Array.Copy(s, appendedValue, s.Length);
-                    for (var i = 0; i < divisionsToAdd; i++)
-                    {
-                        appendedValue[appendedOffset + i] = delimiter;
-                    }
-                    s = appendedValue;
+                    return s;
                 }
 
-                return s;
+                var appendedOffset = s.Length;
+                var appendedValue = new char[appendedOffset + divisionsToAdd];
+                Array.Copy(s, appendedValue, s.Length);
+                for (var i = 0; i < divisionsToAdd; i++)
+                {
+                    appendedValue[appendedOffset + i] = delimiter;
+                }
+                return appendedValue;
             }
         }
 
@@ -200,24 +215,27 @@ namespace NextLevelSeven.Parsing.Dividers
         /// <returns>Joined character arrays.</returns>
         public static char[] JoinChars(params char[][] characters)
         {
-            var totalLength = 0;
-            var count = characters.Length;
-
-            for (var i = 0; i < count; i++)
+            unchecked
             {
-                totalLength += characters[i].Length;
-            }
+                var totalLength = 0;
+                var count = characters.Length;
 
-            var result = new char[totalLength];
-            var offset = 0;
-            foreach (var ca in characters)
-            {
-                var length = ca.Length;
-                Array.Copy(ca, 0, result, offset, length);
-                offset += length;
-            }
+                for (var i = 0; i < count; i++)
+                {
+                    totalLength += characters[i].Length;
+                }
 
-            return result;
+                var result = new char[totalLength];
+                var offset = 0;
+                foreach (var ca in characters)
+                {
+                    var length = ca.Length;
+                    Array.Copy(ca, 0, result, offset, length);
+                    offset += length;
+                }
+
+                return result;
+            }
         }
 
         /// <summary>Join together character arrays to form a single character array, with delimiters.</summary>
@@ -226,31 +244,35 @@ namespace NextLevelSeven.Parsing.Dividers
         /// <returns>Joined character arrays.</returns>
         public static char[] JoinCharsWithDelimiter(char delimiter, params char[][] characters)
         {
-            var totalLength = 0;
-            var count = characters.Length;
-            var delimitersToAdd = -1;
-
-            for (var i = 0; i < count; i++)
+            unchecked
             {
-                totalLength += characters[i].Length;
-                delimitersToAdd++;
-            }
+                var totalLength = 0;
+                var count = characters.Length;
+                var delimitersToAdd = -1;
 
-            var result = new char[totalLength];
-            var offset = 0;
-            foreach (var ca in characters)
-            {
-                var length = ca.Length;
-                Array.Copy(ca, 0, result, offset, length);
-                offset += length;
-                if (delimitersToAdd > 0)
+                for (var i = 0; i < count; i++)
                 {
+                    totalLength += characters[i].Length;
+                    delimitersToAdd++;
+                }
+
+                var result = new char[totalLength];
+                var offset = 0;
+                foreach (var ca in characters)
+                {
+                    var length = ca.Length;
+                    Array.Copy(ca, 0, result, offset, length);
+                    offset += length;
+                    if (delimitersToAdd <= 0)
+                    {
+                        continue;
+                    }
                     result[offset++] = delimiter;
                     delimitersToAdd--;
                 }
-            }
 
-            return result;
+                return result;
+            }
         }
     }
 }

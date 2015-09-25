@@ -8,10 +8,7 @@ namespace NextLevelSeven.Building
         /// <summary>Get a descendant component builder.</summary>
         /// <param name="index">Index within the field repetition to get the builder from.</param>
         /// <returns>Component builder for the specified index.</returns>
-        new IComponentBuilder this[int index]
-        {
-            get;
-        }
+        new IComponentBuilder this[int index] { get; }
 
         /// <summary>Set a component's content.</summary>
         /// <param name="componentIndex">Component index.</param>

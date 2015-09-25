@@ -3,7 +3,7 @@
 namespace NextLevelSeven.Parsing.Dividers
 {
     /// <summary>A splitter which handles getting and setting delimited substrings within a parent string divider.</summary>
-    internal sealed class StringSubDivider : StringDividerBase
+    internal sealed class DescendantStringDivider : StringDivider
     {
         /// <summary>[PERF] Cached divisions list.</summary>
         private IReadOnlyList<StringDivision> _divisions;
@@ -12,7 +12,7 @@ namespace NextLevelSeven.Parsing.Dividers
         /// <param name="baseDivider">Divider to reference.</param>
         /// <param name="delimiter">Delimiter to search for.</param>
         /// <param name="parentIndex">Index within the parent to reference.</param>
-        public StringSubDivider(IStringDivider baseDivider, char delimiter, int parentIndex)
+        public DescendantStringDivider(StringDivider baseDivider, char delimiter, int parentIndex)
         {
             BaseDivider = baseDivider;
             Index = parentIndex;
@@ -23,7 +23,7 @@ namespace NextLevelSeven.Parsing.Dividers
         /// <param name="baseDivider">Divider to reference.</param>
         /// <param name="baseDividerOffset">Index of the character to use as the delimiter from the subdivided value.</param>
         /// <param name="parentIndex">Index within the parent to reference.</param>
-        public StringSubDivider(IStringDivider baseDivider, int baseDividerOffset, int parentIndex)
+        public DescendantStringDivider(StringDivider baseDivider, int baseDividerOffset, int parentIndex)
         {
             BaseDivider = baseDivider;
             Index = parentIndex;
@@ -31,11 +31,7 @@ namespace NextLevelSeven.Parsing.Dividers
         }
 
         /// <summary>Parent divider.</summary>
-        private IStringDivider BaseDivider
-        {
-            get;
-            set;
-        }
+        private StringDivider BaseDivider { get; set; }
 
         /// <summary>Get or set the substring at the specified index.</summary>
         /// <param name="index">Index of the string to get or set.</param>
@@ -58,36 +54,24 @@ namespace NextLevelSeven.Parsing.Dividers
                 var split = splits[index];
                 return split.Length == 0 ? null : new string(BaseValue, split.Offset, split.Length);
             }
-            set
-            {
-                SetValue(index, value);
-            }
+            set { SetValue(index, value); }
         }
 
         public override bool IsNull
         {
-            get
-            {
-                return BaseDivider.IsNull || ValueChars == null || ValueChars.Length == 0;
-            }
+            get { return BaseDivider.IsNull || ValueChars == null || ValueChars.Length == 0; }
         }
 
         /// <summary>String that is operated upon, as a character array. This points to the parent divider's BaseValue.</summary>
         public override char[] BaseValue
         {
-            get
-            {
-                return BaseDivider.BaseValue;
-            }
+            get { return BaseDivider.BaseValue; }
         }
 
         /// <summary>Get the number of divisions.</summary>
         public override int Count
         {
-            get
-            {
-                return Divisions.Count;
-            }
+            get { return Divisions.Count; }
         }
 
         /// <summary>Get the division offsets in the string.</summary>
@@ -111,10 +95,7 @@ namespace NextLevelSeven.Parsing.Dividers
                 var d = BaseDivider.GetSubDivision(Index);
                 return (!d.Valid || d.Length == 0) ? null : new string(BaseValue, d.Offset, d.Length);
             }
-            set
-            {
-                BaseDivider[Index] = value;
-            }
+            set { BaseDivider[Index] = value; }
         }
 
         /// <summary>Calculated value of all divisions separated by delimiters, as characters.</summary>
@@ -127,10 +108,7 @@ namespace NextLevelSeven.Parsing.Dividers
                     ? null
                     : StringDividerOperations.CharSubstring(BaseValue, d.Offset, d.Length);
             }
-            set
-            {
-                BaseDivider[Index] = new string(value);
-            }
+            set { BaseDivider[Index] = new string(value); }
         }
 
         /// <summary>Get or set the subdivided values.</summary>
@@ -144,10 +122,7 @@ namespace NextLevelSeven.Parsing.Dividers
                     yield return this[i];
                 }
             }
-            set
-            {
-                Value = (Delimiter == '\0') ? string.Concat(value) : string.Join(new string(Delimiter, 1), value);
-            }
+            set { Value = (Delimiter == '\0') ? string.Concat(value) : string.Join(new string(Delimiter, 1), value); }
         }
 
         /// <summary>Set the value at the specified subdivision index.</summary>

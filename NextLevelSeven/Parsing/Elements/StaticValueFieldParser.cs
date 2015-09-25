@@ -21,41 +21,26 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Delimiter is invalid for a field delimiter field.</summary>
         public override sealed char Delimiter
         {
-            get
-            {
-                return '\0';
-            }
+            get { return '\0'; }
         }
 
         /// <summary>Returns an empty collection.</summary>
         public override sealed IEnumerable<IElementParser> Descendants
         {
-            get
-            {
-                return Enumerable.Empty<IElementParser>();
-            }
+            get { return Enumerable.Empty<IElementParser>(); }
         }
 
         /// <summary>Returns 1, since fields with static values cannot be divided further.</summary>
         public override int ValueCount
         {
-            get
-            {
-                return 1;
-            }
+            get { return 1; }
         }
 
         /// <summary>Get the value of this field wrapped in an enumerable.</summary>
         public override IEnumerable<string> Values
         {
-            get
-            {
-                yield return Value;
-            }
-            set
-            {
-                Value = string.Concat(value);
-            }
+            get { yield return Value; }
+            set { Value = string.Concat(value); }
         }
 
         /// <summary>Get the field delimiter value.</summary>

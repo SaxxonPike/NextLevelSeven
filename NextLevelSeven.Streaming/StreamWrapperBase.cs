@@ -13,10 +13,6 @@ namespace NextLevelSeven.Streaming
         }
 
         /// <summary>The stream that will be accessed for reader and writer functionality.</summary>
-        public Stream BaseStream
-        {
-            get;
-            private set;
-        }
+        public Stream BaseStream { get; private set; }
     }
 }

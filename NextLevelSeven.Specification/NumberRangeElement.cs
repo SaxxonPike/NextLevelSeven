@@ -37,50 +37,26 @@ namespace NextLevelSeven.Specification
 
         public decimal? LowValue
         {
-            get
-            {
-                return NumberConverter.ConvertToDecimal(LowValueData);
-            }
-            set
-            {
-                LowValueData = NumberConverter.ConvertFromDecimal(value);
-            }
+            get { return NumberConverter.ConvertToDecimal(LowValueData); }
+            set { LowValueData = NumberConverter.ConvertFromDecimal(value); }
         }
 
         public string LowValueData
         {
-            get
-            {
-                return Element[1].Value;
-            }
-            set
-            {
-                Element[1].Value = value;
-            }
+            get { return Element[1].Value; }
+            set { Element[1].Value = value; }
         }
 
         public decimal? HighValue
         {
-            get
-            {
-                return NumberConverter.ConvertToDecimal(HighValueData);
-            }
-            set
-            {
-                HighValueData = NumberConverter.ConvertFromDecimal(value);
-            }
+            get { return NumberConverter.ConvertToDecimal(HighValueData); }
+            set { HighValueData = NumberConverter.ConvertFromDecimal(value); }
         }
 
         public string HighValueData
         {
-            get
-            {
-                return Element[2].Value;
-            }
-            set
-            {
-                Element[2].Value = value;
-            }
+            get { return Element[2].Value; }
+            set { Element[2].Value = value; }
         }
     }
 }

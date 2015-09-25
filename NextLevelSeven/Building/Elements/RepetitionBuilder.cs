@@ -27,19 +27,13 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Component builder for the specified index.</returns>
         public new IComponentBuilder this[int index]
         {
-            get
-            {
-                return _components[index];
-            }
+            get { return _components[index]; }
         }
 
         /// <summary>Get the number of components in this field repetition, including components with no content.</summary>
         public override int ValueCount
         {
-            get
-            {
-                return _components.Max(kv => kv.Key);
-            }
+            get { return _components.Max(kv => kv.Key); }
         }
 
         /// <summary>Get or set component content within this field repetition.</summary>
@@ -53,10 +47,7 @@ namespace NextLevelSeven.Building.Elements
                     yield return _components[i].Value;
                 }
             }
-            set
-            {
-                SetComponents(value.ToArray());
-            }
+            set { SetComponents(value.ToArray()); }
         }
 
         /// <summary>Get or set the field repetition string.</summary>
@@ -88,10 +79,7 @@ namespace NextLevelSeven.Building.Elements
 
                 return result.ToString();
             }
-            set
-            {
-                SetFieldRepetition(value);
-            }
+            set { SetFieldRepetition(value); }
         }
 
         /// <summary>Set a component's content.</summary>
@@ -231,19 +219,13 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get a codec which allows interpretation of the value as other types.</summary>
         public override IEncodedTypeConverter Codec
         {
-            get
-            {
-                return new EncodedTypeConverter(this);
-            }
+            get { return new EncodedTypeConverter(this); }
         }
 
         /// <summary>Get this element's value delimiter.</summary>
         public override char Delimiter
         {
-            get
-            {
-                return ComponentDelimiter;
-            }
+            get { return ComponentDelimiter; }
         }
 
         /// <summary>Get this element's components.</summary>
@@ -262,10 +244,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>If true, the element is considered to exist.</summary>
         public override bool Exists
         {
-            get
-            {
-                return _components.Any(s => s.Value.Exists);
-            }
+            get { return _components.Any(s => s.Value.Exists); }
         }
 
         /// <summary>Create a component builder for the specified index.</summary>

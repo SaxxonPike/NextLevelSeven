@@ -11,17 +11,10 @@ namespace NextLevelSeven.Utility
         /// <summary>Get or set an item with the specified key.</summary>
         /// <param name="index">Key.</param>
         /// <returns>Value belonging to the key.</returns>
-        TValue this[TKey index]
-        {
-            get;
-            set;
-        }
+        TValue this[TKey index] { get; set; }
 
         /// <summary>Get the number of items in the cache.</summary>
-        int Count
-        {
-            get;
-        }
+        int Count { get; }
 
         /// <summary>Determine if the specified key is in the cache.</summary>
         /// <param name="index">Key.</param>

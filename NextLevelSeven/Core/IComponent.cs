@@ -6,10 +6,7 @@ namespace NextLevelSeven.Core
     public interface IComponent : IElement
     {
         /// <summary>Get this element's subcomponents.</summary>
-        IEnumerable<ISubcomponent> Subcomponents
-        {
-            get;
-        }
+        IEnumerable<ISubcomponent> Subcomponents { get; }
 
         /// <summary>Get a copy of the segment.</summary>
         new IComponent Clone();

@@ -4,17 +4,9 @@
     public interface IChannelIdentifier : ISpecificationElement
     {
         /// <summary>Number of the channel. (WVI.1)</summary>
-        int? Number
-        {
-            get;
-            set;
-        }
+        int? Number { get; set; }
 
         /// <summary>Name of the channel. (WVI.2)</summary>
-        string Name
-        {
-            get;
-            set;
-        }
+        string Name { get; set; }
     }
 }

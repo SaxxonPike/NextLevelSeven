@@ -29,28 +29,19 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Returns an empty list since there are no descendants in a subcomponent.</summary>
         public override IEnumerable<IElementParser> Descendants
         {
-            get
-            {
-                return Enumerable.Empty<IElementParser>();
-            }
+            get { return Enumerable.Empty<IElementParser>(); }
         }
 
         /// <summary>Delimiter is invalid for subcomponents.</summary>
         public override char Delimiter
         {
-            get
-            {
-                return '\0';
-            }
+            get { return '\0'; }
         }
 
         /// <summary>Returns 1, since subcomponents can't be divided further.</summary>
         public override int ValueCount
         {
-            get
-            {
-                return 1;
-            }
+            get { return 1; }
         }
 
         /// <summary>Get the subcomponent value.</summary>

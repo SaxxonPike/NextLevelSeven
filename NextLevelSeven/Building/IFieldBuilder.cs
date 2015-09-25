@@ -8,10 +8,7 @@ namespace NextLevelSeven.Building
         /// <summary>Get a descendant field repetition builder.</summary>
         /// <param name="index">Index within the field to get the builder from.</param>
         /// <returns>Field repetition builder for the specified index.</returns>
-        new IRepetitionBuilder this[int index]
-        {
-            get;
-        }
+        new IRepetitionBuilder this[int index] { get; }
 
         /// <summary>Set a component's content.</summary>
         /// <param name="repetition">Field repetition index.</param>

@@ -35,148 +35,82 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>Get or set the character used to separate component-level content.</summary>
-        public virtual char ComponentDelimiter
-        {
-            get;
-            set;
-        }
+        public virtual char ComponentDelimiter { get; set; }
 
         /// <summary>Get or set the character used to signify escape sequences.</summary>
-        public virtual char EscapeCharacter
-        {
-            get;
-            set;
-        }
+        public virtual char EscapeCharacter { get; set; }
 
         /// <summary>Get or set the character used to separate fields.</summary>
-        public virtual char FieldDelimiter
-        {
-            get;
-            set;
-        }
+        public virtual char FieldDelimiter { get; set; }
 
         /// <summary>Get or set the character used to separate field repetition content.</summary>
-        public virtual char RepetitionDelimiter
-        {
-            get;
-            set;
-        }
+        public virtual char RepetitionDelimiter { get; set; }
 
         /// <summary>Get or set the character used to separate subcomponent-level content.</summary>
-        public virtual char SubcomponentDelimiter
-        {
-            get;
-            set;
-        }
+        public virtual char SubcomponentDelimiter { get; set; }
 
         /// <summary>Get the encoding used by this builder.</summary>
-        public BuilderEncodingConfiguration Encoding
-        {
-            get;
-            private set;
-        }
+        public BuilderEncodingConfiguration Encoding { get; private set; }
 
         /// <summary>Get the index at which this builder is located in its descendant.</summary>
-        public int Index
-        {
-            get;
-            private set;
-        }
+        public int Index { get; private set; }
 
         /// <summary>Deep clone this element.</summary>
         /// <returns>Cloned element.</returns>
         public abstract IElement Clone();
 
         /// <summary>Get or set this element's value.</summary>
-        public abstract string Value
-        {
-            get;
-            set;
-        }
+        public abstract string Value { get; set; }
 
         /// <summary>Get or set this element's sub-values.</summary>
-        public abstract IEnumerable<string> Values
-        {
-            get;
-            set;
-        }
+        public abstract IEnumerable<string> Values { get; set; }
 
         /// <summary>Get a converter which will interpret this element's value as other types.</summary>
-        public abstract IEncodedTypeConverter Codec
-        {
-            get;
-        }
+        public abstract IEncodedTypeConverter Codec { get; }
 
         /// <summary>Get the number of sub-values in this element.</summary>
-        public abstract int ValueCount
-        {
-            get;
-        }
+        public abstract int ValueCount { get; }
 
         /// <summary>Get this element's section delimiter.</summary>
-        public abstract char Delimiter
-        {
-            get;
-        }
+        public abstract char Delimiter { get; }
 
         /// <summary>Get the descendant builder at the specified index.</summary>
         /// <param name="index">Index to reference.</param>
         /// <returns>Descendant builder.</returns>
         public IElement this[int index]
         {
-            get
-            {
-                return GetGenericElement(index);
-            }
+            get { return GetGenericElement(index); }
         }
 
         /// <summary>Get or set the value as a formatted string.</summary>
         public string FormattedValue
         {
-            get
-            {
-                return TextConverter.ConvertToString(Value);
-            }
-            set
-            {
-                Value = TextConverter.ConvertFromString(value);
-            }
+            get { return TextConverter.ConvertToString(Value); }
+            set { Value = TextConverter.ConvertFromString(value); }
         }
 
         /// <summary>Get the ancestor element. Null if it's a root element.</summary>
         IElement IElement.Ancestor
         {
-            get
-            {
-                return GetAncestor();
-            }
+            get { return GetAncestor(); }
         }
 
         /// <summary>Get descendant elements. For subcomponents, this will be empty.</summary>
         IEnumerable<IElement> IElement.Descendants
         {
-            get
-            {
-                return GetDescendants();
-            }
+            get { return GetDescendants(); }
         }
 
         /// <summary>Unique key of the element within the message.</summary>
         public string Key
         {
-            get
-            {
-                return ElementOperations.GetKey(this);
-            }
+            get { return ElementOperations.GetKey(this); }
         }
 
         /// <summary>Get the next available index.</summary>
         public virtual int NextIndex
         {
-            get
-            {
-                return GetDescendants().Where(d => d.Exists).Max(d => d.Index) + 1;
-            }
+            get { return GetDescendants().Where(d => d.Exists).Max(d => d.Index) + 1; }
         }
 
         /// <summary>Erase this element's content and mark it non-existant.</summary>
@@ -186,27 +120,18 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>True, if the element is considered to exist.</summary>
-        public abstract bool Exists
-        {
-            get;
-        }
+        public abstract bool Exists { get; }
 
         /// <summary>Get the encoding used by this builder.</summary>
         IReadOnlyEncoding IElement.Encoding
         {
-            get
-            {
-                return Encoding;
-            }
+            get { return Encoding; }
         }
 
         /// <summary>Get the encoding used by this builder.</summary>
         IEncoding IBuilder.Encoding
         {
-            get
-            {
-                return Encoding;
-            }
+            get { return Encoding; }
         }
 
         /// <summary>Compare this builder's value with another object's value. (IComparable support)</summary>

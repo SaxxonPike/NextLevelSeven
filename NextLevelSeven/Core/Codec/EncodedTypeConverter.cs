@@ -15,23 +15,13 @@ namespace NextLevelSeven.Core.Codec
         }
 
         /// <summary>Referenced element.</summary>
-        private IElement BaseElement
-        {
-            get;
-            set;
-        }
+        private IElement BaseElement { get; set; }
 
         /// <summary>Get or set the element's value as a date.</summary>
         public DateTime? AsDate
         {
-            get
-            {
-                return DateTimeConverter.ConvertToDate(BaseElement.Value);
-            }
-            set
-            {
-                BaseElement.Value = DateTimeConverter.ConvertFromDate(value);
-            }
+            get { return DateTimeConverter.ConvertToDate(BaseElement.Value); }
+            set { BaseElement.Value = DateTimeConverter.ConvertFromDate(value); }
         }
 
         /// <summary>Get the element's values as dates.</summary>
@@ -47,14 +37,8 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>Get or set the element's value as a date/time.</summary>
         public DateTimeOffset? AsDateTime
         {
-            get
-            {
-                return DateTimeConverter.ConvertToDateTime(BaseElement.Value);
-            }
-            set
-            {
-                BaseElement.Value = DateTimeConverter.ConvertFromDateTime(value);
-            }
+            get { return DateTimeConverter.ConvertToDateTime(BaseElement.Value); }
+            set { BaseElement.Value = DateTimeConverter.ConvertFromDateTime(value); }
         }
 
         /// <summary>Get the element's values as date/times.</summary>
@@ -70,14 +54,8 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>Get or set the element's value as a decimal.</summary>
         public decimal? AsDecimal
         {
-            get
-            {
-                return NumberConverter.ConvertToDecimal(BaseElement.Value);
-            }
-            set
-            {
-                BaseElement.Value = NumberConverter.ConvertFromDecimal(value);
-            }
+            get { return NumberConverter.ConvertToDecimal(BaseElement.Value); }
+            set { BaseElement.Value = NumberConverter.ConvertFromDecimal(value); }
         }
 
         /// <summary>Get the element's values as decimals.</summary>
@@ -108,14 +86,8 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>Get or set the element's value as an integer.</summary>
         public int? AsInt
         {
-            get
-            {
-                return NumberConverter.ConvertToInt(BaseElement.Value);
-            }
-            set
-            {
-                BaseElement.Value = NumberConverter.ConvertFromInt(value);
-            }
+            get { return NumberConverter.ConvertToInt(BaseElement.Value); }
+            set { BaseElement.Value = NumberConverter.ConvertFromInt(value); }
         }
 
         /// <summary>Get the element's values as integers.</summary>
@@ -131,14 +103,8 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>Get or set the element's value as a string.</summary>
         public string AsString
         {
-            get
-            {
-                return TextConverter.ConvertToString(BaseElement.Value);
-            }
-            set
-            {
-                BaseElement.Value = TextConverter.ConvertFromString(value);
-            }
+            get { return TextConverter.ConvertToString(BaseElement.Value); }
+            set { BaseElement.Value = TextConverter.ConvertFromString(value); }
         }
 
         /// <summary>Get the element's values as strings.</summary>
@@ -170,14 +136,8 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>Get or set the element's value as a time.</summary>
         public TimeSpan? AsTime
         {
-            get
-            {
-                return DateTimeConverter.ConvertToTime(BaseElement.Value);
-            }
-            set
-            {
-                BaseElement.Value = DateTimeConverter.ConvertFromTime(value);
-            }
+            get { return DateTimeConverter.ConvertToTime(BaseElement.Value); }
+            set { BaseElement.Value = DateTimeConverter.ConvertFromTime(value); }
         }
 
         /// <summary>Get the element's values as times.</summary>

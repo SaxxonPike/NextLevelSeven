@@ -13,7 +13,7 @@ namespace NextLevelSeven.Parsing.Elements
         IEquatable<IElement>, IEquatable<string>
     {
         /// <summary>String divider used to split the element's raw value.</summary>
-        private IStringDivider _descendantDivider;
+        private StringDivider _descendantDivider;
 
         /// <summary>Base encoding configuration.</summary>
         private EncodingConfiguration _encodingConfiguration;
@@ -33,14 +33,11 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Ancestor element. Root elements return null.</summary>
         protected virtual Parser Ancestor
         {
-            get
-            {
-                return null;
-            }
+            get { return null; }
         }
 
         /// <summary>Get the string divider used to find descendant values.</summary>
-        public IStringDivider DescendantDivider
+        public StringDivider DescendantDivider
         {
             get
             {
@@ -56,19 +53,13 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Get the deliminter internally being used by the descendant divider.</summary>
         protected char DescendantDividerDelimiter
         {
-            get
-            {
-                return _descendantDivider.Delimiter;
-            }
+            get { return _descendantDivider.Delimiter; }
         }
 
         /// <summary>Returns true if the descendant divider has been initialized.</summary>
         protected bool DescendantDividerInitialized
         {
-            get
-            {
-                return _descendantDivider != null;
-            }
+            get { return _descendantDivider != null; }
         }
 
         /// <summary>Get the encoding configuration.</summary>
@@ -125,34 +116,22 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Element at the specified index.</returns>
         public IElementParser this[int index]
         {
-            get
-            {
-                return GetDescendant(index);
-            }
+            get { return GetDescendant(index); }
         }
 
         /// <summary>Get the codec used to convert values in this element.</summary>
         public IEncodedTypeConverter Codec
         {
-            get
-            {
-                return new EncodedTypeConverter(this);
-            }
+            get { return new EncodedTypeConverter(this); }
         }
 
         /// <summary>Delimiter character to be used when locating sub-elements.</summary>
-        public abstract char Delimiter
-        {
-            get;
-        }
+        public abstract char Delimiter { get; }
 
         /// <summary>Number of descendant values.</summary>
         public virtual int ValueCount
         {
-            get
-            {
-                return DescendantDivider.Count;
-            }
+            get { return DescendantDivider.Count; }
         }
 
         /// <summary>Get descendant elements as an enumerable set.</summary>
@@ -171,26 +150,16 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>If true, the element is considered to exist.</summary>
         public bool Exists
         {
-            get
-            {
-                return DescendantDivider != null && !string.IsNullOrEmpty(DescendantDivider.Value);
-            }
+            get { return DescendantDivider != null && !string.IsNullOrEmpty(DescendantDivider.Value); }
         }
 
         /// <summary>Get or set the exposed index.</summary>
-        public int Index
-        {
-            get;
-            set;
-        }
+        public int Index { get; set; }
 
         /// <summary>Get or set the raw value of this element.</summary>
         public virtual string Value
         {
-            get
-            {
-                return (DescendantDivider == null) ? string.Empty : DescendantDivider.Value;
-            }
+            get { return (DescendantDivider == null) ? string.Empty : DescendantDivider.Value; }
             set
             {
                 DescendantDivider.Value = value;
@@ -204,14 +173,8 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Get or set the descendant raw values of this element.</summary>
         public virtual IEnumerable<string> Values
         {
-            get
-            {
-                return DescendantDivider.Values;
-            }
-            set
-            {
-                DescendantDivider.Values = value;
-            }
+            get { return DescendantDivider.Values; }
+            set { DescendantDivider.Values = value; }
         }
 
         /// <summary>Create a deep clone of the element.</summary>
@@ -223,59 +186,38 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Descendant element.</returns>
         IElement IElement.this[int index]
         {
-            get
-            {
-                return GetDescendant(index);
-            }
+            get { return GetDescendant(index); }
         }
 
         /// <summary>Get or set the value as a formatted string.</summary>
         public string FormattedValue
         {
-            get
-            {
-                return TextConverter.ConvertToString(Value);
-            }
-            set
-            {
-                Value = TextConverter.ConvertFromString(value);
-            }
+            get { return TextConverter.ConvertToString(Value); }
+            set { Value = TextConverter.ConvertFromString(value); }
         }
 
         /// <summary>Get the generic type ancestor element.</summary>
         IElement IElement.Ancestor
         {
-            get
-            {
-                return Ancestor;
-            }
+            get { return Ancestor; }
         }
 
         /// <summary>Get the generic type descendant collection.</summary>
         IEnumerable<IElement> IElement.Descendants
         {
-            get
-            {
-                return Descendants;
-            }
+            get { return Descendants; }
         }
 
         /// <summary>Unique key of the element within the message.</summary>
         public string Key
         {
-            get
-            {
-                return ElementOperations.GetKey(this);
-            }
+            get { return ElementOperations.GetKey(this); }
         }
 
         /// <summary>Get the next available index.</summary>
         public virtual int NextIndex
         {
-            get
-            {
-                return ValueCount + 1;
-            }
+            get { return ValueCount + 1; }
         }
 
         /// <summary>Erase an element from existence.</summary>
@@ -287,10 +229,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Get the encoding configuration being used for this parser.</summary>
         public IReadOnlyEncoding Encoding
         {
-            get
-            {
-                return EncodingConfiguration;
-            }
+            get { return EncodingConfiguration; }
         }
 
         /// <summary>Determines whether this builder's value is equivalent to another element's value. (element IEquatable support)</summary>
@@ -346,9 +285,9 @@ namespace NextLevelSeven.Parsing.Elements
 
         /// <summary>Get a string divider for this descendant element.</summary>
         /// <returns>Descendant string divider.</returns>
-        protected virtual IStringDivider GetDescendantDivider()
+        protected virtual StringDivider GetDescendantDivider()
         {
-            return new StringDivider(string.Empty, Delimiter);
+            return new RootStringDivider(string.Empty, Delimiter);
         }
     }
 }

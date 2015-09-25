@@ -19,32 +19,20 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get the number of field repetitions in this field, including field repetitions with no content.</summary>
         public override int ValueCount
         {
-            get
-            {
-                return 1;
-            }
+            get { return 1; }
         }
 
         /// <summary>Get or set field repetition content within this field.</summary>
         public override IEnumerable<string> Values
         {
-            get
-            {
-                yield return Value;
-            }
-            set
-            {
-                SetField(string.Concat(value));
-            }
+            get { yield return Value; }
+            set { SetField(string.Concat(value)); }
         }
 
         /// <summary>Get or set the field type value.</summary>
         public override string Value
         {
-            get
-            {
-                return FieldDelimiter == '\0' ? null : new string(FieldDelimiter, 1);
-            }
+            get { return FieldDelimiter == '\0' ? null : new string(FieldDelimiter, 1); }
             set
             {
                 if (string.IsNullOrEmpty(value))
@@ -59,10 +47,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>If true, the element is considered to exist.</summary>
         public override bool Exists
         {
-            get
-            {
-                return FieldDelimiter != '\0';
-            }
+            get { return FieldDelimiter != '\0'; }
         }
 
         /// <summary>Delimiter fields cannot have repetitions; this method throws unconditionally.</summary>

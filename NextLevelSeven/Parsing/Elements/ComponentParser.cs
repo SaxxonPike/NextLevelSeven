@@ -33,10 +33,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Delimiter to use for descendants.</summary>
         public override char Delimiter
         {
-            get
-            {
-                return EncodingConfiguration.SubcomponentDelimiter;
-            }
+            get { return EncodingConfiguration.SubcomponentDelimiter; }
         }
 
         /// <summary>Get the value at the specified index.</summary>
@@ -60,10 +57,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Element at the specified index.</returns>
         public new ISubcomponentParser this[int index]
         {
-            get
-            {
-                return _subcomponents[index];
-            }
+            get { return _subcomponents[index]; }
         }
 
         /// <summary>Create a deep clone of the element.</summary>
@@ -96,10 +90,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Get all subcomponents.</summary>
         IEnumerable<ISubcomponent> IComponent.Subcomponents
         {
-            get
-            {
-                return Subcomponents;
-            }
+            get { return Subcomponents; }
         }
 
         /// <summary>Get the descendant element at the specified index.</summary>

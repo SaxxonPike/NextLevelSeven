@@ -44,10 +44,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Component delimiter.</summary>
         public override char Delimiter
         {
-            get
-            {
-                return EncodingConfiguration.ComponentDelimiter;
-            }
+            get { return EncodingConfiguration.ComponentDelimiter; }
         }
 
         /// <summary>Get the value at the specified indices.</summary>
@@ -73,10 +70,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Descendant component at the specified index.</returns>
         public new IComponentParser this[int index]
         {
-            get
-            {
-                return _components[index];
-            }
+            get { return _components[index]; }
         }
 
         /// <summary>Deep clone this repetition.</summary>
@@ -109,10 +103,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Get all components.</summary>
         IEnumerable<IComponent> IRepetition.Components
         {
-            get
-            {
-                return Components;
-            }
+            get { return Components; }
         }
 
         /// <summary>Get the descendant element at the specified index.</summary>

@@ -17,10 +17,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Get or set encoding characters.</summary>
         public override string Value
         {
-            get
-            {
-                return Ancestor.DescendantDivider[1];
-            }
+            get { return Ancestor.DescendantDivider[1]; }
             set
             {
                 // we are assuming MSH + MSH-1 are configured
@@ -40,14 +37,8 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Get or set this field's encoding characters.</summary>
         public override IEnumerable<string> Values
         {
-            get
-            {
-                return Value.Select(c => new string(c, 1));
-            }
-            set
-            {
-                Value = string.Concat(value);
-            }
+            get { return Value.Select(c => new string(c, 1)); }
+            set { Value = string.Concat(value); }
         }
     }
 }

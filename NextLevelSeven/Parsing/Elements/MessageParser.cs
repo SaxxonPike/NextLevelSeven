@@ -25,10 +25,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Get the segment delimiter.</summary>
         public override char Delimiter
         {
-            get
-            {
-                return '\xD';
-            }
+            get { return '\xD'; }
         }
 
         /// <summary>Get data from a specific place in the message. Depth is determined by how many indices are specified.</summary>
@@ -61,10 +58,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Get the root message for this element.</summary>
         ISegmentParser IMessageParser.this[int index]
         {
-            get
-            {
-                return GetSegment(index);
-            }
+            get { return GetSegment(index); }
         }
 
         /// <summary>Check for validity of the message. Returns true if the message can reasonably be parsed.</summary>
@@ -118,10 +112,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Access message details as a property set.</summary>
         public IMessageDetails Details
         {
-            get
-            {
-                return new MessageDetails(this);
-            }
+            get { return new MessageDetails(this); }
         }
 
         /// <summary>Get all segments.</summary>
@@ -140,19 +131,13 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Get all segments.</summary>
         IEnumerable<ISegment> IMessage.Segments
         {
-            get
-            {
-                return Segments;
-            }
+            get { return Segments; }
         }
 
         /// <summary>Get or set the value of this message.</summary>
         public override string Value
         {
-            get
-            {
-                return base.Value;
-            }
+            get { return base.Value; }
             set
             {
                 if (value == null)

@@ -8,10 +8,7 @@ namespace NextLevelSeven.Building
         /// <summary>Get a descendant segment builder.</summary>
         /// <param name="index">Index within the message to get the builder from.</param>
         /// <returns>Segment builder for the specified index.</returns>
-        new ISegmentBuilder this[int index]
-        {
-            get;
-        }
+        new ISegmentBuilder this[int index] { get; }
 
         /// <summary>Set a component's content.</summary>
         /// <param name="segmentIndex">Segment index.</param>

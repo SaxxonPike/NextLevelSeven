@@ -27,19 +27,13 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Field repetition builder for the specified index.</returns>
         public new IRepetitionBuilder this[int index]
         {
-            get
-            {
-                return _repetitions[index];
-            }
+            get { return _repetitions[index]; }
         }
 
         /// <summary>Get the number of field repetitions in this field, including field repetitions with no content.</summary>
         public override int ValueCount
         {
-            get
-            {
-                return (_repetitions.Count > 0) ? _repetitions.Max(kv => kv.Key) : 0;
-            }
+            get { return (_repetitions.Count > 0) ? _repetitions.Max(kv => kv.Key) : 0; }
         }
 
         /// <summary>Get or set field repetition content within this field.</summary>
@@ -53,10 +47,7 @@ namespace NextLevelSeven.Building.Elements
                     yield return _repetitions[i].Value;
                 }
             }
-            set
-            {
-                SetFieldRepetitions(value.ToArray());
-            }
+            set { SetFieldRepetitions(value.ToArray()); }
         }
 
         /// <summary>Get or set the field string.</summary>
@@ -88,10 +79,7 @@ namespace NextLevelSeven.Building.Elements
 
                 return result.ToString();
             }
-            set
-            {
-                SetField(value);
-            }
+            set { SetField(value); }
         }
 
         /// <summary>Set a component's content.</summary>
@@ -282,19 +270,13 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get a codec that allows interpretation of the value as other types.</summary>
         public override sealed IEncodedTypeConverter Codec
         {
-            get
-            {
-                return new EncodedTypeConverter(this);
-            }
+            get { return new EncodedTypeConverter(this); }
         }
 
         /// <summary>Get this element's value delimiter.</summary>
         public override sealed char Delimiter
         {
-            get
-            {
-                return RepetitionDelimiter;
-            }
+            get { return RepetitionDelimiter; }
         }
 
         /// <summary>Get this element's field repetitions.</summary>
@@ -313,10 +295,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>If true, the element is considered to exist.</summary>
         public override bool Exists
         {
-            get
-            {
-                return _repetitions.Any(s => s.Value.Exists);
-            }
+            get { return _repetitions.Any(s => s.Value.Exists); }
         }
 
         /// <summary>Create a repetition builder object.</summary>

@@ -8,10 +8,7 @@ namespace NextLevelSeven.Building
         /// <summary>Get a descendant field builder.</summary>
         /// <param name="index">Index within the segment to get the builder from.</param>
         /// <returns>Field builder for the specified index.</returns>
-        new IFieldBuilder this[int index]
-        {
-            get;
-        }
+        new IFieldBuilder this[int index] { get; }
 
         /// <summary>Set a component's content.</summary>
         /// <param name="fieldIndex">Field index.</param>

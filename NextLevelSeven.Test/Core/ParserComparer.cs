@@ -8,19 +8,13 @@ using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Test.Core
 {
-    /// <summary>
-    ///     A comparer for multiple parsers.
-    /// </summary>
+    /// <summary>A comparer for multiple parsers.</summary>
     public class ParserComparer
     {
-        /// <summary>
-        ///     Parsers to compare.
-        /// </summary>
+        /// <summary>Parsers to compare.</summary>
         private readonly List<IMessage> _parsers = new List<IMessage>();
 
-        /// <summary>
-        ///     Create a parser comparer with the specified parsers. Minimum two parsers required.
-        /// </summary>
+        /// <summary>Create a parser comparer with the specified parsers. Minimum two parsers required.</summary>
         public ParserComparer(IMessage parserA, IMessage parserB, params IMessage[] additionalParsers)
         {
             _parsers.Add(parserA);
@@ -28,9 +22,7 @@ namespace NextLevelSeven.Test.Core
             _parsers.AddRange(additionalParsers);
         }
 
-        /// <summary>
-        ///     Assert that a message parses identically on all parsers.
-        /// </summary>
+        /// <summary>Assert that a message parses identically on all parsers.</summary>
         /// <param name="message">Message to compare.</param>
         public void AssertParseEquivalent(string message)
         {
@@ -44,9 +36,7 @@ namespace NextLevelSeven.Test.Core
             AssertParseEquivalent(_parsers.Select(p => (IElement) p).ToArray());
         }
 
-        /// <summary>
-        ///     Assert that all elements parse identically.
-        /// </summary>
+        /// <summary>Assert that all elements parse identically.</summary>
         /// <param name="elements"></param>
         private void AssertParseEquivalent(params IElement[] elements)
         {
@@ -87,9 +77,7 @@ namespace NextLevelSeven.Test.Core
             }
         }
 
-        /// <summary>
-        ///     Get a string representation of the HL7 element level.
-        /// </summary>
+        /// <summary>Get a string representation of the HL7 element level.</summary>
         private static string GetElementLevel(IElement element)
         {
             if (element is IMessage)
@@ -119,9 +107,7 @@ namespace NextLevelSeven.Test.Core
             return "Element";
         }
 
-        /// <summary>
-        ///     Get a string representation of the HL7 element location.
-        /// </summary>
+        /// <summary>Get a string representation of the HL7 element location.</summary>
         private static string GetElementLocation(IElement element)
         {
             var result = new StringBuilder();
@@ -138,9 +124,7 @@ namespace NextLevelSeven.Test.Core
             return result.ToString();
         }
 
-        /// <summary>
-        ///     Assert values are equal and print detailed report.
-        /// </summary>
+        /// <summary>Assert values are equal and print detailed report.</summary>
         private static void AssertEqual<T>(string errorMessage = null, params T[] values)
         {
             Assert.AreEqual(1, values.Distinct().Count(), string.Format(
@@ -150,9 +134,7 @@ namespace NextLevelSeven.Test.Core
                 errorMessage ?? "Values differ."));
         }
 
-        /// <summary>
-        ///     Assert that a message parses identically on all parsers.
-        /// </summary>
+        /// <summary>Assert that a message parses identically on all parsers.</summary>
         /// <param name="message">Message to compare.</param>
         public void AssertParseEquivalent(IMessage message)
         {

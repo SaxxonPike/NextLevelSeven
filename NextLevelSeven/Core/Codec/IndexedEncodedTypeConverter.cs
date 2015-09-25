@@ -20,25 +20,13 @@ namespace NextLevelSeven.Core.Codec
         }
 
         /// <summary>Referenced element.</summary>
-        private IElement BaseElement
-        {
-            get;
-            set;
-        }
+        private IElement BaseElement { get; set; }
 
         /// <summary>Decoding function from HL7.</summary>
-        private ProxyConverter<string, TDecoded> Decoder
-        {
-            get;
-            set;
-        }
+        private ProxyConverter<string, TDecoded> Decoder { get; set; }
 
         /// <summary>Encoding function to HL7.</summary>
-        private ProxyConverter<TDecoded, string> Encoder
-        {
-            get;
-            set;
-        }
+        private ProxyConverter<TDecoded, string> Encoder { get; set; }
 
         /// <summary>Get the items in the element as a collection.</summary>
         public IEnumerable<TDecoded> Items
@@ -58,14 +46,8 @@ namespace NextLevelSeven.Core.Codec
         /// <returns>Element descendant's value.</returns>
         public TDecoded this[int index]
         {
-            get
-            {
-                return Decoder(BaseElement[index].Value);
-            }
-            set
-            {
-                BaseElement[index].Value = Encoder(value);
-            }
+            get { return Decoder(BaseElement[index].Value); }
+            set { BaseElement[index].Value = Encoder(value); }
         }
     }
 }

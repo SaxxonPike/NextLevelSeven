@@ -8,10 +8,7 @@ namespace NextLevelSeven.Building
         /// <summary>Get a descendant subcomponent builder.</summary>
         /// <param name="index">Index within the component to get the builder from.</param>
         /// <returns>Subcomponent builder for the specified index.</returns>
-        new ISubcomponentBuilder this[int index]
-        {
-            get;
-        }
+        new ISubcomponentBuilder this[int index] { get; }
 
         /// <summary>Set this component's content.</summary>
         /// <param name="value">New value.</param>

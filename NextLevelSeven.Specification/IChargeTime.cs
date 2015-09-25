@@ -6,24 +6,12 @@ namespace NextLevelSeven.Specification
     public interface IChargeTime : ISpecificationElement
     {
         /// <summary>Event that caused the charge. (CCD.1)</summary>
-        string InvocationEvent
-        {
-            get;
-            set;
-        }
+        string InvocationEvent { get; set; }
 
         /// <summary>Date and time of the charge, as a date/time. (CCD.2)</summary>
-        DateTimeOffset? DateTime
-        {
-            get;
-            set;
-        }
+        DateTimeOffset? DateTime { get; set; }
 
         /// <summary>Date and time of the charge, as a string. (CCD.2)</summary>
-        string DateTimeData
-        {
-            get;
-            set;
-        }
+        string DateTimeData { get; set; }
     }
 }

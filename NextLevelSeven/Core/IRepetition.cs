@@ -6,10 +6,7 @@ namespace NextLevelSeven.Core
     public interface IRepetition : IElement
     {
         /// <summary>Get this element's components.</summary>
-        IEnumerable<IComponent> Components
-        {
-            get;
-        }
+        IEnumerable<IComponent> Components { get; }
 
         /// <summary>Get a copy of the segment.</summary>
         new IRepetition Clone();

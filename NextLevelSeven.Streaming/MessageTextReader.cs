@@ -16,11 +16,7 @@ namespace NextLevelSeven.Streaming
         }
 
         /// <summary>TextReader used to perform operations on the base stream.</summary>
-        protected TextReader Reader
-        {
-            get;
-            private set;
-        }
+        protected TextReader Reader { get; private set; }
 
         /// <summary>Read one textual HL7 message from the stream.</summary>
         /// <returns>Message that was read, or null if there are no more messages.</returns>
