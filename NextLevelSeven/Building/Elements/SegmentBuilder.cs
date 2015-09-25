@@ -8,19 +8,13 @@ using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building.Elements
 {
-    /// <summary>
-    ///     Represents an HL7 segment.
-    /// </summary>
+    /// <summary>Represents an HL7 segment.</summary>
     internal sealed class SegmentBuilder : DescendantBuilder, ISegmentBuilder
     {
-        /// <summary>
-        ///     Descendant builders.
-        /// </summary>
+        /// <summary>Descendant builders.</summary>
         private readonly IndexedCache<int, FieldBuilder> _fields;
 
-        /// <summary>
-        ///     Create a segment builder with the specified encoding configuration.
-        /// </summary>
+        /// <summary>Create a segment builder with the specified encoding configuration.</summary>
         /// <param name="builder">Ancestor builder.</param>
         /// <param name="index">Index in the ancestor.</param>
         internal SegmentBuilder(Builder builder, int index)
@@ -29,9 +23,7 @@ namespace NextLevelSeven.Building.Elements
             _fields = new IndexedCache<int, FieldBuilder>(CreateFieldBuilder);
         }
 
-        /// <summary>
-        ///     If true, this is an MSH segment which has special behavior in fields 1 and 2.
-        /// </summary>
+        /// <summary>If true, this is an MSH segment which has special behavior in fields 1 and 2.</summary>
         public bool IsMsh
         {
             get
@@ -45,38 +37,40 @@ namespace NextLevelSeven.Building.Elements
             }
         }
 
-        /// <summary>
-        ///     Get a descendant field builder.
-        /// </summary>
+        /// <summary>Get a descendant field builder.</summary>
         /// <param name="index">Index within the segment to get the builder from.</param>
         /// <returns>Field builder for the specified index.</returns>
         public new IFieldBuilder this[int index]
         {
-            get { return _fields[index]; }
+            get
+            {
+                return _fields[index];
+            }
         }
 
-        /// <summary>
-        ///     Get the number of fields in this segment, including fields with no content.
-        /// </summary>
+        /// <summary>Get the number of fields in this segment, including fields with no content.</summary>
         public override int ValueCount
         {
-            get { return (_fields.Count > 0)
-                ? (_fields.Max(kv => kv.Key) + 1)
-                : 0; }
+            get
+            {
+                return (_fields.Count > 0) ? (_fields.Max(kv => kv.Key) + 1) : 0;
+            }
         }
 
-        /// <summary>
-        ///     Get or set the three-letter type field of this segment.
-        /// </summary>
+        /// <summary>Get or set the three-letter type field of this segment.</summary>
         public string Type
         {
-            get { return _fields[0].Value; }
-            set { SetField(0, value); }
+            get
+            {
+                return _fields[0].Value;
+            }
+            set
+            {
+                SetField(0, value);
+            }
         }
 
-        /// <summary>
-        ///     Get or set field content within this segment.
-        /// </summary>
+        /// <summary>Get or set field content within this segment.</summary>
         public override IEnumerable<string> Values
         {
             get
@@ -87,12 +81,13 @@ namespace NextLevelSeven.Building.Elements
                     yield return _fields[i].Value;
                 }
             }
-            set { SetFields(value.ToArray()); }
+            set
+            {
+                SetFields(value.ToArray());
+            }
         }
 
-        /// <summary>
-        ///     Get or set the segment string.
-        /// </summary>
+        /// <summary>Get or set the segment string.</summary>
         public override string Value
         {
             get
@@ -126,12 +121,13 @@ namespace NextLevelSeven.Building.Elements
 
                 return result.ToString();
             }
-            set { SetSegment(value); }
+            set
+            {
+                SetSegment(value);
+            }
         }
 
-        /// <summary>
-        ///     Set a component's content.
-        /// </summary>
+        /// <summary>Set a component's content.</summary>
         /// <param name="fieldIndex">Field index.</param>
         /// <param name="repetition">Field repetition index.</param>
         /// <param name="componentIndex">Component index.</param>
@@ -143,9 +139,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Replace all component values within a field repetition.
-        /// </summary>
+        /// <summary>Replace all component values within a field repetition.</summary>
         /// <param name="fieldIndex">Field index.</param>
         /// <param name="repetition">Field repetition index.</param>
         /// <param name="components">Values to replace with.</param>
@@ -156,9 +150,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Set a sequence of components within a field repetition, beginning at the specified start index.
-        /// </summary>
+        /// <summary>Set a sequence of components within a field repetition, beginning at the specified start index.</summary>
         /// <param name="fieldIndex">Field index.</param>
         /// <param name="repetition">Field repetition index.</param>
         /// <param name="startIndex">Component index to begin replacing at.</param>
@@ -170,9 +162,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Set a field's content.
-        /// </summary>
+        /// <summary>Set a field's content.</summary>
         /// <param name="fieldIndex">Field index.</param>
         /// <param name="value">New value.</param>
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
@@ -182,9 +172,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Replace all field values within this segment.
-        /// </summary>
+        /// <summary>Replace all field values within this segment.</summary>
         /// <param name="fields">Values to replace with.</param>
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
         public ISegmentBuilder SetFields(params string[] fields)
@@ -193,9 +181,7 @@ namespace NextLevelSeven.Building.Elements
             return SetFields(0, fields);
         }
 
-        /// <summary>
-        ///     Set a sequence of fields within this segment, beginning at the specified start index.
-        /// </summary>
+        /// <summary>Set a sequence of fields within this segment, beginning at the specified start index.</summary>
         /// <param name="startIndex">Field index to begin replacing at.</param>
         /// <param name="fields">Values to replace with.</param>
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
@@ -214,9 +200,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Set a field repetition's content.
-        /// </summary>
+        /// <summary>Set a field repetition's content.</summary>
         /// <param name="fieldIndex">Field index.</param>
         /// <param name="repetition">Field repetition index.</param>
         /// <param name="value">New value.</param>
@@ -227,9 +211,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Replace all field repetitions within a field.
-        /// </summary>
+        /// <summary>Replace all field repetitions within a field.</summary>
         /// <param name="fieldIndex">Field index.</param>
         /// <param name="repetitions">Values to replace with.</param>
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
@@ -239,9 +221,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Set a sequence of field repetitions within a field, beginning at the specified start index.
-        /// </summary>
+        /// <summary>Set a sequence of field repetitions within a field, beginning at the specified start index.</summary>
         /// <param name="fieldIndex">Field index.</param>
         /// <param name="startIndex">Field repetition index to begin replacing at.</param>
         /// <param name="repetitions">Values to replace with.</param>
@@ -252,9 +232,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Set this segment's content.
-        /// </summary>
+        /// <summary>Set this segment's content.</summary>
         /// <param name="value">New value.</param>
         /// <returns>This SegmentBuilder, for chaining purposes.</returns>
         public ISegmentBuilder SetSegment(string value)
@@ -290,9 +268,7 @@ namespace NextLevelSeven.Building.Elements
             return SetFields(values.ToArray());
         }
 
-        /// <summary>
-        ///     Set a subcomponent's content.
-        /// </summary>
+        /// <summary>Set a subcomponent's content.</summary>
         /// <param name="fieldIndex">Field index.</param>
         /// <param name="repetition">Field repetition index.</param>
         /// <param name="componentIndex">Component index.</param>
@@ -306,9 +282,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Replace all subcomponents within a component.
-        /// </summary>
+        /// <summary>Replace all subcomponents within a component.</summary>
         /// <param name="fieldIndex">Field index.</param>
         /// <param name="repetition">Field repetition index.</param>
         /// <param name="componentIndex">Component index.</param>
@@ -321,9 +295,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Set a sequence of subcomponents within a component, beginning at the specified start index.
-        /// </summary>
+        /// <summary>Set a sequence of subcomponents within a component, beginning at the specified start index.</summary>
         /// <param name="fieldIndex">Field index.</param>
         /// <param name="repetition">Field repetition index.</param>
         /// <param name="componentIndex">Component index.</param>
@@ -337,9 +309,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Get the value at the specified index.
-        /// </summary>
+        /// <summary>Get the value at the specified index.</summary>
         /// <param name="field">Field index.</param>
         /// <param name="repetition">Repetition number.</param>
         /// <param name="component">Component index.</param>
@@ -347,14 +317,10 @@ namespace NextLevelSeven.Building.Elements
         /// <returns></returns>
         public string GetValue(int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
         {
-            return field < 0
-                ? Value
-                : _fields[field].GetValue(repetition, component, subcomponent);
+            return field < 0 ? Value : _fields[field].GetValue(repetition, component, subcomponent);
         }
 
-        /// <summary>
-        ///     Get the values at the specified indices.
-        /// </summary>
+        /// <summary>Get the values at the specified indices.</summary>
         /// <param name="field">Field index.</param>
         /// <param name="repetition">Repetition index.</param>
         /// <param name="component">Component index.</param>
@@ -363,48 +329,48 @@ namespace NextLevelSeven.Building.Elements
         public IEnumerable<string> GetValues(int field = -1, int repetition = -1, int component = -1,
             int subcomponent = -1)
         {
-            return field < 0
-                ? Values
-                : _fields[field].GetValues(repetition, component, subcomponent);
+            return field < 0 ? Values : _fields[field].GetValues(repetition, component, subcomponent);
         }
 
-        /// <summary>
-        ///     Deep clone this element.
-        /// </summary>
+        /// <summary>Deep clone this element.</summary>
         /// <returns>Clone of the element.</returns>
         public override IElement Clone()
         {
-            return new SegmentBuilder(Ancestor, Index) {Value = Value};
+            return new SegmentBuilder(Ancestor, Index)
+            {
+                Value = Value
+            };
         }
 
-        /// <summary>
-        ///     Deep clone this segment.
-        /// </summary>
+        /// <summary>Deep clone this segment.</summary>
         /// <returns>Clone of the segment.</returns>
         ISegment ISegment.Clone()
         {
-            return new SegmentBuilder(Ancestor, Index) {Value = Value};
+            return new SegmentBuilder(Ancestor, Index)
+            {
+                Value = Value
+            };
         }
 
-        /// <summary>
-        ///     Get a codec which can be used to interpret this element's data as other types.
-        /// </summary>
+        /// <summary>Get a codec which can be used to interpret this element's data as other types.</summary>
         public override IEncodedTypeConverter Codec
         {
-            get { return new EncodedTypeConverter(this); }
+            get
+            {
+                return new EncodedTypeConverter(this);
+            }
         }
 
-        /// <summary>
-        ///     Get this segment's data delimiter.
-        /// </summary>
+        /// <summary>Get this segment's data delimiter.</summary>
         public override char Delimiter
         {
-            get { return FieldDelimiter; }
+            get
+            {
+                return FieldDelimiter;
+            }
         }
 
-        /// <summary>
-        ///     Get this element's fields.
-        /// </summary>
+        /// <summary>Get this element's fields.</summary>
         IEnumerable<IField> ISegment.Fields
         {
             get
@@ -417,17 +383,25 @@ namespace NextLevelSeven.Building.Elements
             }
         }
 
-        /// <summary>
-        ///     Get the next available index.
-        /// </summary>
+        /// <summary>Get the next available index.</summary>
         public override int NextIndex
         {
-            get { return ValueCount; }
+            get
+            {
+                return ValueCount;
+            }
         }
 
-        /// <summary>
-        ///     Get descendant elements.
-        /// </summary>
+        /// <summary>If true, the element is considered to exist.</summary>
+        public override bool Exists
+        {
+            get
+            {
+                return _fields.Any(s => s.Value.Exists);
+            }
+        }
+
+        /// <summary>Get descendant elements.</summary>
         /// <returns>Descendant elements.</returns>
         protected override IEnumerable<IElement> GetDescendants()
         {
@@ -438,9 +412,7 @@ namespace NextLevelSeven.Building.Elements
             }
         }
 
-        /// <summary>
-        ///     Create a field builder object.
-        /// </summary>
+        /// <summary>Create a field builder object.</summary>
         /// <param name="index">Index of the object to create.</param>
         /// <returns>Field builder object.</returns>
         private FieldBuilder CreateFieldBuilder(int index)
@@ -462,14 +434,10 @@ namespace NextLevelSeven.Building.Elements
                 return new DelimiterFieldBuilder(this, index);
             }
 
-            return (index == 2)
-                ? new EncodingFieldBuilder(this, index)
-                : new FieldBuilder(this, index);
+            return (index == 2) ? new EncodingFieldBuilder(this, index) : new FieldBuilder(this, index);
         }
 
-        /// <summary>
-        ///     Method that is called when a descendant type field has changed.
-        /// </summary>
+        /// <summary>Method that is called when a descendant type field has changed.</summary>
         /// <param name="oldValue">Old type field value.</param>
         /// <param name="newValue">New type field value.</param>
         private static void OnTypeFieldModified(string oldValue, string newValue)
@@ -480,22 +448,12 @@ namespace NextLevelSeven.Building.Elements
             }
         }
 
-        /// <summary>
-        ///     Get the descendant element at the specified index.
-        /// </summary>
+        /// <summary>Get the descendant element at the specified index.</summary>
         /// <param name="index">Index to reference.</param>
         /// <returns>Element at the index.</returns>
         protected override IElement GetGenericElement(int index)
         {
             return _fields[index];
-        }
-
-        /// <summary>
-        ///     If true, the element is considered to exist.
-        /// </summary>
-        public override bool Exists
-        {
-            get { return _fields.Any(s => s.Value.Exists); }
         }
     }
 }

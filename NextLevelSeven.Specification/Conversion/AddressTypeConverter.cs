@@ -2,14 +2,10 @@
 
 namespace NextLevelSeven.Specification.Conversion
 {
-    /// <summary>
-    ///     Converter for HL7 address type.
-    /// </summary>
+    /// <summary>Converter for HL7 address type.</summary>
     public static class AddressTypeConverter
     {
-        /// <summary>
-        ///     Get the raw value for the specified address type.
-        /// </summary>
+        /// <summary>Get the raw value for the specified address type.</summary>
         /// <param name="addressType">Address type.</param>
         /// <returns>HL7 value.</returns>
         public static string ConvertFromTable(AddressType addressType)
@@ -36,9 +32,7 @@ namespace NextLevelSeven.Specification.Conversion
             return null;
         }
 
-        /// <summary>
-        ///     Get the address type from a raw value.
-        /// </summary>
+        /// <summary>Get the address type from a raw value.</summary>
         /// <param name="addressType">Address type.</param>
         /// <returns>Interpreted value.</returns>
         public static AddressType ConvertToTable(string addressType)

@@ -5,22 +5,17 @@ using NextLevelSeven.Parsing;
 
 namespace NextLevelSeven.Streaming
 {
-    /// <summary>
-    ///     A reader that pulls messages from the MLP format.
-    /// </summary>
+    /// <summary>A reader that pulls messages from the MLP format.</summary>
     public class MlpStreamReader : MessageStreamReader
     {
-        /// <summary>
-        ///     Create an MLP stream reader that uses a stream as a data source.
-        /// </summary>
+        /// <summary>Create an MLP stream reader that uses a stream as a data source.</summary>
         /// <param name="baseStream">Stream to get messages from.</param>
-        public MlpStreamReader(Stream baseStream) : base(baseStream)
+        public MlpStreamReader(Stream baseStream)
+            : base(baseStream)
         {
         }
 
-        /// <summary>
-        ///     Read one MLP-encoded message. Returns null if no messages are available.
-        /// </summary>
+        /// <summary>Read one MLP-encoded message. Returns null if no messages are available.</summary>
         /// <returns>Message that was read.</returns>
         public override IMessageParser Read()
         {
@@ -66,9 +61,7 @@ namespace NextLevelSeven.Streaming
             }
         }
 
-        /// <summary>
-        ///     Read all messages in the stream. If empty, there were no more messages.
-        /// </summary>
+        /// <summary>Read all messages in the stream. If empty, there were no more messages.</summary>
         /// <returns>Messages that were read.</returns>
         public override IEnumerable<IMessageParser> ReadAll()
         {

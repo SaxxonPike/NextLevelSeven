@@ -4,28 +4,25 @@ using NextLevelSeven.Parsing;
 
 namespace NextLevelSeven.Streaming
 {
-    /// <summary>
-    ///     A reader that reads textual HL7 messages, separated by blank lines.
-    /// </summary>
+    /// <summary>A reader that reads textual HL7 messages, separated by blank lines.</summary>
     public class MessageTextReader : MessageStreamReader
     {
-        /// <summary>
-        ///     Create a textual HL7 message reader using the specified stream as a source.
-        /// </summary>
+        /// <summary>Create a textual HL7 message reader using the specified stream as a source.</summary>
         /// <param name="baseStream">Stream to use as a source.</param>
-        public MessageTextReader(Stream baseStream) : base(baseStream)
+        public MessageTextReader(Stream baseStream)
+            : base(baseStream)
         {
             Reader = new StreamReader(baseStream);
         }
 
-        /// <summary>
-        ///     TextReader used to perform operations on the base stream.
-        /// </summary>
-        protected TextReader Reader { get; private set; }
+        /// <summary>TextReader used to perform operations on the base stream.</summary>
+        protected TextReader Reader
+        {
+            get;
+            private set;
+        }
 
-        /// <summary>
-        ///     Read one textual HL7 message from the stream.
-        /// </summary>
+        /// <summary>Read one textual HL7 message from the stream.</summary>
         /// <returns>Message that was read, or null if there are no more messages.</returns>
         public override IMessageParser Read()
         {
@@ -54,14 +51,10 @@ namespace NextLevelSeven.Streaming
                 }
             }
 
-            return lines.Count == 0
-                ? null
-                : Interpret(string.Join("\xD", lines));
+            return lines.Count == 0 ? null : Interpret(string.Join("\xD", lines));
         }
 
-        /// <summary>
-        ///     Read all messages in the stream. If empty, there were no more messages.
-        /// </summary>
+        /// <summary>Read all messages in the stream. If empty, there were no more messages.</summary>
         /// <returns>Messages that were read.</returns>
         public override IEnumerable<IMessageParser> ReadAll()
         {

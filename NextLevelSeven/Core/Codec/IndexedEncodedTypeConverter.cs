@@ -3,15 +3,11 @@ using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Core.Codec
 {
-    /// <summary>
-    ///     A wrapper around ICodec to allow for indexing an element's descendants.
-    /// </summary>
+    /// <summary>A wrapper around ICodec to allow for indexing an element's descendants.</summary>
     /// <typeparam name="TDecoded">Type of the decoded value.</typeparam>
     internal sealed class IndexedEncodedTypeConverter<TDecoded> : IIndexedEncodedTypeConverter<TDecoded>
     {
-        /// <summary>
-        ///     Create a codec indexer.
-        /// </summary>
+        /// <summary>Create a codec indexer.</summary>
         /// <param name="baseElement">Element to reference.</param>
         /// <param name="decoder">Decoding function from HL7.</param>
         /// <param name="encoder">Encoding function to HL7.</param>
@@ -23,35 +19,28 @@ namespace NextLevelSeven.Core.Codec
             Encoder = encoder;
         }
 
-        /// <summary>
-        ///     Referenced element.
-        /// </summary>
-        private IElement BaseElement { get; set; }
-
-        /// <summary>
-        ///     Decoding function from HL7.
-        /// </summary>
-        private ProxyConverter<string, TDecoded> Decoder { get; set; }
-
-        /// <summary>
-        ///     Encoding function to HL7.
-        /// </summary>
-        private ProxyConverter<TDecoded, string> Encoder { get; set; }
-
-        /// <summary>
-        ///     Get or set the element descendant's value as the codec indexer's type.
-        /// </summary>
-        /// <param name="index">Index to reference.</param>
-        /// <returns>Element descendant's value.</returns>
-        public TDecoded this[int index]
+        /// <summary>Referenced element.</summary>
+        private IElement BaseElement
         {
-            get { return Decoder(BaseElement[index].Value); }
-            set { BaseElement[index].Value = Encoder(value); }
+            get;
+            set;
         }
 
-        /// <summary>
-        ///     Get the items in the element as a collection.
-        /// </summary>
+        /// <summary>Decoding function from HL7.</summary>
+        private ProxyConverter<string, TDecoded> Decoder
+        {
+            get;
+            set;
+        }
+
+        /// <summary>Encoding function to HL7.</summary>
+        private ProxyConverter<TDecoded, string> Encoder
+        {
+            get;
+            set;
+        }
+
+        /// <summary>Get the items in the element as a collection.</summary>
         public IEnumerable<TDecoded> Items
         {
             get
@@ -61,6 +50,21 @@ namespace NextLevelSeven.Core.Codec
                 {
                     yield return this[i];
                 }
+            }
+        }
+
+        /// <summary>Get or set the element descendant's value as the codec indexer's type.</summary>
+        /// <param name="index">Index to reference.</param>
+        /// <returns>Element descendant's value.</returns>
+        public TDecoded this[int index]
+        {
+            get
+            {
+                return Decoder(BaseElement[index].Value);
+            }
+            set
+            {
+                BaseElement[index].Value = Encoder(value);
             }
         }
     }

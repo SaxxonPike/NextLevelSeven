@@ -2,38 +2,26 @@
 
 namespace NextLevelSeven.Conversion
 {
-    /// <summary>
-    ///     Conversion methods for Integer and Decimal types.
-    /// </summary>
+    /// <summary>Conversion methods for Integer and Decimal types.</summary>
     public static class NumberConverter
     {
-        /// <summary>
-        ///     Convert from decimal value to HL7 number.
-        /// </summary>
+        /// <summary>Convert from decimal value to HL7 number.</summary>
         /// <param name="input">Decimal value to convert.</param>
         /// <returns>Converted decimal value.</returns>
         public static string ConvertFromDecimal(decimal? input)
         {
-            return (input.HasValue)
-                ? input.Value.ToString(CultureInfo.InvariantCulture)
-                : null;
+            return (input.HasValue) ? input.Value.ToString(CultureInfo.InvariantCulture) : null;
         }
 
-        /// <summary>
-        ///     Convert from integer value to HL7 integer.
-        /// </summary>
+        /// <summary>Convert from integer value to HL7 integer.</summary>
         /// <param name="input">Integer value to convert.</param>
         /// <returns>Converted integer value.</returns>
         public static string ConvertFromInt(int? input)
         {
-            return (input.HasValue)
-                ? input.Value.ToString(CultureInfo.InvariantCulture)
-                : null;
+            return (input.HasValue) ? input.Value.ToString(CultureInfo.InvariantCulture) : null;
         }
 
-        /// <summary>
-        ///     Convert HL7 number to decimal value.
-        /// </summary>
+        /// <summary>Convert HL7 number to decimal value.</summary>
         /// <param name="input">Number to convert.</param>
         /// <returns>Converted number.</returns>
         public static decimal? ConvertToDecimal(string input)
@@ -52,9 +40,7 @@ namespace NextLevelSeven.Conversion
             return output;
         }
 
-        /// <summary>
-        ///     Convert HL7 integer to standard integer.
-        /// </summary>
+        /// <summary>Convert HL7 integer to standard integer.</summary>
         /// <param name="input">Integer to convert.</param>
         /// <returns>Converted integer.</returns>
         public static int? ConvertToInt(string input)

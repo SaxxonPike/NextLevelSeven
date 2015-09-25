@@ -9,36 +9,29 @@ using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Parsing.Elements
 {
-    /// <summary>
-    ///     Represents a textual HL7v2 message.
-    /// </summary>
+    /// <summary>Represents a textual HL7v2 message.</summary>
     internal sealed class MessageParser : Parser, IMessageParser
     {
-        /// <summary>
-        ///     Segment cache.
-        /// </summary>
+        /// <summary>Segment cache.</summary>
         private readonly IndexedCache<int, SegmentParser> _segments;
 
-        /// <summary>
-        ///     Create a message with a default MSH segment.
-        /// </summary>
+        /// <summary>Create a message with a default MSH segment.</summary>
         public MessageParser()
         {
             _segments = new IndexedCache<int, SegmentParser>(CreateSegment);
             Value = @"MSH|^~\&|";
         }
 
-        /// <summary>
-        ///     Get the segment delimiter.
-        /// </summary>
+        /// <summary>Get the segment delimiter.</summary>
         public override char Delimiter
         {
-            get { return '\xD'; }
+            get
+            {
+                return '\xD';
+            }
         }
 
-        /// <summary>
-        ///     Get data from a specific place in the message. Depth is determined by how many indices are specified.
-        /// </summary>
+        /// <summary>Get data from a specific place in the message. Depth is determined by how many indices are specified.</summary>
         /// <param name="segment">Segment index.</param>
         /// <param name="field">Field index.</param>
         /// <param name="repetition">Repetition number.</param>
@@ -65,17 +58,16 @@ namespace NextLevelSeven.Parsing.Elements
                 : this[segment][field][repetition][component][subcomponent];
         }
 
-        /// <summary>
-        ///     Get the root message for this element.
-        /// </summary>
+        /// <summary>Get the root message for this element.</summary>
         ISegmentParser IMessageParser.this[int index]
         {
-            get { return GetSegment(index); }
+            get
+            {
+                return GetSegment(index);
+            }
         }
 
-        /// <summary>
-        ///     Check for validity of the message. Returns true if the message can reasonably be parsed.
-        /// </summary>
+        /// <summary>Check for validity of the message. Returns true if the message can reasonably be parsed.</summary>
         /// <returns>True if the message can be parsed, false otherwise.</returns>
         public bool Validate()
         {
@@ -83,29 +75,7 @@ namespace NextLevelSeven.Parsing.Elements
             return value != null && value.StartsWith("MSH");
         }
 
-        /// <summary>
-        ///     Get an escaped version of the string, using encoding characters from this message.
-        /// </summary>
-        /// <param name="data">Data to escape.</param>
-        /// <returns>Escaped data.</returns>
-        public string Escape(string data)
-        {
-            return EncodingOperations.Escape(Encoding, data);
-        }
-
-        /// <summary>
-        ///     Get a string that has been unescaped from HL7.
-        /// </summary>
-        /// <param name="data">Data to unescape.</param>
-        /// <returns>Unescaped string.</returns>
-        public string UnEscape(string data)
-        {
-            return EncodingOperations.UnEscape(Encoding, data);
-        }
-
-        /// <summary>
-        ///     Get data from a specific place in the message. Depth is determined by how many indices are specified.
-        /// </summary>
+        /// <summary>Get data from a specific place in the message. Depth is determined by how many indices are specified.</summary>
         /// <param name="segment">Segment index.</param>
         /// <param name="field">Field index.</param>
         /// <param name="repetition">Repetition number.</param>
@@ -115,14 +85,10 @@ namespace NextLevelSeven.Parsing.Elements
         public IEnumerable<string> GetValues(int segment = -1, int field = -1, int repetition = -1, int component = -1,
             int subcomponent = -1)
         {
-            return segment < 0
-                ? Values
-                : GetSegment(segment).GetValues(field, repetition, component, subcomponent);
+            return segment < 0 ? Values : GetSegment(segment).GetValues(field, repetition, component, subcomponent);
         }
 
-        /// <summary>
-        ///     Get data from a specific place in the message. Depth is determined by how many indices are specified.
-        /// </summary>
+        /// <summary>Get data from a specific place in the message. Depth is determined by how many indices are specified.</summary>
         /// <param name="segment">Segment index.</param>
         /// <param name="field">Field index.</param>
         /// <param name="repetition">Repetition number.</param>
@@ -132,40 +98,33 @@ namespace NextLevelSeven.Parsing.Elements
         public string GetValue(int segment = -1, int field = -1, int repetition = -1, int component = -1,
             int subcomponent = -1)
         {
-            return segment < 0
-                ? Value
-                : GetSegment(segment).GetValue(field, repetition, component, subcomponent);
+            return segment < 0 ? Value : GetSegment(segment).GetValue(field, repetition, component, subcomponent);
         }
 
-        /// <summary>
-        ///     Deep clone this message.
-        /// </summary>
+        /// <summary>Deep clone this message.</summary>
         /// <returns>Clone of the message.</returns>
         public override IElement Clone()
         {
             return CloneInternal();
         }
 
-        /// <summary>
-        ///     Deep clone this message.
-        /// </summary>
+        /// <summary>Deep clone this message.</summary>
         /// <returns>Clone of the message.</returns>
         IMessage IMessage.Clone()
         {
             return CloneInternal();
         }
 
-        /// <summary>
-        ///     Access message details as a property set.
-        /// </summary>
+        /// <summary>Access message details as a property set.</summary>
         public IMessageDetails Details
         {
-            get { return new MessageDetails(this); }
+            get
+            {
+                return new MessageDetails(this);
+            }
         }
 
-        /// <summary>
-        ///     Get all segments.
-        /// </summary>
+        /// <summary>Get all segments.</summary>
         public IEnumerable<ISegmentParser> Segments
         {
             get
@@ -178,20 +137,22 @@ namespace NextLevelSeven.Parsing.Elements
             }
         }
 
-        /// <summary>
-        ///     Get all segments.
-        /// </summary>
+        /// <summary>Get all segments.</summary>
         IEnumerable<ISegment> IMessage.Segments
         {
-            get { return Segments; }
+            get
+            {
+                return Segments;
+            }
         }
 
-        /// <summary>
-        ///     Get or set the value of this message.
-        /// </summary>
+        /// <summary>Get or set the value of this message.</summary>
         public override string Value
         {
-            get { return base.Value; }
+            get
+            {
+                return base.Value;
+            }
             set
             {
                 if (value == null)
@@ -210,26 +171,39 @@ namespace NextLevelSeven.Parsing.Elements
             }
         }
 
-        /// <summary>
-        ///     Create a message with a default MSH segment.
-        /// </summary>
+        /// <summary>Get an escaped version of the string, using encoding characters from this message.</summary>
+        /// <param name="data">Data to escape.</param>
+        /// <returns>Escaped data.</returns>
+        public string Escape(string data)
+        {
+            return EncodingOperations.Escape(Encoding, data);
+        }
+
+        /// <summary>Get a string that has been unescaped from HL7.</summary>
+        /// <param name="data">Data to unescape.</param>
+        /// <returns>Unescaped string.</returns>
+        public string UnEscape(string data)
+        {
+            return EncodingOperations.UnEscape(Encoding, data);
+        }
+
+        /// <summary>Create a message with a default MSH segment.</summary>
         public static MessageParser Create()
         {
             return new MessageParser();
         }
 
-        /// <summary>
-        ///     Create a message using an HL7 data string.
-        /// </summary>
+        /// <summary>Create a message using an HL7 data string.</summary>
         /// <param name="message">Message data to interpret.</param>
         public static MessageParser Create(string message)
         {
-            return new MessageParser {Value = message};
+            return new MessageParser
+            {
+                Value = message
+            };
         }
 
-        /// <summary>
-        ///     Get descendant element.
-        /// </summary>
+        /// <summary>Get descendant element.</summary>
         /// <param name="index">Index of the element.</param>
         /// <returns></returns>
         public override IElementParser GetDescendant(int index)
@@ -237,9 +211,7 @@ namespace NextLevelSeven.Parsing.Elements
             return GetSegment(index);
         }
 
-        /// <summary>
-        ///     Get data from a specific place in the message. Depth is determined by how many indices are specified.
-        /// </summary>
+        /// <summary>Get data from a specific place in the message. Depth is determined by how many indices are specified.</summary>
         /// <param name="segmentName">Segment name.</param>
         /// <param name="field">Field index.</param>
         /// <param name="repetition">Repetition number.</param>
@@ -252,9 +224,7 @@ namespace NextLevelSeven.Parsing.Elements
             return GetFields(segmentName, field, repetition, component, subcomponent).FirstOrDefault();
         }
 
-        /// <summary>
-        ///     Get data from a specific place in the message. Depth is determined by how many indices are specified.
-        /// </summary>
+        /// <summary>Get data from a specific place in the message. Depth is determined by how many indices are specified.</summary>
         /// <param name="segmentName">Segment index.</param>
         /// <param name="field">Field index.</param>
         /// <param name="repetition">Repetition number.</param>
@@ -282,9 +252,7 @@ namespace NextLevelSeven.Parsing.Elements
                 : matches.Select(m => m[field][repetition][component][subcomponent]);
         }
 
-        /// <summary>
-        ///     Get a descendant segment.
-        /// </summary>
+        /// <summary>Get a descendant segment.</summary>
         /// <param name="index">Index of the segment.</param>
         /// <returns></returns>
         public ISegmentParser GetSegment(int index)
@@ -292,9 +260,7 @@ namespace NextLevelSeven.Parsing.Elements
             return _segments[index];
         }
 
-        /// <summary>
-        ///     Create a segment object.
-        /// </summary>
+        /// <summary>Create a segment object.</summary>
         /// <param name="index">Desired index.</param>
         /// <returns>Segment object.</returns>
         private SegmentParser CreateSegment(int index)
@@ -308,9 +274,7 @@ namespace NextLevelSeven.Parsing.Elements
             return result;
         }
 
-        /// <summary>
-        ///     Determines whether this object is equivalent to another object.
-        /// </summary>
+        /// <summary>Determines whether this object is equivalent to another object.</summary>
         /// <param name="obj">Object to compare to.</param>
         /// <returns>True, if objects are considered to be equivalent.</returns>
         public override bool Equals(object obj)
@@ -326,18 +290,14 @@ namespace NextLevelSeven.Parsing.Elements
             return SanitizeLineEndings(obj.ToString()) == ToString();
         }
 
-        /// <summary>
-        ///     Get the hash code for this element.
-        /// </summary>
+        /// <summary>Get the hash code for this element.</summary>
         /// <returns>Hash code of the value's string.</returns>
         public override int GetHashCode()
         {
             return ToString().GetHashCode();
         }
 
-        /// <summary>
-        ///     Change all system line endings to HL7 line endings.
-        /// </summary>
+        /// <summary>Change all system line endings to HL7 line endings.</summary>
         /// <param name="message">String to transform.</param>
         /// <returns>Sanitized string.</returns>
         private string SanitizeLineEndings(string message)
@@ -347,13 +307,15 @@ namespace NextLevelSeven.Parsing.Elements
                 : message.Replace(Environment.NewLine, EncodingConfiguration.SegmentDelimiterString);
         }
 
-        /// <summary>
-        ///     Deep clone this message.
-        /// </summary>
+        /// <summary>Deep clone this message.</summary>
         /// <returns>Clone of the message.</returns>
         private MessageParser CloneInternal()
         {
-            return new MessageParser {Value = Value, Index = Index};
+            return new MessageParser
+            {
+                Value = Value,
+                Index = Index
+            };
         }
     }
 }

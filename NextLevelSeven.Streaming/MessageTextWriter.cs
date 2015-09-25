@@ -3,14 +3,10 @@ using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Streaming
 {
-    /// <summary>
-    ///     A writer that writes textual HL7 messages, separated by blank lines.
-    /// </summary>
+    /// <summary>A writer that writes textual HL7 messages, separated by blank lines.</summary>
     public class MessageTextWriter : MessageStreamWriter
     {
-        /// <summary>
-        ///     Create a textual HL7 message writer using the specified stream to output data.
-        /// </summary>
+        /// <summary>Create a textual HL7 message writer using the specified stream to output data.</summary>
         /// <param name="baseStream">Stream to use as an output.</param>
         public MessageTextWriter(Stream baseStream)
             : base(baseStream)
@@ -18,19 +14,21 @@ namespace NextLevelSeven.Streaming
             Writer = new StreamWriter(baseStream);
         }
 
-        /// <summary>
-        ///     If true, a blank line will be inserted before data is written.
-        /// </summary>
-        protected bool WriteBlankLine { get; private set; }
+        /// <summary>If true, a blank line will be inserted before data is written.</summary>
+        protected bool WriteBlankLine
+        {
+            get;
+            private set;
+        }
 
-        /// <summary>
-        ///     TextWriter that operates on the base stream.
-        /// </summary>
-        protected TextWriter Writer { get; private set; }
+        /// <summary>TextWriter that operates on the base stream.</summary>
+        protected TextWriter Writer
+        {
+            get;
+            private set;
+        }
 
-        /// <summary>
-        ///     Write one textual HL7 message.
-        /// </summary>
+        /// <summary>Write one textual HL7 message.</summary>
         /// <param name="message">Message to write.</param>
         public override void Write(IMessage message)
         {

@@ -7,19 +7,13 @@ using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building.Elements
 {
-    /// <summary>
-    ///     Represents an HL7 field.
-    /// </summary>
+    /// <summary>Represents an HL7 field.</summary>
     internal class FieldBuilder : DescendantBuilder, IFieldBuilder
     {
-        /// <summary>
-        ///     Descendant builders.
-        /// </summary>
+        /// <summary>Descendant builders.</summary>
         private readonly IndexedCache<int, RepetitionBuilder> _repetitions;
 
-        /// <summary>
-        ///     Create a field builder with the specified encoding configuration.
-        /// </summary>
+        /// <summary>Create a field builder with the specified encoding configuration.</summary>
         /// <param name="builder">Ancestor builder.</param>
         /// <param name="index">Index in the ancestor.</param>
         internal FieldBuilder(Builder builder, int index)
@@ -28,27 +22,27 @@ namespace NextLevelSeven.Building.Elements
             _repetitions = new IndexedCache<int, RepetitionBuilder>(CreateRepetitionBuilder);
         }
 
-        /// <summary>
-        ///     Get a descendant field repetition builder.
-        /// </summary>
+        /// <summary>Get a descendant field repetition builder.</summary>
         /// <param name="index">Index within the field to get the builder from.</param>
         /// <returns>Field repetition builder for the specified index.</returns>
         public new IRepetitionBuilder this[int index]
         {
-            get { return _repetitions[index]; }
+            get
+            {
+                return _repetitions[index];
+            }
         }
 
-        /// <summary>
-        ///     Get the number of field repetitions in this field, including field repetitions with no content.
-        /// </summary>
+        /// <summary>Get the number of field repetitions in this field, including field repetitions with no content.</summary>
         public override int ValueCount
         {
-            get { return (_repetitions.Count > 0) ? _repetitions.Max(kv => kv.Key) : 0; }
+            get
+            {
+                return (_repetitions.Count > 0) ? _repetitions.Max(kv => kv.Key) : 0;
+            }
         }
 
-        /// <summary>
-        ///     Get or set field repetition content within this field.
-        /// </summary>
+        /// <summary>Get or set field repetition content within this field.</summary>
         public override IEnumerable<string> Values
         {
             get
@@ -59,12 +53,13 @@ namespace NextLevelSeven.Building.Elements
                     yield return _repetitions[i].Value;
                 }
             }
-            set { SetFieldRepetitions(value.ToArray()); }
+            set
+            {
+                SetFieldRepetitions(value.ToArray());
+            }
         }
 
-        /// <summary>
-        ///     Get or set the field string.
-        /// </summary>
+        /// <summary>Get or set the field string.</summary>
         public override string Value
         {
             get
@@ -93,12 +88,13 @@ namespace NextLevelSeven.Building.Elements
 
                 return result.ToString();
             }
-            set { SetField(value); }
+            set
+            {
+                SetField(value);
+            }
         }
 
-        /// <summary>
-        ///     Set a component's content.
-        /// </summary>
+        /// <summary>Set a component's content.</summary>
         /// <param name="repetition">Field repetition index.</param>
         /// <param name="componentIndex">Component index.</param>
         /// <param name="value">New value.</param>
@@ -109,9 +105,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Replace all component values within a field repetition.
-        /// </summary>
+        /// <summary>Replace all component values within a field repetition.</summary>
         /// <param name="repetition">Field repetition index.</param>
         /// <param name="components">Values to replace with.</param>
         /// <returns>This FieldBuilder, for chaining purposes.</returns>
@@ -121,9 +115,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Set a sequence of components within a field repetition, beginning at the specified start index.
-        /// </summary>
+        /// <summary>Set a sequence of components within a field repetition, beginning at the specified start index.</summary>
         /// <param name="repetition">Field repetition index.</param>
         /// <param name="startIndex">Component index to begin replacing at.</param>
         /// <param name="components">Values to replace with.</param>
@@ -134,9 +126,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Set this field's content.
-        /// </summary>
+        /// <summary>Set this field's content.</summary>
         /// <param name="value">New value.</param>
         /// <returns>This FieldBuilder, for chaining purposes.</returns>
         public virtual IFieldBuilder SetField(string value)
@@ -157,9 +147,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Set a field repetition's content.
-        /// </summary>
+        /// <summary>Set a field repetition's content.</summary>
         /// <param name="repetition">Field repetition index.</param>
         /// <param name="value">New value.</param>
         /// <returns>This FieldBuilder, for chaining purposes.</returns>
@@ -177,9 +165,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Replace all field repetitions within this field.
-        /// </summary>
+        /// <summary>Replace all field repetitions within this field.</summary>
         /// <param name="repetitions">Values to replace with.</param>
         /// <returns>This FieldBuilder, for chaining purposes.</returns>
         public IFieldBuilder SetFieldRepetitions(params string[] repetitions)
@@ -198,9 +184,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Set a sequence of field repetitions within this field, beginning at the specified start index.
-        /// </summary>
+        /// <summary>Set a sequence of field repetitions within this field, beginning at the specified start index.</summary>
         /// <param name="startIndex">Field repetition index to begin replacing at.</param>
         /// <param name="repetitions">Values to replace with.</param>
         /// <returns>This FieldBuilder, for chaining purposes.</returns>
@@ -219,9 +203,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Set a subcomponent's content.
-        /// </summary>
+        /// <summary>Set a subcomponent's content.</summary>
         /// <param name="repetition">Field repetition index.</param>
         /// <param name="componentIndex">Component index.</param>
         /// <param name="subcomponentIndex">Subcomponent index.</param>
@@ -233,9 +215,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Replace all subcomponents within a component.
-        /// </summary>
+        /// <summary>Replace all subcomponents within a component.</summary>
         /// <param name="repetition">Field repetition index.</param>
         /// <param name="componentIndex">Component index.</param>
         /// <param name="subcomponents">Subcomponent index.</param>
@@ -246,9 +226,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Set a sequence of subcomponents within a component, beginning at the specified start index.
-        /// </summary>
+        /// <summary>Set a sequence of subcomponents within a component, beginning at the specified start index.</summary>
         /// <param name="repetition">Field repetition index.</param>
         /// <param name="componentIndex">Component index.</param>
         /// <param name="startIndex">Subcomponent index to begin replacing at.</param>
@@ -261,71 +239,65 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Get the value at the specified indices.
-        /// </summary>
+        /// <summary>Get the value at the specified indices.</summary>
         /// <param name="repetition">Repetition number.</param>
         /// <param name="component">Component index.</param>
         /// <param name="subcomponent">Subcomponent index.</param>
         /// <returns></returns>
         public string GetValue(int repetition = -1, int component = -1, int subcomponent = -1)
         {
-            return repetition < 0
-                ? Value
-                : _repetitions[repetition].GetValue(component, subcomponent);
+            return repetition < 0 ? Value : _repetitions[repetition].GetValue(component, subcomponent);
         }
 
-        /// <summary>
-        ///     Get the values at the specified indices.
-        /// </summary>
+        /// <summary>Get the values at the specified indices.</summary>
         /// <param name="repetition">Repetition number.</param>
         /// <param name="component">Component index.</param>
         /// <param name="subcomponent">Subcomponent index.</param>
         /// <returns></returns>
         public IEnumerable<string> GetValues(int repetition = -1, int component = -1, int subcomponent = -1)
         {
-            return repetition < 0
-                ? Values
-                : _repetitions[repetition].GetValues(component, subcomponent);
+            return repetition < 0 ? Values : _repetitions[repetition].GetValues(component, subcomponent);
         }
 
-        /// <summary>
-        ///     Deep clone this element.
-        /// </summary>
+        /// <summary>Deep clone this element.</summary>
         /// <returns>Clone of the element.</returns>
         public override sealed IElement Clone()
         {
-            return new FieldBuilder(Ancestor, Index) {Value = Value};
+            return new FieldBuilder(Ancestor, Index)
+            {
+                Value = Value
+            };
         }
 
-        /// <summary>
-        ///     Deep clone this field.
-        /// </summary>
+        /// <summary>Deep clone this field.</summary>
         /// <returns>Clone of the field.</returns>
         IField IField.Clone()
         {
-            return new FieldBuilder(Ancestor, Index) {Value = Value};
+            return new FieldBuilder(Ancestor, Index)
+            {
+                Value = Value
+            };
         }
 
-        /// <summary>
-        ///     Get a codec that allows interpretation of the value as other types.
-        /// </summary>
+        /// <summary>Get a codec that allows interpretation of the value as other types.</summary>
         public override sealed IEncodedTypeConverter Codec
         {
-            get { return new EncodedTypeConverter(this); }
+            get
+            {
+                return new EncodedTypeConverter(this);
+            }
         }
 
-        /// <summary>
-        ///     Get this element's value delimiter.
-        /// </summary>
+        /// <summary>Get this element's value delimiter.</summary>
         public override sealed char Delimiter
         {
-            get { return RepetitionDelimiter; }
+            get
+            {
+                return RepetitionDelimiter;
+            }
         }
 
-        /// <summary>
-        ///     Get this element's field repetitions.
-        /// </summary>
+        /// <summary>Get this element's field repetitions.</summary>
         IEnumerable<IRepetition> IField.Repetitions
         {
             get
@@ -338,9 +310,16 @@ namespace NextLevelSeven.Building.Elements
             }
         }
 
-        /// <summary>
-        ///     Create a repetition builder object.
-        /// </summary>
+        /// <summary>If true, the element is considered to exist.</summary>
+        public override bool Exists
+        {
+            get
+            {
+                return _repetitions.Any(s => s.Value.Exists);
+            }
+        }
+
+        /// <summary>Create a repetition builder object.</summary>
         /// <param name="index">Index for the new object.</param>
         /// <returns>Repetition builder object.</returns>
         protected virtual RepetitionBuilder CreateRepetitionBuilder(int index)
@@ -348,22 +327,12 @@ namespace NextLevelSeven.Building.Elements
             return new RepetitionBuilder(this, index);
         }
 
-        /// <summary>
-        ///     Get the element at the specified index.
-        /// </summary>
+        /// <summary>Get the element at the specified index.</summary>
         /// <param name="index"></param>
         /// <returns></returns>
         protected override sealed IElement GetGenericElement(int index)
         {
             return _repetitions[index];
-        }
-
-        /// <summary>
-        ///     If true, the element is considered to exist.
-        /// </summary>
-        public override bool Exists
-        {
-            get { return _repetitions.Any(s => s.Value.Exists); }
         }
     }
 }

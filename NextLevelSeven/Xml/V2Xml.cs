@@ -8,14 +8,10 @@ using NextLevelSeven.Parsing;
 
 namespace NextLevelSeven.Xml
 {
-    /// <summary>
-    ///     Conversion methods for HL7v2 and XML.
-    /// </summary>
+    /// <summary>Conversion methods for HL7v2 and XML.</summary>
     internal static class V2Xml
     {
-        /// <summary>
-        ///     Convert an XML document into a message builder.
-        /// </summary>
+        /// <summary>Convert an XML document into a message builder.</summary>
         /// <param name="document">Document to convert.</param>
         /// <returns>Converted document.</returns>
         public static IMessageBuilder ConvertToBuilder(XmlDocument document)
@@ -25,9 +21,7 @@ namespace NextLevelSeven.Xml
             return message;
         }
 
-        /// <summary>
-        ///     Convert an XML document into a message parser.
-        /// </summary>
+        /// <summary>Convert an XML document into a message parser.</summary>
         /// <param name="document">Document to convert.</param>
         /// <returns>Converted document.</returns>
         public static IMessageParser ConvertToParser(XmlDocument document)
@@ -37,9 +31,7 @@ namespace NextLevelSeven.Xml
             return message;
         }
 
-        /// <summary>
-        ///     Convert a message into XML.
-        /// </summary>
+        /// <summary>Convert a message into XML.</summary>
         /// <param name="message">Message to convert.</param>
         /// <returns>Converted message.</returns>
         public static XmlDocument ConvertToXml(IMessage message)
@@ -49,9 +41,7 @@ namespace NextLevelSeven.Xml
             return document;
         }
 
-        /// <summary>
-        ///     Sanitize string before XML output.
-        /// </summary>
+        /// <summary>Sanitize string before XML output.</summary>
         /// <param name="value">Value to sanitize.</param>
         /// <returns>Sanitized string.</returns>
         private static string EscapeString(string value)
@@ -59,9 +49,7 @@ namespace NextLevelSeven.Xml
             return value ?? string.Empty;
         }
 
-        /// <summary>
-        ///     Write message content into an XML document.
-        /// </summary>
+        /// <summary>Write message content into an XML document.</summary>
         /// <param name="message">Message to get content from.</param>
         /// <param name="document">Document to write into.</param>
         private static void ExportXml(IMessage message, XmlDocument document)
@@ -85,9 +73,7 @@ namespace NextLevelSeven.Xml
             ExportElement(document, messageElement, "", message);
         }
 
-        /// <summary>
-        ///     Write one element into an XML document.
-        /// </summary>
+        /// <summary>Write one element into an XML document.</summary>
         /// <param name="document">Document to write into.</param>
         /// <param name="ancestor">Ancestor XML element to write into.</param>
         /// <param name="nameSpace">Namespace used to build tag names.</param>
@@ -165,9 +151,7 @@ namespace NextLevelSeven.Xml
             }
         }
 
-        /// <summary>
-        ///     Read an XML document into a message.
-        /// </summary>
+        /// <summary>Read an XML document into a message.</summary>
         /// <param name="message">Message to write into.</param>
         /// <param name="document">Source document.</param>
         private static void ImportXml(XmlDocument document, IMessage message)

@@ -2,9 +2,7 @@
 {
     public static partial class ErrorMessages
     {
-        /// <summary>
-        ///     English language translation.
-        /// </summary>
+        /// <summary>English language translation.</summary>
         private sealed class English : ErrorMessageLanguage
         {
             public override string GetMessage(ErrorCode code)

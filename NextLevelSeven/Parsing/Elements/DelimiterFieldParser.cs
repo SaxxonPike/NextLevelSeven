@@ -1,22 +1,16 @@
 ﻿namespace NextLevelSeven.Parsing.Elements
 {
-    /// <summary>
-    ///     Represents the special MSH-1 field, which contains the field delimiter for the rest of the segment.
-    /// </summary>
+    /// <summary>Represents the special MSH-1 field, which contains the field delimiter for the rest of the segment.</summary>
     internal sealed class DelimiterFieldParser : StaticValueFieldParser
     {
-        /// <summary>
-        ///     Create a field delimiter descendant.
-        /// </summary>
+        /// <summary>Create a field delimiter descendant.</summary>
         /// <param name="ancestor">Ancestor element.</param>
         public DelimiterFieldParser(Parser ancestor)
             : base(ancestor, 0, 1)
         {
         }
 
-        /// <summary>
-        ///     Get or set the value of the field delimiter.
-        /// </summary>
+        /// <summary>Get or set the value of the field delimiter.</summary>
         public override string Value
         {
             get
@@ -31,9 +25,11 @@
             set
             {
                 var s = Ancestor.DescendantDivider.Value;
-                if (s == null || s.Length < 3) { return; }
-                var newValue = string.Concat(s.Substring(0, 3), value,
-                    (s.Length > 3 ? s.Substring(4) : string.Empty));
+                if (s == null || s.Length < 3)
+                {
+                    return;
+                }
+                var newValue = string.Concat(s.Substring(0, 3), value, (s.Length > 3 ? s.Substring(4) : string.Empty));
                 Ancestor.DescendantDivider.Value = newValue;
             }
         }

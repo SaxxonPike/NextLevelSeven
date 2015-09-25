@@ -2,29 +2,19 @@
 
 namespace NextLevelSeven.Parsing.Dividers
 {
-    /// <summary>
-    ///     A root-level splitter which handles getting and setting delimited substrings within a string.
-    /// </summary>
+    /// <summary>A root-level splitter which handles getting and setting delimited substrings within a string.</summary>
     internal sealed class StringDivider : StringDividerBase
     {
-        /// <summary>
-        ///     [PERF] Cached divisions list.
-        /// </summary>
+        /// <summary>[PERF] Cached divisions list.</summary>
         private IReadOnlyList<StringDivision> _divisions;
 
-        /// <summary>
-        ///     Internally keep track if the base value is null.
-        /// </summary>
+        /// <summary>Internally keep track if the base value is null.</summary>
         private bool _isNull;
 
-        /// <summary>
-        ///     Internal character store.
-        /// </summary>
+        /// <summary>Internal character store.</summary>
         private char[] _valueChars;
 
-        /// <summary>
-        ///     Create a divider for a specified string.
-        /// </summary>
+        /// <summary>Create a divider for a specified string.</summary>
         /// <param name="s">String to divide.</param>
         /// <param name="delimiter">Delimiter to search for.</param>
         public StringDivider(string s, char delimiter)
@@ -33,9 +23,7 @@ namespace NextLevelSeven.Parsing.Dividers
             ValueChars = StringDividerOperations.GetChars(s);
         }
 
-        /// <summary>
-        ///     Get or set the substring at the specified index.
-        /// </summary>
+        /// <summary>Get or set the substring at the specified index.</summary>
         /// <param name="index">Index of the string to get or set.</param>
         /// <returns>Substring.</returns>
         public override string this[int index]
@@ -53,28 +41,31 @@ namespace NextLevelSeven.Parsing.Dividers
                 var d = Divisions[index];
                 return new string(ValueChars, d.Offset, d.Length);
             }
-            set { SetValue(index, value); }
+            set
+            {
+                SetValue(index, value);
+            }
         }
 
-        /// <summary>
-        ///     String that is operated upon, as a character array.
-        /// </summary>
+        /// <summary>String that is operated upon, as a character array.</summary>
         public override char[] BaseValue
         {
-            get { return ValueChars; }
+            get
+            {
+                return ValueChars;
+            }
         }
 
-        /// <summary>
-        ///     Get the number of divisions.
-        /// </summary>
+        /// <summary>Get the number of divisions.</summary>
         public override int Count
         {
-            get { return Divisions.Count; }
+            get
+            {
+                return Divisions.Count;
+            }
         }
 
-        /// <summary>
-        ///     Get the division offsets in the string.
-        /// </summary>
+        /// <summary>Get the division offsets in the string.</summary>
         public override IReadOnlyList<StringDivision> Divisions
         {
             get
@@ -84,35 +75,59 @@ namespace NextLevelSeven.Parsing.Dividers
             }
         }
 
-        /// <summary>
-        ///     Calculated value of all divisions separated by delimiters.
-        /// </summary>
+        /// <summary>Calculated value of all divisions separated by delimiters.</summary>
         public override string Value
         {
-            get { return IsNull ? null : new string(ValueChars); }
-            set { ValueChars = StringDividerOperations.GetChars(value); }
+            get
+            {
+                return IsNull ? null : new string(ValueChars);
+            }
+            set
+            {
+                ValueChars = StringDividerOperations.GetChars(value);
+            }
         }
 
-        /// <summary>
-        ///     Calculated value of all divisions separated by delimiters, as chars.
-        /// </summary>
+        /// <summary>Calculated value of all divisions separated by delimiters, as chars.</summary>
         public override char[] ValueChars
         {
-            get { return _valueChars; }
-            set { Initialize(value); }
+            get
+            {
+                return _valueChars;
+            }
+            set
+            {
+                Initialize(value);
+            }
         }
 
-        /// <summary>
-        ///     Returns true if the divider base value is null.
-        /// </summary>
+        /// <summary>Returns true if the divider base value is null.</summary>
         public override bool IsNull
         {
-            get { return _isNull; }
+            get
+            {
+                return _isNull;
+            }
         }
 
-        /// <summary>
-        ///     Set the string value at the specified index.
-        /// </summary>
+        /// <summary>Get the internal values.</summary>
+        public override IEnumerable<string> Values
+        {
+            get
+            {
+                var count = Divisions.Count;
+                for (var i = 0; i < count; i++)
+                {
+                    yield return this[i];
+                }
+            }
+            set
+            {
+                Value = (Delimiter == '\0') ? string.Concat(value) : string.Join(new string(Delimiter, 1), value);
+            }
+        }
+
+        /// <summary>Set the string value at the specified index.</summary>
         /// <param name="index">Index to change.</param>
         /// <param name="value">New value.</param>
         private void SetValue(int index, string value)
@@ -139,9 +154,7 @@ namespace NextLevelSeven.Parsing.Dividers
             }
         }
 
-        /// <summary>
-        ///     Initialize the divider's value with the specified characters.
-        /// </summary>
+        /// <summary>Initialize the divider's value with the specified characters.</summary>
         /// <param name="s">Characters to set the value to.</param>
         private void Initialize(char[] s)
         {
@@ -153,33 +166,11 @@ namespace NextLevelSeven.Parsing.Dividers
             RaiseValueChanged();
         }
 
-        /// <summary>
-        ///     Get the internal value as a string.
-        /// </summary>
+        /// <summary>Get the internal value as a string.</summary>
         /// <returns>Value as a string.</returns>
         public override string ToString()
         {
             return Value;
-        }
-
-        /// <summary>
-        ///     Get the internal values.
-        /// </summary>
-        public override IEnumerable<string> Values
-        {
-            get
-            {
-                var count = Divisions.Count;
-                for (var i = 0; i < count; i++)
-                {
-                    yield return this[i];
-                }
-            }
-            set {
-                Value = (Delimiter == '\0')
-                    ? string.Concat(value)
-                    : string.Join(new string(Delimiter, 1), value);
-            }
         }
     }
 }

@@ -9,19 +9,13 @@ using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building.Elements
 {
-    /// <summary>
-    ///     Represents an HL7 message as discrete parts, which can be quickly modified and exported.
-    /// </summary>
+    /// <summary>Represents an HL7 message as discrete parts, which can be quickly modified and exported.</summary>
     internal sealed class MessageBuilder : Builder, IMessageBuilder
     {
-        /// <summary>
-        ///     Descendant segments.
-        /// </summary>
+        /// <summary>Descendant segments.</summary>
         private readonly IndexedCache<int, SegmentBuilder> _segments;
 
-        /// <summary>
-        ///     Create a message builder with default MSH segment containing only encoding characters.
-        /// </summary>
+        /// <summary>Create a message builder with default MSH segment containing only encoding characters.</summary>
         public MessageBuilder()
         {
             _segments = new IndexedCache<int, SegmentBuilder>(CreateSegmentBuilder);
@@ -30,31 +24,33 @@ namespace NextLevelSeven.Building.Elements
             RepetitionDelimiter = '~';
             SubcomponentDelimiter = '&';
             FieldDelimiter = '|';
-            SetFields(1, "MSH", new string(FieldDelimiter, 1),
-                new string(new[] {ComponentDelimiter, RepetitionDelimiter, EscapeCharacter, SubcomponentDelimiter}));
+            SetFields(1, "MSH", new string(FieldDelimiter, 1), new string(new[]
+            {
+                ComponentDelimiter, RepetitionDelimiter, EscapeCharacter, SubcomponentDelimiter
+            }));
         }
 
-        /// <summary>
-        ///     Get a descendant segment builder.
-        /// </summary>
+        /// <summary>Get a descendant segment builder.</summary>
         /// <param name="index">Index within the message to get the builder from.</param>
         /// <returns>Segment builder for the specified index.</returns>
         public new ISegmentBuilder this[int index]
         {
-            get { return _segments[index]; }
+            get
+            {
+                return _segments[index];
+            }
         }
 
-        /// <summary>
-        ///     Get the number of segments in the message.
-        /// </summary>
+        /// <summary>Get the number of segments in the message.</summary>
         public override int ValueCount
         {
-            get { return _segments.Max(kv => kv.Key); }
+            get
+            {
+                return _segments.Max(kv => kv.Key);
+            }
         }
 
-        /// <summary>
-        ///     Get or set segment content within this message.
-        /// </summary>
+        /// <summary>Get or set segment content within this message.</summary>
         public override IEnumerable<string> Values
         {
             get
@@ -65,12 +61,13 @@ namespace NextLevelSeven.Building.Elements
                     yield return _segments[i].Value;
                 }
             }
-            set { SetSegments(value.ToArray()); }
+            set
+            {
+                SetSegments(value.ToArray());
+            }
         }
 
-        /// <summary>
-        ///     Get or set the message string.
-        /// </summary>
+        /// <summary>Get or set the message string.</summary>
         public override string Value
         {
             get
@@ -84,12 +81,13 @@ namespace NextLevelSeven.Building.Elements
                     _segments.OrderBy(i => i.Key).Select(i => i.Value.Value));
                 return result;
             }
-            set { SetMessage(value); }
+            set
+            {
+                SetMessage(value);
+            }
         }
 
-        /// <summary>
-        ///     Set a component's content.
-        /// </summary>
+        /// <summary>Set a component's content.</summary>
         /// <param name="segmentIndex">Segment index.</param>
         /// <param name="fieldIndex">Field index.</param>
         /// <param name="repetition">Field repetition index.</param>
@@ -103,9 +101,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Replace all component values within a field repetition.
-        /// </summary>
+        /// <summary>Replace all component values within a field repetition.</summary>
         /// <param name="segmentIndex">Segment index.</param>
         /// <param name="fieldIndex">Field index.</param>
         /// <param name="repetition">Field repetition index.</param>
@@ -118,9 +114,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Set a sequence of components within a field repetition, beginning at the specified start index.
-        /// </summary>
+        /// <summary>Set a sequence of components within a field repetition, beginning at the specified start index.</summary>
         /// <param name="segmentIndex">Segment index.</param>
         /// <param name="fieldIndex">Field index.</param>
         /// <param name="repetition">Field repetition index.</param>
@@ -134,9 +128,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Set a field's content.
-        /// </summary>
+        /// <summary>Set a field's content.</summary>
         /// <param name="segmentIndex">Segment index.</param>
         /// <param name="fieldIndex">Field index.</param>
         /// <param name="value">New value.</param>
@@ -147,9 +139,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Replace all field values within a segment.
-        /// </summary>
+        /// <summary>Replace all field values within a segment.</summary>
         /// <param name="segmentIndex">Segment index.</param>
         /// <param name="fields">Values to replace with.</param>
         /// <returns>This MessageBuilder, for chaining purposes.</returns>
@@ -159,9 +149,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Set a sequence of fields within a segment, beginning at the specified start index.
-        /// </summary>
+        /// <summary>Set a sequence of fields within a segment, beginning at the specified start index.</summary>
         /// <param name="segmentIndex">Segment index.</param>
         /// <param name="startIndex">Field index to begin replacing at.</param>
         /// <param name="fields">Values to replace with.</param>
@@ -172,9 +160,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Set a field repetition's content.
-        /// </summary>
+        /// <summary>Set a field repetition's content.</summary>
         /// <param name="segmentIndex">Segment index.</param>
         /// <param name="fieldIndex">Field index.</param>
         /// <param name="repetition">Field repetition index.</param>
@@ -186,9 +172,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Replace all field repetitions within a field.
-        /// </summary>
+        /// <summary>Replace all field repetitions within a field.</summary>
         /// <param name="segmentIndex">Segment index.</param>
         /// <param name="fieldIndex">Field index.</param>
         /// <param name="repetitions">Values to replace with.</param>
@@ -199,9 +183,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Set a sequence of field repetitions within a field, beginning at the specified start index.
-        /// </summary>
+        /// <summary>Set a sequence of field repetitions within a field, beginning at the specified start index.</summary>
         /// <param name="segmentIndex">Segment index.</param>
         /// <param name="fieldIndex">Field index.</param>
         /// <param name="startIndex">Field repetition index to begin replacing at.</param>
@@ -214,9 +196,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Set this message's content.
-        /// </summary>
+        /// <summary>Set this message's content.</summary>
         /// <param name="value">New value.</param>
         /// <returns>This MessageBuilder, for chaining purposes.</returns>
         public IMessageBuilder SetMessage(string value)
@@ -255,9 +235,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Set a segment's content.
-        /// </summary>
+        /// <summary>Set a segment's content.</summary>
         /// <param name="segmentIndex">Segment index.</param>
         /// <param name="value">New value.</param>
         /// <returns>This MessageBuilder, for chaining purposes.</returns>
@@ -267,9 +245,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Replace all segments within this message.
-        /// </summary>
+        /// <summary>Replace all segments within this message.</summary>
         /// <param name="segments">Values to replace with.</param>
         /// <returns>This MessageBuilder, for chaining purposes.</returns>
         public IMessageBuilder SetSegments(params string[] segments)
@@ -284,9 +260,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Set a sequence of segments within this message, beginning at the specified start index.
-        /// </summary>
+        /// <summary>Set a sequence of segments within this message, beginning at the specified start index.</summary>
         /// <param name="startIndex">Segment index to begin replacing at.</param>
         /// <param name="segments">Values to replace with.</param>
         /// <returns>This MessageBuilder, for chaining purposes.</returns>
@@ -300,9 +274,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Set a subcomponent's content.
-        /// </summary>
+        /// <summary>Set a subcomponent's content.</summary>
         /// <param name="segmentIndex">Segment index.</param>
         /// <param name="fieldIndex">Field index.</param>
         /// <param name="repetition">Field repetition index.</param>
@@ -311,16 +283,13 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="value">New value.</param>
         /// <returns>This MessageBuilder, for chaining purposes.</returns>
         public IMessageBuilder SetSubcomponent(int segmentIndex, int fieldIndex, int repetition, int componentIndex,
-            int subcomponentIndex,
-            string value)
+            int subcomponentIndex, string value)
         {
             _segments[segmentIndex].SetSubcomponent(fieldIndex, repetition, componentIndex, subcomponentIndex, value);
             return this;
         }
 
-        /// <summary>
-        ///     Replace all subcomponents within a component.
-        /// </summary>
+        /// <summary>Replace all subcomponents within a component.</summary>
         /// <param name="segmentIndex">Segment index.</param>
         /// <param name="fieldIndex">Field index.</param>
         /// <param name="repetition">Field repetition index.</param>
@@ -334,9 +303,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Set a sequence of subcomponents within a component, beginning at the specified start index.
-        /// </summary>
+        /// <summary>Set a sequence of subcomponents within a component, beginning at the specified start index.</summary>
         /// <param name="segmentIndex">Segment index.</param>
         /// <param name="fieldIndex">Field index.</param>
         /// <param name="repetition">Field repetition index.</param>
@@ -351,9 +318,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Get the values at the specific location in the message.
-        /// </summary>
+        /// <summary>Get the values at the specific location in the message.</summary>
         /// <param name="segment">Segment index.</param>
         /// <param name="field">Field index.</param>
         /// <param name="repetition">Repetition index.</param>
@@ -384,9 +349,7 @@ namespace NextLevelSeven.Building.Elements
                 : _segments[segment][field][repetition][component][subcomponent].Value.Yield();
         }
 
-        /// <summary>
-        ///     Get the value at the specific location in the message.
-        /// </summary>
+        /// <summary>Get the value at the specific location in the message.</summary>
         /// <param name="segment">Segment index.</param>
         /// <param name="field">Field index.</param>
         /// <param name="repetition">Repetition index.</param>
@@ -417,51 +380,54 @@ namespace NextLevelSeven.Building.Elements
                 : _segments[segment][field][repetition][component][subcomponent].Value;
         }
 
-        /// <summary>
-        ///     Deep clone the message builder.
-        /// </summary>
+        /// <summary>Deep clone the message builder.</summary>
         /// <returns>Clone of the message builder.</returns>
         public override IElement Clone()
         {
-            return new MessageBuilder {Value = Value};
+            return new MessageBuilder
+            {
+                Value = Value
+            };
         }
 
-        /// <summary>
-        ///     Deep clone the message.
-        /// </summary>
+        /// <summary>Deep clone the message.</summary>
         /// <returns>Clone of the message.</returns>
         IMessage IMessage.Clone()
         {
-            return new MessageBuilder {Value = Value};
+            return new MessageBuilder
+            {
+                Value = Value
+            };
         }
 
-        /// <summary>
-        ///     Get a codec which can be used to interpret this element as other types.
-        /// </summary>
+        /// <summary>Get a codec which can be used to interpret this element as other types.</summary>
         public override IEncodedTypeConverter Codec
         {
-            get { return new EncodedTypeConverter(this); }
+            get
+            {
+                return new EncodedTypeConverter(this);
+            }
         }
 
-        /// <summary>
-        ///     Get the message delimiter.
-        /// </summary>
+        /// <summary>Get the message delimiter.</summary>
         public override char Delimiter
         {
-            get { return Encoding.SegmentDelimiter; }
+            get
+            {
+                return Encoding.SegmentDelimiter;
+            }
         }
 
-        /// <summary>
-        ///     Get a wrapper which can manipulate message details.
-        /// </summary>
+        /// <summary>Get a wrapper which can manipulate message details.</summary>
         public IMessageDetails Details
         {
-            get { return new MessageDetails(this); }
+            get
+            {
+                return new MessageDetails(this);
+            }
         }
 
-        /// <summary>
-        ///     Get the message's segments.
-        /// </summary>
+        /// <summary>Get the message's segments.</summary>
         IEnumerable<ISegment> IMessage.Segments
         {
             get
@@ -474,21 +440,24 @@ namespace NextLevelSeven.Building.Elements
             }
         }
 
-        /// <summary>
-        ///     Change all system line endings to HL7 line endings.
-        /// </summary>
+        /// <summary>If true, the element is considered to exist.</summary>
+        public override bool Exists
+        {
+            get
+            {
+                return _segments.Any(s => s.Value.Exists);
+            }
+        }
+
+        /// <summary>Change all system line endings to HL7 line endings.</summary>
         /// <param name="message">String to transform.</param>
         /// <returns>Sanitized string.</returns>
         private string SanitizeLineEndings(string message)
         {
-            return message == null
-                ? null
-                : message.Replace(Environment.NewLine, Encoding.SegmentDelimiterString);
+            return message == null ? null : message.Replace(Environment.NewLine, Encoding.SegmentDelimiterString);
         }
 
-        /// <summary>
-        ///     Create a segment builder object.
-        /// </summary>
+        /// <summary>Create a segment builder object.</summary>
         /// <param name="index">Index to create the object for.</param>
         /// <returns>Segment builder object.</returns>
         private SegmentBuilder CreateSegmentBuilder(int index)
@@ -496,22 +465,12 @@ namespace NextLevelSeven.Building.Elements
             return new SegmentBuilder(this, index);
         }
 
-        /// <summary>
-        ///     Get the element at the specified index.
-        /// </summary>
+        /// <summary>Get the element at the specified index.</summary>
         /// <param name="index">Desired index.</param>
         /// <returns>Element at the index.</returns>
         protected override IElement GetGenericElement(int index)
         {
             return _segments[index];
-        }
-
-        /// <summary>
-        ///     If true, the element is considered to exist.
-        /// </summary>
-        public override bool Exists
-        {
-            get { return _segments.Any(s => s.Value.Exists); }
         }
     }
 }

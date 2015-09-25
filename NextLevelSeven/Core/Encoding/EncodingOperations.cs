@@ -3,14 +3,10 @@ using System.Text;
 
 namespace NextLevelSeven.Core.Encoding
 {
-    /// <summary>
-    ///     Contains operations for escaping and unescaping HL7 strings.
-    /// </summary>
-    static internal class EncodingOperations
+    /// <summary>Contains operations for escaping and unescaping HL7 strings.</summary>
+    internal static class EncodingOperations
     {
-        /// <summary>
-        ///     Add HL7 escape codes where necessary, according to this encoding configuration.
-        /// </summary>
+        /// <summary>Add HL7 escape codes where necessary, according to this encoding configuration.</summary>
         /// <param name="config">Encoding configuration.</param>
         /// <param name="s">String to escape.</param>
         /// <returns>Escaped string.</returns>
@@ -37,7 +33,10 @@ namespace NextLevelSeven.Core.Encoding
 
                 if (c == componentDelimiter)
                 {
-                    output.Append(new[] { escapeDelimiter, 'S', escapeDelimiter });
+                    output.Append(new[]
+                    {
+                        escapeDelimiter, 'S', escapeDelimiter
+                    });
                     continue;
                 }
 
@@ -51,7 +50,10 @@ namespace NextLevelSeven.Core.Encoding
                             {
                                 case 'N': // normal text
                                 case 'H': // highlight text
-                                    output.Append(new[] { escapeDelimiter, data[index + 1], escapeDelimiter });
+                                    output.Append(new[]
+                                    {
+                                        escapeDelimiter, data[index + 1], escapeDelimiter
+                                    });
                                     index += 2;
                                     continue;
                             }
@@ -113,25 +115,37 @@ namespace NextLevelSeven.Core.Encoding
                         }
                     }
 
-                    output.Append(new[] { escapeDelimiter, 'E', escapeDelimiter });
+                    output.Append(new[]
+                    {
+                        escapeDelimiter, 'E', escapeDelimiter
+                    });
                     continue;
                 }
 
                 if (c == fieldDelimiter)
                 {
-                    output.Append(new[] { escapeDelimiter, 'F', escapeDelimiter });
+                    output.Append(new[]
+                    {
+                        escapeDelimiter, 'F', escapeDelimiter
+                    });
                     continue;
                 }
 
                 if (c == repetitionDelimiter)
                 {
-                    output.Append(new[] { escapeDelimiter, 'R', escapeDelimiter });
+                    output.Append(new[]
+                    {
+                        escapeDelimiter, 'R', escapeDelimiter
+                    });
                     continue;
                 }
 
                 if (c == subcomponentDelimiter)
                 {
-                    output.Append(new[] { escapeDelimiter, 'T', escapeDelimiter });
+                    output.Append(new[]
+                    {
+                        escapeDelimiter, 'T', escapeDelimiter
+                    });
                     continue;
                 }
 
@@ -141,9 +155,7 @@ namespace NextLevelSeven.Core.Encoding
             return output.ToString();
         }
 
-        /// <summary>
-        ///     Remove HL7 escape codes, using this encoding configuration for special characters.
-        /// </summary>
+        /// <summary>Remove HL7 escape codes, using this encoding configuration for special characters.</summary>
         /// <param name="config">Encoding configuration.</param>
         /// <param name="s">String to unescape.</param>
         /// <returns>Unescaped string.</returns>

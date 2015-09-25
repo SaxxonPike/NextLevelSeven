@@ -2,24 +2,16 @@
 
 namespace NextLevelSeven.Diagnostics
 {
-    /// <summary>
-    ///     Contains error message processing logic for multiple languages.
-    /// </summary>
+    /// <summary>Contains error message processing logic for multiple languages.</summary>
     public static partial class ErrorMessages
     {
-        /// <summary>
-        ///     Language to fall back when the selected language does not have a translation.
-        /// </summary>
+        /// <summary>Language to fall back when the selected language does not have a translation.</summary>
         private static readonly ErrorMessageLanguage FallbackLanguage = new English();
 
-        /// <summary>
-        ///     Backing store for Language.
-        /// </summary>
+        /// <summary>Backing store for Language.</summary>
         private static ErrorMessageLanguage _language;
 
-        /// <summary>
-        ///     Currently selected language.
-        /// </summary>
+        /// <summary>Currently selected language.</summary>
         private static ErrorMessageLanguage Language
         {
             get
@@ -32,9 +24,7 @@ namespace NextLevelSeven.Diagnostics
             }
         }
 
-        /// <summary>
-        ///     Get an error message for the currently selected language.
-        /// </summary>
+        /// <summary>Get an error message for the currently selected language.</summary>
         /// <param name="code">Error code to get the message for.</param>
         /// <param name="extraInfo">Extra information to pass for string formatting.</param>
         /// <returns></returns>
@@ -49,9 +39,7 @@ namespace NextLevelSeven.Diagnostics
             return string.Format("{0} (NL7-{1})", string.Format(message ?? "Unknown error.", extraInfo), (int) code);
         }
 
-        /// <summary>
-        ///     Set the selected language for error messages.
-        /// </summary>
+        /// <summary>Set the selected language for error messages.</summary>
         /// <param name="language">Two-letter language code. If more than two characters are passed, only the first two are used.</param>
         public static void SetLanguage(string language = null)
         {
@@ -77,14 +65,10 @@ namespace NextLevelSeven.Diagnostics
             }
         }
 
-        /// <summary>
-        ///     Base class for error message languages.
-        /// </summary>
+        /// <summary>Base class for error message languages.</summary>
         private abstract class ErrorMessageLanguage
         {
-            /// <summary>
-            ///     Get the error message for this language.
-            /// </summary>
+            /// <summary>Get the error message for this language.</summary>
             /// <param name="code">Error code to get the message for.</param>
             /// <returns>Error string.</returns>
             public abstract string GetMessage(ErrorCode code);

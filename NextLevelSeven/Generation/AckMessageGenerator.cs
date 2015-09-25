@@ -5,14 +5,10 @@ using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Generation
 {
-    /// <summary>
-    ///     An ACK message generator for HL7v2 messages, used as responses to requests. This is a static class.
-    /// </summary>
+    /// <summary>An ACK message generator for HL7v2 messages, used as responses to requests. This is a static class.</summary>
     public static class AckMessageGenerator
     {
-        /// <summary>
-        ///     Generate an HL7v2 ACK message.
-        /// </summary>
+        /// <summary>Generate an HL7v2 ACK message.</summary>
         /// <param name="message">Message to acknowledge.</param>
         /// <param name="code">Response code.</param>
         /// <param name="reason">MSA-3 text field string.</param>
@@ -20,8 +16,7 @@ namespace NextLevelSeven.Generation
         /// <param name="application">Application name for MSH-4.</param>
         /// <returns>A complete ACK message.</returns>
         private static IMessageBuilder Generate(IMessage message, string code, string reason = null,
-            string facility = null,
-            string application = null)
+            string facility = null, string application = null)
         {
             var sourceMsh = message.Segments.OfType("MSH").First();
             var result = Message.Build(sourceMsh.Value);
@@ -46,9 +41,7 @@ namespace NextLevelSeven.Generation
             return result;
         }
 
-        /// <summary>
-        ///     Generate an HL7v2 ACK indicating an error.
-        /// </summary>
+        /// <summary>Generate an HL7v2 ACK indicating an error.</summary>
         /// <param name="message">Message to acknowledge.</param>
         /// <param name="reason">MSA-3 text field string.</param>
         /// <param name="facility">Facility name for MSH-3.</param>
@@ -60,9 +53,7 @@ namespace NextLevelSeven.Generation
             return Generate(message, "AE", reason, facility, application);
         }
 
-        /// <summary>
-        ///     Generate an HL7v2 ACK indicating a rejection. Mainly used to tell the sender the data is invalid.
-        /// </summary>
+        /// <summary>Generate an HL7v2 ACK indicating a rejection. Mainly used to tell the sender the data is invalid.</summary>
         /// <param name="message">Message to acknowledge.</param>
         /// <param name="reason">MSA-3 text field string.</param>
         /// <param name="facility">Facility name for MSH-3.</param>
@@ -74,16 +65,13 @@ namespace NextLevelSeven.Generation
             return Generate(message, "AR", reason, facility, application);
         }
 
-        /// <summary>
-        ///     Generate an HL7v2 ACK indicating a successful transfer.
-        /// </summary>
+        /// <summary>Generate an HL7v2 ACK indicating a successful transfer.</summary>
         /// <param name="message">Message to acknowledge.</param>
         /// <param name="reason">MSA-3 text field string.</param>
         /// <param name="facility">Facility name for MSH-3.</param>
         /// <param name="application">Application name for MSH-4.</param>
         /// <returns>Complete HL7 ACK message.</returns>
-        public static IMessageBuilder GenerateSuccess(IMessage message, string reason = null,
-            string facility = null,
+        public static IMessageBuilder GenerateSuccess(IMessage message, string reason = null, string facility = null,
             string application = null)
         {
             return Generate(message, "AA", reason, facility, application);

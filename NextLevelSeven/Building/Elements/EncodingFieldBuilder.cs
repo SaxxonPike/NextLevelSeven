@@ -6,19 +6,13 @@ using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Building.Elements
 {
-    /// <summary>
-    ///     A field builder for encoding characters.
-    /// </summary>
+    /// <summary>A field builder for encoding characters.</summary>
     internal sealed class EncodingFieldBuilder : FieldBuilder
     {
-        /// <summary>
-        ///     Internal value.
-        /// </summary>
+        /// <summary>Internal value.</summary>
         private string _value;
 
-        /// <summary>
-        ///     Create a field builder with the specified encoding configuration.
-        /// </summary>
+        /// <summary>Create a field builder with the specified encoding configuration.</summary>
         /// <param name="builder">Ancestor builder.</param>
         /// <param name="index">Index in the ancestor.</param>
         internal EncodingFieldBuilder(Builder builder, int index)
@@ -26,17 +20,16 @@ namespace NextLevelSeven.Building.Elements
         {
         }
 
-        /// <summary>
-        ///     Get the number of field repetitions in this field, including field repetitions with no content.
-        /// </summary>
+        /// <summary>Get the number of field repetitions in this field, including field repetitions with no content.</summary>
         public override int ValueCount
         {
-            get { return Value.Length; }
+            get
+            {
+                return Value.Length;
+            }
         }
 
-        /// <summary>
-        ///     Get or set field repetition content within this field.
-        /// </summary>
+        /// <summary>Get or set field repetition content within this field.</summary>
         public override IEnumerable<string> Values
         {
             get
@@ -47,22 +40,35 @@ namespace NextLevelSeven.Building.Elements
                     yield return new string(_value[i], 1);
                 }
             }
-            set { SetField(string.Concat(value)); }
+            set
+            {
+                SetField(string.Concat(value));
+            }
         }
 
-        /// <summary>
-        ///     Get or set this fixed field's value.
-        /// </summary>
+        /// <summary>Get or set this fixed field's value.</summary>
         public override string Value
         {
             get
             {
                 var result = new StringBuilder();
-                
-                if (ComponentDelimiter != '\0') { result.Append(ComponentDelimiter); }
-                if (RepetitionDelimiter != '\0') { result.Append(RepetitionDelimiter); }
-                if (EscapeCharacter != '\0') { result.Append(EscapeCharacter); }
-                if (SubcomponentDelimiter != '\0') { result.Append(SubcomponentDelimiter); }
+
+                if (ComponentDelimiter != '\0')
+                {
+                    result.Append(ComponentDelimiter);
+                }
+                if (RepetitionDelimiter != '\0')
+                {
+                    result.Append(RepetitionDelimiter);
+                }
+                if (EscapeCharacter != '\0')
+                {
+                    result.Append(EscapeCharacter);
+                }
+                if (SubcomponentDelimiter != '\0')
+                {
+                    result.Append(SubcomponentDelimiter);
+                }
 
                 if (_value != null && _value.Length > 4)
                 {
@@ -85,9 +91,17 @@ namespace NextLevelSeven.Building.Elements
             }
         }
 
-        /// <summary>
-        ///     Encoding character fields cannot have repetitions; this method throws unconditionally.
-        /// </summary>
+        /// <summary>If true, the element is considered to exist.</summary>
+        public override bool Exists
+        {
+            get
+            {
+                return ComponentDelimiter != '\0' || EscapeCharacter != '\0' || RepetitionDelimiter != '\0' ||
+                    SubcomponentDelimiter != '\0';
+            }
+        }
+
+        /// <summary>Encoding character fields cannot have repetitions; this method throws unconditionally.</summary>
         /// <param name="index">Not used.</param>
         /// <returns>Nothing.</returns>
         protected override RepetitionBuilder CreateRepetitionBuilder(int index)
@@ -95,9 +109,7 @@ namespace NextLevelSeven.Building.Elements
             throw new BuilderException(ErrorCode.FixedFieldsCannotBeDivided);
         }
 
-        /// <summary>
-        ///     Set this field's content.
-        /// </summary>
+        /// <summary>Set this field's content.</summary>
         /// <param name="value">New value.</param>
         /// <returns>This FieldBuilder, for chaining purposes.</returns>
         public override IFieldBuilder SetField(string value)
@@ -106,9 +118,7 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Set the contents of this field.
-        /// </summary>
+        /// <summary>Set the contents of this field.</summary>
         /// <param name="repetition"></param>
         /// <param name="value"></param>
         /// <returns></returns>
@@ -122,21 +132,11 @@ namespace NextLevelSeven.Building.Elements
             return this;
         }
 
-        /// <summary>
-        ///     Get descendant elements.
-        /// </summary>
+        /// <summary>Get descendant elements.</summary>
         /// <returns>Descendant elements.</returns>
         protected override IEnumerable<IElement> GetDescendants()
         {
             return Enumerable.Empty<IElement>();
-        }
-
-        /// <summary>
-        ///     If true, the element is considered to exist.
-        /// </summary>
-        public override bool Exists
-        {
-            get { return ComponentDelimiter != '\0' || EscapeCharacter != '\0' || RepetitionDelimiter != '\0' || SubcomponentDelimiter != '\0'; }
         }
     }
 }

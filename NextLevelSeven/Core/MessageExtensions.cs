@@ -5,20 +5,15 @@ using NextLevelSeven.Xml;
 
 namespace NextLevelSeven.Core
 {
-    /// <summary>
-    ///     Extensions to the IMessage interface.
-    /// </summary>
+    /// <summary>Extensions to the IMessage interface.</summary>
     public static class MessageExtensions
     {
-        /// <summary>
-        ///     Get segments that start with the specified segment type, and include all segments below until the next split.
-        /// </summary>
+        /// <summary>Get segments that start with the specified segment type, and include all segments below until the next split.</summary>
         /// <param name="message">Message to get segments from.</param>
         /// <param name="segmentType">Segment type to split by.</param>
         /// <param name="includeExtras">If true, include the extra split data at the beginning.</param>
         /// <returns>Segment sets that start with the specified segment type.</returns>
-        public static IEnumerable<IEnumerable<ISegment>> SplitSegments(this IMessage message,
-            string segmentType,
+        public static IEnumerable<IEnumerable<ISegment>> SplitSegments(this IMessage message, string segmentType,
             bool includeExtras = false)
         {
             var currentSegments = new List<ISegment>();
@@ -44,10 +39,7 @@ namespace NextLevelSeven.Core
             }
         }
 
-        /// <summary>
-        ///     Get segments that start with any of the specified segment types, and include all segments below until the next
-        ///     split.
-        /// </summary>
+        /// <summary>Get segments that start with any of the specified segment types, and include all segments below until the next split.</summary>
         /// <param name="message">Message to get segments from.</param>
         /// <param name="segmentTypes">Segment types to split by.</param>
         /// <param name="includeExtras">If true, include the extra split data at the beginning.</param>
@@ -58,9 +50,7 @@ namespace NextLevelSeven.Core
             return segmentTypes.SelectMany(s => SplitSegments(message, s, includeExtras));
         }
 
-        /// <summary>
-        ///     Convert a message to XML.
-        /// </summary>
+        /// <summary>Convert a message to XML.</summary>
         /// <param name="message">Message to convert.</param>
         /// <returns>Converted message.</returns>
         public static XmlDocument ToXml(this IMessage message)

@@ -2,19 +2,13 @@
 
 namespace NextLevelSeven.Parsing.Dividers
 {
-    /// <summary>
-    ///     A splitter which handles getting and setting delimited substrings within a parent string divider.
-    /// </summary>
+    /// <summary>A splitter which handles getting and setting delimited substrings within a parent string divider.</summary>
     internal sealed class StringSubDivider : StringDividerBase
     {
-        /// <summary>
-        ///     [PERF] Cached divisions list.
-        /// </summary>
+        /// <summary>[PERF] Cached divisions list.</summary>
         private IReadOnlyList<StringDivision> _divisions;
 
-        /// <summary>
-        ///     Create a subdivider for the specified string divider.
-        /// </summary>
+        /// <summary>Create a subdivider for the specified string divider.</summary>
         /// <param name="baseDivider">Divider to reference.</param>
         /// <param name="delimiter">Delimiter to search for.</param>
         /// <param name="parentIndex">Index within the parent to reference.</param>
@@ -25,9 +19,7 @@ namespace NextLevelSeven.Parsing.Dividers
             Delimiter = delimiter;
         }
 
-        /// <summary>
-        ///     Create a subdivider for the specified string divider.
-        /// </summary>
+        /// <summary>Create a subdivider for the specified string divider.</summary>
         /// <param name="baseDivider">Divider to reference.</param>
         /// <param name="baseDividerOffset">Index of the character to use as the delimiter from the subdivided value.</param>
         /// <param name="parentIndex">Index within the parent to reference.</param>
@@ -38,14 +30,14 @@ namespace NextLevelSeven.Parsing.Dividers
             Delimiter = baseDivider.Value[baseDividerOffset];
         }
 
-        /// <summary>
-        ///     Parent divider.
-        /// </summary>
-        private IStringDivider BaseDivider { get; set; }
+        /// <summary>Parent divider.</summary>
+        private IStringDivider BaseDivider
+        {
+            get;
+            set;
+        }
 
-        /// <summary>
-        ///     Get or set the substring at the specified index.
-        /// </summary>
+        /// <summary>Get or set the substring at the specified index.</summary>
         /// <param name="index">Index of the string to get or set.</param>
         /// <returns>Substring.</returns>
         public override string this[int index]
@@ -66,33 +58,39 @@ namespace NextLevelSeven.Parsing.Dividers
                 var split = splits[index];
                 return split.Length == 0 ? null : new string(BaseValue, split.Offset, split.Length);
             }
-            set { SetValue(index, value); }
+            set
+            {
+                SetValue(index, value);
+            }
         }
 
         public override bool IsNull
         {
-            get { return BaseDivider.IsNull || ValueChars == null || ValueChars.Length == 0; }
+            get
+            {
+                return BaseDivider.IsNull || ValueChars == null || ValueChars.Length == 0;
+            }
         }
 
-        /// <summary>
-        ///     String that is operated upon, as a character array. This points to the parent divider's BaseValue.
-        /// </summary>
+        /// <summary>String that is operated upon, as a character array. This points to the parent divider's BaseValue.</summary>
         public override char[] BaseValue
         {
-            get { return BaseDivider.BaseValue; }
+            get
+            {
+                return BaseDivider.BaseValue;
+            }
         }
 
-        /// <summary>
-        ///     Get the number of divisions.
-        /// </summary>
+        /// <summary>Get the number of divisions.</summary>
         public override int Count
         {
-            get { return Divisions.Count; }
+            get
+            {
+                return Divisions.Count;
+            }
         }
 
-        /// <summary>
-        ///     Get the division offsets in the string.
-        /// </summary>
+        /// <summary>Get the division offsets in the string.</summary>
         public override IReadOnlyList<StringDivision> Divisions
         {
             get
@@ -105,24 +103,21 @@ namespace NextLevelSeven.Parsing.Dividers
             }
         }
 
-        /// <summary>
-        ///     Calculated value of all divisions separated by delimiters.
-        /// </summary>
+        /// <summary>Calculated value of all divisions separated by delimiters.</summary>
         public override string Value
         {
             get
             {
                 var d = BaseDivider.GetSubDivision(Index);
-                return (!d.Valid || d.Length == 0)
-                    ? null
-                    : new string(BaseValue, d.Offset, d.Length);
+                return (!d.Valid || d.Length == 0) ? null : new string(BaseValue, d.Offset, d.Length);
             }
-            set { BaseDivider[Index] = value; }
+            set
+            {
+                BaseDivider[Index] = value;
+            }
         }
 
-        /// <summary>
-        ///     Calculated value of all divisions separated by delimiters, as characters.
-        /// </summary>
+        /// <summary>Calculated value of all divisions separated by delimiters, as characters.</summary>
         public override char[] ValueChars
         {
             get
@@ -132,12 +127,30 @@ namespace NextLevelSeven.Parsing.Dividers
                     ? null
                     : StringDividerOperations.CharSubstring(BaseValue, d.Offset, d.Length);
             }
-            set { BaseDivider[Index] = new string(value); }
+            set
+            {
+                BaseDivider[Index] = new string(value);
+            }
         }
 
-        /// <summary>
-        ///     Set the value at the specified subdivision index.
-        /// </summary>
+        /// <summary>Get or set the subdivided values.</summary>
+        public override IEnumerable<string> Values
+        {
+            get
+            {
+                var count = Divisions.Count;
+                for (var i = 0; i < count; i++)
+                {
+                    yield return this[i];
+                }
+            }
+            set
+            {
+                Value = (Delimiter == '\0') ? string.Concat(value) : string.Join(new string(Delimiter, 1), value);
+            }
+        }
+
+        /// <summary>Set the value at the specified subdivision index.</summary>
         /// <param name="index">Index to set.</param>
         /// <param name="value">New value.</param>
         private void SetValue(int index, string value)
@@ -166,18 +179,14 @@ namespace NextLevelSeven.Parsing.Dividers
             RaiseValueChanged();
         }
 
-        /// <summary>
-        ///     Get the internal value as a string.
-        /// </summary>
+        /// <summary>Get the internal value as a string.</summary>
         /// <returns>Value as a string.</returns>
         public override string ToString()
         {
             return Value;
         }
 
-        /// <summary>
-        ///     [PERF] Refresh internal division cache.
-        /// </summary>
+        /// <summary>[PERF] Refresh internal division cache.</summary>
         private void Update()
         {
             Version = BaseDivider.Version;
@@ -190,27 +199,6 @@ namespace NextLevelSeven.Parsing.Dividers
             else
             {
                 _divisions = new List<StringDivision>();
-            }
-        }
-
-        /// <summary>
-        ///     Get or set the subdivided values.
-        /// </summary>
-        public override IEnumerable<string> Values
-        {
-            get
-            {
-                var count = Divisions.Count;
-                for (var i = 0; i < count; i++)
-                {
-                    yield return this[i];
-                }
-            }
-            set
-            {
-                Value = (Delimiter == '\0')
-                    ? string.Concat(value)
-                    : string.Join(new string(Delimiter, 1), value);
             }
         }
     }

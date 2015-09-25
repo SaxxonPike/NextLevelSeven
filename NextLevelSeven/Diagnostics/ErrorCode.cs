@@ -1,8 +1,6 @@
 ﻿namespace NextLevelSeven.Diagnostics
 {
-    /// <summary>
-    ///     An enumeration of possible error messages.
-    /// </summary>
+    /// <summary>An enumeration of possible error messages.</summary>
     public enum ErrorCode
     {
         // NOTE: Do not change error code numbers once they have been added.

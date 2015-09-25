@@ -4,26 +4,23 @@ using System.Text;
 
 namespace NextLevelSeven.Parsing.Elements
 {
-    /// <summary>
-    ///     Represents the special field at MSH-2, which contains encoding characters for a message.
-    /// </summary>
+    /// <summary>Represents the special field at MSH-2, which contains encoding characters for a message.</summary>
     internal sealed class EncodingFieldParser : StaticValueFieldParser
     {
-        /// <summary>
-        ///     Create an encoding field.
-        /// </summary>
+        /// <summary>Create an encoding field.</summary>
         /// <param name="ancestor"></param>
         public EncodingFieldParser(Parser ancestor)
             : base(ancestor, 1, 2)
         {
         }
 
-        /// <summary>
-        ///     Get or set encoding characters.
-        /// </summary>
+        /// <summary>Get or set encoding characters.</summary>
         public override string Value
         {
-            get { return Ancestor.DescendantDivider[1]; }
+            get
+            {
+                return Ancestor.DescendantDivider[1];
+            }
             set
             {
                 // we are assuming MSH + MSH-1 are configured
@@ -40,9 +37,7 @@ namespace NextLevelSeven.Parsing.Elements
             }
         }
 
-        /// <summary>
-        ///     Get or set this field's encoding characters.
-        /// </summary>
+        /// <summary>Get or set this field's encoding characters.</summary>
         public override IEnumerable<string> Values
         {
             get

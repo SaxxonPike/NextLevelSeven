@@ -3,26 +3,18 @@ using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Conversion
 {
-    /// <summary>
-    ///     Conversion methods for HL7 date/time values.
-    /// </summary>
+    /// <summary>Conversion methods for HL7 date/time values.</summary>
     public static class DateTimeConverter
     {
-        /// <summary>
-        ///     Convert from date to HL7 date.
-        /// </summary>
+        /// <summary>Convert from date to HL7 date.</summary>
         /// <param name="input">Date to convert.</param>
         /// <returns>Converted date.</returns>
         public static string ConvertFromDate(DateTime? input)
         {
-            return !input.HasValue
-                ? null
-                : input.Value.ToString("yyyyMMdd");
+            return !input.HasValue ? null : input.Value.ToString("yyyyMMdd");
         }
 
-        /// <summary>
-        ///     Convert from date/time to HL7 date/time.
-        /// </summary>
+        /// <summary>Convert from date/time to HL7 date/time.</summary>
         /// <param name="input">Date/time to convert.</param>
         /// <returns>Converted date/time.</returns>
         public static string ConvertFromDateTime(DateTimeOffset? input)
@@ -35,25 +27,18 @@ namespace NextLevelSeven.Conversion
             var offset = input.Value.Offset;
             var time = input.Value;
 
-            return time.ToString("yyyyMMddHHmmss") +
-                   offset.ToString((offset < TimeSpan.Zero ? "\\-" : "\\+") + "hhmm");
+            return time.ToString("yyyyMMddHHmmss") + offset.ToString((offset < TimeSpan.Zero ? "\\-" : "\\+") + "hhmm");
         }
 
-        /// <summary>
-        ///     Convert from time to HL7 time.
-        /// </summary>
+        /// <summary>Convert from time to HL7 time.</summary>
         /// <param name="input">Time to convert.</param>
         /// <returns>Converted time.</returns>
         public static string ConvertFromTime(TimeSpan? input)
         {
-            return !input.HasValue
-                ? null
-                : input.Value.ToString("HHmmss");
+            return !input.HasValue ? null : input.Value.ToString("HHmmss");
         }
 
-        /// <summary>
-        ///     Convert from HL7 date to .NET date.
-        /// </summary>
+        /// <summary>Convert from HL7 date to .NET date.</summary>
         /// <param name="input">Date to convert.</param>
         /// <returns>Converted date.</returns>
         public static DateTime? ConvertToDate(string input)
@@ -66,9 +51,7 @@ namespace NextLevelSeven.Conversion
             return null;
         }
 
-        /// <summary>
-        ///     Convert from HL7 date/time to .NET date/time.
-        /// </summary>
+        /// <summary>Convert from HL7 date/time to .NET date/time.</summary>
         /// <param name="input">Date/time to convert.</param>
         /// <returns>Converted date/time.</returns>
         public static DateTimeOffset? ConvertToDateTime(string input)
@@ -112,9 +95,7 @@ namespace NextLevelSeven.Conversion
                 : new DateTime(year, month, day, time.Hours, time.Minutes, time.Seconds, time.Milliseconds);
         }
 
-        /// <summary>
-        ///     Convert HL7 time to .NET time.
-        /// </summary>
+        /// <summary>Convert HL7 time to .NET time.</summary>
         /// <param name="input">Time to convert.</param>
         /// <returns>Converted time.</returns>
         public static TimeSpan? ConvertToTime(string input)

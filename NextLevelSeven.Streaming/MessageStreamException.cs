@@ -3,15 +3,11 @@ using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Streaming
 {
-    /// <summary>
-    ///     Represents an exception that would be raised for HL7 streaming errors.
-    /// </summary>
+    /// <summary>Represents an exception that would be raised for HL7 streaming errors.</summary>
     [Serializable]
     public class MessageStreamException : StreamException
     {
-        /// <summary>
-        ///     Create an HL7 stream exception.
-        /// </summary>
+        /// <summary>Create an HL7 stream exception.</summary>
         internal MessageStreamException(ErrorCode code)
             : base(code)
         {

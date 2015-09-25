@@ -8,14 +8,10 @@ using NextLevelSeven.Parsing.Elements;
 
 namespace NextLevelSeven.Core
 {
-    /// <summary>
-    ///     Extensions to the IElement interface.
-    /// </summary>
+    /// <summary>Extensions to the IElement interface.</summary>
     public static class ElementExtensions
     {
-        /// <summary>
-        ///     Add a string as a descendant.
-        /// </summary>
+        /// <summary>Add a string as a descendant.</summary>
         /// <param name="target">Element to add to.</param>
         /// <param name="elementToAdd">String to be added.</param>
         /// <returns>The newly added element.</returns>
@@ -24,9 +20,7 @@ namespace NextLevelSeven.Core
             target[target.NextIndex].Value = elementToAdd;
         }
 
-        /// <summary>
-        ///     Add an element as a descendant.
-        /// </summary>
+        /// <summary>Add an element as a descendant.</summary>
         /// <param name="target">Element to add to.</param>
         /// <param name="elementToAdd">Element to be added.</param>
         /// <returns>The newly added element.</returns>
@@ -35,9 +29,7 @@ namespace NextLevelSeven.Core
             CopyOver(elementToAdd, target[target.NextIndex]);
         }
 
-        /// <summary>
-        ///     Add elements as descendants.
-        /// </summary>
+        /// <summary>Add elements as descendants.</summary>
         /// <param name="target">Element to add to.</param>
         /// <param name="elementsToAdd">Elements to be added.</param>
         public static void AddRange(this IElement target, params string[] elementsToAdd)
@@ -45,9 +37,7 @@ namespace NextLevelSeven.Core
             AddRange(target, elementsToAdd.AsEnumerable());
         }
 
-        /// <summary>
-        ///     Add elements as descendants.
-        /// </summary>
+        /// <summary>Add elements as descendants.</summary>
         /// <param name="target">Element to add to.</param>
         /// <param name="elementsToAdd">Elements to be added.</param>
         public static void AddRange(this IElement target, IEnumerable<string> elementsToAdd)
@@ -58,9 +48,7 @@ namespace NextLevelSeven.Core
             }
         }
 
-        /// <summary>
-        ///     Add elements as descendants.
-        /// </summary>
+        /// <summary>Add elements as descendants.</summary>
         /// <param name="target">Element to add to.</param>
         /// <param name="elementsToAdd">Elements to be added.</param>
         public static void AddRange(this IElement target, IEnumerable<IElement> elementsToAdd)
@@ -71,9 +59,7 @@ namespace NextLevelSeven.Core
             }
         }
 
-        /// <summary>
-        ///     Copy elements and sub-elements one by one into the target.
-        /// </summary>
+        /// <summary>Copy elements and sub-elements one by one into the target.</summary>
         /// <param name="source"></param>
         /// <param name="target"></param>
         private static void CopyOver(IElement source, IElement target)
@@ -91,10 +77,7 @@ namespace NextLevelSeven.Core
             }
         }
 
-
-        /// <summary>
-        ///     Delete an element from its ancestor. Throws an exception if the element is a root element.
-        /// </summary>
+        /// <summary>Delete an element from its ancestor. Throws an exception if the element is a root element.</summary>
         /// <param name="target">Element to delete.</param>
         public static void Delete(this IElement target)
         {
@@ -105,9 +88,7 @@ namespace NextLevelSeven.Core
             target.Ancestor.Delete(target.Index);
         }
 
-        /// <summary>
-        ///     Delete a descendant element.
-        /// </summary>
+        /// <summary>Delete a descendant element.</summary>
         /// <param name="target">Element to delete from.</param>
         /// <param name="indices">Indices of descendants to delete.</param>
         public static void Delete(this IElement target, params int[] indices)
@@ -116,9 +97,7 @@ namespace NextLevelSeven.Core
             target.Values = target.Descendants.Where((d, i) => !indices.Contains(d.Index)).Select(d => d.Value).ToList();
         }
 
-        /// <summary>
-        ///     Delete elements in the enumerable. All elements must share a direct ancestor.
-        /// </summary>
+        /// <summary>Delete elements in the enumerable. All elements must share a direct ancestor.</summary>
         /// <param name="targets">Elements to delete.</param>
         public static void Delete(this IEnumerable<IElement> targets)
         {
@@ -134,14 +113,12 @@ namespace NextLevelSeven.Core
             {
                 throw new ElementException(ErrorCode.ElementsMustShareDirectAncestors);
             }
-            
+
             // perform deletion
             elements.First().Ancestor.Delete(elements.Select(e => e.Index).ToArray());
         }
 
-        /// <summary>
-        ///     Get segments that do not match a specific segment type.
-        /// </summary>
+        /// <summary>Get segments that do not match a specific segment type.</summary>
         /// <param name="segments">Segments to query.</param>
         /// <param name="segmentType">Segment type to filter out.</param>
         /// <returns>Segments that do not match the filtered segment type.</returns>
@@ -150,9 +127,7 @@ namespace NextLevelSeven.Core
             return segments.Where(s => s.Type != segmentType);
         }
 
-        /// <summary>
-        ///     Get segments that do not match any of the specified segment types.
-        /// </summary>
+        /// <summary>Get segments that do not match any of the specified segment types.</summary>
         /// <param name="segments">Segments to query.</param>
         /// <param name="segmentTypes">Segment types to filter out.</param>
         /// <returns>Segments that do not match the filtered segment types.</returns>
@@ -162,17 +137,13 @@ namespace NextLevelSeven.Core
             return segments.Where(s => !segmentTypes.Contains(s.Type));
         }
 
-        /// <summary>
-        ///     Get meaningful content from descendants, excluding null/empty fields and segment type.
-        /// </summary>
+        /// <summary>Get meaningful content from descendants, excluding null/empty fields and segment type.</summary>
         public static IEnumerable<IElement> GetDescendantContent(this IElement element)
         {
             return element.Descendants.Where(d => d.Index > 0 && !string.IsNullOrEmpty(d.Value));
         }
 
-        /// <summary>
-        ///     If true, the element has meaningful descendants (not necessarily direct ones.)
-        /// </summary>
+        /// <summary>If true, the element has meaningful descendants (not necessarily direct ones.)</summary>
         public static bool HasSignificantDescendants(this IElement element)
         {
             if (element is ISubcomponent)
@@ -189,9 +160,7 @@ namespace NextLevelSeven.Core
             return (element.ValueCount > 1) || element.Descendants.Any(HasSignificantDescendants);
         }
 
-        /// <summary>
-        ///     Insert element data after the specified descendant element.
-        /// </summary>
+        /// <summary>Insert element data after the specified descendant element.</summary>
         /// <param name="target">Element to add to.</param>
         /// <param name="index">Index of the descendant to add data after.</param>
         /// <param name="elementToInsert">Descendant data to insert.</param>
@@ -200,9 +169,7 @@ namespace NextLevelSeven.Core
             InsertBefore(target, index + 1, elementToInsert);
         }
 
-        /// <summary>
-        ///     Insert element data after the specified element.
-        /// </summary>
+        /// <summary>Insert element data after the specified element.</summary>
         /// <param name="target">Element to add data after.</param>
         /// <param name="elementToInsert">Descendant data to insert.</param>
         public static void InsertAfter(this IElement target, IElement elementToInsert)
@@ -210,9 +177,7 @@ namespace NextLevelSeven.Core
             target.Ancestor.InsertBefore(target.Index + 1, elementToInsert);
         }
 
-        /// <summary>
-        ///     Insert string data after the specified descendant element.
-        /// </summary>
+        /// <summary>Insert string data after the specified descendant element.</summary>
         /// <param name="target">Element to add to.</param>
         /// <param name="index">Index of the descendant to add data after.</param>
         /// <param name="dataToInsert">Descendant string to insert.</param>
@@ -221,9 +186,7 @@ namespace NextLevelSeven.Core
             InsertBefore(target, index + 1, dataToInsert);
         }
 
-        /// <summary>
-        ///     Insert string data after the specified element.
-        /// </summary>
+        /// <summary>Insert string data after the specified element.</summary>
         /// <param name="target">Element to add data after.</param>
         /// <param name="dataToInsert">Descendant string to insert.</param>
         public static void InsertAfter(this IElement target, string dataToInsert)
@@ -231,9 +194,7 @@ namespace NextLevelSeven.Core
             target.Ancestor.InsertBefore(target.Index + 1, dataToInsert);
         }
 
-        /// <summary>
-        ///     Insert element data before the specified descendant element.
-        /// </summary>
+        /// <summary>Insert element data before the specified descendant element.</summary>
         /// <param name="target">Element to add to.</param>
         /// <param name="index">Index of the descendant to add data before.</param>
         /// <param name="elementToInsert">Descendant data to insert.</param>
@@ -243,9 +204,7 @@ namespace NextLevelSeven.Core
             CopyOver(elementToInsert, target[index]);
         }
 
-        /// <summary>
-        ///     Insert element data before the specified element.
-        /// </summary>
+        /// <summary>Insert element data before the specified element.</summary>
         /// <param name="target">Element to add data before.</param>
         /// <param name="elementToInsert">Descendant data to insert.</param>
         public static void InsertBefore(this IElement target, IElement elementToInsert)
@@ -253,9 +212,7 @@ namespace NextLevelSeven.Core
             target.Ancestor.InsertBefore(target.Index, elementToInsert);
         }
 
-        /// <summary>
-        ///     Insert string data before the specified descendant element.
-        /// </summary>
+        /// <summary>Insert string data before the specified descendant element.</summary>
         /// <param name="target">Element to add to.</param>
         /// <param name="index">Index of the descendant to add data before.</param>
         /// <param name="dataToInsert">Descendant data to insert.</param>
@@ -265,9 +222,7 @@ namespace NextLevelSeven.Core
             target[index].Value = dataToInsert;
         }
 
-        /// <summary>
-        ///     Insert string data before the specified element.
-        /// </summary>
+        /// <summary>Insert string data before the specified element.</summary>
         /// <param name="target">Element to add data before.</param>
         /// <param name="dataToInsert">Descendant data to insert.</param>
         public static void InsertBefore(this IElement target, string dataToInsert)
@@ -275,9 +230,7 @@ namespace NextLevelSeven.Core
             target.Ancestor.InsertBefore(target.Index, dataToInsert);
         }
 
-        /// <summary>
-        ///     Move elements forward one index, starting at the specified index.
-        /// </summary>
+        /// <summary>Move elements forward one index, starting at the specified index.</summary>
         /// <param name="target">Element to modify.</param>
         /// <param name="index">Index to begin at.</param>
         private static void InsertEmpty(IElement target, int index)
@@ -291,12 +244,10 @@ namespace NextLevelSeven.Core
                 {
                     target[v.Key].Nullify();
                 }
-            }            
+            }
         }
 
-        /// <summary>
-        ///     Determine if the value is either not present or the HL7 standard null value.
-        /// </summary>
+        /// <summary>Determine if the value is either not present or the HL7 standard null value.</summary>
         /// <param name="target">Element to verify value for.</param>
         /// <returns>True, if the element's value is null equivalent.</returns>
         public static bool IsNull(this IElement target)
@@ -304,9 +255,7 @@ namespace NextLevelSeven.Core
             return HL7.NullValues.Contains(target.Value);
         }
 
-        /// <summary>
-        ///     Move element within its ancestor. Returns the new element reference.
-        /// </summary>
+        /// <summary>Move element within its ancestor. Returns the new element reference.</summary>
         /// <param name="target">Element to move.</param>
         /// <param name="targetIndex">Target index.</param>
         /// <returns>Element in its new place.</returns>
@@ -348,9 +297,7 @@ namespace NextLevelSeven.Core
             return ancestor[targetIndex];
         }
 
-        /// <summary>
-        ///     Set the value of a field to existant null.
-        /// </summary>
+        /// <summary>Set the value of a field to existant null.</summary>
         /// <param name="target">Element to nullify.</param>
         public static void Nullify(this IElement target)
         {
@@ -377,9 +324,7 @@ namespace NextLevelSeven.Core
             target.Value = HL7.Null;
         }
 
-        /// <summary>
-        ///     Get only segments that match the specified segment type.
-        /// </summary>
+        /// <summary>Get only segments that match the specified segment type.</summary>
         /// <param name="segments">Segments to query.</param>
         /// <param name="segmentType">Segment type to get.</param>
         /// <returns>Segments that match the specified segment type.</returns>
@@ -388,9 +333,7 @@ namespace NextLevelSeven.Core
             return segments.Where(s => s.Type == segmentType);
         }
 
-        /// <summary>
-        ///     Get only segments that match any of the specified segment types.
-        /// </summary>
+        /// <summary>Get only segments that match any of the specified segment types.</summary>
         /// <param name="segments">Segments to query.</param>
         /// <param name="segmentTypes">Segment types to get.</param>
         /// <returns>Segments that match one of the specified segment types.</returns>
@@ -400,9 +343,7 @@ namespace NextLevelSeven.Core
             return segments.Where(s => !segmentTypes.Contains(s.Type));
         }
 
-        /// <summary>
-        ///     Copy the contents of this message to a new message builder.
-        /// </summary>
+        /// <summary>Copy the contents of this message to a new message builder.</summary>
         /// <param name="message">Message to get data from.</param>
         /// <returns>Converted message.</returns>
         public static IMessageBuilder ToBuilder(this IMessage message)
@@ -410,9 +351,7 @@ namespace NextLevelSeven.Core
             return Message.Build(message.Value);
         }
 
-        /// <summary>
-        ///     Copy the contents of this message to a new HL7 message parser.
-        /// </summary>
+        /// <summary>Copy the contents of this message to a new HL7 message parser.</summary>
         /// <param name="message">Message to get data from.</param>
         /// <returns>Converted message.</returns>
         public static IMessageParser ToParser(this IMessage message)
@@ -420,9 +359,7 @@ namespace NextLevelSeven.Core
             return Message.Parse(message.Value);
         }
 
-        /// <summary>
-        ///     Get the segment at the specified index.
-        /// </summary>
+        /// <summary>Get the segment at the specified index.</summary>
         /// <param name="ancestor">Ancestor element.</param>
         /// <param name="index">Index of the descendant.</param>
         /// <returns>Descendant element.</returns>
@@ -431,9 +368,7 @@ namespace NextLevelSeven.Core
             return (ISegment) ancestor[index];
         }
 
-        /// <summary>
-        ///     Get the field at the specified index.
-        /// </summary>
+        /// <summary>Get the field at the specified index.</summary>
         /// <param name="ancestor">Ancestor element.</param>
         /// <param name="index">Index of the descendant.</param>
         /// <returns>Descendant element.</returns>
@@ -442,9 +377,7 @@ namespace NextLevelSeven.Core
             return (IField) ancestor[index];
         }
 
-        /// <summary>
-        ///     Get the field repetition at the specified index.
-        /// </summary>
+        /// <summary>Get the field repetition at the specified index.</summary>
         /// <param name="ancestor">Ancestor element.</param>
         /// <param name="index">Index of the descendant.</param>
         /// <returns>Descendant element.</returns>
@@ -453,9 +386,7 @@ namespace NextLevelSeven.Core
             return (IRepetition) ancestor[index];
         }
 
-        /// <summary>
-        ///     Get the component at the specified index, assuming repetition 1.
-        /// </summary>
+        /// <summary>Get the component at the specified index, assuming repetition 1.</summary>
         /// <param name="ancestor">Ancestor element.</param>
         /// <param name="index">Index of the descendant.</param>
         /// <returns>Descendant element.</returns>
@@ -464,9 +395,7 @@ namespace NextLevelSeven.Core
             return (IComponent) ancestor[1][index];
         }
 
-        /// <summary>
-        ///     Get the component at the specified index.
-        /// </summary>
+        /// <summary>Get the component at the specified index.</summary>
         /// <param name="ancestor">Ancestor element.</param>
         /// <param name="index">Index of the descendant.</param>
         /// <returns>Descendant element.</returns>
@@ -475,9 +404,7 @@ namespace NextLevelSeven.Core
             return (IComponent) ancestor[index];
         }
 
-        /// <summary>
-        ///     Get the subcomponent at the specified index.
-        /// </summary>
+        /// <summary>Get the subcomponent at the specified index.</summary>
         /// <param name="ancestor">Ancestor element.</param>
         /// <param name="index">Index of the descendant.</param>
         /// <returns>Descendant element.</returns>
@@ -486,9 +413,7 @@ namespace NextLevelSeven.Core
             return (ISubcomponent) ancestor[index];
         }
 
-        /// <summary>
-        ///     Create a new message.
-        /// </summary>
+        /// <summary>Create a new message.</summary>
         /// <typeparam name="T">Any IMessage type.</typeparam>
         /// <returns>New message builder/parser.</returns>
         private static T ToNewMessage<T>(IEnumerable<ISegment> segments) where T : IMessage, new()
@@ -504,11 +429,10 @@ namespace NextLevelSeven.Core
             var newMessage = new T();
 
             // determine where to pull message metadata from
-            var childSegment = sourceSegments.FirstOrDefault(s => s.Type == "MSH")
-                               ??
-                               sourceSegments.Where(s => s.Ancestor is IMessage)
-                                   .Select(s => (ISegment) (s.Ancestor[1]))
-                                   .FirstOrDefault();
+            var childSegment = sourceSegments.FirstOrDefault(s => s.Type == "MSH") ??
+                sourceSegments.Where(s => s.Ancestor is IMessage)
+                    .Select(s => (ISegment) (s.Ancestor[1]))
+                    .FirstOrDefault();
             if (childSegment != null)
             {
                 CopyOver(childSegment, newMessage[1]);
@@ -523,9 +447,7 @@ namespace NextLevelSeven.Core
             return newMessage;
         }
 
-        /// <summary>
-        ///     Create a new message builder with the selected segments.
-        /// </summary>
+        /// <summary>Create a new message builder with the selected segments.</summary>
         /// <param name="segments">Segments to make a new message for.</param>
         /// <returns>New message builder.</returns>
         public static IMessageBuilder ToNewBuilder(this IEnumerable<ISegment> segments)
@@ -533,9 +455,7 @@ namespace NextLevelSeven.Core
             return ToNewMessage<MessageBuilder>(segments);
         }
 
-        /// <summary>
-        ///     Create a new message parser with the selected segments.
-        /// </summary>
+        /// <summary>Create a new message parser with the selected segments.</summary>
         /// <param name="segments">Segments to make a new message for.</param>
         /// <returns>New message parser.</returns>
         public static IMessageParser ToNewParser(this IEnumerable<ISegment> segments)

@@ -3,14 +3,10 @@ using System.Collections.Generic;
 
 namespace NextLevelSeven.Parsing.Dividers
 {
-    /// <summary>
-    ///     Common string and char[] splitting operations used by StringDivider and StringSubDivider classes.
-    /// </summary>
+    /// <summary>Common string and char[] splitting operations used by StringDivider and StringSubDivider classes.</summary>
     internal static class StringDividerOperations
     {
-        /// <summary>
-        ///     Get a subset of a character array.
-        /// </summary>
+        /// <summary>Get a subset of a character array.</summary>
         /// <param name="s">Characters.</param>
         /// <param name="offset">Offset to start.</param>
         /// <returns>Extracted characters.</returns>
@@ -19,9 +15,7 @@ namespace NextLevelSeven.Parsing.Dividers
             return CharSubstring(s, offset, s.Length - offset);
         }
 
-        /// <summary>
-        ///     Get a subset of a character array.
-        /// </summary>
+        /// <summary>Get a subset of a character array.</summary>
         /// <param name="s">Characters.</param>
         /// <param name="offset">Offset to start.</param>
         /// <param name="length">Length of characters.</param>
@@ -33,9 +27,7 @@ namespace NextLevelSeven.Parsing.Dividers
             return result;
         }
 
-        /// <summary>
-        ///     Copy characters to a new array.
-        /// </summary>
+        /// <summary>Copy characters to a new array.</summary>
         /// <param name="s">Source.</param>
         /// <returns>Copied characters.</returns>
         public static char[] CopyChars(char[] s)
@@ -46,9 +38,7 @@ namespace NextLevelSeven.Parsing.Dividers
             return result;
         }
 
-        /// <summary>
-        ///     Attempts to convert a string to characters, or returns null if not possible.
-        /// </summary>
+        /// <summary>Attempts to convert a string to characters, or returns null if not possible.</summary>
         /// <param name="s">String to convert.</param>
         /// <returns>Converted characters.</returns>
         public static char[] GetChars(string s)
@@ -56,9 +46,7 @@ namespace NextLevelSeven.Parsing.Dividers
             return (s == null) ? null : s.ToCharArray();
         }
 
-        /// <summary>
-        ///     Get divisions without bounds.
-        /// </summary>
+        /// <summary>Get divisions without bounds.</summary>
         /// <param name="s">Characters to parse.</param>
         /// <param name="delimiter">Delimiter to search for.</param>
         /// <returns>Divisions.</returns>
@@ -69,9 +57,7 @@ namespace NextLevelSeven.Parsing.Dividers
                 : GetDivisions(s, delimiter, new StringDivision(0, s.Length));
         }
 
-        /// <summary>
-        ///     Get divisions within the specified division bounds.
-        /// </summary>
+        /// <summary>Get divisions within the specified division bounds.</summary>
         /// <param name="s">Characters to parse.</param>
         /// <param name="delimiter">Delimiter to search for.</param>
         /// <param name="parent">Bounds within which to search.</param>
@@ -117,9 +103,7 @@ namespace NextLevelSeven.Parsing.Dividers
             }
         }
 
-        /// <summary>
-        ///     Get a string, with the appropriate number of delimiters and divisions to be addressed up to the index.
-        /// </summary>
+        /// <summary>Get a string, with the appropriate number of delimiters and divisions to be addressed up to the index.</summary>
         /// <param name="s">String to pad.</param>
         /// <param name="index">Index to pad to.</param>
         /// <param name="delimiter">Delimiter to pad with.</param>
@@ -136,7 +120,10 @@ namespace NextLevelSeven.Parsing.Dividers
 
                 if (delimiter == '\0')
                 {
-                    divisions = new List<StringDivision> {new StringDivision(0, s.Length)};
+                    divisions = new List<StringDivision>
+                    {
+                        new StringDivision(0, s.Length)
+                    };
                     return s;
                 }
 
@@ -168,9 +155,7 @@ namespace NextLevelSeven.Parsing.Dividers
             }
         }
 
-        /// <summary>
-        ///     Get the resulting string that has part of itself replaced with another string.
-        /// </summary>
+        /// <summary>Get the resulting string that has part of itself replaced with another string.</summary>
         /// <param name="s">String to replace within.</param>
         /// <param name="offset">Offset to start the replace.</param>
         /// <param name="length">Length in characters to replace.</param>
@@ -210,9 +195,7 @@ namespace NextLevelSeven.Parsing.Dividers
             }
         }
 
-        /// <summary>
-        ///     Join together character arrays to form a single character array.
-        /// </summary>
+        /// <summary>Join together character arrays to form a single character array.</summary>
         /// <param name="characters">Character arrays to join.</param>
         /// <returns>Joined character arrays.</returns>
         public static char[] JoinChars(params char[][] characters)
@@ -237,9 +220,7 @@ namespace NextLevelSeven.Parsing.Dividers
             return result;
         }
 
-        /// <summary>
-        ///     Join together character arrays to form a single character array, with delimiters.
-        /// </summary>
+        /// <summary>Join together character arrays to form a single character array, with delimiters.</summary>
         /// <param name="delimiter">Delimiter to use.</param>
         /// <param name="characters">Character arrays to join.</param>
         /// <returns>Joined character arrays.</returns>

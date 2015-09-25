@@ -4,91 +4,102 @@ using NextLevelSeven.Core.Encoding;
 
 namespace NextLevelSeven.Core
 {
-    /// <summary>
-    ///     Represents an abstract element in an HL7 message.
-    /// </summary>
+    /// <summary>Represents an abstract element in an HL7 message.</summary>
     public interface IElement
     {
-        /// <summary>
-        ///     Get a sub-element at the specified index.
-        /// </summary>
+        /// <summary>Get a sub-element at the specified index.</summary>
         /// <param name="index"></param>
         /// <returns>Sub-element at the specified index.</returns>
-        IElement this[int index] { get; }
+        IElement this[int index]
+        {
+            get;
+        }
 
-        /// <summary>
-        ///     Get the ancestor element. Null if the element is a root element.
-        /// </summary>
-        IElement Ancestor { get; }
+        /// <summary>Get the ancestor element. Null if the element is a root element.</summary>
+        IElement Ancestor
+        {
+            get;
+        }
 
-        /// <summary>
-        ///     Get a codec which can be used to interpret the stored value as other types.
-        /// </summary>
-        IEncodedTypeConverter Codec { get; }
+        /// <summary>Get a codec which can be used to interpret the stored value as other types.</summary>
+        IEncodedTypeConverter Codec
+        {
+            get;
+        }
 
-        /// <summary>
-        ///     Get the delimiter character of the element. This will be zero if there are no sub-elements.
-        /// </summary>
-        char Delimiter { get; }
+        /// <summary>Get the delimiter character of the element. This will be zero if there are no sub-elements.</summary>
+        char Delimiter
+        {
+            get;
+        }
 
-        /// <summary>
-        ///     Get the descendant elements within this element.
-        /// </summary>
-        IEnumerable<IElement> Descendants { get; }
+        /// <summary>Get the descendant elements within this element.</summary>
+        IEnumerable<IElement> Descendants
+        {
+            get;
+        }
 
-        /// <summary>
-        ///     Get the encoding characters this element uses.
-        /// </summary>
-        IReadOnlyEncoding Encoding { get; }
+        /// <summary>Get the encoding characters this element uses.</summary>
+        IReadOnlyEncoding Encoding
+        {
+            get;
+        }
 
-        /// <summary>
-        ///     Erase this element's content and mark it non-existant.
-        /// </summary>
+        /// <summary>Returns true if the element is considered existant.</summary>
+        bool Exists
+        {
+            get;
+        }
+
+        /// <summary>Get or set the formatted value of the element.</summary>
+        string FormattedValue
+        {
+            get;
+            set;
+        }
+
+        /// <summary>Get the index of the element.</summary>
+        int Index
+        {
+            get;
+        }
+
+        /// <summary>Unique key of the element within the message.</summary>
+        string Key
+        {
+            get;
+        }
+
+        /// <summary>Next available index for adding elements.</summary>
+        int NextIndex
+        {
+            get;
+        }
+
+        /// <summary>Get or set the complete value of the element.</summary>
+        string Value
+        {
+            get;
+            set;
+        }
+
+        /// <summary>Get the number of subvalues in the element.</summary>
+        int ValueCount
+        {
+            get;
+        }
+
+        /// <summary>Get or set the subvalues of the element.</summary>
+        IEnumerable<string> Values
+        {
+            get;
+            set;
+        }
+
+        /// <summary>Erase this element's content and mark it non-existant.</summary>
         void Erase();
 
-        /// <summary>
-        ///     Returns true if the element is considered existant.
-        /// </summary>
-        bool Exists { get; }
-
-        /// <summary>
-        ///     Get or set the formatted value of the element.
-        /// </summary>
-        string FormattedValue { get; set; }
-
-        /// <summary>
-        ///     Get the index of the element.
-        /// </summary>
-        int Index { get; }
-
-        /// <summary>
-        ///     Unique key of the element within the message.
-        /// </summary>
-        string Key { get; }
-
-        /// <summary>
-        ///     Next available index for adding elements.
-        /// </summary>
-        int NextIndex { get; }
-
-        /// <summary>
-        ///     Get or set the complete value of the element.
-        /// </summary>
-        string Value { get; set; }
-
-        /// <summary>
-        ///     Get the number of subvalues in the element.
-        /// </summary>
-        int ValueCount { get; }
-
-        /// <summary>
-        ///     Get or set the subvalues of the element.
-        /// </summary>
-        IEnumerable<string> Values { get; set; }
-
-        /// <summary>
-        ///     Get a copy of the element.
-        /// </summary>
+        /// <summary>Get a copy of the element.</summary>
         IElement Clone();
     }
 }

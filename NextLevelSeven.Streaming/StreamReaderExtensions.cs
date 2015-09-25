@@ -5,14 +5,10 @@ using NextLevelSeven.Parsing;
 
 namespace NextLevelSeven.Streaming
 {
-    /// <summary>
-    ///     Extensions to HL7 stream readers.
-    /// </summary>
+    /// <summary>Extensions to HL7 stream readers.</summary>
     public static class StreamReaderExtensions
     {
-        /// <summary>
-        ///     Read a message, skipping any ElementException and MessageException raised.
-        /// </summary>
+        /// <summary>Read a message, skipping any ElementException and MessageException raised.</summary>
         /// <param name="reader">Reader to read with.</param>
         /// <returns>Message that was read, or null if none were found.</returns>
         public static IMessageParser ReadAndSkipMessageErrors(this MessageStreamReader reader)
@@ -31,9 +27,7 @@ namespace NextLevelSeven.Streaming
             }
         }
 
-        /// <summary>
-        ///     Read all messages, skipping any ElementException and MessageException raised.
-        /// </summary>
+        /// <summary>Read all messages, skipping any ElementException and MessageException raised.</summary>
         /// <param name="reader">Reader to read with.</param>
         /// <returns>Messages that were read.</returns>
         public static IEnumerable<IMessageParser> ReadAllAndSkipMessageErrors(this MessageStreamReader reader)

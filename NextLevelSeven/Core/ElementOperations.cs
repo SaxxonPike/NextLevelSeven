@@ -4,14 +4,10 @@ using System.Linq;
 
 namespace NextLevelSeven.Core
 {
-    /// <summary>
-    ///     A collection of useful internal operations that are common to elements of all types.
-    /// </summary>
+    /// <summary>A collection of useful internal operations that are common to elements of all types.</summary>
     internal static class ElementOperations
     {
-        /// <summary>
-        ///     Get a key unique to this element in the tree.
-        /// </summary>
+        /// <summary>Get a key unique to this element in the tree.</summary>
         public static string GetKey(IElement target)
         {
             // root element?
@@ -36,15 +32,13 @@ namespace NextLevelSeven.Core
             return String.Concat(type, index.ToString(CultureInfo.InvariantCulture));
         }
 
-        /// <summary>
-        ///     Determine if the element is a field that contains encoding characters of some kind. (MSH-1, MSH-2)
-        /// </summary>
+        /// <summary>Determine if the element is a field that contains encoding characters of some kind. (MSH-1, MSH-2)</summary>
         /// <param name="element">Element to check.</param>
         /// <returns>True, if the element contains encoding characters of some kind.</returns>
         public static bool HasEncodingCharacters(IElement element)
         {
-            return (element is IField && element.Ancestor != null && ((ISegment)element.Ancestor).Type == "MSH" &&
-                    element.Index >= 1 && element.Index <= 2);
+            return (element is IField && element.Ancestor != null && ((ISegment) element.Ancestor).Type == "MSH" &&
+                element.Index >= 1 && element.Index <= 2);
         }
     }
 }

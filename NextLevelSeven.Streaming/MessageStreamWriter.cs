@@ -5,22 +5,17 @@ using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Streaming
 {
-    /// <summary>
-    ///     A stream writer for HL7 data.
-    /// </summary>
+    /// <summary>A stream writer for HL7 data.</summary>
     public class MessageStreamWriter : StreamWrapperBase, IMessageWriter
     {
-        /// <summary>
-        ///     Create an HL7 stream writer that puts its information into a base stream.
-        /// </summary>
+        /// <summary>Create an HL7 stream writer that puts its information into a base stream.</summary>
         /// <param name="baseStream">Stream to write to.</param>
-        public MessageStreamWriter(Stream baseStream) : base(baseStream)
+        public MessageStreamWriter(Stream baseStream)
+            : base(baseStream)
         {
         }
 
-        /// <summary>
-        ///     Write an HL7 message to the stream.
-        /// </summary>
+        /// <summary>Write an HL7 message to the stream.</summary>
         /// <param name="message">Message to write.</param>
         public virtual void Write(IMessage message)
         {
@@ -37,9 +32,7 @@ namespace NextLevelSeven.Streaming
             }
         }
 
-        /// <summary>
-        ///     Write all messages to the stream.
-        /// </summary>
+        /// <summary>Write all messages to the stream.</summary>
         /// <param name="messages">Messages to write.</param>
         public virtual void WriteAll(IEnumerable<IMessage> messages)
         {
@@ -49,9 +42,7 @@ namespace NextLevelSeven.Streaming
             }
         }
 
-        /// <summary>
-        ///     Convert a string into raw bytes.
-        /// </summary>
+        /// <summary>Convert a string into raw bytes.</summary>
         /// <param name="data">Data to convert.</param>
         /// <returns>Converted bytes.</returns>
         protected virtual byte[] Encode(string data)
@@ -59,9 +50,7 @@ namespace NextLevelSeven.Streaming
             return Encoding.UTF8.GetBytes(data);
         }
 
-        /// <summary>
-        ///     Convert an HL7 message into a single string.
-        /// </summary>
+        /// <summary>Convert an HL7 message into a single string.</summary>
         /// <param name="message">Message to convert.</param>
         /// <returns>Converted message.</returns>
         protected virtual string Interpret(IMessage message)
@@ -69,9 +58,7 @@ namespace NextLevelSeven.Streaming
             return message.Value;
         }
 
-        /// <summary>
-        ///     Convert raw data into a data stream.
-        /// </summary>
+        /// <summary>Convert raw data into a data stream.</summary>
         /// <param name="data">Data to convert.</param>
         /// <returns>Converted data stream.</returns>
         protected virtual Stream Process(byte[] data)
