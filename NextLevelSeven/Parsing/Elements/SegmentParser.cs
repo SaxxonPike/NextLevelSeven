@@ -44,13 +44,15 @@ namespace NextLevelSeven.Parsing.Elements
         {
             get
             {
+                // use ancestor's delimiter where possible
                 if (Ancestor != null)
                 {
                     return EncodingConfiguration.FieldDelimiter;
                 }
 
-                return DescendantStringDivider != null
-                    ? DescendantStringDivider.Delimiter
+                // if the string divider is not initialized yet, trying to use it indirectly causes an infinite loop.
+                return DescendantDividerInitialized
+                    ? DescendantDividerDelimiter
                     : '|';
             }
         }

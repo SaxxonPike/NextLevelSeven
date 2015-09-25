@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Encoding;
 using NextLevelSeven.Diagnostics;
@@ -19,6 +20,11 @@ namespace NextLevelSeven.Parsing.Elements
         private SubcomponentParser(EncodingConfigurationBase config)
             : base(config)
         {
+        }
+
+        public override IEnumerable<IElementParser> Descendants
+        {
+            get { return Enumerable.Empty<IElementParser>(); }
         }
 
         public override char Delimiter

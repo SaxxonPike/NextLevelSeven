@@ -9,7 +9,7 @@ using NextLevelSeven.Parsing.Dividers;
 namespace NextLevelSeven.Parsing.Elements
 {
     /// <summary>
-    ///     Represents a generic HL7 message element, which may contain other elements.
+    ///     Represents a generic HL7 root element, which may contain other elements.
     /// </summary>
     internal abstract class ParserBase : IElementParser, IComparable, IComparable<IElement>, IComparable<string>,
         IEquatable<IElement>, IEquatable<string>
@@ -36,38 +36,14 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>
-        ///     Create a descendant element with the specified ancestor.
-        /// </summary>
-        protected ParserBase(ParserBase ancestor)
-        {
-            Ancestor = ancestor;
-        }
-
-        /// <summary>
-        ///     Create a descendant element with the specified ancestor and encoding configuration.
-        /// </summary>
-        /// <param name="ancestor"></param>
-        /// <param name="config"></param>
-        protected ParserBase(ParserBase ancestor, EncodingConfigurationBase config)
-        {
-            Ancestor = ancestor;
-            _encodingConfiguration = config;
-        }
-
-        /// <summary>
         ///     String divider used to split the element's raw value.
         /// </summary>
-        protected IStringDivider DescendantStringDivider { get; private set; }
+        private IStringDivider _descendantDivider;
 
         /// <summary>
-        ///     Zero-based index within the parent element's raw data.
+        ///     Ancestor element. Root elements return null.
         /// </summary>
-        protected int ParentIndex { get; set; }
-
-        /// <summary>
-        ///     Ancestor element. Null if this element is a root element.
-        /// </summary>
-        protected ParserBase Ancestor { get; private set; }
+        virtual protected ParserBase Ancestor { get { return null; } }
 
         /// <summary>
         ///     Get the string divider used to find descendant values.
@@ -76,16 +52,26 @@ namespace NextLevelSeven.Parsing.Elements
         {
             get
             {
-                if (DescendantStringDivider != null)
-                {
-                    return DescendantStringDivider;
-                }
-
-                DescendantStringDivider = (Ancestor == null)
-                    ? GetDescendantDividerRoot(string.Empty)
-                    : GetDescendantDivider(Ancestor, ParentIndex);
-                return DescendantStringDivider;
+                if (_descendantDivider != null) { return _descendantDivider; }
+                _descendantDivider = GetDescendantDivider();
+                return _descendantDivider;
             }
+        }
+
+        /// <summary>
+        ///     Get the deliminter internally being used by the descendant divider.
+        /// </summary>
+        protected char DescendantDividerDelimiter
+        {
+            get { return _descendantDivider.Delimiter; }
+        }
+
+        /// <summary>
+        ///     Returns true if the descendant divider has been initialized.
+        /// </summary>
+        protected bool DescendantDividerInitialized
+        {
+            get { return _descendantDivider != null; }
         }
 
         /// <summary>
@@ -354,15 +340,6 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>
-        ///     Get the number of values in the element.
-        /// </summary>
-        /// <returns>Number of values in the element.</returns>
-        protected int GetValueCount()
-        {
-            return ValueCount;
-        }
-
-        /// <summary>
         ///     Get the descendant element at the specified index.
         /// </summary>
         /// <param name="index">Exposed index of the descendant element.</param>
@@ -375,28 +352,16 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Copied string.</returns>
         public override sealed string ToString()
         {
-            return Value;
+            return Value ?? string.Empty;
         }
 
         /// <summary>
         ///     Get a string divider for this descendant element.
         /// </summary>
-        /// <param name="ancestor">Ancestor element.</param>
-        /// <param name="index">Zero-based index within the parent's divider.</param>
         /// <returns>Descendant string divider.</returns>
-        protected virtual IStringDivider GetDescendantDivider(ParserBase ancestor, int index)
+        protected virtual IStringDivider GetDescendantDivider()
         {
-            return new StringSubDivider(ancestor.DescendantDivider, Delimiter, index);
-        }
-
-        /// <summary>
-        ///     Get a string divider for this root element.
-        /// </summary>
-        /// <param name="value">Initial value.</param>
-        /// <returns>String divider.</returns>
-        private IStringDivider GetDescendantDividerRoot(string value)
-        {
-            return new StringDivider(value, Delimiter);
+            return new StringDivider(string.Empty, Delimiter);
         }
 
         /// <summary>

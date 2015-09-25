@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Parsing.Dividers;
 using NextLevelSeven.Utility;
 
@@ -54,9 +55,19 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>
         ///     Returns an empty collection.
         /// </summary>
-        public override IEnumerable<IElementParser> Descendants
+        sealed public override IEnumerable<IElementParser> Descendants
         {
             get { return Enumerable.Empty<IElementParser>(); }
+        }
+
+        /// <summary>
+        ///     Throws an error because fields with static values cannot have descendants.
+        /// </summary>
+        /// <param name="index">Desired index.</param>
+        /// <returns>Element at the specified index.</returns>
+        sealed public override IElementParser GetDescendant(int index)
+        {
+            throw new ParserException(ErrorCode.FixedFieldsCannotBeDivided);
         }
 
         /// <summary>

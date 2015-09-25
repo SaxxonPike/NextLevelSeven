@@ -130,7 +130,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// </summary>
         /// <param name="index">Desired index.</param>
         /// <returns>Element at the specified index.</returns>
-        public override sealed IElementParser GetDescendant(int index)
+        public override IElementParser GetDescendant(int index)
         {
             return GetRepetition(index);
         }

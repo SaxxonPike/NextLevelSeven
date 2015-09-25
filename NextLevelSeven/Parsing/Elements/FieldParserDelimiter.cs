@@ -30,14 +30,11 @@
             }
             set
             {
-                // TODO: change the other delimiters in the segment
                 var s = Ancestor.DescendantDivider.Value;
-                if (s != null && s.Length >= 3)
-                {
-                    var newValue = string.Concat(s.Substring(0, 3), value,
-                        (s.Length > 3 ? s.Substring(4) : string.Empty));
-                    Ancestor.DescendantDivider.Value = newValue;
-                }
+                if (s == null || s.Length < 3) { return; }
+                var newValue = string.Concat(s.Substring(0, 3), value,
+                    (s.Length > 3 ? s.Substring(4) : string.Empty));
+                Ancestor.DescendantDivider.Value = newValue;
             }
         }
     }
