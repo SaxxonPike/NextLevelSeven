@@ -140,7 +140,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>
         ///     Get the codec used to convert values in this element.
         /// </summary>
-        public IEncodedTypeConverter As
+        public IEncodedTypeConverter Codec
         {
             get { return new EncodedTypeConverter(this); }
         }

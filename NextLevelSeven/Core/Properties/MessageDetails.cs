@@ -69,8 +69,8 @@ namespace NextLevelSeven.Core.Properties
         /// </summary>
         public DateTimeOffset? Time
         {
-            get { return _message[1][7].As.DateTime; }
-            set { _message[1][7].As.DateTime = value; }
+            get { return _message[1][7].Codec.AsDateTime; }
+            set { _message[1][7].Codec.AsDateTime = value; }
         }
 
         /// <summary>

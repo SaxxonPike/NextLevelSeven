@@ -22,9 +22,9 @@ namespace NextLevelSeven.Core
         IElement Ancestor { get; }
 
         /// <summary>
-        ///     Interpret the stored value as other types.
+        ///     Get a codec which can be used to interpret the stored value as other types.
         /// </summary>
-        IEncodedTypeConverter As { get; }
+        IEncodedTypeConverter Codec { get; }
 
         /// <summary>
         ///     Get the delimiter character of the element. This will be zero if there are no sub-elements.

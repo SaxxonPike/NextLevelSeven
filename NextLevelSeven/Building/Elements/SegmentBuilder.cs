@@ -389,7 +389,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>
         ///     Get a codec which can be used to interpret this element's data as other types.
         /// </summary>
-        public override IEncodedTypeConverter As
+        public override IEncodedTypeConverter Codec
         {
             get { return new EncodedTypeConverter(this); }
         }

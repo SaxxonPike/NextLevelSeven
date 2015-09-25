@@ -310,7 +310,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>
         ///     Get a codec that allows interpretation of the value as other types.
         /// </summary>
-        public override sealed IEncodedTypeConverter As
+        public override sealed IEncodedTypeConverter Codec
         {
             get { return new EncodedTypeConverter(this); }
         }

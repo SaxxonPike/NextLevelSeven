@@ -26,7 +26,7 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>
         ///     Get or set the element's value as a date.
         /// </summary>
-        public DateTime? Date
+        public DateTime? AsDate
         {
             get { return DateTimeConverter.ConvertToDate(BaseElement.Value); }
             set { BaseElement.Value = DateTimeConverter.ConvertFromDate(value); }
@@ -35,7 +35,7 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>
         ///     Get the element's values as dates.
         /// </summary>
-        public IIndexedEncodedTypeConverter<DateTime?> Dates
+        public IIndexedEncodedTypeConverter<DateTime?> AsDates
         {
             get
             {
@@ -47,7 +47,7 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>
         ///     Get or set the element's value as a date/time.
         /// </summary>
-        public DateTimeOffset? DateTime
+        public DateTimeOffset? AsDateTime
         {
             get { return DateTimeConverter.ConvertToDateTime(BaseElement.Value); }
             set { BaseElement.Value = DateTimeConverter.ConvertFromDateTime(value); }
@@ -56,7 +56,7 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>
         ///     Get the element's values as date/times.
         /// </summary>
-        public IIndexedEncodedTypeConverter<DateTimeOffset?> DateTimes
+        public IIndexedEncodedTypeConverter<DateTimeOffset?> AsDateTimes
         {
             get
             {
@@ -68,7 +68,7 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>
         ///     Get or set the element's value as a decimal.
         /// </summary>
-        public decimal? Decimal
+        public decimal? AsDecimal
         {
             get { return NumberConverter.ConvertToDecimal(BaseElement.Value); }
             set { BaseElement.Value = NumberConverter.ConvertFromDecimal(value); }
@@ -77,7 +77,7 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>
         ///     Get the element's values as decimals.
         /// </summary>
-        public IIndexedEncodedTypeConverter<decimal?> Decimals
+        public IIndexedEncodedTypeConverter<decimal?> AsDecimals
         {
             get
             {
@@ -89,7 +89,7 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>
         ///     Get or set the element's value as formatted text.
         /// </summary>
-        public IEnumerable<string> FormattedText
+        public IEnumerable<string> AsFormattedText
         {
             get
             {
@@ -106,7 +106,7 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>
         ///     Get or set the element's value as an integer.
         /// </summary>
-        public int? Int
+        public int? AsInt
         {
             get { return NumberConverter.ConvertToInt(BaseElement.Value); }
             set { BaseElement.Value = NumberConverter.ConvertFromInt(value); }
@@ -115,7 +115,7 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>
         ///     Get the element's values as integers.
         /// </summary>
-        public IIndexedEncodedTypeConverter<int?> Ints
+        public IIndexedEncodedTypeConverter<int?> AsInts
         {
             get
             {
@@ -127,7 +127,7 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>
         ///     Get or set the element's value as a string.
         /// </summary>
-        public string String
+        public string AsString
         {
             get { return TextConverter.ConvertToString(BaseElement.Value); }
             set { BaseElement.Value = TextConverter.ConvertFromString(value); }
@@ -136,7 +136,7 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>
         ///     Get the element's values as strings.
         /// </summary>
-        public IIndexedEncodedTypeConverter<string> Strings
+        public IIndexedEncodedTypeConverter<string> AsStrings
         {
             get
             {
@@ -148,7 +148,7 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>
         ///     Get or set the element's value as a text field.
         /// </summary>
-        public string TextField
+        public string AsTextField
         {
             get
             {
@@ -167,7 +167,7 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>
         ///     Get or set the element's value as a time.
         /// </summary>
-        public TimeSpan? Time
+        public TimeSpan? AsTime
         {
             get { return DateTimeConverter.ConvertToTime(BaseElement.Value); }
             set { BaseElement.Value = DateTimeConverter.ConvertFromTime(value); }
@@ -176,7 +176,7 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>
         ///     Get the element's values as times.
         /// </summary>
-        public IIndexedEncodedTypeConverter<TimeSpan?> Times
+        public IIndexedEncodedTypeConverter<TimeSpan?> AsTimes
         {
             get
             {

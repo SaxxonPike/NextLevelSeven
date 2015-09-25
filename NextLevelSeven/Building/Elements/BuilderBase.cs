@@ -125,7 +125,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>
         ///     Get a converter which will interpret this element's value as other types.
         /// </summary>
-        public abstract IEncodedTypeConverter As { get; }
+        public abstract IEncodedTypeConverter Codec { get; }
 
         /// <summary>
         ///     Get the number of sub-values in this element.

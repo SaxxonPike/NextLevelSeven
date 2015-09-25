@@ -32,7 +32,7 @@ namespace NextLevelSeven.Generation
             targetMsh[6].Value = sourceMsh[4].Value;
             targetMsh[3].Value = application ?? sourceMsh[5].Value;
             targetMsh[4].Value = facility ?? sourceMsh[6].Value;
-            targetMsh[7].As.DateTime = DateTime.Now;
+            targetMsh[7].Codec.AsDateTime = DateTime.Now;
             targetMsh[9][1][1].Value = "ACK";
 
             msa[0].Value = "MSA";

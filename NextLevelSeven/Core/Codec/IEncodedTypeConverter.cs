@@ -11,71 +11,71 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>
         ///     Get or set element data as a date only.
         /// </summary>
-        DateTime? Date { get; set; }
+        DateTime? AsDate { get; set; }
 
         /// <summary>
         ///     Get all descendant element data as dates only.
         /// </summary>
-        IIndexedEncodedTypeConverter<DateTime?> Dates { get; }
+        IIndexedEncodedTypeConverter<DateTime?> AsDates { get; }
 
         /// <summary>
         ///     Get or set element data as a date/time.
         /// </summary>
-        DateTimeOffset? DateTime { get; set; }
+        DateTimeOffset? AsDateTime { get; set; }
 
         /// <summary>
         ///     Get all descendant element data as date/time.
         /// </summary>
-        IIndexedEncodedTypeConverter<DateTimeOffset?> DateTimes { get; }
+        IIndexedEncodedTypeConverter<DateTimeOffset?> AsDateTimes { get; }
 
         /// <summary>
         ///     Get or set element data as a decimal number.
         /// </summary>
-        decimal? Decimal { get; set; }
+        decimal? AsDecimal { get; set; }
 
         /// <summary>
         ///     Get all descendant element data as decimal numbers.
         /// </summary>
-        IIndexedEncodedTypeConverter<decimal?> Decimals { get; }
+        IIndexedEncodedTypeConverter<decimal?> AsDecimals { get; }
 
         /// <summary>
         ///     Get or set formatted text.
         /// </summary>
-        IEnumerable<string> FormattedText { get; set; }
+        IEnumerable<string> AsFormattedText { get; set; }
 
         /// <summary>
         ///     Get or set element data as an integer.
         /// </summary>
-        int? Int { get; set; }
+        int? AsInt { get; set; }
 
         /// <summary>
         ///     Get all descendant element data as integers.
         /// </summary>
-        IIndexedEncodedTypeConverter<int?> Ints { get; }
+        IIndexedEncodedTypeConverter<int?> AsInts { get; }
 
         /// <summary>
         ///     Get or set element data as a string.
         /// </summary>
-        string String { get; set; }
+        string AsString { get; set; }
 
         /// <summary>
         ///     Get or set all descendant element data as strings.
         /// </summary>
-        IIndexedEncodedTypeConverter<string> Strings { get; }
+        IIndexedEncodedTypeConverter<string> AsStrings { get; }
 
         /// <summary>
         ///     Get or set data as a text field.
         /// </summary>
-        string TextField { get; set; }
+        string AsTextField { get; set; }
 
         /// <summary>
         ///     Get or set element data as a time only.
         /// </summary>
-        TimeSpan? Time { get; set; }
+        TimeSpan? AsTime { get; set; }
 
         /// <summary>
         ///     Get all descendant element data as times only.
         /// </summary>
-        IIndexedEncodedTypeConverter<TimeSpan?> Times { get; }
+        IIndexedEncodedTypeConverter<TimeSpan?> AsTimes { get; }
     }
 }
