@@ -5,6 +5,9 @@ namespace NextLevelSeven.Core
     /// <summary>Represents a field element in an HL7 message.</summary>
     public interface IField : IElement
     {
+        /// <summary>Get the ancestor segment. Null if the element is an orphan.</summary>
+        new ISegment Ancestor { get; }
+
         /// <summary>Get this element's repetitions.</summary>
         IEnumerable<IRepetition> Repetitions { get; }
 

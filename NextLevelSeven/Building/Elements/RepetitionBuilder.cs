@@ -262,5 +262,13 @@ namespace NextLevelSeven.Building.Elements
         {
             return _components[index];
         }
+
+        /// <summary>
+        ///     Get this element's heirarchy-specific ancestor.
+        /// </summary>
+        IField IRepetition.Ancestor
+        {
+            get { return Ancestor as IField; }
+        }
     }
 }

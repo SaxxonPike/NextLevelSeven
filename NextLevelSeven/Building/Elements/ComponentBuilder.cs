@@ -233,5 +233,13 @@ namespace NextLevelSeven.Building.Elements
         {
             return _subcomponents[index];
         }
+
+        /// <summary>
+        ///     Get this element's heirarchy-specific ancestor.
+        /// </summary>
+        IRepetition IComponent.Ancestor
+        {
+            get { return Ancestor as IRepetition; }
+        }
     }
 }

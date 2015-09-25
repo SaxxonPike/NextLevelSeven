@@ -365,7 +365,7 @@ namespace NextLevelSeven.Core
         /// <returns>Descendant element.</returns>
         public static ISegment Segment(this IMessage ancestor, int index)
         {
-            return (ISegment) ancestor[index];
+            return ancestor[index] as ISegment;
         }
 
         /// <summary>Get the field at the specified index.</summary>
@@ -374,7 +374,7 @@ namespace NextLevelSeven.Core
         /// <returns>Descendant element.</returns>
         public static IField Field(this ISegment ancestor, int index)
         {
-            return (IField) ancestor[index];
+            return ancestor[index] as IField;
         }
 
         /// <summary>Get the field repetition at the specified index.</summary>
@@ -383,7 +383,7 @@ namespace NextLevelSeven.Core
         /// <returns>Descendant element.</returns>
         public static IRepetition Repetition(this IField ancestor, int index)
         {
-            return (IRepetition) ancestor[index];
+            return ancestor[index] as IRepetition;
         }
 
         /// <summary>Get the component at the specified index, assuming repetition 1.</summary>
@@ -392,7 +392,7 @@ namespace NextLevelSeven.Core
         /// <returns>Descendant element.</returns>
         public static IComponent Component(this IField ancestor, int index)
         {
-            return (IComponent) ancestor[1][index];
+            return ancestor[1][index] as IComponent;
         }
 
         /// <summary>Get the component at the specified index.</summary>
@@ -401,7 +401,7 @@ namespace NextLevelSeven.Core
         /// <returns>Descendant element.</returns>
         public static IComponent Component(this IRepetition ancestor, int index)
         {
-            return (IComponent) ancestor[index];
+            return ancestor[index] as IComponent;
         }
 
         /// <summary>Get the subcomponent at the specified index.</summary>
@@ -410,7 +410,7 @@ namespace NextLevelSeven.Core
         /// <returns>Descendant element.</returns>
         public static ISubcomponent Subcomponent(this IComponent ancestor, int index)
         {
-            return (ISubcomponent) ancestor[index];
+            return ancestor[index] as ISubcomponent;
         }
 
         /// <summary>Create a new message.</summary>
@@ -430,8 +430,8 @@ namespace NextLevelSeven.Core
 
             // determine where to pull message metadata from
             var childSegment = sourceSegments.FirstOrDefault(s => s.Type == "MSH") ??
-                               sourceSegments.Where(s => s.Ancestor is IMessage)
-                                   .Select(s => (ISegment) (s.Ancestor[1]))
+                               sourceSegments.Where(s => s.Ancestor != null)
+                                   .Select(s => s.Ancestor[1])
                                    .FirstOrDefault();
             if (childSegment != null)
             {

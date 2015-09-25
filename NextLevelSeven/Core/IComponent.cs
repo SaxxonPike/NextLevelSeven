@@ -5,6 +5,9 @@ namespace NextLevelSeven.Core
     /// <summary>Represents a component element in an HL7 message.</summary>
     public interface IComponent : IElement
     {
+        /// <summary>Get the ancestor repetition. Null if the element is an orphan.</summary>
+        new IRepetition Ancestor { get; }
+
         /// <summary>Get this element's subcomponents.</summary>
         IEnumerable<ISubcomponent> Subcomponents { get; }
 

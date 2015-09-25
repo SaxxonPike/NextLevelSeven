@@ -124,5 +124,13 @@ namespace NextLevelSeven.Parsing.Elements
                 Value = Value
             };
         }
+
+        /// <summary>
+        ///     Get this element's heirarchy-specific ancestor.
+        /// </summary>
+        IRepetition IComponent.Ancestor
+        {
+            get { return Ancestor as IRepetition; }
+        }
     }
 }

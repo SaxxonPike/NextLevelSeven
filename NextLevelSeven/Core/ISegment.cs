@@ -5,6 +5,9 @@ namespace NextLevelSeven.Core
     /// <summary>Represents a segment element in an HL7 message.</summary>
     public interface ISegment : IElement
     {
+        /// <summary>Get the ancestor message. Null if the element is an orphan.</summary>
+        new IMessage Ancestor { get; }
+
         /// <summary>Get or set the three-letter type code for the segment.</summary>
         string Type { get; set; }
 

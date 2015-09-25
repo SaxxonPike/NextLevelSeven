@@ -136,5 +136,13 @@ namespace NextLevelSeven.Parsing.Elements
                 Value = Value
             };
         }
+
+        /// <summary>
+        ///     Get this element's heirarchy-specific ancestor.
+        /// </summary>
+        ISegment IField.Ancestor
+        {
+            get { return Ancestor as ISegment; }
+        }
     }
 }

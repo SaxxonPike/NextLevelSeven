@@ -425,5 +425,13 @@ namespace NextLevelSeven.Building.Elements
         {
             return _fields[index];
         }
+
+        /// <summary>
+        ///     Get this element's heirarchy-specific ancestor.
+        /// </summary>
+        IMessage ISegment.Ancestor
+        {
+            get { return Ancestor as IMessage; }
+        }
     }
 }

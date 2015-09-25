@@ -117,5 +117,13 @@ namespace NextLevelSeven.Building.Elements
         {
             return Enumerable.Empty<IElement>();
         }
+
+        /// <summary>
+        ///     Get this element's heirarchy-specific ancestor.
+        /// </summary>
+        IComponent ISubcomponent.Ancestor
+        {
+            get { return Ancestor as IComponent; }
+        }
     }
 }
