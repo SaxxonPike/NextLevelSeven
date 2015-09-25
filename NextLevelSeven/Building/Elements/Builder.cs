@@ -11,13 +11,13 @@ namespace NextLevelSeven.Building.Elements
     /// <summary>
     ///     Base class for message builders.
     /// </summary>
-    internal abstract class BuilderBase : IComparable, IComparable<IElement>, IComparable<string>,
+    internal abstract class Builder : IComparable, IComparable<IElement>, IComparable<string>,
         IEquatable<IElement>, IEquatable<string>, IBuilder
     {
         /// <summary>
         ///     Initialize the message builder base class.
         /// </summary>
-        internal BuilderBase()
+        internal Builder()
         {
             Encoding = new BuilderEncodingConfiguration(this);
         }
@@ -26,7 +26,7 @@ namespace NextLevelSeven.Building.Elements
         ///     Initialize the message builder base class.
         /// </summary>
         /// <param name="config">Message's encoding configuration.</param>
-        internal BuilderBase(BuilderEncodingConfiguration config)
+        internal Builder(BuilderEncodingConfiguration config)
             : this(config, 0)
         {
         }
@@ -36,7 +36,7 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         /// <param name="config">Message's encoding configuration.</param>
         /// <param name="index">Index in the parent.</param>
-        internal BuilderBase(BuilderEncodingConfiguration config, int index)
+        internal Builder(BuilderEncodingConfiguration config, int index)
         {
             Encoding = config;
             Index = index;
@@ -206,15 +206,6 @@ namespace NextLevelSeven.Building.Elements
         public bool Equals(string other)
         {
             return string.Equals(Value, other, StringComparison.Ordinal);
-        }
-
-        /// <summary>
-        ///     Get the number of sub-values in this builder.
-        /// </summary>
-        /// <returns></returns>
-        protected int GetValueCount()
-        {
-            return ValueCount;
         }
 
         /// <summary>

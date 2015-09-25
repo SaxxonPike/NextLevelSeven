@@ -11,35 +11,56 @@ namespace NextLevelSeven.Parsing.Elements
     /// <summary>
     ///     Represents a segment-level element in an HL7 message.
     /// </summary>
-    internal sealed class SegmentParser : ParserBaseDescendant, ISegmentParser
+    internal sealed class SegmentParser : DescendantParser, ISegmentParser
     {
         /// <summary>
         ///     Internal component cache.
         /// </summary>
         private readonly IndexedCache<int, FieldParser> _fields;
 
-        public SegmentParser(ParserBase ancestor, int parentIndex, int externalIndex)
+        /// <summary>
+        ///     Create a segment with the specified ancestor and indices.
+        /// </summary>
+        /// <param name="ancestor">Ancestor element.</param>
+        /// <param name="parentIndex">Index within the ancestor string divider.</param>
+        /// <param name="externalIndex">Exposed index.</param>
+        public SegmentParser(Parser ancestor, int parentIndex, int externalIndex)
             : base(ancestor, parentIndex, externalIndex)
         {
             _fields = new IndexedCache<int, FieldParser>(CreateField);
         }
 
-        private SegmentParser(EncodingConfigurationBase config)
+        /// <summary>
+        ///     Create a segment root with the specified encoding configuration.
+        /// </summary>
+        /// <param name="config"></param>
+        private SegmentParser(EncodingConfiguration config)
             : base(config)
         {
             _fields = new IndexedCache<int, FieldParser>(CreateField);
         }
 
+        /// <summary>
+        ///     Returns true if the segment's type field is MSH.
+        /// </summary>
         private bool IsMsh
         {
             get { return (string.Equals(Type, "MSH", StringComparison.Ordinal)); }
         }
 
+        /// <summary>
+        ///     Get the descendant field parser at the specified index.
+        /// </summary>
+        /// <param name="index">Index of the field.</param>
+        /// <returns>Field parser at the specified index.</returns>
         IFieldParser ISegmentParser.this[int index]
         {
             get { return _fields[index]; }
         }
 
+        /// <summary>
+        ///     Field delimiter.
+        /// </summary>
         public override char Delimiter
         {
             get
@@ -57,6 +78,9 @@ namespace NextLevelSeven.Parsing.Elements
             }
         }
 
+        /// <summary>
+        ///     Get descendant fields as an enumerable set.
+        /// </summary>
         public override IEnumerable<IElementParser> Descendants
         {
             get
@@ -69,6 +93,9 @@ namespace NextLevelSeven.Parsing.Elements
             }
         }
 
+        /// <summary>
+        ///     Get the number of values in the segment.
+        /// </summary>
         public override int ValueCount
         {
             get
@@ -81,12 +108,23 @@ namespace NextLevelSeven.Parsing.Elements
             }
         }
 
+        /// <summary>
+        ///     Get the segment type from index 0.
+        /// </summary>
         public string Type
         {
             get { return DescendantDivider[0]; }
             set { DescendantDivider[0] = value; }
         }
 
+        /// <summary>
+        ///     Get the value at the specified indices.
+        /// </summary>
+        /// <param name="field">Field index.</param>
+        /// <param name="repetition">Repetition number.</param>
+        /// <param name="component">Component index.</param>
+        /// <param name="subcomponent">Subcomponent index.</param>
+        /// <returns>Value at the specified indices.</returns>
         public string GetValue(int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
         {
             return field < 0
@@ -94,6 +132,14 @@ namespace NextLevelSeven.Parsing.Elements
                 : _fields[field].GetValue(repetition, component, subcomponent);
         }
 
+        /// <summary>
+        ///     Get all values at the specified indices.
+        /// </summary>
+        /// <param name="field">Field index.</param>
+        /// <param name="repetition">Repetition number.</param>
+        /// <param name="component">Component index.</param>
+        /// <param name="subcomponent">Subcomponent index.</param>
+        /// <returns>Values at the specified indices.</returns>
         public IEnumerable<string> GetValues(int field = -1, int repetition = -1, int component = -1,
             int subcomponent = -1)
         {
@@ -102,16 +148,27 @@ namespace NextLevelSeven.Parsing.Elements
                 : _fields[field].GetValues(repetition, component, subcomponent);
         }
 
+        /// <summary>
+        ///     Deep clone this element.
+        /// </summary>
+        /// <returns>Clone of the element.</returns>
         public override IElement Clone()
         {
             return CloneInternal();
         }
 
+        /// <summary>
+        ///     Deep clone this segment.
+        /// </summary>
+        /// <returns>Clone of the segment.</returns>
         ISegment ISegment.Clone()
         {
             return CloneInternal();
         }
 
+        /// <summary>
+        ///     Get or set all field values in this segment.
+        /// </summary>
         public override IEnumerable<string> Values
         {
             get { return base.Values; }
@@ -161,6 +218,11 @@ namespace NextLevelSeven.Parsing.Elements
             get { return ValueCount; }
         }
 
+        /// <summary>
+        ///     Get the descendant element at the specified index.
+        /// </summary>
+        /// <param name="index">Index of the descendant element.</param>
+        /// <returns>Descendant element at the specified index.</returns>
         public override IElementParser GetDescendant(int index)
         {
             return _fields[index];
@@ -182,7 +244,7 @@ namespace NextLevelSeven.Parsing.Elements
             {
                 if (index == 1)
                 {
-                    var descendant = new FieldParserDelimiter(this);
+                    var descendant = new DelimiterFieldParser(this);
                     return descendant;
                 }
 
@@ -203,6 +265,10 @@ namespace NextLevelSeven.Parsing.Elements
             return result;
         }
 
+        /// <summary>
+        ///     Deep clone this segment.
+        /// </summary>
+        /// <returns>Clone of the segment.</returns>
         private SegmentParser CloneInternal()
         {
             return new SegmentParser(EncodingConfiguration) {Index = Index, Value = Value};

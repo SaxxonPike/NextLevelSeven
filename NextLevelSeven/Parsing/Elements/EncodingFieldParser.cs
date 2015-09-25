@@ -7,13 +7,13 @@ namespace NextLevelSeven.Parsing.Elements
     /// <summary>
     ///     Represents the special field at MSH-2, which contains encoding characters for a message.
     /// </summary>
-    internal sealed class EncodingFieldParser : FieldParserWithStaticValue
+    internal sealed class EncodingFieldParser : StaticValueFieldParser
     {
         /// <summary>
         ///     Create an encoding field.
         /// </summary>
         /// <param name="ancestor"></param>
-        public EncodingFieldParser(ParserBase ancestor)
+        public EncodingFieldParser(Parser ancestor)
             : base(ancestor, 1, 2)
         {
         }

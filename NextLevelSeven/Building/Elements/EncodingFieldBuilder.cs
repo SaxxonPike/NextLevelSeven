@@ -21,7 +21,7 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         /// <param name="builder">Ancestor builder.</param>
         /// <param name="index">Index in the ancestor.</param>
-        internal EncodingFieldBuilder(BuilderBase builder, int index)
+        internal EncodingFieldBuilder(Builder builder, int index)
             : base(builder, index)
         {
         }

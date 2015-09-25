@@ -10,7 +10,7 @@ namespace NextLevelSeven.Building.Elements
     /// <summary>
     ///     Represents an HL7 component.
     /// </summary>
-    internal sealed class ComponentBuilder : BuilderBaseDescendant, IComponentBuilder
+    internal sealed class ComponentBuilder : DescendantBuilder, IComponentBuilder
     {
         /// <summary>
         ///     Descendant builders.
@@ -22,7 +22,7 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         /// <param name="builder">Ancestor builder.</param>
         /// <param name="index">Index of the component.</param>
-        internal ComponentBuilder(BuilderBase builder, int index)
+        internal ComponentBuilder(Builder builder, int index)
             : base(builder, index)
         {
             _subcomponents = new IndexedCache<int, SubcomponentBuilder>(CreateSubcomponentBuilder);

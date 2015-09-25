@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NextLevelSeven.Core.Encoding;
 using NextLevelSeven.Diagnostics;
-using NextLevelSeven.Parsing.Dividers;
 using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Parsing.Elements
 {
-    internal abstract class FieldParserWithStaticValue : FieldParser
+    /// <summary>
+    ///     Base class for fields that have no descendants.
+    /// </summary>
+    internal abstract class StaticValueFieldParser : FieldParser
     {
         /// <summary>
         ///     Create a field delimiter descendant.
@@ -14,7 +17,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <param name="ancestor">Ancestor element.</param>
         /// <param name="index">Index within the ancestor.</param>
         /// <param name="externalIndex">Exposed index.</param>
-        protected FieldParserWithStaticValue(ParserBase ancestor, int index, int externalIndex)
+        protected StaticValueFieldParser(Parser ancestor, int index, int externalIndex)
             : base(ancestor, index, externalIndex)
         {
         }
@@ -84,7 +87,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Repetition descendant.</returns>
         protected override sealed RepetitionParser CreateRepetition(int index)
         {
-            return new RepetitionParser(this, index - 1, index, Core.Encoding.EncodingConfiguration.Empty);
+            return new RepetitionParser(this, index - 1, index, EncodingConfiguration.Empty);
         }
 
         /// <summary>

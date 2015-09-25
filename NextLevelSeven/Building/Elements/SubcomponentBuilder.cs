@@ -11,7 +11,7 @@ namespace NextLevelSeven.Building.Elements
     /// <summary>
     ///     Subcomponent HL7 element builder.
     /// </summary>
-    internal sealed class SubcomponentBuilder : BuilderBaseDescendant, ISubcomponentBuilder
+    internal sealed class SubcomponentBuilder : DescendantBuilder, ISubcomponentBuilder
     {
         /// <summary>
         ///     Internal subcomponent value.
@@ -23,7 +23,7 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         /// <param name="builder">Ancestor builder.</param>
         /// <param name="index">Index in the ancestor.</param>
-        internal SubcomponentBuilder(BuilderBase builder, int index)
+        internal SubcomponentBuilder(Builder builder, int index)
             : base(builder, index)
         {
         }

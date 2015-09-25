@@ -6,14 +6,14 @@ namespace NextLevelSeven.Building.Elements
     /// <summary>
     ///     Base class for builders that are not root level.
     /// </summary>
-    internal abstract class BuilderBaseDescendant : BuilderBase
+    internal abstract class DescendantBuilder : Builder
     {
         /// <summary>
         ///     Initialize the message builder base class.
         /// </summary>
         /// <param name="ancestor">Ancestor from which configuration will be obtained.</param>
         /// <param name="index">Index in the parent.</param>
-        internal BuilderBaseDescendant(BuilderBase ancestor, int index)
+        internal DescendantBuilder(Builder ancestor, int index)
             : base(ancestor.Encoding, index)
         {
             Ancestor = ancestor;
@@ -22,7 +22,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>
         ///     Get the ancestor builder.
         /// </summary>
-        protected BuilderBase Ancestor { get; private set; }
+        protected Builder Ancestor { get; private set; }
 
         /// <summary>
         ///     Get or set the component delimiter character.

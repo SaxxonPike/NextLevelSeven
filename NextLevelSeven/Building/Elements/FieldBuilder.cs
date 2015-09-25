@@ -10,7 +10,7 @@ namespace NextLevelSeven.Building.Elements
     /// <summary>
     ///     Represents an HL7 field.
     /// </summary>
-    internal class FieldBuilder : BuilderBaseDescendant, IFieldBuilder
+    internal class FieldBuilder : DescendantBuilder, IFieldBuilder
     {
         /// <summary>
         ///     Descendant builders.
@@ -22,7 +22,7 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         /// <param name="builder">Ancestor builder.</param>
         /// <param name="index">Index in the ancestor.</param>
-        internal FieldBuilder(BuilderBase builder, int index)
+        internal FieldBuilder(Builder builder, int index)
             : base(builder, index)
         {
             _repetitions = new IndexedCache<int, RepetitionBuilder>(CreateRepetitionBuilder);

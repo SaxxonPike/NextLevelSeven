@@ -1,5 +1,4 @@
 ﻿using NextLevelSeven.Core.Encoding;
-using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Parsing.Dividers;
 
 namespace NextLevelSeven.Parsing.Elements
@@ -7,13 +6,13 @@ namespace NextLevelSeven.Parsing.Elements
     /// <summary>
     ///     Represents a generic HL7 descendant element with an ancestor.
     /// </summary>
-    internal abstract class ParserBaseDescendant : ParserBase
+    internal abstract class DescendantParser : Parser
     {
         /// <summary>
         ///     Create a descendant element that is detached from an ancestor.
         /// </summary>
         /// <param name="config">Encoding configuration for the element.</param>
-        protected ParserBaseDescendant(EncodingConfigurationBase config)
+        protected DescendantParser(EncodingConfiguration config)
             : base(config)
         {
         }
@@ -24,7 +23,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <param name="ancestor">Element's ancestor.</param>
         /// <param name="parentIndex">Index within the parent.</param>
         /// <param name="externalIndex">Index exposed externally.</param>
-        protected ParserBaseDescendant(ParserBase ancestor, int parentIndex, int externalIndex)
+        protected DescendantParser(Parser ancestor, int parentIndex, int externalIndex)
         {
             _ancestor = ancestor;
             ParentIndex = parentIndex;
@@ -34,8 +33,8 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>
         ///     Create a descendant element that uses an alternative encoding configuration.
         /// </summary>
-        protected ParserBaseDescendant(ParserBase ancestor, int parentIndex, int externalIndex,
-            EncodingConfigurationBase config)
+        protected DescendantParser(Parser ancestor, int parentIndex, int externalIndex,
+            EncodingConfiguration config)
             : base(config)
         {
             _ancestor = ancestor;
@@ -46,12 +45,12 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>
         ///     Internal backing store for Ancestor.
         /// </summary>
-        private readonly ParserBase _ancestor;
+        private readonly Parser _ancestor;
 
         /// <summary>
         ///     Ancestor element.
         /// </summary>
-        sealed protected override ParserBase Ancestor
+        sealed protected override Parser Ancestor
         {
             get { return _ancestor; }
         }

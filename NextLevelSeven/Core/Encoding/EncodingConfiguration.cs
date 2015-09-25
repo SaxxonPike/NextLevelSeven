@@ -1,69 +1,129 @@
 ﻿namespace NextLevelSeven.Core.Encoding
 {
-    internal sealed class EncodingConfiguration : EncodingConfigurationBase
+    /// <summary>
+    ///     Provides information about the characters used to encode an HL7 message.
+    /// </summary>
+    internal abstract class EncodingConfiguration : IReadOnlyEncoding
     {
         /// <summary>
         ///     Default encoding configuration.
         /// </summary>
-        public static readonly EncodingConfiguration Default = new EncodingConfiguration();
+        public static readonly EncodingConfiguration Default = new SimpleEncodingConfiguration();
 
         /// <summary>
         ///     An encoding configuration with all characters set to zero.
         /// </summary>
-        public static readonly EncodingConfiguration Empty = new EncodingConfiguration('\0', '\0', '\0', '\0', '\0');
+        public static readonly EncodingConfiguration Empty = new SimpleEncodingConfiguration('\0', '\0', '\0', '\0', '\0');
 
         /// <summary>
-        ///     Create an encoding configuration with the default characters.
+        ///     Get the delimiter character used to split components.
         /// </summary>
-        public EncodingConfiguration()
+        public abstract char ComponentDelimiter { get; protected set; }
+
+        /// <summary>
+        ///     Get the delimiter character used to split components.
+        /// </summary>
+        public string ComponentDelimiterString
         {
+            get { return new string(ComponentDelimiter, 1); }
         }
 
         /// <summary>
-        ///     Clone an existing encoding configuration.
+        ///     Get the escape character used to mark encoded sequences.
         /// </summary>
-        /// <param name="other">Source configuration to pull values from.</param>
-        public EncodingConfiguration(EncodingConfigurationBase other)
+        public abstract char EscapeCharacter { get; protected set; }
+
+        /// <summary>
+        ///     Get the escape character used to mark encoded sequences.
+        /// </summary>
+        public string EscapeDelimiterString
         {
-            CopyFrom(other);
+            get { return new string(EscapeCharacter, 1); }
         }
 
         /// <summary>
-        ///     Create an encoding configuration with the specified characters.
+        ///     Get the escape character used to separate fields.
         /// </summary>
-        /// <param name="field">Field delimiter.</param>
-        /// <param name="repetition">Repetition delimiter.</param>
-        /// <param name="component">Component delimiter.</param>
-        /// <param name="subcomponent">Subcomponent delimiter.</param>
-        /// <param name="escape">Escape character.</param>
-        public EncodingConfiguration(char field, char repetition, char component, char subcomponent, char escape)
+        public abstract char FieldDelimiter { get; protected set; }
+
+        /// <summary>
+        ///     Get the escape character used to separate fields.
+        /// </summary>
+        public string FieldDelimiterString
         {
-            InitializeWith(field, repetition, component, subcomponent, escape);
+            get { return new string(FieldDelimiter, 1); }
         }
 
         /// <summary>
-        ///     Get the component delimiter.
+        ///     Get the repetition character used to separate multiple data in the same field.
         /// </summary>
-        public override char ComponentDelimiter { get; protected set; }
+        public abstract char RepetitionDelimiter { get; protected set; }
 
         /// <summary>
-        ///     Get the escape character.
+        ///     Get the repetition character used to separate multiple data in the same field.
         /// </summary>
-        public override char EscapeCharacter { get; protected set; }
+        public string RepetitionDelimiterString
+        {
+            get { return new string(RepetitionDelimiter, 1); }
+        }
 
         /// <summary>
-        ///     Get the field delimiter.
+        ///     Get the segment delimiter used to separate segments in a message. This is non-negotiable in the HL7 standard.
         /// </summary>
-        public override char FieldDelimiter { get; protected set; }
+        public char SegmentDelimiter
+        {
+            get { return '\xD'; }
+        }
 
         /// <summary>
-        ///     Get the repetition delimiter.
+        ///     Get the segment delimiter used to separate segments in a message. This is non-negotiable in the HL7 standard.
         /// </summary>
-        public override char RepetitionDelimiter { get; protected set; }
+        public string SegmentDelimiterString
+        {
+            get { return "\xD"; }
+        }
 
         /// <summary>
-        ///     Get the subcomponent delimiter.
+        ///     Get the delimiter character used to split subcomponents.
         /// </summary>
-        public override char SubcomponentDelimiter { get; protected set; }
+        public abstract char SubcomponentDelimiter { get; protected set; }
+
+        /// <summary>
+        ///     Get the delimiter character used to split subcomponents.
+        /// </summary>
+        public string SubcomponentDelimiterString
+        {
+            get { return new string(SubcomponentDelimiter, 1); }
+        }
+
+        /// <summary>
+        ///     Initialize defaults.
+        /// </summary>
+        /// <param name="field"></param>
+        /// <param name="repetition"></param>
+        /// <param name="component"></param>
+        /// <param name="subcomponent"></param>
+        /// <param name="escape"></param>
+        protected void InitializeWith(char field, char repetition, char component, char subcomponent, char escape)
+        {
+            FieldDelimiter = field;
+            RepetitionDelimiter = repetition;
+            ComponentDelimiter = component;
+            SubcomponentDelimiter = subcomponent;
+            EscapeCharacter = escape;
+        }
+
+        /// <summary>
+        ///     Clone defaults from another configuration.
+        /// </summary>
+        /// <param name="other">Source configuration.</param>
+        protected void CopyFrom(EncodingConfiguration other)
+        {
+            ComponentDelimiter = other.ComponentDelimiter;
+            EscapeCharacter = other.EscapeCharacter;
+            FieldDelimiter = other.FieldDelimiter;
+            RepetitionDelimiter = other.RepetitionDelimiter;
+            SubcomponentDelimiter = other.SubcomponentDelimiter;
+        }
     }
 }

@@ -11,7 +11,7 @@ namespace NextLevelSeven.Building.Elements
     /// <summary>
     ///     Represents an HL7 segment.
     /// </summary>
-    internal sealed class SegmentBuilder : BuilderBaseDescendant, ISegmentBuilder
+    internal sealed class SegmentBuilder : DescendantBuilder, ISegmentBuilder
     {
         /// <summary>
         ///     Descendant builders.
@@ -23,7 +23,7 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         /// <param name="builder">Ancestor builder.</param>
         /// <param name="index">Index in the ancestor.</param>
-        internal SegmentBuilder(BuilderBase builder, int index)
+        internal SegmentBuilder(Builder builder, int index)
             : base(builder, index)
         {
             _fields = new IndexedCache<int, FieldBuilder>(CreateFieldBuilder);

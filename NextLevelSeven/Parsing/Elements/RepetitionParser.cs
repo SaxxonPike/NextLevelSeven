@@ -9,7 +9,7 @@ namespace NextLevelSeven.Parsing.Elements
     /// <summary>
     ///     Represents a repetition-level element in an HL7 message.
     /// </summary>
-    internal sealed class RepetitionParser : ParserBaseDescendant, IRepetitionParser
+    internal sealed class RepetitionParser : DescendantParser, IRepetitionParser
     {
         /// <summary>
         ///     Internal component cache.
@@ -22,7 +22,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <param name="ancestor">Ancestor element.</param>
         /// <param name="parentIndex">Index in the parent splitter.</param>
         /// <param name="externalIndex">Exposed index.</param>
-        public RepetitionParser(ParserBase ancestor, int parentIndex, int externalIndex)
+        public RepetitionParser(Parser ancestor, int parentIndex, int externalIndex)
             : base(ancestor, parentIndex, externalIndex)
         {
             _components = new IndexedCache<int, ComponentParser>(CreateComponent);
@@ -36,8 +36,8 @@ namespace NextLevelSeven.Parsing.Elements
         /// <param name="parentIndex">Index in the parent splitter.</param>
         /// <param name="externalIndex">Exposed index.</param>
         /// <param name="config">Encoding configuration to use.</param>
-        public RepetitionParser(ParserBase ancestor, int parentIndex, int externalIndex,
-            EncodingConfigurationBase config)
+        public RepetitionParser(Parser ancestor, int parentIndex, int externalIndex,
+            EncodingConfiguration config)
             : base(ancestor, parentIndex, externalIndex, config)
         {
             _components = new IndexedCache<int, ComponentParser>(CreateComponent);
@@ -47,7 +47,7 @@ namespace NextLevelSeven.Parsing.Elements
         ///     Create a detached repetition with the specified initial value and encoding configuration.
         /// </summary>
         /// <param name="config">Encoding configuration.</param>
-        private RepetitionParser(EncodingConfigurationBase config)
+        private RepetitionParser(EncodingConfiguration config)
             : base(config)
         {
             _components = new IndexedCache<int, ComponentParser>(CreateComponent);

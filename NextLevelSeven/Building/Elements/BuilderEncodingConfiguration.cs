@@ -5,13 +5,13 @@ namespace NextLevelSeven.Building.Elements
     /// <summary>
     ///     An encoding configuration wrapper that redirects character properties from a MessageBuilder.
     /// </summary>
-    internal sealed class BuilderEncodingConfiguration : EncodingConfigurationBase, IEncoding
+    internal sealed class BuilderEncodingConfiguration : EncodingConfiguration, IEncoding
     {
         /// <summary>
         ///     Create an encoding configuration from a message or segment.
         /// </summary>
         /// <param name="builder">Message builder to pull the characters from.</param>
-        public BuilderEncodingConfiguration(BuilderBase builder)
+        public BuilderEncodingConfiguration(Builder builder)
         {
             Builder = builder;
         }
@@ -19,7 +19,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>
         ///     Builder to pull characters from.
         /// </summary>
-        BuilderBase Builder { get; set; }
+        Builder Builder { get; set; }
 
         char IEncoding.ComponentDelimiter
         {

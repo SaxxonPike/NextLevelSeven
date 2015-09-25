@@ -12,7 +12,7 @@ namespace NextLevelSeven.Parsing.Elements
     /// <summary>
     ///     Represents a textual HL7v2 message.
     /// </summary>
-    internal sealed class MessageParser : ParserBase, IMessageParser
+    internal sealed class MessageParser : Parser, IMessageParser
     {
         /// <summary>
         ///     Segment cache.

@@ -6,13 +6,8 @@ namespace NextLevelSeven.Parsing.Elements
     /// <summary>
     ///     An encoding configuration that gets its values from an HL7 message.
     /// </summary>
-    internal class ParserEncodingConfiguration : EncodingConfigurationBase
+    internal class ParserEncodingConfiguration : EncodingConfiguration
     {
-        /// <summary>
-        ///     Get a default parser encoding configuration.
-        /// </summary>
-        public static readonly ParserEncodingConfiguration Default = new ParserEncodingConfiguration();
-
         /// <summary>
         ///     Create a default encoding configuration.
         /// </summary>

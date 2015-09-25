@@ -3,13 +3,13 @@
     /// <summary>
     ///     Represents the special MSH-1 field, which contains the field delimiter for the rest of the segment.
     /// </summary>
-    internal sealed class FieldParserDelimiter : FieldParserWithStaticValue
+    internal sealed class DelimiterFieldParser : StaticValueFieldParser
     {
         /// <summary>
         ///     Create a field delimiter descendant.
         /// </summary>
         /// <param name="ancestor">Ancestor element.</param>
-        public FieldParserDelimiter(ParserBase ancestor)
+        public DelimiterFieldParser(Parser ancestor)
             : base(ancestor, 0, 1)
         {
         }

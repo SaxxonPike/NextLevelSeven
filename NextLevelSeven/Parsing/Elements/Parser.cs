@@ -9,20 +9,20 @@ using NextLevelSeven.Parsing.Dividers;
 namespace NextLevelSeven.Parsing.Elements
 {
     /// <summary>
-    ///     Represents a generic HL7 root element, which may contain other elements.
+    ///     Represents a generic HL7 element, which may contain other elements.
     /// </summary>
-    internal abstract class ParserBase : IElementParser, IComparable, IComparable<IElement>, IComparable<string>,
+    internal abstract class Parser : IElementParser, IComparable, IComparable<IElement>, IComparable<string>,
         IEquatable<IElement>, IEquatable<string>
     {
         /// <summary>
         ///     Base encoding configuration.
         /// </summary>
-        private EncodingConfigurationBase _encodingConfiguration;
+        private EncodingConfiguration _encodingConfiguration;
 
         /// <summary>
         ///     Create a root element.
         /// </summary>
-        protected ParserBase()
+        protected Parser()
         {
         }
 
@@ -30,7 +30,7 @@ namespace NextLevelSeven.Parsing.Elements
         ///     Create a root element with the specified encoding configuration.
         /// </summary>
         /// <param name="config"></param>
-        protected ParserBase(EncodingConfigurationBase config)
+        protected Parser(EncodingConfiguration config)
         {
             _encodingConfiguration = config;
         }
@@ -43,7 +43,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>
         ///     Ancestor element. Root elements return null.
         /// </summary>
-        virtual protected ParserBase Ancestor { get { return null; } }
+        virtual protected Parser Ancestor { get { return null; } }
 
         /// <summary>
         ///     Get the string divider used to find descendant values.
@@ -271,7 +271,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>
         ///     Get the encoding configuration.
         /// </summary>
-        public EncodingConfigurationBase EncodingConfiguration
+        public EncodingConfiguration EncodingConfiguration
         {
             get
             {
@@ -285,7 +285,7 @@ namespace NextLevelSeven.Parsing.Elements
                 }
                 if (!(this is IMessage))
                 {
-                    return Core.Encoding.EncodingConfiguration.Default;
+                    return EncodingConfiguration.Default;
                 }
                 _encodingConfiguration = new ParserEncodingConfiguration((ISegment)this[1]);
                 return _encodingConfiguration;

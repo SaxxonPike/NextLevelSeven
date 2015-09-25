@@ -12,7 +12,7 @@ namespace NextLevelSeven.Building.Elements
     /// <summary>
     ///     Represents an HL7 message as discrete parts, which can be quickly modified and exported.
     /// </summary>
-    internal sealed class MessageBuilder : BuilderBase, IMessageBuilder
+    internal sealed class MessageBuilder : Builder, IMessageBuilder
     {
         /// <summary>
         ///     Descendant segments.

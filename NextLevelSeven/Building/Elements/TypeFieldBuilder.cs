@@ -24,7 +24,7 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="builder">Ancestor builder.</param>
         /// <param name="onTypeFieldChangedHandler">Method to call when the type field has changed.</param>
         /// <param name="index">Index in the ancestor.</param>
-        internal TypeFieldBuilder(BuilderBase builder, ProxyChangePendingNotifier<string> onTypeFieldChangedHandler,
+        internal TypeFieldBuilder(Builder builder, ProxyChangePendingNotifier<string> onTypeFieldChangedHandler,
             int index)
             : base(builder, index)
         {
