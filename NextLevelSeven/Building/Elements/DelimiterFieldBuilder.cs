@@ -35,7 +35,7 @@ namespace NextLevelSeven.Building.Elements
             get { return FieldDelimiter == '\0' ? null : new string(FieldDelimiter, 1); }
             set
             {
-                if (string.IsNullOrEmpty(value))
+                if (string.IsNullOrEmpty(value) || HL7.NullValues.Contains(value))
                 {
                     FieldDelimiter = '\0';
                     return;
@@ -73,7 +73,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns></returns>
         public override IFieldBuilder SetFieldRepetition(int repetition, string value)
         {
-            if (repetition > 1)
+            if (repetition != 1)
             {
                 throw new BuilderException(ErrorCode.FixedFieldsCannotBeDivided);
             }

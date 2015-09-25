@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NextLevelSeven.Building;
 using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Test.Building
@@ -6,6 +7,27 @@ namespace NextLevelSeven.Test.Building
     [TestClass]
     public sealed class SegmentBuilderTests : BuildingTestFixture
     {
+        [TestMethod]
+        public void SegmentBuilder_MapsBuilderAncestor()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1];
+            Assert.AreSame(builder, builder.Ancestor[1]);
+        }
+
+        [TestMethod]
+        public void SegmentBuilder_MapsGenericBuilderAncestor()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1] as ISegment;
+            Assert.AreSame(builder, builder.Ancestor[1]);
+        }
+
+        [TestMethod]
+        public void SegmentBuilder_MapsGenericAncestor()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1] as IElement;
+            Assert.AreSame(builder, builder.Ancestor[1]);
+        }
+
         [TestMethod]
         public void SegmentBuilder_CanGetField()
         {

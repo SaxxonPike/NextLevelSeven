@@ -7,6 +7,27 @@ namespace NextLevelSeven.Test.Building
     public sealed class SubcomponentBuilderTests : BuildingTestFixture
     {
         [TestMethod]
+        public void SubcomponentBuilder_MapsBuilderAncestor()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
+            Assert.AreSame(builder, builder.Ancestor[1]);
+        }
+
+        [TestMethod]
+        public void SubcomponentBuilder_MapsGenericBuilderAncestor()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1] as ISubcomponent;
+            Assert.AreSame(builder, builder.Ancestor[1]);
+        }
+
+        [TestMethod]
+        public void SubcomponentBuilder_MapsGenericAncestor()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1] as IElement;
+            Assert.AreSame(builder, builder.Ancestor[1]);
+        }
+
+        [TestMethod]
         public void SubcomponentBuilder_CanGetValue()
         {
             var val0 = Randomized.String();
@@ -35,6 +56,23 @@ namespace NextLevelSeven.Test.Building
             var clone = builder.Clone();
             Assert.AreNotSame(builder, clone, "Builder and its clone must not refer to the same object.");
             Assert.AreEqual(builder.ToString(), clone.ToString(), "Clone data doesn't match source data.");
+        }
+
+        [TestMethod]
+        public void SubcomponentBuilder_CanBeCloned_Generic()
+        {
+            IElement builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}",
+                Randomized.String(), Randomized.String(), Randomized.String(), Randomized.String()))[1][3][2][2][2];
+            var clone = builder.Clone();
+            Assert.AreNotSame(builder, clone, "Builder and its clone must not refer to the same object.");
+            Assert.AreEqual(builder.ToString(), clone.ToString(), "Clone data doesn't match source data.");
+        }
+
+        [TestMethod]
+        public void SubcomponentBuilder_HasOneValue()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
+            Assert.AreEqual(1, builder.ValueCount);
         }
     }
 }

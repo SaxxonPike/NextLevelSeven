@@ -1,4 +1,6 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NextLevelSeven.Building;
 using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Test.Building
@@ -6,6 +8,92 @@ namespace NextLevelSeven.Test.Building
     [TestClass]
     public sealed class FieldBuilderTests : BuildingTestFixture
     {
+        [TestMethod]
+        public void FieldBuilder_Delimiter_HasOneValue()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][1];
+            Assert.AreEqual(1, builder.ValueCount);
+        }
+
+        [TestMethod]
+        public void FieldBuilder_Delimiter_GetsOneValue()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][1];
+            Assert.AreEqual(1, builder.Values.Count());
+        }
+
+        [TestMethod]
+        public void FieldBuilder_Delimiter_SetsSingleValueFromOnlyFirstCharacter()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][1];
+            builder.Value = "$%^&";
+            Assert.AreEqual(builder.Value, "$");
+        }
+
+        [TestMethod]
+        public void FieldBuilder_Delimiter_SetsValuesFromOnlyFirstCharacter()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][1];
+            builder.Values = new[] { "$", "#" };
+            Assert.AreEqual(builder.Value, "$");
+        }
+
+        [TestMethod]
+        public void FieldBuilder_Delimiter_CanNullify()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][1];
+            builder.Nullify();
+            Assert.IsNull(builder.Value);
+        }
+
+        [TestMethod]
+        public void FieldBuilder_Delimiter_ThrowsOnSubdivision()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][1];
+            IElement test = null;
+            It.Throws<BuilderException>(() => test = builder[1]);
+            Assert.IsNull(test);
+        }
+
+        [TestMethod]
+        public void FieldBuilder_Delimiter_ThrowsOnIndirectSubdivision()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][1];
+            IElement test = null;
+            It.Throws<BuilderException>(() => test = builder.SetFieldRepetition(0, "$"));
+            Assert.IsNull(test);
+        }
+
+        [TestMethod]
+        public void FieldBuilder_Delimiter_SetsOnIndirectSubdivision()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][1];
+            IElement test = null;
+            builder.SetFieldRepetition(1, "$");
+            Assert.AreEqual(builder.Value, "$");
+        }
+
+        [TestMethod]
+        public void FieldBuilder_MapsBuilderAncestor()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][1];
+            Assert.AreSame(builder, builder.Ancestor[1]);
+        }
+
+        [TestMethod]
+        public void FieldBuilder_MapsGenericBuilderAncestor()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][1] as IField;
+            Assert.AreSame(builder, builder.Ancestor[1]);
+        }
+
+        [TestMethod]
+        public void FieldBuilder_MapsGenericAncestor()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][1] as IElement;
+            Assert.AreSame(builder, builder.Ancestor[1]);
+        }
+
         [TestMethod]
         public void FieldBuilder_CanGetRepetition()
         {

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NextLevelSeven.Building;
 using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Test.Building
@@ -7,6 +9,57 @@ namespace NextLevelSeven.Test.Building
     [TestClass]
     public sealed class BuilderBaseTests : BuildingTestFixture
     {
+        [TestMethod]
+        public void Builder_CanBeCompared()
+        {
+            var builder0 = Message.Build(ExampleMessages.Standard);
+            var builder1 = Message.Build(ExampleMessages.Standard);
+            builder0.Segment(1).Field(3).Value = "0";
+            builder1.Segment(1).Field(3).Value = "1";
+            var list = new List<IBuilder> { builder1, builder0 };
+            list.Sort();
+            Assert.AreSame(list[0], builder0);
+            Assert.AreSame(list[1], builder1);
+            list.Reverse();
+            Assert.AreSame(list[0], builder1);
+            Assert.AreSame(list[1], builder0);
+        }
+
+        [TestMethod]
+        public void Builder_CanFormatNull()
+        {
+            var builder = Message.Build(ExampleMessages.Standard);
+            builder[1][3].FormattedValue = "\"\"";
+            Assert.IsNull(builder[1][3].FormattedValue);
+        }
+
+        [TestMethod]
+        public void Builder_CanFormatStrings()
+        {
+            var builder = Message.Build(ExampleMessages.Standard);
+            var value = Randomized.String();
+            builder[1][3].FormattedValue = value;
+            Assert.AreEqual(value, builder[1][3].FormattedValue);
+        }
+
+        [TestMethod]
+        public void Builder_CanBeErased()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][3];
+            var value = Randomized.String();
+            builder.Value = value;
+            builder.Erase();
+            Assert.IsNull(builder.Value);
+            Assert.IsFalse(builder.Exists);
+        }
+
+        [TestMethod]
+        public void Builder_DefaultsToNonExistant()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][3];
+            Assert.IsFalse(builder[2].Exists);
+        }
+
         [TestMethod]
         public void Builder_ConvertsHl7NullToExistingNull()
         {

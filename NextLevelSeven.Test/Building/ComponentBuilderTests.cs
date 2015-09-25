@@ -7,6 +7,27 @@ namespace NextLevelSeven.Test.Building
     public sealed class ComponentBuilderTests : BuildingTestFixture
     {
         [TestMethod]
+        public void ComponentBuilder_MapsBuilderAncestor()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1];
+            Assert.AreSame(builder, builder.Ancestor[1]);
+        }
+
+        [TestMethod]
+        public void ComponentBuilder_MapsGenericBuilderAncestor()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1] as IComponent;
+            Assert.AreSame(builder, builder.Ancestor[1]);
+        }
+
+        [TestMethod]
+        public void ComponentBuilder_MapsGenericAncestor()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1] as IElement;
+            Assert.AreSame(builder, builder.Ancestor[1]);
+        }
+
+        [TestMethod]
         public void ComponentBuilder_CanGetSubcomponent()
         {
             var builder = Message.Build(ExampleMessages.Variety);

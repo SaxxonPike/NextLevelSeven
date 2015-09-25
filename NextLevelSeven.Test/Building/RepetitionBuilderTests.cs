@@ -7,6 +7,27 @@ namespace NextLevelSeven.Test.Building
     public sealed class RepetitionBuilderTests : BuildingTestFixture
     {
         [TestMethod]
+        public void RepetitionBuilder_MapsBuilderAncestor()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][3][1];
+            Assert.AreSame(builder, builder.Ancestor[1]);
+        }
+
+        [TestMethod]
+        public void RepetitionBuilder_MapsGenericBuilderAncestor()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][3][1] as IRepetition;
+            Assert.AreSame(builder, builder.Ancestor[1]);
+        }
+
+        [TestMethod]
+        public void RepetitionBuilder_MapsGenericAncestor()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][3][1] as IElement;
+            Assert.AreSame(builder, builder.Ancestor[1]);
+        }
+
+        [TestMethod]
         public void RepetitionBuilder_CanGetComponent_ThroughField()
         {
             var builder = Message.Build(ExampleMessages.Variety);
