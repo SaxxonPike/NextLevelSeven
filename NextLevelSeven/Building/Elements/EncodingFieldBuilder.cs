@@ -68,7 +68,10 @@ namespace NextLevelSeven.Building.Elements
                 {
                     result.Append(_value.Substring(4));
                 }
-                return result.ToString();
+
+                return (result.Length == 0)
+                    ? null
+                    : result.ToString();
             }
             set
             {

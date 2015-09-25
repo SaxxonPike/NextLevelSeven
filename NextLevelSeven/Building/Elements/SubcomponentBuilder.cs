@@ -34,14 +34,19 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get or set the component string.</summary>
         public override string Value
         {
-            get { return string.Equals(HL7.Null, _value, StringComparison.Ordinal) ? null : _value; }
+            get 
+            {
+                return string.Equals(HL7.Null, _value, StringComparison.Ordinal) || string.Equals(string.Empty, _value, StringComparison.Ordinal)
+                    ? null
+                    : _value; 
+            }
             set { SetSubcomponent(value); }
         }
 
         /// <summary>Returns 0 if null, and 1 otherwise.</summary>
         public override int ValueCount
         {
-            get { return _value == null ? 0 : 1; }
+            get { return 1; }
         }
 
         /// <summary>Return an enumerable with the content inside.</summary>

@@ -68,9 +68,12 @@ namespace NextLevelSeven.Building.Elements
                     return null;
                 }
 
-                var result = string.Join(Encoding.SegmentDelimiterString,
-                    _segments.OrderBy(i => i.Key).Select(i => i.Value.Value));
-                return result;
+                var result = string.Join(Encoding.SegmentDelimiterString ?? string.Empty,
+                    _segments.OrderBy(i => i.Key).Select(i => i.Value.Value ?? string.Empty));
+
+                return (result.Length == 0)
+                    ? null
+                    : result;
             }
             set { SetMessage(value); }
         }

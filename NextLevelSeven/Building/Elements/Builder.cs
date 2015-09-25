@@ -20,13 +20,6 @@ namespace NextLevelSeven.Building.Elements
 
         /// <summary>Initialize the message builder base class.</summary>
         /// <param name="config">Message's encoding configuration.</param>
-        internal Builder(BuilderEncodingConfiguration config)
-            : this(config, 0)
-        {
-        }
-
-        /// <summary>Initialize the message builder base class.</summary>
-        /// <param name="config">Message's encoding configuration.</param>
         /// <param name="index">Index in the parent.</param>
         internal Builder(BuilderEncodingConfiguration config, int index)
         {

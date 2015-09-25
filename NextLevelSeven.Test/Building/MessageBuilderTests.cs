@@ -10,6 +10,13 @@ namespace NextLevelSeven.Test.Building
     public sealed class MessageBuilderTests : BuildingTestFixture
     {
         [TestMethod]
+        public void MessageBuilder_HasCorrectRootKey()
+        {
+            var builder = Message.Build(ExampleMessages.Standard);
+            Assert.AreEqual(ElementDefaults.RootElementKey, builder.Key);
+        }
+
+        [TestMethod]
         public void MessageBuilder_CanGetSegment()
         {
             var builder = Message.Build(ExampleMessages.Variety);

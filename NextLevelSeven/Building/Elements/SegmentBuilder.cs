@@ -104,7 +104,9 @@ namespace NextLevelSeven.Building.Elements
                     }
                 }
 
-                return result.ToString();
+                return (result.Length == 0)
+                    ? null
+                    : result.ToString();
             }
             set { SetSegment(value); }
         }

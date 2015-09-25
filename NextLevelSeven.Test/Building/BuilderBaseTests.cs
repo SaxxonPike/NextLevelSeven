@@ -8,6 +8,27 @@ namespace NextLevelSeven.Test.Building
     public sealed class BuilderBaseTests : BuildingTestFixture
     {
         [TestMethod]
+        public void Builder_ConvertsHl7NullToExistingNull()
+        {
+            var builder = Message.Build(ExampleMessages.Standard);
+            builder[1][3].Value = "\"\"";
+            Assert.IsNull(builder[1][3].Value);
+        }
+
+        [TestMethod]
+        public void Builder_ShouldEqualItself()
+        {
+            var builder = Message.Build(ExampleMessages.Standard);
+            Assert.IsTrue(builder.Equals(builder));
+        }
+
+        [TestMethod]
+        public void Builder_ShouldHaveHashCode()
+        {
+            Assert.AreNotEqual(0, Message.Build(ExampleMessages.Standard).GetHashCode());
+        }
+
+        [TestMethod]
         public void Builder_CanFormat()
         {
             var param = Randomized.String();
