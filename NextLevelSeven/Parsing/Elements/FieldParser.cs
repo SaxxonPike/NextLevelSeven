@@ -43,7 +43,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Value at the specified indices.</returns>
         public virtual string GetValue(int repetition = -1, int component = -1, int subcomponent = -1)
         {
-            return repetition < 0 ? Value : GetRepetition(repetition).GetValue(component, subcomponent);
+            return repetition < 0 ? Value : _repetitions[repetition].GetValue(component, subcomponent);
         }
 
         /// <summary>Get the values at the specified indices.</summary>
@@ -53,7 +53,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Values at the specified indices.</returns>
         public virtual IEnumerable<string> GetValues(int repetition = -1, int component = -1, int subcomponent = -1)
         {
-            return repetition < 0 ? Values : GetRepetition(repetition).GetValues(component, subcomponent);
+            return repetition < 0 ? Values : _repetitions[repetition].GetValues(component, subcomponent);
         }
 
         /// <summary>Get a descendant field repetition.</summary>
@@ -61,7 +61,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Desired field repetition.</returns>
         public new IRepetitionParser this[int index]
         {
-            get { return GetRepetition(index); }
+            get { return _repetitions[index]; }
         }
 
         /// <summary>Deep clone this field.</summary>
@@ -101,14 +101,6 @@ namespace NextLevelSeven.Parsing.Elements
         /// <param name="index">Desired index.</param>
         /// <returns>Element at the specified index.</returns>
         public override IElementParser GetDescendant(int index)
-        {
-            return GetRepetition(index);
-        }
-
-        /// <summary>Get the descendant field repetition at the specified index.</summary>
-        /// <param name="index">Desired index.</param>
-        /// <returns>Element at the specified index.</returns>
-        protected IRepetitionParser GetRepetition(int index)
         {
             return _repetitions[index];
         }

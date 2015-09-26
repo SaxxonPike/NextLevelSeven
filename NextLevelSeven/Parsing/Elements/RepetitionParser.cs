@@ -53,7 +53,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Value at the specified indices.</returns>
         public string GetValue(int component = -1, int subcomponent = -1)
         {
-            return component < 0 ? Value : GetComponent(component).GetValue(subcomponent);
+            return component < 0 ? Value : _components[component].GetValue(subcomponent);
         }
 
         /// <summary>Get the values at the specified indices.</summary>
@@ -62,7 +62,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Values at the specified indices.</returns>
         public IEnumerable<string> GetValues(int component = -1, int subcomponent = -1)
         {
-            return component < 0 ? Values : GetComponent(component).GetValues(subcomponent);
+            return component < 0 ? Values : _components[component].GetValues(subcomponent);
         }
 
         /// <summary>Get the descendant component at the specified index.</summary>
@@ -110,14 +110,6 @@ namespace NextLevelSeven.Parsing.Elements
         /// <param name="index">Desired index.</param>
         /// <returns>Descendant element at the specified index.</returns>
         public override IElementParser GetDescendant(int index)
-        {
-            return _components[index];
-        }
-
-        /// <summary>Get the descendant component at the specified index.</summary>
-        /// <param name="index">Desired index.</param>
-        /// <returns>Descendant component at the specified index.</returns>
-        private IComponentParser GetComponent(int index)
         {
             return _components[index];
         }

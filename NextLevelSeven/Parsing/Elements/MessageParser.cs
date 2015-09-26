@@ -58,7 +58,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Get the root message for this element.</summary>
         ISegmentParser IMessageParser.this[int index]
         {
-            get { return GetSegment(index); }
+            get { return _segments[index]; }
         }
 
         /// <summary>Check for validity of the message. Returns true if the message can reasonably be parsed.</summary>
@@ -79,7 +79,7 @@ namespace NextLevelSeven.Parsing.Elements
         public IEnumerable<string> GetValues(int segment = -1, int field = -1, int repetition = -1, int component = -1,
             int subcomponent = -1)
         {
-            return segment < 0 ? Values : GetSegment(segment).GetValues(field, repetition, component, subcomponent);
+            return segment < 0 ? Values : _segments[segment].GetValues(field, repetition, component, subcomponent);
         }
 
         /// <summary>Get data from a specific place in the message. Depth is determined by how many indices are specified.</summary>
@@ -92,7 +92,7 @@ namespace NextLevelSeven.Parsing.Elements
         public string GetValue(int segment = -1, int field = -1, int repetition = -1, int component = -1,
             int subcomponent = -1)
         {
-            return segment < 0 ? Value : GetSegment(segment).GetValue(field, repetition, component, subcomponent);
+            return segment < 0 ? Value : _segments[segment].GetValue(field, repetition, component, subcomponent);
         }
 
         /// <summary>Deep clone this message.</summary>
@@ -193,7 +193,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns></returns>
         public override IElementParser GetDescendant(int index)
         {
-            return GetSegment(index);
+            return _segments[index];
         }
 
         /// <summary>Get data from a specific place in the message. Depth is determined by how many indices are specified.</summary>
@@ -235,14 +235,6 @@ namespace NextLevelSeven.Parsing.Elements
             return (subcomponent < 0)
                 ? (IEnumerable<IElementParser>) matches.Select(m => m[field][repetition][component])
                 : matches.Select(m => m[field][repetition][component][subcomponent]);
-        }
-
-        /// <summary>Get a descendant segment.</summary>
-        /// <param name="index">Index of the segment.</param>
-        /// <returns></returns>
-        public ISegmentParser GetSegment(int index)
-        {
-            return _segments[index];
         }
 
         /// <summary>Create a segment object.</summary>

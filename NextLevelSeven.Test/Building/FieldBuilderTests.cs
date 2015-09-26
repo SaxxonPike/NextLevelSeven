@@ -68,7 +68,6 @@ namespace NextLevelSeven.Test.Building
         public void FieldBuilder_Delimiter_SetsOnIndirectSubdivision()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][1];
-            IElement test = null;
             builder.SetFieldRepetition(1, "$");
             Assert.AreEqual(builder.Value, "$");
         }
