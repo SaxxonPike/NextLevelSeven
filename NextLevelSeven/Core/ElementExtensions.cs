@@ -247,14 +247,6 @@ namespace NextLevelSeven.Core
             }
         }
 
-        /// <summary>Determine if the value is either not present or the HL7 standard null value.</summary>
-        /// <param name="target">Element to verify value for.</param>
-        /// <returns>True, if the element's value is null equivalent.</returns>
-        public static bool IsNull(this IElement target)
-        {
-            return HL7.NullValues.Contains(target.Value);
-        }
-
         /// <summary>Move element within its ancestor. Returns the new element reference.</summary>
         /// <param name="target">Element to move.</param>
         /// <param name="targetIndex">Target index.</param>

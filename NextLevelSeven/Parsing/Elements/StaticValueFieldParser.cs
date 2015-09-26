@@ -76,7 +76,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Repetition descendant.</returns>
         protected override sealed RepetitionParser CreateRepetition(int index)
         {
-            return new RepetitionParser(this, index - 1, index, EncodingConfiguration.Empty);
+            throw new ParserException(ErrorCode.FixedFieldsCannotBeDivided);
         }
 
         /// <summary>Deep clone this field.</summary>

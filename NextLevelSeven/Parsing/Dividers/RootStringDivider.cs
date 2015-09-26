@@ -30,14 +30,6 @@ namespace NextLevelSeven.Parsing.Dividers
         {
             get
             {
-                if (IsNull)
-                {
-                    return null;
-                }
-                if (index < 0 || index >= Count)
-                {
-                    return null;
-                }
                 var d = Divisions[index];
                 return new string(ValueChars, d.Offset, d.Length);
             }
@@ -105,26 +97,11 @@ namespace NextLevelSeven.Parsing.Dividers
         /// <param name="value">New value.</param>
         private void SetValue(int index, string value)
         {
-            if (index < 0)
-            {
-                return;
-            }
-
             List<StringDivision> divisions;
             var paddedString = StringDividerOperations.GetPaddedString(ValueChars, index, Delimiter, out divisions);
-            if (index >= divisions.Count)
-            {
-                Initialize((index >= divisions.Count)
-                    ? StringDividerOperations.JoinCharsWithDelimiter(Delimiter, paddedString,
-                        StringDividerOperations.GetChars(value))
-                    : StringDividerOperations.GetChars(value));
-            }
-            else
-            {
-                var d = divisions[index];
-                Initialize(StringDividerOperations.GetSplicedString(paddedString, d.Offset, d.Length,
-                    StringDividerOperations.GetChars(value)));
-            }
+            var d = divisions[index];
+            Initialize(StringDividerOperations.GetSplicedString(paddedString, d.Offset, d.Length,
+                StringDividerOperations.GetChars(value)));
         }
 
         /// <summary>Initialize the divider's value with the specified characters.</summary>
@@ -133,17 +110,8 @@ namespace NextLevelSeven.Parsing.Dividers
         {
             _divisions = null;
             _valueChars = s;
-            _isNull = ValueChars == null;
+            _isNull = s == null || s.Length == 0;
             Version++;
-
-            RaiseValueChanged();
-        }
-
-        /// <summary>Get the internal value as a string.</summary>
-        /// <returns>Value as a string.</returns>
-        public override string ToString()
-        {
-            return Value;
         }
     }
 }

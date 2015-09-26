@@ -94,6 +94,7 @@
     <Compile Include="Race.cs" />
     <Compile Include="Randomized.cs" />
     <Compile Include="PerformanceTestFixture.cs" />
+    <Compile Include="Utility\EnumerableExtensionTests.cs" />
     <Compile Include="Utility\IndexedCacheTests.cs" />
     <Compile Include="Utility\UtilityTestFixture.cs" />
     <Compile Include="Xml\V2XmlTests.cs" />

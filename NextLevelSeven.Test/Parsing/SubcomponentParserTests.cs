@@ -1,11 +1,64 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
+using NextLevelSeven.Parsing;
 
 namespace NextLevelSeven.Test.Parsing
 {
     [TestClass]
     public class SubcomponentParserTests : ParsingTestFixture
     {
+        [TestMethod]
+        public void Subcomponent_HasComponentAncestor()
+        {
+            var element = Message.Parse(ExampleMessages.Minimum)[1][3][1][1][1];
+            Assert.IsNotNull(element.Ancestor);
+        }
+
+        [TestMethod]
+        public void Subcomponent_HasGenericComponentAncestor()
+        {
+            var element = Message.Parse(ExampleMessages.Minimum)[1][3][1][1][1] as ISubcomponent;
+            Assert.IsNotNull(element.Ancestor);
+        }
+
+        [TestMethod]
+        public void Subcomponent_HasGenericAncestor()
+        {
+            var element = Message.Parse(ExampleMessages.Minimum)[1][3][1][1][1] as IElementParser;
+            Assert.IsNotNull(element.Ancestor as IComponent);
+        }
+
+        [TestMethod]
+        public void Subcomponent_HasOneValue()
+        {
+            var element = Message.Parse(ExampleMessages.Minimum)[1][3][1][1][1];
+            var val0 = Randomized.String();
+            element.Value = val0;
+            Assert.AreEqual(1, element.ValueCount);
+            Assert.AreEqual(element.Value, val0);
+            Assert.AreEqual(1, element.Values.Count());
+        }
+
+        [TestMethod]
+        public void Subcomponent_ThrowsWhenMovingElements()
+        {
+            var element = Message.Parse(ExampleMessages.Minimum)[1][3][1][1][1];
+            element.Value = Randomized.String();
+            var newMessage = element.Clone();
+            It.Throws<ParserException>(() => newMessage[2].MoveToIndex(3));
+            Assert.AreEqual(element.Value, newMessage.Value);
+        }
+
+        [TestMethod]
+        public void Subcomponent_Throws_WhenIndexed()
+        {
+            var element = Message.Parse(ExampleMessages.Standard)[1][3][1][1][1];
+            string value = null;
+            It.Throws<ParserException>(() => { value = element[1].Value; });
+            Assert.IsNull(value);
+        }
+
         [TestMethod]
         public void Subcomponent_CanBeCloned()
         {

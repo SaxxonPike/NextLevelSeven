@@ -57,8 +57,8 @@
                         return "Reached end of stream before MLP end-of-message was found.";
                     case ErrorCode.ReachedEndOfMlpStream:
                         return "Reached end of stream before MLP data could be read.";
-                    case ErrorCode.RepetitionIndexMustBeZeroOrGreater:
-                        return "Repetition index must be zero or greater.";
+                    case ErrorCode.RepetitionIndexMustBeGreaterThanZero:
+                        return "Repetition index must be greater than zero.";
                     case ErrorCode.RootElementCannotBeDeleted:
                         return "Root element cannot be deleted.";
                     case ErrorCode.RootElementCannotBeErased:

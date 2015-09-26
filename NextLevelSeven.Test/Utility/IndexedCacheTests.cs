@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Utility;
 
@@ -11,6 +14,17 @@ namespace NextLevelSeven.Test.Utility
         private static IIndexedCache<int, string> InitializeCache(Func<int, string> factory)
         {
             return UtilityMocks.GetIndexedCache(factory);
+        }
+
+        [TestMethod]
+        public void IndexedCache_CanBeIteratedGenerically()
+        {
+            var val0 = Randomized.String();
+            var cache = InitializeCache(i => val0);
+            var enumerable = (IEnumerable) cache;
+            var cacheItem = cache[0];
+            Assert.AreEqual(val0, cacheItem);
+            Assert.AreEqual(val0, enumerable.OfType<KeyValuePair<int, string>>().First().Value);
         }
 
         [TestMethod]

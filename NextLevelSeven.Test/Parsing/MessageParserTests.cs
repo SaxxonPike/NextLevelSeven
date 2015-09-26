@@ -3,12 +3,45 @@ using System.Diagnostics;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
+using NextLevelSeven.Parsing;
 
 namespace NextLevelSeven.Test.Parsing
 {
     [TestClass]
     public class MessageParserTests : ParsingTestFixture
     {
+        [TestMethod]
+        public void Message_CanGetValues()
+        {
+            var message = Message.Parse(ExampleMessages.Minimum);
+            Assert.AreEqual(ExampleMessages.Minimum, message.Values.First());
+        }
+
+        [TestMethod]
+        public void Message_CanIndexPastEnd()
+        {
+            var message = Message.Parse(ExampleMessages.Minimum);
+            Assert.IsNull(message[5].Value);
+        }
+
+        [TestMethod]
+        public void Message_CanMoveSegments()
+        {
+            var message = Message.Parse(ExampleMessages.Standard);
+            var newMessage = message.Clone();
+            newMessage[2].MoveToIndex(3);
+            Assert.AreEqual(message[2].Value, newMessage[3].Value);
+        }
+
+        [TestMethod]
+        public void Message_Throws_WhenIndexedBelowOne()
+        {
+            var element = Message.Parse(ExampleMessages.Standard);
+            string value = null;
+            It.Throws<ParserException>(() => { value = element[0].Value; });
+            Assert.IsNull(value);
+        }
+
         [TestMethod]
         public void Message_CanSetMsh1()
         {

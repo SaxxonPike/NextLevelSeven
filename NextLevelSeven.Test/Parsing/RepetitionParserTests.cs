@@ -1,11 +1,31 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
+using NextLevelSeven.Parsing;
 
 namespace NextLevelSeven.Test.Parsing
 {
     [TestClass]
     public class RepetitionParserTests : ParsingTestFixture
     {
+        [TestMethod]
+        public void Repetition_CanMoveComponents()
+        {
+            var element = Message.Parse(ExampleMessages.Minimum)[1][3][1];
+            element.Values = new[] { Randomized.String(), Randomized.String(), Randomized.String(), Randomized.String() };
+            var newMessage = element.Clone();
+            newMessage[2].MoveToIndex(3);
+            Assert.AreEqual(element[2].Value, newMessage[3].Value);
+        }
+
+        [TestMethod]
+        public void Repetition_Throws_WhenIndexedBelowOne()
+        {
+            var element = Message.Parse(ExampleMessages.Standard)[1][3][1];
+            string value = null;
+            It.Throws<ParserException>(() => { value = element[0].Value; });
+            Assert.IsNull(value);
+        }
+
         [TestMethod]
         public void Repetition_CanBeCloned()
         {

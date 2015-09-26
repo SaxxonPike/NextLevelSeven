@@ -110,9 +110,9 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Subcomponent.</returns>
         protected virtual RepetitionParser CreateRepetition(int index)
         {
-            if (index < 0)
+            if (index <= 0)
             {
-                throw new ParserException(ErrorCode.RepetitionIndexMustBeZeroOrGreater);
+                throw new ParserException(ErrorCode.RepetitionIndexMustBeGreaterThanZero);
             }
 
             return new RepetitionParser(this, index - 1, index);

@@ -14,8 +14,5 @@ namespace NextLevelSeven.Parsing
 
         /// <summary>Get all descendant elements.</summary>
         new IEnumerable<IElementParser> Descendants { get; }
-
-        /// <summary>Event that is triggered whenever either this element's value</summary>
-        event EventHandler ValueChanged;
     }
 }

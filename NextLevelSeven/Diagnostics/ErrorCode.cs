@@ -26,7 +26,7 @@
         /* 0008 */
         MessageDataIsTooShort,
         /* 0009 */
-        RepetitionIndexMustBeZeroOrGreater,
+        RepetitionIndexMustBeGreaterThanZero,
         /* 0010 */
         RootElementCannotBeDeleted,
         /* 0011 */

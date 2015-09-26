@@ -1,12 +1,108 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
+using NextLevelSeven.Parsing;
 
 namespace NextLevelSeven.Test.Parsing
 {
     [TestClass]
     public class FieldParserTests : ParsingTestFixture
     {
+        [TestMethod]
+        public void Field_Encoding_HasNoDelimiter()
+        {
+            var field = Message.Parse(ExampleMessages.Minimum)[1][2];
+            Assert.AreEqual('\0', field.Delimiter);
+        }
+
+        [TestMethod]
+        public void Field_Encoding_HasNoDescendants()
+        {
+            var field = Message.Parse(ExampleMessages.Minimum)[1][2];
+            Assert.AreEqual(0, field.Descendants.Count());
+        }
+
+        [TestMethod]
+        public void Field_Encoding_ThrowsOnDescendantAccess()
+        {
+            var field = Message.Parse(ExampleMessages.Minimum)[1][2];
+            string result = null;
+            It.Throws<ParserException>(() => result = field[2].Value);
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        public void Field_Delimiter_HasNoDelimiter()
+        {
+            var field = Message.Parse(ExampleMessages.Minimum)[1][1];
+            Assert.AreEqual('\0', field.Delimiter);
+        }
+
+        [TestMethod]
+        public void Field_Delimiter_HasNoDescendants()
+        {
+            var field = Message.Parse(ExampleMessages.Minimum)[1][1];
+            Assert.AreEqual(0, field.Descendants.Count());
+        }
+
+        [TestMethod]
+        public void Field_Delimiter_ThrowsOnDescendantAccess()
+        {
+            var field = Message.Parse(ExampleMessages.Minimum)[1][1];
+            string result = null;
+            It.Throws<ParserException>(() => result = field[2].Value);
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        public void Field_Delimiter_HasOneValue()
+        {
+            var field = Message.Parse(ExampleMessages.Minimum)[1][1];
+            Assert.AreEqual(1, field.ValueCount);
+            Assert.AreEqual(field.Value, field.GetValue());
+            Assert.AreEqual(1, field.Values.Count());
+            Assert.AreEqual(1, field.GetValues().Count());
+        }
+
+        [TestMethod]
+        public void Field_CanGetIsolatedValue()
+        {
+            var field = Message.Parse(ExampleMessages.Minimum)[1][3];
+            var val0 = Randomized.String();
+            field.Value = val0;
+            var newField = field.Clone();
+            Assert.AreEqual(field.Value, newField.Value);
+            Assert.AreEqual(1, field.Values.Count());
+        }
+
+        [TestMethod]
+        public void Field_CanGetIsolatedNullValue()
+        {
+            var field = Message.Parse(ExampleMessages.Minimum)[1][3];
+            var newField = field.Clone();
+            Assert.IsNull(newField.Value);
+        }
+
+        [TestMethod]
+        public void Field_CanMoveRepetitions()
+        {
+            var element = Message.Parse(ExampleMessages.Minimum)[1][3];
+            element.Values = new[] {Randomized.String(), Randomized.String(), Randomized.String(), Randomized.String()};
+            var newMessage = element.Clone();
+            newMessage[2].MoveToIndex(3);
+            Assert.AreEqual(element[2].Value, newMessage[3].Value);
+        }
+
+        [TestMethod]
+        public void Field_Throws_WhenIndexedBelowOne()
+        {
+            var element = Message.Parse(ExampleMessages.Standard)[1][3];
+            string value = null;
+            It.Throws<ParserException>(() => { value = element[0].Value; });
+            Assert.IsNull(value);
+        }
+
         [TestMethod]
         public void Field_HasCorrectIndex()
         {

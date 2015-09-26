@@ -37,6 +37,14 @@ namespace NextLevelSeven.Test.Generation
         }
 
         [TestMethod]
+        public void AckMessageGenerator_GeneratesErrorCodeWithReason()
+        {
+            var reason = Randomized.String();
+            var ack = AckMessageGenerator.GenerateError(_message, reason);
+            Assert.AreEqual(reason, ack[2][3].Value);
+        }
+
+        [TestMethod]
         public void AckMessageGenerator_GeneratesRejectCode()
         {
             var ack = AckMessageGenerator.GenerateReject(_message);

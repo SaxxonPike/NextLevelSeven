@@ -19,17 +19,6 @@ namespace NextLevelSeven.Parsing.Dividers
             Delimiter = delimiter;
         }
 
-        /// <summary>Create a subdivider for the specified string divider.</summary>
-        /// <param name="baseDivider">Divider to reference.</param>
-        /// <param name="baseDividerOffset">Index of the character to use as the delimiter from the subdivided value.</param>
-        /// <param name="parentIndex">Index within the parent to reference.</param>
-        public DescendantStringDivider(StringDivider baseDivider, int baseDividerOffset, int parentIndex)
-        {
-            BaseDivider = baseDivider;
-            Index = parentIndex;
-            Delimiter = baseDivider.Value[baseDividerOffset];
-        }
-
         /// <summary>Parent divider.</summary>
         private StringDivider BaseDivider { get; set; }
 
@@ -45,13 +34,7 @@ namespace NextLevelSeven.Parsing.Dividers
                     return null;
                 }
 
-                var splits = Divisions;
-                if (index >= splits.Count || index < 0)
-                {
-                    return null;
-                }
-
-                var split = splits[index];
+                var split = Divisions[index];
                 return split.Length == 0 ? null : new string(BaseValue, split.Offset, split.Length);
             }
             set { SetValue(index, value); }
@@ -130,35 +113,12 @@ namespace NextLevelSeven.Parsing.Dividers
         /// <param name="value">New value.</param>
         private void SetValue(int index, string value)
         {
-            if (index < 0)
-            {
-                return;
-            }
-
             List<StringDivision> divisions;
             var paddedString = StringDividerOperations.GetPaddedString(ValueChars, index, Delimiter, out divisions);
-            if (index >= divisions.Count)
-            {
-                ValueChars = (index > 0)
-                    ? StringDividerOperations.JoinChars(paddedString, StringDividerOperations.GetChars(value))
-                    : value.ToCharArray();
-            }
-            else
-            {
-                var d = divisions[index];
-                ValueChars = StringDividerOperations.GetSplicedString(paddedString, d.Offset, d.Length,
-                    StringDividerOperations.GetChars(value));
-            }
+            var d = divisions[index];
+            ValueChars = StringDividerOperations.GetSplicedString(paddedString, d.Offset, d.Length,
+                StringDividerOperations.GetChars(value));
             _divisions = null;
-
-            RaiseValueChanged();
-        }
-
-        /// <summary>Get the internal value as a string.</summary>
-        /// <returns>Value as a string.</returns>
-        public override string ToString()
-        {
-            return Value;
         }
 
         /// <summary>[PERF] Refresh internal division cache.</summary>

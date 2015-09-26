@@ -108,9 +108,6 @@ namespace NextLevelSeven.Parsing.Elements
             return string.Compare(Value, other, StringComparison.CurrentCulture);
         }
 
-        /// <summary>Event that is raised when this element's raw value has changed.</summary>
-        public event EventHandler ValueChanged;
-
         /// <summary>Get the descendant element at the specified index.</summary>
         /// <param name="index">Index of the desired element.</param>
         /// <returns>Element at the specified index.</returns>
@@ -163,10 +160,6 @@ namespace NextLevelSeven.Parsing.Elements
             set
             {
                 DescendantDivider.Value = value;
-                if (ValueChanged != null)
-                {
-                    ValueChanged(this, EventArgs.Empty);
-                }
             }
         }
 

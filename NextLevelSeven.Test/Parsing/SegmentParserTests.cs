@@ -1,12 +1,34 @@
 ﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
+using NextLevelSeven.Parsing;
 
 namespace NextLevelSeven.Test.Parsing
 {
     [TestClass]
     public class SegmentParserTests : ParsingTestFixture
     {
+        [TestMethod]
+        public void Segment_CanMoveFields()
+        {
+            var element = Message.Parse(ExampleMessages.Minimum)[1];
+            element[3].Value = Randomized.String();
+            element[4].Value = Randomized.String();
+            element[5].Value = Randomized.String();
+            var newMessage = element.Clone();
+            newMessage[3].MoveToIndex(4);
+            Assert.AreEqual(element[3].Value, newMessage[4].Value);
+        }
+
+        [TestMethod]
+        public void Segment_Throws_WhenIndexedBelowZero()
+        {
+            var element = Message.Parse(ExampleMessages.Standard)[1];
+            string value = null;
+            It.Throws<ParserException>(() => { value = element[-1].Value; });
+            Assert.IsNull(value);
+        }
+
         [TestMethod]
         public void Segment_WithIdenticalValueToAnotherSegment_IsEquivalent()
         {

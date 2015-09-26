@@ -1,11 +1,31 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
+using NextLevelSeven.Parsing;
 
 namespace NextLevelSeven.Test.Parsing
 {
     [TestClass]
     public class ComponentParserTests : ParsingTestFixture
     {
+        [TestMethod]
+        public void Component_CanMoveSubcomponents()
+        {
+            var element = Message.Parse(ExampleMessages.Minimum)[1][3][1][1];
+            element.Values = new[] { Randomized.String(), Randomized.String(), Randomized.String(), Randomized.String() };
+            var newMessage = element.Clone();
+            newMessage[2].MoveToIndex(3);
+            Assert.AreEqual(element[2].Value, newMessage[3].Value);
+        }
+
+        [TestMethod]
+        public void Component_Throws_WhenIndexedBelowOne()
+        {
+            var component = Message.Parse(ExampleMessages.Standard)[1][3][1][1];
+            string value = null;
+            It.Throws<ParserException>(() => { value = component[0].Value; });
+            Assert.IsNull(value);
+        }
+
         [TestMethod]
         public void Component_CanBeCloned()
         {

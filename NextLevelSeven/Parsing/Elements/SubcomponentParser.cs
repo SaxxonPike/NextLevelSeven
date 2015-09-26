@@ -44,20 +44,6 @@ namespace NextLevelSeven.Parsing.Elements
             get { return 1; }
         }
 
-        /// <summary>Get the subcomponent value.</summary>
-        /// <returns></returns>
-        public string GetValue()
-        {
-            return Value;
-        }
-
-        /// <summary>Get the subcomponent value wrapped in an Enumerable.</summary>
-        /// <returns></returns>
-        public IEnumerable<string> GetValues()
-        {
-            return Value.Yield();
-        }
-
         /// <summary>Deep clone this element.</summary>
         /// <returns>Clone of the element.</returns>
         public override IElement Clone()
