@@ -3,12 +3,20 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Building;
 using NextLevelSeven.Core;
+using NextLevelSeven.Core.Encoding;
 
 namespace NextLevelSeven.Test.Building
 {
     [TestClass]
     public sealed class BuilderBaseTests : BuildingTestFixture
     {
+        [TestMethod]
+        public void Builder_ImplementsEncodingAndReadOnlyEncodingIdentically()
+        {
+            var builder = Message.Build();
+            Assert.AreSame(builder.Encoding, (builder as IElement).Encoding);
+        }
+
         [TestMethod]
         public void Builder_CanBeCompared()
         {
