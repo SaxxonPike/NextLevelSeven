@@ -323,5 +323,15 @@ namespace NextLevelSeven.Building.Elements
         {
             get { return Ancestor as ISegment; }
         }
+
+        /// <summary>
+        ///     Move descendant to another index.
+        /// </summary>
+        /// <param name="sourceIndex">Source index.</param>
+        /// <param name="targetIndex">Target index.</param>
+        public override void MoveDescendant(int sourceIndex, int targetIndex)
+        {
+            MoveDescendant(_repetitions, sourceIndex, targetIndex);
+        }
     }
 }

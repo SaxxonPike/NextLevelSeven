@@ -10,6 +10,12 @@ namespace NextLevelSeven.Test.Building
     public sealed class MessageBuilderTests : BuildingTestFixture
     {
         [TestMethod]
+        public void MessageBuilder_ThrowsWithIncorrectFirstSegment()
+        {
+            It.Throws<ElementException>(() => Message.Build(Randomized.String()));
+        }
+
+        [TestMethod]
         public void MessageBuilder_HasCorrectRootKey()
         {
             var builder = Message.Build(ExampleMessages.Standard);

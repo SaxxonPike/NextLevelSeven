@@ -97,8 +97,6 @@
     <Compile Include="Utility\EnumerableExtensionTests.cs" />
     <Compile Include="Utility\IndexedCacheTests.cs" />
     <Compile Include="Utility\UtilityTestFixture.cs" />
-    <Compile Include="Xml\V2XmlTests.cs" />
-    <Compile Include="Xml\XmlTestFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NextLevelSeven\NextLevelSeven.csproj">

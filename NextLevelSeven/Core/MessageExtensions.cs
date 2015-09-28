@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Xml;
-using NextLevelSeven.Xml;
 
 namespace NextLevelSeven.Core
 {
@@ -48,14 +47,6 @@ namespace NextLevelSeven.Core
             IEnumerable<string> segmentTypes, bool includeExtras = false)
         {
             return segmentTypes.SelectMany(s => SplitSegments(message, s, includeExtras));
-        }
-
-        /// <summary>Convert a message to XML.</summary>
-        /// <param name="message">Message to convert.</param>
-        /// <returns>Converted message.</returns>
-        public static XmlDocument ToXml(this IMessage message)
-        {
-            return V2Xml.ConvertToXml(message);
         }
     }
 }

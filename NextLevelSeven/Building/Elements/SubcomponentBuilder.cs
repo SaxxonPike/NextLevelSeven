@@ -4,7 +4,6 @@ using System.Linq;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Codec;
 using NextLevelSeven.Diagnostics;
-using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building.Elements
 {
@@ -36,7 +35,7 @@ namespace NextLevelSeven.Building.Elements
         {
             get 
             {
-                return string.Equals(HL7.Null, _value, StringComparison.Ordinal) || string.Equals(string.Empty, _value, StringComparison.Ordinal)
+                return HL7.NullValues.Contains(_value)
                     ? null
                     : _value; 
             }
@@ -54,20 +53,6 @@ namespace NextLevelSeven.Building.Elements
         {
             get { yield return _value; }
             set { _value = string.Concat(value); }
-        }
-
-        /// <summary>Get this subcomponent's value.</summary>
-        /// <returns>Subcomponent value.</returns>
-        public string GetValue()
-        {
-            return Value;
-        }
-
-        /// <summary>Get this subcomponent's value wrapped as an enumerable.</summary>
-        /// <returns>Subcomponent value.</returns>
-        public IEnumerable<string> GetValues()
-        {
-            return Value.Yield();
         }
 
         /// <summary>Deep clone this element.</summary>
@@ -139,5 +124,14 @@ namespace NextLevelSeven.Building.Elements
             get { return Ancestor as IComponentBuilder; }
         }
 
+        /// <summary>
+        ///     Move descendant to another index.
+        /// </summary>
+        /// <param name="sourceIndex">Source index.</param>
+        /// <param name="targetIndex">Target index.</param>
+        public override void MoveDescendant(int sourceIndex, int targetIndex)
+        {
+            throw new BuilderException(ErrorCode.SubcomponentCannotHaveDescendants);
+        }
     }
 }

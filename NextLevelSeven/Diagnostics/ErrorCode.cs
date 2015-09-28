@@ -10,80 +10,54 @@
         /* 0000 */
         Unspecified,
         /* 0001 */
-        ComponentIndexMustBeGreaterThanZero,
-        /* 0002 */
-        DescendantElementsCannotBeModified,
-        /* 0003 */
-        ExceededRetriesForMessage,
-        /* 0004 */
-        FieldIndexMustBeZeroOrGreater,
-        /* 0005 */
-        HeaderByteIsIncorrect,
-        /* 0006 */
-        MessageDataMustNotBeNull,
-        /* 0007 */
-        MessageDataMustStartWithMsh,
-        /* 0008 */
-        MessageDataIsTooShort,
-        /* 0009 */
-        RepetitionIndexMustBeGreaterThanZero,
-        /* 0010 */
-        RootElementCannotBeDeleted,
-        /* 0011 */
-        RootElementCannotBeErased,
-        /* 0012 */
-        SegmentIndexMustBeGreaterThanZero,
-        /* 0013 */
-        SubcomponentCannotHaveDescendants,
-        /* 0014 */
-        SubcomponentIndexMustBeGreaterThanZero,
-        /* 0015 */
-        TimedOutWaitingForTransportToBecomeReady,
-        /* 0016 */
-        UnableToParseDate,
-        /* 0017 */
-        ReachedEndOfMlpStream,
-        /* 0018 */
-        MlpDataEndedPrematurely,
-        /* 0019 */
-        InvalidMlpCharacter,
-        /* 0020 */
         DoNotTranslateThisMessageForTestingPurposes,
-        /* 0021 */
+        /* 0002 */
+        ComponentIndexMustBeGreaterThanZero,
+        /* 0003 */
+        FieldIndexMustBeZeroOrGreater,
+        /* 0004 */
+        HeaderByteIsIncorrect,
+        /* 0005 */
+        MessageDataMustNotBeNull,
+        /* 0006 */
+        MessageDataMustStartWithMsh,
+        /* 0007 */
+        MessageDataIsTooShort,
+        /* 0008 */
+        RepetitionIndexMustBeGreaterThanZero,
+        /* 0009 */
+        SegmentIndexMustBeGreaterThanZero,
+        /* 0010 */
+        SubcomponentCannotHaveDescendants,
+        /* 0011 */
+        SubcomponentIndexMustBeGreaterThanZero,
+        /* 0012 */
+        UnableToParseDate,
+        /* 0013 */
+        MlpDataEndedPrematurely,
+        /* 0014 */
         AncestorDoesNotExist,
-        /* 0022 */
+        /* 0015 */
         ElementIndexMustBeZeroOrGreater,
-        /* 0023 */
+        /* 0016 */
         EncodingElementCannotBeMoved,
-        /* 0024 */
+        /* 0017 */
         SegmentTypeCannotBeMoved,
-        /* 0025 */
+        /* 0018 */
         ElementsMustShareDirectAncestors,
-        /* 0026 */
-        SegmentBuilderHasInvalidSegmentType,
-        /* 0027 */
-        TransportNotStarted,
-        /* 0028 */
+        /* 0019 */
         FixedFieldsCannotBeDivided,
-        /* 0029 */
+        /* 0020 */
         ChangingSegmentTypesToAndFromMshIsNotSupported,
-        /* 0030 */
-        InvalidAddressType,
-        /* 0031 */
+        /* 0021 */
         DataTypeIsTooLong,
-        /* 0032 */
+        /* 0022 */
         DataIsInvalidForType,
-        /* 0033 */
+        /* 0023 */
         FieldCannotBeNull,
-        /* 0034 */
+        /* 0024 */
         SegmentDataIsTooShort,
-        /* 0035 */
-        InvalidCompare,
-        /* 0036 */
-        MessageTypeIsInvalid,
-        /* 0037 */
-        MessageTriggerEventIsInvalid,
-        /* 0038 */
+        /* 0025 */
         SegmentDataMustNotBeNull,
     }
 }

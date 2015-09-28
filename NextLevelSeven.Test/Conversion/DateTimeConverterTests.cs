@@ -8,6 +8,12 @@ namespace NextLevelSeven.Test.Conversion
     public class DateTimeConverterTests : ConversionTestFixture
     {
         [TestMethod]
+        public void DateTimeConverter_ThrowsWithInvalidYear()
+        {
+            It.Throws<ConversionException>(() => DateTimeConverter.ConvertToDate("1"));
+        }
+
+        [TestMethod]
         public void DateTimeConverter_DecodesTime()
         {
             Assert.AreEqual(new TimeSpan(6, 8, 10), DateTimeConverter.ConvertToTime("060810"));

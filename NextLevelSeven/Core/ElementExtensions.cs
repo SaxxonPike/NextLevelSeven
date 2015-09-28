@@ -88,7 +88,7 @@ namespace NextLevelSeven.Core
             target.Ancestor.Delete(target.Index);
         }
 
-        /// <summary>Delete a descendant element.</summary>
+        /// <summary>Delete descendant elements.</summary>
         /// <param name="target">Element to delete from.</param>
         /// <param name="indices">Indices of descendants to delete.</param>
         public static void Delete(this IElement target, params int[] indices)
@@ -109,7 +109,8 @@ namespace NextLevelSeven.Core
             }
 
             // determine if we have a single common direct ancestor
-            if (elements.Select(t => t.Ancestor).Distinct().Count() > 1)
+            var firstAncestor = elements.First().Ancestor;
+            if (elements.Skip(1).Any(t => !ReferenceEquals(t.Ancestor, firstAncestor)))
             {
                 throw new ElementException(ErrorCode.ElementsMustShareDirectAncestors);
             }

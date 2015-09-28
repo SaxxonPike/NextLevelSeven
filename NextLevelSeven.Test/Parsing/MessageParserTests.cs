@@ -11,6 +11,12 @@ namespace NextLevelSeven.Test.Parsing
     public class MessageParserTests : ParsingTestFixture
     {
         [TestMethod]
+        public void Message_ThrowsWithIncorrectFirstSegment()
+        {
+            It.Throws<ElementException>(() => Message.Parse(Randomized.String()));
+        }
+
+        [TestMethod]
         public void Message_CanGetValues()
         {
             var message = Message.Parse(ExampleMessages.Minimum);

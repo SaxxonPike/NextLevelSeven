@@ -8,6 +8,95 @@ namespace NextLevelSeven.Test.Core
     public class ElementExtensionTests : CoreTestFixture
     {
         [TestMethod]
+        public void ElementExtensions_Element_AddsOtherElements()
+        {
+            var val0 = Randomized.String();
+            var val1 = Randomized.String();
+            var message0 = Message.Build(ExampleMessages.Standard);
+            var message1 = message0.Clone();
+            message0[1][3].Value = val0;
+            message1[1][3].Value = val1;
+            message0.AddRange(message1.Segments.Skip(2));
+            Assert.AreEqual(message0.ValueCount, (message1.ValueCount * 2) - 2);
+            Assert.AreEqual(message0[message1.ValueCount + 1].Value, message1[3].Value);
+        }
+
+        [TestMethod]
+        public void ElementExtensions_Element_ThrowsWhenEncodingFieldIsMoved()
+        {
+            var message = Message.Build(ExampleMessages.Standard);
+            It.Throws<ElementException>(() => message[1][2].MoveToIndex(1));
+        }
+
+        [TestMethod]
+        public void ElementExtensions_Element_ThrowsWhenFieldDelimiterIsMoved()
+        {
+            var message = Message.Build(ExampleMessages.Standard);
+            It.Throws<ElementException>(() => message[1][1].MoveToIndex(2));
+        }
+
+        [TestMethod]
+        public void ElementExtensions_Element_ThrowsWhenSegmentTypeIsMoved()
+        {
+            var message = Message.Build(ExampleMessages.Standard);
+            It.Throws<ElementException>(() => message[2][0].MoveToIndex(2));
+        }
+
+        [TestMethod]
+        public void ElementExtensions_Element_DoesNotMoveWhenMovedToSameIndex()
+        {
+            var message = Message.Build(ExampleMessages.Standard);
+            message[2].MoveToIndex(2);
+        }
+
+        [TestMethod]
+        public void ElementExtensions_Builder_CanBeDeletedFromAncestor()
+        {
+            var message = Message.Build(ExampleMessages.Standard);
+            var newMessage = message.Clone();
+            newMessage[2].Delete();
+            Assert.AreEqual(message[3].Value, newMessage[2].Value);
+        }
+
+        [TestMethod]
+        public void ElementExtensions_Message_CannotBeDeletedFromAncestor()
+        {
+            var message = Message.Parse(ExampleMessages.Standard);
+            It.Throws<ElementException>(message.Delete);
+        }
+
+        [TestMethod]
+        public void ElementExtensions_Message_CannotBeMoved()
+        {
+            var message = Message.Parse(ExampleMessages.Standard);
+            It.Throws<ElementException>(() => message.MoveToIndex(2));
+        }
+
+        [TestMethod]
+        public void ElementExtensions_Element_ThrowsWhenMoveIndexIsBelowMinimum()
+        {
+            var message = Message.Parse(ExampleMessages.Standard);
+            It.Throws<ElementException>(() => message[2].MoveToIndex(-1));
+        }
+
+        [TestMethod]
+        public void ElementExtensions_Element_ThrowsWhenDeletingElementsFromDifferentAncestors()
+        {
+            var message0 = Message.Parse(ExampleMessages.Standard);
+            var message1 = Message.Parse(ExampleMessages.Standard);
+            It.Throws<ElementException>(() => new[] {message0[2], message1[2]}.Delete());
+        }
+
+        [TestMethod]
+        public void ElementExtensions_Parser_CanBeDeletedFromAncestor()
+        {
+            var message = Message.Parse(ExampleMessages.Standard);
+            var newMessage = message.Clone();
+            newMessage[2].Delete();
+            Assert.AreEqual(message[3].Value, newMessage[2].Value);
+        }
+
+        [TestMethod]
         public void ElementExtensions_Parser_CanCreateNewMessageFromSegments()
         {
             var message = Message.Build(ExampleMessages.Standard);

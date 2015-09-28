@@ -7,6 +7,14 @@ namespace NextLevelSeven.Test.Building
     public sealed class SubcomponentBuilderTests : BuildingTestFixture
     {
         [TestMethod]
+        public void SubcomponentBuilder_SetsValuesWithConcatenation()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
+            builder.Values = new[] {"a", "b", "c", "d"};
+            Assert.AreEqual(builder.Value, "abcd");
+        }
+
+        [TestMethod]
         public void SubcomponentBuilder_MapsBuilderAncestor()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];

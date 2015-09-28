@@ -8,6 +8,37 @@ namespace NextLevelSeven.Test.Building
     public sealed class SegmentBuilderTests : BuildingTestFixture
     {
         [TestMethod]
+        public void SegmentBuilder_CanMoveFields()
+        {
+            var builder = Message.Build(ExampleMessages.Standard);
+            var val0 = Randomized.String();
+            builder[1][3].Value = val0;
+            builder[1][3].MoveToIndex(4);
+            Assert.AreEqual(val0, builder[1][4].Value);
+        }
+
+        [TestMethod]
+        public void SegmentBuilder_Throws_WhenDataIsTooShort()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1];
+            It.Throws<ElementException>(() => builder.Value = "M");
+        }
+
+        [TestMethod]
+        public void SegmentBuilder_Throws_WhenMshDataIsNull()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1];
+            It.Throws<ElementException>(() => builder.Value = null);
+        }
+
+        [TestMethod]
+        public void SegmentBuilder_CanNullifyNonMshSegment()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[2];
+            builder.Value = null;
+        }
+
+        [TestMethod]
         public void SegmentBuilder_MapsBuilderAncestor()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1];

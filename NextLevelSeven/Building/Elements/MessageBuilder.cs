@@ -451,5 +451,15 @@ namespace NextLevelSeven.Building.Elements
         {
             return _segments[index];
         }
+
+        /// <summary>
+        ///     Move descendant to another index.
+        /// </summary>
+        /// <param name="sourceIndex">Source index.</param>
+        /// <param name="targetIndex">Target index.</param>
+        public override void MoveDescendant(int sourceIndex, int targetIndex)
+        {
+            MoveDescendant(_segments, sourceIndex, targetIndex);
+        }
     }
 }

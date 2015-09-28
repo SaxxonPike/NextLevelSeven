@@ -3,7 +3,6 @@ using NextLevelSeven.Building;
 using NextLevelSeven.Building.Elements;
 using NextLevelSeven.Parsing;
 using NextLevelSeven.Parsing.Elements;
-using NextLevelSeven.Xml;
 
 namespace NextLevelSeven.Core
 {
@@ -51,14 +50,6 @@ namespace NextLevelSeven.Core
             };
         }
 
-        /// <summary>Create a message builder, initialized with contents from an XML document.</summary>
-        /// <param name="document">XML document.</param>
-        /// <returns>New message builder.</returns>
-        public static IMessageBuilder BuildXml(XmlDocument document)
-        {
-            return V2Xml.ConvertToBuilder(document);
-        }
-
         /// <summary>Create a new message with a default MSH.</summary>
         /// <returns>New message.</returns>
         public static IMessageParser Parse()
@@ -98,14 +89,6 @@ namespace NextLevelSeven.Core
             {
                 Value = string.Format(message, args)
             };
-        }
-
-        /// <summary>Create a new message, initialized with contents from an XML document.</summary>
-        /// <param name="document">XML document.</param>
-        /// <returns>New message parser.</returns>
-        public static IMessageParser ParseXml(XmlDocument document)
-        {
-            return V2Xml.ConvertToParser(document);
         }
     }
 }

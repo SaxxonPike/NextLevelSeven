@@ -228,7 +228,12 @@ namespace NextLevelSeven.Building.Elements
                 return this;
             }
 
-            if (value == null || value.Length <= 3)
+            if (value == null)
+            {
+                throw new BuilderException(ErrorCode.SegmentDataMustNotBeNull);
+            }
+
+            if (value.Length <= 3)
             {
                 throw new BuilderException(ErrorCode.SegmentDataIsTooShort);
             }
@@ -444,5 +449,22 @@ namespace NextLevelSeven.Building.Elements
             get { return Ancestor as IMessageBuilder; }
         }
 
+        /// <summary>
+        ///     Move descendant to another index.
+        /// </summary>
+        /// <param name="sourceIndex">Source index.</param>
+        /// <param name="targetIndex">Target index.</param>
+        public override void MoveDescendant(int sourceIndex, int targetIndex)
+        {
+            if (sourceIndex == 0)
+            {
+                throw new BuilderException(ErrorCode.SegmentTypeCannotBeMoved);
+            }
+            if (((sourceIndex >= 1 && sourceIndex <= 2) || (targetIndex >= 1 && targetIndex <= 2)) && IsMsh)
+            {
+                throw new BuilderException(ErrorCode.EncodingElementCannotBeMoved);
+            }
+            MoveDescendant(_fields, sourceIndex, targetIndex);
+        }
     }
 }

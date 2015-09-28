@@ -5,6 +5,8 @@ using NextLevelSeven.Conversion;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Codec;
 using NextLevelSeven.Core.Encoding;
+using NextLevelSeven.Diagnostics;
+using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building.Elements
 {
@@ -217,6 +219,55 @@ namespace NextLevelSeven.Building.Elements
             for (var i = 1; i <= count; i++)
             {
                 yield return this[i];
+            }
+        }
+
+        /// <summary>
+        ///     Move element to another index. Fails on root elements.
+        /// </summary>
+        /// <param name="index">New index.</param>
+        public virtual void MoveToIndex(int index)
+        {
+            if (Index == index)
+            {
+                return;
+            }
+            throw new BuilderException(ErrorCode.AncestorDoesNotExist);
+        }
+
+        /// <summary>
+        ///     Move a descendant element to another index.
+        /// </summary>
+        /// <param name="sourceIndex">Index to move from.</param>
+        /// <param name="targetIndex">Index to move to.</param>
+        public abstract void MoveDescendant(int sourceIndex, int targetIndex);
+
+        /// <summary>
+        ///     Move a descendant element to another index within the cache provided.
+        /// </summary>
+        /// <typeparam name="TDescendant">Type of descendant element.</typeparam>
+        /// <param name="cache">Cache to move within.</param>
+        /// <param name="source">Source index.</param>
+        /// <param name="target">Target index.</param>
+        static protected void MoveDescendant<TDescendant>(IIndexedCache<int, TDescendant> cache, int source, int target) where TDescendant : Builder
+        {
+            var values = cache.ToList();
+            var sourceValue = cache[source];
+
+            foreach (var value in values.Where(v => v.Key > source))
+            {
+                value.Value.Index--;
+            }
+            foreach (var value in values.Where(v => v.Key > target))
+            {
+                value.Value.Index++;
+            }
+
+            sourceValue.Index = target;
+            cache.Clear();
+            foreach (var value in values)
+            {
+                cache[value.Value.Index] = value.Value;
             }
         }
     }

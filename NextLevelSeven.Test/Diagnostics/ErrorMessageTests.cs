@@ -22,7 +22,7 @@ namespace NextLevelSeven.Test.Diagnostics
         public void ErrorMessages_ReturnsMessagesWithErrorCodes()
         {
             var message = ErrorMessages.Get(ErrorCode.DoNotTranslateThisMessageForTestingPurposes);
-            Assert.IsTrue(message.EndsWith("(NL7-20)"), @"Error code is not properly returned in the error string.");
+            Assert.IsTrue(message.EndsWith("(NL7-1)"), @"Error code is not properly returned in the error string.");
         }
 
         [TestMethod]
@@ -44,6 +44,14 @@ namespace NextLevelSeven.Test.Diagnostics
             ErrorMessages.SetLanguage();
             Assert.AreNotEqual(message, ErrorMessages.Get(ErrorCode.Unspecified),
                 @"German and English returned the same error string.");
+        }
+
+        [TestMethod]
+        public void ErrorMessages_InvalidCodeReturnsGenericMessage()
+        {
+            var message = ErrorMessages.Get((ErrorCode)int.MaxValue);
+            Assert.IsTrue(message.Contains("Unknown error"));
+            Assert.IsTrue(message.Contains(string.Format("(NL7-{0})", int.MaxValue)));
         }
     }
 }
