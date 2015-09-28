@@ -1,4 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using System.Diagnostics;
+using System.Globalization;
+using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Test.Building
@@ -6,6 +10,66 @@ namespace NextLevelSeven.Test.Building
     [TestClass]
     public sealed class SubcomponentBuilderTests : BuildingTestFixture
     {
+        [TestMethod]
+        public void SubcomponentBuilder_GetsCodec()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
+            var codec = builder.Codec;
+            var value = Randomized.Number();
+            codec.AsInt = value;
+            Assert.AreEqual(value.ToString(CultureInfo.InvariantCulture), builder.Value);
+        }
+
+        [TestMethod]
+        public void SubcomponentBuilder_HasNoDescendants()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
+            Assert.AreEqual(0, builder.Descendants.Count());
+        }
+
+        [TestMethod]
+        public void SubcomponentBuilder_HasNoDelimiter()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
+            Assert.AreEqual('\0', builder.Delimiter);
+        }
+
+        [TestMethod]
+        public void SubcomponentBuilder_ThrowsOnIndex()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
+            It.Throws<ElementException>(() => Debug.Write(builder[1].Value));
+        }
+
+        [TestMethod]
+        public void SubcomponentBuilder_ThrowsOnDelete()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
+            It.Throws<ElementException>(() => builder.DeleteDescendant(1));
+        }
+
+        [TestMethod]
+        public void SubcomponentBuilder_ThrowsOnMove()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
+            It.Throws<ElementException>(() => builder.MoveDescendant(1, 2));
+        }
+
+        [TestMethod]
+        public void SubcomponentBuilder_ThrowsOnInsertString()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
+            It.Throws<ElementException>(() => builder.InsertDescendant(Randomized.String(), 1));
+        }
+
+        [TestMethod]
+        public void SubcomponentBuilder_ThrowsOnInsertElement()
+        {
+            var builder0 = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
+            var builder1 = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
+            It.Throws<ElementException>(() => builder0.InsertDescendant(builder1, 1));
+        }
+
         [TestMethod]
         public void SubcomponentBuilder_SetsValuesWithConcatenation()
         {

@@ -100,6 +100,33 @@ namespace NextLevelSeven.Test.Building
         }
 
         [TestMethod]
+        public void MessageBuilder_CanInsertElementBeforeSelf()
+        {
+            var val0 = Randomized.StringCaps(3) + "|" + Randomized.String();
+            var val1 = Randomized.StringCaps(3) + "|" + Randomized.String();
+            var message0 = string.Format("MSH|^~\\&\r{0}", val0);
+            var message1 = string.Format("MSH|^~\\&\r{0}", val1);
+            var builder0 = Message.Build(message0);
+            var builder1 = Message.Build(message1);
+            var builder2 = builder0.Clone();
+            builder0[2].Insert(builder1[2]);
+            Assert.AreEqual(builder0[2].Value, builder1[2].Value);
+            Assert.AreEqual(builder0[3].Value, builder2[2].Value);
+        }
+
+        [TestMethod]
+        public void MessageBuilder_CanInsertStringBeforeSelf()
+        {
+            var val0 = Randomized.StringCaps(3) + "|" + Randomized.String();
+            var val1 = Randomized.StringCaps(3) + "|" + Randomized.String();
+            var message = string.Format("MSH|^~\\&\r{0}", val0);
+            var builder = Message.Build(message);
+            builder[2].Insert(val1);
+            Assert.AreEqual(val1, builder[2].Value);
+            Assert.AreEqual(val0, builder[3].Value);
+        }
+
+        [TestMethod]
         public void MessageBuilder_CanAddValue()
         {
             var val0 = Randomized.StringCaps(3) + "|" + Randomized.String();

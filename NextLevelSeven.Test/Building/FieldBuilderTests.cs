@@ -9,6 +9,71 @@ namespace NextLevelSeven.Test.Building
     public sealed class FieldBuilderTests : BuildingTestFixture
     {
         [TestMethod]
+        public void FieldBuilder_Encoding_Exists()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][2];
+            Assert.IsTrue(builder.Exists);
+        }
+
+        [TestMethod]
+        public void FieldBuilder_Encoding_GetsValues()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][2];
+            builder.Value = "$%^&";
+            ArrayComparer.AssertCompare(new[] { "$", "%", "^", "&" }, builder.Values.ToArray());
+        }
+
+        [TestMethod]
+        public void FieldBuilder_Encoding_SetsValue()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][2];
+            builder.Value = "$%^&";
+            Assert.AreEqual(builder.Value, "$%^&");
+        }
+
+        [TestMethod]
+        public void FieldBuilder_Encoding_SetsValues()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][2];
+            builder.Values = new[] { "$", "#", "~", "@" };
+            Assert.AreEqual(builder.Value, "$#~@");
+        }
+
+        [TestMethod]
+        public void FieldBuilder_Encoding_CanNullify()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][2];
+            builder.Nullify();
+            Assert.IsNull(builder.Value);
+        }
+
+        [TestMethod]
+        public void FieldBuilder_Encoding_ThrowsOnSubdivision()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][2];
+            IElement test = null;
+            It.Throws<BuilderException>(() => test = builder[1]);
+            Assert.IsNull(test);
+        }
+
+        [TestMethod]
+        public void FieldBuilder_Encoding_ThrowsOnIndirectSubdivision()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][2];
+            IElement test = null;
+            It.Throws<BuilderException>(() => test = builder.SetFieldRepetition(0, "~@#$"));
+            Assert.IsNull(test);
+        }
+
+        [TestMethod]
+        public void FieldBuilder_Encoding_SetsOnIndirectSubdivision()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][2];
+            builder.SetFieldRepetition(1, "~@#$");
+            Assert.AreEqual(builder.Value, "~@#$");
+        }
+
+        [TestMethod]
         public void FieldBuilder_Delimiter_HasOneValue()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][1];

@@ -69,7 +69,7 @@ namespace NextLevelSeven.Building.Elements
                     result.Append(_value.Substring(4));
                 }
 
-                return (result.Length == 0)
+                return (HL7.NullValues.Contains(result.ToString()))
                     ? null
                     : result.ToString();
             }
@@ -93,8 +93,7 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                return ComponentDelimiter != '\0' || EscapeCharacter != '\0' || RepetitionDelimiter != '\0' ||
-                       SubcomponentDelimiter != '\0';
+                return Value != null;
             }
         }
 
@@ -121,7 +120,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns></returns>
         public override IFieldBuilder SetFieldRepetition(int repetition, string value)
         {
-            if (repetition > 1)
+            if (repetition != 1)
             {
                 throw new BuilderException(ErrorCode.FixedFieldsCannotBeDivided);
             }
