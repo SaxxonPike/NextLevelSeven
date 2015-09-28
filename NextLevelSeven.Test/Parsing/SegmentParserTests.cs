@@ -16,7 +16,7 @@ namespace NextLevelSeven.Test.Parsing
             element[4].Value = Randomized.String();
             element[5].Value = Randomized.String();
             var newMessage = element.Clone();
-            newMessage[3].MoveToIndex(4);
+            newMessage[3].Move(4);
             Assert.AreEqual(element[3].Value, newMessage[4].Value);
         }
 

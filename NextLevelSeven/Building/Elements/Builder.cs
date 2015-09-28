@@ -5,7 +5,6 @@ using NextLevelSeven.Conversion;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Codec;
 using NextLevelSeven.Core.Encoding;
-using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building.Elements
@@ -223,16 +222,91 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>
-        ///     Move element to another index. Fails on root elements.
+        ///     Delete a descendant element.
         /// </summary>
-        /// <param name="index">New index.</param>
-        public virtual void MoveToIndex(int index)
+        /// <param name="index">Index to delete at.</param>
+        public abstract void DeleteDescendant(int index);
+
+        /// <summary>
+        ///     Delete a descendant element at the specified index.
+        /// </summary>
+        /// <typeparam name="TDescendant">Type of descendant element.</typeparam>
+        /// <param name="cache">Cache to delete within.</param>
+        /// <param name="index">Descendant index to delete.</param>
+        static protected void DeleteDescendant<TDescendant>(IIndexedCache<int, TDescendant> cache, int index) where TDescendant : Builder
         {
-            if (Index == index)
+            var values = cache.Where(c => c.Key != index).ToList();
+            foreach (var value in values.Where(v => v.Key > index))
             {
-                return;
+                value.Value.Index--;
             }
-            throw new BuilderException(ErrorCode.AncestorDoesNotExist);
+            cache.Clear();
+            foreach (var value in values)
+            {
+                cache[value.Value.Index] = value.Value;
+            }
+        }
+
+        /// <summary>
+        ///     Insert a copy of the specified element at the specified descendant index.
+        /// </summary>
+        /// <param name="index">Index to insert into.</param>
+        /// <param name="element">Element to insert.</param>
+        public abstract IElement InsertDescendant(IElement element, int index);
+
+        /// <summary>
+        ///     Insert a copy of the specified element at the specified descendant index.
+        /// </summary>
+        /// <param name="index">Index to insert into.</param>
+        /// <param name="value">Value to insert.</param>
+        public abstract IElement InsertDescendant(string value, int index);
+
+        /// <summary>
+        ///     Move indices forward in preparation for insert.
+        /// </summary>
+        /// <typeparam name="TDescendant">Type of descendant element.</typeparam>
+        /// <param name="cache">Cache to modify.</param>
+        /// <param name="index">Descendant index.</param>
+        static private void ShiftForInsert<TDescendant>(IIndexedCache<int, TDescendant> cache, int index) where TDescendant : Builder
+        {
+            var values = cache.ToList();
+            foreach (var value in values.Where(v => v.Key >= index))
+            {
+                value.Value.Index++;
+            }
+            cache.Clear();
+            foreach (var value in values)
+            {
+                cache[value.Value.Index] = value.Value;
+            }
+        }
+
+        /// <summary>
+        ///     Insert a descendant element at the specified index.
+        /// </summary>
+        /// <typeparam name="TDescendant">Type of descendant element.</typeparam>
+        /// <param name="cache">Cache to delete within.</param>
+        /// <param name="index">Descendant index to delete.</param>
+        /// <param name="value">Value to insert.</param>
+        static protected IBuilder InsertDescendant<TDescendant>(IIndexedCache<int, TDescendant> cache, int index, string value) where TDescendant : Builder
+        {
+            ShiftForInsert(cache, index);
+            cache[index].Value = value;
+            return cache[index];
+        }
+
+        /// <summary>
+        ///     Insert a descendant element string at the specified index.
+        /// </summary>
+        /// <typeparam name="TDescendant">Type of descendant element.</typeparam>
+        /// <param name="cache">Cache to delete within.</param>
+        /// <param name="index">Descendant index to delete.</param>
+        /// <param name="element">Element to insert.</param>
+        static protected IBuilder InsertDescendant<TDescendant>(IIndexedCache<int, TDescendant> cache, int index, IElement element) where TDescendant : Builder
+        {
+            ShiftForInsert(cache, index);
+            element.CopyTo(cache[index]);
+            return cache[index];
         }
 
         /// <summary>

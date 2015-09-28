@@ -450,6 +450,59 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>
+        ///     Delete a descendant at the specified index.
+        /// </summary>
+        /// <param name="index">Index to delete at.</param>
+        public override void DeleteDescendant(int index)
+        {
+            if (index == 0)
+            {
+                throw new BuilderException(ErrorCode.SegmentTypeCannotBeMoved);
+            }
+            if (index >= 1 && index <= 2 && IsMsh)
+            {
+                throw new BuilderException(ErrorCode.EncodingElementCannotBeMoved);
+            }
+            DeleteDescendant(_fields, index);
+        }
+
+        /// <summary>
+        ///     Insert a descendant element.
+        /// </summary>
+        /// <param name="element">Element to insert.</param>
+        /// <param name="index">Index to insert at.</param>
+        public override IElement InsertDescendant(IElement element, int index)
+        {
+            if (index <= 0)
+            {
+                throw new BuilderException(ErrorCode.SegmentTypeCannotBeMoved);
+            }
+            if (index >= 1 && index <= 2 && IsMsh)
+            {
+                throw new BuilderException(ErrorCode.EncodingElementCannotBeMoved);
+            }
+            return InsertDescendant(_fields, index, element);
+        }
+
+        /// <summary>
+        ///     Insert a descendant element string.
+        /// </summary>
+        /// <param name="value">Value to insert.</param>
+        /// <param name="index">Index to insert at.</param>
+        public override IElement InsertDescendant(string value, int index)
+        {
+            if (index <= 0)
+            {
+                throw new BuilderException(ErrorCode.SegmentTypeCannotBeMoved);
+            }
+            if (index >= 1 && index <= 2 && IsMsh)
+            {
+                throw new BuilderException(ErrorCode.EncodingElementCannotBeMoved);
+            }
+            return InsertDescendant(_fields, index, value);
+        }
+
+        /// <summary>
         ///     Move descendant to another index.
         /// </summary>
         /// <param name="sourceIndex">Source index.</param>

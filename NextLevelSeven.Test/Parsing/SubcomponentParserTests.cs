@@ -46,7 +46,7 @@ namespace NextLevelSeven.Test.Parsing
             var element = Message.Parse(ExampleMessages.Minimum)[1][3][1][1][1];
             element.Value = Randomized.String();
             var newMessage = element.Clone();
-            It.Throws<ParserException>(() => newMessage[2].MoveToIndex(3));
+            It.Throws<ParserException>(() => newMessage[2].Move(3));
             Assert.AreEqual(element.Value, newMessage.Value);
         }
 

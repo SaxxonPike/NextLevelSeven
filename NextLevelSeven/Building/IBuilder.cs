@@ -8,11 +8,5 @@ namespace NextLevelSeven.Building
     {
         /// <summary>Get the encoding used by this builder.</summary>
         new IEncoding Encoding { get; }
-
-        /// <summary>
-        ///     Move the element to another index within its ancestor.
-        /// </summary>
-        /// <param name="index">New index.</param>
-        void MoveToIndex(int index);
     }
 }

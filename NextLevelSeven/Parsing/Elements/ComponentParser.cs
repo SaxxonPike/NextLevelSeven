@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Encoding;
 using NextLevelSeven.Diagnostics;
@@ -140,6 +141,5 @@ namespace NextLevelSeven.Parsing.Elements
         {
             get { return Ancestor as IRepetitionParser; }
         }
-
     }
 }

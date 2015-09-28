@@ -73,25 +73,28 @@ namespace NextLevelSeven.Test.Building
         }
 
         [TestMethod]
-        public void MessageBuilder_CanInsertAfterDescendant()
+        public void MessageBuilder_CanInsertElementBeforeDescendant()
         {
             var val0 = Randomized.StringCaps(3) + "|" + Randomized.String();
             var val1 = Randomized.StringCaps(3) + "|" + Randomized.String();
-            var message = string.Format("MSH|^~\\&\r{0}", val0);
-            var builder = Message.Build(message);
-            builder.InsertAfter(1, val1);
-            Assert.AreEqual(val1, builder[2].Value);
-            Assert.AreEqual(val0, builder[3].Value);
+            var message0 = string.Format("MSH|^~\\&\r{0}", val0);
+            var message1 = string.Format("MSH|^~\\&\r{0}", val1);
+            var builder0 = Message.Build(message0);
+            var builder1 = Message.Build(message1);
+            var builder2 = builder0.Clone();
+            builder0.Insert(2, builder1[2]);
+            Assert.AreEqual(builder0[2].Value, builder1[2].Value);
+            Assert.AreEqual(builder0[3].Value, builder2[2].Value);
         }
 
         [TestMethod]
-        public void MessageBuilder_CanInsertBeforeDescendant()
+        public void MessageBuilder_CanInsertStringBeforeDescendant()
         {
             var val0 = Randomized.StringCaps(3) + "|" + Randomized.String();
             var val1 = Randomized.StringCaps(3) + "|" + Randomized.String();
             var message = string.Format("MSH|^~\\&\r{0}", val0);
             var builder = Message.Build(message);
-            builder.InsertBefore(2, val1);
+            builder.Insert(2, val1);
             Assert.AreEqual(val1, builder[2].Value);
             Assert.AreEqual(val0, builder[3].Value);
         }
@@ -355,7 +358,7 @@ namespace NextLevelSeven.Test.Building
         }
 
         [TestMethod]
-        public void MessageBuilder_ConvertsToMessage()
+        public void MessageBuilder_ConvertsToParser()
         {
             var builder = Message.Build(ExampleMessages.Standard);
             var beforeMessageString = builder.Value;
@@ -364,7 +367,7 @@ namespace NextLevelSeven.Test.Building
         }
 
         [TestMethod]
-        public void MessageBuilder_ConvertsFromMessage()
+        public void MessageBuilder_ConvertsFromParser()
         {
             var message = Message.Parse(ExampleMessages.Standard);
             var beforeBuilderString = message.Value;

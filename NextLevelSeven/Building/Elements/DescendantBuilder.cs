@@ -69,21 +69,5 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Deep clone this builder.</summary>
         /// <returns>Cloned builder.</returns>
         public abstract override IElement Clone();
-
-        /// <summary>
-        ///     Move an element to another index.
-        /// </summary>
-        /// <param name="index">New index.</param>
-        public override void MoveToIndex(int index)
-        {
-            Ancestor.MoveDescendant(Index, index);
-        }
-
-        /// <summary>
-        ///     Move a descendant to another index.
-        /// </summary>
-        /// <param name="sourceIndex">Source index.</param>
-        /// <param name="targetIndex">Target index.</param>
-        public abstract override void MoveDescendant(int sourceIndex, int targetIndex);
     }
 }

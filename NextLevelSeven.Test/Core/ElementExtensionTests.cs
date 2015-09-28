@@ -25,28 +25,28 @@ namespace NextLevelSeven.Test.Core
         public void ElementExtensions_Element_ThrowsWhenEncodingFieldIsMoved()
         {
             var message = Message.Build(ExampleMessages.Standard);
-            It.Throws<ElementException>(() => message[1][2].MoveToIndex(1));
+            It.Throws<ElementException>(() => message[1][2].Move(1));
         }
 
         [TestMethod]
         public void ElementExtensions_Element_ThrowsWhenFieldDelimiterIsMoved()
         {
             var message = Message.Build(ExampleMessages.Standard);
-            It.Throws<ElementException>(() => message[1][1].MoveToIndex(2));
+            It.Throws<ElementException>(() => message[1][1].Move(2));
         }
 
         [TestMethod]
         public void ElementExtensions_Element_ThrowsWhenSegmentTypeIsMoved()
         {
             var message = Message.Build(ExampleMessages.Standard);
-            It.Throws<ElementException>(() => message[2][0].MoveToIndex(2));
+            It.Throws<ElementException>(() => message[2][0].Move(2));
         }
 
         [TestMethod]
         public void ElementExtensions_Element_DoesNotMoveWhenMovedToSameIndex()
         {
             var message = Message.Build(ExampleMessages.Standard);
-            message[2].MoveToIndex(2);
+            message[2].Move(2);
         }
 
         [TestMethod]
@@ -69,14 +69,14 @@ namespace NextLevelSeven.Test.Core
         public void ElementExtensions_Message_CannotBeMoved()
         {
             var message = Message.Parse(ExampleMessages.Standard);
-            It.Throws<ElementException>(() => message.MoveToIndex(2));
+            It.Throws<ElementException>(() => message.Move(2));
         }
 
         [TestMethod]
         public void ElementExtensions_Element_ThrowsWhenMoveIndexIsBelowMinimum()
         {
             var message = Message.Parse(ExampleMessages.Standard);
-            It.Throws<ElementException>(() => message[2].MoveToIndex(-1));
+            It.Throws<ElementException>(() => message[2].Move(-1));
         }
 
         [TestMethod]
@@ -179,56 +179,6 @@ namespace NextLevelSeven.Test.Core
         public void ElementExtensions_Parser_CanDelete()
         {
             ElementExtensions_CanDelete(Message.Parse(ExampleMessages.Standard));
-        }
-
-        // Insert Element After
-
-        private static void ElementExtensions_CanInsertElementAfter(IElement element)
-        {
-            var modifiedElement = element.Clone();
-            modifiedElement.InsertAfter(2, element[2]);
-            Assert.AreEqual(modifiedElement[3].Value, element[2].Value,
-                "Element insertion (after) failed: duplication didn't work.");
-            Assert.AreEqual(modifiedElement[4].Value, element[3].Value,
-                "Element insertion (after) failed: shifted segments weren't in order.");
-        }
-
-        [TestMethod]
-        public void ElementExtensions_Builder_CanInsertElementAfter()
-        {
-            ElementExtensions_CanInsertElementAfter(Message.Build(ExampleMessages.Standard));
-        }
-
-        [TestMethod]
-        public void ElementExtensions_Parser_CanInsertElementAfter()
-        {
-            ElementExtensions_CanInsertElementAfter(Message.Parse(ExampleMessages.Standard));
-        }
-
-        // Insert String After
-
-        private static void ElementExtensions_CanInsertStringAfter(IElement element)
-        {
-            const string testSegment = @"TST|0|";
-
-            var modifiedElement = element.Clone();
-            modifiedElement[1].InsertAfter(testSegment);
-            Assert.AreEqual(modifiedElement[2].Value, testSegment,
-                "Text insertion (after) failed: expected string didn't appear in modified message.");
-            Assert.AreEqual(modifiedElement[3].Value, element[2].Value,
-                "Text insertion (after) failed: shifted segments weren't in order.");
-        }
-
-        [TestMethod]
-        public void ElementExtensions_Builder_CanInsertStringAfter()
-        {
-            ElementExtensions_CanInsertStringAfter(Message.Build(ExampleMessages.Standard));
-        }
-
-        [TestMethod]
-        public void ElementExtensions_Parser_CanInsertStringAfter()
-        {
-            ElementExtensions_CanInsertStringAfter(Message.Parse(ExampleMessages.Standard));
         }
     }
 }

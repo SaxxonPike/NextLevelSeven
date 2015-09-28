@@ -245,6 +245,35 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>
+        ///     Delete a descendant at the specified index.
+        /// </summary>
+        /// <param name="index">Index to delete at.</param>
+        public override void DeleteDescendant(int index)
+        {
+            DeleteDescendant(_subcomponents, index);
+        }
+
+        /// <summary>
+        ///     Insert a descendant element.
+        /// </summary>
+        /// <param name="element">Element to insert.</param>
+        /// <param name="index">Index to insert at.</param>
+        public override IElement InsertDescendant(IElement element, int index)
+        {
+            return InsertDescendant(_subcomponents, index, element);
+        }
+
+        /// <summary>
+        ///     Insert a descendant element string.
+        /// </summary>
+        /// <param name="value">Value to insert.</param>
+        /// <param name="index">Index to insert at.</param>
+        public override IElement InsertDescendant(string value, int index)
+        {
+            return InsertDescendant(_subcomponents, index, value);
+        }
+
+        /// <summary>
         ///     Move descendant to another index.
         /// </summary>
         /// <param name="sourceIndex">Source index.</param>

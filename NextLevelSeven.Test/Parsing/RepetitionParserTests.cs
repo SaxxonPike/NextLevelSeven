@@ -13,7 +13,7 @@ namespace NextLevelSeven.Test.Parsing
             var element = Message.Parse(ExampleMessages.Minimum)[1][3][1];
             element.Values = new[] { Randomized.String(), Randomized.String(), Randomized.String(), Randomized.String() };
             var newMessage = element.Clone();
-            newMessage[2].MoveToIndex(3);
+            newMessage[2].Move(3);
             Assert.AreEqual(element[2].Value, newMessage[3].Value);
         }
 

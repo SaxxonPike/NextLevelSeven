@@ -18,6 +18,11 @@ namespace NextLevelSeven.Core
         /// <summary>Get a codec which can be used to interpret the stored value as other types.</summary>
         IEncodedTypeConverter Codec { get; }
 
+        /// <summary>
+        ///     Delete a descendant element.
+        /// </summary>
+        void DeleteDescendant(int index);
+
         /// <summary>Get the delimiter character of the element. This will be zero if there are no sub-elements.</summary>
         char Delimiter { get; }
 
@@ -36,8 +41,31 @@ namespace NextLevelSeven.Core
         /// <summary>Get the index of the element.</summary>
         int Index { get; }
 
+        /// <summary>
+        ///     Insert a descendant element as a value at the specified index.
+        /// </summary>
+        /// <param name="value">Value to insert.</param>
+        /// <param name="index">Index where to insert.</param>
+        /// <returns></returns>
+        IElement InsertDescendant(string value, int index);
+
+        /// <summary>
+        ///     Insert a descendant element at the specified index.
+        /// </summary>
+        /// <param name="element">Element to insert.</param>
+        /// <param name="index">Index where to insert.</param>
+        /// <returns></returns>
+        IElement InsertDescendant(IElement element, int index);
+
         /// <summary>Unique key of the element within the message.</summary>
         string Key { get; }
+
+        /// <summary>
+        ///     Move a descendant element to another index.
+        /// </summary>
+        /// <param name="sourceIndex"></param>
+        /// <param name="targetIndex"></param>
+        void MoveDescendant(int sourceIndex, int targetIndex);
 
         /// <summary>Next available index for adding elements.</summary>
         int NextIndex { get; }

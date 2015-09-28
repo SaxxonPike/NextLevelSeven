@@ -26,7 +26,7 @@ namespace NextLevelSeven.Core
         /// <returns>The newly added element.</returns>
         public static void Add(this IElement target, IElement elementToAdd)
         {
-            CopyOver(elementToAdd, target[target.NextIndex]);
+            CopyTo(elementToAdd, target[target.NextIndex]);
         }
 
         /// <summary>Add elements as descendants.</summary>
@@ -62,13 +62,13 @@ namespace NextLevelSeven.Core
         /// <summary>Copy elements and sub-elements one by one into the target.</summary>
         /// <param name="source"></param>
         /// <param name="target"></param>
-        private static void CopyOver(IElement source, IElement target)
+        public static void CopyTo(this IElement source, IElement target)
         {
             if (!(target is ISubcomponent) && source.HasSignificantDescendants())
             {
                 foreach (var descendant in source.Descendants.ToList())
                 {
-                    CopyOver(descendant, target[descendant.Index]);
+                    CopyTo(descendant, target[descendant.Index]);
                 }
             }
             else
@@ -81,11 +81,12 @@ namespace NextLevelSeven.Core
         /// <param name="target">Element to delete.</param>
         public static void Delete(this IElement target)
         {
-            if (target.Ancestor == null)
+            var ancestor = target.Ancestor;
+            if (ancestor == null)
             {
                 throw new ElementException(ErrorCode.AncestorDoesNotExist);
             }
-            target.Ancestor.Delete(target.Index);
+            ancestor.DeleteDescendant(target.Index);
         }
 
         /// <summary>Delete descendant elements.</summary>
@@ -93,8 +94,10 @@ namespace NextLevelSeven.Core
         /// <param name="indices">Indices of descendants to delete.</param>
         public static void Delete(this IElement target, params int[] indices)
         {
-            // convert to list first so we don't squash our input values.
-            target.Values = target.Descendants.Where((d, i) => !indices.Contains(d.Index)).Select(d => d.Value).ToList();
+            foreach (var index in indices.OrderByDescending(i => i))
+            {
+                target.DeleteDescendant(index);
+            }
         }
 
         /// <summary>Delete elements in the enumerable. All elements must share a direct ancestor.</summary>
@@ -161,132 +164,62 @@ namespace NextLevelSeven.Core
             return (element.ValueCount > 1) || element.Descendants.Any(HasSignificantDescendants);
         }
 
-        /// <summary>Insert element data after the specified descendant element.</summary>
-        /// <param name="target">Element to add to.</param>
-        /// <param name="index">Index of the descendant to add data after.</param>
-        /// <param name="elementToInsert">Descendant data to insert.</param>
-        public static void InsertAfter(this IElement target, int index, IElement elementToInsert)
-        {
-            InsertBefore(target, index + 1, elementToInsert);
-        }
-
-        /// <summary>Insert element data after the specified element.</summary>
-        /// <param name="target">Element to add data after.</param>
-        /// <param name="elementToInsert">Descendant data to insert.</param>
-        public static void InsertAfter(this IElement target, IElement elementToInsert)
-        {
-            target.Ancestor.InsertBefore(target.Index + 1, elementToInsert);
-        }
-
-        /// <summary>Insert string data after the specified descendant element.</summary>
-        /// <param name="target">Element to add to.</param>
-        /// <param name="index">Index of the descendant to add data after.</param>
-        /// <param name="dataToInsert">Descendant string to insert.</param>
-        public static void InsertAfter(this IElement target, int index, string dataToInsert)
-        {
-            InsertBefore(target, index + 1, dataToInsert);
-        }
-
-        /// <summary>Insert string data after the specified element.</summary>
-        /// <param name="target">Element to add data after.</param>
-        /// <param name="dataToInsert">Descendant string to insert.</param>
-        public static void InsertAfter(this IElement target, string dataToInsert)
-        {
-            target.Ancestor.InsertBefore(target.Index + 1, dataToInsert);
-        }
-
         /// <summary>Insert element data before the specified descendant element.</summary>
         /// <param name="target">Element to add to.</param>
         /// <param name="index">Index of the descendant to add data before.</param>
         /// <param name="elementToInsert">Descendant data to insert.</param>
-        public static void InsertBefore(this IElement target, int index, IElement elementToInsert)
+        public static void Insert(this IElement target, int index, IElement elementToInsert)
         {
-            InsertEmpty(target, index);
-            CopyOver(elementToInsert, target[index]);
+            target.InsertDescendant(elementToInsert, index);
         }
 
         /// <summary>Insert element data before the specified element.</summary>
         /// <param name="target">Element to add data before.</param>
         /// <param name="elementToInsert">Descendant data to insert.</param>
-        public static void InsertBefore(this IElement target, IElement elementToInsert)
-        {
-            target.Ancestor.InsertBefore(target.Index, elementToInsert);
-        }
-
-        /// <summary>Insert string data before the specified descendant element.</summary>
-        /// <param name="target">Element to add to.</param>
-        /// <param name="index">Index of the descendant to add data before.</param>
-        /// <param name="dataToInsert">Descendant data to insert.</param>
-        public static void InsertBefore(this IElement target, int index, string dataToInsert)
-        {
-            InsertEmpty(target, index);
-            target[index].Value = dataToInsert;
-        }
-
-        /// <summary>Insert string data before the specified element.</summary>
-        /// <param name="target">Element to add data before.</param>
-        /// <param name="dataToInsert">Descendant data to insert.</param>
-        public static void InsertBefore(this IElement target, string dataToInsert)
-        {
-            target.Ancestor.InsertBefore(target.Index, dataToInsert);
-        }
-
-        /// <summary>Move elements forward one index, starting at the specified index.</summary>
-        /// <param name="target">Element to modify.</param>
-        /// <param name="index">Index to begin at.</param>
-        private static void InsertEmpty(IElement target, int index)
-        {
-            var values = target.Descendants.Where(e => e.Index >= index).ToDictionary(e => e.Index, e => e.Value);
-            foreach (var v in values.OrderByDescending(kv => kv.Key).ToList())
-            {
-                target[v.Key + 1].Nullify();
-                CopyOver(target[v.Key], target[v.Key + 1]);
-                if (!values.ContainsKey(v.Key - 1))
-                {
-                    target[v.Key].Nullify();
-                }
-            }
-        }
-
-        /// <summary>Move element within its ancestor. Returns the new element reference.</summary>
-        /// <param name="target">Element to move.</param>
-        /// <param name="targetIndex">Target index.</param>
-        /// <returns>Element in its new place.</returns>
-        public static IElement MoveToIndex(this IElement target, int targetIndex)
+        public static void Insert(this IElement target, IElement elementToInsert)
         {
             var ancestor = target.Ancestor;
             if (ancestor == null)
             {
                 throw new ElementException(ErrorCode.AncestorDoesNotExist);
             }
+            ancestor.InsertDescendant(elementToInsert, target.Index);
+        }
 
-            if (targetIndex < 0)
+        /// <summary>Insert string data before the specified descendant element.</summary>
+        /// <param name="target">Element to add to.</param>
+        /// <param name="index">Index of the descendant to add data before.</param>
+        /// <param name="dataToInsert">Descendant data to insert.</param>
+        public static void Insert(this IElement target, int index, string dataToInsert)
+        {
+            target.InsertDescendant(dataToInsert, index);
+        }
+
+        /// <summary>Insert string data before the specified element.</summary>
+        /// <param name="target">Element to add data before.</param>
+        /// <param name="dataToInsert">Descendant data to insert.</param>
+        public static void Insert(this IElement target, string dataToInsert)
+        {
+            var ancestor = target.Ancestor;
+            if (ancestor == null)
             {
-                throw new ElementException(ErrorCode.ElementIndexMustBeZeroOrGreater);
+                throw new ElementException(ErrorCode.AncestorDoesNotExist);
             }
+            ancestor.InsertDescendant(dataToInsert, target.Index);
+        }
 
-            if (targetIndex == target.Index)
+        /// <summary>Move element within its ancestor. Returns the new element reference.</summary>
+        /// <param name="target">Element to move.</param>
+        /// <param name="targetIndex">Target index.</param>
+        /// <returns>Element in its new place.</returns>
+        public static IElement Move(this IElement target, int targetIndex)
+        {
+            var ancestor = target.Ancestor;
+            if (ancestor == null)
             {
-                return target;
+                throw new ElementException(ErrorCode.AncestorDoesNotExist);
             }
-
-            if (ancestor is ISegment)
-            {
-                if (target.Index < 1)
-                {
-                    throw new ElementException(ErrorCode.SegmentTypeCannotBeMoved);
-                }
-
-                if (target.Index <= 2 && (ancestor as ISegment).Type == "MSH")
-                {
-                    throw new ElementException(ErrorCode.EncodingElementCannotBeMoved);
-                }
-            }
-
-            var elementToMove = target.Clone();
-            ancestor.Delete(target.Index);
-            InsertEmpty(ancestor, targetIndex);
-            CopyOver(elementToMove, ancestor[targetIndex]);
+            ancestor.MoveDescendant(target.Index, targetIndex);
             return ancestor[targetIndex];
         }
 
@@ -428,7 +361,7 @@ namespace NextLevelSeven.Core
                                    .FirstOrDefault();
             if (childSegment != null)
             {
-                CopyOver(childSegment, newMessage[1]);
+                CopyTo(childSegment, newMessage[1]);
             }
 
             // build message

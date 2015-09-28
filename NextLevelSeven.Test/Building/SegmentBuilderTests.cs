@@ -13,7 +13,7 @@ namespace NextLevelSeven.Test.Building
             var builder = Message.Build(ExampleMessages.Standard);
             var val0 = Randomized.String();
             builder[1][3].Value = val0;
-            builder[1][3].MoveToIndex(4);
+            builder[1][3].Move(4);
             Assert.AreEqual(val0, builder[1][4].Value);
         }
 

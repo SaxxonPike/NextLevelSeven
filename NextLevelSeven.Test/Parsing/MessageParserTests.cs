@@ -11,6 +11,24 @@ namespace NextLevelSeven.Test.Parsing
     public class MessageParserTests : ParsingTestFixture
     {
         [TestMethod]
+        public void Message_ConvertsToBuilder()
+        {
+            var builder = Message.Parse(ExampleMessages.Standard);
+            var beforeMessageString = builder.Value;
+            var message = builder.ToBuilder();
+            Assert.AreEqual(beforeMessageString, message.Value, "Conversion from parser to builder failed.");
+        }
+
+        [TestMethod]
+        public void Message_ConvertsFromBuilder()
+        {
+            var message = Message.Build(ExampleMessages.Standard);
+            var beforeBuilderString = message.Value;
+            var afterBuilder = Message.Parse(message);
+            Assert.AreEqual(beforeBuilderString, afterBuilder.Value, "Conversion from builder to parser failed.");
+        }
+
+        [TestMethod]
         public void Message_ThrowsWithIncorrectFirstSegment()
         {
             It.Throws<ElementException>(() => Message.Parse(Randomized.String()));
@@ -35,7 +53,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var message = Message.Parse(ExampleMessages.Standard);
             var newMessage = message.Clone();
-            newMessage[2].MoveToIndex(3);
+            newMessage[2].Move(3);
             Assert.AreEqual(message[2].Value, newMessage[3].Value);
         }
 
