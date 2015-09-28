@@ -23,6 +23,12 @@ namespace NextLevelSeven.Building.Elements
             _onTypeFieldChangedHandler = onTypeFieldChangedHandler;
         }
 
+        /// <summary>Returns zero. Subcomponents cannot be divided any further. Therefore, they have no useful delimiter.</summary>
+        public override char Delimiter
+        {
+            get { return '\0'; }
+        }
+
         /// <summary>Get or set the field type value.</summary>
         public override string Value
         {
@@ -59,7 +65,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This TypeFieldBuilder.</returns>
         public override IFieldBuilder SetFieldRepetition(int repetition, string value)
         {
-            if (repetition > 1)
+            if (repetition != 1)
             {
                 throw new BuilderException(ErrorCode.FixedFieldsCannotBeDivided);
             }

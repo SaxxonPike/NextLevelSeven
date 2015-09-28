@@ -7,6 +7,28 @@ namespace NextLevelSeven.Test.Building
     public sealed class RepetitionBuilderTests : BuildingTestFixture
     {
         [TestMethod]
+        public void RepetitionBuilder_CanSetAllSubcomponents()
+        {
+            var builder = Message.Build()[1][3][1];
+            var val0 = Randomized.String();
+            var val1 = Randomized.String();
+            var val2 = Randomized.String();
+            builder.SetSubcomponents(1, 1, val0, val1, val2);
+            Assert.AreEqual(string.Join("&", val0, val1, val2), builder.Value);
+        }
+
+        [TestMethod]
+        public void RepetitionBuilder_CanSetAllComponents()
+        {
+            var builder = Message.Build()[1][3][1];
+            var val0 = Randomized.String();
+            var val1 = Randomized.String();
+            var val2 = Randomized.String();
+            builder.SetComponents(1, val0, val1, val2);
+            Assert.AreEqual(string.Join("^", val0, val1, val2), builder.Value);
+        }
+
+        [TestMethod]
         public void RepetitionBuilder_MapsBuilderAncestor()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][3][1];

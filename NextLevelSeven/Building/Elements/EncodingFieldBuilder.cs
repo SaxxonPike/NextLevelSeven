@@ -20,6 +20,12 @@ namespace NextLevelSeven.Building.Elements
         {
         }
 
+        /// <summary>Returns zero. Subcomponents cannot be divided any further. Therefore, they have no useful delimiter.</summary>
+        public override char Delimiter
+        {
+            get { return '\0'; }
+        }
+
         /// <summary>Get the number of field repetitions in this field, including field repetitions with no content.</summary>
         public override int ValueCount
         {

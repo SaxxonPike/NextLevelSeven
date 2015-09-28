@@ -276,7 +276,7 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>Get this element's value delimiter.</summary>
-        public override sealed char Delimiter
+        public override char Delimiter
         {
             get { return RepetitionDelimiter; }
         }

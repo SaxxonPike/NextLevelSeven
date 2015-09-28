@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Diagnostics;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Building;
 using NextLevelSeven.Core;
@@ -8,6 +9,27 @@ namespace NextLevelSeven.Test.Building
     [TestClass]
     public sealed class FieldBuilderTests : BuildingTestFixture
     {
+        [TestMethod]
+        public void FieldBuilder_Type_HasNoDescendants()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][0];
+            Assert.AreEqual(0, builder.Descendants.Count());
+        }
+
+        [TestMethod]
+        public void FieldBuilder_Type_HasNoDelimiter()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][0];
+            Assert.AreEqual('\0', builder.Delimiter);
+        }
+
+        [TestMethod]
+        public void FieldBuilder_Type_ThrowsOnIndex()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][0];
+            It.Throws<ElementException>(() => Debug.Write(builder[1].Value));
+        }
+
         [TestMethod]
         public void FieldBuilder_Encoding_Exists()
         {
@@ -319,6 +341,39 @@ namespace NextLevelSeven.Test.Building
                 .SetSubcomponents(1, 1, 1, subcomponent1, subcomponent2);
             Assert.AreEqual(string.Format("{0}&{1}", subcomponent1, subcomponent2), builder.Value,
                 @"Unexpected result.");
+        }
+
+        [TestMethod]
+        public void FieldBuilder_CanSetAllSubcomponents()
+        {
+            var builder = Message.Build()[1][3];
+            var val0 = Randomized.String();
+            var val1 = Randomized.String();
+            var val2 = Randomized.String();
+            builder.SetSubcomponents(1, 1, 1, val0, val1, val2);
+            Assert.AreEqual(string.Join("&", val0, val1, val2), builder.Value);
+        }
+
+        [TestMethod]
+        public void FieldBuilder_CanSetAllComponents()
+        {
+            var builder = Message.Build()[1][3];
+            var val0 = Randomized.String();
+            var val1 = Randomized.String();
+            var val2 = Randomized.String();
+            builder.SetComponents(1, 1, val0, val1, val2);
+            Assert.AreEqual(string.Join("^", val0, val1, val2), builder.Value);
+        }
+
+        [TestMethod]
+        public void FieldBuilder_CanSetAllRepetitions()
+        {
+            var builder = Message.Build()[1][3];
+            var val0 = Randomized.String();
+            var val1 = Randomized.String();
+            var val2 = Randomized.String();
+            builder.SetFieldRepetitions(1, val0, val1, val2);
+            Assert.AreEqual(string.Join("~", val0, val1, val2), builder.Value);
         }
 
         [TestMethod]
