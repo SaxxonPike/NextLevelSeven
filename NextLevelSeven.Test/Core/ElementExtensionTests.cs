@@ -17,7 +17,7 @@ namespace NextLevelSeven.Test.Core
             message0[1][3].Value = val0;
             message1[1][3].Value = val1;
             message0.AddRange(message1.Segments.Skip(2));
-            Assert.AreEqual(message0.ValueCount, (message1.ValueCount * 2) - 2);
+            Assert.AreEqual(message0.ValueCount, (message1.ValueCount*2) - 2);
             Assert.AreEqual(message0[message1.ValueCount + 1].Value, message1[3].Value);
         }
 

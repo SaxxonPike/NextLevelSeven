@@ -176,6 +176,18 @@ namespace NextLevelSeven.Parsing.Elements
             get { return ValueCount; }
         }
 
+        /// <summary>Get this element's heirarchy-specific ancestor.</summary>
+        IMessage ISegment.Ancestor
+        {
+            get { return Ancestor as IMessage; }
+        }
+
+        /// <summary>Get this element's heirarchy-specific ancestor parser.</summary>
+        IMessageParser ISegmentParser.Ancestor
+        {
+            get { return Ancestor as IMessageParser; }
+        }
+
         /// <summary>Get the descendant element at the specified index.</summary>
         /// <param name="index">Index of the descendant element.</param>
         /// <returns>Descendant element at the specified index.</returns>
@@ -229,22 +241,5 @@ namespace NextLevelSeven.Parsing.Elements
                 Value = Value
             };
         }
-
-        /// <summary>
-        ///     Get this element's heirarchy-specific ancestor.
-        /// </summary>
-        IMessage ISegment.Ancestor
-        {
-            get { return Ancestor as IMessage; }
-        }
-
-        /// <summary>
-        ///     Get this element's heirarchy-specific ancestor parser.
-        /// </summary>
-        IMessageParser ISegmentParser.Ancestor
-        {
-            get { return Ancestor as IMessageParser; }
-        }
-
     }
 }

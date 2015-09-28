@@ -3,7 +3,6 @@ using System.Linq;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Encoding;
 using NextLevelSeven.Diagnostics;
-using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Parsing.Elements
 {
@@ -58,6 +57,18 @@ namespace NextLevelSeven.Parsing.Elements
             return CloneInternal();
         }
 
+        /// <summary>Get this element's heirarchy-specific ancestor.</summary>
+        IComponent ISubcomponent.Ancestor
+        {
+            get { return Ancestor as IComponent; }
+        }
+
+        /// <summary>Get this element's heirarchy-specific ancestor parser.</summary>
+        IComponentParser ISubcomponentParser.Ancestor
+        {
+            get { return Ancestor as IComponentParser; }
+        }
+
         /// <summary>Throws. Subcomponents have no descendants.</summary>
         /// <param name="index"></param>
         /// <returns></returns>
@@ -75,22 +86,6 @@ namespace NextLevelSeven.Parsing.Elements
                 Index = Index,
                 Value = Value
             };
-        }
-
-        /// <summary>
-        ///     Get this element's heirarchy-specific ancestor.
-        /// </summary>
-        IComponent ISubcomponent.Ancestor
-        {
-            get { return Ancestor as IComponent; }
-        }
-
-        /// <summary>
-        ///     Get this element's heirarchy-specific ancestor parser.
-        /// </summary>
-        IComponentParser ISubcomponentParser.Ancestor
-        {
-            get { return Ancestor as IComponentParser; }
         }
     }
 }

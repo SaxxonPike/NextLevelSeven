@@ -3,9 +3,7 @@ using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Parsing
 {
-    /// <summary>
-    ///     A parser for HL7 messages at the field repetition level.
-    /// </summary>
+    /// <summary>A parser for HL7 messages at the field repetition level.</summary>
     public interface IRepetitionParser : IElementParser, IRepetition
     {
         /// <summary>Get the ancestor field. Null if the element is an orphan.</summary>

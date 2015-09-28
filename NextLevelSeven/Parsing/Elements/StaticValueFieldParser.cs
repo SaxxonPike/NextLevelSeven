@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using NextLevelSeven.Core.Encoding;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Utility;
 

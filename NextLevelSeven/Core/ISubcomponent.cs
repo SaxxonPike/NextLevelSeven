@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace NextLevelSeven.Core
+﻿namespace NextLevelSeven.Core
 {
     /// <summary>Represents a subcomponent element in an HL7 message.</summary>
     public interface ISubcomponent : IElement

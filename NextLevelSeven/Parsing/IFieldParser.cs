@@ -3,9 +3,7 @@ using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Parsing
 {
-    /// <summary>
-    ///     A parser for HL7 messages at the field level.
-    /// </summary>
+    /// <summary>A parser for HL7 messages at the field level.</summary>
     public interface IFieldParser : IElementParser, IField
     {
         /// <summary>Get the ancestor segment. Null if the element is an orphan.</summary>

@@ -106,6 +106,18 @@ namespace NextLevelSeven.Parsing.Elements
             get { return Components; }
         }
 
+        /// <summary>Get this element's heirarchy-specific ancestor.</summary>
+        IField IRepetition.Ancestor
+        {
+            get { return Ancestor as IField; }
+        }
+
+        /// <summary>Get this element's heirarchy-specific ancestor parser.</summary>
+        IFieldParser IRepetitionParser.Ancestor
+        {
+            get { return Ancestor as IFieldParser; }
+        }
+
         /// <summary>Get the descendant element at the specified index.</summary>
         /// <param name="index">Desired index.</param>
         /// <returns>Descendant element at the specified index.</returns>
@@ -137,22 +149,6 @@ namespace NextLevelSeven.Parsing.Elements
                 Index = Index,
                 Value = Value
             };
-        }
-
-        /// <summary>
-        ///     Get this element's heirarchy-specific ancestor.
-        /// </summary>
-        IField IRepetition.Ancestor
-        {
-            get { return Ancestor as IField; }
-        }
-
-        /// <summary>
-        ///     Get this element's heirarchy-specific ancestor parser.
-        /// </summary>
-        IFieldParser IRepetitionParser.Ancestor
-        {
-            get { return Ancestor as IFieldParser; }
         }
     }
 }

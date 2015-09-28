@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using NextLevelSeven.Utility;
 
@@ -19,13 +18,11 @@ namespace NextLevelSeven.Test
             return new IndexedCache<TKey, TValue>(new ProxyFactory<TKey, TValue>(factoryMethod));
         }
 
-        /// <summary>
-        ///     Pass through to the Yield enumerable extension.
-        /// </summary>
+        /// <summary>Pass through to the Yield enumerable extension.</summary>
         /// <typeparam name="T">Type of item.</typeparam>
         /// <param name="item">Item to yield.</param>
         /// <returns>An enumerable containing only the item.</returns>
-        static public IEnumerable<T> Yield<T>(T item)
+        public static IEnumerable<T> Yield<T>(T item)
         {
             return item.Yield();
         }

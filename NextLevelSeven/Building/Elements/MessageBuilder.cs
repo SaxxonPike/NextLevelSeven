@@ -428,6 +428,37 @@ namespace NextLevelSeven.Building.Elements
             get { return _segments.Any(s => s.Value.Exists); }
         }
 
+        /// <summary>Delete a descendant at the specified index.</summary>
+        /// <param name="index">Index to delete at.</param>
+        public override void DeleteDescendant(int index)
+        {
+            DeleteDescendant(_segments, index);
+        }
+
+        /// <summary>Move descendant to another index.</summary>
+        /// <param name="sourceIndex">Source index.</param>
+        /// <param name="targetIndex">Target index.</param>
+        public override void MoveDescendant(int sourceIndex, int targetIndex)
+        {
+            MoveDescendant(_segments, sourceIndex, targetIndex);
+        }
+
+        /// <summary>Insert a descendant element.</summary>
+        /// <param name="element">Element to insert.</param>
+        /// <param name="index">Index to insert at.</param>
+        public override IElement InsertDescendant(IElement element, int index)
+        {
+            return InsertDescendant(_segments, index, element);
+        }
+
+        /// <summary>Insert a descendant element string.</summary>
+        /// <param name="value">Value to insert.</param>
+        /// <param name="index">Index to insert at.</param>
+        public override IElement InsertDescendant(string value, int index)
+        {
+            return InsertDescendant(_segments, index, value);
+        }
+
         /// <summary>Change all system line endings to HL7 line endings.</summary>
         /// <param name="message">String to transform.</param>
         /// <returns>Sanitized string.</returns>
@@ -450,45 +481,6 @@ namespace NextLevelSeven.Building.Elements
         protected override IElement GetGenericElement(int index)
         {
             return _segments[index];
-        }
-
-        /// <summary>
-        ///     Delete a descendant at the specified index.
-        /// </summary>
-        /// <param name="index">Index to delete at.</param>
-        public override void DeleteDescendant(int index)
-        {
-            DeleteDescendant(_segments, index);
-        }
-
-        /// <summary>
-        ///     Move descendant to another index.
-        /// </summary>
-        /// <param name="sourceIndex">Source index.</param>
-        /// <param name="targetIndex">Target index.</param>
-        public override void MoveDescendant(int sourceIndex, int targetIndex)
-        {
-            MoveDescendant(_segments, sourceIndex, targetIndex);
-        }
-
-        /// <summary>
-        ///     Insert a descendant element.
-        /// </summary>
-        /// <param name="element">Element to insert.</param>
-        /// <param name="index">Index to insert at.</param>
-        public override IElement InsertDescendant(IElement element, int index)
-        {
-            return InsertDescendant(_segments, index, element);
-        }
-
-        /// <summary>
-        ///     Insert a descendant element string.
-        /// </summary>
-        /// <param name="value">Value to insert.</param>
-        /// <param name="index">Index to insert at.</param>
-        public override IElement InsertDescendant(string value, int index)
-        {
-            return InsertDescendant(_segments, index, value);
         }
     }
 }

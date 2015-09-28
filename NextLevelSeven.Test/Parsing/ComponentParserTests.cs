@@ -11,7 +11,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Component_CanMoveSubcomponents()
         {
             var element = Message.Parse(ExampleMessages.Minimum)[1][3][1][1];
-            element.Values = new[] { Randomized.String(), Randomized.String(), Randomized.String(), Randomized.String() };
+            element.Values = new[] {Randomized.String(), Randomized.String(), Randomized.String(), Randomized.String()};
             var newMessage = element.Clone();
             newMessage[2].Move(3);
             Assert.AreEqual(element[2].Value, newMessage[3].Value);

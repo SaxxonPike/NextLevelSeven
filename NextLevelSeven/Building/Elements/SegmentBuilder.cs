@@ -378,6 +378,81 @@ namespace NextLevelSeven.Building.Elements
             get { return _fields.Any(s => s.Value.Exists); }
         }
 
+        /// <summary>Get this element's heirarchy-specific ancestor.</summary>
+        IMessage ISegment.Ancestor
+        {
+            get { return Ancestor as IMessage; }
+        }
+
+        /// <summary>Get this element's heirarchy-specific ancestor builder.</summary>
+        IMessageBuilder ISegmentBuilder.Ancestor
+        {
+            get { return Ancestor as IMessageBuilder; }
+        }
+
+        /// <summary>Delete a descendant at the specified index.</summary>
+        /// <param name="index">Index to delete at.</param>
+        public override void DeleteDescendant(int index)
+        {
+            if (index == 0)
+            {
+                throw new BuilderException(ErrorCode.SegmentTypeCannotBeMoved);
+            }
+            if (index >= 1 && index <= 2 && IsMsh)
+            {
+                throw new BuilderException(ErrorCode.EncodingElementCannotBeMoved);
+            }
+            DeleteDescendant(_fields, index);
+        }
+
+        /// <summary>Insert a descendant element.</summary>
+        /// <param name="element">Element to insert.</param>
+        /// <param name="index">Index to insert at.</param>
+        public override IElement InsertDescendant(IElement element, int index)
+        {
+            if (index <= 0)
+            {
+                throw new BuilderException(ErrorCode.SegmentTypeCannotBeMoved);
+            }
+            if (index >= 1 && index <= 2 && IsMsh)
+            {
+                throw new BuilderException(ErrorCode.EncodingElementCannotBeMoved);
+            }
+            return InsertDescendant(_fields, index, element);
+        }
+
+        /// <summary>Insert a descendant element string.</summary>
+        /// <param name="value">Value to insert.</param>
+        /// <param name="index">Index to insert at.</param>
+        public override IElement InsertDescendant(string value, int index)
+        {
+            if (index <= 0)
+            {
+                throw new BuilderException(ErrorCode.SegmentTypeCannotBeMoved);
+            }
+            if (index >= 1 && index <= 2 && IsMsh)
+            {
+                throw new BuilderException(ErrorCode.EncodingElementCannotBeMoved);
+            }
+            return InsertDescendant(_fields, index, value);
+        }
+
+        /// <summary>Move descendant to another index.</summary>
+        /// <param name="sourceIndex">Source index.</param>
+        /// <param name="targetIndex">Target index.</param>
+        public override void MoveDescendant(int sourceIndex, int targetIndex)
+        {
+            if (sourceIndex == 0)
+            {
+                throw new BuilderException(ErrorCode.SegmentTypeCannotBeMoved);
+            }
+            if (((sourceIndex >= 1 && sourceIndex <= 2) || (targetIndex >= 1 && targetIndex <= 2)) && IsMsh)
+            {
+                throw new BuilderException(ErrorCode.EncodingElementCannotBeMoved);
+            }
+            MoveDescendant(_fields, sourceIndex, targetIndex);
+        }
+
         /// <summary>Get descendant elements.</summary>
         /// <returns>Descendant elements.</returns>
         protected override IEnumerable<IElement> GetDescendants()
@@ -431,93 +506,6 @@ namespace NextLevelSeven.Building.Elements
         protected override IElement GetGenericElement(int index)
         {
             return _fields[index];
-        }
-
-        /// <summary>
-        ///     Get this element's heirarchy-specific ancestor.
-        /// </summary>
-        IMessage ISegment.Ancestor
-        {
-            get { return Ancestor as IMessage; }
-        }
-
-        /// <summary>
-        ///     Get this element's heirarchy-specific ancestor builder.
-        /// </summary>
-        IMessageBuilder ISegmentBuilder.Ancestor
-        {
-            get { return Ancestor as IMessageBuilder; }
-        }
-
-        /// <summary>
-        ///     Delete a descendant at the specified index.
-        /// </summary>
-        /// <param name="index">Index to delete at.</param>
-        public override void DeleteDescendant(int index)
-        {
-            if (index == 0)
-            {
-                throw new BuilderException(ErrorCode.SegmentTypeCannotBeMoved);
-            }
-            if (index >= 1 && index <= 2 && IsMsh)
-            {
-                throw new BuilderException(ErrorCode.EncodingElementCannotBeMoved);
-            }
-            DeleteDescendant(_fields, index);
-        }
-
-        /// <summary>
-        ///     Insert a descendant element.
-        /// </summary>
-        /// <param name="element">Element to insert.</param>
-        /// <param name="index">Index to insert at.</param>
-        public override IElement InsertDescendant(IElement element, int index)
-        {
-            if (index <= 0)
-            {
-                throw new BuilderException(ErrorCode.SegmentTypeCannotBeMoved);
-            }
-            if (index >= 1 && index <= 2 && IsMsh)
-            {
-                throw new BuilderException(ErrorCode.EncodingElementCannotBeMoved);
-            }
-            return InsertDescendant(_fields, index, element);
-        }
-
-        /// <summary>
-        ///     Insert a descendant element string.
-        /// </summary>
-        /// <param name="value">Value to insert.</param>
-        /// <param name="index">Index to insert at.</param>
-        public override IElement InsertDescendant(string value, int index)
-        {
-            if (index <= 0)
-            {
-                throw new BuilderException(ErrorCode.SegmentTypeCannotBeMoved);
-            }
-            if (index >= 1 && index <= 2 && IsMsh)
-            {
-                throw new BuilderException(ErrorCode.EncodingElementCannotBeMoved);
-            }
-            return InsertDescendant(_fields, index, value);
-        }
-
-        /// <summary>
-        ///     Move descendant to another index.
-        /// </summary>
-        /// <param name="sourceIndex">Source index.</param>
-        /// <param name="targetIndex">Target index.</param>
-        public override void MoveDescendant(int sourceIndex, int targetIndex)
-        {
-            if (sourceIndex == 0)
-            {
-                throw new BuilderException(ErrorCode.SegmentTypeCannotBeMoved);
-            }
-            if (((sourceIndex >= 1 && sourceIndex <= 2) || (targetIndex >= 1 && targetIndex <= 2)) && IsMsh)
-            {
-                throw new BuilderException(ErrorCode.EncodingElementCannotBeMoved);
-            }
-            MoveDescendant(_fields, sourceIndex, targetIndex);
         }
     }
 }

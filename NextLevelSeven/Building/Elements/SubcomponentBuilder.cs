@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Codec;
@@ -33,11 +32,11 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get or set the component string.</summary>
         public override string Value
         {
-            get 
+            get
             {
                 return HL7.NullValues.Contains(_value)
                     ? null
-                    : _value; 
+                    : _value;
             }
             set { SetSubcomponent(value); }
         }
@@ -93,6 +92,49 @@ namespace NextLevelSeven.Building.Elements
             get { return _value != null; }
         }
 
+        /// <summary>Get this element's heirarchy-specific ancestor.</summary>
+        IComponent ISubcomponent.Ancestor
+        {
+            get { return Ancestor as IComponent; }
+        }
+
+        /// <summary>Get this element's heirarchy-specific ancestor builder.</summary>
+        IComponentBuilder ISubcomponentBuilder.Ancestor
+        {
+            get { return Ancestor as IComponentBuilder; }
+        }
+
+        /// <summary>Delete a descendant at the specified index.</summary>
+        /// <param name="index">Index to delete at.</param>
+        public override void DeleteDescendant(int index)
+        {
+            throw new BuilderException(ErrorCode.SubcomponentCannotHaveDescendants);
+        }
+
+        /// <summary>Insert a descendant element.</summary>
+        /// <param name="element">Element to insert.</param>
+        /// <param name="index">Index to insert at.</param>
+        public override IElement InsertDescendant(IElement element, int index)
+        {
+            throw new BuilderException(ErrorCode.SubcomponentCannotHaveDescendants);
+        }
+
+        /// <summary>Insert a descendant element string.</summary>
+        /// <param name="value">Value to insert.</param>
+        /// <param name="index">Index to insert at.</param>
+        public override IElement InsertDescendant(string value, int index)
+        {
+            throw new BuilderException(ErrorCode.SubcomponentCannotHaveDescendants);
+        }
+
+        /// <summary>Move descendant to another index.</summary>
+        /// <param name="sourceIndex">Source index.</param>
+        /// <param name="targetIndex">Target index.</param>
+        public override void MoveDescendant(int sourceIndex, int targetIndex)
+        {
+            throw new BuilderException(ErrorCode.SubcomponentCannotHaveDescendants);
+        }
+
         /// <summary>Throws. Subcomponents cannot be divided any further.</summary>
         /// <param name="index"></param>
         /// <returns></returns>
@@ -106,61 +148,6 @@ namespace NextLevelSeven.Building.Elements
         protected override IEnumerable<IElement> GetDescendants()
         {
             return Enumerable.Empty<IElement>();
-        }
-
-        /// <summary>
-        ///     Get this element's heirarchy-specific ancestor.
-        /// </summary>
-        IComponent ISubcomponent.Ancestor
-        {
-            get { return Ancestor as IComponent; }
-        }
-
-        /// <summary>
-        ///     Get this element's heirarchy-specific ancestor builder.
-        /// </summary>
-        IComponentBuilder ISubcomponentBuilder.Ancestor
-        {
-            get { return Ancestor as IComponentBuilder; }
-        }
-
-        /// <summary>
-        ///     Delete a descendant at the specified index.
-        /// </summary>
-        /// <param name="index">Index to delete at.</param>
-        public override void DeleteDescendant(int index)
-        {
-            throw new BuilderException(ErrorCode.SubcomponentCannotHaveDescendants);
-        }
-
-        /// <summary>
-        ///     Insert a descendant element.
-        /// </summary>
-        /// <param name="element">Element to insert.</param>
-        /// <param name="index">Index to insert at.</param>
-        public override IElement InsertDescendant(IElement element, int index)
-        {
-            throw new BuilderException(ErrorCode.SubcomponentCannotHaveDescendants);
-        }
-
-        /// <summary>
-        ///     Insert a descendant element string.
-        /// </summary>
-        /// <param name="value">Value to insert.</param>
-        /// <param name="index">Index to insert at.</param>
-        public override IElement InsertDescendant(string value, int index)
-        {
-            throw new BuilderException(ErrorCode.SubcomponentCannotHaveDescendants);
-        }
-
-        /// <summary>
-        ///     Move descendant to another index.
-        /// </summary>
-        /// <param name="sourceIndex">Source index.</param>
-        /// <param name="targetIndex">Target index.</param>
-        public override void MoveDescendant(int sourceIndex, int targetIndex)
-        {
-            throw new BuilderException(ErrorCode.SubcomponentCannotHaveDescendants);
         }
     }
 }

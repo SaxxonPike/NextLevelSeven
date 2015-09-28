@@ -42,7 +42,7 @@ namespace NextLevelSeven.Test.Building
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][2];
             builder.Value = "$%^&";
-            ArrayComparer.AssertCompare(new[] { "$", "%", "^", "&" }, builder.Values.ToArray());
+            ArrayComparer.AssertCompare(new[] {"$", "%", "^", "&"}, builder.Values.ToArray());
         }
 
         [TestMethod]
@@ -57,7 +57,7 @@ namespace NextLevelSeven.Test.Building
         public void FieldBuilder_Encoding_SetsValues()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][2];
-            builder.Values = new[] { "$", "#", "~", "@" };
+            builder.Values = new[] {"$", "#", "~", "@"};
             Assert.AreEqual(builder.Value, "$#~@");
         }
 
@@ -121,7 +121,7 @@ namespace NextLevelSeven.Test.Building
         public void FieldBuilder_Delimiter_SetsValuesFromOnlyFirstCharacter()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][1];
-            builder.Values = new[] { "$", "#" };
+            builder.Values = new[] {"$", "#"};
             Assert.AreEqual(builder.Value, "$");
         }
 

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Building;
 using NextLevelSeven.Core;
-using NextLevelSeven.Core.Encoding;
 
 namespace NextLevelSeven.Test.Building
 {
@@ -24,7 +23,7 @@ namespace NextLevelSeven.Test.Building
             var builder1 = Message.Build(ExampleMessages.Standard);
             builder0.Segment(1).Field(3).Value = "0";
             builder1.Segment(1).Field(3).Value = "1";
-            var list = new List<IBuilder> { builder1, builder0 };
+            var list = new List<IBuilder> {builder1, builder0};
             list.Sort();
             Assert.AreSame(list[0], builder0);
             Assert.AreSame(list[1], builder1);

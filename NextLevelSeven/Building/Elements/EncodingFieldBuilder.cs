@@ -97,10 +97,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>If true, the element is considered to exist.</summary>
         public override bool Exists
         {
-            get
-            {
-                return Value != null;
-            }
+            get { return Value != null; }
         }
 
         /// <summary>Encoding character fields cannot have repetitions; this method throws unconditionally.</summary>

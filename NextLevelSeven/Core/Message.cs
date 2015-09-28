@@ -1,5 +1,4 @@
-﻿using System.Xml;
-using NextLevelSeven.Building;
+﻿using NextLevelSeven.Building;
 using NextLevelSeven.Building.Elements;
 using NextLevelSeven.Parsing;
 using NextLevelSeven.Parsing.Elements;

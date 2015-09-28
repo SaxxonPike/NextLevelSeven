@@ -49,7 +49,7 @@ namespace NextLevelSeven.Test.Diagnostics
         [TestMethod]
         public void ErrorMessages_InvalidCodeReturnsGenericMessage()
         {
-            var message = ErrorMessages.Get((ErrorCode)int.MaxValue);
+            var message = ErrorMessages.Get((ErrorCode) int.MaxValue);
             Assert.IsTrue(message.Contains("Unknown error"));
             Assert.IsTrue(message.Contains(string.Format("(NL7-{0})", int.MaxValue)));
         }

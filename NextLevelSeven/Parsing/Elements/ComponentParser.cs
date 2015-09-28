@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Encoding;
 using NextLevelSeven.Diagnostics;
@@ -94,6 +93,18 @@ namespace NextLevelSeven.Parsing.Elements
             get { return Subcomponents; }
         }
 
+        /// <summary>Get this element's heirarchy-specific ancestor.</summary>
+        IRepetition IComponent.Ancestor
+        {
+            get { return Ancestor as IRepetition; }
+        }
+
+        /// <summary>Get this element's heirarchy-specific ancestor parser.</summary>
+        IRepetitionParser IComponentParser.Ancestor
+        {
+            get { return Ancestor as IRepetitionParser; }
+        }
+
         /// <summary>Get the descendant element at the specified index.</summary>
         /// <param name="index">Index of the desired element.</param>
         /// <returns>Element at the specified index.</returns>
@@ -124,22 +135,6 @@ namespace NextLevelSeven.Parsing.Elements
                 Index = Index,
                 Value = Value
             };
-        }
-
-        /// <summary>
-        ///     Get this element's heirarchy-specific ancestor.
-        /// </summary>
-        IRepetition IComponent.Ancestor
-        {
-            get { return Ancestor as IRepetition; }
-        }
-
-        /// <summary>
-        ///     Get this element's heirarchy-specific ancestor parser.
-        /// </summary>
-        IRepetitionParser IComponentParser.Ancestor
-        {
-            get { return Ancestor as IRepetitionParser; }
         }
     }
 }
