@@ -46,6 +46,81 @@ namespace NextLevelSeven.Parsing.Elements
             get { return _fields[index]; }
         }
 
+        int AdjustIndexForMsh(int index)
+        {
+            if (!IsMsh)
+            {
+                return index;
+            }
+            if (index > 1)
+            {
+                return index - 1;
+            }
+            return index;
+        }
+
+        /// <summary>Delete a descendant element.</summary>
+        /// <param name="index">Index to insert at.</param>
+        override public void DeleteDescendant(int index)
+        {
+            if (IsMsh)
+            {
+                if (index == 1)
+                {
+                    GetDescendant(1).Erase();
+                }
+                else if (index > 1)
+                {
+                    DescendantDivider.Delete(index - 1);                    
+                }
+            }
+            else
+            {
+                DescendantDivider.Delete(index);
+            }
+        }
+
+        /// <summary>Insert a descendant element.</summary>
+        /// <param name="element">Element to insert.</param>
+        /// <param name="index">Index to insert at.</param>
+        override public IElement InsertDescendant(IElement element, int index)
+        {
+            InsertDescendant(element.Value, index);
+            return GetDescendant(index);
+        }
+
+        /// <summary>Insert a descendant element.</summary>
+        /// <param name="value">Value to insert.</param>
+        /// <param name="index">Index to insert at.</param>
+        override public IElement InsertDescendant(string value, int index)
+        {
+            if (IsMsh)
+            {
+                if (index == 1)
+                {
+                    DescendantDivider[0] += value;
+                    DescendantDivider.Delete(1);
+                }
+                else if (index > 1)
+                {
+                    DescendantDivider.Insert(index - 1, value);
+                }
+            }
+            else
+            {
+                DescendantDivider.Insert(index, value);
+            }
+            return GetDescendant(index);
+        }
+
+        /// <summary>Move a descendant.</summary>
+        /// <param name="sourceIndex"></param>
+        /// <param name="targetIndex"></param>
+        override public void MoveDescendant(int sourceIndex, int targetIndex)
+        {
+            DescendantDivider.Move(AdjustIndexForMsh(sourceIndex), AdjustIndexForMsh(targetIndex));
+        }
+
         /// <summary>Field delimiter.</summary>
         public override char Delimiter
         {

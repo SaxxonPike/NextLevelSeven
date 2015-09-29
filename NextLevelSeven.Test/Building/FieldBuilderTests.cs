@@ -27,7 +27,7 @@ namespace NextLevelSeven.Test.Building
         public void FieldBuilder_Type_ThrowsOnIndex()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][0];
-            It.Throws<ElementException>(() => Debug.Write(builder[1].Value));
+            It.Throws<ElementException>(() => Assert.Inconclusive(builder[1].Value));
         }
 
         [TestMethod]

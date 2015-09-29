@@ -37,7 +37,7 @@ namespace NextLevelSeven.Test.Building
         public void SubcomponentBuilder_ThrowsOnIndex()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
-            It.Throws<ElementException>(() => Debug.Write(builder[1].Value));
+            It.Throws<ElementException>(() => Assert.Inconclusive(builder[1].Value));
         }
 
         [TestMethod]

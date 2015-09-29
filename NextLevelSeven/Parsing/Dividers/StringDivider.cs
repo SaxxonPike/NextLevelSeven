@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Parsing.Dividers
 {
@@ -54,5 +56,54 @@ namespace NextLevelSeven.Parsing.Dividers
         public abstract void Pad(char delimiter, int index, int start, int length, List<StringDivision> divisions);
 
         public abstract void PadSubDivider(int index);
+
+        public void Delete(int index)
+        {
+            if (index >= Divisions.Count || index < 0)
+            {
+                return;
+            }
+            var d = Divisions[index];
+            var offset = d.Offset;
+            var length = d.Length;
+            if (length == 0)
+            {
+                return;
+            }
+            if (index > 0)
+            {
+                offset--;
+                length++;
+            }
+            else
+            {
+                var endOfDivision = Divisions.Max(e => e.Offset);
+                if (offset < endOfDivision)
+                {
+                    length++;                    
+                }
+            }
+            Replace(offset, length, StringDividerOperations.EmptyChars);
+        }
+
+        public void Insert(int index, string value)
+        {
+            if (index < 0)
+            {
+                throw new ParserException(ErrorCode.ElementIndexMustBeZeroOrGreater);
+            }
+            this[index] = string.Concat(value, new string(Delimiter, 1), this[index] ?? string.Empty);
+        }
+
+        public void Move(int sourceIndex, int targetIndex)
+        {
+            if (sourceIndex < 0 || targetIndex < 0)
+            {
+                throw new ParserException(ErrorCode.ElementIndexMustBeZeroOrGreater);
+            }
+            var value = this[sourceIndex];
+            Delete(sourceIndex);
+            Insert(targetIndex, value);
+        }
     }
 }

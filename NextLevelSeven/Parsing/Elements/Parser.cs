@@ -226,42 +226,35 @@ namespace NextLevelSeven.Parsing.Elements
 
         /// <summary>Delete a descendant element.</summary>
         /// <param name="index">Index to insert at.</param>
-        public void DeleteDescendant(int index)
+        virtual public void DeleteDescendant(int index)
         {
-            Values = Descendants.OrderBy(d => d.Index).Where(d => d.Index != index).Select(d => d.Value);
+            //Values = Descendants.OrderBy(d => d.Index).Where(d => d.Index != index).Select(d => d.Value);
+            DescendantDivider.Delete(index - 1);
         }
 
         /// <summary>Insert a descendant element.</summary>
         /// <param name="element">Element to insert.</param>
         /// <param name="index">Index to insert at.</param>
-        public IElement InsertDescendant(IElement element, int index)
+        virtual public IElement InsertDescendant(IElement element, int index)
         {
-            Values = Descendants.TakeWhile(d => d.Index < index)
-                .Concat(element.Yield())
-                .Concat(Descendants.SkipWhile(d => d.Index < index))
-                .Select(d => d.Value);
-            return GetDescendant(index);
+            return InsertDescendant(element.Value, index);
         }
 
         /// <summary>Insert a descendant element.</summary>
         /// <param name="value">Value to insert.</param>
         /// <param name="index">Index to insert at.</param>
-        public IElement InsertDescendant(string value, int index)
+        virtual public IElement InsertDescendant(string value, int index)
         {
-            Values = Descendants.TakeWhile(d => d.Index < index).Select(d => d.Value)
-                .Concat(value.Yield())
-                .Concat(Descendants.SkipWhile(d => d.Index < index).Select(d => d.Value));
+            DescendantDivider.Insert(index - 1, value);
             return GetDescendant(index);
         }
 
         /// <summary>Move a descendant.</summary>
         /// <param name="sourceIndex"></param>
         /// <param name="targetIndex"></param>
-        public void MoveDescendant(int sourceIndex, int targetIndex)
+        virtual public void MoveDescendant(int sourceIndex, int targetIndex)
         {
-            var value = GetDescendant(sourceIndex).Value;
-            DeleteDescendant(sourceIndex);
-            InsertDescendant(value, targetIndex);
+            DescendantDivider.Move(sourceIndex - 1, targetIndex - 1);
         }
 
         /// <summary>Determines whether this builder's value is equivalent to another element's value. (element IEquatable support)</summary>
