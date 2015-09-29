@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using NextLevelSeven.Core;
-using NextLevelSeven.Core.Encoding;
 using NextLevelSeven.Core.Properties;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Utility;
@@ -154,38 +153,6 @@ namespace NextLevelSeven.Parsing.Elements
                 }
                 base.Value = SanitizeLineEndings(value);
             }
-        }
-
-        /// <summary>Get an escaped version of the string, using encoding characters from this message.</summary>
-        /// <param name="data">Data to escape.</param>
-        /// <returns>Escaped data.</returns>
-        public string Escape(string data)
-        {
-            return EncodingOperations.Escape(Encoding, data);
-        }
-
-        /// <summary>Get a string that has been unescaped from HL7.</summary>
-        /// <param name="data">Data to unescape.</param>
-        /// <returns>Unescaped string.</returns>
-        public string UnEscape(string data)
-        {
-            return EncodingOperations.UnEscape(Encoding, data);
-        }
-
-        /// <summary>Create a message with a default MSH segment.</summary>
-        public static MessageParser Create()
-        {
-            return new MessageParser();
-        }
-
-        /// <summary>Create a message using an HL7 data string.</summary>
-        /// <param name="message">Message data to interpret.</param>
-        public static MessageParser Create(string message)
-        {
-            return new MessageParser
-            {
-                Value = message
-            };
         }
 
         /// <summary>Get descendant element.</summary>

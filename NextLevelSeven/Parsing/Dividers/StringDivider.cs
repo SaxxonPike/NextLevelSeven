@@ -34,7 +34,7 @@ namespace NextLevelSeven.Parsing.Dividers
         public abstract string Value { get; set; }
 
         /// <summary>Get the value as a character array.</summary>
-        public abstract char[] ValueChars { get; set; }
+        public abstract char[] ValueChars { get; protected set; }
 
         /// <summary>Get the version number of the divider, which is incremented each time it changes.</summary>
         public int Version { get; protected set; }
@@ -59,17 +59,17 @@ namespace NextLevelSeven.Parsing.Dividers
 
         public void Delete(int index)
         {
-            if (index >= Divisions.Count || index < 0)
+            if (index >= Divisions.Count)
             {
                 return;
+            }
+            if (index < 0)
+            {
+                throw new ParserException(ErrorCode.ElementIndexMustBeZeroOrGreater);
             }
             var d = Divisions[index];
             var offset = d.Offset;
             var length = d.Length;
-            if (length == 0)
-            {
-                return;
-            }
             if (index > 0)
             {
                 offset--;

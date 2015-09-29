@@ -11,6 +11,41 @@ namespace NextLevelSeven.Test.Parsing
     public class MessageParserTests : ParsingTestFixture
     {
         [TestMethod]
+        public void Message_Validates()
+        {
+            var message = Message.Parse(ExampleMessages.Minimum);
+            Assert.IsTrue(message.Validate());
+        }
+
+        [TestMethod]
+        public void Message_DeletesOutOfRangeIndex()
+        {
+            var message = Message.Parse(ExampleMessages.Minimum);
+            message.DeleteDescendant(2);
+        }
+
+        [TestMethod]
+        public void Message_ThrowsOnInsertingNegativeIndex()
+        {
+            var message = Message.Parse(ExampleMessages.Minimum);
+            It.Throws<ElementException>(() => message.InsertDescendant(Randomized.String(), -2));
+        }
+
+        [TestMethod]
+        public void Message_ThrowsOnDeletingNegativeIndex()
+        {
+            var message = Message.Parse(ExampleMessages.Minimum);
+            It.Throws<ElementException>(() => message.DeleteDescendant(-2));
+        }
+
+        [TestMethod]
+        public void Message_DeletesZeroLengthItem()
+        {
+            var message = Message.Parse(ExampleMessages.Minimum + "\r\r");
+            message.DeleteDescendant(2);
+        }
+
+        [TestMethod]
         public void Message_ConvertsToBuilder()
         {
             var builder = Message.Parse(ExampleMessages.Standard);
@@ -39,6 +74,14 @@ namespace NextLevelSeven.Test.Parsing
         {
             var message = Message.Parse(ExampleMessages.Minimum);
             Assert.AreEqual(ExampleMessages.Minimum, message.Values.First());
+        }
+
+        [TestMethod]
+        public void Message_CanSetValues()
+        {
+            var message = Message.Parse(ExampleMessages.Minimum);
+            message.Values = new[] {ExampleMessages.Minimum, ExampleMessages.Minimum, ExampleMessages.Minimum};
+            Assert.AreEqual(3, message.ValueCount);
         }
 
         [TestMethod]
@@ -216,6 +259,17 @@ namespace NextLevelSeven.Test.Parsing
                 "Retrieval methods differ at the component level.");
             Assert.AreEqual(message.GetValue(1, 3, 1, 1, 1), message[1][3][1][1][1].Value,
                 "Retrieval methods differ at the component level.");
+        }
+
+        [TestMethod]
+        public void Message_MultiRetrievalMethodsAreIdentical()
+        {
+            var message = Message.Parse(ExampleMessages.Variety);
+            ArrayComparer.AssertCompare(message.GetValues(1).ToArray(), message[1].Values.ToArray());
+            ArrayComparer.AssertCompare(message.GetValues(1, 3).ToArray(), message[1][3].Values.ToArray());
+            ArrayComparer.AssertCompare(message.GetValues(1, 3, 1).ToArray(), message[1][3][1].Values.ToArray());
+            ArrayComparer.AssertCompare(message.GetValues(1, 3, 1, 1).ToArray(), message[1][3][1][1].Values.ToArray());
+            ArrayComparer.AssertCompare(message.GetValues(1, 3, 1, 1, 1).ToArray(), message[1][3][1][1][1].Values.ToArray());
         }
 
         [TestMethod]

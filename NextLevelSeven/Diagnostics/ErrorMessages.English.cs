@@ -26,7 +26,7 @@
                     case ErrorCode.EncodingElementCannotBeMoved:
                         return "Encoding element cannot be moved.";
                     case ErrorCode.FieldCannotBeNull:
-                        return "Field cannot be null: {0}";
+                        return "Field cannot be null.";
                     case ErrorCode.FieldIndexMustBeZeroOrGreater:
                         return "Field index must be zero or greater.";
                     case ErrorCode.FixedFieldsCannotBeDivided:

@@ -65,7 +65,7 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>Get the encoding configuration.</summary>
-        public EncodingConfiguration EncodingConfiguration
+        protected EncodingConfiguration EncodingConfiguration
         {
             get
             {

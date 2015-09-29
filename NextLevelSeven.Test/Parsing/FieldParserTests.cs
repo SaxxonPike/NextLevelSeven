@@ -10,6 +10,28 @@ namespace NextLevelSeven.Test.Parsing
     public class FieldParserTests : ParsingTestFixture
     {
         [TestMethod]
+        public void Field_Delimiter_CanGetValue()
+        {
+            var field = Message.Parse(ExampleMessages.Minimum)[1][1];
+            Assert.AreEqual("|", field.Value);
+        }
+
+        [TestMethod]
+        public void Field_Delimiter_CanGetNullSegmentValue()
+        {
+            var field = Message.Parse(ExampleMessages.Minimum)[2][1];
+            Assert.IsNull(field.Value);
+        }
+
+        [TestMethod]
+        public void Field_Delimiter_CanNotSetNullSegmentValue()
+        {
+            var message = Message.Parse(ExampleMessages.Minimum);
+            var field = message[1][1];
+            It.Throws<ElementException>(() => field.Value = null);
+        }
+
+        [TestMethod]
         public void Field_Encoding_HasNoDelimiter()
         {
             var field = Message.Parse(ExampleMessages.Minimum)[1][2];

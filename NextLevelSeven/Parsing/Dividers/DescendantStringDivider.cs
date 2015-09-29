@@ -91,7 +91,7 @@ namespace NextLevelSeven.Parsing.Dividers
                     ? null
                     : StringDividerOperations.CharSubstring(BaseValue, d.Offset, d.Length);
             }
-            set { BaseDivider[Index] = new string(value); }
+            protected set { }
         }
 
         /// <summary>Get or set the subdivided values.</summary>

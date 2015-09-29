@@ -70,7 +70,7 @@ namespace NextLevelSeven.Parsing.Dividers
         public override char[] ValueChars
         {
             get { return _valueChars; }
-            set { Initialize(value); }
+            protected set { Initialize(value); }
         }
 
         /// <summary>Returns true if the divider base value is null.</summary>

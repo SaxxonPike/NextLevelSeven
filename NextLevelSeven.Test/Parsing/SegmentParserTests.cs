@@ -9,6 +9,16 @@ namespace NextLevelSeven.Test.Parsing
     public class SegmentParserTests : ParsingTestFixture
     {
         [TestMethod]
+        public void Segment_CanGetAndSetType()
+        {
+            var element = Message.Parse(ExampleMessages.Standard)[2];
+            var newType = Randomized.StringCaps(3);
+            element.Type = newType;
+            Assert.AreEqual(newType, element.Type);
+            Assert.AreEqual(newType, element[0].Value);
+        }
+
+        [TestMethod]
         public void Segment_CanMoveFields()
         {
             var element = Message.Parse(ExampleMessages.Minimum)[1];
@@ -54,6 +64,14 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [TestMethod]
+        public void Segment_HasClonedEncoding()
+        {
+            var segment = Message.Parse(ExampleMessages.Standard)[1];
+            var clone = segment.Clone();
+            Assert.AreSame(segment.Encoding, clone.Encoding, "Cloned segment is the same referenced object.");
+        }
+
+        [TestMethod]
         public void Segment_CanAddDescendantsAtEnd()
         {
             var segment = Message.Parse(ExampleMessages.Standard)[2];
@@ -78,6 +96,20 @@ namespace NextLevelSeven.Test.Parsing
         {
             var message = Message.Parse(ExampleMessages.Standard);
             var segment = message[1];
+            var field3 = segment[3].Value;
+            var field5 = segment[5].Value;
+            var field6 = segment[6].Value;
+            segment.Delete(4);
+            Assert.AreEqual(field3, segment[3].Value, @"Expected segment[3] to remain the same after delete.");
+            Assert.AreEqual(field5, segment[4].Value, @"Expected segment[5] to become segment[4].");
+            Assert.AreEqual(field6, segment[5].Value, @"Expected segment[6] to become segment[5].");
+        }
+
+        [TestMethod]
+        public void Segment_CanDeleteNonMshField()
+        {
+            var message = Message.Parse(ExampleMessages.Standard);
+            var segment = message[2];
             var field3 = segment[3].Value;
             var field5 = segment[5].Value;
             var field6 = segment[6].Value;

@@ -1,4 +1,9 @@
-﻿namespace NextLevelSeven.Parsing.Elements
+﻿using System;
+using System.Linq;
+using NextLevelSeven.Core;
+using NextLevelSeven.Diagnostics;
+
+namespace NextLevelSeven.Parsing.Elements
 {
     /// <summary>Represents the special MSH-1 field, which contains the field delimiter for the rest of the segment.</summary>
     internal sealed class DelimiterFieldParser : StaticValueFieldParser
@@ -28,6 +33,10 @@
                 if (s == null || s.Length < 3)
                 {
                     return;
+                }
+                if (HL7.NullValues.Contains(value))
+                {
+                    throw new ParserException(ErrorCode.FieldCannotBeNull);
                 }
                 var newValue = string.Concat(s.Substring(0, 3), value, (s.Length > 3 ? s.Substring(4) : string.Empty));
                 Ancestor.DescendantDivider.Value = newValue;
