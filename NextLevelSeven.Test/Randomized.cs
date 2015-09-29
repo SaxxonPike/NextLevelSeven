@@ -52,12 +52,7 @@ namespace NextLevelSeven.Test
             return String(length).ToUpperInvariant().Replace('-', 'A');
         }
 
-        public static string StringLetters()
-        {
-            return StringLetters(16);
-        }
-
-        public static string StringLetters(int length)
+        public static string StringLetters(int length = 16)
         {
             var builder = new StringBuilder();
             for (var i = 0; i < length; i++)
@@ -67,12 +62,7 @@ namespace NextLevelSeven.Test
             return builder.ToString();
         }
 
-        public static string StringNumbers()
-        {
-            return StringNumbers(16);
-        }
-
-        public static string StringNumbers(int length)
+        public static string StringNumbers(int length = 16)
         {
             var builder = new StringBuilder();
             for (var i = 0; i < length; i++)

@@ -331,5 +331,25 @@ namespace NextLevelSeven.Building.Elements
                 cache[value.Value.Index] = value.Value;
             }
         }
+
+        /// <summary>
+        ///     Get the message for this builder.
+        /// </summary>
+        public IMessage Message
+        {
+            get
+            {
+                var ancestor = GetAncestor();
+                while (ancestor != null)
+                {
+                    if (ancestor is IMessage)
+                    {
+                        return ancestor as IMessage;
+                    }
+                    ancestor = ancestor.Ancestor;
+                }
+                return null;
+            }
+        }
     }
 }

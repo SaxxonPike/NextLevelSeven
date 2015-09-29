@@ -78,8 +78,9 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void Builder_ShouldEqualItself()
         {
-            var builder = Message.Build(ExampleMessages.Standard);
-            Assert.IsTrue(builder.Equals(builder));
+            var builder = (object)Message.Build(ExampleMessages.Standard);
+            var builder2 = builder;
+            Assert.IsTrue(builder.Equals(builder2));
         }
 
         [TestMethod]

@@ -24,7 +24,7 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>If true, this is an MSH segment which has special behavior in fields 1 and 2.</summary>
-        public bool IsMsh
+        private bool IsMsh
         {
             get
             {

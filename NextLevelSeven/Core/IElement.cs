@@ -66,6 +66,11 @@ namespace NextLevelSeven.Core
         /// <returns></returns>
         IElement InsertDescendant(IElement element, int index);
 
+        /// <summary>
+        ///     Get the parent message for the element.
+        /// </summary>
+        IMessage Message { get; }
+
         /// <summary>Move a descendant element to another index.</summary>
         /// <param name="sourceIndex"></param>
         /// <param name="targetIndex"></param>

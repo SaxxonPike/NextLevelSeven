@@ -1,8 +1,15 @@
-﻿namespace NextLevelSeven.Specification
+﻿using NextLevelSeven.Core;
+
+namespace NextLevelSeven.Specification
 {
     /// <summary>Base interface for HL7 specification interfaces.</summary>
     public interface ISpecificationElement
     {
+        /// <summary>
+        /// Element being wrapped.
+        /// </summary>
+        IElement Element { get; }
+
         /// <summary>True, if the values in the data type are valid and all required fields are populated.</summary>
         bool IsValid { get; }
 

@@ -321,5 +321,25 @@ namespace NextLevelSeven.Parsing.Elements
         {
             return new RootStringDivider(string.Empty, Delimiter);
         }
+
+        /// <summary>
+        ///     Get the message for this builder.
+        /// </summary>
+        public IMessage Message
+        {
+            get
+            {
+                var ancestor = Ancestor;
+                while (ancestor != null)
+                {
+                    if (ancestor is IMessage)
+                    {
+                        return ancestor as IMessage;
+                    }
+                    ancestor = ancestor.Ancestor;
+                }
+                return null;
+            }
+        }
     }
 }
