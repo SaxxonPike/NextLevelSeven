@@ -6,6 +6,8 @@ namespace NextLevelSeven.Parsing.Dividers
     /// <summary>Common string and char[] splitting operations used by StringDivider and StringSubDivider classes.</summary>
     internal static class StringDividerOperations
     {
+        public static readonly char[] EmptyChars = new char[0];
+
         /// <summary>Get a subset of a character array.</summary>
         /// <param name="s">Characters.</param>
         /// <param name="offset">Offset to start.</param>

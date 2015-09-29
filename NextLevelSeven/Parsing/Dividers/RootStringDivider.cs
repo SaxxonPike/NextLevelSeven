@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace NextLevelSeven.Parsing.Dividers
 {
@@ -6,7 +7,7 @@ namespace NextLevelSeven.Parsing.Dividers
     internal sealed class RootStringDivider : StringDivider
     {
         /// <summary>[PERF] Cached divisions list.</summary>
-        private IReadOnlyList<StringDivision> _divisions;
+        private List<StringDivision> _divisions;
 
         /// <summary>Internally keep track if the base value is null.</summary>
         private bool _isNull;
@@ -97,11 +98,9 @@ namespace NextLevelSeven.Parsing.Dividers
         /// <param name="value">New value.</param>
         private void SetValue(int index, string value)
         {
-            List<StringDivision> divisions;
-            var paddedString = StringDividerOperations.GetPaddedString(ValueChars, index, Delimiter, out divisions);
-            var d = divisions[index];
-            Initialize(StringDividerOperations.GetSplicedString(paddedString, d.Offset, d.Length,
-                StringDividerOperations.GetChars(value)));
+            Pad(Delimiter, index, 0, _valueChars.Length, _divisions);
+            var d = Divisions[index];
+            Replace(d.Offset, d.Length, StringDividerOperations.GetChars(value));
         }
 
         /// <summary>Initialize the divider's value with the specified characters.</summary>
@@ -112,6 +111,91 @@ namespace NextLevelSeven.Parsing.Dividers
             _valueChars = s;
             _isNull = s == null || s.Length == 0;
             Version++;
+        }
+
+        public override void Pad(char delimiter, int index, int start, int length, List<StringDivision> divisions)
+        {
+            if (index == 0)
+            {
+                return;
+            }
+
+            var delimiterCount = 0;
+            var end = start + length;
+            for (var i = start; i < end; i++)
+            {
+                if (_valueChars[i] != delimiter)
+                {
+                    continue;
+                }
+                delimiterCount++;
+                if (delimiterCount >= index)
+                {
+                    return;
+                }
+            }
+
+            var delimitersToAdd = (index - delimiterCount);
+            var oldLength = _valueChars.Length;
+
+            Array.Resize(ref _valueChars, oldLength + delimitersToAdd);
+            if (oldLength > end)
+            {
+                Array.Copy(_valueChars, end, _valueChars, end + delimitersToAdd, oldLength - end);
+            }
+            if (divisions.Capacity < divisions.Count + delimitersToAdd)
+            {
+                divisions.Capacity = divisions.Count + delimitersToAdd;
+            }
+            while (delimitersToAdd > 0)
+            {
+                delimitersToAdd--;
+                _valueChars[end++] = delimiter;
+                divisions.Add(new StringDivision(end, 0));
+            }
+        }
+
+        public override void Replace(int start, int length, char[] value)
+        {
+            if (value == null)
+            {
+                value = StringDividerOperations.EmptyChars;
+            }
+
+            var charsLength = _valueChars.Length;
+            var valueLength = value.Length;
+            var newLength = charsLength + (valueLength - length);
+            var postLength = charsLength - (start + length);
+
+            if (start >= charsLength)
+            {
+                newLength = start + valueLength;
+                Array.Resize(ref _valueChars, newLength);
+            }
+            else if (length > valueLength)
+            {
+                if (postLength > 0)
+                {
+                    Array.Copy(_valueChars, start + length, _valueChars, start + valueLength, postLength);
+                }
+                Array.Resize(ref _valueChars, newLength);
+            }
+            else if (length < valueLength)
+            {
+                Array.Resize(ref _valueChars, newLength);
+                if (postLength > 0)
+                {
+                    Array.Copy(_valueChars, start + length, _valueChars, start + valueLength, postLength);
+                }
+            }
+            Array.Copy(value, 0, _valueChars, start, valueLength);
+            _divisions = null;
+            Version++;
+        }
+
+        public override void PadSubDivider(int index)
+        {
+            Pad(Delimiter, index, 0, _valueChars.Length, _divisions);
         }
     }
 }

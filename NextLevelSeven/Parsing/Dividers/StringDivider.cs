@@ -48,5 +48,11 @@ namespace NextLevelSeven.Parsing.Dividers
             var d = Divisions;
             return (index >= d.Count) ? StringDivision.Invalid : d[index];
         }
+
+        public abstract void Replace(int start, int length, char[] value);
+
+        public abstract void Pad(char delimiter, int index, int start, int length, List<StringDivision> divisions);
+
+        public abstract void PadSubDivider(int index);
     }
 }

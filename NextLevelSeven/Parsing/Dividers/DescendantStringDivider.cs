@@ -6,7 +6,7 @@ namespace NextLevelSeven.Parsing.Dividers
     internal sealed class DescendantStringDivider : StringDivider
     {
         /// <summary>[PERF] Cached divisions list.</summary>
-        private IReadOnlyList<StringDivision> _divisions;
+        private List<StringDivision> _divisions;
 
         /// <summary>Create a subdivider for the specified string divider.</summary>
         /// <param name="baseDivider">Divider to reference.</param>
@@ -113,12 +113,9 @@ namespace NextLevelSeven.Parsing.Dividers
         /// <param name="value">New value.</param>
         private void SetValue(int index, string value)
         {
-            List<StringDivision> divisions;
-            var paddedString = StringDividerOperations.GetPaddedString(ValueChars, index, Delimiter, out divisions);
-            var d = divisions[index];
-            ValueChars = StringDividerOperations.GetSplicedString(paddedString, d.Offset, d.Length,
-                StringDividerOperations.GetChars(value));
-            _divisions = null;
+            PadSubDivider(index);
+            var d = Divisions[index];
+            Replace(d.Offset, d.Length, StringDividerOperations.GetChars(value));
         }
 
         /// <summary>[PERF] Refresh internal division cache.</summary>
@@ -135,6 +132,28 @@ namespace NextLevelSeven.Parsing.Dividers
             {
                 _divisions = new List<StringDivision>();
             }
+        }
+
+        public override void Replace(int start, int length, char[] value)
+        {
+            BaseDivider.Replace(start, length, value);
+            _divisions = null;
+        }
+
+        public override void Pad(char delimiter, int index, int start, int length, List<StringDivision> divisions)
+        {
+            BaseDivider.Pad(delimiter, index, start, length, divisions);
+        }
+
+        public override void PadSubDivider(int index)
+        {
+            BaseDivider.PadSubDivider(Index);
+            var d = BaseDivider.GetSubDivision(Index);
+            if (_divisions == null)
+            {
+                Update();
+            }
+            BaseDivider.Pad(Delimiter, index, d.Offset, d.Length, _divisions);
         }
     }
 }
