@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using NextLevelSeven.Core;
+using NextLevelSeven.Core.Encoding;
 using NextLevelSeven.Core.Properties;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Utility;

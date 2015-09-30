@@ -51,10 +51,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Hl7StreamReaderTests.cs" />
-    <Compile Include="Hl7TextReaderTests.cs" />
-    <Compile Include="MlpStreamReaderTests.cs" />
-    <Compile Include="MlpStreamWriterTests.cs" />
+    <Compile Include="Hl7StreamReaderUnitTests.cs" />
+    <Compile Include="Hl7TextReaderUnitTests.cs" />
+    <Compile Include="MlpStreamReaderUnitTests.cs" />
+    <Compile Include="MlpStreamWriterUnitTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StreamingTestFixture.cs" />
   </ItemGroup>

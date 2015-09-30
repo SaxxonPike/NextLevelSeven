@@ -3,7 +3,7 @@
 namespace NextLevelSeven.Test.Building
 {
     [TestClass]
-    public abstract class BuildingTestFixture : PerformanceTestFixture
+    public abstract class BuildingTestFixture : BaseTestFixture
     {
     }
 }

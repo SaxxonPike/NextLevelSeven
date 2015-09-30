@@ -35,13 +35,13 @@
         }
 
         /// <summary>Get the segment delimiter used to separate segments in a message. This is non-negotiable in the HL7 standard.</summary>
-        public char SegmentDelimiter
+        public static char SegmentDelimiter
         {
             get { return '\xD'; }
         }
 
         /// <summary>Get the segment delimiter used to separate segments in a message. This is non-negotiable in the HL7 standard.</summary>
-        public string SegmentDelimiterString
+        public static string SegmentDelimiterString
         {
             get { return "\xD"; }
         }

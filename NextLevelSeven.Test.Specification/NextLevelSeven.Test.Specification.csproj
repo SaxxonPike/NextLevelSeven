@@ -51,10 +51,10 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Elements\AddressTests.cs" />
-    <Compile Include="Conversion\AddressTypeConverterTests.cs" />
-    <Compile Include="Elements\CodedElementTests.cs" />
-    <Compile Include="Elements\NumberRangeExtensionTests.cs" />
+    <Compile Include="Elements\AddressUnitTests.cs" />
+    <Compile Include="Conversion\AddressTypeConverterUnitTests.cs" />
+    <Compile Include="Elements\CodedElementUnitTests.cs" />
+    <Compile Include="Elements\NumberRangeExtensionUnitTests.cs" />
     <Compile Include="SpecificationTestFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

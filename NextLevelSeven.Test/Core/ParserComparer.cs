@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
+using NextLevelSeven.Test.Testing;
 
 namespace NextLevelSeven.Test.Core
 {
@@ -52,7 +53,7 @@ namespace NextLevelSeven.Test.Core
             AssertEqual("Value counts differ.", _parsers.Select(p => p.ValueCount).ToArray());
 
             // verify array contents are identical
-            ArrayComparer.AssertCompare(_parsers.Select(p => p.Values.ToList()).ToArray());
+            AssertArray.AreEqual(_parsers.Select(p => p.Values.ToList()).ToArray());
 
             // verify descendant counts are identical
             AssertEqual("Enumerable descendant counts differ.", _parsers.Select(p => p.Descendants.Count()).ToArray());

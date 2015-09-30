@@ -3,7 +3,7 @@
 namespace NextLevelSeven.Test.Generation
 {
     [TestClass]
-    public class GenerationTestFixture : PerformanceTestFixture
+    public class GenerationTestFixture : BaseTestFixture
     {
     }
 }

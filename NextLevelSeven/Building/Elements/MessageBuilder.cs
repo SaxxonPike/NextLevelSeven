@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Codec;
+using NextLevelSeven.Core.Encoding;
 using NextLevelSeven.Core.Properties;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Utility;
@@ -68,7 +69,7 @@ namespace NextLevelSeven.Building.Elements
                     return null;
                 }
 
-                var result = string.Join(Encoding.SegmentDelimiterString ?? string.Empty,
+                var result = string.Join(EncodingConfiguration.SegmentDelimiterString ?? string.Empty,
                     _segments.OrderBy(i => i.Key).Select(i => i.Value.Value ?? string.Empty));
 
                 return (result.Length == 0)
@@ -218,7 +219,7 @@ namespace NextLevelSeven.Building.Elements
             _segments.Clear();
             var index = 1;
 
-            foreach (var segment in value.Split(Encoding.SegmentDelimiter))
+            foreach (var segment in value.Split(EncodingConfiguration.SegmentDelimiter))
             {
                 SetSegment(index++, segment);
             }
@@ -247,7 +248,7 @@ namespace NextLevelSeven.Building.Elements
                 return this;
             }
 
-            SetMessage(string.Join(Encoding.SegmentDelimiterString, segments));
+            SetMessage(string.Join(EncodingConfiguration.SegmentDelimiterString, segments));
             return this;
         }
 
@@ -400,7 +401,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get the message delimiter.</summary>
         public override char Delimiter
         {
-            get { return Encoding.SegmentDelimiter; }
+            get { return EncodingConfiguration.SegmentDelimiter; }
         }
 
         /// <summary>Get a wrapper which can manipulate message details.</summary>
@@ -464,7 +465,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Sanitized string.</returns>
         private string SanitizeLineEndings(string message)
         {
-            return message == null ? null : message.Replace(Environment.NewLine, Encoding.SegmentDelimiterString);
+            return message == null ? null : message.Replace(Environment.NewLine, EncodingConfiguration.SegmentDelimiterString);
         }
 
         /// <summary>Create a segment builder object.</summary>

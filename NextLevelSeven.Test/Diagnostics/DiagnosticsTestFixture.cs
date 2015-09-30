@@ -3,7 +3,7 @@
 namespace NextLevelSeven.Test.Diagnostics
 {
     [TestClass]
-    public class DiagnosticsTestFixture : PerformanceTestFixture
+    public class DiagnosticsTestFixture : BaseTestFixture
     {
     }
 }
