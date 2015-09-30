@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace NextLevelSeven.Test.Generation
+namespace NextLevelSeven.Test.Specification.Generation
 {
     [TestClass]
     public class GenerationTestFixture : BaseTestFixture

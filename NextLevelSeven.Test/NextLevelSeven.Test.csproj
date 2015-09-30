@@ -72,7 +72,6 @@
     <Compile Include="Core\ParserComparer.cs" />
     <Compile Include="Core\BuilderParserEqualityFunctionalTests.cs" />
     <Compile Include="Diagnostics\DiagnosticsTestFixture.cs" />
-    <Compile Include="Generation\GenerationTestFixture.cs" />
     <Compile Include="Parsing\ComponentParserUnitTests.cs" />
     <Compile Include="Core\EscapeFunctionalTests.cs" />
     <Compile Include="Diagnostics\ErrorMessageUnitTests.cs" />
@@ -82,8 +81,6 @@
     <Compile Include="Core\MessageExtensionUnitTests.cs" />
     <Compile Include="Parsing\MessageParserUnitTests.cs" />
     <Compile Include="Testing\Measure.cs" />
-    <Compile Include="Generation\AckMessageGeneratorUnitTests.cs" />
-    <Compile Include="Generation\MessageGeneratorUnitTests.cs" />
     <Compile Include="Parsing\RepetitionParserUnitTests.cs" />
     <Compile Include="Parsing\SegmentParserUnitTests.cs" />
     <Compile Include="Parsing\SubcomponentParserUnitTests.cs" />

@@ -45,6 +45,8 @@
     <Compile Include="Conversion\AddressTypeConverter.cs" />
     <Compile Include="Elements\CodedElementElement.cs" />
     <Compile Include="ElementSpecificationExtensions.cs" />
+    <Compile Include="Generation\AckMessageGenerator.cs" />
+    <Compile Include="Generation\MessageGenerator.cs" />
     <Compile Include="IAddress.cs" />
     <Compile Include="IAuthorizationInfo.cs" />
     <Compile Include="IChannelCalibrationParameters.cs" />

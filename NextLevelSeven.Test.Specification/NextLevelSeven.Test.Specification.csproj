@@ -55,6 +55,9 @@
     <Compile Include="Conversion\AddressTypeConverterUnitTests.cs" />
     <Compile Include="Elements\CodedElementUnitTests.cs" />
     <Compile Include="Elements\NumberRangeExtensionUnitTests.cs" />
+    <Compile Include="Generation\AckMessageGeneratorUnitTests.cs" />
+    <Compile Include="Generation\GenerationTestFixture.cs" />
+    <Compile Include="Generation\MessageGeneratorUnitTests.cs" />
     <Compile Include="SpecificationTestFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

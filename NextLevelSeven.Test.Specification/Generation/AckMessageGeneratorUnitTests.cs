@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
-using NextLevelSeven.Generation;
+using NextLevelSeven.Specification.Generation;
 using NextLevelSeven.Test.Testing;
 
-namespace NextLevelSeven.Test.Generation
+namespace NextLevelSeven.Test.Specification.Generation
 {
     [TestClass]
     public class AckMessageGeneratorUnitTests : GenerationTestFixture

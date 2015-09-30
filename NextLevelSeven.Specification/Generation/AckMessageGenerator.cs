@@ -3,7 +3,7 @@ using System.Linq;
 using NextLevelSeven.Building;
 using NextLevelSeven.Core;
 
-namespace NextLevelSeven.Generation
+namespace NextLevelSeven.Specification.Generation
 {
     /// <summary>An ACK message generator for HL7v2 messages, used as responses to requests. This is a static class.</summary>
     public static class AckMessageGenerator

@@ -2,7 +2,7 @@
 using NextLevelSeven.Building;
 using NextLevelSeven.Core;
 
-namespace NextLevelSeven.Generation
+namespace NextLevelSeven.Specification.Generation
 {
     /// <summary>A generic message generator for HL7v2 messages, which fills in most basic information when creating new messages. This is a static class.</summary>
     public static class MessageGenerator
