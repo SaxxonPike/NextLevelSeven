@@ -10,6 +10,37 @@ namespace NextLevelSeven.Test.Parsing
     public class SubcomponentParserUnitTests : ParsingTestFixture
     {
         [TestMethod]
+        public void Subcomponent_UsesSameEncodingAsMessage()
+        {
+            var message = Message.Parse(ExampleMessages.Minimum);
+            var element = message[1][3][1][1][1];
+            Assert.AreSame(message.Encoding, element.Encoding);
+        }
+
+        [TestMethod]
+        public void Subcomponent_CanGetMessage()
+        {
+            var message = Message.Parse(ExampleMessages.Minimum);
+            var element = message[1][3][1][1][1];
+            Assert.AreSame(message, element.Message);
+        }
+
+        [TestMethod]
+        public void Subcomponent_CloneHasNoMessage()
+        {
+            var message = Message.Parse(ExampleMessages.Minimum);
+            var element = message[1][3][1][1][1].Clone();
+            Assert.IsNull(element.Message);
+        }
+
+        [TestMethod]
+        public void Subcomponent_HasNoDescendants()
+        {
+            var element = Message.Parse(ExampleMessages.Minimum)[1][3][1][1][1];
+            Assert.AreEqual(0, element.Descendants.Count());
+        }
+
+        [TestMethod]
         public void Subcomponent_HasComponentAncestor()
         {
             var element = Message.Parse(ExampleMessages.Minimum)[1][3][1][1][1];
@@ -64,6 +95,15 @@ namespace NextLevelSeven.Test.Parsing
         public void Subcomponent_CanBeCloned()
         {
             var subcomponent = Message.Parse(ExampleMessages.Standard)[1][3][1][1][1];
+            var clone = subcomponent.Clone();
+            Assert.AreNotSame(subcomponent, clone, "Cloned subcomponent is the same referenced object.");
+            Assert.AreEqual(subcomponent.Value, clone.Value, "Cloned subcomponent has different contents.");
+        }
+
+        [TestMethod]
+        public void Subcomponent_CanBeClonedGenerically()
+        {
+            var subcomponent = (IElement)Message.Parse(ExampleMessages.Standard)[1][3][1][1][1];
             var clone = subcomponent.Clone();
             Assert.AreNotSame(subcomponent, clone, "Cloned subcomponent is the same referenced object.");
             Assert.AreEqual(subcomponent.Value, clone.Value, "Cloned subcomponent has different contents.");

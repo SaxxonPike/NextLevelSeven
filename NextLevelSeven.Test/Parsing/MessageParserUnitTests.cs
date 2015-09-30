@@ -12,6 +12,37 @@ namespace NextLevelSeven.Test.Parsing
     public class MessageParserUnitTests : ParsingTestFixture
     {
         [TestMethod]
+        public void Message_IsEquivalentWhenValuesMatch()
+        {
+            var message0 = Message.Parse(ExampleMessages.Standard);
+            var message1 = Message.Parse(ExampleMessages.Standard);
+            Assert.AreNotSame(message0, message1);
+            Assert.IsTrue(message0.Equals(message1));
+        }
+
+        [TestMethod]
+        public void Message_IsEquivalentWhenReferencesMatch()
+        {
+            var message = Message.Parse(ExampleMessages.Standard);
+            var generic = (object)message;
+            Assert.IsTrue(message.Equals(generic));
+        }
+
+        [TestMethod]
+        public void Message_IsEquivalentToStrings()
+        {
+            var message = Message.Parse(ExampleMessages.Standard);
+            Assert.IsTrue(message.Equals(ExampleMessages.Standard));
+        }
+
+        [TestMethod]
+        public void Message_IsNotEquivalentWhenNull()
+        {
+            var message = Message.Parse(ExampleMessages.Standard);
+            Assert.IsFalse(message.Equals(null));
+        }
+
+        [TestMethod]
         public void Message_Validates()
         {
             var message = Message.Parse(ExampleMessages.Minimum);

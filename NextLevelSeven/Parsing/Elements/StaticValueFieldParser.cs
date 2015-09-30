@@ -35,12 +35,11 @@ namespace NextLevelSeven.Parsing.Elements
             get { return 1; }
         }
 
-        /// <summary>Get the value of this field wrapped in an enumerable.</summary>
-        public override IEnumerable<string> Values
-        {
-            get { yield return Value; }
-            set { Value = string.Concat(value); }
-        }
+        /// <summary>Get or set the value of this field.</summary>
+        public abstract override string Value { get; set; }
+
+        /// <summary>Get or set the value of this field wrapped in an enumerable.</summary>
+        public abstract override IEnumerable<string> Values { get; set; }
 
         /// <summary>Get the field delimiter value.</summary>
         /// <param name="repetition">Not used.</param>
@@ -61,14 +60,6 @@ namespace NextLevelSeven.Parsing.Elements
             int subcomponent = -1)
         {
             return Value.Yield();
-        }
-
-        /// <summary>Throws an error because fields with static values cannot have descendants.</summary>
-        /// <param name="index">Desired index.</param>
-        /// <returns>Element at the specified index.</returns>
-        public override sealed IElementParser GetDescendant(int index)
-        {
-            throw new ParserException(ErrorCode.FixedFieldsCannotBeDivided);
         }
 
         /// <summary>Get a repetition division of this field.</summary>

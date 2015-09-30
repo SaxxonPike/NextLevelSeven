@@ -72,7 +72,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Throws. Subcomponents have no descendants.</summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        public override IElementParser GetDescendant(int index)
+        protected override IElementParser GetDescendant(int index)
         {
             throw new ParserException(ErrorCode.SubcomponentCannotHaveDescendants);
         }

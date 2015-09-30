@@ -297,7 +297,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Get the descendant element at the specified index.</summary>
         /// <param name="index">Exposed index of the descendant element.</param>
         /// <returns>Descendant element at the specified index.</returns>
-        public abstract IElementParser GetDescendant(int index);
+        protected abstract IElementParser GetDescendant(int index);
 
         /// <summary>Copy the contents of this element to a string.</summary>
         /// <returns>Copied string.</returns>

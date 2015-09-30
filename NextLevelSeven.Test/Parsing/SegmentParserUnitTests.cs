@@ -32,6 +32,26 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [TestMethod]
+        public void Segment_CanSetValues()
+        {
+            var message = Message.Parse(ExampleMessages.Standard);
+            var type = Mock.StringCaps(3);
+            var data = Mock.String();
+            message[2].Values = new[] { type, data };
+            Assert.AreEqual(string.Format("{0}|{1}", type, data), message[2].Value);
+        }
+
+        [TestMethod]
+        public void Segment_CanSetValuesOnMsh()
+        {
+            var message = Message.Parse(ExampleMessages.Standard);
+            var data = Mock.String();
+            var delimiter = "$";
+            message[1].Values = new[] { "MSH", delimiter, data };
+            Assert.AreEqual(string.Format("MSH{0}{1}", delimiter, data), message[1].Value);
+        }
+
+        [TestMethod]
         public void Segment_Throws_WhenIndexedBelowZero()
         {
             var element = Message.Parse(ExampleMessages.Standard)[1];
@@ -65,6 +85,36 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [TestMethod]
+        public void Segment_CanBeClonedGenerically()
+        {
+            var segment = (IElement) Message.Parse(ExampleMessages.Standard)[1];
+            var clone = segment.Clone();
+            Assert.AreNotSame(segment, clone, "Cloned segment is the same referenced object.");
+            Assert.AreEqual(segment.Value, clone.Value, "Cloned segment has different contents.");
+        }
+
+        [TestMethod]
+        public void Segment_HasMessageAncestor()
+        {
+            var element = Message.Parse(ExampleMessages.Minimum)[1];
+            Assert.IsNotNull(element.Ancestor);
+        }
+
+        [TestMethod]
+        public void Segment_HasGenericMessageAncestor()
+        {
+            var element = Message.Parse(ExampleMessages.Minimum)[1] as ISegment;
+            Assert.IsNotNull(element.Ancestor);
+        }
+
+        [TestMethod]
+        public void Segment_HasGenericAncestor()
+        {
+            var element = Message.Parse(ExampleMessages.Minimum)[1] as IElementParser;
+            Assert.IsNotNull(element.Ancestor as IMessage);
+        }
+
+        [TestMethod]
         public void Segment_HasClonedEncoding()
         {
             var segment = Message.Parse(ExampleMessages.Standard)[1];
@@ -81,6 +131,22 @@ namespace NextLevelSeven.Test.Parsing
             segment[fieldCount].Value = id;
             Assert.AreEqual(fieldCount + 1, segment.ValueCount,
                 @"Number of elements after appending at the end is incorrect.");
+        }
+
+        [TestMethod]
+        public void Segment_CanGetFields()
+        {
+            var message = Message.Parse(ExampleMessages.Standard);
+            var segment = message[2];
+            Assert.AreEqual(7, segment.Fields.Count());
+        }
+
+        [TestMethod]
+        public void Segment_CanGetFieldsGenerically()
+        {
+            var message = Message.Parse(ExampleMessages.Standard);
+            ISegment segment = message[2];
+            Assert.AreEqual(7, segment.Fields.Count());
         }
 
         [TestMethod]

@@ -4,15 +4,8 @@ using NextLevelSeven.Core.Encoding;
 namespace NextLevelSeven.Parsing.Elements
 {
     /// <summary>An encoding configuration that gets its values from an HL7 message.</summary>
-    internal class ParserEncodingConfiguration : EncodingConfiguration
+    internal sealed class ParserEncodingConfiguration : EncodingConfiguration
     {
-        /// <summary>Create a default encoding configuration.</summary>
-        public ParserEncodingConfiguration()
-        {
-            var emptyMessage = new MessageParser();
-            Segment = emptyMessage.Segment(1);
-        }
-
         /// <summary>Create an encoding configuration from a message or segment.</summary>
         /// <param name="segment">Field to pull the characters from.</param>
         public ParserEncodingConfiguration(ISegment segment)
@@ -63,7 +56,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <param name="value">String to check.</param>
         /// <param name="index">Index within the specified string.</param>
         /// <returns></returns>
-        protected static char TryGetChar(string value, int index)
+        private static char TryGetChar(string value, int index)
         {
             if (index < 0 || index >= value.Length)
             {

@@ -14,16 +14,6 @@ namespace NextLevelSeven.Parsing
         /// <summary>Get all segments in the message.</summary>
         new IEnumerable<ISegmentParser> Segments { get; }
 
-        /// <summary>Get data from a specific place in the message. Depth is determined by how many indices are specified.</summary>
-        /// <param name="segment">Segment index.</param>
-        /// <param name="field">Field index.</param>
-        /// <param name="repetition">Repetition number.</param>
-        /// <param name="component">Component index.</param>
-        /// <param name="subcomponent">Subcomponent index.</param>
-        /// <returns>The first occurrence of the specified element.</returns>
-        IElementParser GetElement(int segment = -1, int field = -1, int repetition = -1, int component = -1,
-            int subcomponent = -1);
-
         /// <summary>Check for validity of the message. Returns true if the message can reasonably be parsed.</summary>
         /// <returns>True if the message can be parsed, false otherwise.</returns>
         bool Validate();

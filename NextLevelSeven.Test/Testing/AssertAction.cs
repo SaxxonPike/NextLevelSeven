@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NextLevelSeven.Test.Testing
@@ -13,6 +14,7 @@ namespace NextLevelSeven.Test.Testing
             }
             catch (Exception ex)
             {
+                Debug.WriteLine(ex.ToString());
                 if (ex is TException)
                 {
                     return;

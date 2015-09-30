@@ -46,6 +46,11 @@ namespace NextLevelSeven.Parsing.Elements
             get { return _fields[index]; }
         }
 
+        /// <summary>
+        ///     Get an index, adjusted for whether or not the segment is an MSH segment.
+        /// </summary>
+        /// <param name="index"></param>
+        /// <returns></returns>
         int AdjustIndexForMsh(int index)
         {
             if (!IsMsh)
@@ -266,7 +271,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Get the descendant element at the specified index.</summary>
         /// <param name="index">Index of the descendant element.</param>
         /// <returns>Descendant element at the specified index.</returns>
-        public override IElementParser GetDescendant(int index)
+        protected override IElementParser GetDescendant(int index)
         {
             return _fields[index];
         }

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NextLevelSeven.Testing;
 
 namespace NextLevelSeven.Test.Utility
 {

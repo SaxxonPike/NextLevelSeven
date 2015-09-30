@@ -54,6 +54,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Parsing\ParserBaseUnitTests.cs" />
     <Compile Include="Testing\AssertArray.cs" />
     <Compile Include="Testing\AssertEnumerable.cs" />
     <Compile Include="Building\BuilderBaseUnitTests.cs" />

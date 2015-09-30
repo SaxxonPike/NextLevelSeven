@@ -108,7 +108,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Get the descendant element at the specified index.</summary>
         /// <param name="index">Index of the desired element.</param>
         /// <returns>Element at the specified index.</returns>
-        public override IElementParser GetDescendant(int index)
+        protected override IElementParser GetDescendant(int index)
         {
             return _subcomponents[index];
         }

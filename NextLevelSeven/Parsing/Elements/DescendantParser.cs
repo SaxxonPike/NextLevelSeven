@@ -27,15 +27,6 @@ namespace NextLevelSeven.Parsing.Elements
             Index = externalIndex;
         }
 
-        /// <summary>Create a descendant element that uses an alternative encoding configuration.</summary>
-        protected DescendantParser(Parser ancestor, int parentIndex, int externalIndex, EncodingConfiguration config)
-            : base(config)
-        {
-            _ancestor = ancestor;
-            ParentIndex = parentIndex;
-            Index = externalIndex;
-        }
-
         /// <summary>Ancestor element.</summary>
         protected override sealed Parser Ancestor
         {
@@ -43,7 +34,7 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>Zero-based index within the parent element's raw data.</summary>
-        protected int ParentIndex { get; set; }
+        private int ParentIndex { get; set; }
 
         /// <summary>Get a string divider for this descendant element.</summary>
         /// <returns>Descendant string divider.</returns>

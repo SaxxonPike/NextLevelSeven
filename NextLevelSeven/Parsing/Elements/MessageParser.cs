@@ -28,33 +28,6 @@ namespace NextLevelSeven.Parsing.Elements
             get { return '\xD'; }
         }
 
-        /// <summary>Get data from a specific place in the message. Depth is determined by how many indices are specified.</summary>
-        /// <param name="segment">Segment index.</param>
-        /// <param name="field">Field index.</param>
-        /// <param name="repetition">Repetition number.</param>
-        /// <param name="component">Component index.</param>
-        /// <param name="subcomponent">Subcomponent index.</param>
-        /// <returns>The first occurrence of the specified element.</returns>
-        public IElementParser GetElement(int segment, int field = -1, int repetition = -1, int component = -1,
-            int subcomponent = -1)
-        {
-            if (field < 0)
-            {
-                return this[segment];
-            }
-            if (repetition < 0)
-            {
-                return this[segment][field];
-            }
-            if (component < 0)
-            {
-                return this[segment][field][repetition];
-            }
-            return subcomponent < 0
-                ? this[segment][field][repetition][component]
-                : this[segment][field][repetition][component][subcomponent];
-        }
-
         /// <summary>Get the root message for this element.</summary>
         ISegmentParser IMessageParser.this[int index]
         {
@@ -159,50 +132,9 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Get descendant element.</summary>
         /// <param name="index">Index of the element.</param>
         /// <returns></returns>
-        public override IElementParser GetDescendant(int index)
+        protected override IElementParser GetDescendant(int index)
         {
             return _segments[index];
-        }
-
-        /// <summary>Get data from a specific place in the message. Depth is determined by how many indices are specified.</summary>
-        /// <param name="segmentName">Segment name.</param>
-        /// <param name="field">Field index.</param>
-        /// <param name="repetition">Repetition number.</param>
-        /// <param name="component">Component index.</param>
-        /// <param name="subcomponent">Subcomponent index.</param>
-        /// <returns>The first occurrence of the specified element.</returns>
-        public IElementParser GetField(string segmentName, int field = -1, int repetition = -1, int component = -1,
-            int subcomponent = -1)
-        {
-            return GetFields(segmentName, field, repetition, component, subcomponent).FirstOrDefault();
-        }
-
-        /// <summary>Get data from a specific place in the message. Depth is determined by how many indices are specified.</summary>
-        /// <param name="segmentName">Segment index.</param>
-        /// <param name="field">Field index.</param>
-        /// <param name="repetition">Repetition number.</param>
-        /// <param name="component">Component index.</param>
-        /// <param name="subcomponent">Subcomponent index.</param>
-        /// <returns>The first occurrence of the specified element.</returns>
-        public IEnumerable<IElementParser> GetFields(string segmentName, int field = -1, int repetition = -1,
-            int component = -1, int subcomponent = -1)
-        {
-            var matches = Segments.Where(s => s.Type == segmentName);
-            if (field < 0)
-            {
-                return matches;
-            }
-            if (repetition < 0)
-            {
-                return matches.Select(m => m[field]);
-            }
-            if (component < 0)
-            {
-                return matches.Select(m => m[field][repetition]);
-            }
-            return (subcomponent < 0)
-                ? (IEnumerable<IElementParser>) matches.Select(m => m[field][repetition][component])
-                : matches.Select(m => m[field][repetition][component][subcomponent]);
         }
 
         /// <summary>Create a segment object.</summary>
@@ -239,13 +171,13 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Hash code of the value's string.</returns>
         public override int GetHashCode()
         {
-            return ToString().GetHashCode();
+            return base.GetHashCode();
         }
 
         /// <summary>Change all system line endings to HL7 line endings.</summary>
         /// <param name="message">String to transform.</param>
         /// <returns>Sanitized string.</returns>
-        private string SanitizeLineEndings(string message)
+        private static string SanitizeLineEndings(string message)
         {
             return message == null
                 ? null

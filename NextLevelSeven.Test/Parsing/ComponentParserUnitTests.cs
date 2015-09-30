@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
 using NextLevelSeven.Parsing;
 using NextLevelSeven.Test.Testing;
@@ -45,6 +46,30 @@ namespace NextLevelSeven.Test.Parsing
             component[count + 1].Value = id;
             Assert.AreEqual(count + 1, component.ValueCount,
                 @"Number of elements after appending at the end of a component is incorrect.");
+        }
+
+        [TestMethod]
+        public void Component_CanGetSubcomponents()
+        {
+            var id1 = Mock.String();
+            var id2 = Mock.String();
+            var id3 = Mock.String();
+            var id4 = Mock.String();
+            var component =
+                Message.Parse(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}", id1, id2, id3, id4))[1][3][2][2];
+            Assert.AreEqual(2, component.Subcomponents.Count());
+        }
+
+        [TestMethod]
+        public void Component_CanGetSubcomponentsGenerically()
+        {
+            var id1 = Mock.String();
+            var id2 = Mock.String();
+            var id3 = Mock.String();
+            var id4 = Mock.String();
+            IComponent component =
+                Message.Parse(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}", id1, id2, id3, id4))[1][3][2][2];
+            Assert.AreEqual(2, component.Subcomponents.Count());
         }
 
         [TestMethod]

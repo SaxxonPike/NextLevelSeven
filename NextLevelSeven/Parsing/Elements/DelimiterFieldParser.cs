@@ -1,6 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using NextLevelSeven.Core;
 using NextLevelSeven.Diagnostics;
+using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Parsing.Elements
 {
@@ -19,20 +21,11 @@ namespace NextLevelSeven.Parsing.Elements
         {
             get
             {
-                var value = Ancestor.DescendantDivider.Value;
-                if (value != null && value.Length > 3)
-                {
-                    return new string(value[3], 1);
-                }
-                return null;
+                return new string(Ancestor.DescendantDivider.Value[3], 1);
             }
             set
             {
                 var s = Ancestor.DescendantDivider.Value;
-                if (s == null || s.Length < 3)
-                {
-                    return;
-                }
                 if (HL7.NullValues.Contains(value))
                 {
                     throw new ParserException(ErrorCode.FieldCannotBeNull);
@@ -40,6 +33,15 @@ namespace NextLevelSeven.Parsing.Elements
                 var newValue = string.Concat(s.Substring(0, 3), value, (s.Length > 3 ? s.Substring(4) : string.Empty));
                 Ancestor.DescendantDivider.Value = newValue;
             }
+        }
+
+        /// <summary>
+        ///     Get or set the value of the field delimiter. Only the first value is considered.
+        /// </summary>
+        public override IEnumerable<string> Values
+        {
+            get { yield return Value; }
+            set { Value = value.First(); }
         }
     }
 }

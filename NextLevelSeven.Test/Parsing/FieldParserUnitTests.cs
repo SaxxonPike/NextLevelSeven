@@ -11,6 +11,15 @@ namespace NextLevelSeven.Test.Parsing
     public class FieldParserUnitTests : ParsingTestFixture
     {
         [TestMethod]
+        public void Field_Delimiter_CanBeCloned()
+        {
+            var field = Message.Parse(ExampleMessages.Minimum)[1][1];
+            var clone = field.Clone();
+            Assert.AreNotSame(field, clone, "Cloned field is the same referenced object.");
+            Assert.AreEqual(field.Value, clone.Value, "Cloned field has different contents.");
+        }
+
+        [TestMethod]
         public void Field_Delimiter_CanGetValue()
         {
             var field = Message.Parse(ExampleMessages.Minimum)[1][1];
@@ -30,6 +39,31 @@ namespace NextLevelSeven.Test.Parsing
             var message = Message.Parse(ExampleMessages.Minimum);
             var field = message[1][1];
             AssertAction.Throws<ElementException>(() => field.Value = null);
+        }
+
+        [TestMethod]
+        public void Field_Encoding_CanBeCloned()
+        {
+            var field = Message.Parse(ExampleMessages.Minimum)[1][2];
+            var clone = field.Clone();
+            Assert.AreNotSame(field, clone, "Cloned field is the same referenced object.");
+            Assert.AreEqual(field.Value, clone.Value, "Cloned field has different contents.");
+        }
+
+        [TestMethod]
+        public void Field_Encoding_CanGetValues()
+        {
+            var field = Message.Parse(ExampleMessages.Minimum)[1][2];
+            AssertArray.AreEqual(new[] {"^", "~", "\\", "&"}, field.Values.ToArray());
+        }
+
+        [TestMethod]
+        public void Field_Encoding_CanSetValues()
+        {
+            var field = Message.Parse(ExampleMessages.Minimum)[1][2];
+            var values = new[] {"^", "~", "\\", "&"};
+            field.Values = values;
+            Assert.AreEqual(string.Concat(values), field.Value);
         }
 
         [TestMethod]
@@ -70,11 +104,29 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [TestMethod]
+        public void Field_Delimiter_SetsOnlyFirstValue()
+        {
+            var field = Message.Parse(ExampleMessages.Minimum)[1][1];
+            var values = new[] {"$", "@"};
+            field.Values = values;
+            Assert.AreEqual(values.First(), field.Value);
+        }
+
+        [TestMethod]
         public void Field_Delimiter_ThrowsOnDescendantAccess()
         {
             var field = Message.Parse(ExampleMessages.Minimum)[1][1];
             string result = null;
             AssertAction.Throws<ParserException>(() => result = field[2].Value);
+            Assert.IsNull(result);
+        }
+
+        [TestMethod]
+        public void Field_Delimiter_ThrowsOnGenericDescendantAccess()
+        {
+            IElementParser field = Message.Parse(ExampleMessages.Minimum)[1][1];
+            IElementParser result = null;
+            AssertAction.Throws<ParserException>(() => result = field[2]);
             Assert.IsNull(result);
         }
 
@@ -86,6 +138,14 @@ namespace NextLevelSeven.Test.Parsing
             Assert.AreEqual(field.Value, field.GetValue());
             Assert.AreEqual(1, field.Values.Count());
             Assert.AreEqual(1, field.GetValues().Count());
+        }
+
+        [TestMethod]
+        public void Field_CanGetAncestor()
+        {
+            var segment = Message.Parse(ExampleMessages.Standard)[1];
+            var field = segment[3];
+            Assert.AreSame(segment, field.Ancestor);
         }
 
         [TestMethod]
@@ -150,6 +210,15 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [TestMethod]
+        public void Field_CanBeClonedGenerically()
+        {
+            var field = (IElement)Message.Parse(ExampleMessages.Standard)[1][3];
+            var clone = field.Clone();
+            Assert.AreNotSame(field, clone, "Cloned field is the same referenced object.");
+            Assert.AreEqual(field.Value, clone.Value, "Cloned field has different contents.");
+        }
+
+        [TestMethod]
         public void Field_CanAddDescendantsAtEnd()
         {
             var field = Message.Parse(ExampleMessages.Standard)[2][3];
@@ -158,6 +227,20 @@ namespace NextLevelSeven.Test.Parsing
             field[count + 1].Value = id;
             Assert.AreEqual(count + 1, field.ValueCount,
                 @"Number of elements after appending at the end of a field is incorrect.");
+        }
+
+        [TestMethod]
+        public void Field_CanGetRepetitions()
+        {
+            var repetitions = Message.Parse(ExampleMessages.Standard)[8][13].Repetitions;
+            Assert.AreEqual(2, repetitions.Count());
+        }
+
+        [TestMethod]
+        public void Field_CanGetRepetitionsGenerically()
+        {
+            var repetitions = (Message.Parse(ExampleMessages.Standard)[8][13] as IField).Repetitions;
+            Assert.AreEqual(2, repetitions.Count());
         }
 
         [TestMethod]

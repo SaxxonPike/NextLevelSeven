@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using NextLevelSeven.Core;
 using NextLevelSeven.Utility;
 
-namespace NextLevelSeven.Test
+namespace NextLevelSeven.Testing
 {
     /// <summary>Contains mock classes for the Utility namespace for use in testing.</summary>
     public static class UtilityMocks

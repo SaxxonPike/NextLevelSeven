@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
 using NextLevelSeven.Parsing;
 using NextLevelSeven.Test.Testing;
@@ -37,6 +38,15 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [TestMethod]
+        public void Repetition_CanBeClonedGenerically()
+        {
+            IElement repetition = Message.Parse(ExampleMessages.Standard)[1][3][1];
+            var clone = repetition.Clone();
+            Assert.AreNotSame(repetition, clone, "Cloned repetition is the same referenced object.");
+            Assert.AreEqual(repetition.Value, clone.Value, "Cloned repetition has different contents.");
+        }
+
+        [TestMethod]
         public void Repetition_CanAddDescendantsAtEnd()
         {
             var repetition = Message.Parse(ExampleMessages.Standard)[2][3][4];
@@ -45,6 +55,20 @@ namespace NextLevelSeven.Test.Parsing
             repetition[count + 1].Value = id;
             Assert.AreEqual(count + 1, repetition.ValueCount,
                 @"Number of elements after appending at the end of a repetition is incorrect.");
+        }
+
+        [TestMethod]
+        public void Repetition_CanGetComponents()
+        {
+            var repetition = Message.Parse(ExampleMessages.Standard)[8][13][2];
+            Assert.AreEqual(3, repetition.Components.Count());
+        }
+
+        [TestMethod]
+        public void Repetition_CanGetComponentsGenerically()
+        {
+            IRepetition repetition = Message.Parse(ExampleMessages.Standard)[8][13][2];
+            Assert.AreEqual(3, repetition.Components.Count());
         }
 
         [TestMethod]
