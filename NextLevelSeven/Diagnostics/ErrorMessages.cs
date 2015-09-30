@@ -42,6 +42,7 @@ namespace NextLevelSeven.Diagnostics
         /// <param name="language">Two-letter language code. If more than two characters are passed, only the first two are used.</param>
         public static void SetLanguage(string language = null)
         {
+            _language = null;
             var cultureName = language ?? CultureInfo.CurrentCulture.Name.ToLowerInvariant();
             if (string.IsNullOrWhiteSpace(cultureName) || cultureName.Length < 2)
             {

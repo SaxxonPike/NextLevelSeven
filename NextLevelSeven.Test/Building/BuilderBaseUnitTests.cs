@@ -34,23 +34,6 @@ namespace NextLevelSeven.Test.Building
         }
 
         [TestMethod]
-        public void Builder_CanFormatNull()
-        {
-            var builder = Message.Build(ExampleMessages.Standard);
-            builder[1][3].FormattedValue = "\"\"";
-            Assert.IsNull(builder[1][3].FormattedValue);
-        }
-
-        [TestMethod]
-        public void Builder_CanFormatStrings()
-        {
-            var builder = Message.Build(ExampleMessages.Standard);
-            var value = Mock.String();
-            builder[1][3].FormattedValue = value;
-            Assert.AreEqual(value, builder[1][3].FormattedValue);
-        }
-
-        [TestMethod]
         public void Builder_CanBeErased()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][3];

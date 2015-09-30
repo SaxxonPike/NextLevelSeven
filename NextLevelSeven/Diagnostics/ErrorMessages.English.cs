@@ -1,8 +1,11 @@
-﻿namespace NextLevelSeven.Diagnostics
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace NextLevelSeven.Diagnostics
 {
     public static partial class ErrorMessages
     {
         /// <summary>English language translation.</summary>
+        [ExcludeFromCodeCoverage]
         private sealed class English : ErrorMessageLanguage
         {
             public override string GetMessage(ErrorCode code)
@@ -19,6 +22,8 @@
                         return "Data is invalid for type: {0}";
                     case ErrorCode.DoNotTranslateThisMessageForTestingPurposes:
                         return "This message is not to be translated to any other language for testing purposes.";
+                    case ErrorCode.ElementIndexMustBeGreaterThanZero:
+                        return "Element index must be greater than zero.";
                     case ErrorCode.ElementIndexMustBeZeroOrGreater:
                         return "Element index must be zero or greater.";
                     case ErrorCode.ElementsMustShareDirectAncestors:

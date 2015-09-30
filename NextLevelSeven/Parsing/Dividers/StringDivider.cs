@@ -63,10 +63,6 @@ namespace NextLevelSeven.Parsing.Dividers
             {
                 return;
             }
-            if (index < 0)
-            {
-                throw new ParserException(ErrorCode.ElementIndexMustBeZeroOrGreater);
-            }
             var d = Divisions[index];
             var offset = d.Offset;
             var length = d.Length;
@@ -88,19 +84,11 @@ namespace NextLevelSeven.Parsing.Dividers
 
         public void Insert(int index, string value)
         {
-            if (index < 0)
-            {
-                throw new ParserException(ErrorCode.ElementIndexMustBeZeroOrGreater);
-            }
             this[index] = string.Concat(value, new string(Delimiter, 1), this[index] ?? string.Empty);
         }
 
         public void Move(int sourceIndex, int targetIndex)
         {
-            if (sourceIndex < 0 || targetIndex < 0)
-            {
-                throw new ParserException(ErrorCode.ElementIndexMustBeZeroOrGreater);
-            }
             var value = this[sourceIndex];
             Delete(sourceIndex);
             Insert(targetIndex, value);

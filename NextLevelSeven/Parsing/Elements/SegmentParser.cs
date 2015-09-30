@@ -35,7 +35,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Returns true if the segment's type field is MSH.</summary>
         private bool IsMsh
         {
-            get { return (string.Equals(Type, "MSH", StringComparison.Ordinal)); }
+            get { return (String.Equals(Type, "MSH", StringComparison.Ordinal)); }
         }
 
         /// <summary>Get the descendant field parser at the specified index.</summary>
@@ -46,38 +46,14 @@ namespace NextLevelSeven.Parsing.Elements
             get { return _fields[index]; }
         }
 
-        /// <summary>
-        ///     Get an index, adjusted for whether or not the segment is an MSH segment.
-        /// </summary>
-        /// <param name="index"></param>
-        /// <returns></returns>
-        int AdjustIndexForMsh(int index)
-        {
-            if (!IsMsh)
-            {
-                return index;
-            }
-            if (index > 1)
-            {
-                return index - 1;
-            }
-            return index;
-        }
-
         /// <summary>Delete a descendant element.</summary>
         /// <param name="index">Index to insert at.</param>
         override public void DeleteDescendant(int index)
         {
             if (IsMsh)
             {
-                if (index == 1)
-                {
-                    GetDescendant(1).Erase();
-                }
-                else if (index > 1)
-                {
-                    DescendantDivider.Delete(index - 1);                    
-                }
+                ThrowIfEncodingFieldIndex(index);
+                DescendantDivider.Delete(index - 1);                    
             }
             else
             {
@@ -101,15 +77,8 @@ namespace NextLevelSeven.Parsing.Elements
         {
             if (IsMsh)
             {
-                if (index == 1)
-                {
-                    DescendantDivider[0] += value;
-                    DescendantDivider.Delete(1);
-                }
-                else if (index > 1)
-                {
-                    DescendantDivider.Insert(index - 1, value);
-                }
+                ThrowIfEncodingFieldIndex(index);
+                DescendantDivider.Insert(index - 1, value);
             }
             else
             {
@@ -123,7 +92,15 @@ namespace NextLevelSeven.Parsing.Elements
         /// <param name="targetIndex"></param>
         override public void MoveDescendant(int sourceIndex, int targetIndex)
         {
-            DescendantDivider.Move(AdjustIndexForMsh(sourceIndex), AdjustIndexForMsh(targetIndex));
+            if (IsMsh)
+            {
+                ThrowIfEncodingFieldIndex(sourceIndex, targetIndex);
+                DescendantDivider.Move(sourceIndex - 1, targetIndex - 1);
+            }
+            else
+            {
+                DescendantDivider.Move(sourceIndex, targetIndex);
+            }
         }
 
         /// <summary>Field delimiter.</summary>
@@ -224,7 +201,7 @@ namespace NextLevelSeven.Parsing.Elements
                     var values = value.ToList();
                     var delimiter = values[1];
                     values.RemoveAt(1);
-                    DescendantDivider.Value = string.Join(delimiter, values);
+                    DescendantDivider.Value = String.Join(delimiter, values);
                     return;
                 }
                 base.Values = value;
@@ -320,6 +297,17 @@ namespace NextLevelSeven.Parsing.Elements
                 Index = Index,
                 Value = Value
             };
+        }
+
+        /// <summary>
+        ///     Enforce not being able to modify placement for encoding fields.
+        /// </summary>
+        static void ThrowIfEncodingFieldIndex(params int[] indices)
+        {
+            if (indices.Any(index => index <= 2))
+            {
+                throw new ParserException(ErrorCode.EncodingElementCannotBeMoved);
+            }
         }
     }
 }

@@ -31,8 +31,13 @@ namespace NextLevelSeven.Parsing.Dividers
         {
             get
             {
-                var d = Divisions[index];
-                return new string(ValueChars, d.Offset, d.Length);
+                var divisions = Divisions;
+                if (index < divisions.Count)
+                {
+                    var d = Divisions[index];
+                    return new string(ValueChars, d.Offset, d.Length);                    
+                }
+                return string.Empty;
             }
             set { SetValue(index, value); }
         }

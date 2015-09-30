@@ -57,6 +57,24 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [TestMethod]
+        public void Message_InsertsElement()
+        {
+            var message = Message.Parse(ExampleMessages.Minimum);
+            var segment = Message.Parse(Mock.Message())[2];
+            message.InsertDescendant(segment, 2);
+            Assert.AreEqual(message[2].Value, segment.Value);
+        }
+
+        [TestMethod]
+        public void Message_InsertsString()
+        {
+            var message = Message.Parse(ExampleMessages.Minimum);
+            var segment = Mock.Segment();
+            message.InsertDescendant(segment, 2);        
+            Assert.AreEqual(message[2].Value, segment);
+        }
+
+        [TestMethod]
         public void Message_ThrowsOnInsertingNegativeIndex()
         {
             var message = Message.Parse(ExampleMessages.Minimum);

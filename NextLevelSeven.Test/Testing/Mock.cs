@@ -7,6 +7,16 @@ namespace NextLevelSeven.Test.Testing
     {
         private static readonly Random Rng = new Random();
 
+        public static string Message()
+        {
+            return string.Join("\r", string.Join("|", ExampleMessages.Minimum, String(), String()), Segment(), Segment(), Segment());
+        }
+
+        public static string Segment()
+        {
+            return string.Join("|", StringCaps(3), String(), String());
+        }
+
         public static int Number()
         {
             return Rng.Next(int.MaxValue);

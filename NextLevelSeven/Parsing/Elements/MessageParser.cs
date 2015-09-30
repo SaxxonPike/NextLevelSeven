@@ -22,6 +22,51 @@ namespace NextLevelSeven.Parsing.Elements
             Value = @"MSH|^~\&|";
         }
 
+        /// <summary>
+        ///     Delete a descendant element.
+        /// </summary>
+        /// <param name="index">Index to delete.</param>
+        public override void DeleteDescendant(int index)
+        {
+            ThrowIfEncodingSegmentIndex(index);
+            base.DeleteDescendant(index);
+        }
+
+        /// <summary>
+        ///     Move a descendant from one index to another.
+        /// </summary>
+        /// <param name="sourceIndex">Index to move from.</param>
+        /// <param name="targetIndex">Index to move to.</param>
+        public override void MoveDescendant(int sourceIndex, int targetIndex)
+        {
+            ThrowIfEncodingSegmentIndex(sourceIndex, targetIndex);
+            base.MoveDescendant(sourceIndex, targetIndex);
+        }
+
+        /// <summary>
+        ///     Insert an element's value at the specified index.
+        /// </summary>
+        /// <param name="element">Element to insert.</param>
+        /// <param name="index">Index at which to insert.</param>
+        /// <returns></returns>
+        public override IElement InsertDescendant(IElement element, int index)
+        {
+            ThrowIfEncodingSegmentIndex(index);
+            return base.InsertDescendant(element, index);
+        }
+
+        /// <summary>
+        ///     Insert a descendant value at the specified index.
+        /// </summary>
+        /// <param name="value">Value to insert.</param>
+        /// <param name="index">Index at which to insert.</param>
+        /// <returns></returns>
+        public override IElement InsertDescendant(string value, int index)
+        {
+            ThrowIfEncodingSegmentIndex(index);
+            return base.InsertDescendant(value, index);
+        }
+
         /// <summary>Get the segment delimiter.</summary>
         public override char Delimiter
         {
@@ -193,6 +238,17 @@ namespace NextLevelSeven.Parsing.Elements
                 Value = Value,
                 Index = Index
             };
+        }
+
+        /// <summary>
+        ///     Enforce not being able to modify placement for encoding fields.
+        /// </summary>
+        static void ThrowIfEncodingSegmentIndex(params int[] indices)
+        {
+            if (indices.Any(index => index <= 1))
+            {
+                throw new ParserException(ErrorCode.EncodingElementCannotBeMoved);
+            }
         }
     }
 }

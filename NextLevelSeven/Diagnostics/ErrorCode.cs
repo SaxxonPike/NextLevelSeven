@@ -59,5 +59,7 @@
         SegmentDataIsTooShort,
         /* 0025 */
         SegmentDataMustNotBeNull,
+        /* 0026 */
+        ElementIndexMustBeGreaterThanZero,
     }
 }

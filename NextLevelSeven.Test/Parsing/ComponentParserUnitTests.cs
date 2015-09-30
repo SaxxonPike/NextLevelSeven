@@ -10,6 +10,27 @@ namespace NextLevelSeven.Test.Parsing
     public class ComponentParserUnitTests : ParsingTestFixture
     {
         [TestMethod]
+        public void Component_HasRepetitionAncestor()
+        {
+            var element = Message.Parse(ExampleMessages.Minimum)[1][3][1][1];
+            Assert.IsNotNull(element.Ancestor);
+        }
+
+        [TestMethod]
+        public void Component_HasGenericRepetitionAncestor()
+        {
+            var element = Message.Parse(ExampleMessages.Minimum)[1][3][1][1] as IComponent;
+            Assert.IsNotNull(element.Ancestor);
+        }
+
+        [TestMethod]
+        public void Component_HasGenericAncestor()
+        {
+            var element = Message.Parse(ExampleMessages.Minimum)[1][3][1][1] as IElementParser;
+            Assert.IsNotNull(element.Ancestor as IRepetition);
+        }
+
+        [TestMethod]
         public void Component_CanMoveSubcomponents()
         {
             var element = Message.Parse(ExampleMessages.Minimum)[1][3][1][1];
@@ -32,6 +53,15 @@ namespace NextLevelSeven.Test.Parsing
         public void Component_CanBeCloned()
         {
             var component = Message.Parse(ExampleMessages.Standard)[1][3][1][1];
+            var clone = component.Clone();
+            Assert.AreNotSame(component, clone, "Cloned component is the same referenced object.");
+            Assert.AreEqual(component.Value, clone.Value, "Cloned component has different contents.");
+        }
+
+        [TestMethod]
+        public void Component_CanBeClonedGenerically()
+        {
+            IElement component = Message.Parse(ExampleMessages.Standard)[1][3][1][1];
             var clone = component.Clone();
             Assert.AreNotSame(component, clone, "Cloned component is the same referenced object.");
             Assert.AreEqual(component.Value, clone.Value, "Cloned component has different contents.");

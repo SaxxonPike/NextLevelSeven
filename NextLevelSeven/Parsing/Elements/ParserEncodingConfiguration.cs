@@ -1,4 +1,5 @@
-﻿using NextLevelSeven.Core;
+﻿using System.Diagnostics.CodeAnalysis;
+using NextLevelSeven.Core;
 using NextLevelSeven.Core.Encoding;
 
 namespace NextLevelSeven.Parsing.Elements
@@ -20,14 +21,14 @@ namespace NextLevelSeven.Parsing.Elements
         public override char ComponentDelimiter
         {
             get { return TryGetChar(Segment[2].Value, 0); }
-            protected set { }
+            [ExcludeFromCodeCoverage] protected set { }
         }
 
         /// <summary>Get the encoding escape character from MSH-2.</summary>
         public override char EscapeCharacter
         {
             get { return TryGetChar(Segment[2].Value, 2); }
-            protected set { }
+            [ExcludeFromCodeCoverage] protected set { }
         }
 
         /// <summary>Get the encoding field delimiter from the fourth character in the message.</summary>
@@ -35,21 +36,21 @@ namespace NextLevelSeven.Parsing.Elements
         {
             // important: do not change this to Segment[1].Value due to an infinite call loop.
             get { return TryGetChar(Segment.Ancestor.Value, 3); }
-            protected set { }
+            [ExcludeFromCodeCoverage] protected set { }
         }
 
         /// <summary>Get the encoding repetition delimiter from MSH-2.</summary>
         public override char RepetitionDelimiter
         {
             get { return TryGetChar(Segment[2].Value, 1); }
-            protected set { }
+            [ExcludeFromCodeCoverage] protected set { }
         }
 
         /// <summary>Get the encoding subcomponent character from MSH-2.</summary>
         public override char SubcomponentDelimiter
         {
             get { return TryGetChar(Segment[2].Value, 3); }
-            protected set { }
+            [ExcludeFromCodeCoverage] protected set { }
         }
 
         /// <summary>Attempt to get a character from the specified string and index, and return 0 if not present.</summary>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace NextLevelSeven.Parsing.Dividers
 {
@@ -91,7 +92,7 @@ namespace NextLevelSeven.Parsing.Dividers
                     ? null
                     : StringDividerOperations.CharSubstring(BaseValue, d.Offset, d.Length);
             }
-            protected set { }
+            [ExcludeFromCodeCoverage] protected set { /* should not be called */ }
         }
 
         /// <summary>Get or set the subdivided values.</summary>

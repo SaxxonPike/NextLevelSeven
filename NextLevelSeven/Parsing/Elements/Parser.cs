@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using NextLevelSeven.Conversion;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Codec;
 using NextLevelSeven.Core.Encoding;
+using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Parsing.Dividers;
 
 namespace NextLevelSeven.Parsing.Elements
@@ -75,11 +77,9 @@ namespace NextLevelSeven.Parsing.Elements
                 {
                     return Ancestor.EncodingConfiguration;
                 }
-                if (!(this is IMessage))
-                {
-                    return EncodingConfiguration.Default;
-                }
-                _encodingConfiguration = new ParserEncodingConfiguration((ISegment) this[1]);
+                _encodingConfiguration = (this is MessageParser)
+                    ? new ParserEncodingConfiguration((ISegment) this[1])
+                    : null;
                 return _encodingConfiguration;
             }
         }
@@ -89,6 +89,11 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns></returns>
         public int CompareTo(object obj)
         {
+            var other = obj as IElement;
+            if (other != null)
+            {
+                return CompareTo(other);
+            }
             return obj == null ? 1 : CompareTo(obj.ToString());
         }
 
@@ -179,13 +184,6 @@ namespace NextLevelSeven.Parsing.Elements
             get { return GetDescendant(index); }
         }
 
-        /// <summary>Get or set the value as a formatted string.</summary>
-        public string FormattedValue
-        {
-            get { return TextConverter.ConvertToString(Value); }
-            set { Value = TextConverter.ConvertFromString(value); }
-        }
-
         /// <summary>Get the generic type ancestor element.</summary>
         IElement IElement.Ancestor
         {
@@ -226,7 +224,10 @@ namespace NextLevelSeven.Parsing.Elements
         /// <param name="index">Index to insert at.</param>
         virtual public void DeleteDescendant(int index)
         {
-            //Values = Descendants.OrderBy(d => d.Index).Where(d => d.Index != index).Select(d => d.Value);
+            if (index < 1)
+            {
+                throw new ParserException(ErrorCode.ElementIndexMustBeZeroOrGreater);
+            }
             DescendantDivider.Delete(index - 1);
         }
 
@@ -235,6 +236,10 @@ namespace NextLevelSeven.Parsing.Elements
         /// <param name="index">Index to insert at.</param>
         virtual public IElement InsertDescendant(IElement element, int index)
         {
+            if (index < 1)
+            {
+                throw new ParserException(ErrorCode.ElementIndexMustBeZeroOrGreater);
+            }
             return InsertDescendant(element.Value, index);
         }
 
@@ -243,6 +248,10 @@ namespace NextLevelSeven.Parsing.Elements
         /// <param name="index">Index to insert at.</param>
         virtual public IElement InsertDescendant(string value, int index)
         {
+            if (index < 1)
+            {
+                throw new ParserException(ErrorCode.ElementIndexMustBeZeroOrGreater);
+            }
             DescendantDivider.Insert(index - 1, value);
             return GetDescendant(index);
         }
@@ -252,6 +261,10 @@ namespace NextLevelSeven.Parsing.Elements
         /// <param name="targetIndex"></param>
         virtual public void MoveDescendant(int sourceIndex, int targetIndex)
         {
+            if (sourceIndex < 1 || targetIndex < 1)
+            {
+                throw new ParserException(ErrorCode.ElementIndexMustBeZeroOrGreater);
+            }
             DescendantDivider.Move(sourceIndex - 1, targetIndex - 1);
         }
 

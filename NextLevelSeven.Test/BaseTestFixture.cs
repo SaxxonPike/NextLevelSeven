@@ -1,9 +1,11 @@
 ﻿using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace NextLevelSeven.Test
 {
     [TestClass]
+    [ExcludeFromCodeCoverage]
     public abstract class BaseTestFixture
     {
         private long _frequency;

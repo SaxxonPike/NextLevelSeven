@@ -10,6 +10,13 @@ namespace NextLevelSeven.Test.Parsing
     public class SegmentParserUnitTests : ParsingTestFixture
     {
         [TestMethod]
+        public void Segment_CloneCanGetDelimiter()
+        {
+            var element = Message.Parse(ExampleMessages.Standard)[2].Clone();
+            Assert.AreEqual('|', element.Delimiter);
+        }
+
+        [TestMethod]
         public void Segment_CanGetAndSetType()
         {
             var element = Message.Parse(ExampleMessages.Standard)[2];
@@ -20,9 +27,21 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [TestMethod]
-        public void Segment_CanMoveFields()
+        public void Segment_CanMoveMshFields()
         {
             var element = Message.Parse(ExampleMessages.Minimum)[1];
+            element[3].Value = Mock.String();
+            element[4].Value = Mock.String();
+            element[5].Value = Mock.String();
+            var newMessage = element.Clone();
+            newMessage[3].Move(4);
+            Assert.AreEqual(element[3].Value, newMessage[4].Value);
+        }
+
+        [TestMethod]
+        public void Segment_CanMoveFields()
+        {
+            var element = Message.Parse(Mock.Message())[2];
             element[3].Value = Mock.String();
             element[4].Value = Mock.String();
             element[5].Value = Mock.String();
@@ -49,6 +68,53 @@ namespace NextLevelSeven.Test.Parsing
             var delimiter = "$";
             message[1].Values = new[] { "MSH", delimiter, data };
             Assert.AreEqual(string.Format("MSH{0}{1}", delimiter, data), message[1].Value);
+        }
+
+        [TestMethod]
+        public void Segment_CanInsertFields()
+        {
+            var message = Message.Parse(ExampleMessages.Standard);
+            var segment = message[2];
+            var data = Mock.String();
+            segment.InsertDescendant(data, 1);
+            Assert.AreEqual(data, segment[1].Value);
+        }
+
+        [TestMethod]
+        public void Segment_CanInsertFieldElement()
+        {
+            var message = Message.Parse(ExampleMessages.Standard);
+            var segment = message[2];
+            var data = Message.Parse(Mock.Message())[2][1];
+            segment.InsertDescendant(data, 1);
+            Assert.AreEqual(data.Value, segment[1].Value);
+        }
+
+        [TestMethod]
+        public void Segment_CanNotInsertMshElement()
+        {
+            var message = Message.Parse(ExampleMessages.Standard);
+            var segment = message[1];
+            var data = Message.Parse(Mock.Message())[2][1];
+            AssertAction.Throws<ElementException>(() => segment.InsertDescendant(data, 1));
+        }
+
+        [TestMethod]
+        public void Segment_GetsNextIndex()
+        {
+            var message = Message.Parse(Mock.Message());
+            var segment = message[2];
+            Assert.AreEqual(segment.ValueCount, segment.NextIndex);
+        }
+
+        [TestMethod]
+        public void Segment_CanInsertFieldsInMsh()
+        {
+            var message = Message.Parse(ExampleMessages.Standard);
+            var segment = message[1];
+            var data = Mock.String();
+            segment.InsertDescendant(data, 3);
+            Assert.AreEqual(data, segment[3].Value);
         }
 
         [TestMethod]
@@ -170,6 +236,22 @@ namespace NextLevelSeven.Test.Parsing
             Assert.AreEqual(field3, segment[3].Value, @"Expected segment[3] to remain the same after delete.");
             Assert.AreEqual(field5, segment[4].Value, @"Expected segment[5] to become segment[4].");
             Assert.AreEqual(field6, segment[5].Value, @"Expected segment[6] to become segment[5].");
+        }
+
+        [TestMethod]
+        public void Segment_CanNotDeleteMsh1()
+        {
+            var message = Message.Parse(ExampleMessages.Standard);
+            var segment = message[1];
+            AssertAction.Throws<ElementException>(() => segment.Delete(1));
+        }
+
+        [TestMethod]
+        public void Segment_CanNotDeleteMsh2()
+        {
+            var message = Message.Parse(ExampleMessages.Standard);
+            var segment = message[1];
+            AssertAction.Throws<ElementException>(() => segment.Delete(2));
         }
 
         [TestMethod]

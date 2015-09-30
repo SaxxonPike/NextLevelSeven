@@ -10,6 +10,27 @@ namespace NextLevelSeven.Test.Parsing
     public class RepetitionParserUnitTests : ParsingTestFixture
     {
         [TestMethod]
+        public void Repetition_HasFieldAncestor()
+        {
+            var element = Message.Parse(ExampleMessages.Minimum)[1][3][1];
+            Assert.IsNotNull(element.Ancestor);
+        }
+
+        [TestMethod]
+        public void Repetition_HasGenericFieldAncestor()
+        {
+            var element = Message.Parse(ExampleMessages.Minimum)[1][3][1] as IRepetition;
+            Assert.IsNotNull(element.Ancestor);
+        }
+
+        [TestMethod]
+        public void Repetition_HasGenericAncestor()
+        {
+            var element = Message.Parse(ExampleMessages.Minimum)[1][3][1] as IElementParser;
+            Assert.IsNotNull(element.Ancestor as IField);
+        }
+
+        [TestMethod]
         public void Repetition_CanMoveComponents()
         {
             var element = Message.Parse(ExampleMessages.Minimum)[1][3][1];

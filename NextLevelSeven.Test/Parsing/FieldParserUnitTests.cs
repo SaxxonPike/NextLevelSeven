@@ -168,6 +168,28 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [TestMethod]
+        public void Field_CanInsertRepetitions()
+        {
+            var element = Message.Parse(ExampleMessages.Minimum)[1][3];
+            element.Values = new[] { Mock.String(), Mock.String(), Mock.String(), Mock.String() };
+            var value = Mock.String();
+            element.InsertDescendant(value, 1);
+            Assert.AreEqual(5, element.ValueCount);
+            Assert.AreEqual(value, element[1].Value);
+        }
+
+        [TestMethod]
+        public void Field_CanInsertElementRepetitions()
+        {
+            var otherElement = Message.Parse(Mock.Message())[1][3][1];
+            var element = Message.Parse(Mock.Message())[1][3];
+            element.Values = new[] { Mock.String(), Mock.String(), Mock.String(), Mock.String() };
+            element.InsertDescendant(otherElement, 1);
+            Assert.AreEqual(5, element.ValueCount);
+            Assert.AreEqual(otherElement.Value, element[1].Value);
+        }
+
+        [TestMethod]
         public void Field_CanMoveRepetitions()
         {
             var element = Message.Parse(ExampleMessages.Minimum)[1][3];
@@ -216,6 +238,14 @@ namespace NextLevelSeven.Test.Parsing
             var clone = field.Clone();
             Assert.AreNotSame(field, clone, "Cloned field is the same referenced object.");
             Assert.AreEqual(field.Value, clone.Value, "Cloned field has different contents.");
+        }
+
+        [TestMethod]
+        public void Field_CanBeErased()
+        {
+            var field = (IElement)Message.Parse(ExampleMessages.Standard)[1][3];
+            field.Erase();
+            Assert.IsNull(field.Value);
         }
 
         [TestMethod]
@@ -287,16 +317,6 @@ namespace NextLevelSeven.Test.Parsing
             var message = Message.Parse();
             message[1][3].Value = HL7.Null;
             Assert.AreEqual(HL7.Null, message[1][3].Value, @"Value of two double quotes was not interpreted as null.");
-            Assert.IsTrue(message[1][3].Exists, @"Explicitly set null value must appear to exist.");
-        }
-
-        [TestMethod]
-        public void Field_WillHaveFormattedValuesInterpretedAsNull()
-        {
-            var message = Message.Parse();
-            message[1][3].Value = HL7.Null;
-            Assert.AreEqual(null, message[1][3].FormattedValue,
-                @"Value of two double quotes was not interpreted as null.");
             Assert.IsTrue(message[1][3].Exists, @"Explicitly set null value must appear to exist.");
         }
 

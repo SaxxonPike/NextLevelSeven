@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Diagnostics;
+using NextLevelSeven.Test.Testing;
 
 namespace NextLevelSeven.Test.Diagnostics
 {
@@ -37,11 +38,31 @@ namespace NextLevelSeven.Test.Diagnostics
         }
 
         [TestMethod]
+        public void ErrorMessages_SetsLanguageToDefault_WhenPassingGarbage()
+        {
+            ErrorMessages.SetLanguage("de");
+            var message = ErrorMessages.Get(ErrorCode.Unspecified);
+            ErrorMessages.SetLanguage(Mock.String());
+            Assert.AreNotEqual(message, ErrorMessages.Get(ErrorCode.Unspecified),
+                @"German and English returned the same error string.");
+        }
+
+        [TestMethod]
+        public void ErrorMessages_SetsLanguageToDefault_WhenPassingEmpty()
+        {
+            ErrorMessages.SetLanguage("de");
+            var message = ErrorMessages.Get(ErrorCode.Unspecified);
+            ErrorMessages.SetLanguage(string.Empty);
+            Assert.AreNotEqual(message, ErrorMessages.Get(ErrorCode.Unspecified),
+                @"German and English returned the same error string.");
+        }
+
+        [TestMethod]
         public void ErrorMessages_SetsLanguageToDefault_WhenPassingNull()
         {
             ErrorMessages.SetLanguage("de");
             var message = ErrorMessages.Get(ErrorCode.Unspecified);
-            ErrorMessages.SetLanguage();
+            ErrorMessages.SetLanguage(null);
             Assert.AreNotEqual(message, ErrorMessages.Get(ErrorCode.Unspecified),
                 @"German and English returned the same error string.");
         }

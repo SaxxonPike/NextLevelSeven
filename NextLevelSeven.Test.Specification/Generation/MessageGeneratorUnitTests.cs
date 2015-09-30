@@ -45,6 +45,18 @@ namespace NextLevelSeven.Test.Specification.Generation
         }
 
         [TestMethod]
+        public void MessageGenerator_GeneratesControlId()
+        {
+            Assert.AreEqual(_controlId, _message.Details.ControlId, @"Control ID doesn't match.");            
+        }
+
+        [TestMethod]
+        public void MessageGenerator_GeneratesNoSecurity()
+        {
+            Assert.IsNull(_message.Details.Security);
+        }
+
+        [TestMethod]
         public void MessageGenerator_GeneratesProperEncodingCharacters()
         {
             Debug.WriteLine(_message);
