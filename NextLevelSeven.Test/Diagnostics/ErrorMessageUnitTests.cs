@@ -62,7 +62,7 @@ namespace NextLevelSeven.Test.Diagnostics
         {
             ErrorMessages.SetLanguage("de");
             var message = ErrorMessages.Get(ErrorCode.Unspecified);
-            ErrorMessages.SetLanguage(null);
+            ErrorMessages.SetLanguage();
             Assert.AreNotEqual(message, ErrorMessages.Get(ErrorCode.Unspecified),
                 @"German and English returned the same error string.");
         }

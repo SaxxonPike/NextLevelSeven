@@ -260,6 +260,14 @@ namespace NextLevelSeven.Test.Parsing
         {
             var message = Message.Parse(ExampleMessages.Standard);
             Assert.IsTrue(message.Details.Time.HasValue, "Parsed message date is incorrect.");
+            Assert.AreEqual(new DateTime(2013, 05, 28), message.Details.Time.Value.Date);
+        }
+
+        [TestMethod]
+        public void Message_CanParseMessageDateTime()
+        {
+            var message = Message.Parse(ExampleMessages.Standard);
+            Assert.IsTrue(message.Details.Time.HasValue, "Parsed message date/time is incorrect.");
             Assert.AreEqual(new DateTime(2013, 05, 28, 07, 38, 29), message.Details.Time.Value.DateTime);
         }
 

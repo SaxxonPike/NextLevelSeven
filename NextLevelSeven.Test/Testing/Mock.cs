@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Text;
 
 namespace NextLevelSeven.Test.Testing
@@ -7,9 +8,91 @@ namespace NextLevelSeven.Test.Testing
     {
         private static readonly Random Rng = new Random();
 
+        public static string Date()
+        {
+            return string.Concat(
+                PaddedNumber(1900, 2015, 4),
+                PaddedNumber(01, 12, 2),
+                PaddedNumber(01, 28, 2)
+                );
+        }
+
+        public static string DateTime()
+        {
+            return string.Concat(
+                Date(),
+                PaddedNumber(00, 24, 2),
+                PaddedNumber(00, 60, 2),
+                PaddedNumber(00, 60, 2)
+                );
+        }
+
+        public static string DateTimeMilliseconds()
+        {
+            return string.Concat(
+                DateTime(),
+                ".",
+                Number(10000).ToString()
+                );
+        }
+
+        public static string DateWithTimeZone()
+        {
+            return string.Concat(
+                Date(),
+                TimeZone()
+                );
+        }
+
+        public static string DateTimeWithTimeZone()
+        {
+            return string.Concat(
+                DateTime(),
+                TimeZone()
+                );
+        }
+
+        public static string DateTimeMillisecondsWithTimeZone()
+        {
+            return string.Concat(
+                DateTimeMilliseconds(),
+                TimeZone()
+                );
+        }
+
+        public static string TimeZone()
+        {
+            return string.Concat(
+                Number(2) == 0 ? "+" : "-",
+                PaddedNumber(00, 12, 2),
+                PaddedNumber(00, 60, 2)
+                );
+        }
+
+        public static string Decimal()
+        {
+            return Rng.NextDouble().ToString(CultureInfo.InvariantCulture);
+        }
+
+        public static string PaddedNumber(int minInclusive, int maxExclusive, int padLength)
+        {
+            var result = Number(minInclusive, maxExclusive).ToString();
+            return string.Concat(new string('0', padLength - result.Length), result);
+        }
+
         public static string Message()
         {
-            return string.Join("\r", string.Join("|", ExampleMessages.Minimum, String(), String()), Segment(), Segment(), Segment());
+            return string.Join("\r", string.Join("|",
+                ExampleMessages.Minimum,
+                String(), String(), // receiver
+                String(), String(), // sender
+                DateTime(), // message date/time
+                String(), // security
+                string.Join("^", StringCaps(3), StringCaps(3)), // message type/event
+                String(), // control id
+                String(3), // processing id
+                string.Join(".", "2", Number(1, 7).ToString(CultureInfo.InvariantCulture)) // version
+                ), Segment(), Segment(), Segment());
         }
 
         public static string Segment()

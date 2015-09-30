@@ -20,8 +20,9 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void Builder_CanBeCompared()
         {
-            var builder0 = Message.Build(ExampleMessages.Standard);
-            var builder1 = Message.Build(ExampleMessages.Standard);
+            var content = Mock.Message();
+            var builder0 = Message.Build(content);
+            var builder1 = Message.Build(content);
             builder0.Segment(1).Field(3).Value = "0";
             builder1.Segment(1).Field(3).Value = "1";
             var list = new List<IBuilder> {builder1, builder0};
@@ -36,7 +37,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void Builder_CanBeErased()
         {
-            var builder = Message.Build(ExampleMessages.Standard)[1][3];
+            var builder = Message.Build(Mock.Message())[1][3];
             var value = Mock.String();
             builder.Value = value;
             builder.Erase();
@@ -47,14 +48,14 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void Builder_DefaultsToNonExistant()
         {
-            var builder = Message.Build(ExampleMessages.Standard)[1][3];
+            var builder = Message.Build(Mock.Message())[1][3];
             Assert.IsFalse(builder[2].Exists);
         }
 
         [TestMethod]
         public void Builder_ConvertsHl7NullToExistingNull()
         {
-            var builder = Message.Build(ExampleMessages.Standard);
+            var builder = Message.Build(Mock.Message());
             builder[1][3].Value = "\"\"";
             Assert.IsNull(builder[1][3].Value);
         }
@@ -62,7 +63,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void Builder_ShouldEqualItself()
         {
-            var builder = (object)Message.Build(ExampleMessages.Standard);
+            var builder = (object)Message.Build(Mock.Message());
             var builder2 = builder;
             Assert.IsTrue(builder.Equals(builder2));
         }
@@ -70,7 +71,7 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void Builder_ShouldHaveHashCode()
         {
-            Assert.AreNotEqual(0, Message.Build(ExampleMessages.Standard).GetHashCode());
+            Assert.AreNotEqual(0, Message.Build(Mock.Message()).GetHashCode());
         }
 
         [TestMethod]

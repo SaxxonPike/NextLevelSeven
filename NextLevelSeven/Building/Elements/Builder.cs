@@ -76,13 +76,6 @@ namespace NextLevelSeven.Building.Elements
             get { return GetGenericElement(index); }
         }
 
-        /// <summary>Get or set the value as a formatted string.</summary>
-        public string FormattedValue
-        {
-            get { return TextConverter.ConvertToString(Value); }
-            set { Value = TextConverter.ConvertFromString(value); }
-        }
-
         /// <summary>Get the ancestor element. Null if it's a root element.</summary>
         IElement IElement.Ancestor
         {

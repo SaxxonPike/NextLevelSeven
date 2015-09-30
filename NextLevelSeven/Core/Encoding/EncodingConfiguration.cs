@@ -3,13 +3,6 @@
     /// <summary>Provides information about the characters used to encode an HL7 message.</summary>
     internal abstract class EncodingConfiguration : IReadOnlyEncoding
     {
-        /// <summary>Default encoding configuration.</summary>
-        public static readonly EncodingConfiguration Default = new SimpleEncodingConfiguration();
-
-        /// <summary>An encoding configuration with all characters set to zero.</summary>
-        public static readonly EncodingConfiguration Empty = new SimpleEncodingConfiguration('\0', '\0', '\0', '\0',
-            '\0');
-
         /// <summary>Get the delimiter character used to split components.</summary>
         public string ComponentDelimiterString
         {

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using NextLevelSeven.Core;
 using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Testing

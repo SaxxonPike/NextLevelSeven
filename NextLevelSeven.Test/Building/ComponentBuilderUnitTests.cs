@@ -81,21 +81,21 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void ComponentBuilder_MapsBuilderAncestor()
         {
-            var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1];
+            var builder = Message.Build(Mock.Message())[1][3][1][1];
             Assert.AreSame(builder, builder.Ancestor[1]);
         }
 
         [TestMethod]
         public void ComponentBuilder_MapsGenericBuilderAncestor()
         {
-            var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1] as IComponent;
+            var builder = Message.Build(Mock.Message())[1][3][1][1] as IComponent;
             Assert.AreSame(builder, builder.Ancestor[1]);
         }
 
         [TestMethod]
         public void ComponentBuilder_MapsGenericAncestor()
         {
-            var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1] as IElement;
+            var builder = Message.Build(Mock.Message())[1][3][1][1] as IElement;
             Assert.AreSame(builder, builder.Ancestor[1]);
         }
 

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Linq;
 
 namespace NextLevelSeven.Core
@@ -21,7 +20,7 @@ namespace NextLevelSeven.Core
             var segment = target as ISegment;
             if (segment == null)
             {
-                return String.Join(GetKey(ancestor), ".", target.Index.ToString(CultureInfo.InvariantCulture));
+                return string.Concat(GetKey(ancestor), ".", target.Index.ToString(CultureInfo.InvariantCulture));
             }
 
             // segment? (these are named like so: MSH1, OBR3, etc)
@@ -29,7 +28,7 @@ namespace NextLevelSeven.Core
             var type = segment.Type;
             var index =
                 message.Segments.Where(s => s.Type == type).Select(s => s.Index).ToList().IndexOf(segment.Index) + 1;
-            return String.Concat(type, index.ToString(CultureInfo.InvariantCulture));
+            return string.Concat(type, index.ToString(CultureInfo.InvariantCulture));
         }
 
         /// <summary>Determine if the element is a field that contains encoding characters of some kind. (MSH-1, MSH-2)</summary>

@@ -28,6 +28,14 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>Encoding function to HL7.</summary>
         private ProxyConverter<TDecoded, string> Encoder { get; set; }
 
+        /// <summary>
+        ///     Get the number of items in the collection.
+        /// </summary>
+        public int Count
+        {
+            get { return BaseElement.ValueCount; }
+        }
+
         /// <summary>Get the items in the element as a collection.</summary>
         public IEnumerable<TDecoded> Items
         {
