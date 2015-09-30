@@ -22,17 +22,6 @@ namespace NextLevelSeven.Parsing.Elements
             _components = new IndexedCache<int, ComponentParser>(CreateComponent);
         }
 
-        /// <summary>Create a repetition with the specified ancestor, ancestor index, and exposed index, with an alternative encoding configuration.</summary>
-        /// <param name="ancestor">Ancestor element.</param>
-        /// <param name="parentIndex">Index in the parent splitter.</param>
-        /// <param name="externalIndex">Exposed index.</param>
-        /// <param name="config">Encoding configuration to use.</param>
-        public RepetitionParser(Parser ancestor, int parentIndex, int externalIndex, EncodingConfiguration config)
-            : base(ancestor, parentIndex, externalIndex, config)
-        {
-            _components = new IndexedCache<int, ComponentParser>(CreateComponent);
-        }
-
         /// <summary>Create a detached repetition with the specified initial value and encoding configuration.</summary>
         /// <param name="config">Encoding configuration.</param>
         private RepetitionParser(EncodingConfiguration config)

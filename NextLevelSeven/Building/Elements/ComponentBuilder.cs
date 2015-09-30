@@ -121,7 +121,7 @@ namespace NextLevelSeven.Building.Elements
         public IComponentBuilder SetSubcomponents(params string[] subcomponents)
         {
             _subcomponents.Clear();
-            if (subcomponents == null)
+            if (subcomponents == null || subcomponents.Length == 0)
             {
                 return this;
             }
@@ -140,7 +140,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This ComponentBuilder, for chaining purposes.</returns>
         public IComponentBuilder SetSubcomponents(int startIndex, params string[] subcomponents)
         {
-            if (subcomponents == null)
+            if (subcomponents == null || subcomponents.Length == 0)
             {
                 return this;
             }

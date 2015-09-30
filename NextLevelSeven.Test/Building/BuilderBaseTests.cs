@@ -13,7 +13,7 @@ namespace NextLevelSeven.Test.Building
         public void Builder_ImplementsEncodingAndReadOnlyEncodingIdentically()
         {
             var builder = Message.Build();
-            Assert.AreSame(builder.Encoding, (builder as IElement).Encoding);
+            Assert.AreSame(builder.Encoding, ((IElement) builder).Encoding);
         }
 
         [TestMethod]

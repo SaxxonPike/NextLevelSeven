@@ -7,14 +7,74 @@ namespace NextLevelSeven.Test.Building
     public sealed class ComponentBuilderTests : BuildingTestFixture
     {
         [TestMethod]
-        public void ComponentBuilder_CanSetAllSubcomponents()
+        public void ComponentBuilder_ClearsSubcomponentsWithNoParameters()
+        {
+            var builder = Message.Build()[1][3][1][1];
+            builder.Values = new[] {Randomized.String(), Randomized.String()};
+            builder.SetSubcomponents();
+            Assert.IsNull(builder.Value);
+        }
+
+        [TestMethod]
+        public void ComponentBuilder_DoesNotClearSubcomponentsWithNoParametersAndIndex()
+        {
+            var builder = Message.Build()[1][3][1][1];
+            var val0 = Randomized.String();
+            var val1 = Randomized.String();
+            builder.Values = new[] { val0, val1 };
+            builder.SetSubcomponents(1);
+            Assert.AreEqual(string.Format("{0}&{1}", val0, val1), builder.Value);
+        }
+
+        [TestMethod]
+        public void ComponentBuilder_CanSetComponent()
+        {
+            var builder = Message.Build()[1][3][1][1];
+            var val0 = Randomized.String();
+            builder.SetComponent(val0);
+            Assert.AreEqual(val0, builder.Value);
+        }
+
+        [TestMethod]
+        public void ComponentBuilder_CanSetSubcomponent()
+        {
+            var builder = Message.Build()[1][3][1][1];
+            var val0 = Randomized.String();
+            builder.SetSubcomponent(2, val0);
+            Assert.AreEqual(string.Format("&{0}", val0), builder.Value);
+        }
+
+        [TestMethod]
+        public void ComponentBuilder_CanSetSubcomponents()
         {
             var builder = Message.Build()[1][3][1][1];
             var val0 = Randomized.String();
             var val1 = Randomized.String();
             var val2 = Randomized.String();
-            builder.SetSubcomponents(1, val0, val1, val2);
-            Assert.AreEqual(string.Join("&", val0, val1, val2), builder.Value);
+            builder.SetSubcomponents(val0, val1, val2);
+            Assert.AreEqual(string.Format("{0}&{1}&{2}", val0, val1, val2), builder.Value);
+        }
+
+        [TestMethod]
+        public void ComponentBuilder_CanSetSubcomponentsAtIndex()
+        {
+            var builder = Message.Build()[1][3][1][1];
+            var val0 = Randomized.String();
+            var val1 = Randomized.String();
+            var val2 = Randomized.String();
+            builder.SetSubcomponents(2, val0, val1, val2);
+            Assert.AreEqual(string.Join("&", "", val0, val1, val2), builder.Value);
+        }
+
+        [TestMethod]
+        public void ComponentBuilder_CanSetValues()
+        {
+            var builder = Message.Build()[1][3][1][1];
+            var val0 = Randomized.String();
+            var val1 = Randomized.String();
+            var val2 = Randomized.String();
+            builder.Values = new[] {val0, val1, val2};
+            Assert.AreEqual(string.Format("{0}&{1}&{2}", val0, val1, val2), builder.Value);
         }
 
         [TestMethod]

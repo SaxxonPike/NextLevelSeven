@@ -37,7 +37,7 @@ namespace NextLevelSeven.Core
         /// <returns>True, if the element contains encoding characters of some kind.</returns>
         public static bool HasEncodingCharacters(IElement element)
         {
-            return (element is IField && element.Ancestor != null && (element as IField).Ancestor.Type == "MSH" &&
+            return (element is IField && element.Ancestor != null && ((IField) element).Ancestor.Type == "MSH" &&
                     element.Index >= 1 && element.Index <= 2);
         }
     }
