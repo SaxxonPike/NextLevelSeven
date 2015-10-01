@@ -11,7 +11,7 @@ namespace NextLevelSeven.Building.Elements
     internal sealed class ComponentBuilder : DescendantBuilder, IComponentBuilder
     {
         /// <summary>Descendant builders.</summary>
-        private readonly IndexedCache<SubcomponentBuilder> _subcomponents;
+        private readonly BuilderElementCache<SubcomponentBuilder> _subcomponents;
 
         /// <summary>Create a component builder using the specified encoding configuration.</summary>
         /// <param name="builder">Ancestor builder.</param>
@@ -19,13 +19,13 @@ namespace NextLevelSeven.Building.Elements
         internal ComponentBuilder(Builder builder, int index)
             : base(builder, index)
         {
-            _subcomponents = new IndexedCache<SubcomponentBuilder>(CreateSubcomponentBuilder);
+            _subcomponents = new BuilderElementCache<SubcomponentBuilder>(CreateSubcomponentBuilder);
         }
 
         private ComponentBuilder(IEncoding config, int index)
             : base(config, index)
         {
-            _subcomponents = new IndexedCache<SubcomponentBuilder>(CreateSubcomponentBuilder);
+            _subcomponents = new BuilderElementCache<SubcomponentBuilder>(CreateSubcomponentBuilder);
         }
 
         /// <summary>Get a descendant subcomponent builder.</summary>
@@ -39,7 +39,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get the number of subcomponents in this component, including subcomponents with no content.</summary>
         public override int ValueCount
         {
-            get { return _subcomponents.Max(kv => kv.Key); }
+            get { return _subcomponents.Max<KeyValuePair<int, SubcomponentBuilder>, int>(kv => kv.Key); }
         }
 
         /// <summary>Get or set subcomponent content within this component.</summary>
@@ -69,7 +69,7 @@ namespace NextLevelSeven.Building.Elements
                 var index = 1;
                 var result = new StringBuilder();
 
-                foreach (var subcomponent in _subcomponents.OrderBy(i => i.Key))
+                foreach (var subcomponent in _subcomponents.OrderBy<KeyValuePair<int, SubcomponentBuilder>, int>(i => i.Key))
                 {
                     while (index < subcomponent.Key)
                     {
@@ -221,44 +221,13 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>If true, the element is considered to exist.</summary>
         public override bool Exists
         {
-            get { return _subcomponents.Any(s => s.Value.Exists); }
+            get { return _subcomponents.Any<KeyValuePair<int, SubcomponentBuilder>>(s => s.Value.Exists); }
         }
 
         /// <summary>Get this element's heirarchy-specific ancestor.</summary>
         IRepetition IComponent.Ancestor
         {
             get { return Ancestor as IRepetition; }
-        }
-
-        /// <summary>Delete a descendant at the specified index.</summary>
-        /// <param name="index">Index to delete at.</param>
-        public override void Delete(int index)
-        {
-            DeleteDescendant(_subcomponents, index);
-        }
-
-        /// <summary>Insert a descendant element.</summary>
-        /// <param name="element">Element to insert.</param>
-        /// <param name="index">Index to insert at.</param>
-        public override IElement Insert(int index, IElement element)
-        {
-            return InsertDescendant(_subcomponents, index, element);
-        }
-
-        /// <summary>Insert a descendant element string.</summary>
-        /// <param name="value">Value to insert.</param>
-        /// <param name="index">Index to insert at.</param>
-        public override IElement Insert(int index, string value)
-        {
-            return InsertDescendant(_subcomponents, index, value);
-        }
-
-        /// <summary>Move descendant to another index.</summary>
-        /// <param name="sourceIndex">Source index.</param>
-        /// <param name="targetIndex">Target index.</param>
-        public override void Move(int sourceIndex, int targetIndex)
-        {
-            MoveDescendant(_subcomponents, sourceIndex, targetIndex);
         }
 
         /// <summary>Create a subcomponent builder object.</summary>
@@ -275,6 +244,11 @@ namespace NextLevelSeven.Building.Elements
         protected override IElement GetGenericElement(int index)
         {
             return _subcomponents[index];
+        }
+
+        protected override IIndexedElementCache<Builder> GetCache()
+        {
+            return _subcomponents;
         }
     }
 }

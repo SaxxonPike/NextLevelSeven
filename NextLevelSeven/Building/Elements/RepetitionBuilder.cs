@@ -11,7 +11,7 @@ namespace NextLevelSeven.Building.Elements
     internal sealed class RepetitionBuilder : DescendantBuilder, IRepetitionBuilder
     {
         /// <summary>Descendant builders.</summary>
-        private readonly IndexedCache<ComponentBuilder> _components;
+        private readonly BuilderElementCache<ComponentBuilder> _components;
 
         /// <summary>Create a repetition builder using the specified encoding configuration.</summary>
         /// <param name="builder">Ancestor builder.</param>
@@ -19,13 +19,13 @@ namespace NextLevelSeven.Building.Elements
         internal RepetitionBuilder(Builder builder, int index)
             : base(builder, index)
         {
-            _components = new IndexedCache<ComponentBuilder>(CreateComponentBuilder);
+            _components = new BuilderElementCache<ComponentBuilder>(CreateComponentBuilder);
         }
 
         private RepetitionBuilder(IEncoding config, int index)
             : base(config, index)
         {
-            _components = new IndexedCache<ComponentBuilder>(CreateComponentBuilder);
+            _components = new BuilderElementCache<ComponentBuilder>(CreateComponentBuilder);
         }
 
         /// <summary>Get a descendant component builder.</summary>
@@ -39,7 +39,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get the number of components in this field repetition, including components with no content.</summary>
         public override int ValueCount
         {
-            get { return _components.Max(kv => kv.Key); }
+            get { return _components.Max<KeyValuePair<int, ComponentBuilder>, int>(kv => kv.Key); }
         }
 
         /// <summary>Get or set component content within this field repetition.</summary>
@@ -69,7 +69,7 @@ namespace NextLevelSeven.Building.Elements
                 var index = 1;
                 var result = new StringBuilder();
 
-                foreach (var component in _components.OrderBy(i => i.Key))
+                foreach (var component in _components.OrderBy<KeyValuePair<int, ComponentBuilder>, int>(i => i.Key))
                 {
                     while (index < component.Key)
                     {
@@ -248,7 +248,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>If true, the element is considered to exist.</summary>
         public override bool Exists
         {
-            get { return _components.Any(s => s.Value.Exists); }
+            get { return _components.Any<KeyValuePair<int, ComponentBuilder>>(s => s.Value.Exists); }
         }
 
         /// <summary>Get this element's heirarchy-specific ancestor.</summary>
@@ -261,37 +261,6 @@ namespace NextLevelSeven.Building.Elements
         IFieldBuilder IRepetitionBuilder.Ancestor
         {
             get { return Ancestor as IFieldBuilder; }
-        }
-
-        /// <summary>Delete a descendant at the specified index.</summary>
-        /// <param name="index">Index to delete at.</param>
-        public override void Delete(int index)
-        {
-            DeleteDescendant(_components, index);
-        }
-
-        /// <summary>Move descendant to another index.</summary>
-        /// <param name="sourceIndex">Source index.</param>
-        /// <param name="targetIndex">Target index.</param>
-        public override void Move(int sourceIndex, int targetIndex)
-        {
-            MoveDescendant(_components, sourceIndex, targetIndex);
-        }
-
-        /// <summary>Insert a descendant element.</summary>
-        /// <param name="element">Element to insert.</param>
-        /// <param name="index">Index to insert at.</param>
-        public override IElement Insert(int index, IElement element)
-        {
-            return InsertDescendant(_components, index, element);
-        }
-
-        /// <summary>Insert a descendant element string.</summary>
-        /// <param name="value">Value to insert.</param>
-        /// <param name="index">Index to insert at.</param>
-        public override IElement Insert(int index, string value)
-        {
-            return InsertDescendant(_components, index, value);
         }
 
         /// <summary>Create a component builder for the specified index.</summary>
@@ -308,6 +277,11 @@ namespace NextLevelSeven.Building.Elements
         protected override IElement GetGenericElement(int index)
         {
             return _components[index];
+        }
+
+        protected override IIndexedElementCache<Builder> GetCache()
+        {
+            return _components;
         }
     }
 }

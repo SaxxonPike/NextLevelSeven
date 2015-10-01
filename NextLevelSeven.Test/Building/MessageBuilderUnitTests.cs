@@ -11,6 +11,33 @@ namespace NextLevelSeven.Test.Building
     public sealed class MessageBuilderUnitTests : BuildingTestFixture
     {
         [TestMethod]
+        public void MessageBuilder_RetrievalMethodsAreIdentical()
+        {
+            var message = Message.Build(ExampleMessages.Standard);
+            Assert.AreEqual(message.GetValue(1), message[1].Value,
+                "Retrieval methods differ at the segment level.");
+            Assert.AreEqual(message.GetValue(1, 3), message[1][3].Value,
+                "Retrieval methods differ at the field level.");
+            Assert.AreEqual(message.GetValue(1, 3, 1), message[1][3][1].Value,
+                "Retrieval methods differ at the repetition level.");
+            Assert.AreEqual(message.GetValue(1, 3, 1, 1), message[1][3][1][1].Value,
+                "Retrieval methods differ at the component level.");
+            Assert.AreEqual(message.GetValue(1, 3, 1, 1, 1), message[1][3][1][1][1].Value,
+                "Retrieval methods differ at the component level.");
+        }
+
+        [TestMethod]
+        public void MessageBuilder_MultiRetrievalMethodsAreIdentical()
+        {
+            var message = Message.Build(ExampleMessages.Variety);
+            AssertArray.AreEqual(message.GetValues(1).ToArray(), message[1].Values.ToArray());
+            AssertArray.AreEqual(message.GetValues(1, 3).ToArray(), message[1][3].Values.ToArray());
+            AssertArray.AreEqual(message.GetValues(1, 3, 1).ToArray(), message[1][3][1].Values.ToArray());
+            AssertArray.AreEqual(message.GetValues(1, 3, 1, 1).ToArray(), message[1][3][1][1].Values.ToArray());
+            AssertArray.AreEqual(message.GetValues(1, 3, 1, 1, 1).ToArray(), message[1][3][1][1][1].Values.ToArray());
+        }
+
+        [TestMethod]
         public void MessageBuilder_ThrowsWithIncorrectFirstSegment()
         {
             AssertAction.Throws<ElementException>(() => Message.Build(Mock.String()));

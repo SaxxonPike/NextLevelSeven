@@ -10,6 +10,30 @@ namespace NextLevelSeven.Test.Building
     public sealed class SubcomponentBuilderUnitTests : BuildingTestFixture
     {
         [TestMethod]
+        public void SubcomponentBuilder_ExistsWithNonNullValue()
+        {
+            var builder = Message.Build(Mock.Message())[1][3][1][1][1];
+            builder.Value = Mock.String();
+            Assert.IsTrue(builder.Exists);
+        }
+
+        [TestMethod]
+        public void SubcomponentBuilder_ExistsWithNullPresentValue()
+        {
+            var builder = Message.Build(Mock.Message())[1][3][1][1][1];
+            builder.Value = HL7.Null;
+            Assert.IsTrue(builder.Exists);
+        }
+
+        [TestMethod]
+        public void SubcomponentBuilder_DoesNotExistWithNullValue()
+        {
+            var builder = Message.Build(Mock.Message())[1][3][1][1][1];
+            builder.Value = null;
+            Assert.IsFalse(builder.Exists);
+        }
+
+        [TestMethod]
         public void SubcomponentBuilder_GetsCodec()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];

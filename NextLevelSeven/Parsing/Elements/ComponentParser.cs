@@ -10,7 +10,7 @@ namespace NextLevelSeven.Parsing.Elements
     internal sealed class ComponentParser : DescendantParser, IComponentParser
     {
         /// <summary>Internal subcomponent cache.</summary>
-        private readonly IndexedCache<SubcomponentParser> _subcomponents;
+        private readonly IndexedElementCache<SubcomponentParser> _subcomponents;
 
         /// <summary>Create a component.</summary>
         /// <param name="ancestor">Ancestor element to pull encoding information from.</param>
@@ -19,7 +19,7 @@ namespace NextLevelSeven.Parsing.Elements
         public ComponentParser(Parser ancestor, int parentIndex, int externalIndex)
             : base(ancestor, parentIndex, externalIndex)
         {
-            _subcomponents = new IndexedCache<SubcomponentParser>(CreateSubcomponent);
+            _subcomponents = new IndexedElementCache<SubcomponentParser>(CreateSubcomponent);
         }
 
         /// <summary>Create a detached component.</summary>
@@ -27,7 +27,7 @@ namespace NextLevelSeven.Parsing.Elements
         private ComponentParser(ReadOnlyEncodingConfiguration config)
             : base(config)
         {
-            _subcomponents = new IndexedCache<SubcomponentParser>(CreateSubcomponent);
+            _subcomponents = new IndexedElementCache<SubcomponentParser>(CreateSubcomponent);
         }
 
         /// <summary>Delimiter to use for descendants.</summary>

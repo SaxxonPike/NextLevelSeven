@@ -12,7 +12,7 @@ namespace NextLevelSeven.Building.Elements
     internal sealed class SegmentBuilder : DescendantBuilder, ISegmentBuilder
     {
         /// <summary>Descendant builders.</summary>
-        private readonly IndexedCache<FieldBuilder> _fields;
+        private readonly BuilderElementCache<FieldBuilder> _fields;
 
         /// <summary>Create a segment builder with the specified encoding configuration.</summary>
         /// <param name="builder">Ancestor builder.</param>
@@ -20,13 +20,13 @@ namespace NextLevelSeven.Building.Elements
         internal SegmentBuilder(Builder builder, int index)
             : base(builder, index)
         {
-            _fields = new IndexedCache<FieldBuilder>(CreateFieldBuilder);
+            _fields = new BuilderElementCache<FieldBuilder>(CreateFieldBuilder);
         }
 
         private SegmentBuilder(IEncoding config, int index)
             : base(config, index)
         {
-            _fields = new IndexedCache<FieldBuilder>(CreateFieldBuilder);
+            _fields = new BuilderElementCache<FieldBuilder>(CreateFieldBuilder);
         }
 
         /// <summary>If true, this is an MSH segment which has special behavior in fields 1 and 2.</summary>
@@ -54,7 +54,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get the number of fields in this segment, including fields with no content.</summary>
         public override int ValueCount
         {
-            get { return (_fields.Count > 0) ? (_fields.Max(kv => kv.Key) + 1) : 0; }
+            get { return (_fields.Count > 0) ? (_fields.Max<KeyValuePair<int, FieldBuilder>, int>(kv => kv.Key) + 1) : 0; }
         }
 
         /// <summary>Get or set the three-letter type field of this segment.</summary>
@@ -92,7 +92,7 @@ namespace NextLevelSeven.Building.Elements
                 var result = new StringBuilder();
                 var typeIsMsh = IsMsh;
 
-                foreach (var field in _fields.OrderBy(i => i.Key).Where(field => field.Key >= 0))
+                foreach (var field in _fields.OrderBy<KeyValuePair<int, FieldBuilder>, int>(i => i.Key).Where(field => field.Key >= 0))
                 {
                     while (index < field.Key)
                     {
@@ -379,7 +379,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>If true, the element is considered to exist.</summary>
         public override bool Exists
         {
-            get { return _fields.Any(s => s.Value.Exists); }
+            get { return _fields.Any<KeyValuePair<int, FieldBuilder>>(s => s.Value.Exists); }
         }
 
         /// <summary>Get this element's heirarchy-specific ancestor.</summary>
@@ -406,7 +406,7 @@ namespace NextLevelSeven.Building.Elements
             {
                 throw new BuilderException(ErrorCode.EncodingElementCannotBeMoved);
             }
-            DeleteDescendant(_fields, index);
+            base.Delete(index);
         }
 
         /// <summary>Insert a descendant element.</summary>
@@ -422,7 +422,7 @@ namespace NextLevelSeven.Building.Elements
             {
                 throw new BuilderException(ErrorCode.EncodingElementCannotBeMoved);
             }
-            return InsertDescendant(_fields, index, element);
+            return base.Insert(index, element);
         }
 
         /// <summary>Insert a descendant element string.</summary>
@@ -438,7 +438,7 @@ namespace NextLevelSeven.Building.Elements
             {
                 throw new BuilderException(ErrorCode.EncodingElementCannotBeMoved);
             }
-            return InsertDescendant(_fields, index, value);
+            return base.Insert(index, value);
         }
 
         /// <summary>Move descendant to another index.</summary>
@@ -454,7 +454,7 @@ namespace NextLevelSeven.Building.Elements
             {
                 throw new BuilderException(ErrorCode.EncodingElementCannotBeMoved);
             }
-            MoveDescendant(_fields, sourceIndex, targetIndex);
+            base.Move(sourceIndex, targetIndex);
         }
 
         /// <summary>Get descendant elements.</summary>
@@ -510,6 +510,11 @@ namespace NextLevelSeven.Building.Elements
         protected override IElement GetGenericElement(int index)
         {
             return _fields[index];
+        }
+
+        protected override IIndexedElementCache<Builder> GetCache()
+        {
+            return _fields;
         }
     }
 }

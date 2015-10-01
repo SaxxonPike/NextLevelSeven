@@ -11,7 +11,7 @@ namespace NextLevelSeven.Building.Elements
     internal class FieldBuilder : DescendantBuilder, IFieldBuilder
     {
         /// <summary>Descendant builders.</summary>
-        private readonly IndexedCache<RepetitionBuilder> _repetitions;
+        private readonly BuilderElementCache<RepetitionBuilder> _repetitions;
 
         /// <summary>Create a field builder with the specified encoding configuration.</summary>
         /// <param name="builder">Ancestor builder.</param>
@@ -19,13 +19,13 @@ namespace NextLevelSeven.Building.Elements
         internal FieldBuilder(Builder builder, int index)
             : base(builder, index)
         {
-            _repetitions = new IndexedCache<RepetitionBuilder>(CreateRepetitionBuilder);
+            _repetitions = new BuilderElementCache<RepetitionBuilder>(CreateRepetitionBuilder);
         }
 
         private FieldBuilder(IEncoding config, int index)
             : base(config, index)
         {
-            _repetitions = new IndexedCache<RepetitionBuilder>(CreateRepetitionBuilder);
+            _repetitions = new BuilderElementCache<RepetitionBuilder>(CreateRepetitionBuilder);
         }
 
         /// <summary>Get a descendant field repetition builder.</summary>
@@ -39,7 +39,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get the number of field repetitions in this field, including field repetitions with no content.</summary>
         public override int ValueCount
         {
-            get { return (_repetitions.Count > 0) ? _repetitions.Max(kv => kv.Key) : 0; }
+            get { return (_repetitions.Count > 0) ? _repetitions.Max<KeyValuePair<int, RepetitionBuilder>, int>(kv => kv.Key) : 0; }
         }
 
         /// <summary>Get or set field repetition content within this field.</summary>
@@ -69,7 +69,7 @@ namespace NextLevelSeven.Building.Elements
                 var index = 1;
                 var result = new StringBuilder();
 
-                foreach (var repetition in _repetitions.OrderBy(i => i.Key))
+                foreach (var repetition in _repetitions.OrderBy<KeyValuePair<int, RepetitionBuilder>, int>(i => i.Key))
                 {
                     while (index < repetition.Key)
                     {
@@ -301,44 +301,13 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>If true, the element is considered to exist.</summary>
         public override bool Exists
         {
-            get { return _repetitions.Any(s => s.Value.Exists); }
+            get { return _repetitions.Any<KeyValuePair<int, RepetitionBuilder>>(s => s.Value.Exists); }
         }
 
         /// <summary>Get this element's heirarchy-specific ancestor.</summary>
         ISegment IField.Ancestor
         {
             get { return Ancestor as ISegment; }
-        }
-
-        /// <summary>Delete a descendant at the specified index.</summary>
-        /// <param name="index">Index to delete at.</param>
-        public override void Delete(int index)
-        {
-            DeleteDescendant(_repetitions, index);
-        }
-
-        /// <summary>Insert a descendant element.</summary>
-        /// <param name="element">Element to insert.</param>
-        /// <param name="index">Index to insert at.</param>
-        public override IElement Insert(int index, IElement element)
-        {
-            return InsertDescendant(_repetitions, index, element);
-        }
-
-        /// <summary>Insert a descendant element string.</summary>
-        /// <param name="value">Value to insert.</param>
-        /// <param name="index">Index to insert at.</param>
-        public override IElement Insert(int index, string value)
-        {
-            return InsertDescendant(_repetitions, index, value);
-        }
-
-        /// <summary>Move descendant to another index.</summary>
-        /// <param name="sourceIndex">Source index.</param>
-        /// <param name="targetIndex">Target index.</param>
-        public override void Move(int sourceIndex, int targetIndex)
-        {
-            MoveDescendant(_repetitions, sourceIndex, targetIndex);
         }
 
         /// <summary>Create a repetition builder object.</summary>
@@ -355,6 +324,11 @@ namespace NextLevelSeven.Building.Elements
         protected override sealed IElement GetGenericElement(int index)
         {
             return _repetitions[index];
+        }
+
+        protected override IIndexedElementCache<Builder> GetCache()
+        {
+            return _repetitions;
         }
     }
 }

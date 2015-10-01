@@ -124,24 +124,36 @@ namespace NextLevelSeven.Building.Elements
             get { return Encoding; }
         }
 
-        /// <summary>Delete a descendant element.</summary>
+        /// <summary>Delete a descendant at the specified index.</summary>
         /// <param name="index">Index to delete at.</param>
-        public abstract void Delete(int index);
+        public virtual void Delete(int index)
+        {
+            DeleteDescendant(index);
+        }
 
-        /// <summary>Insert a copy of the specified element at the specified descendant index.</summary>
-        /// <param name="index">Index to insert into.</param>
+        /// <summary>Insert a descendant element.</summary>
         /// <param name="element">Element to insert.</param>
-        public abstract IElement Insert(int index, IElement element);
+        /// <param name="index">Index to insert at.</param>
+        public virtual IElement Insert(int index, IElement element)
+        {
+            return InsertDescendant(index, element);
+        }
 
-        /// <summary>Insert a copy of the specified element at the specified descendant index.</summary>
-        /// <param name="index">Index to insert into.</param>
+        /// <summary>Insert a descendant element string.</summary>
         /// <param name="value">Value to insert.</param>
-        public abstract IElement Insert(int index, string value);
+        /// <param name="index">Index to insert at.</param>
+        public virtual IElement Insert(int index, string value)
+        {
+            return InsertDescendant(index, value);
+        }
 
-        /// <summary>Move a descendant element to another index.</summary>
-        /// <param name="sourceIndex">Index to move from.</param>
-        /// <param name="targetIndex">Index to move to.</param>
-        public abstract void Move(int sourceIndex, int targetIndex);
+        /// <summary>Move descendant to another index.</summary>
+        /// <param name="sourceIndex">Source index.</param>
+        /// <param name="targetIndex">Target index.</param>
+        public virtual void Move(int sourceIndex, int targetIndex)
+        {
+            MoveDescendant(sourceIndex, targetIndex);
+        }
 
         /// <summary>Get the element at the specified index as an IElement.</summary>
         /// <param name="index">Index at which to get the element.</param>
@@ -177,13 +189,13 @@ namespace NextLevelSeven.Building.Elements
         /// <typeparam name="TDescendant">Type of descendant element.</typeparam>
         /// <param name="cache">Cache to delete within.</param>
         /// <param name="index">Descendant index to delete.</param>
-        protected static void DeleteDescendant<TDescendant>(IIndexedCache<TDescendant> cache, int index)
-            where TDescendant : Builder
+        protected void DeleteDescendant(int index)
         {
+            var cache = GetCache();
             var values = cache.Where(c => c.Key != index).ToList();
-            foreach (var value in values.Where(v => v.Key > index))
+            foreach (var builder in values.Where(v => v.Key > index).Select(value => value.Value))
             {
-                value.Value.Index--;
+                builder.Index--;
             }
             cache.Clear();
             foreach (var value in values)
@@ -196,13 +208,12 @@ namespace NextLevelSeven.Building.Elements
         /// <typeparam name="TDescendant">Type of descendant element.</typeparam>
         /// <param name="cache">Cache to modify.</param>
         /// <param name="index">Descendant index.</param>
-        private static void ShiftForInsert<TDescendant>(IIndexedCache<TDescendant> cache, int index)
-            where TDescendant : Builder
+        private static void ShiftForInsert(IIndexedElementCache<Builder> cache, int index)
         {
             var values = cache.ToList();
-            foreach (var value in values.Where(v => v.Key >= index))
+            foreach (var builder in values.Where(v => v.Key >= index).Select(value => value.Value))
             {
-                value.Value.Index++;
+                builder.Index++;
             }
             cache.Clear();
             foreach (var value in values)
@@ -216,9 +227,10 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="cache">Cache to delete within.</param>
         /// <param name="index">Descendant index to delete.</param>
         /// <param name="value">Value to insert.</param>
-        protected static IElementBuilder InsertDescendant<TDescendant>(IIndexedCache<TDescendant> cache, int index,
-            string value) where TDescendant : Builder
+        protected IElementBuilder InsertDescendant(int index,
+            string value)
         {
+            var cache = GetCache();
             ShiftForInsert(cache, index);
             cache[index].Value = value;
             return cache[index];
@@ -229,9 +241,10 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="cache">Cache to delete within.</param>
         /// <param name="index">Descendant index to delete.</param>
         /// <param name="element">Element to insert.</param>
-        protected static IElementBuilder InsertDescendant<TDescendant>(IIndexedCache<TDescendant> cache, int index,
-            IElement element) where TDescendant : Builder
+        protected IElementBuilder InsertDescendant(int index,
+            IElement element)
         {
+            var cache = GetCache();
             ShiftForInsert(cache, index);
             element.CopyTo(cache[index]);
             return cache[index];
@@ -242,28 +255,33 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="cache">Cache to move within.</param>
         /// <param name="source">Source index.</param>
         /// <param name="target">Target index.</param>
-        protected static void MoveDescendant<TDescendant>(IIndexedCache<TDescendant> cache, int source, int target)
-            where TDescendant : Builder
+        protected void MoveDescendant(int source, int target)
         {
+            var cache = GetCache();
             var values = cache.ToList();
             var sourceValue = cache[source];
 
-            foreach (var value in values.Where(v => v.Key > source))
+            foreach (var builder in values.Where(v => v.Key > source).Select(value => value.Value))
             {
-                value.Value.Index--;
+                builder.Index--;
             }
-            foreach (var value in values.Where(v => v.Key > target))
+            foreach (var builder in values.Where(v => v.Key > target).Select(value => value.Value))
             {
-                value.Value.Index++;
+                builder.Index++;
             }
 
-            sourceValue.Index = target;
+            if (sourceValue != null)
+            {
+                sourceValue.Index = target;                
+            }
             cache.Clear();
             foreach (var value in values)
             {
                 cache[value.Value.Index] = value.Value;
             }
         }
+
+        protected abstract IIndexedElementCache<Builder> GetCache();
 
         /// <summary>
         ///     Get the message for this builder.

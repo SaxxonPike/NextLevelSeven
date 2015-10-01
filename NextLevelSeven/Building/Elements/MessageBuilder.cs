@@ -13,12 +13,12 @@ namespace NextLevelSeven.Building.Elements
     internal sealed class MessageBuilder : Builder, IMessageBuilder
     {
         /// <summary>Descendant segments.</summary>
-        private readonly IndexedCache<SegmentBuilder> _segments;
+        private readonly BuilderElementCache<SegmentBuilder> _segments;
 
         /// <summary>Create a message builder with default MSH segment containing only encoding characters.</summary>
         public MessageBuilder()
         {
-            _segments = new IndexedCache<SegmentBuilder>(CreateSegmentBuilder);
+            _segments = new BuilderElementCache<SegmentBuilder>(CreateSegmentBuilder);
             ComponentDelimiter = '^';
             EscapeCharacter = '\\';
             RepetitionDelimiter = '~';
@@ -41,7 +41,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get the number of segments in the message.</summary>
         public override int ValueCount
         {
-            get { return _segments.Max(kv => kv.Key); }
+            get { return _segments.Max<KeyValuePair<int, SegmentBuilder>, int>(kv => kv.Key); }
         }
 
         /// <summary>Get or set segment content within this message.</summary>
@@ -69,7 +69,7 @@ namespace NextLevelSeven.Building.Elements
                 }
 
                 var result = string.Join(ReadOnlyEncodingConfiguration.SegmentDelimiterString,
-                    _segments.OrderBy(i => i.Key).Select(i => i.Value.Value ?? string.Empty));
+                    _segments.OrderBy<KeyValuePair<int, SegmentBuilder>, int>(i => i.Key).Select(i => i.Value.Value ?? string.Empty));
 
                 return (result.Length == 0)
                     ? null
@@ -319,25 +319,7 @@ namespace NextLevelSeven.Building.Elements
         public IEnumerable<string> GetValues(int segment = -1, int field = -1, int repetition = -1, int component = -1,
             int subcomponent = -1)
         {
-            if (segment < 0)
-            {
-                return Values;
-            }
-            if (field < 0)
-            {
-                return _segments[segment].Values;
-            }
-            if (repetition < 0)
-            {
-                return _segments[segment][field].Values;
-            }
-            if (component < 0)
-            {
-                return _segments[segment][field][repetition].Values;
-            }
-            return (subcomponent < 0)
-                ? _segments[segment][field][repetition][component].Values
-                : _segments[segment][field][repetition][component][subcomponent].Value.Yield();
+            return segment < 0 ? Values : _segments[segment].GetValues(field, repetition, component, subcomponent);
         }
 
         /// <summary>Get the value at the specific location in the message.</summary>
@@ -350,25 +332,7 @@ namespace NextLevelSeven.Building.Elements
         public string GetValue(int segment = -1, int field = -1, int repetition = -1, int component = -1,
             int subcomponent = -1)
         {
-            if (segment < 0)
-            {
-                return Value;
-            }
-            if (field < 0)
-            {
-                return _segments[segment].Value;
-            }
-            if (repetition < 0)
-            {
-                return _segments[segment][field].Value;
-            }
-            if (component < 0)
-            {
-                return _segments[segment][field][repetition].Value;
-            }
-            return (subcomponent < 0)
-                ? _segments[segment][field][repetition][component].Value
-                : _segments[segment][field][repetition][component][subcomponent].Value;
+            return segment < 0 ? Value : _segments[segment].GetValue(field, repetition, component, subcomponent);
         }
 
         /// <summary>Deep clone the message builder.</summary>
@@ -423,38 +387,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>If true, the element is considered to exist.</summary>
         public override bool Exists
         {
-            get { return _segments.Any(s => s.Value.Exists); }
-        }
-
-        /// <summary>Delete a descendant at the specified index.</summary>
-        /// <param name="index">Index to delete at.</param>
-        public override void Delete(int index)
-        {
-            DeleteDescendant(_segments, index);
-        }
-
-        /// <summary>Move descendant to another index.</summary>
-        /// <param name="sourceIndex">Source index.</param>
-        /// <param name="targetIndex">Target index.</param>
-        public override void Move(int sourceIndex, int targetIndex)
-        {
-            MoveDescendant(_segments, sourceIndex, targetIndex);
-        }
-
-        /// <summary>Insert a descendant element.</summary>
-        /// <param name="element">Element to insert.</param>
-        /// <param name="index">Index to insert at.</param>
-        public override IElement Insert(int index, IElement element)
-        {
-            return InsertDescendant(_segments, index, element);
-        }
-
-        /// <summary>Insert a descendant element string.</summary>
-        /// <param name="value">Value to insert.</param>
-        /// <param name="index">Index to insert at.</param>
-        public override IElement Insert(int index, string value)
-        {
-            return InsertDescendant(_segments, index, value);
+            get { return _segments.Any<KeyValuePair<int, SegmentBuilder>>(s => s.Value.Exists); }
         }
 
         /// <summary>Change all system line endings to HL7 line endings.</summary>
@@ -479,6 +412,11 @@ namespace NextLevelSeven.Building.Elements
         protected override IElement GetGenericElement(int index)
         {
             return _segments[index];
+        }
+
+        protected override IIndexedElementCache<Builder> GetCache()
+        {
+            return _segments;
         }
     }
 }

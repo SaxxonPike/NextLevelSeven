@@ -92,8 +92,6 @@
     <Compile Include="Testing\Mock.cs" />
     <Compile Include="BaseTestFixture.cs" />
     <Compile Include="Testing\TestUnitTests.cs" />
-    <Compile Include="Utility\EnumerableExtensionUnitTests.cs" />
-    <Compile Include="Utility\IndexedCacheUnitTests.cs" />
     <Compile Include="Utility\UtilityTestFixture.cs" />
   </ItemGroup>
   <ItemGroup>

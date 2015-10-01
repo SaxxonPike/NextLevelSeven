@@ -44,6 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Building\Elements\Builder.cs" />
+    <Compile Include="Building\Elements\BuilderElementCache.cs" />
     <Compile Include="Building\Elements\DescendantBuilder.cs" />
     <Compile Include="Building\BuilderException.cs" />
     <Compile Include="Building\Elements\BuilderEncodingConfiguration.cs" />
@@ -51,6 +52,7 @@
     <Compile Include="Building\Elements\DelimiterFieldBuilder.cs" />
     <Compile Include="Building\Elements\EncodingFieldBuilder.cs" />
     <Compile Include="Building\Elements\FieldBuilder.cs" />
+    <Compile Include="Building\Elements\StaticValueFieldBuilder.cs" />
     <Compile Include="Building\IElementBuilder.cs" />
     <Compile Include="Building\IComponentBuilder.cs" />
     <Compile Include="Building\IFieldBuilder.cs" />
@@ -127,9 +129,8 @@
     <Compile Include="Diagnostics\ErrorMessages.English.cs" />
     <Compile Include="Diagnostics\ErrorCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Testing\UtilityMocks.cs" />
-    <Compile Include="Utility\IIndexedCache.cs" />
-    <Compile Include="Utility\IndexedCache.cs" />
+    <Compile Include="Utility\IIndexedElementCache.cs" />
+    <Compile Include="Utility\IndexedElementCache.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

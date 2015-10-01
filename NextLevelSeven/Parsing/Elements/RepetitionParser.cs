@@ -10,7 +10,7 @@ namespace NextLevelSeven.Parsing.Elements
     internal sealed class RepetitionParser : DescendantParser, IRepetitionParser
     {
         /// <summary>Internal component cache.</summary>
-        private readonly IndexedCache<ComponentParser> _components;
+        private readonly IndexedElementCache<ComponentParser> _components;
 
         /// <summary>Create a repetition with the specified ancestor, ancestor index, and exposed index.</summary>
         /// <param name="ancestor">Ancestor element.</param>
@@ -19,7 +19,7 @@ namespace NextLevelSeven.Parsing.Elements
         public RepetitionParser(Parser ancestor, int parentIndex, int externalIndex)
             : base(ancestor, parentIndex, externalIndex)
         {
-            _components = new IndexedCache<ComponentParser>(CreateComponent);
+            _components = new IndexedElementCache<ComponentParser>(CreateComponent);
         }
 
         /// <summary>Create a detached repetition with the specified initial value and encoding configuration.</summary>
@@ -27,7 +27,7 @@ namespace NextLevelSeven.Parsing.Elements
         private RepetitionParser(ReadOnlyEncodingConfiguration config)
             : base(config)
         {
-            _components = new IndexedCache<ComponentParser>(CreateComponent);
+            _components = new IndexedElementCache<ComponentParser>(CreateComponent);
         }
 
         /// <summary>Component delimiter.</summary>

@@ -3,6 +3,7 @@ using System.Linq;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Encoding;
 using NextLevelSeven.Diagnostics;
+using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building.Elements
 {
@@ -130,14 +131,6 @@ namespace NextLevelSeven.Building.Elements
             throw new BuilderException(ErrorCode.SubcomponentCannotHaveDescendants);
         }
 
-        /// <summary>Move descendant to another index.</summary>
-        /// <param name="sourceIndex">Source index.</param>
-        /// <param name="targetIndex">Target index.</param>
-        public override void Move(int sourceIndex, int targetIndex)
-        {
-            throw new BuilderException(ErrorCode.SubcomponentCannotHaveDescendants);
-        }
-
         /// <summary>Throws. Subcomponents cannot be divided any further.</summary>
         /// <param name="index"></param>
         /// <returns></returns>
@@ -151,6 +144,11 @@ namespace NextLevelSeven.Building.Elements
         protected override IEnumerable<IElement> GetDescendants()
         {
             return Enumerable.Empty<IElement>();
+        }
+
+        protected override IIndexedElementCache<Builder> GetCache()
+        {
+            throw new BuilderException(ErrorCode.SubcomponentCannotHaveDescendants);
         }
     }
 }

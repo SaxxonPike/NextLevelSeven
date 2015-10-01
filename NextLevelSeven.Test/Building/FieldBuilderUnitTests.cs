@@ -170,7 +170,14 @@ namespace NextLevelSeven.Test.Building
         }
 
         [TestMethod]
-        public void FieldBuilder_Delimiter_GetsOneValue()
+        public void FieldBuilder_Delimiter_GetsValue()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][1];
+            Assert.AreEqual("|", builder.Value);
+        }
+
+        [TestMethod]
+        public void FieldBuilder_Delimiter_GetsValues()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][1];
             Assert.AreEqual(1, builder.Values.Count());
