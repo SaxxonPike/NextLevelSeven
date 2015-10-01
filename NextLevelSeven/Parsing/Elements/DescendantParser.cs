@@ -11,7 +11,7 @@ namespace NextLevelSeven.Parsing.Elements
 
         /// <summary>Create a descendant element that is detached from an ancestor.</summary>
         /// <param name="config">Encoding configuration for the element.</param>
-        protected DescendantParser(EncodingConfiguration config)
+        protected DescendantParser(ReadOnlyEncodingConfiguration config)
             : base(config)
         {
         }

@@ -1,9 +1,10 @@
-﻿using NextLevelSeven.Core.Encoding;
+﻿using System.Diagnostics.CodeAnalysis;
+using NextLevelSeven.Core.Encoding;
 
 namespace NextLevelSeven.Building.Elements
 {
     /// <summary>An encoding configuration wrapper that redirects character properties from a MessageBuilder.</summary>
-    internal sealed class BuilderEncodingConfiguration : EncodingConfiguration, IEncoding
+    internal sealed class BuilderEncodingConfiguration : ReadOnlyEncodingConfiguration, IEncoding
     {
         /// <summary>Create an encoding configuration from a message or segment.</summary>
         /// <param name="builder">Message builder to pull the characters from.</param>
@@ -48,31 +49,31 @@ namespace NextLevelSeven.Building.Elements
         public override char ComponentDelimiter
         {
             get { return Builder.ComponentDelimiter; }
-            protected set { Builder.ComponentDelimiter = value; }
+            [ExcludeFromCodeCoverage] protected set { }
         }
 
         public override char EscapeCharacter
         {
             get { return Builder.EscapeCharacter; }
-            protected set { Builder.EscapeCharacter = value; }
+            [ExcludeFromCodeCoverage] protected set { }
         }
 
         public override char FieldDelimiter
         {
             get { return Builder.FieldDelimiter; }
-            protected set { Builder.FieldDelimiter = value; }
+            [ExcludeFromCodeCoverage] protected set { }
         }
 
         public override char RepetitionDelimiter
         {
             get { return Builder.RepetitionDelimiter; }
-            protected set { Builder.RepetitionDelimiter = value; }
+            [ExcludeFromCodeCoverage] protected set { }
         }
 
         public override char SubcomponentDelimiter
         {
             get { return Builder.SubcomponentDelimiter; }
-            protected set { Builder.SubcomponentDelimiter = value; }
+            [ExcludeFromCodeCoverage] protected set { }
         }
     }
 }

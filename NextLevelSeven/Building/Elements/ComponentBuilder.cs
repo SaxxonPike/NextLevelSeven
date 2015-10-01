@@ -194,7 +194,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Clone of the component.</returns>
         ComponentBuilder CloneInternal()
         {
-            return new ComponentBuilder(new SimpleEncodingConfiguration(Encoding), Index)
+            return new ComponentBuilder(new EncodingConfiguration(Encoding), Index)
             {
                 Value = Value
             };            

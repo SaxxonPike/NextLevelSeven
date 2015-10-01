@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Runtime.InteropServices;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
 using NextLevelSeven.Test.Testing;
 
@@ -7,6 +8,13 @@ namespace NextLevelSeven.Test.Building
     [TestClass]
     public sealed class SegmentBuilderUnitTests : BuildingTestFixture
     {
+        [TestMethod]
+        public void SegmentBuilder_HasDelimiter()
+        {
+            var builder = Message.Build(Mock.Message());
+            Assert.AreEqual('|', builder[1].Delimiter);
+        }
+
         [TestMethod]
         public void SegmentBuilder_CanMoveFields()
         {
@@ -71,6 +79,15 @@ namespace NextLevelSeven.Test.Building
         public void SegmentBuilder_CanBeCloned()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1];
+            var clone = builder.Clone();
+            Assert.AreNotSame(builder, clone, "Builder and its clone must not refer to the same object.");
+            Assert.AreEqual(builder.ToString(), clone.ToString(), "Clone data doesn't match source data.");
+        }
+
+        [TestMethod]
+        public void SegmentBuilder_CanBeClonedGenerically()
+        {
+            IElement builder = Message.Build(ExampleMessages.Standard)[1];
             var clone = builder.Clone();
             Assert.AreNotSame(builder, clone, "Builder and its clone must not refer to the same object.");
             Assert.AreEqual(builder.ToString(), clone.ToString(), "Clone data doesn't match source data.");

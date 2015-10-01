@@ -69,7 +69,7 @@ namespace NextLevelSeven.Building.Elements
                     return null;
                 }
 
-                var result = string.Join(EncodingConfiguration.SegmentDelimiterString ?? string.Empty,
+                var result = string.Join(ReadOnlyEncodingConfiguration.SegmentDelimiterString ?? string.Empty,
                     _segments.OrderBy(i => i.Key).Select(i => i.Value.Value ?? string.Empty));
 
                 return (result.Length == 0)
@@ -219,7 +219,7 @@ namespace NextLevelSeven.Building.Elements
             _segments.Clear();
             var index = 1;
 
-            foreach (var segment in value.Split(EncodingConfiguration.SegmentDelimiter))
+            foreach (var segment in value.Split(ReadOnlyEncodingConfiguration.SegmentDelimiter))
             {
                 SetSegment(index++, segment);
             }
@@ -248,7 +248,7 @@ namespace NextLevelSeven.Building.Elements
                 return this;
             }
 
-            SetMessage(string.Join(EncodingConfiguration.SegmentDelimiterString, segments));
+            SetMessage(string.Join(ReadOnlyEncodingConfiguration.SegmentDelimiterString, segments));
             return this;
         }
 
@@ -395,7 +395,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get the message delimiter.</summary>
         public override char Delimiter
         {
-            get { return EncodingConfiguration.SegmentDelimiter; }
+            get { return ReadOnlyEncodingConfiguration.SegmentDelimiter; }
         }
 
         /// <summary>Get a wrapper which can manipulate message details.</summary>
@@ -459,7 +459,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Sanitized string.</returns>
         private string SanitizeLineEndings(string message)
         {
-            return message == null ? null : message.Replace(Environment.NewLine, EncodingConfiguration.SegmentDelimiterString);
+            return message == null ? null : message.Replace(Environment.NewLine, ReadOnlyEncodingConfiguration.SegmentDelimiterString);
         }
 
         /// <summary>Create a segment builder object.</summary>

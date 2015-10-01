@@ -5,7 +5,7 @@ using NextLevelSeven.Core.Encoding;
 namespace NextLevelSeven.Parsing.Elements
 {
     /// <summary>An encoding configuration that gets its values from an HL7 message.</summary>
-    internal sealed class ParserEncodingConfiguration : EncodingConfiguration
+    internal sealed class ParserEncodingConfiguration : ReadOnlyEncodingConfiguration
     {
         /// <summary>Create an encoding configuration from a message or segment.</summary>
         /// <param name="segment">Field to pull the characters from.</param>

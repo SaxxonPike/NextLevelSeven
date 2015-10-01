@@ -26,7 +26,7 @@ namespace NextLevelSeven.Parsing.Elements
 
         /// <summary>Create a segment root with the specified encoding configuration.</summary>
         /// <param name="config"></param>
-        private SegmentParser(EncodingConfiguration config)
+        private SegmentParser(ReadOnlyEncodingConfiguration config)
             : base(config)
         {
             _fields = new IndexedCache<int, FieldParser>(CreateField);

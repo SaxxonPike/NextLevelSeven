@@ -69,7 +69,7 @@
     <Compile Include="Conversion\TextConverter.cs" />
     <Compile Include="Core\ElementExtensions.cs" />
     <Compile Include="Core\ElementOperations.cs" />
-    <Compile Include="Core\Encoding\SimpleEncodingConfiguration.cs" />
+    <Compile Include="Core\Encoding\EncodingConfiguration.cs" />
     <Compile Include="Core\EncodingExtensions.cs" />
     <Compile Include="Core\Encoding\EncodingOperations.cs" />
     <Compile Include="Core\HL7.cs" />
@@ -107,7 +107,7 @@
     <Compile Include="Parsing\Dividers\StringDivider.cs" />
     <Compile Include="Parsing\Dividers\StringDividerOperations.cs" />
     <Compile Include="Parsing\Elements\Parser.cs" />
-    <Compile Include="Core\Encoding\EncodingConfiguration.cs" />
+    <Compile Include="Core\Encoding\ReadOnlyEncodingConfiguration.cs" />
     <Compile Include="Parsing\Elements\EncodingFieldParser.cs" />
     <Compile Include="Parsing\Elements\FieldParser.cs" />
     <Compile Include="Parsing\Elements\DelimiterFieldParser.cs" />

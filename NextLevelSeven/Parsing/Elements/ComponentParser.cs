@@ -24,7 +24,7 @@ namespace NextLevelSeven.Parsing.Elements
 
         /// <summary>Create a detached component.</summary>
         /// <param name="config">Encoding configuration.</param>
-        private ComponentParser(EncodingConfiguration config)
+        private ComponentParser(ReadOnlyEncodingConfiguration config)
             : base(config)
         {
             _subcomponents = new IndexedCache<int, SubcomponentParser>(CreateSubcomponent);

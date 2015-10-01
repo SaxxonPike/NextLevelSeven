@@ -24,7 +24,7 @@ namespace NextLevelSeven.Parsing.Elements
 
         /// <summary>Create a detached repetition with the specified initial value and encoding configuration.</summary>
         /// <param name="config">Encoding configuration.</param>
-        private RepetitionParser(EncodingConfiguration config)
+        private RepetitionParser(ReadOnlyEncodingConfiguration config)
             : base(config)
         {
             _components = new IndexedCache<int, ComponentParser>(CreateComponent);

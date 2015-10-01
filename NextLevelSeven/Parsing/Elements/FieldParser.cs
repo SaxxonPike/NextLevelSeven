@@ -24,7 +24,7 @@ namespace NextLevelSeven.Parsing.Elements
 
         /// <summary>Create a detached field with the specified initial value and configuration.</summary>
         /// <param name="config">Encoding configuration.</param>
-        public FieldParser(EncodingConfiguration config)
+        public FieldParser(ReadOnlyEncodingConfiguration config)
             : base(config)
         {
             _repetitions = new IndexedCache<int, RepetitionParser>(CreateRepetition);

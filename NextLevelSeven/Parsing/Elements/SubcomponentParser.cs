@@ -20,7 +20,7 @@ namespace NextLevelSeven.Parsing.Elements
 
         /// <summary>Create a subcomponent root with the specified encoding configuration.</summary>
         /// <param name="config">Encoding configuration to use.</param>
-        private SubcomponentParser(EncodingConfiguration config)
+        private SubcomponentParser(ReadOnlyEncodingConfiguration config)
             : base(config)
         {
         }

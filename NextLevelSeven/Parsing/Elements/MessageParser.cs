@@ -203,7 +203,7 @@ namespace NextLevelSeven.Parsing.Elements
         {
             return message == null
                 ? null
-                : message.Replace(Environment.NewLine, EncodingConfiguration.SegmentDelimiterString);
+                : message.Replace(Environment.NewLine, ReadOnlyEncodingConfiguration.SegmentDelimiterString);
         }
 
         /// <summary>Deep clone this message.</summary>

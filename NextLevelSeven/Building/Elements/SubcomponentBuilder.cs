@@ -78,7 +78,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns></returns>
         SubcomponentBuilder CloneInternal()
         {
-            return new SubcomponentBuilder(new SimpleEncodingConfiguration(Encoding), Index)
+            return new SubcomponentBuilder(new EncodingConfiguration(Encoding), Index)
             {
                 Value = Value
             };            

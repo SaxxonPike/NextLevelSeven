@@ -15,7 +15,7 @@ namespace NextLevelSeven.Parsing.Elements
         private StringDivider _descendantDivider;
 
         /// <summary>Base encoding configuration.</summary>
-        private EncodingConfiguration _encodingConfiguration;
+        private ReadOnlyEncodingConfiguration _encodingConfiguration;
 
         /// <summary>Create a root element.</summary>
         protected Parser()
@@ -24,7 +24,7 @@ namespace NextLevelSeven.Parsing.Elements
 
         /// <summary>Create a root element with the specified encoding configuration.</summary>
         /// <param name="config"></param>
-        protected Parser(EncodingConfiguration config)
+        protected Parser(ReadOnlyEncodingConfiguration config)
         {
             _encodingConfiguration = config;
         }
@@ -62,7 +62,7 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>Get the encoding configuration.</summary>
-        protected EncodingConfiguration EncodingConfiguration
+        protected ReadOnlyEncodingConfiguration EncodingConfiguration
         {
             get
             {

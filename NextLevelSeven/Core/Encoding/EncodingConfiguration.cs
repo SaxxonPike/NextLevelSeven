@@ -1,53 +1,73 @@
 ﻿namespace NextLevelSeven.Core.Encoding
 {
-    /// <summary>Provides information about the characters used to encode an HL7 message.</summary>
-    internal abstract class EncodingConfiguration : IReadOnlyEncoding
+    internal sealed class EncodingConfiguration : ReadOnlyEncodingConfiguration, IEncoding
     {
-        /// <summary>Get the segment delimiter used to separate segments in a message. This is non-negotiable in the HL7 standard.</summary>
-        public const char SegmentDelimiter = '\xD';
-
-        /// <summary>Get the segment delimiter used to separate segments in a message. This is non-negotiable in the HL7 standard.</summary>
-        public const string SegmentDelimiterString = "\xD";
-
-        /// <summary>Get the delimiter character used to split components.</summary>
-        public abstract char ComponentDelimiter { get; protected set; }
-
-        /// <summary>Get the escape character used to mark encoded sequences.</summary>
-        public abstract char EscapeCharacter { get; protected set; }
-
-        /// <summary>Get the escape character used to separate fields.</summary>
-        public abstract char FieldDelimiter { get; protected set; }
-
-        /// <summary>Get the repetition character used to separate multiple data in the same field.</summary>
-        public abstract char RepetitionDelimiter { get; protected set; }
-
-        /// <summary>Get the delimiter character used to split subcomponents.</summary>
-        public abstract char SubcomponentDelimiter { get; protected set; }
-
-        /// <summary>Initialize defaults.</summary>
-        /// <param name="field"></param>
-        /// <param name="repetition"></param>
-        /// <param name="component"></param>
-        /// <param name="subcomponent"></param>
-        /// <param name="escape"></param>
-        protected void InitializeWith(char field, char repetition, char component, char subcomponent, char escape)
+        /// <summary>Create an encoding configuration with the default characters.</summary>
+        public EncodingConfiguration()
         {
-            FieldDelimiter = field;
-            RepetitionDelimiter = repetition;
-            ComponentDelimiter = component;
-            SubcomponentDelimiter = subcomponent;
-            EscapeCharacter = escape;
         }
 
-        /// <summary>Clone defaults from another configuration.</summary>
-        /// <param name="other">Source configuration.</param>
-        protected void CopyFrom(IReadOnlyEncoding other)
+        /// <summary>Clone an existing encoding configuration.</summary>
+        /// <param name="other">Source configuration to pull values from.</param>
+        public EncodingConfiguration(IReadOnlyEncoding other)
         {
-            ComponentDelimiter = other.ComponentDelimiter;
-            EscapeCharacter = other.EscapeCharacter;
-            FieldDelimiter = other.FieldDelimiter;
-            RepetitionDelimiter = other.RepetitionDelimiter;
-            SubcomponentDelimiter = other.SubcomponentDelimiter;
+            CopyFrom(other);
+        }
+
+        /// <summary>Create an encoding configuration with the specified characters.</summary>
+        /// <param name="field">Field delimiter.</param>
+        /// <param name="repetition">Repetition delimiter.</param>
+        /// <param name="component">Component delimiter.</param>
+        /// <param name="subcomponent">Subcomponent delimiter.</param>
+        /// <param name="escape">Escape character.</param>
+        public EncodingConfiguration(char field, char repetition, char component, char subcomponent, char escape)
+        {
+            InitializeWith(field, repetition, component, subcomponent, escape);
+        }
+
+        /// <summary>Get the component delimiter.</summary>
+        public override char ComponentDelimiter { get; protected set; }
+
+        /// <summary>Get the escape character.</summary>
+        public override char EscapeCharacter { get; protected set; }
+
+        /// <summary>Get the field delimiter.</summary>
+        public override char FieldDelimiter { get; protected set; }
+
+        /// <summary>Get the repetition delimiter.</summary>
+        public override char RepetitionDelimiter { get; protected set; }
+
+        /// <summary>Get the subcomponent delimiter.</summary>
+        public override char SubcomponentDelimiter { get; protected set; }
+
+        char IEncoding.ComponentDelimiter
+        {
+            get { return ComponentDelimiter; }
+            set { ComponentDelimiter = value; }
+        }
+
+        char IEncoding.EscapeCharacter
+        {
+            get { return EscapeCharacter; }
+            set { EscapeCharacter = value; }
+        }
+
+        char IEncoding.FieldDelimiter
+        {
+            get { return FieldDelimiter; }
+            set { FieldDelimiter = value; }
+        }
+
+        char IEncoding.RepetitionDelimiter
+        {
+            get { return RepetitionDelimiter; }
+            set { RepetitionDelimiter = value; }
+        }
+
+        char IEncoding.SubcomponentDelimiter
+        {
+            get { return SubcomponentDelimiter; }
+            set { SubcomponentDelimiter = value; }
         }
     }
 }

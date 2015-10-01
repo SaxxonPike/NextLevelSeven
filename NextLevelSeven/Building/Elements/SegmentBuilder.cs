@@ -346,7 +346,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Clone of the segment.</returns>
         SegmentBuilder CloneInternal()
         {
-            return new SegmentBuilder(new SimpleEncodingConfiguration(Encoding), Index)
+            return new SegmentBuilder(new EncodingConfiguration(Encoding), Index)
             {
                 Value = Value
             };            
