@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System.Linq;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
 using NextLevelSeven.Test.Testing;
 
@@ -7,6 +8,20 @@ namespace NextLevelSeven.Test.Building
     [TestClass]
     public sealed class ComponentBuilderUnitTests : BuildingTestFixture
     {
+        [TestMethod]
+        public void ComponentBuilder_HasDelimiter()
+        {
+            var builder = Message.Build()[1][3][1][1];
+            Assert.AreEqual('&', builder.Delimiter);
+        }
+
+        [TestMethod]
+        public void ComponentBuilder_HasSubcomponents()
+        {
+            var builder = Message.Build(ExampleMessages.Variety)[1][3][1][1];
+            Assert.AreEqual(2, builder.Subcomponents.Count());
+        }
+
         [TestMethod]
         public void ComponentBuilder_ClearsSubcomponentsWithNoParameters()
         {
@@ -133,8 +148,16 @@ namespace NextLevelSeven.Test.Building
         [TestMethod]
         public void ComponentBuilder_CanBeCloned()
         {
-            var builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}",
-                Mock.String(), Mock.String(), Mock.String(), Mock.String()))[1][3][2][2];
+            var builder = Message.Build(Mock.Message())[1][3][2][2];
+            var clone = builder.Clone();
+            Assert.AreNotSame(builder, clone, "Builder and its clone must not refer to the same object.");
+            Assert.AreEqual(builder.ToString(), clone.ToString(), "Clone data doesn't match source data.");
+        }
+
+        [TestMethod]
+        public void ComponentBuilder_CanBeClonedGenerically()
+        {
+            IElement builder = Message.Build(Mock.Message())[1][3][2][2];
             var clone = builder.Clone();
             Assert.AreNotSame(builder, clone, "Builder and its clone must not refer to the same object.");
             Assert.AreEqual(builder.ToString(), clone.ToString(), "Clone data doesn't match source data.");

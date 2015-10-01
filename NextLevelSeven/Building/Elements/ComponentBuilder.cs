@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Text;
 using NextLevelSeven.Core;
-using NextLevelSeven.Core.Codec;
 using NextLevelSeven.Core.Encoding;
 using NextLevelSeven.Utility;
 
@@ -12,7 +11,7 @@ namespace NextLevelSeven.Building.Elements
     internal sealed class ComponentBuilder : DescendantBuilder, IComponentBuilder
     {
         /// <summary>Descendant builders.</summary>
-        private readonly IndexedCache<int, SubcomponentBuilder> _subcomponents;
+        private readonly IndexedCache<SubcomponentBuilder> _subcomponents;
 
         /// <summary>Create a component builder using the specified encoding configuration.</summary>
         /// <param name="builder">Ancestor builder.</param>
@@ -20,13 +19,13 @@ namespace NextLevelSeven.Building.Elements
         internal ComponentBuilder(Builder builder, int index)
             : base(builder, index)
         {
-            _subcomponents = new IndexedCache<int, SubcomponentBuilder>(CreateSubcomponentBuilder);
+            _subcomponents = new IndexedCache<SubcomponentBuilder>(CreateSubcomponentBuilder);
         }
 
         private ComponentBuilder(IEncoding config, int index)
             : base(config, index)
         {
-            _subcomponents = new IndexedCache<int, SubcomponentBuilder>(CreateSubcomponentBuilder);
+            _subcomponents = new IndexedCache<SubcomponentBuilder>(CreateSubcomponentBuilder);
         }
 
         /// <summary>Get a descendant subcomponent builder.</summary>

@@ -14,12 +14,12 @@ namespace NextLevelSeven.Building.Elements
     internal sealed class MessageBuilder : Builder, IMessageBuilder
     {
         /// <summary>Descendant segments.</summary>
-        private readonly IndexedCache<int, SegmentBuilder> _segments;
+        private readonly IndexedCache<SegmentBuilder> _segments;
 
         /// <summary>Create a message builder with default MSH segment containing only encoding characters.</summary>
         public MessageBuilder()
         {
-            _segments = new IndexedCache<int, SegmentBuilder>(CreateSegmentBuilder);
+            _segments = new IndexedCache<SegmentBuilder>(CreateSegmentBuilder);
             ComponentDelimiter = '^';
             EscapeCharacter = '\\';
             RepetitionDelimiter = '~';

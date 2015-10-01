@@ -13,12 +13,12 @@ namespace NextLevelSeven.Parsing.Elements
     internal sealed class MessageParser : Parser, IMessageParser
     {
         /// <summary>Segment cache.</summary>
-        private readonly IndexedCache<int, SegmentParser> _segments;
+        private readonly IndexedCache<SegmentParser> _segments;
 
         /// <summary>Create a message with a default MSH segment.</summary>
         public MessageParser()
         {
-            _segments = new IndexedCache<int, SegmentParser>(CreateSegment);
+            _segments = new IndexedCache<SegmentParser>(CreateSegment);
             Value = @"MSH|^~\&|";
         }
 

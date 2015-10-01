@@ -12,7 +12,7 @@ namespace NextLevelSeven.Parsing.Elements
     internal sealed class SegmentParser : DescendantParser, ISegmentParser
     {
         /// <summary>Internal component cache.</summary>
-        private readonly IndexedCache<int, FieldParser> _fields;
+        private readonly IndexedCache<FieldParser> _fields;
 
         /// <summary>Create a segment with the specified ancestor and indices.</summary>
         /// <param name="ancestor">Ancestor element.</param>
@@ -21,7 +21,7 @@ namespace NextLevelSeven.Parsing.Elements
         public SegmentParser(Parser ancestor, int parentIndex, int externalIndex)
             : base(ancestor, parentIndex, externalIndex)
         {
-            _fields = new IndexedCache<int, FieldParser>(CreateField);
+            _fields = new IndexedCache<FieldParser>(CreateField);
         }
 
         /// <summary>Create a segment root with the specified encoding configuration.</summary>
@@ -29,7 +29,7 @@ namespace NextLevelSeven.Parsing.Elements
         private SegmentParser(ReadOnlyEncodingConfiguration config)
             : base(config)
         {
-            _fields = new IndexedCache<int, FieldParser>(CreateField);
+            _fields = new IndexedCache<FieldParser>(CreateField);
         }
 
         /// <summary>Returns true if the segment's type field is MSH.</summary>

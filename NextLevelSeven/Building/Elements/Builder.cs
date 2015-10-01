@@ -178,7 +178,7 @@ namespace NextLevelSeven.Building.Elements
         /// <typeparam name="TDescendant">Type of descendant element.</typeparam>
         /// <param name="cache">Cache to delete within.</param>
         /// <param name="index">Descendant index to delete.</param>
-        protected static void DeleteDescendant<TDescendant>(IIndexedCache<int, TDescendant> cache, int index)
+        protected static void DeleteDescendant<TDescendant>(IIndexedCache<TDescendant> cache, int index)
             where TDescendant : Builder
         {
             var values = cache.Where(c => c.Key != index).ToList();
@@ -197,7 +197,7 @@ namespace NextLevelSeven.Building.Elements
         /// <typeparam name="TDescendant">Type of descendant element.</typeparam>
         /// <param name="cache">Cache to modify.</param>
         /// <param name="index">Descendant index.</param>
-        private static void ShiftForInsert<TDescendant>(IIndexedCache<int, TDescendant> cache, int index)
+        private static void ShiftForInsert<TDescendant>(IIndexedCache<TDescendant> cache, int index)
             where TDescendant : Builder
         {
             var values = cache.ToList();
@@ -217,7 +217,7 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="cache">Cache to delete within.</param>
         /// <param name="index">Descendant index to delete.</param>
         /// <param name="value">Value to insert.</param>
-        protected static IElementBuilder InsertDescendant<TDescendant>(IIndexedCache<int, TDescendant> cache, int index,
+        protected static IElementBuilder InsertDescendant<TDescendant>(IIndexedCache<TDescendant> cache, int index,
             string value) where TDescendant : Builder
         {
             ShiftForInsert(cache, index);
@@ -230,7 +230,7 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="cache">Cache to delete within.</param>
         /// <param name="index">Descendant index to delete.</param>
         /// <param name="element">Element to insert.</param>
-        protected static IElementBuilder InsertDescendant<TDescendant>(IIndexedCache<int, TDescendant> cache, int index,
+        protected static IElementBuilder InsertDescendant<TDescendant>(IIndexedCache<TDescendant> cache, int index,
             IElement element) where TDescendant : Builder
         {
             ShiftForInsert(cache, index);
@@ -243,7 +243,7 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="cache">Cache to move within.</param>
         /// <param name="source">Source index.</param>
         /// <param name="target">Target index.</param>
-        protected static void MoveDescendant<TDescendant>(IIndexedCache<int, TDescendant> cache, int source, int target)
+        protected static void MoveDescendant<TDescendant>(IIndexedCache<TDescendant> cache, int source, int target)
             where TDescendant : Builder
         {
             var values = cache.ToList();

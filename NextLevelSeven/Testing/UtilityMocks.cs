@@ -12,10 +12,10 @@ namespace NextLevelSeven.Testing
         /// <typeparam name="TValue">Type of value.</typeparam>
         /// <param name="factoryMethod">Method that will create new values.</param>
         /// <returns>Indexed cache of the specified types and the specified factory.</returns>
-        public static IIndexedCache<TKey, TValue> GetIndexedCache<TKey, TValue>(Func<TKey, TValue> factoryMethod)
+        public static IIndexedCache<TValue> GetIndexedCache<TValue>(Func<int, TValue> factoryMethod)
             where TValue : class
         {
-            return new IndexedCache<TKey, TValue>(new ProxyFactory<TKey, TValue>(factoryMethod));
+            return new IndexedCache<TValue>(new ProxyFactory<int, TValue>(factoryMethod));
         }
 
         /// <summary>Pass through to the Yield enumerable extension.</summary>

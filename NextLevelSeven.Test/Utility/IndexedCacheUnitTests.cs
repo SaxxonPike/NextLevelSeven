@@ -13,7 +13,7 @@ namespace NextLevelSeven.Test.Utility
     [TestClass]
     public class IndexedCacheUnitTests : UtilityTestFixture
     {
-        private static IIndexedCache<int, string> InitializeCache(Func<int, string> factory)
+        private static IIndexedCache<string> InitializeCache(Func<int, string> factory)
         {
             return UtilityMocks.GetIndexedCache(factory);
         }

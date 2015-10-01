@@ -13,7 +13,7 @@ namespace NextLevelSeven.Building.Elements
     internal sealed class SegmentBuilder : DescendantBuilder, ISegmentBuilder
     {
         /// <summary>Descendant builders.</summary>
-        private readonly IndexedCache<int, FieldBuilder> _fields;
+        private readonly IndexedCache<FieldBuilder> _fields;
 
         /// <summary>Create a segment builder with the specified encoding configuration.</summary>
         /// <param name="builder">Ancestor builder.</param>
@@ -21,13 +21,13 @@ namespace NextLevelSeven.Building.Elements
         internal SegmentBuilder(Builder builder, int index)
             : base(builder, index)
         {
-            _fields = new IndexedCache<int, FieldBuilder>(CreateFieldBuilder);
+            _fields = new IndexedCache<FieldBuilder>(CreateFieldBuilder);
         }
 
         private SegmentBuilder(IEncoding config, int index)
             : base(config, index)
         {
-            _fields = new IndexedCache<int, FieldBuilder>(CreateFieldBuilder);
+            _fields = new IndexedCache<FieldBuilder>(CreateFieldBuilder);
         }
 
         /// <summary>If true, this is an MSH segment which has special behavior in fields 1 and 2.</summary>

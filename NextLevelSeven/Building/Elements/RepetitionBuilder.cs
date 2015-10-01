@@ -12,7 +12,7 @@ namespace NextLevelSeven.Building.Elements
     internal sealed class RepetitionBuilder : DescendantBuilder, IRepetitionBuilder
     {
         /// <summary>Descendant builders.</summary>
-        private readonly IndexedCache<int, ComponentBuilder> _components;
+        private readonly IndexedCache<ComponentBuilder> _components;
 
         /// <summary>Create a repetition builder using the specified encoding configuration.</summary>
         /// <param name="builder">Ancestor builder.</param>
@@ -20,13 +20,13 @@ namespace NextLevelSeven.Building.Elements
         internal RepetitionBuilder(Builder builder, int index)
             : base(builder, index)
         {
-            _components = new IndexedCache<int, ComponentBuilder>(CreateComponentBuilder);
+            _components = new IndexedCache<ComponentBuilder>(CreateComponentBuilder);
         }
 
         private RepetitionBuilder(IEncoding config, int index)
             : base(config, index)
         {
-            _components = new IndexedCache<int, ComponentBuilder>(CreateComponentBuilder);
+            _components = new IndexedCache<ComponentBuilder>(CreateComponentBuilder);
         }
 
         /// <summary>Get a descendant component builder.</summary>

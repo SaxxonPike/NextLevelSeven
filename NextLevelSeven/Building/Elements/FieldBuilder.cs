@@ -12,7 +12,7 @@ namespace NextLevelSeven.Building.Elements
     internal class FieldBuilder : DescendantBuilder, IFieldBuilder
     {
         /// <summary>Descendant builders.</summary>
-        private readonly IndexedCache<int, RepetitionBuilder> _repetitions;
+        private readonly IndexedCache<RepetitionBuilder> _repetitions;
 
         /// <summary>Create a field builder with the specified encoding configuration.</summary>
         /// <param name="builder">Ancestor builder.</param>
@@ -20,13 +20,13 @@ namespace NextLevelSeven.Building.Elements
         internal FieldBuilder(Builder builder, int index)
             : base(builder, index)
         {
-            _repetitions = new IndexedCache<int, RepetitionBuilder>(CreateRepetitionBuilder);
+            _repetitions = new IndexedCache<RepetitionBuilder>(CreateRepetitionBuilder);
         }
 
         private FieldBuilder(IEncoding config, int index)
             : base(config, index)
         {
-            _repetitions = new IndexedCache<int, RepetitionBuilder>(CreateRepetitionBuilder);
+            _repetitions = new IndexedCache<RepetitionBuilder>(CreateRepetitionBuilder);
         }
 
         /// <summary>Get a descendant field repetition builder.</summary>
