@@ -392,12 +392,6 @@ namespace NextLevelSeven.Building.Elements
             };
         }
 
-        /// <summary>Get a codec which can be used to interpret this element as other types.</summary>
-        public override IEncodedTypeConverter Codec
-        {
-            get { return new EncodedTypeConverter(this); }
-        }
-
         /// <summary>Get the message delimiter.</summary>
         public override char Delimiter
         {
@@ -431,7 +425,7 @@ namespace NextLevelSeven.Building.Elements
 
         /// <summary>Delete a descendant at the specified index.</summary>
         /// <param name="index">Index to delete at.</param>
-        public override void DeleteDescendant(int index)
+        public override void Delete(int index)
         {
             DeleteDescendant(_segments, index);
         }
@@ -439,7 +433,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Move descendant to another index.</summary>
         /// <param name="sourceIndex">Source index.</param>
         /// <param name="targetIndex">Target index.</param>
-        public override void MoveDescendant(int sourceIndex, int targetIndex)
+        public override void Move(int sourceIndex, int targetIndex)
         {
             MoveDescendant(_segments, sourceIndex, targetIndex);
         }
@@ -447,7 +441,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Insert a descendant element.</summary>
         /// <param name="element">Element to insert.</param>
         /// <param name="index">Index to insert at.</param>
-        public override IElement InsertDescendant(IElement element, int index)
+        public override IElement Insert(int index, IElement element)
         {
             return InsertDescendant(_segments, index, element);
         }
@@ -455,7 +449,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Insert a descendant element string.</summary>
         /// <param name="value">Value to insert.</param>
         /// <param name="index">Index to insert at.</param>
-        public override IElement InsertDescendant(string value, int index)
+        public override IElement Insert(int index, string value)
         {
             return InsertDescendant(_segments, index, value);
         }

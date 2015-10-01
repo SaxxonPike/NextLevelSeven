@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Building;
 using NextLevelSeven.Core;
+using NextLevelSeven.Parsing;
 using NextLevelSeven.Test.Testing;
 
 namespace NextLevelSeven.Test.Building
@@ -15,23 +16,6 @@ namespace NextLevelSeven.Test.Building
         {
             var builder = Message.Build();
             Assert.AreSame(builder.Encoding, ((IElement) builder).Encoding);
-        }
-
-        [TestMethod]
-        public void Builder_CanBeCompared()
-        {
-            var content = Mock.Message();
-            var builder0 = Message.Build(content);
-            var builder1 = Message.Build(content);
-            builder0.Segment(1).Field(3).Value = "0";
-            builder1.Segment(1).Field(3).Value = "1";
-            var list = new List<IBuilder> {builder1, builder0};
-            list.Sort();
-            Assert.AreSame(list[0], builder0);
-            Assert.AreSame(list[1], builder1);
-            list.Reverse();
-            Assert.AreSame(list[0], builder1);
-            Assert.AreSame(list[1], builder0);
         }
 
         [TestMethod]
@@ -81,38 +65,6 @@ namespace NextLevelSeven.Test.Building
             const string message = "{0}|{1}";
             Assert.AreEqual(Message.BuildFormat(message, ExampleMessages.Minimum, param).Value,
                 string.Format(message, ExampleMessages.Minimum, param));
-        }
-
-        [TestMethod]
-        public void Builders_AreContentEquivalent()
-        {
-            var message = ExampleMessages.Minimum;
-            var builder = (object) Message.Build(message);
-            Assert.IsTrue(builder.Equals(message));
-        }
-
-        [TestMethod]
-        public void Builders_AreNullContentEquivalent()
-        {
-            var message = ExampleMessages.Minimum;
-            Assert.IsTrue(Message.Build(message)[1][3].Equals(null));
-        }
-
-        [TestMethod]
-        public void Builders_AreStringEquivalent()
-        {
-            var message = ExampleMessages.Minimum;
-            var builder = (IEquatable<string>) Message.Build(message);
-            Assert.IsTrue(builder.Equals(message));
-        }
-
-        [TestMethod]
-        public void Builders_AreElementEquivalent()
-        {
-            var message = ExampleMessages.Minimum;
-            IElement element = Message.Parse(message);
-            var builder = (IEquatable<IElement>) Message.Build(message);
-            Assert.IsTrue(builder.Equals(element));
         }
     }
 }

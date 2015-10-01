@@ -3,7 +3,7 @@
 namespace NextLevelSeven.Building
 {
     /// <summary>Interface for a subcomponent element builder.</summary>
-    public interface ISubcomponentBuilder : IBuilder, ISubcomponent
+    public interface ISubcomponentBuilder : IElementBuilder, ISubcomponent
     {
         /// <summary>Get the ancestor builder. Null if the element is an orphan.</summary>
         new IComponentBuilder Ancestor { get; }

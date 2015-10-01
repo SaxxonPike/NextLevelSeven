@@ -3,7 +3,7 @@
 namespace NextLevelSeven.Building
 {
     /// <summary>Interface for a field element builder.</summary>
-    public interface IFieldBuilder : IBuilder, IField
+    public interface IFieldBuilder : IElementBuilder, IField
     {
         /// <summary>Get a descendant field repetition builder.</summary>
         /// <param name="index">Index within the field to get the builder from.</param>

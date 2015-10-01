@@ -48,7 +48,7 @@ namespace NextLevelSeven.Parsing.Elements
 
         /// <summary>Delete a descendant element.</summary>
         /// <param name="index">Index to insert at.</param>
-        override public void DeleteDescendant(int index)
+        override public void Delete(int index)
         {
             if (IsMsh)
             {
@@ -64,16 +64,16 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Insert a descendant element.</summary>
         /// <param name="element">Element to insert.</param>
         /// <param name="index">Index to insert at.</param>
-        override public IElement InsertDescendant(IElement element, int index)
+        override public IElement Insert(int index, IElement element)
         {
-            InsertDescendant(element.Value, index);
+            Insert(index, element.Value);
             return GetDescendant(index);
         }
 
         /// <summary>Insert a descendant element.</summary>
         /// <param name="value">Value to insert.</param>
         /// <param name="index">Index to insert at.</param>
-        override public IElement InsertDescendant(string value, int index)
+        override public IElement Insert(int index, string value)
         {
             if (IsMsh)
             {
@@ -90,7 +90,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Move a descendant.</summary>
         /// <param name="sourceIndex"></param>
         /// <param name="targetIndex"></param>
-        override public void MoveDescendant(int sourceIndex, int targetIndex)
+        override public void Move(int sourceIndex, int targetIndex)
         {
             if (IsMsh)
             {
@@ -192,7 +192,10 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Get or set all field values in this segment.</summary>
         public override IEnumerable<string> Values
         {
-            get { return base.Values; }
+            get
+            {
+                return Descendants.Select(d => d.Value);
+            }
             set
             {
                 if (IsMsh)

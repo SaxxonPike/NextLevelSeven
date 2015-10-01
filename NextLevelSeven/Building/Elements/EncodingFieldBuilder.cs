@@ -82,11 +82,6 @@ namespace NextLevelSeven.Building.Elements
             set
             {
                 _value = value;
-                if (value == null)
-                {
-                    return;
-                }
-
                 ComponentDelimiter = _value.Length >= 1 ? _value[0] : '\0';
                 RepetitionDelimiter = _value.Length >= 2 ? _value[1] : '\0';
                 EscapeCharacter = _value.Length >= 3 ? _value[2] : '\0';

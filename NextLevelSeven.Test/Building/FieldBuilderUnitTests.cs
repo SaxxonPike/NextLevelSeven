@@ -31,10 +31,42 @@ namespace NextLevelSeven.Test.Building
         }
 
         [TestMethod]
+        public void FieldBuilder_Type_SetsRepetitionOne()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[2][0];
+            var value = Mock.String();
+            builder.SetFieldRepetition(1, value);
+            Assert.AreEqual(value, builder.Value);
+        }
+
+        [TestMethod]
+        public void FieldBuilder_Type_ThrowsOnRepetitionsOtherThanOne()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[2][0];
+            var value = Mock.String();
+            AssertAction.Throws<ElementException>(() => builder.SetFieldRepetition(0, value));
+            AssertAction.Throws<ElementException>(() => builder.SetFieldRepetition(2, value));
+        }
+
+        [TestMethod]
         public void FieldBuilder_Encoding_Exists()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][2];
             Assert.IsTrue(builder.Exists);
+        }
+
+        [TestMethod]
+        public void FieldBuilder_Encoding_HasNoDescendants()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][2];
+            Assert.AreEqual(0, builder.Descendants.Count());
+        }
+
+        [TestMethod]
+        public void FieldBuilder_Encoding_HasMultipleValues()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][2];
+            Assert.AreEqual(4, builder.ValueCount);
         }
 
         [TestMethod]
@@ -88,6 +120,20 @@ namespace NextLevelSeven.Test.Building
         }
 
         [TestMethod]
+        public void Fieldbuilder_Encoding_SetsOversizedValue()
+        {
+            var message = Message.Build(ExampleMessages.Standard);
+            var builder = message[1][2];
+            var value = "!@#$%";
+            builder.Value = value;
+            Assert.AreEqual('!', message.Encoding.ComponentDelimiter);
+            Assert.AreEqual('@', message.Encoding.RepetitionDelimiter);
+            Assert.AreEqual('#', message.Encoding.EscapeCharacter);
+            Assert.AreEqual('$', message.Encoding.SubcomponentDelimiter);
+            Assert.AreEqual(value, builder.Value);
+        }
+
+        [TestMethod]
         public void FieldBuilder_Encoding_SetsOnIndirectSubdivision()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][2];
@@ -96,10 +142,31 @@ namespace NextLevelSeven.Test.Building
         }
 
         [TestMethod]
+        public void FieldBuilder_Encoding_HasNoDelimiter()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][2];
+            Assert.AreEqual('\0', builder.Delimiter);
+        }
+
+        [TestMethod]
         public void FieldBuilder_Delimiter_HasOneValue()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][1];
             Assert.AreEqual(1, builder.ValueCount);
+        }
+
+        [TestMethod]
+        public void FieldBuilder_Delimiter_HasNoDelimiter()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][1];
+            Assert.AreEqual('\0', builder.Delimiter);
+        }
+
+        [TestMethod]
+        public void FieldBuilder_Delimiter_HasNoDescendants()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][1];
+            Assert.AreEqual(0, builder.Descendants.Count());
         }
 
         [TestMethod]

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using NextLevelSeven.Conversion;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Codec;
 using NextLevelSeven.Core.Encoding;
@@ -10,8 +9,7 @@ using NextLevelSeven.Utility;
 namespace NextLevelSeven.Building.Elements
 {
     /// <summary>Base class for message builders.</summary>
-    internal abstract class Builder : IComparable, IComparable<IElement>, IComparable<string>, IEquatable<IElement>,
-        IEquatable<string>, IBuilder
+    internal abstract class Builder : IElementBuilder
     {
         /// <summary>Initialize the message builder base class.</summary>
         internal Builder()
@@ -22,7 +20,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Initialize the message builder base class.</summary>
         /// <param name="config">Message's encoding configuration.</param>
         /// <param name="index">Index in the parent.</param>
-        internal Builder(BuilderEncodingConfiguration config, int index)
+        internal Builder(IEncoding config, int index)
         {
             Encoding = config;
             Index = index;
@@ -44,7 +42,7 @@ namespace NextLevelSeven.Building.Elements
         public virtual char SubcomponentDelimiter { get; set; }
 
         /// <summary>Get the encoding used by this builder.</summary>
-        public BuilderEncodingConfiguration Encoding { get; private set; }
+        public IEncoding Encoding { get; private set; }
 
         /// <summary>Get the index at which this builder is located in its descendant.</summary>
         public int Index { get; private set; }
@@ -60,7 +58,13 @@ namespace NextLevelSeven.Building.Elements
         public abstract IEnumerable<string> Values { get; set; }
 
         /// <summary>Get a converter which will interpret this element's value as other types.</summary>
-        public abstract IEncodedTypeConverter Codec { get; }
+        public virtual IEncodedTypeConverter Codec
+        {
+            get
+            {
+                return new EncodedTypeConverter(this);
+            }
+        }
 
         /// <summary>Get the number of sub-values in this element.</summary>
         public abstract int ValueCount { get; }
@@ -116,97 +120,34 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>Get the encoding used by this builder.</summary>
-        IEncoding IBuilder.Encoding
+        IEncoding IElementBuilder.Encoding
         {
             get { return Encoding; }
         }
 
         /// <summary>Delete a descendant element.</summary>
         /// <param name="index">Index to delete at.</param>
-        public abstract void DeleteDescendant(int index);
+        public abstract void Delete(int index);
 
         /// <summary>Insert a copy of the specified element at the specified descendant index.</summary>
         /// <param name="index">Index to insert into.</param>
         /// <param name="element">Element to insert.</param>
-        public abstract IElement InsertDescendant(IElement element, int index);
+        public abstract IElement Insert(int index, IElement element);
 
         /// <summary>Insert a copy of the specified element at the specified descendant index.</summary>
         /// <param name="index">Index to insert into.</param>
         /// <param name="value">Value to insert.</param>
-        public abstract IElement InsertDescendant(string value, int index);
+        public abstract IElement Insert(int index, string value);
 
         /// <summary>Move a descendant element to another index.</summary>
         /// <param name="sourceIndex">Index to move from.</param>
         /// <param name="targetIndex">Index to move to.</param>
-        public abstract void MoveDescendant(int sourceIndex, int targetIndex);
-
-        /// <summary>Compare this builder's value with another object's value. (IComparable support)</summary>
-        /// <param name="obj">Other BuilderBase.</param>
-        /// <returns></returns>
-        public int CompareTo(object obj)
-        {
-            return obj == null ? 1 : CompareTo(obj.ToString());
-        }
-
-        /// <summary>Compare this builder's value with another element's value. (element IComparable support)</summary>
-        /// <param name="other">Other element to compare to.</param>
-        /// <returns></returns>
-        public int CompareTo(IElement other)
-        {
-            return other == null ? 1 : CompareTo(other.Value);
-        }
-
-        /// <summary>Compare this builder's value with another string. (generic IComparable support)</summary>
-        /// <param name="other">Other string to compare to.</param>
-        /// <returns></returns>
-        public int CompareTo(string other)
-        {
-            return string.Compare(Value, other, StringComparison.CurrentCulture);
-        }
-
-        /// <summary>Determines whether this builder's value is equivalent to another element's value. (element IEquatable support)</summary>
-        /// <param name="other">Object to compare to.</param>
-        /// <returns>True, if objects are considered to be equivalent.</returns>
-        public bool Equals(IElement other)
-        {
-            return string.Equals(Value, other.Value, StringComparison.Ordinal);
-        }
-
-        /// <summary>Determine if this builder's value is equal to another string. (IEquatable support)</summary>
-        /// <param name="other">Other string.</param>
-        /// <returns>True, if the two are equivalent.</returns>
-        public bool Equals(string other)
-        {
-            return string.Equals(Value, other, StringComparison.Ordinal);
-        }
+        public abstract void Move(int sourceIndex, int targetIndex);
 
         /// <summary>Get the element at the specified index as an IElement.</summary>
         /// <param name="index">Index at which to get the element.</param>
         /// <returns>Generic element.</returns>
         protected abstract IElement GetGenericElement(int index);
-
-        /// <summary>Determines whether this object is equivalent to another object.</summary>
-        /// <param name="obj">Object to compare to.</param>
-        /// <returns>True, if objects are considered to be equivalent.</returns>
-        public override sealed bool Equals(object obj)
-        {
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-            if (ReferenceEquals(null, obj))
-            {
-                return Value == null;
-            }
-            return Value == obj.ToString();
-        }
-
-        /// <summary>Get this builder's hash code.</summary>
-        /// <returns>Hash code for the builder.</returns>
-        public override sealed int GetHashCode()
-        {
-            return Value.GetHashCode();
-        }
 
         /// <summary>Get this builder's contents as a string.</summary>
         /// <returns>Builder's contents.</returns>
@@ -276,7 +217,7 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="cache">Cache to delete within.</param>
         /// <param name="index">Descendant index to delete.</param>
         /// <param name="value">Value to insert.</param>
-        protected static IBuilder InsertDescendant<TDescendant>(IIndexedCache<int, TDescendant> cache, int index,
+        protected static IElementBuilder InsertDescendant<TDescendant>(IIndexedCache<int, TDescendant> cache, int index,
             string value) where TDescendant : Builder
         {
             ShiftForInsert(cache, index);
@@ -289,7 +230,7 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="cache">Cache to delete within.</param>
         /// <param name="index">Descendant index to delete.</param>
         /// <param name="element">Element to insert.</param>
-        protected static IBuilder InsertDescendant<TDescendant>(IIndexedCache<int, TDescendant> cache, int index,
+        protected static IElementBuilder InsertDescendant<TDescendant>(IIndexedCache<int, TDescendant> cache, int index,
             IElement element) where TDescendant : Builder
         {
             ShiftForInsert(cache, index);

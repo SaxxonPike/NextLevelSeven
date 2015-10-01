@@ -9,6 +9,55 @@ namespace NextLevelSeven.Test.Core
     public class ElementExtensionUnitTests : CoreTestFixture
     {
         [TestMethod]
+        public void ElementExtensions_SimplifiesSegment()
+        {
+            var message = Message.Parse(Mock.Message());
+            var segment = message.Segment(1);
+            var fieldCount = segment.ValueCount;
+            segment.Field(3).Nullify();
+            Assert.AreEqual(fieldCount - 1, segment.Simplified().Count());
+        }
+
+        [TestMethod]
+        public void ElementExtensions_ThrowsWhenInsertingWithoutAncestor()
+        {
+            var message = Message.Parse();
+            var segment = message[1].Clone();
+            AssertAction.Throws<ElementException>(() => segment.Insert(Mock.String()));
+        }
+
+        [TestMethod]
+        public void ElementExtensions_ThrowsWhenInsertingElementWithoutHavingAncestor()
+        {
+            var message = Message.Parse(Mock.Message());
+            var segment = message[1].Clone();
+            AssertAction.Throws<ElementException>(() => segment.Insert(message[2]));
+        }
+
+        [TestMethod]
+        public void ElementExtensions_ThrowsWhenNullifyingMessage()
+        {
+            var message = Message.Parse(Mock.Message());
+            AssertAction.Throws<ElementException>(message.Nullify);
+        }
+
+        [TestMethod]
+        public void ElementExtensions_NullifiesMshSegment()
+        {
+            var message = Message.Parse(Mock.Message());
+            message[1].Nullify();
+            Assert.AreEqual(3, message[1].ValueCount);
+        }
+
+        [TestMethod]
+        public void ElementExtensions_NullifiesSegment()
+        {
+            var message = Message.Parse(Mock.Message());
+            message[2].Nullify();
+            Assert.AreEqual(1, message[2].ValueCount);
+        }
+
+        [TestMethod]
         public void ElementExtensions_Element_AddsOtherElements()
         {
             var val0 = Mock.String();
@@ -81,6 +130,12 @@ namespace NextLevelSeven.Test.Core
         }
 
         [TestMethod]
+        public void ElementExtensions_Element_DoesNotThrowWhenDeletingZeroElements()
+        {
+            AssertAction.DoesNotThrow(Enumerable.Empty<IElement>().Delete);
+        }
+
+        [TestMethod]
         public void ElementExtensions_Element_ThrowsWhenDeletingElementsFromDifferentAncestors()
         {
             var message0 = Message.Parse(ExampleMessages.Standard);
@@ -98,6 +153,15 @@ namespace NextLevelSeven.Test.Core
         }
 
         [TestMethod]
+        public void ElementExtensions_CanCreateNewEmptyMessageFromZeroSegments()
+        {
+            var message = Message.Build(ExampleMessages.Standard);
+            var parser = message.Segments.OfType("|||").ToNewParser();
+            Assert.AreEqual(1, parser.ValueCount);
+            Assert.AreEqual("MSH", message[1].Type);
+        }
+
+        [TestMethod]
         public void ElementExtensions_Parser_CanCreateNewMessageFromSegments()
         {
             var message = Message.Build(ExampleMessages.Standard);
@@ -105,6 +169,22 @@ namespace NextLevelSeven.Test.Core
             Assert.AreEqual(3, parser.ValueCount);
             Assert.AreEqual(message[1].Value, parser[1].Value);
             Assert.AreEqual(message.Segments.OfType("PID").First().Value, parser[2].Value);
+        }
+
+        [TestMethod]
+        public void ElementExtensions_Parser_CanGetMultipleSegmentTypes()
+        {
+            var message = Message.Build(ExampleMessages.Standard);
+            var segments = message.Segments.OfTypes("MSH", "PID");
+            Assert.AreEqual(3, segments.Count());
+        }
+
+        [TestMethod]
+        public void ElementExtensions_Parser_CanGetMultipleSegmentTypesAsEnumerable()
+        {
+            var message = Message.Build(ExampleMessages.Standard);
+            var segments = message.Segments.OfTypes(new [] {"MSH", "PID"}.AsEnumerable());
+            Assert.AreEqual(3, segments.Count());
         }
 
         [TestMethod]
@@ -165,7 +245,7 @@ namespace NextLevelSeven.Test.Core
         private static void ElementExtensions_CanDelete(IElement element)
         {
             var modifiedElement = element.Clone();
-            modifiedElement.Delete(2);
+            ElementExtensions.Delete(modifiedElement, 2);
             Assert.AreEqual(modifiedElement[2].Value, element[3].Value);
             Assert.AreEqual(modifiedElement[3].Value, element[4].Value);
         }

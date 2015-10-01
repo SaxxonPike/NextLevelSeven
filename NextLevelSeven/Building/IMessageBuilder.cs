@@ -3,7 +3,7 @@
 namespace NextLevelSeven.Building
 {
     /// <summary>Interface for a top-level message element builder.</summary>
-    public interface IMessageBuilder : IMessage, IBuilder
+    public interface IMessageBuilder : IMessage, IElementBuilder
     {
         /// <summary>Get a descendant segment builder.</summary>
         /// <param name="index">Index within the message to get the builder from.</param>

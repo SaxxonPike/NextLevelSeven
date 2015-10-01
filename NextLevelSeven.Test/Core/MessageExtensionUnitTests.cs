@@ -28,6 +28,24 @@ namespace NextLevelSeven.Test.Core
         }
 
         [TestMethod]
+        public void MessageExtensions_Builder_CanFilterPidAndObx_FromMessage()
+        {
+            var message = Message.Build(ExampleMessages.MultiplePid);
+            Assert.IsTrue(message.Segments.ExceptTypes("PID", "OBX").Any(), "Only PIDs and OBXs are to be filtered.");
+            Assert.IsTrue(message.Segments.ExceptTypes("PID", "OBX").All(s => s.Type != "PID" && s.Type != "OBX"),
+                "PIDs and OBXs were not completely filtered.");
+        }
+
+        [TestMethod]
+        public void MessageExtensions_Parser_CanFilterPidAndObx_FromMessage()
+        {
+            var message = Message.Parse(ExampleMessages.MultiplePid);
+            Assert.IsTrue(message.Segments.ExceptTypes(new [] {"PID", "OBX"}.AsEnumerable()).Any(), "Only PIDs and OBXs are to be filtered.");
+            Assert.IsTrue(message.Segments.ExceptTypes(new[] { "PID", "OBX" }.AsEnumerable()).All(s => s.Type != "PID" && s.Type != "OBX"),
+                "PIDs and OBXs were not completely filtered.");
+        }
+
+        [TestMethod]
         public void MessageExtensions_Builder_CanGetObrSplitsWithoutExtras()
         {
             var message = Message.Build(ExampleMessages.MultipleObr);

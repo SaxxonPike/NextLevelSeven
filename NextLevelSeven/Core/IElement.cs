@@ -49,19 +49,19 @@ namespace NextLevelSeven.Core
         IEnumerable<string> Values { get; set; }
 
         /// <summary>Delete a descendant element.</summary>
-        void DeleteDescendant(int index);
+        void Delete(int index);
 
         /// <summary>Insert a descendant element as a value at the specified index.</summary>
         /// <param name="value">Value to insert.</param>
         /// <param name="index">Index where to insert.</param>
         /// <returns></returns>
-        IElement InsertDescendant(string value, int index);
+        IElement Insert(int index, string value);
 
         /// <summary>Insert a descendant element at the specified index.</summary>
         /// <param name="element">Element to insert.</param>
         /// <param name="index">Index where to insert.</param>
         /// <returns></returns>
-        IElement InsertDescendant(IElement element, int index);
+        IElement Insert(int index, IElement element);
 
         /// <summary>
         ///     Get the parent message for the element.
@@ -71,7 +71,7 @@ namespace NextLevelSeven.Core
         /// <summary>Move a descendant element to another index.</summary>
         /// <param name="sourceIndex"></param>
         /// <param name="targetIndex"></param>
-        void MoveDescendant(int sourceIndex, int targetIndex);
+        void Move(int sourceIndex, int targetIndex);
 
         /// <summary>Erase this element's content and mark it non-existant.</summary>
         void Erase();

@@ -3,7 +3,7 @@
 namespace NextLevelSeven.Building
 {
     /// <summary>Interface for a component element builder.</summary>
-    public interface IComponentBuilder : IBuilder, IComponent
+    public interface IComponentBuilder : IElementBuilder, IComponent
     {
         /// <summary>Get a descendant subcomponent builder.</summary>
         /// <param name="index">Index within the component to get the builder from.</param>

@@ -1,6 +1,6 @@
 ﻿namespace NextLevelSeven.Core.Encoding
 {
-    internal sealed class SimpleEncodingConfiguration : EncodingConfiguration
+    internal sealed class SimpleEncodingConfiguration : EncodingConfiguration, IEncoding
     {
         /// <summary>Create an encoding configuration with the default characters.</summary>
         public SimpleEncodingConfiguration()
@@ -9,7 +9,7 @@
 
         /// <summary>Clone an existing encoding configuration.</summary>
         /// <param name="other">Source configuration to pull values from.</param>
-        public SimpleEncodingConfiguration(EncodingConfiguration other)
+        public SimpleEncodingConfiguration(IReadOnlyEncoding other)
         {
             CopyFrom(other);
         }
@@ -39,5 +39,35 @@
 
         /// <summary>Get the subcomponent delimiter.</summary>
         public override char SubcomponentDelimiter { get; protected set; }
+
+        char IEncoding.ComponentDelimiter
+        {
+            get { return ComponentDelimiter; }
+            set { ComponentDelimiter = value; }
+        }
+
+        char IEncoding.EscapeCharacter
+        {
+            get { return EscapeCharacter; }
+            set { EscapeCharacter = value; }
+        }
+
+        char IEncoding.FieldDelimiter
+        {
+            get { return FieldDelimiter; }
+            set { FieldDelimiter = value; }
+        }
+
+        char IEncoding.RepetitionDelimiter
+        {
+            get { return RepetitionDelimiter; }
+            set { RepetitionDelimiter = value; }
+        }
+
+        char IEncoding.SubcomponentDelimiter
+        {
+            get { return SubcomponentDelimiter; }
+            set { SubcomponentDelimiter = value; }
+        }
     }
 }

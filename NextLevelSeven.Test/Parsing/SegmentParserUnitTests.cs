@@ -76,7 +76,7 @@ namespace NextLevelSeven.Test.Parsing
             var message = Message.Parse(ExampleMessages.Standard);
             var segment = message[2];
             var data = Mock.String();
-            segment.InsertDescendant(data, 1);
+            segment.Insert(1, data);
             Assert.AreEqual(data, segment[1].Value);
         }
 
@@ -86,7 +86,7 @@ namespace NextLevelSeven.Test.Parsing
             var message = Message.Parse(ExampleMessages.Standard);
             var segment = message[2];
             var data = Message.Parse(Mock.Message())[2][1];
-            segment.InsertDescendant(data, 1);
+            segment.Insert(1, data);
             Assert.AreEqual(data.Value, segment[1].Value);
         }
 
@@ -96,7 +96,7 @@ namespace NextLevelSeven.Test.Parsing
             var message = Message.Parse(ExampleMessages.Standard);
             var segment = message[1];
             var data = Message.Parse(Mock.Message())[2][1];
-            AssertAction.Throws<ElementException>(() => segment.InsertDescendant(data, 1));
+            AssertAction.Throws<ElementException>(() => segment.Insert(1, data));
         }
 
         [TestMethod]
@@ -113,7 +113,7 @@ namespace NextLevelSeven.Test.Parsing
             var message = Message.Parse(ExampleMessages.Standard);
             var segment = message[1];
             var data = Mock.String();
-            segment.InsertDescendant(data, 3);
+            segment.Insert(3, data);
             Assert.AreEqual(data, segment[3].Value);
         }
 
@@ -232,7 +232,7 @@ namespace NextLevelSeven.Test.Parsing
             var field3 = segment[3].Value;
             var field5 = segment[5].Value;
             var field6 = segment[6].Value;
-            segment.Delete(4);
+            ElementExtensions.Delete(segment, 4);
             Assert.AreEqual(field3, segment[3].Value, @"Expected segment[3] to remain the same after delete.");
             Assert.AreEqual(field5, segment[4].Value, @"Expected segment[5] to become segment[4].");
             Assert.AreEqual(field6, segment[5].Value, @"Expected segment[6] to become segment[5].");
@@ -243,7 +243,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var message = Message.Parse(ExampleMessages.Standard);
             var segment = message[1];
-            AssertAction.Throws<ElementException>(() => segment.Delete(1));
+            AssertAction.Throws<ElementException>(() => ElementExtensions.Delete(segment, 1));
         }
 
         [TestMethod]
@@ -251,7 +251,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var message = Message.Parse(ExampleMessages.Standard);
             var segment = message[1];
-            AssertAction.Throws<ElementException>(() => segment.Delete(2));
+            AssertAction.Throws<ElementException>(() => ElementExtensions.Delete(segment, 2));
         }
 
         [TestMethod]
@@ -262,7 +262,7 @@ namespace NextLevelSeven.Test.Parsing
             var field3 = segment[3].Value;
             var field5 = segment[5].Value;
             var field6 = segment[6].Value;
-            segment.Delete(4);
+            ElementExtensions.Delete(segment, 4);
             Assert.AreEqual(field3, segment[3].Value, @"Expected segment[3] to remain the same after delete.");
             Assert.AreEqual(field5, segment[4].Value, @"Expected segment[5] to become segment[4].");
             Assert.AreEqual(field6, segment[5].Value, @"Expected segment[6] to become segment[5].");

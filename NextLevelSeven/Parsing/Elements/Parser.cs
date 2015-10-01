@@ -9,8 +9,7 @@ using NextLevelSeven.Parsing.Dividers;
 namespace NextLevelSeven.Parsing.Elements
 {
     /// <summary>Represents a generic HL7 element, which may contain other elements.</summary>
-    internal abstract class Parser : IElementParser, IComparable, IComparable<IElement>, IComparable<string>,
-        IEquatable<IElement>, IEquatable<string>
+    internal abstract class Parser : IElementParser
     {
         /// <summary>String divider used to split the element's raw value.</summary>
         private StringDivider _descendantDivider;
@@ -80,35 +79,6 @@ namespace NextLevelSeven.Parsing.Elements
                     : null;
                 return _encodingConfiguration;
             }
-        }
-
-        /// <summary>Compare this builder's value with another object's value. (IComparable support)</summary>
-        /// <param name="obj">Other BuilderBase.</param>
-        /// <returns></returns>
-        public int CompareTo(object obj)
-        {
-            var other = obj as IElement;
-            if (other != null)
-            {
-                return CompareTo(other);
-            }
-            return obj == null ? 1 : CompareTo(obj.ToString());
-        }
-
-        /// <summary>Compare this builder's value with another element's value. (element IComparable support)</summary>
-        /// <param name="other">Other element to compare to.</param>
-        /// <returns></returns>
-        public int CompareTo(IElement other)
-        {
-            return other == null ? 1 : CompareTo(other.Value);
-        }
-
-        /// <summary>Compare this builder's value with another string. (generic IComparable support)</summary>
-        /// <param name="other">Other string to compare to.</param>
-        /// <returns></returns>
-        public int CompareTo(string other)
-        {
-            return string.Compare(Value, other, StringComparison.CurrentCulture);
         }
 
         /// <summary>Get the descendant element at the specified index.</summary>
@@ -220,7 +190,7 @@ namespace NextLevelSeven.Parsing.Elements
 
         /// <summary>Delete a descendant element.</summary>
         /// <param name="index">Index to insert at.</param>
-        virtual public void DeleteDescendant(int index)
+        virtual public void Delete(int index)
         {
             if (index < 1)
             {
@@ -232,19 +202,19 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Insert a descendant element.</summary>
         /// <param name="element">Element to insert.</param>
         /// <param name="index">Index to insert at.</param>
-        virtual public IElement InsertDescendant(IElement element, int index)
+        virtual public IElement Insert(int index, IElement element)
         {
             if (index < 1)
             {
                 throw new ParserException(ErrorCode.ElementIndexMustBeZeroOrGreater);
             }
-            return InsertDescendant(element.Value, index);
+            return Insert(index, element.Value);
         }
 
         /// <summary>Insert a descendant element.</summary>
         /// <param name="value">Value to insert.</param>
         /// <param name="index">Index to insert at.</param>
-        virtual public IElement InsertDescendant(string value, int index)
+        virtual public IElement Insert(int index, string value)
         {
             if (index < 1)
             {
@@ -257,52 +227,13 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Move a descendant.</summary>
         /// <param name="sourceIndex"></param>
         /// <param name="targetIndex"></param>
-        virtual public void MoveDescendant(int sourceIndex, int targetIndex)
+        virtual public void Move(int sourceIndex, int targetIndex)
         {
             if (sourceIndex < 1 || targetIndex < 1)
             {
                 throw new ParserException(ErrorCode.ElementIndexMustBeZeroOrGreater);
             }
             DescendantDivider.Move(sourceIndex - 1, targetIndex - 1);
-        }
-
-        /// <summary>Determines whether this builder's value is equivalent to another element's value. (element IEquatable support)</summary>
-        /// <param name="other">Object to compare to.</param>
-        /// <returns>True, if objects are considered to be equivalent.</returns>
-        public bool Equals(IElement other)
-        {
-            return string.Equals(Value, other.Value, StringComparison.Ordinal);
-        }
-
-        /// <summary>Determine equality with a string.</summary>
-        /// <param name="other">String to compare to.</param>
-        /// <returns>True, if the element's raw value and the specified string are equivalent.</returns>
-        public bool Equals(string other)
-        {
-            return ToString() == other;
-        }
-
-        /// <summary>Determine value equality with another object.</summary>
-        /// <param name="obj">Object to compare.</param>
-        /// <returns>True, if this element's value and the object are equivalent.</returns>
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
-            return obj.ToString() == ToString();
-        }
-
-        /// <summary>Get the hash code for this element.</summary>
-        /// <returns>Hash code of the value's string.</returns>
-        public override int GetHashCode()
-        {
-            return ToString().GetHashCode();
         }
 
         /// <summary>Get the descendant element at the specified index.</summary>

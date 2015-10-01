@@ -119,7 +119,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var message = Message.Parse("MSH|^~\\&|\rTST|123^456&ABC~789^012");
             var component = message[2][1][1][2];
-            component.Delete(1);
+            ElementExtensions.Delete(component, 1);
             Assert.AreEqual("MSH|^~\\&|\rTST|123^ABC~789^012", message.Value, @"Message was modified unexpectedly.");
         }
 

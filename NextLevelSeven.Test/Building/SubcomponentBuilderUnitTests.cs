@@ -44,21 +44,21 @@ namespace NextLevelSeven.Test.Building
         public void SubcomponentBuilder_ThrowsOnDelete()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
-            AssertAction.Throws<ElementException>(() => builder.DeleteDescendant(1));
+            AssertAction.Throws<ElementException>(() => builder.Delete(1));
         }
 
         [TestMethod]
         public void SubcomponentBuilder_ThrowsOnMove()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
-            AssertAction.Throws<ElementException>(() => builder.MoveDescendant(1, 2));
+            AssertAction.Throws<ElementException>(() => builder.Move(1, 2));
         }
 
         [TestMethod]
         public void SubcomponentBuilder_ThrowsOnInsertString()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
-            AssertAction.Throws<ElementException>(() => builder.InsertDescendant(Mock.String(), 1));
+            AssertAction.Throws<ElementException>(() => builder.Insert(1, Mock.String()));
         }
 
         [TestMethod]
@@ -66,7 +66,7 @@ namespace NextLevelSeven.Test.Building
         {
             var builder0 = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
             var builder1 = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
-            AssertAction.Throws<ElementException>(() => builder0.InsertDescendant(builder1, 1));
+            AssertAction.Throws<ElementException>(() => builder0.Insert(1, builder1));
         }
 
         [TestMethod]
@@ -96,6 +96,22 @@ namespace NextLevelSeven.Test.Building
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1] as IElement;
             Assert.AreSame(builder, builder.Ancestor[1]);
+        }
+
+        [TestMethod]
+        public void SubcomponentBuilder_CanGetMessage()
+        {
+            var message = Message.Build(Mock.Message());
+            var builder = message[1][3][1][1][1];
+            Assert.AreSame(message, builder.Message);
+        }
+
+        [TestMethod]
+        public void SubcomponentBuilder_CloneHasNullMessage()
+        {
+            var message = Message.Build(Mock.Message());
+            var builder = message[1][3][1][1][1].Clone();
+            Assert.IsNull(builder.Message);
         }
 
         [TestMethod]

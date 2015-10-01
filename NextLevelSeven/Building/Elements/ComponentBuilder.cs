@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Codec;
+using NextLevelSeven.Core.Encoding;
 using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building.Elements
@@ -18,6 +19,12 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="index">Index of the component.</param>
         internal ComponentBuilder(Builder builder, int index)
             : base(builder, index)
+        {
+            _subcomponents = new IndexedCache<int, SubcomponentBuilder>(CreateSubcomponentBuilder);
+        }
+
+        private ComponentBuilder(IEncoding config, int index)
+            : base(config, index)
         {
             _subcomponents = new IndexedCache<int, SubcomponentBuilder>(CreateSubcomponentBuilder);
         }
@@ -173,26 +180,24 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Clone of the element.</returns>
         public override IElement Clone()
         {
-            return new ComponentBuilder(Ancestor, Index)
-            {
-                Value = Value
-            };
+            return CloneInternal();
         }
 
         /// <summary>Deep clone this component.</summary>
         /// <returns>Clone of the component.</returns>
         IComponent IComponent.Clone()
         {
-            return new ComponentBuilder(Ancestor, Index)
-            {
-                Value = Value
-            };
+            return CloneInternal();
         }
 
-        /// <summary>Get a codec which can be used to interpret this element's value as other types.</summary>
-        public override IEncodedTypeConverter Codec
+        /// <summary>Deep clone this component.</summary>
+        /// <returns>Clone of the component.</returns>
+        ComponentBuilder CloneInternal()
         {
-            get { return new EncodedTypeConverter(this); }
+            return new ComponentBuilder(new SimpleEncodingConfiguration(Encoding), Index)
+            {
+                Value = Value
+            };            
         }
 
         /// <summary>Get the subcomponent delimiter.</summary>
@@ -228,7 +233,7 @@ namespace NextLevelSeven.Building.Elements
 
         /// <summary>Delete a descendant at the specified index.</summary>
         /// <param name="index">Index to delete at.</param>
-        public override void DeleteDescendant(int index)
+        public override void Delete(int index)
         {
             DeleteDescendant(_subcomponents, index);
         }
@@ -236,7 +241,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Insert a descendant element.</summary>
         /// <param name="element">Element to insert.</param>
         /// <param name="index">Index to insert at.</param>
-        public override IElement InsertDescendant(IElement element, int index)
+        public override IElement Insert(int index, IElement element)
         {
             return InsertDescendant(_subcomponents, index, element);
         }
@@ -244,7 +249,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Insert a descendant element string.</summary>
         /// <param name="value">Value to insert.</param>
         /// <param name="index">Index to insert at.</param>
-        public override IElement InsertDescendant(string value, int index)
+        public override IElement Insert(int index, string value)
         {
             return InsertDescendant(_subcomponents, index, value);
         }
@@ -252,7 +257,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Move descendant to another index.</summary>
         /// <param name="sourceIndex">Source index.</param>
         /// <param name="targetIndex">Target index.</param>
-        public override void MoveDescendant(int sourceIndex, int targetIndex)
+        public override void Move(int sourceIndex, int targetIndex)
         {
             MoveDescendant(_subcomponents, sourceIndex, targetIndex);
         }

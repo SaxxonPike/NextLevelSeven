@@ -5,6 +5,7 @@ using NextLevelSeven.Building.Elements;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Parsing;
 using NextLevelSeven.Parsing.Elements;
+using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Core
 {
@@ -86,7 +87,7 @@ namespace NextLevelSeven.Core
             {
                 throw new ElementException(ErrorCode.AncestorDoesNotExist);
             }
-            ancestor.DeleteDescendant(target.Index);
+            ancestor.Delete(target.Index);
         }
 
         /// <summary>Delete descendant elements.</summary>
@@ -96,7 +97,7 @@ namespace NextLevelSeven.Core
         {
             foreach (var index in indices.OrderByDescending(i => i))
             {
-                target.DeleteDescendant(index);
+                target.Delete(index);
             }
         }
 
@@ -141,8 +142,18 @@ namespace NextLevelSeven.Core
             return segments.Where(s => !segmentTypes.Contains(s.Type));
         }
 
+        /// <summary>Get segments that do not match any of the specified segment types.</summary>
+        /// <param name="segments">Segments to query.</param>
+        /// <param name="segmentTypes">Segment types to filter out.</param>
+        /// <returns>Segments that do not match the filtered segment types.</returns>
+        public static IEnumerable<ISegment> ExceptTypes(this IEnumerable<ISegment> segments,
+            params string[] segmentTypes)
+        {
+            return ExceptTypes(segments, segmentTypes.AsEnumerable());
+        }
+
         /// <summary>Get meaningful content from descendants, excluding null/empty fields and segment type.</summary>
-        public static IEnumerable<IElement> GetDescendantContent(this IElement element)
+        public static IEnumerable<IElement> Simplified(this IElement element)
         {
             return element.Descendants.Where(d => d.Index > 0 && !string.IsNullOrEmpty(d.Value));
         }
@@ -164,15 +175,6 @@ namespace NextLevelSeven.Core
             return (element.ValueCount > 1) || element.Descendants.Any(HasSignificantDescendants);
         }
 
-        /// <summary>Insert element data before the specified descendant element.</summary>
-        /// <param name="target">Element to add to.</param>
-        /// <param name="index">Index of the descendant to add data before.</param>
-        /// <param name="elementToInsert">Descendant data to insert.</param>
-        public static void Insert(this IElement target, int index, IElement elementToInsert)
-        {
-            target.InsertDescendant(elementToInsert, index);
-        }
-
         /// <summary>Insert element data before the specified element.</summary>
         /// <param name="target">Element to add data before.</param>
         /// <param name="elementToInsert">Descendant data to insert.</param>
@@ -183,16 +185,7 @@ namespace NextLevelSeven.Core
             {
                 throw new ElementException(ErrorCode.AncestorDoesNotExist);
             }
-            ancestor.InsertDescendant(elementToInsert, target.Index);
-        }
-
-        /// <summary>Insert string data before the specified descendant element.</summary>
-        /// <param name="target">Element to add to.</param>
-        /// <param name="index">Index of the descendant to add data before.</param>
-        /// <param name="dataToInsert">Descendant data to insert.</param>
-        public static void Insert(this IElement target, int index, string dataToInsert)
-        {
-            target.InsertDescendant(dataToInsert, index);
+            ancestor.Insert(target.Index, elementToInsert);
         }
 
         /// <summary>Insert string data before the specified element.</summary>
@@ -205,7 +198,7 @@ namespace NextLevelSeven.Core
             {
                 throw new ElementException(ErrorCode.AncestorDoesNotExist);
             }
-            ancestor.InsertDescendant(dataToInsert, target.Index);
+            ancestor.Insert(target.Index, dataToInsert);
         }
 
         /// <summary>Move element within its ancestor. Returns the new element reference.</summary>
@@ -219,7 +212,7 @@ namespace NextLevelSeven.Core
             {
                 throw new ElementException(ErrorCode.AncestorDoesNotExist);
             }
-            ancestor.MoveDescendant(target.Index, targetIndex);
+            ancestor.Move(target.Index, targetIndex);
             return ancestor[targetIndex];
         }
 
@@ -227,12 +220,6 @@ namespace NextLevelSeven.Core
         /// <param name="target">Element to nullify.</param>
         public static void Nullify(this IElement target)
         {
-            // don't change what's already null.
-            if (target == null || target.Value == null)
-            {
-                return;
-            }
-
             // messages can't be nullified.
             if (target is IMessage)
             {
@@ -243,7 +230,9 @@ namespace NextLevelSeven.Core
             var segment = target as ISegment;
             if (segment != null)
             {
-                segment.Value = string.Concat(segment.Type, segment.Delimiter);
+                segment.Values = (segment.Type == "MSH")
+                    ? segment.Values.Take(3).ToList()
+                    : segment.Type.Yield();
                 return;
             }
 
@@ -266,7 +255,17 @@ namespace NextLevelSeven.Core
         public static IEnumerable<ISegment> OfTypes(this IEnumerable<ISegment> segments,
             IEnumerable<string> segmentTypes)
         {
-            return segments.Where(s => !segmentTypes.Contains(s.Type));
+            return segments.Where(s => segmentTypes.Contains(s.Type));
+        }
+
+        /// <summary>Get only segments that match any of the specified segment types.</summary>
+        /// <param name="segments">Segments to query.</param>
+        /// <param name="segmentTypes">Segment types to get.</param>
+        /// <returns>Segments that match one of the specified segment types.</returns>
+        public static IEnumerable<ISegment> OfTypes(this IEnumerable<ISegment> segments,
+            params string[] segmentTypes)
+        {
+            return OfTypes(segments, segmentTypes.AsEnumerable());
         }
 
         /// <summary>Copy the contents of this message to a new message builder.</summary>
@@ -344,15 +343,15 @@ namespace NextLevelSeven.Core
         /// <returns>New message builder/parser.</returns>
         private static T ToNewMessage<T>(IEnumerable<ISegment> segments) where T : IMessage, new()
         {
+            // for message metadata
+            var newMessage = new T();
+
             // build empty message when there are no segments
             var sourceSegments = segments.ToList();
             if (sourceSegments.Count == 0)
             {
-                return new T();
+                return newMessage;
             }
-
-            // for message metadata
-            var newMessage = new T();
 
             // determine where to pull message metadata from
             var childSegment = sourceSegments.FirstOrDefault(s => s.Type == "MSH") ??

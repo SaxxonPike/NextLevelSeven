@@ -10,6 +10,14 @@ namespace NextLevelSeven.Test.Parsing
     public class SubcomponentParserUnitTests : ParsingTestFixture
     {
         [TestMethod]
+        public void Subcomponent_CanGetKey()
+        {
+            var message = Message.Parse(ExampleMessages.Minimum);
+            var element = message[1][3][1][1][1];
+            Assert.AreEqual("MSH1.3.1.1.1", element.Key);
+        }
+
+        [TestMethod]
         public void Subcomponent_UsesSameEncodingAsMessage()
         {
             var message = Message.Parse(ExampleMessages.Minimum);

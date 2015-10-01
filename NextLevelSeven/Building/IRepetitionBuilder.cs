@@ -3,7 +3,7 @@
 namespace NextLevelSeven.Building
 {
     /// <summary>Interface for a field repetition element builder.</summary>
-    public interface IRepetitionBuilder : IBuilder, IRepetition
+    public interface IRepetitionBuilder : IElementBuilder, IRepetition
     {
         /// <summary>Get the ancestor builder. Null if the element is an orphan.</summary>
         new IFieldBuilder Ancestor { get; }

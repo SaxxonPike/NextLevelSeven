@@ -51,7 +51,7 @@
     <Compile Include="Building\Elements\DelimiterFieldBuilder.cs" />
     <Compile Include="Building\Elements\EncodingFieldBuilder.cs" />
     <Compile Include="Building\Elements\FieldBuilder.cs" />
-    <Compile Include="Building\IBuilder.cs" />
+    <Compile Include="Building\IElementBuilder.cs" />
     <Compile Include="Building\IComponentBuilder.cs" />
     <Compile Include="Building\IFieldBuilder.cs" />
     <Compile Include="Building\IMessageBuilder.cs" />

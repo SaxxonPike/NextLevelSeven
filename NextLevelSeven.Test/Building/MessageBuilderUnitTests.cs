@@ -152,6 +152,18 @@ namespace NextLevelSeven.Test.Building
         }
 
         [TestMethod]
+        public void MessageBuilder_CanAddValuesWithEnumerable()
+        {
+            var val0 = Mock.StringCaps(3) + "|" + Mock.String();
+            var val1 = Mock.StringCaps(3) + "|" + Mock.String();
+            const string message = "MSH|^~\\&";
+            var builder = Message.Build(message);
+            builder.AddRange(new[] {val0, val1}.AsEnumerable());
+            Assert.AreEqual(val0, builder[2].Value);
+            Assert.AreEqual(val1, builder[3].Value);
+        }
+
+        [TestMethod]
         public void MessageBuilder_CanGetValue()
         {
             var val0 = Mock.StringCaps(3) + "|" + Mock.String();

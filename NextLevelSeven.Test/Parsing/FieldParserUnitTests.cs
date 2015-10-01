@@ -173,7 +173,7 @@ namespace NextLevelSeven.Test.Parsing
             var element = Message.Parse(ExampleMessages.Minimum)[1][3];
             element.Values = new[] { Mock.String(), Mock.String(), Mock.String(), Mock.String() };
             var value = Mock.String();
-            element.InsertDescendant(value, 1);
+            element.Insert(1, value);
             Assert.AreEqual(5, element.ValueCount);
             Assert.AreEqual(value, element[1].Value);
         }
@@ -184,7 +184,7 @@ namespace NextLevelSeven.Test.Parsing
             var otherElement = Message.Parse(Mock.Message())[1][3][1];
             var element = Message.Parse(Mock.Message())[1][3];
             element.Values = new[] { Mock.String(), Mock.String(), Mock.String(), Mock.String() };
-            element.InsertDescendant(otherElement, 1);
+            element.Insert(1, otherElement);
             Assert.AreEqual(5, element.ValueCount);
             Assert.AreEqual(otherElement.Value, element[1].Value);
         }
@@ -285,7 +285,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var message = Message.Parse("MSH|^~\\&|\rTST|123~456|789~012");
             var field = message[2][1];
-            field.Delete(1);
+            ElementExtensions.Delete(field, 1);
             Assert.AreEqual("MSH|^~\\&|\rTST|456|789~012", message.Value, @"Message was modified unexpectedly.");
         }
 

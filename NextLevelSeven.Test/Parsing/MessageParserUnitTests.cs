@@ -12,15 +12,6 @@ namespace NextLevelSeven.Test.Parsing
     public class MessageParserUnitTests : ParsingTestFixture
     {
         [TestMethod]
-        public void Message_IsEquivalentWhenValuesMatch()
-        {
-            var message0 = Message.Parse(ExampleMessages.Standard);
-            var message1 = Message.Parse(ExampleMessages.Standard);
-            Assert.AreNotSame(message0, message1);
-            Assert.IsTrue(message0.Equals(message1));
-        }
-
-        [TestMethod]
         public void Message_IsEquivalentWhenReferencesMatch()
         {
             var message = Message.Parse(ExampleMessages.Standard);
@@ -29,17 +20,27 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [TestMethod]
-        public void Message_IsEquivalentToStrings()
-        {
-            var message = Message.Parse(ExampleMessages.Standard);
-            Assert.IsTrue(message.Equals(ExampleMessages.Standard));
-        }
-
-        [TestMethod]
         public void Message_IsNotEquivalentWhenNull()
         {
             var message = Message.Parse(ExampleMessages.Standard);
             Assert.IsFalse(message.Equals(null));
+        }
+
+        [TestMethod]
+        public void Message_ToStringGetsValue()
+        {
+            var content = Mock.Message();
+            var message = Message.Parse(content);
+            Assert.AreEqual(content, message.ToString());
+        }
+
+        [TestMethod]
+        public void Message_ToStringGetsEmptyWhenFieldIsNull()
+        {
+            var content = Mock.Message();
+            var field = Message.Parse(content)[1][3];
+            field.Value = null;
+            Assert.AreEqual(string.Empty, field.ToString());
         }
 
         [TestMethod]
@@ -53,7 +54,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Message_DeletesOutOfRangeIndex()
         {
             var message = Message.Parse(ExampleMessages.Minimum);
-            message.DeleteDescendant(2);
+            message.Delete(2);
         }
 
         [TestMethod]
@@ -61,7 +62,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var message = Message.Parse(ExampleMessages.Minimum);
             var segment = Message.Parse(Mock.Message())[2];
-            message.InsertDescendant(segment, 2);
+            message.Insert(2, segment);
             Assert.AreEqual(message[2].Value, segment.Value);
         }
 
@@ -70,7 +71,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var message = Message.Parse(ExampleMessages.Minimum);
             var segment = Mock.Segment();
-            message.InsertDescendant(segment, 2);        
+            message.Insert(2, segment);        
             Assert.AreEqual(message[2].Value, segment);
         }
 
@@ -78,21 +79,21 @@ namespace NextLevelSeven.Test.Parsing
         public void Message_ThrowsOnInsertingNegativeIndex()
         {
             var message = Message.Parse(ExampleMessages.Minimum);
-            AssertAction.Throws<ElementException>(() => message.InsertDescendant(Mock.String(), -2));
+            AssertAction.Throws<ElementException>(() => message.Insert(-2, Mock.String()));
         }
 
         [TestMethod]
         public void Message_ThrowsOnDeletingNegativeIndex()
         {
             var message = Message.Parse(ExampleMessages.Minimum);
-            AssertAction.Throws<ElementException>(() => message.DeleteDescendant(-2));
+            AssertAction.Throws<ElementException>(() => message.Delete(-2));
         }
 
         [TestMethod]
         public void Message_DeletesZeroLengthItem()
         {
             var message = Message.Parse(ExampleMessages.Minimum + "\r\r");
-            message.DeleteDescendant(2);
+            message.Delete(2);
         }
 
         [TestMethod]
@@ -354,21 +355,6 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [TestMethod]
-        public void Message_WithIdentivalValueToAnotherMessage_IsEquivalent()
-        {
-            var message1 = Message.Parse(ExampleMessages.Standard);
-            var message2 = Message.Parse(ExampleMessages.Standard);
-            Assert.AreEqual(message1, message2);
-        }
-
-        [TestMethod]
-        public void Message_WhenCreatedUsingString_IsEquivalentToTheString()
-        {
-            var message = Message.Parse(ExampleMessages.Standard);
-            Assert.AreEqual(message, ExampleMessages.Standard);
-        }
-
-        [TestMethod]
         public void Message_WithOnlyOneSegment_WillClaimToHaveSignificantDescendants()
         {
             var message = Message.Parse();
@@ -463,7 +449,7 @@ namespace NextLevelSeven.Test.Parsing
             var segment1 = message[1].Value;
             var segment3 = message[3].Value;
             var segment4 = message[4].Value;
-            message.Delete(2);
+            ElementExtensions.Delete(message, 2);
             Assert.AreEqual(segment1, message[1].Value, @"Expected message[1] to remain the same after delete.");
             Assert.AreEqual(segment3, message[2].Value, @"Expected message[3] to become message[2].");
             Assert.AreEqual(segment4, message[3].Value, @"Expected message[4] to become message[3].");

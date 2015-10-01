@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using NextLevelSeven.Core;
+using NextLevelSeven.Core.Encoding;
 
 namespace NextLevelSeven.Building.Elements
 {
@@ -15,42 +16,50 @@ namespace NextLevelSeven.Building.Elements
             Ancestor = ancestor;
         }
 
+        /// <summary>Initialize the message builder base class.</summary>
+        /// <param name="config">Configuration to use.</param>
+        protected DescendantBuilder(IEncoding config, int index)
+            : base(config, index)
+        {
+            Ancestor = null;
+        }
+
         /// <summary>Get the ancestor builder.</summary>
         protected Builder Ancestor { get; private set; }
 
         /// <summary>Get or set the component delimiter character.</summary>
         public override sealed char ComponentDelimiter
         {
-            get { return Ancestor.ComponentDelimiter; }
-            set { Ancestor.ComponentDelimiter = value; }
+            get { return Encoding.ComponentDelimiter; }
+            set { Encoding.ComponentDelimiter = value; }
         }
 
         /// <summary>Get or set the escape delimiter character.</summary>
         public override sealed char EscapeCharacter
         {
-            get { return Ancestor.EscapeCharacter; }
-            set { Ancestor.EscapeCharacter = value; }
+            get { return Encoding.EscapeCharacter; }
+            set { Encoding.EscapeCharacter = value; }
         }
 
         /// <summary>Get or set the field delimiter character.</summary>
         public override sealed char FieldDelimiter
         {
-            get { return Ancestor.FieldDelimiter; }
-            set { Ancestor.FieldDelimiter = value; }
+            get { return Encoding.FieldDelimiter; }
+            set { Encoding.FieldDelimiter = value; }
         }
 
         /// <summary>Get or set the repetition delimiter character.</summary>
         public override sealed char RepetitionDelimiter
         {
-            get { return Ancestor.RepetitionDelimiter; }
-            set { Ancestor.RepetitionDelimiter = value; }
+            get { return Encoding.RepetitionDelimiter; }
+            set { Encoding.RepetitionDelimiter = value; }
         }
 
         /// <summary>Get or set the subcomponent delimiter character.</summary>
         public override sealed char SubcomponentDelimiter
         {
-            get { return Ancestor.SubcomponentDelimiter; }
-            set { Ancestor.SubcomponentDelimiter = value; }
+            get { return Encoding.SubcomponentDelimiter; }
+            set { Encoding.SubcomponentDelimiter = value; }
         }
 
         /// <summary>Get or set the builder's value.</summary>

@@ -3,7 +3,7 @@
 namespace NextLevelSeven.Building
 {
     /// <summary>Interface for a segment element builder.</summary>
-    public interface ISegmentBuilder : IBuilder, ISegment
+    public interface ISegmentBuilder : IElementBuilder, ISegment
     {
         /// <summary>Get the ancestor builder. Null if the element is an orphan.</summary>
         new IMessageBuilder Ancestor { get; }

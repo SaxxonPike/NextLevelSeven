@@ -26,10 +26,10 @@ namespace NextLevelSeven.Parsing.Elements
         ///     Delete a descendant element.
         /// </summary>
         /// <param name="index">Index to delete.</param>
-        public override void DeleteDescendant(int index)
+        public override void Delete(int index)
         {
             ThrowIfEncodingSegmentIndex(index);
-            base.DeleteDescendant(index);
+            base.Delete(index);
         }
 
         /// <summary>
@@ -37,10 +37,10 @@ namespace NextLevelSeven.Parsing.Elements
         /// </summary>
         /// <param name="sourceIndex">Index to move from.</param>
         /// <param name="targetIndex">Index to move to.</param>
-        public override void MoveDescendant(int sourceIndex, int targetIndex)
+        public override void Move(int sourceIndex, int targetIndex)
         {
             ThrowIfEncodingSegmentIndex(sourceIndex, targetIndex);
-            base.MoveDescendant(sourceIndex, targetIndex);
+            base.Move(sourceIndex, targetIndex);
         }
 
         /// <summary>
@@ -49,10 +49,10 @@ namespace NextLevelSeven.Parsing.Elements
         /// <param name="element">Element to insert.</param>
         /// <param name="index">Index at which to insert.</param>
         /// <returns></returns>
-        public override IElement InsertDescendant(IElement element, int index)
+        public override IElement Insert(int index, IElement element)
         {
             ThrowIfEncodingSegmentIndex(index);
-            return base.InsertDescendant(element, index);
+            return base.Insert(index, element);
         }
 
         /// <summary>
@@ -61,10 +61,10 @@ namespace NextLevelSeven.Parsing.Elements
         /// <param name="value">Value to insert.</param>
         /// <param name="index">Index at which to insert.</param>
         /// <returns></returns>
-        public override IElement InsertDescendant(string value, int index)
+        public override IElement Insert(int index, string value)
         {
             ThrowIfEncodingSegmentIndex(index);
-            return base.InsertDescendant(value, index);
+            return base.Insert(index, value);
         }
 
         /// <summary>Get the segment delimiter.</summary>
@@ -194,29 +194,6 @@ namespace NextLevelSeven.Parsing.Elements
 
             var result = new SegmentParser(this, index - 1, index);
             return result;
-        }
-
-        /// <summary>Determines whether this object is equivalent to another object.</summary>
-        /// <param name="obj">Object to compare to.</param>
-        /// <returns>True, if objects are considered to be equivalent.</returns>
-        public override bool Equals(object obj)
-        {
-            if (ReferenceEquals(this, obj))
-            {
-                return true;
-            }
-            if (ReferenceEquals(null, obj))
-            {
-                return false;
-            }
-            return SanitizeLineEndings(obj.ToString()) == ToString();
-        }
-
-        /// <summary>Get the hash code for this element.</summary>
-        /// <returns>Hash code of the value's string.</returns>
-        public override int GetHashCode()
-        {
-            return base.GetHashCode();
         }
 
         /// <summary>Change all system line endings to HL7 line endings.</summary>
