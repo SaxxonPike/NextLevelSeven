@@ -18,6 +18,7 @@ namespace NextLevelSeven.Building.Elements
 
         /// <summary>Initialize the message builder base class.</summary>
         /// <param name="config">Configuration to use.</param>
+        /// <param name="index">Index for new builder.</param>
         protected DescendantBuilder(IEncoding config, int index)
             : base(config, index)
         {

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 namespace NextLevelSeven.Utility
 {
     /// <summary>A cache that wraps around a dictionary, auto-requesting items that don't exist already.</summary>
-    /// <typeparam name="int"></typeparam>
     /// <typeparam name="TValue"></typeparam>
     internal sealed class IndexedCache<TValue> : IIndexedCache<TValue>
         where TValue : class

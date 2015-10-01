@@ -3,7 +3,6 @@
 namespace NextLevelSeven.Utility
 {
     /// <summary>Interface to an indexed cache.</summary>
-    /// <typeparam name="TKey">Type of key.</typeparam>
     /// <typeparam name="TValue">Type of value.</typeparam>
     public interface IIndexedCache<TValue> : IEnumerable<KeyValuePair<int, TValue>>
         where TValue : class

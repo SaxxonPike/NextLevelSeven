@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using NextLevelSeven.Core;
-using NextLevelSeven.Core.Codec;
 using NextLevelSeven.Core.Encoding;
 using NextLevelSeven.Core.Properties;
 using NextLevelSeven.Diagnostics;
@@ -69,7 +68,7 @@ namespace NextLevelSeven.Building.Elements
                     return null;
                 }
 
-                var result = string.Join(ReadOnlyEncodingConfiguration.SegmentDelimiterString ?? string.Empty,
+                var result = string.Join(ReadOnlyEncodingConfiguration.SegmentDelimiterString,
                     _segments.OrderBy(i => i.Key).Select(i => i.Value.Value ?? string.Empty));
 
                 return (result.Length == 0)

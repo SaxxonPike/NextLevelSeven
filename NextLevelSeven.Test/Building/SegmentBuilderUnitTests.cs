@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
 using NextLevelSeven.Test.Testing;
@@ -8,6 +8,31 @@ namespace NextLevelSeven.Test.Building
     [TestClass]
     public sealed class SegmentBuilderUnitTests : BuildingTestFixture
     {
+        [TestMethod]
+        public void SegmentBuilder_HasNoValueWhenSettingEmptyValues()
+        {
+            var message = Message.Build(Mock.Message());
+            var builder = message[message.NextIndex];
+            builder.Values = Enumerable.Empty<string>();
+            Assert.IsNull(builder.Value);
+        }
+
+        [TestMethod]
+        public void SegmentBuilder_NewSegmentHasNullValue()
+        {
+            var message = Message.Build(Mock.Message());
+            var builder = message[message.NextIndex];
+            Assert.IsNull(builder.Value);
+        }
+
+        [TestMethod]
+        public void SegmentBuilder_NewSegmentHasNoValues()
+        {
+            var message = Message.Build(Mock.Message());
+            var builder = message[message.NextIndex];
+            Assert.AreEqual(0, builder.Values.Count());
+        }
+
         [TestMethod]
         public void SegmentBuilder_HasDelimiter()
         {

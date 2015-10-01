@@ -8,7 +8,6 @@ namespace NextLevelSeven.Testing
     public static class UtilityMocks
     {
         /// <summary>Create an indexed cache, using the specified factory to lazily create values that don't already exist.</summary>
-        /// <typeparam name="TKey">Type of key.</typeparam>
         /// <typeparam name="TValue">Type of value.</typeparam>
         /// <param name="factoryMethod">Method that will create new values.</param>
         /// <returns>Indexed cache of the specified types and the specified factory.</returns>
