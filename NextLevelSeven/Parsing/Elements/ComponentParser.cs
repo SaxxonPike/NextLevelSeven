@@ -64,14 +64,14 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>The cloned element.</returns>
         public override IElement Clone()
         {
-            return CloneInternal();
+            return CloneComponent();
         }
 
         /// <summary>Create a deep clone of the component.</summary>
         /// <returns>The cloned component.</returns>
         IComponent IComponent.Clone()
         {
-            return CloneInternal();
+            return CloneComponent();
         }
 
         /// <summary>Get all subcomponents.</summary>
@@ -128,7 +128,7 @@ namespace NextLevelSeven.Parsing.Elements
 
         /// <summary>Create a deep clone of the component.</summary>
         /// <returns>Cloned component.</returns>
-        private ComponentParser CloneInternal()
+        private ComponentParser CloneComponent()
         {
             return new ComponentParser(EncodingConfiguration)
             {

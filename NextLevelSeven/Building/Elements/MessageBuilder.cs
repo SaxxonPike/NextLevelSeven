@@ -376,20 +376,24 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Clone of the message builder.</returns>
         public override IElement Clone()
         {
-            return new MessageBuilder
-            {
-                Value = Value
-            };
+            return CloneMessage();
         }
 
         /// <summary>Deep clone the message.</summary>
         /// <returns>Clone of the message.</returns>
         IMessage IMessage.Clone()
         {
+            return CloneMessage();
+        }
+
+        /// <summary>Deep clone the message.</summary>
+        /// <returns>Clone of the message.</returns>
+        MessageBuilder CloneMessage()
+        {
             return new MessageBuilder
             {
                 Value = Value
-            };
+            };            
         }
 
         /// <summary>Get the message delimiter.</summary>

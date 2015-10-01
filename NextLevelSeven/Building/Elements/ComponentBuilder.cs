@@ -179,19 +179,19 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Clone of the element.</returns>
         public override IElement Clone()
         {
-            return CloneInternal();
+            return CloneComponent();
         }
 
         /// <summary>Deep clone this component.</summary>
         /// <returns>Clone of the component.</returns>
         IComponent IComponent.Clone()
         {
-            return CloneInternal();
+            return CloneComponent();
         }
 
         /// <summary>Deep clone this component.</summary>
         /// <returns>Clone of the component.</returns>
-        ComponentBuilder CloneInternal()
+        ComponentBuilder CloneComponent()
         {
             return new ComponentBuilder(new EncodingConfiguration(Encoding), Index)
             {

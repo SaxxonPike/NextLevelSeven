@@ -179,14 +179,14 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Clone of the element.</returns>
         public override IElement Clone()
         {
-            return CloneInternal();
+            return CloneSegment();
         }
 
         /// <summary>Deep clone this segment.</summary>
         /// <returns>Clone of the segment.</returns>
         ISegment ISegment.Clone()
         {
-            return CloneInternal();
+            return CloneSegment();
         }
 
         /// <summary>Get or set all field values in this segment.</summary>
@@ -293,7 +293,7 @@ namespace NextLevelSeven.Parsing.Elements
 
         /// <summary>Deep clone this segment.</summary>
         /// <returns>Clone of the segment.</returns>
-        private SegmentParser CloneInternal()
+        private SegmentParser CloneSegment()
         {
             return new SegmentParser(EncodingConfiguration)
             {

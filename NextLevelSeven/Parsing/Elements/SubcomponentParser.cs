@@ -47,14 +47,14 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Clone of the element.</returns>
         public override IElement Clone()
         {
-            return CloneInternal();
+            return CloneSubcomponent();
         }
 
         /// <summary>Deep clone this subcomponent.</summary>
         /// <returns>Clone of the subcomponent.</returns>
         ISubcomponent ISubcomponent.Clone()
         {
-            return CloneInternal();
+            return CloneSubcomponent();
         }
 
         /// <summary>Get this element's heirarchy-specific ancestor.</summary>
@@ -79,7 +79,7 @@ namespace NextLevelSeven.Parsing.Elements
 
         /// <summary>Deep clone this subcomponent.</summary>
         /// <returns>Clone of the subcomponent.</returns>
-        private SubcomponentParser CloneInternal()
+        private SubcomponentParser CloneSubcomponent()
         {
             return new SubcomponentParser(EncodingConfiguration)
             {

@@ -71,7 +71,7 @@ namespace NextLevelSeven.Parsing.Elements
 
         /// <summary>Deep clone this field.</summary>
         /// <returns>Cloned field.</returns>
-        protected override sealed FieldParser CloneInternal()
+        protected override sealed FieldParser CloneField()
         {
             return new FieldParser(EncodingConfiguration)
             {

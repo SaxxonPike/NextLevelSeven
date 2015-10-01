@@ -332,19 +332,19 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Clone of the element.</returns>
         public override IElement Clone()
         {
-            return CloneInternal();
+            return CloneSegment();
         }
 
         /// <summary>Deep clone this segment.</summary>
         /// <returns>Clone of the segment.</returns>
         ISegment ISegment.Clone()
         {
-            return CloneInternal();
+            return CloneSegment();
         }
 
         /// <summary>Deep clone this segment.</summary>
         /// <returns>Clone of the segment.</returns>
-        SegmentBuilder CloneInternal()
+        SegmentBuilder CloneSegment()
         {
             return new SegmentBuilder(new EncodingConfiguration(Encoding), Index)
             {

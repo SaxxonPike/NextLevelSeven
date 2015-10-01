@@ -64,19 +64,19 @@ namespace NextLevelSeven.Building.Elements
         /// <returns></returns>
         public override IElement Clone()
         {
-            return CloneInternal();
+            return CloneSubcomponent();
         }
 
         /// <summary>Deep clone this subcomponent.</summary>
         /// <returns></returns>
         ISubcomponent ISubcomponent.Clone()
         {
-            return CloneInternal();
+            return CloneSubcomponent();
         }
 
         /// <summary>Deep clone this subcomponent.</summary>
         /// <returns></returns>
-        SubcomponentBuilder CloneInternal()
+        SubcomponentBuilder CloneSubcomponent()
         {
             return new SubcomponentBuilder(new EncodingConfiguration(Encoding), Index)
             {

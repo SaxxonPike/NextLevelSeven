@@ -68,14 +68,14 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Clone of the field.</returns>
         public override sealed IElement Clone()
         {
-            return CloneInternal();
+            return CloneField();
         }
 
         /// <summary>Deep clone this field.</summary>
         /// <returns>Clone of the field.</returns>
         IField IField.Clone()
         {
-            return CloneInternal();
+            return CloneField();
         }
 
         /// <summary>Get all field repetitions.</summary>
@@ -132,7 +132,7 @@ namespace NextLevelSeven.Parsing.Elements
 
         /// <summary>Deep clone this field.</summary>
         /// <returns>Clone of the field.</returns>
-        protected virtual FieldParser CloneInternal()
+        protected virtual FieldParser CloneField()
         {
             return new FieldParser(EncodingConfiguration)
             {

@@ -117,14 +117,14 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Clone of the message.</returns>
         public override IElement Clone()
         {
-            return CloneInternal();
+            return CloneMessage();
         }
 
         /// <summary>Deep clone this message.</summary>
         /// <returns>Clone of the message.</returns>
         IMessage IMessage.Clone()
         {
-            return CloneInternal();
+            return CloneMessage();
         }
 
         /// <summary>Access message details as a property set.</summary>
@@ -208,7 +208,7 @@ namespace NextLevelSeven.Parsing.Elements
 
         /// <summary>Deep clone this message.</summary>
         /// <returns>Clone of the message.</returns>
-        private MessageParser CloneInternal()
+        private MessageParser CloneMessage()
         {
             return new MessageParser
             {

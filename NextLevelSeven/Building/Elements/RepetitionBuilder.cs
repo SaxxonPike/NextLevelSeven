@@ -209,20 +209,22 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Clone of the element.</returns>
         public override IElement Clone()
         {
-            return new RepetitionBuilder(Ancestor, Index)
-            {
-                Value = Value
-            };
+            return CloneRepetition();
         }
 
         /// <summary>Deep clone this field repetition.</summary>
         /// <returns>Clone of the repetition.</returns>
         IRepetition IRepetition.Clone()
         {
-            return new RepetitionBuilder(Ancestor, Index)
+            return CloneRepetition();
+        }
+
+        RepetitionBuilder CloneRepetition()
+        {
+            return new RepetitionBuilder(new EncodingConfiguration(Encoding), Index)
             {
                 Value = Value
-            };
+            };            
         }
 
         /// <summary>Get this element's value delimiter.</summary>

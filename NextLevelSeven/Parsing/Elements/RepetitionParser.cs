@@ -66,14 +66,14 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Clone of this repetition.</returns>
         public override IElement Clone()
         {
-            return CloneInternal();
+            return CloneRepetition();
         }
 
         /// <summary>Deep clone this repetition.</summary>
         /// <returns>Clone of this repetition.</returns>
         IRepetition IRepetition.Clone()
         {
-            return CloneInternal();
+            return CloneRepetition();
         }
 
         /// <summary>Get all components.</summary>
@@ -131,7 +131,7 @@ namespace NextLevelSeven.Parsing.Elements
 
         /// <summary>Deep clone this repetition.</summary>
         /// <returns>Clone of this repetition.</returns>
-        private RepetitionParser CloneInternal()
+        private RepetitionParser CloneRepetition()
         {
             return new RepetitionParser(EncodingConfiguration)
             {

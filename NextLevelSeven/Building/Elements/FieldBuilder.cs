@@ -260,20 +260,24 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Clone of the element.</returns>
         public override sealed IElement Clone()
         {
-            return new FieldBuilder(Ancestor, Index)
-            {
-                Value = Value
-            };
+            return CloneField();
         }
 
         /// <summary>Deep clone this field.</summary>
         /// <returns>Clone of the field.</returns>
         IField IField.Clone()
         {
-            return new FieldBuilder(Ancestor, Index)
+            return CloneField();
+        }
+
+        /// <summary>Deep clone this field.</summary>
+        /// <returns>Clone of the field.</returns>
+        FieldBuilder CloneField()
+        {
+            return new FieldBuilder(new EncodingConfiguration(Encoding), Index)
             {
                 Value = Value
-            };
+            };            
         }
 
         /// <summary>Get this element's value delimiter.</summary>
