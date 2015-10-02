@@ -13,13 +13,13 @@ namespace NextLevelSeven.Utility
         protected readonly Dictionary<int, TValue> Cache = new Dictionary<int, TValue>();
 
         /// <summary>Factory method to generate keys that don't exist already.</summary>
-        protected readonly ProxyFactory<int, TValue> Factory;
+        private readonly ProxyFactory<int, TValue> _factory;
 
         /// <summary>Create an indexed cache that uses the specified factory to generate items not already cached.</summary>
         /// <param name="factory"></param>
         public IndexedElementCache(ProxyFactory<int, TValue> factory)
         {
-            Factory = factory;
+            _factory = factory;
         }
 
         /// <summary>Get or set an item in the cache.</summary>
@@ -34,7 +34,7 @@ namespace NextLevelSeven.Utility
                 {
                     return value;
                 }
-                value = Factory(index);
+                value = _factory(index);
                 Cache[index] = value;
                 return value;
             }

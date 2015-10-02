@@ -8,32 +8,32 @@
         /// <param name="facilityIndex">Index of the facility data.</param>
         public ProxyIdentity(IElement element, int applicationIndex, int facilityIndex)
         {
-            ApplicationIndex = applicationIndex;
-            Element = element;
-            FacilityIndex = facilityIndex;
+            _applicationIndex = applicationIndex;
+            _element = element;
+            _facilityIndex = facilityIndex;
         }
 
         /// <summary>Get the application data index.</summary>
-        private int ApplicationIndex { get; set; }
+        private readonly int _applicationIndex;
 
         /// <summary>Get the referenced builder.</summary>
-        private IElement Element { get; set; }
+        private readonly IElement _element;
 
         /// <summary>Get the facility data index.</summary>
-        private int FacilityIndex { get; set; }
+        private readonly int _facilityIndex;
 
         /// <summary>Get or set the application name.</summary>
         public string Application
         {
-            get { return Element[ApplicationIndex].Value; }
-            set { Element[ApplicationIndex].Value = value; }
+            get { return _element[_applicationIndex].Value; }
+            set { _element[_applicationIndex].Value = value; }
         }
 
         /// <summary>Get or set the facility name.</summary>
         public string Facility
         {
-            get { return Element[FacilityIndex].Value; }
-            set { Element[FacilityIndex].Value = value; }
+            get { return _element[_facilityIndex].Value; }
+            set { _element[_facilityIndex].Value = value; }
         }
     }
 }

@@ -24,10 +24,10 @@ namespace NextLevelSeven.Parsing.Dividers
         public char Delimiter { get; protected set; }
 
         /// <summary>Get the list of subdivisions.</summary>
-        public abstract IReadOnlyList<StringDivision> Divisions { get; }
+        protected abstract IReadOnlyList<StringDivision> Divisions { get; }
 
         /// <summary>Index inside the parent.</summary>
-        public int Index { get; set; }
+        protected int Index { get; set; }
 
         /// <summary>Get the value of all subdivisions stitched together with the delimiter.</summary>
         public abstract string Value { get; set; }

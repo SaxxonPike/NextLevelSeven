@@ -23,7 +23,7 @@ namespace NextLevelSeven.Parsing.Elements
         protected DescendantParser(Parser ancestor, int parentIndex, int externalIndex)
         {
             _ancestor = ancestor;
-            ParentIndex = parentIndex;
+            _parentIndex = parentIndex;
             Index = externalIndex;
         }
 
@@ -34,7 +34,7 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>Zero-based index within the parent element's raw data.</summary>
-        private int ParentIndex { get; set; }
+        private readonly int _parentIndex;
 
         /// <summary>Get a string divider for this descendant element.</summary>
         /// <returns>Descendant string divider.</returns>
@@ -42,7 +42,7 @@ namespace NextLevelSeven.Parsing.Elements
         {
             return (Ancestor == null)
                 ? base.GetDescendantDivider()
-                : new DescendantStringDivider(Ancestor.DescendantDivider, Delimiter, ParentIndex);
+                : new DescendantStringDivider(Ancestor.DescendantDivider, Delimiter, _parentIndex);
         }
     }
 }

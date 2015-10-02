@@ -14,26 +14,26 @@ namespace NextLevelSeven.Core.Codec
         public IndexedEncodedTypeConverter(IElement baseElement, ProxyConverter<string, TDecoded> decoder,
             ProxyConverter<TDecoded, string> encoder)
         {
-            BaseElement = baseElement;
-            Decoder = decoder;
-            Encoder = encoder;
+            _baseElement = baseElement;
+            _decoder = decoder;
+            _encoder = encoder;
         }
 
         /// <summary>Referenced element.</summary>
-        private IElement BaseElement { get; set; }
+        private readonly IElement _baseElement;
 
         /// <summary>Decoding function from HL7.</summary>
-        private ProxyConverter<string, TDecoded> Decoder { get; set; }
+        private readonly ProxyConverter<string, TDecoded> _decoder;
 
         /// <summary>Encoding function to HL7.</summary>
-        private ProxyConverter<TDecoded, string> Encoder { get; set; }
+        private readonly ProxyConverter<TDecoded, string> _encoder;
 
         /// <summary>
         ///     Get the number of items in the collection.
         /// </summary>
         public int Count
         {
-            get { return BaseElement.ValueCount; }
+            get { return _baseElement.ValueCount; }
         }
 
         /// <summary>Get the items in the element as a collection.</summary>
@@ -41,7 +41,7 @@ namespace NextLevelSeven.Core.Codec
         {
             get
             {
-                var count = BaseElement.ValueCount;
+                var count = _baseElement.ValueCount;
                 for (var i = 1; i <= count; i++)
                 {
                     yield return this[i];
@@ -54,8 +54,8 @@ namespace NextLevelSeven.Core.Codec
         /// <returns>Element descendant's value.</returns>
         public TDecoded this[int index]
         {
-            get { return Decoder(BaseElement[index].Value); }
-            set { BaseElement[index].Value = Encoder(value); }
+            get { return _decoder(_baseElement[index].Value); }
+            set { _baseElement[index].Value = _encoder(value); }
         }
     }
 }

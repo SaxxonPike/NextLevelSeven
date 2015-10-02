@@ -11,23 +11,23 @@ namespace NextLevelSeven.Parsing.Elements
         /// <param name="segment">Field to pull the characters from.</param>
         public ParserEncodingConfiguration(ISegment segment)
         {
-            Segment = segment;
+            _segment = segment;
         }
 
         /// <summary>Base segment to pull values from.</summary>
-        private ISegment Segment { get; set; }
+        private readonly ISegment _segment;
 
         /// <summary>Get the encoding component delimiter from MSH-2.</summary>
         public override char ComponentDelimiter
         {
-            get { return TryGetChar(Segment[2].Value, 0); }
+            get { return TryGetChar(_segment[2].Value, 0); }
             [ExcludeFromCodeCoverage] protected set { }
         }
 
         /// <summary>Get the encoding escape character from MSH-2.</summary>
         public override char EscapeCharacter
         {
-            get { return TryGetChar(Segment[2].Value, 2); }
+            get { return TryGetChar(_segment[2].Value, 2); }
             [ExcludeFromCodeCoverage] protected set { }
         }
 
@@ -35,21 +35,21 @@ namespace NextLevelSeven.Parsing.Elements
         public override char FieldDelimiter
         {
             // important: do not change this to Segment[1].Value due to an infinite call loop.
-            get { return TryGetChar(Segment.Ancestor.Value, 3); }
+            get { return TryGetChar(_segment.Ancestor.Value, 3); }
             [ExcludeFromCodeCoverage] protected set { }
         }
 
         /// <summary>Get the encoding repetition delimiter from MSH-2.</summary>
         public override char RepetitionDelimiter
         {
-            get { return TryGetChar(Segment[2].Value, 1); }
+            get { return TryGetChar(_segment[2].Value, 1); }
             [ExcludeFromCodeCoverage] protected set { }
         }
 
         /// <summary>Get the encoding subcomponent character from MSH-2.</summary>
         public override char SubcomponentDelimiter
         {
-            get { return TryGetChar(Segment[2].Value, 3); }
+            get { return TryGetChar(_segment[2].Value, 3); }
             [ExcludeFromCodeCoverage] protected set { }
         }
 

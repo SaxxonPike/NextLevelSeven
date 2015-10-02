@@ -55,7 +55,7 @@ namespace NextLevelSeven.Parsing.Dividers
         }
 
         /// <summary>Get the division offsets in the string.</summary>
-        public override IReadOnlyList<StringDivision> Divisions
+        protected override IReadOnlyList<StringDivision> Divisions
         {
             get
             {

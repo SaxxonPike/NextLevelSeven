@@ -42,7 +42,7 @@ namespace NextLevelSeven.Building.Elements
         public virtual char SubcomponentDelimiter { get; set; }
 
         /// <summary>Get the encoding used by this builder.</summary>
-        public IEncoding Encoding { get; private set; }
+        public readonly IEncoding Encoding;
 
         /// <summary>Get the index at which this builder is located in its descendant.</summary>
         public int Index { get; private set; }
@@ -207,10 +207,8 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>Delete a descendant element at the specified index.</summary>
-        /// <typeparam name="TDescendant">Type of descendant element.</typeparam>
-        /// <param name="cache">Cache to delete within.</param>
         /// <param name="index">Descendant index to delete.</param>
-        protected void DeleteDescendant(int index)
+        void DeleteDescendant(int index)
         {
             var cache = GetCache();
             var values = cache.Where(c => c.Key != index).ToList();
@@ -226,7 +224,6 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>Move indices forward in preparation for insert.</summary>
-        /// <typeparam name="TDescendant">Type of descendant element.</typeparam>
         /// <param name="cache">Cache to modify.</param>
         /// <param name="index">Descendant index.</param>
         private static void ShiftForInsert(IIndexedElementCache<Builder> cache, int index)
@@ -244,11 +241,9 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>Insert a descendant element at the specified index.</summary>
-        /// <typeparam name="TDescendant">Type of descendant element.</typeparam>
-        /// <param name="cache">Cache to delete within.</param>
         /// <param name="index">Descendant index to delete.</param>
         /// <param name="value">Value to insert.</param>
-        protected IElementBuilder InsertDescendant(int index,
+        IElementBuilder InsertDescendant(int index,
             string value)
         {
             var cache = GetCache();
@@ -258,11 +253,9 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>Insert a descendant element string at the specified index.</summary>
-        /// <typeparam name="TDescendant">Type of descendant element.</typeparam>
-        /// <param name="cache">Cache to delete within.</param>
         /// <param name="index">Descendant index to delete.</param>
         /// <param name="element">Element to insert.</param>
-        protected IElementBuilder InsertDescendant(int index,
+        IElementBuilder InsertDescendant(int index,
             IElement element)
         {
             var cache = GetCache();
@@ -272,11 +265,9 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>Move a descendant element to another index within the cache provided.</summary>
-        /// <typeparam name="TDescendant">Type of descendant element.</typeparam>
-        /// <param name="cache">Cache to move within.</param>
         /// <param name="source">Source index.</param>
         /// <param name="target">Target index.</param>
-        protected void MoveDescendant(int source, int target)
+        void MoveDescendant(int source, int target)
         {
             var cache = GetCache();
             var values = cache.ToList();

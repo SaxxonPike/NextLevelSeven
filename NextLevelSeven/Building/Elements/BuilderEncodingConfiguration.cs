@@ -10,69 +10,69 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="builder">Message builder to pull the characters from.</param>
         public BuilderEncodingConfiguration(Builder builder)
         {
-            Builder = builder;
+            _builder = builder;
         }
 
         /// <summary>Builder to pull characters from.</summary>
-        private Builder Builder { get; set; }
+        private readonly Builder _builder;
 
         char IEncoding.ComponentDelimiter
         {
-            get { return Builder.ComponentDelimiter; }
-            set { Builder.ComponentDelimiter = value; }
+            get { return _builder.ComponentDelimiter; }
+            set { _builder.ComponentDelimiter = value; }
         }
 
         char IEncoding.EscapeCharacter
         {
-            get { return Builder.EscapeCharacter; }
-            set { Builder.EscapeCharacter = value; }
+            get { return _builder.EscapeCharacter; }
+            set { _builder.EscapeCharacter = value; }
         }
 
         char IEncoding.FieldDelimiter
         {
-            get { return Builder.FieldDelimiter; }
-            set { Builder.FieldDelimiter = value; }
+            get { return _builder.FieldDelimiter; }
+            set { _builder.FieldDelimiter = value; }
         }
 
         char IEncoding.RepetitionDelimiter
         {
-            get { return Builder.RepetitionDelimiter; }
-            set { Builder.RepetitionDelimiter = value; }
+            get { return _builder.RepetitionDelimiter; }
+            set { _builder.RepetitionDelimiter = value; }
         }
 
         char IEncoding.SubcomponentDelimiter
         {
-            get { return Builder.SubcomponentDelimiter; }
-            set { Builder.SubcomponentDelimiter = value; }
+            get { return _builder.SubcomponentDelimiter; }
+            set { _builder.SubcomponentDelimiter = value; }
         }
 
         public override char ComponentDelimiter
         {
-            get { return Builder.ComponentDelimiter; }
+            get { return _builder.ComponentDelimiter; }
             [ExcludeFromCodeCoverage] protected set { }
         }
 
         public override char EscapeCharacter
         {
-            get { return Builder.EscapeCharacter; }
+            get { return _builder.EscapeCharacter; }
             [ExcludeFromCodeCoverage] protected set { }
         }
 
         public override char FieldDelimiter
         {
-            get { return Builder.FieldDelimiter; }
+            get { return _builder.FieldDelimiter; }
             [ExcludeFromCodeCoverage] protected set { }
         }
 
         public override char RepetitionDelimiter
         {
-            get { return Builder.RepetitionDelimiter; }
+            get { return _builder.RepetitionDelimiter; }
             [ExcludeFromCodeCoverage] protected set { }
         }
 
         public override char SubcomponentDelimiter
         {
-            get { return Builder.SubcomponentDelimiter; }
+            get { return _builder.SubcomponentDelimiter; }
             [ExcludeFromCodeCoverage] protected set { }
         }
     }

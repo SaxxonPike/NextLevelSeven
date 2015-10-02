@@ -26,7 +26,7 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>Get the ancestor builder.</summary>
-        protected Builder Ancestor { get; private set; }
+        protected readonly Builder Ancestor;
 
         /// <summary>Get or set the component delimiter character.</summary>
         public override sealed char ComponentDelimiter

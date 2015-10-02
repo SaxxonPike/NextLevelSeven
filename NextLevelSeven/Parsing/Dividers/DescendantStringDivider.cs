@@ -15,13 +15,13 @@ namespace NextLevelSeven.Parsing.Dividers
         /// <param name="parentIndex">Index within the parent to reference.</param>
         public DescendantStringDivider(StringDivider baseDivider, char delimiter, int parentIndex)
         {
-            BaseDivider = baseDivider;
+            _baseDivider = baseDivider;
             Index = parentIndex;
             Delimiter = delimiter;
         }
 
         /// <summary>Parent divider.</summary>
-        private StringDivider BaseDivider { get; set; }
+        private readonly StringDivider _baseDivider;
 
         /// <summary>Get or set the substring at the specified index.</summary>
         /// <param name="index">Index of the string to get or set.</param>
@@ -43,13 +43,13 @@ namespace NextLevelSeven.Parsing.Dividers
 
         public override bool IsNull
         {
-            get { return BaseDivider.IsNull || ValueChars == null || ValueChars.Length == 0; }
+            get { return _baseDivider.IsNull || ValueChars == null || ValueChars.Length == 0; }
         }
 
         /// <summary>String that is operated upon, as a character array. This points to the parent divider's BaseValue.</summary>
         public override char[] BaseValue
         {
-            get { return BaseDivider.BaseValue; }
+            get { return _baseDivider.BaseValue; }
         }
 
         /// <summary>Get the number of divisions.</summary>
@@ -59,11 +59,11 @@ namespace NextLevelSeven.Parsing.Dividers
         }
 
         /// <summary>Get the division offsets in the string.</summary>
-        public override IReadOnlyList<StringDivision> Divisions
+        protected override IReadOnlyList<StringDivision> Divisions
         {
             get
             {
-                if (_divisions == null || Version != BaseDivider.Version)
+                if (_divisions == null || Version != _baseDivider.Version)
                 {
                     Update();
                 }
@@ -76,10 +76,10 @@ namespace NextLevelSeven.Parsing.Dividers
         {
             get
             {
-                var d = BaseDivider.GetSubDivision(Index);
+                var d = _baseDivider.GetSubDivision(Index);
                 return (!d.Valid || d.Length == 0) ? null : new string(BaseValue, d.Offset, d.Length);
             }
-            set { BaseDivider[Index] = value; }
+            set { _baseDivider[Index] = value; }
         }
 
         /// <summary>Calculated value of all divisions separated by delimiters, as characters.</summary>
@@ -87,7 +87,7 @@ namespace NextLevelSeven.Parsing.Dividers
         {
             get
             {
-                var d = BaseDivider.GetSubDivision(Index);
+                var d = _baseDivider.GetSubDivision(Index);
                 return (!d.Valid || d.Length == 0)
                     ? null
                     : StringDividerOperations.CharSubstring(BaseValue, d.Offset, d.Length);
@@ -122,12 +122,12 @@ namespace NextLevelSeven.Parsing.Dividers
         /// <summary>[PERF] Refresh internal division cache.</summary>
         private void Update()
         {
-            Version = BaseDivider.Version;
-            var baseDivision = BaseDivider.GetSubDivision(Index);
+            Version = _baseDivider.Version;
+            var baseDivision = _baseDivider.GetSubDivision(Index);
             if (baseDivision.Valid)
             {
                 _divisions = StringDividerOperations.GetDivisions(BaseValue, Delimiter,
-                    BaseDivider.GetSubDivision(Index));
+                    _baseDivider.GetSubDivision(Index));
             }
             else
             {
@@ -137,24 +137,24 @@ namespace NextLevelSeven.Parsing.Dividers
 
         public override void Replace(int start, int length, char[] value)
         {
-            BaseDivider.Replace(start, length, value);
+            _baseDivider.Replace(start, length, value);
             _divisions = null;
         }
 
         public override void Pad(char delimiter, int index, int start, int length, List<StringDivision> divisions)
         {
-            BaseDivider.Pad(delimiter, index, start, length, divisions);
+            _baseDivider.Pad(delimiter, index, start, length, divisions);
         }
 
         public override void PadSubDivider(int index)
         {
-            BaseDivider.PadSubDivider(Index);
-            var d = BaseDivider.GetSubDivision(Index);
+            _baseDivider.PadSubDivider(Index);
+            var d = _baseDivider.GetSubDivision(Index);
             if (_divisions == null)
             {
                 Update();
             }
-            BaseDivider.Pad(Delimiter, index, d.Offset, d.Length, _divisions);
+            _baseDivider.Pad(Delimiter, index, d.Offset, d.Length, _divisions);
         }
     }
 }
