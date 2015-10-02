@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Text;
 using NextLevelSeven.Core;
-using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Building.Elements
 {

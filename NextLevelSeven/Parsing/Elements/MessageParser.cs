@@ -220,7 +220,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>
         ///     Enforce not being able to modify placement for encoding fields.
         /// </summary>
-        static void ThrowIfEncodingSegmentIndex(params int[] indices)
+        private static void ThrowIfEncodingSegmentIndex(params int[] indices)
         {
             if (indices.Any(index => index <= 1))
             {

@@ -3,7 +3,6 @@ using System.Linq;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Codec;
 using NextLevelSeven.Core.Encoding;
-using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building.Elements
@@ -11,6 +10,9 @@ namespace NextLevelSeven.Building.Elements
     /// <summary>Base class for message builders.</summary>
     internal abstract class Builder : IElementBuilder
     {
+        /// <summary>Get the encoding used by this builder.</summary>
+        public readonly IEncoding Encoding;
+
         /// <summary>Initialize the message builder base class.</summary>
         internal Builder()
         {
@@ -41,9 +43,6 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get or set the character used to separate subcomponent-level content.</summary>
         public virtual char SubcomponentDelimiter { get; set; }
 
-        /// <summary>Get the encoding used by this builder.</summary>
-        public readonly IEncoding Encoding;
-
         /// <summary>Get the index at which this builder is located in its descendant.</summary>
         public int Index { get; private set; }
 
@@ -60,10 +59,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get a converter which will interpret this element's value as other types.</summary>
         public virtual IEncodedTypeConverter Codec
         {
-            get
-            {
-                return new EncodedTypeConverter(this);
-            }
+            get { return new EncodedTypeConverter(this); }
         }
 
         /// <summary>Get the number of sub-values in this element.</summary>
@@ -125,16 +121,6 @@ namespace NextLevelSeven.Building.Elements
             get { return Encoding; }
         }
 
-        /// <summary>
-        ///     Returns true if the index can be moved or deleted.
-        /// </summary>
-        /// <param name="index">Index to verify.</param>
-        /// <returns></returns>
-        protected virtual bool AssertIndexIsMovable(int index)
-        {
-            return true;
-        }
-
         /// <summary>Delete a descendant at the specified index.</summary>
         /// <param name="index">Index to delete at.</param>
         public void Delete(int index)
@@ -176,6 +162,36 @@ namespace NextLevelSeven.Building.Elements
             }
         }
 
+        /// <summary>
+        ///     Get the message for this builder.
+        /// </summary>
+        public IMessage Message
+        {
+            get
+            {
+                var ancestor = GetAncestor();
+                while (ancestor != null)
+                {
+                    if (ancestor is IMessage)
+                    {
+                        return ancestor as IMessage;
+                    }
+                    ancestor = ancestor.Ancestor;
+                }
+                return null;
+            }
+        }
+
+        /// <summary>
+        ///     Returns true if the index can be moved or deleted.
+        /// </summary>
+        /// <param name="index">Index to verify.</param>
+        /// <returns></returns>
+        protected virtual bool AssertIndexIsMovable(int index)
+        {
+            return true;
+        }
+
         /// <summary>Get the element at the specified index as an IElement.</summary>
         /// <param name="index">Index at which to get the element.</param>
         /// <returns>Generic element.</returns>
@@ -208,7 +224,7 @@ namespace NextLevelSeven.Building.Elements
 
         /// <summary>Delete a descendant element at the specified index.</summary>
         /// <param name="index">Descendant index to delete.</param>
-        void DeleteDescendant(int index)
+        private void DeleteDescendant(int index)
         {
             var cache = GetCache();
             var values = cache.Where(c => c.Key != index).ToList();
@@ -243,7 +259,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Insert a descendant element at the specified index.</summary>
         /// <param name="index">Descendant index to delete.</param>
         /// <param name="value">Value to insert.</param>
-        IElementBuilder InsertDescendant(int index,
+        private IElementBuilder InsertDescendant(int index,
             string value)
         {
             var cache = GetCache();
@@ -255,7 +271,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Insert a descendant element string at the specified index.</summary>
         /// <param name="index">Descendant index to delete.</param>
         /// <param name="element">Element to insert.</param>
-        IElementBuilder InsertDescendant(int index,
+        private IElementBuilder InsertDescendant(int index,
             IElement element)
         {
             var cache = GetCache();
@@ -267,7 +283,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Move a descendant element to another index within the cache provided.</summary>
         /// <param name="source">Source index.</param>
         /// <param name="target">Target index.</param>
-        void MoveDescendant(int source, int target)
+        private void MoveDescendant(int source, int target)
         {
             var cache = GetCache();
             var values = cache.ToList();
@@ -284,7 +300,7 @@ namespace NextLevelSeven.Building.Elements
 
             if (sourceValue != null)
             {
-                sourceValue.Index = target;                
+                sourceValue.Index = target;
             }
             cache.Clear();
             foreach (var value in values)
@@ -298,25 +314,5 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         /// <returns></returns>
         protected abstract IIndexedElementCache<Builder> GetCache();
-
-        /// <summary>
-        ///     Get the message for this builder.
-        /// </summary>
-        public IMessage Message
-        {
-            get
-            {
-                var ancestor = GetAncestor();
-                while (ancestor != null)
-                {
-                    if (ancestor is IMessage)
-                    {
-                        return ancestor as IMessage;
-                    }
-                    ancestor = ancestor.Ancestor;
-                }
-                return null;
-            }
-        }
     }
 }

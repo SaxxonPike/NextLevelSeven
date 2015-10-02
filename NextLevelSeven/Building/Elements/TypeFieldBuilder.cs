@@ -1,5 +1,4 @@
-﻿using NextLevelSeven.Diagnostics;
-using NextLevelSeven.Utility;
+﻿using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building.Elements
 {

@@ -18,10 +18,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Get or set the value of the field delimiter.</summary>
         public override string Value
         {
-            get
-            {
-                return new string(Ancestor.DescendantDivider.Value[3], 1);
-            }
+            get { return new string(Ancestor.DescendantDivider.Value[3], 1); }
             set
             {
                 var s = Ancestor.DescendantDivider.Value;

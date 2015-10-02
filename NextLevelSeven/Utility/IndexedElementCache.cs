@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Utility
@@ -9,11 +8,11 @@ namespace NextLevelSeven.Utility
     /// <typeparam name="TValue"></typeparam>
     internal class IndexedElementCache<TValue> : IIndexedElementCache<TValue> where TValue : class, IElement
     {
-        /// <summary>Internal cache.</summary>
-        protected readonly Dictionary<int, TValue> Cache = new Dictionary<int, TValue>();
-
         /// <summary>Factory method to generate keys that don't exist already.</summary>
         private readonly ProxyFactory<int, TValue> _factory;
+
+        /// <summary>Internal cache.</summary>
+        protected readonly Dictionary<int, TValue> Cache = new Dictionary<int, TValue>();
 
         /// <summary>Create an indexed cache that uses the specified factory to generate items not already cached.</summary>
         /// <param name="factory"></param>

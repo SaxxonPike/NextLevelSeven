@@ -19,7 +19,7 @@ namespace NextLevelSeven.Streaming
         /// <returns>Message that was read.</returns>
         public override IMessageParser Read()
         {
-            int vtByte = BaseStream.ReadByte();
+            var vtByte = BaseStream.ReadByte();
             if (vtByte == -1)
             {
                 return null;

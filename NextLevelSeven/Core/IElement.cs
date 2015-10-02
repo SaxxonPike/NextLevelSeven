@@ -48,6 +48,11 @@ namespace NextLevelSeven.Core
         /// <summary>Get or set the subvalues of the element.</summary>
         IEnumerable<string> Values { get; set; }
 
+        /// <summary>
+        ///     Get the parent message for the element.
+        /// </summary>
+        IMessage Message { get; }
+
         /// <summary>Delete a descendant element.</summary>
         void Delete(int index);
 
@@ -62,11 +67,6 @@ namespace NextLevelSeven.Core
         /// <param name="index">Index where to insert.</param>
         /// <returns></returns>
         IElement Insert(int index, IElement element);
-
-        /// <summary>
-        ///     Get the parent message for the element.
-        /// </summary>
-        IMessage Message { get; }
 
         /// <summary>Move a descendant element to another index.</summary>
         /// <param name="sourceIndex"></param>

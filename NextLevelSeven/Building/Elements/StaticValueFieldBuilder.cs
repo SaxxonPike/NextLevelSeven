@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NextLevelSeven.Core;
 using NextLevelSeven.Diagnostics;
 
@@ -18,12 +15,7 @@ namespace NextLevelSeven.Building.Elements
         {
         }
 
-        protected override bool AssertIndexIsMovable(int index)
-        {
-            throw new BuilderException(ErrorCode.EncodingElementCannotBeMoved);
-        }
-
-        abstract public override string Value { get; set; }
+        public abstract override string Value { get; set; }
 
         /// <summary>Get the number of field repetitions in this field, including field repetitions with no content.</summary>
         public override int ValueCount
@@ -38,30 +30,35 @@ namespace NextLevelSeven.Building.Elements
             set { Value = string.Concat(value); }
         }
 
-        /// <summary>Static fields cannot have repetitions; this method throws unconditionally.</summary>
-        /// <param name="index">Not used.</param>
-        /// <returns>Nothing.</returns>
-        sealed protected override RepetitionBuilder CreateRepetitionBuilder(int index)
-        {
-            throw new BuilderException(ErrorCode.FixedFieldsCannotBeDivided);
-        }
-
         /// <summary>Returns zero. Static fields cannot be divided any further. Therefore, they have no useful delimiter.</summary>
-        sealed public override char Delimiter
+        public override sealed char Delimiter
         {
             get { return '\0'; }
         }
 
         /// <summary>If true, the element is considered to exist.</summary>
-        sealed public override bool Exists
+        public override sealed bool Exists
         {
             get { return Value != null; }
+        }
+
+        protected override bool AssertIndexIsMovable(int index)
+        {
+            throw new BuilderException(ErrorCode.EncodingElementCannotBeMoved);
+        }
+
+        /// <summary>Static fields cannot have repetitions; this method throws unconditionally.</summary>
+        /// <param name="index">Not used.</param>
+        /// <returns>Nothing.</returns>
+        protected override sealed RepetitionBuilder CreateRepetitionBuilder(int index)
+        {
+            throw new BuilderException(ErrorCode.FixedFieldsCannotBeDivided);
         }
 
         /// <summary>Set the contents of this field.</summary>
         /// <param name="value">New value.</param>
         /// <returns>This StaticValueFieldBuilder.</returns>
-        sealed public override IFieldBuilder SetField(string value)
+        public override sealed IFieldBuilder SetField(string value)
         {
             Value = value;
             return this;
@@ -71,7 +68,7 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="repetition"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        sealed public override IFieldBuilder SetFieldRepetition(int repetition, string value)
+        public override sealed IFieldBuilder SetFieldRepetition(int repetition, string value)
         {
             if (repetition != 1)
             {
@@ -83,7 +80,7 @@ namespace NextLevelSeven.Building.Elements
 
         /// <summary>Get descendant elements.</summary>
         /// <returns>Descendant elements.</returns>
-        sealed protected override IEnumerable<IElement> GetDescendants()
+        protected override sealed IEnumerable<IElement> GetDescendants()
         {
             return Enumerable.Empty<IElement>();
         }

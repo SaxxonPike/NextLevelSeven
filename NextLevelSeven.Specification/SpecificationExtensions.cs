@@ -3,7 +3,10 @@
     /// <summary>Extensions for specification classes.</summary>
     public static class SpecificationExtensions
     {
-        /// <summary>Return whether or not the specified number is within this number range (inclusive). Null values will always return false.</summary>
+        /// <summary>
+        ///     Return whether or not the specified number is within this number range (inclusive). Null values will always
+        ///     return false.
+        /// </summary>
         /// <param name="range">Range to check.</param>
         /// <param name="value">Value to check.</param>
         /// <returns>True if the value falls within the range, false otherwise.</returns>

@@ -60,6 +60,6 @@
         /* 0025 */
         SegmentDataMustNotBeNull,
         /* 0026 */
-        ElementIndexMustBeGreaterThanZero,
+        ElementIndexMustBeGreaterThanZero
     }
 }

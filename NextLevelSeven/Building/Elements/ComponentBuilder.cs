@@ -189,16 +189,6 @@ namespace NextLevelSeven.Building.Elements
             return CloneComponent();
         }
 
-        /// <summary>Deep clone this component.</summary>
-        /// <returns>Clone of the component.</returns>
-        ComponentBuilder CloneComponent()
-        {
-            return new ComponentBuilder(new EncodingConfiguration(Encoding), Index)
-            {
-                Value = Value
-            };            
-        }
-
         /// <summary>Get the subcomponent delimiter.</summary>
         public override char Delimiter
         {
@@ -228,6 +218,16 @@ namespace NextLevelSeven.Building.Elements
         IRepetition IComponent.Ancestor
         {
             get { return Ancestor as IRepetition; }
+        }
+
+        /// <summary>Deep clone this component.</summary>
+        /// <returns>Clone of the component.</returns>
+        private ComponentBuilder CloneComponent()
+        {
+            return new ComponentBuilder(new EncodingConfiguration(Encoding), Index)
+            {
+                Value = Value
+            };
         }
 
         /// <summary>Create a subcomponent builder object.</summary>

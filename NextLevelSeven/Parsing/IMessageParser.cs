@@ -6,7 +6,10 @@ namespace NextLevelSeven.Parsing
     /// <summary>Common interface for the highest level element in an HL7 message: the message itself.</summary>
     public interface IMessageParser : IElementParser, IMessage
     {
-        /// <summary>Get a descendant segment at the specified index. Indices match the HL7 specification, and are not necessarily zero-based.</summary>
+        /// <summary>
+        ///     Get a descendant segment at the specified index. Indices match the HL7 specification, and are not necessarily
+        ///     zero-based.
+        /// </summary>
         /// <param name="index">Index to query.</param>
         /// <returns>Element that was found at the index.</returns>
         new ISegmentParser this[int index] { get; }

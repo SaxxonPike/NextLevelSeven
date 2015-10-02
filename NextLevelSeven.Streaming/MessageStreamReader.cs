@@ -23,7 +23,10 @@ namespace NextLevelSeven.Streaming
             return Process(BaseStream);
         }
 
-        /// <summary>Read all messages in the stream. If empty, there were no more messages. (Using the base stream reader, the entire stream will be read as one message.)</summary>
+        /// <summary>
+        ///     Read all messages in the stream. If empty, there were no more messages. (Using the base stream reader, the
+        ///     entire stream will be read as one message.)
+        /// </summary>
         /// <returns>Messages that were read.</returns>
         public virtual IEnumerable<IMessageParser> ReadAll()
         {

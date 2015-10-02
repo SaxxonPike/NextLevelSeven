@@ -6,7 +6,7 @@ namespace NextLevelSeven.Specification
     public interface ISpecificationElement
     {
         /// <summary>
-        /// Element being wrapped.
+        ///     Element being wrapped.
         /// </summary>
         IElement Element { get; }
 

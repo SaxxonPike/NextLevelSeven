@@ -39,7 +39,12 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get the number of field repetitions in this field, including field repetitions with no content.</summary>
         public override int ValueCount
         {
-            get { return (_repetitions.Count > 0) ? _repetitions.Max<KeyValuePair<int, RepetitionBuilder>, int>(kv => kv.Key) : 0; }
+            get
+            {
+                return (_repetitions.Count > 0)
+                    ? _repetitions.Max<KeyValuePair<int, RepetitionBuilder>, int>(kv => kv.Key)
+                    : 0;
+            }
         }
 
         /// <summary>Get or set field repetition content within this field.</summary>
@@ -269,16 +274,6 @@ namespace NextLevelSeven.Building.Elements
             return CloneField();
         }
 
-        /// <summary>Deep clone this field.</summary>
-        /// <returns>Clone of the field.</returns>
-        FieldBuilder CloneField()
-        {
-            return new FieldBuilder(new EncodingConfiguration(Encoding), Index)
-            {
-                Value = Value
-            };            
-        }
-
         /// <summary>Get this element's value delimiter.</summary>
         public override char Delimiter
         {
@@ -308,6 +303,16 @@ namespace NextLevelSeven.Building.Elements
         ISegment IField.Ancestor
         {
             get { return Ancestor as ISegment; }
+        }
+
+        /// <summary>Deep clone this field.</summary>
+        /// <returns>Clone of the field.</returns>
+        private FieldBuilder CloneField()
+        {
+            return new FieldBuilder(new EncodingConfiguration(Encoding), Index)
+            {
+                Value = Value
+            };
         }
 
         /// <summary>Create a repetition builder object.</summary>

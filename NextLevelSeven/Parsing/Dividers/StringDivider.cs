@@ -75,7 +75,7 @@ namespace NextLevelSeven.Parsing.Dividers
                 var endOfDivision = Divisions.Max(e => e.Offset);
                 if (offset < endOfDivision)
                 {
-                    length++;                    
+                    length++;
                 }
             }
             Replace(offset, length, StringDividerOperations.EmptyChars);

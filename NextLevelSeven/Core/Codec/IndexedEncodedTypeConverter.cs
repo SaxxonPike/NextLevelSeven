@@ -7,6 +7,15 @@ namespace NextLevelSeven.Core.Codec
     /// <typeparam name="TDecoded">Type of the decoded value.</typeparam>
     internal sealed class IndexedEncodedTypeConverter<TDecoded> : IIndexedEncodedTypeConverter<TDecoded>
     {
+        /// <summary>Referenced element.</summary>
+        private readonly IElement _baseElement;
+
+        /// <summary>Decoding function from HL7.</summary>
+        private readonly ProxyConverter<string, TDecoded> _decoder;
+
+        /// <summary>Encoding function to HL7.</summary>
+        private readonly ProxyConverter<TDecoded, string> _encoder;
+
         /// <summary>Create a codec indexer.</summary>
         /// <param name="baseElement">Element to reference.</param>
         /// <param name="decoder">Decoding function from HL7.</param>
@@ -18,15 +27,6 @@ namespace NextLevelSeven.Core.Codec
             _decoder = decoder;
             _encoder = encoder;
         }
-
-        /// <summary>Referenced element.</summary>
-        private readonly IElement _baseElement;
-
-        /// <summary>Decoding function from HL7.</summary>
-        private readonly ProxyConverter<string, TDecoded> _decoder;
-
-        /// <summary>Encoding function to HL7.</summary>
-        private readonly ProxyConverter<TDecoded, string> _encoder;
 
         /// <summary>
         ///     Get the number of items in the collection.

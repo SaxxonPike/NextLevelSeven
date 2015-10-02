@@ -6,15 +6,15 @@ namespace NextLevelSeven.Building.Elements
     /// <summary>An encoding configuration wrapper that redirects character properties from a MessageBuilder.</summary>
     internal sealed class BuilderEncodingConfiguration : ReadOnlyEncodingConfiguration, IEncoding
     {
+        /// <summary>Builder to pull characters from.</summary>
+        private readonly Builder _builder;
+
         /// <summary>Create an encoding configuration from a message or segment.</summary>
         /// <param name="builder">Message builder to pull the characters from.</param>
         public BuilderEncodingConfiguration(Builder builder)
         {
             _builder = builder;
         }
-
-        /// <summary>Builder to pull characters from.</summary>
-        private readonly Builder _builder;
 
         char IEncoding.ComponentDelimiter
         {

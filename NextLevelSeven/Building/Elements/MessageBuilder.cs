@@ -69,7 +69,8 @@ namespace NextLevelSeven.Building.Elements
                 }
 
                 var result = string.Join(ReadOnlyEncodingConfiguration.SegmentDelimiterString,
-                    _segments.OrderBy<KeyValuePair<int, SegmentBuilder>, int>(i => i.Key).Select(i => i.Value.Value ?? string.Empty));
+                    _segments.OrderBy<KeyValuePair<int, SegmentBuilder>, int>(i => i.Key)
+                        .Select(i => i.Value.Value ?? string.Empty));
 
                 return (result.Length == 0)
                     ? null
@@ -349,16 +350,6 @@ namespace NextLevelSeven.Building.Elements
             return CloneMessage();
         }
 
-        /// <summary>Deep clone the message.</summary>
-        /// <returns>Clone of the message.</returns>
-        MessageBuilder CloneMessage()
-        {
-            return new MessageBuilder
-            {
-                Value = Value
-            };            
-        }
-
         /// <summary>Get the message delimiter.</summary>
         public override char Delimiter
         {
@@ -390,12 +381,24 @@ namespace NextLevelSeven.Building.Elements
             get { return _segments.Any<KeyValuePair<int, SegmentBuilder>>(s => s.Value.Exists); }
         }
 
+        /// <summary>Deep clone the message.</summary>
+        /// <returns>Clone of the message.</returns>
+        private MessageBuilder CloneMessage()
+        {
+            return new MessageBuilder
+            {
+                Value = Value
+            };
+        }
+
         /// <summary>Change all system line endings to HL7 line endings.</summary>
         /// <param name="message">String to transform.</param>
         /// <returns>Sanitized string.</returns>
         private string SanitizeLineEndings(string message)
         {
-            return message == null ? null : message.Replace(Environment.NewLine, ReadOnlyEncodingConfiguration.SegmentDelimiterString);
+            return message == null
+                ? null
+                : message.Replace(Environment.NewLine, ReadOnlyEncodingConfiguration.SegmentDelimiterString);
         }
 
         /// <summary>Create a segment builder object.</summary>

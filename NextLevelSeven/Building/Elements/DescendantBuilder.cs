@@ -7,6 +7,9 @@ namespace NextLevelSeven.Building.Elements
     /// <summary>Base class for builders that are not root level.</summary>
     internal abstract class DescendantBuilder : Builder
     {
+        /// <summary>Get the ancestor builder.</summary>
+        protected readonly Builder Ancestor;
+
         /// <summary>Initialize the message builder base class.</summary>
         /// <param name="ancestor">Ancestor from which configuration will be obtained.</param>
         /// <param name="index">Index in the parent.</param>
@@ -24,9 +27,6 @@ namespace NextLevelSeven.Building.Elements
         {
             Ancestor = null;
         }
-
-        /// <summary>Get the ancestor builder.</summary>
-        protected readonly Builder Ancestor;
 
         /// <summary>Get or set the component delimiter character.</summary>
         public override sealed char ComponentDelimiter

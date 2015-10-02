@@ -35,7 +35,7 @@ namespace NextLevelSeven.Parsing.Dividers
                 if (index < divisions.Count)
                 {
                     var d = Divisions[index];
-                    return new string(ValueChars, d.Offset, d.Length);                    
+                    return new string(ValueChars, d.Offset, d.Length);
                 }
                 return string.Empty;
             }

@@ -189,7 +189,7 @@ namespace NextLevelSeven.Parsing.Elements
 
         /// <summary>Delete a descendant element.</summary>
         /// <param name="index">Index to insert at.</param>
-        virtual public void Delete(int index)
+        public virtual void Delete(int index)
         {
             if (index < 1)
             {
@@ -201,7 +201,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Insert a descendant element.</summary>
         /// <param name="element">Element to insert.</param>
         /// <param name="index">Index to insert at.</param>
-        virtual public IElement Insert(int index, IElement element)
+        public virtual IElement Insert(int index, IElement element)
         {
             if (index < 1)
             {
@@ -213,7 +213,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Insert a descendant element.</summary>
         /// <param name="value">Value to insert.</param>
         /// <param name="index">Index to insert at.</param>
-        virtual public IElement Insert(int index, string value)
+        public virtual IElement Insert(int index, string value)
         {
             if (index < 1)
             {
@@ -226,32 +226,13 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Move a descendant.</summary>
         /// <param name="sourceIndex"></param>
         /// <param name="targetIndex"></param>
-        virtual public void Move(int sourceIndex, int targetIndex)
+        public virtual void Move(int sourceIndex, int targetIndex)
         {
             if (sourceIndex < 1 || targetIndex < 1)
             {
                 throw new ParserException(ErrorCode.ElementIndexMustBeZeroOrGreater);
             }
             DescendantDivider.Move(sourceIndex - 1, targetIndex - 1);
-        }
-
-        /// <summary>Get the descendant element at the specified index.</summary>
-        /// <param name="index">Exposed index of the descendant element.</param>
-        /// <returns>Descendant element at the specified index.</returns>
-        protected abstract IElementParser GetDescendant(int index);
-
-        /// <summary>Copy the contents of this element to a string.</summary>
-        /// <returns>Copied string.</returns>
-        public override sealed string ToString()
-        {
-            return Value ?? string.Empty;
-        }
-
-        /// <summary>Get a string divider for this descendant element.</summary>
-        /// <returns>Descendant string divider.</returns>
-        protected virtual StringDivider GetDescendantDivider()
-        {
-            return new RootStringDivider(string.Empty, Delimiter);
         }
 
         /// <summary>
@@ -272,6 +253,25 @@ namespace NextLevelSeven.Parsing.Elements
                 }
                 return null;
             }
+        }
+
+        /// <summary>Get the descendant element at the specified index.</summary>
+        /// <param name="index">Exposed index of the descendant element.</param>
+        /// <returns>Descendant element at the specified index.</returns>
+        protected abstract IElementParser GetDescendant(int index);
+
+        /// <summary>Copy the contents of this element to a string.</summary>
+        /// <returns>Copied string.</returns>
+        public override sealed string ToString()
+        {
+            return Value ?? string.Empty;
+        }
+
+        /// <summary>Get a string divider for this descendant element.</summary>
+        /// <returns>Descendant string divider.</returns>
+        protected virtual StringDivider GetDescendantDivider()
+        {
+            return new RootStringDivider(string.Empty, Delimiter);
         }
     }
 }

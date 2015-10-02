@@ -341,16 +341,6 @@ namespace NextLevelSeven.Building.Elements
             return CloneSegment();
         }
 
-        /// <summary>Deep clone this segment.</summary>
-        /// <returns>Clone of the segment.</returns>
-        SegmentBuilder CloneSegment()
-        {
-            return new SegmentBuilder(new EncodingConfiguration(Encoding), Index)
-            {
-                Value = Value
-            };            
-        }
-
         /// <summary>Get this segment's data delimiter.</summary>
         public override char Delimiter
         {
@@ -392,6 +382,16 @@ namespace NextLevelSeven.Building.Elements
         IMessageBuilder ISegmentBuilder.Ancestor
         {
             get { return Ancestor as IMessageBuilder; }
+        }
+
+        /// <summary>Deep clone this segment.</summary>
+        /// <returns>Clone of the segment.</returns>
+        private SegmentBuilder CloneSegment()
+        {
+            return new SegmentBuilder(new EncodingConfiguration(Encoding), Index)
+            {
+                Value = Value
+            };
         }
 
         /// <summary>

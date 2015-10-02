@@ -218,14 +218,6 @@ namespace NextLevelSeven.Building.Elements
             return CloneRepetition();
         }
 
-        RepetitionBuilder CloneRepetition()
-        {
-            return new RepetitionBuilder(new EncodingConfiguration(Encoding), Index)
-            {
-                Value = Value
-            };            
-        }
-
         /// <summary>Get this element's value delimiter.</summary>
         public override char Delimiter
         {
@@ -261,6 +253,14 @@ namespace NextLevelSeven.Building.Elements
         IFieldBuilder IRepetitionBuilder.Ancestor
         {
             get { return Ancestor as IFieldBuilder; }
+        }
+
+        private RepetitionBuilder CloneRepetition()
+        {
+            return new RepetitionBuilder(new EncodingConfiguration(Encoding), Index)
+            {
+                Value = Value
+            };
         }
 
         /// <summary>Create a component builder for the specified index.</summary>

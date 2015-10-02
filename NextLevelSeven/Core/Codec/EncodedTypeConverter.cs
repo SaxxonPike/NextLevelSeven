@@ -7,15 +7,15 @@ namespace NextLevelSeven.Core.Codec
     /// <summary>Provides HL7 value conversion.</summary>
     internal sealed class EncodedTypeConverter : IEncodedTypeConverter
     {
+        /// <summary>Referenced element.</summary>
+        private readonly IElement _baseElement;
+
         /// <summary>Create a codec that references the specified element's data.</summary>
         /// <param name="baseElement">Element to reference.</param>
         public EncodedTypeConverter(IElement baseElement)
         {
             _baseElement = baseElement;
         }
-
-        /// <summary>Referenced element.</summary>
-        private readonly IElement _baseElement;
 
         /// <summary>Get or set the element's value as a date.</summary>
         public DateTime? AsDate
@@ -46,7 +46,8 @@ namespace NextLevelSeven.Core.Codec
         {
             get
             {
-                return new IndexedEncodedTypeConverter<DateTimeOffset?>(_baseElement, DateTimeConverter.ConvertToDateTime,
+                return new IndexedEncodedTypeConverter<DateTimeOffset?>(_baseElement,
+                    DateTimeConverter.ConvertToDateTime,
                     DateTimeConverter.ConvertFromDateTime);
             }
         }
@@ -123,7 +124,8 @@ namespace NextLevelSeven.Core.Codec
             get
             {
                 return string.Join(Environment.NewLine,
-                    TextConverter.ConvertToFormattedText(_baseElement.Value, _baseElement.Delimiter, _baseElement.Encoding));
+                    TextConverter.ConvertToFormattedText(_baseElement.Value, _baseElement.Delimiter,
+                        _baseElement.Encoding));
             }
             set
             {

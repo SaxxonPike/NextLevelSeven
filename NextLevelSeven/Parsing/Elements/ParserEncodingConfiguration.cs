@@ -7,15 +7,15 @@ namespace NextLevelSeven.Parsing.Elements
     /// <summary>An encoding configuration that gets its values from an HL7 message.</summary>
     internal sealed class ParserEncodingConfiguration : ReadOnlyEncodingConfiguration
     {
+        /// <summary>Base segment to pull values from.</summary>
+        private readonly ISegment _segment;
+
         /// <summary>Create an encoding configuration from a message or segment.</summary>
         /// <param name="segment">Field to pull the characters from.</param>
         public ParserEncodingConfiguration(ISegment segment)
         {
             _segment = segment;
         }
-
-        /// <summary>Base segment to pull values from.</summary>
-        private readonly ISegment _segment;
 
         /// <summary>Get the encoding component delimiter from MSH-2.</summary>
         public override char ComponentDelimiter

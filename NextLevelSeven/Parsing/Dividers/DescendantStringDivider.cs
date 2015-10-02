@@ -6,6 +6,9 @@ namespace NextLevelSeven.Parsing.Dividers
     /// <summary>A splitter which handles getting and setting delimited substrings within a parent string divider.</summary>
     internal sealed class DescendantStringDivider : StringDivider
     {
+        /// <summary>Parent divider.</summary>
+        private readonly StringDivider _baseDivider;
+
         /// <summary>[PERF] Cached divisions list.</summary>
         private List<StringDivision> _divisions;
 
@@ -19,9 +22,6 @@ namespace NextLevelSeven.Parsing.Dividers
             Index = parentIndex;
             Delimiter = delimiter;
         }
-
-        /// <summary>Parent divider.</summary>
-        private readonly StringDivider _baseDivider;
 
         /// <summary>Get or set the substring at the specified index.</summary>
         /// <param name="index">Index of the string to get or set.</param>
@@ -92,7 +92,11 @@ namespace NextLevelSeven.Parsing.Dividers
                     ? null
                     : StringDividerOperations.CharSubstring(BaseValue, d.Offset, d.Length);
             }
-            [ExcludeFromCodeCoverage] protected set { /* should not be called */ }
+            [ExcludeFromCodeCoverage]
+            protected set
+            {
+                /* should not be called */
+            }
         }
 
         /// <summary>Get or set the subdivided values.</summary>

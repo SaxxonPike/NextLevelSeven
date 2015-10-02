@@ -9,6 +9,9 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Internal backing store for Ancestor.</summary>
         private readonly Parser _ancestor;
 
+        /// <summary>Zero-based index within the parent element's raw data.</summary>
+        private readonly int _parentIndex;
+
         /// <summary>Create a descendant element that is detached from an ancestor.</summary>
         /// <param name="config">Encoding configuration for the element.</param>
         protected DescendantParser(ReadOnlyEncodingConfiguration config)
@@ -32,9 +35,6 @@ namespace NextLevelSeven.Parsing.Elements
         {
             get { return _ancestor; }
         }
-
-        /// <summary>Zero-based index within the parent element's raw data.</summary>
-        private readonly int _parentIndex;
 
         /// <summary>Get a string divider for this descendant element.</summary>
         /// <returns>Descendant string divider.</returns>

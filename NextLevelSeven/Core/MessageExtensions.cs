@@ -37,7 +37,10 @@ namespace NextLevelSeven.Core
             }
         }
 
-        /// <summary>Get segments that start with any of the specified segment types, and include all segments below until the next split.</summary>
+        /// <summary>
+        ///     Get segments that start with any of the specified segment types, and include all segments below until the next
+        ///     split.
+        /// </summary>
         /// <param name="message">Message to get segments from.</param>
         /// <param name="segmentTypes">Segment types to split by.</param>
         /// <param name="includeExtras">If true, include the extra split data at the beginning.</param>

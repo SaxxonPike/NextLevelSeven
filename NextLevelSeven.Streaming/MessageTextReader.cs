@@ -7,6 +7,9 @@ namespace NextLevelSeven.Streaming
     /// <summary>A reader that reads textual HL7 messages, separated by blank lines.</summary>
     public class MessageTextReader : MessageStreamReader
     {
+        /// <summary>TextReader used to perform operations on the base stream.</summary>
+        protected readonly TextReader Reader;
+
         /// <summary>Create a textual HL7 message reader using the specified stream as a source.</summary>
         /// <param name="baseStream">Stream to use as a source.</param>
         public MessageTextReader(Stream baseStream)
@@ -14,9 +17,6 @@ namespace NextLevelSeven.Streaming
         {
             Reader = new StreamReader(baseStream);
         }
-
-        /// <summary>TextReader used to perform operations on the base stream.</summary>
-        protected TextReader Reader { get; private set; }
 
         /// <summary>Read one textual HL7 message from the stream.</summary>
         /// <returns>Message that was read, or null if there are no more messages.</returns>

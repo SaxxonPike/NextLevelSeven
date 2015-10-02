@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using NextLevelSeven.Core;
@@ -75,16 +76,6 @@ namespace NextLevelSeven.Building.Elements
             return CloneSubcomponent();
         }
 
-        /// <summary>Deep clone this subcomponent.</summary>
-        /// <returns></returns>
-        SubcomponentBuilder CloneSubcomponent()
-        {
-            return new SubcomponentBuilder(new EncodingConfiguration(Encoding), Index)
-            {
-                Value = Value
-            };            
-        }
-
         /// <summary>Returns zero. Subcomponents cannot be divided any further. Therefore, they have no useful delimiter.</summary>
         public override char Delimiter
         {
@@ -109,10 +100,21 @@ namespace NextLevelSeven.Building.Elements
             get { return Ancestor as IComponentBuilder; }
         }
 
+        /// <summary>Deep clone this subcomponent.</summary>
+        /// <returns></returns>
+        private SubcomponentBuilder CloneSubcomponent()
+        {
+            return new SubcomponentBuilder(new EncodingConfiguration(Encoding), Index)
+            {
+                Value = Value
+            };
+        }
+
         protected override bool AssertIndexIsMovable(int index)
         {
             throw new BuilderException(ErrorCode.SubcomponentCannotHaveDescendants);
         }
+
         /// <summary>Throws. Subcomponents cannot be divided any further.</summary>
         /// <param name="index"></param>
         /// <returns></returns>
@@ -134,7 +136,7 @@ namespace NextLevelSeven.Building.Elements
         [ExcludeFromCodeCoverage]
         protected override IIndexedElementCache<Builder> GetCache()
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
     }
 }
