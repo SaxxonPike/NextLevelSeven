@@ -91,12 +91,13 @@ namespace NextLevelSeven.Building.Elements
                 var index = 0;
                 var result = new StringBuilder();
                 var typeIsMsh = IsMsh;
+                var fieldDelimiter = FieldDelimiter;
 
                 foreach (var field in _fields.OrderedByKey.Where(field => field.Key >= 0))
                 {
                     while (index < field.Key)
                     {
-                        result.Append(FieldDelimiter);
+                        result.Append(fieldDelimiter);
                         index++;
                     }
 
