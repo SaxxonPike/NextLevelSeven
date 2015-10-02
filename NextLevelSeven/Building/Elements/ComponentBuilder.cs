@@ -39,7 +39,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get the number of subcomponents in this component, including subcomponents with no content.</summary>
         public override int ValueCount
         {
-            get { return _subcomponents.Max<KeyValuePair<int, SubcomponentBuilder>, int>(kv => kv.Key); }
+            get { return _subcomponents.MaxKey; }
         }
 
         /// <summary>Get or set subcomponent content within this component.</summary>
@@ -69,7 +69,7 @@ namespace NextLevelSeven.Building.Elements
                 var index = 1;
                 var result = new StringBuilder();
 
-                foreach (var subcomponent in _subcomponents.OrderBy<KeyValuePair<int, SubcomponentBuilder>, int>(i => i.Key))
+                foreach (var subcomponent in _subcomponents.OrderedByKey)
                 {
                     while (index < subcomponent.Key)
                     {
@@ -221,7 +221,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>If true, the element is considered to exist.</summary>
         public override bool Exists
         {
-            get { return _subcomponents.Any<KeyValuePair<int, SubcomponentBuilder>>(s => s.Value.Exists); }
+            get { return _subcomponents.AnyExists; }
         }
 
         /// <summary>Get this element's heirarchy-specific ancestor.</summary>

@@ -10,6 +10,13 @@ namespace NextLevelSeven.Test.Building
     public sealed class FieldBuilderUnitTests : BuildingTestFixture
     {
         [TestMethod]
+        public void FieldBuilder_Type_CannotMoveDescendants()
+        {
+            var builder = Message.Build(ExampleMessages.Standard)[1][0];
+            AssertAction.Throws<ElementException>(() => builder.Move(1, 2));
+        }
+
+        [TestMethod]
         public void FieldBuilder_Type_HasNoDescendants()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][0];

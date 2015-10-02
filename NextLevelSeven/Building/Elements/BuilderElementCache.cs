@@ -24,5 +24,20 @@ namespace NextLevelSeven.Building.Elements
             get { return base[index]; }
             set { base[index] = (TValue)value; }
         }
+
+        public bool AnyExists
+        {
+            get { return Cache.Any(kv => kv.Value.Exists); }
+        }
+
+        public int MaxKey
+        {
+            get { return Cache.Max(kv => kv.Key); }
+        }
+
+        public IOrderedEnumerable<KeyValuePair<int, TValue>> OrderedByKey
+        {
+            get { return Cache.OrderBy(kv => kv.Key); }
+        } 
     }
 }

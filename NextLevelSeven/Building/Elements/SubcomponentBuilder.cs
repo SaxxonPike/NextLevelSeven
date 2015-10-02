@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Encoding;
@@ -108,29 +109,10 @@ namespace NextLevelSeven.Building.Elements
             get { return Ancestor as IComponentBuilder; }
         }
 
-        /// <summary>Delete a descendant at the specified index.</summary>
-        /// <param name="index">Index to delete at.</param>
-        public override void Delete(int index)
+        protected override bool AssertIndexIsMovable(int index)
         {
             throw new BuilderException(ErrorCode.SubcomponentCannotHaveDescendants);
         }
-
-        /// <summary>Insert a descendant element.</summary>
-        /// <param name="element">Element to insert.</param>
-        /// <param name="index">Index to insert at.</param>
-        public override IElement Insert(int index, IElement element)
-        {
-            throw new BuilderException(ErrorCode.SubcomponentCannotHaveDescendants);
-        }
-
-        /// <summary>Insert a descendant element string.</summary>
-        /// <param name="value">Value to insert.</param>
-        /// <param name="index">Index to insert at.</param>
-        public override IElement Insert(int index, string value)
-        {
-            throw new BuilderException(ErrorCode.SubcomponentCannotHaveDescendants);
-        }
-
         /// <summary>Throws. Subcomponents cannot be divided any further.</summary>
         /// <param name="index"></param>
         /// <returns></returns>
@@ -146,9 +128,13 @@ namespace NextLevelSeven.Building.Elements
             return Enumerable.Empty<IElement>();
         }
 
+        /// <summary>
+        ///     Shouldn't be reachable, but is required as part of being derived from Builder.
+        /// </summary>
+        [ExcludeFromCodeCoverage]
         protected override IIndexedElementCache<Builder> GetCache()
         {
-            throw new BuilderException(ErrorCode.SubcomponentCannotHaveDescendants);
+            throw new System.NotImplementedException();
         }
     }
 }

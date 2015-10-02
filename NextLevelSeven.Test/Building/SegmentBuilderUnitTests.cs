@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Configuration;
+using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
 using NextLevelSeven.Test.Testing;
@@ -8,6 +9,23 @@ namespace NextLevelSeven.Test.Building
     [TestClass]
     public sealed class SegmentBuilderUnitTests : BuildingTestFixture
     {
+        [TestMethod]
+        public void SegmentBuilder_ThrowsOnNegativeIndexMove()
+        {
+            var segment = Message.Build(Mock.Message())[1];
+            AssertAction.Throws<ElementException>(() => segment.Move(3, -1));
+            AssertAction.Throws<ElementException>(() => segment.Move(-1, 3));
+            AssertAction.Throws<ElementException>(() => segment.Move(-1, -2));
+        }
+
+        [TestMethod]
+        public void SegmentBuilder_HasCorrectNextIndex()
+        {
+            var message = Message.Build(Mock.Message());
+            var segment = message[1];
+            Assert.AreEqual(segment.Fields.Last().Index + 1, segment.NextIndex);
+        }
+
         [TestMethod]
         public void SegmentBuilder_HasNoValueWhenSettingEmptyValues()
         {
@@ -98,6 +116,14 @@ namespace NextLevelSeven.Test.Building
             var builder = Message.Build(ExampleMessages.Variety);
             Assert.IsNotNull(builder[1][3].Value);
             Assert.AreEqual(builder[1][3].Value, builder.Segment(1).Field(3).Value, "Fields returned differ.");
+        }
+
+        [TestMethod]
+        public void SegmentBuilder_CanGetFields()
+        {
+            var builder = Message.Build(ExampleMessages.Variety)[1];
+            // +1 is added because this is an MSH segment
+            Assert.AreEqual(builder.Value.Split('|').Length + 1, builder.Fields.Count());
         }
 
         [TestMethod]

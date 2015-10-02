@@ -18,6 +18,11 @@ namespace NextLevelSeven.Building.Elements
         {
         }
 
+        protected override bool AssertIndexIsMovable(int index)
+        {
+            throw new BuilderException(ErrorCode.EncodingElementCannotBeMoved);
+        }
+
         abstract public override string Value { get; set; }
 
         /// <summary>Get the number of field repetitions in this field, including field repetitions with no content.</summary>

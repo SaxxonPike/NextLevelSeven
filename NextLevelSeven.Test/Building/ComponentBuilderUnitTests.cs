@@ -9,6 +9,43 @@ namespace NextLevelSeven.Test.Building
     public sealed class ComponentBuilderUnitTests : BuildingTestFixture
     {
         [TestMethod]
+        public void ComponentBuilder_CanMoveDescendants()
+        {
+            var builder = Message.Build(ExampleMessages.Variety)[1][3][1][1];
+            var val1 = Mock.String();
+            var val2 = Mock.String();
+            builder[1].Value = val1;
+            builder[2].Value = val2;
+            builder.Move(1, 2);
+            Assert.AreEqual(builder[1].Value, val2);
+            Assert.AreEqual(builder[2].Value, val1);
+        }
+
+        [TestMethod]
+        public void ComponentBuilder_ExistsWithValue()
+        {
+            var builder = Message.Build(Mock.Message())[1][3][1][1];
+            builder.Value = Mock.String();
+            Assert.IsTrue(builder.Exists);
+        }
+
+        [TestMethod]
+        public void ComponentBuilder_DoesNotExistWithNullValue()
+        {
+            var builder = Message.Build(Mock.Message())[1][3][1][1];
+            builder.Value = null;
+            Assert.IsFalse(builder.Exists);
+        }
+
+        [TestMethod]
+        public void ComponentBuilder_DoesNotExistAfterErasing()
+        {
+            var builder = Message.Build(Mock.Message())[1][3][1][1];
+            builder.Erase();
+            Assert.IsFalse(builder.Exists);
+        }
+
+        [TestMethod]
         public void ComponentBuilder_HasDelimiter()
         {
             var builder = Message.Build()[1][3][1][1];

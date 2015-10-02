@@ -54,7 +54,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get the number of fields in this segment, including fields with no content.</summary>
         public override int ValueCount
         {
-            get { return (_fields.Count > 0) ? (_fields.Max<KeyValuePair<int, FieldBuilder>, int>(kv => kv.Key) + 1) : 0; }
+            get { return (_fields.Count > 0) ? (_fields.MaxKey + 1) : 0; }
         }
 
         /// <summary>Get or set the three-letter type field of this segment.</summary>
@@ -92,7 +92,7 @@ namespace NextLevelSeven.Building.Elements
                 var result = new StringBuilder();
                 var typeIsMsh = IsMsh;
 
-                foreach (var field in _fields.OrderBy<KeyValuePair<int, FieldBuilder>, int>(i => i.Key).Where(field => field.Key >= 0))
+                foreach (var field in _fields.OrderedByKey.Where(field => field.Key >= 0))
                 {
                     while (index < field.Key)
                     {
@@ -379,7 +379,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>If true, the element is considered to exist.</summary>
         public override bool Exists
         {
-            get { return _fields.Any<KeyValuePair<int, FieldBuilder>>(s => s.Value.Exists); }
+            get { return _fields.AnyExists; }
         }
 
         /// <summary>Get this element's heirarchy-specific ancestor.</summary>
@@ -394,10 +394,16 @@ namespace NextLevelSeven.Building.Elements
             get { return Ancestor as IMessageBuilder; }
         }
 
-        /// <summary>Delete a descendant at the specified index.</summary>
-        /// <param name="index">Index to delete at.</param>
-        public override void Delete(int index)
+        /// <summary>
+        ///     Throw an exception if the index is one for an encoding element or is otherwise invalid.
+        /// </summary>
+        /// <param name="index"></param>
+        protected override bool AssertIndexIsMovable(int index)
         {
+            if (index < 0)
+            {
+                throw new BuilderException(ErrorCode.ElementIndexMustBeZeroOrGreater);
+            }
             if (index == 0)
             {
                 throw new BuilderException(ErrorCode.SegmentTypeCannotBeMoved);
@@ -406,55 +412,7 @@ namespace NextLevelSeven.Building.Elements
             {
                 throw new BuilderException(ErrorCode.EncodingElementCannotBeMoved);
             }
-            base.Delete(index);
-        }
-
-        /// <summary>Insert a descendant element.</summary>
-        /// <param name="element">Element to insert.</param>
-        /// <param name="index">Index to insert at.</param>
-        public override IElement Insert(int index, IElement element)
-        {
-            if (index <= 0)
-            {
-                throw new BuilderException(ErrorCode.SegmentTypeCannotBeMoved);
-            }
-            if (index >= 1 && index <= 2 && IsMsh)
-            {
-                throw new BuilderException(ErrorCode.EncodingElementCannotBeMoved);
-            }
-            return base.Insert(index, element);
-        }
-
-        /// <summary>Insert a descendant element string.</summary>
-        /// <param name="value">Value to insert.</param>
-        /// <param name="index">Index to insert at.</param>
-        public override IElement Insert(int index, string value)
-        {
-            if (index <= 0)
-            {
-                throw new BuilderException(ErrorCode.SegmentTypeCannotBeMoved);
-            }
-            if (index >= 1 && index <= 2 && IsMsh)
-            {
-                throw new BuilderException(ErrorCode.EncodingElementCannotBeMoved);
-            }
-            return base.Insert(index, value);
-        }
-
-        /// <summary>Move descendant to another index.</summary>
-        /// <param name="sourceIndex">Source index.</param>
-        /// <param name="targetIndex">Target index.</param>
-        public override void Move(int sourceIndex, int targetIndex)
-        {
-            if (sourceIndex == 0)
-            {
-                throw new BuilderException(ErrorCode.SegmentTypeCannotBeMoved);
-            }
-            if (((sourceIndex >= 1 && sourceIndex <= 2) || (targetIndex >= 1 && targetIndex <= 2)) && IsMsh)
-            {
-                throw new BuilderException(ErrorCode.EncodingElementCannotBeMoved);
-            }
-            base.Move(sourceIndex, targetIndex);
+            return true;
         }
 
         /// <summary>Get descendant elements.</summary>

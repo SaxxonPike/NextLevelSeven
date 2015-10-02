@@ -3,6 +3,7 @@ using System.Linq;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Codec;
 using NextLevelSeven.Core.Encoding;
+using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Building.Elements
@@ -124,35 +125,55 @@ namespace NextLevelSeven.Building.Elements
             get { return Encoding; }
         }
 
+        /// <summary>
+        ///     Returns true if the index can be moved or deleted.
+        /// </summary>
+        /// <param name="index">Index to verify.</param>
+        /// <returns></returns>
+        protected virtual bool AssertIndexIsMovable(int index)
+        {
+            return true;
+        }
+
         /// <summary>Delete a descendant at the specified index.</summary>
         /// <param name="index">Index to delete at.</param>
-        public virtual void Delete(int index)
+        public void Delete(int index)
         {
-            DeleteDescendant(index);
+            if (AssertIndexIsMovable(index))
+            {
+                DeleteDescendant(index);
+            }
         }
 
         /// <summary>Insert a descendant element.</summary>
         /// <param name="element">Element to insert.</param>
         /// <param name="index">Index to insert at.</param>
-        public virtual IElement Insert(int index, IElement element)
+        public IElement Insert(int index, IElement element)
         {
-            return InsertDescendant(index, element);
+            return AssertIndexIsMovable(index)
+                ? InsertDescendant(index, element)
+                : null;
         }
 
         /// <summary>Insert a descendant element string.</summary>
         /// <param name="value">Value to insert.</param>
         /// <param name="index">Index to insert at.</param>
-        public virtual IElement Insert(int index, string value)
+        public IElement Insert(int index, string value)
         {
-            return InsertDescendant(index, value);
+            return AssertIndexIsMovable(index)
+                ? InsertDescendant(index, value)
+                : null;
         }
 
         /// <summary>Move descendant to another index.</summary>
         /// <param name="sourceIndex">Source index.</param>
         /// <param name="targetIndex">Target index.</param>
-        public virtual void Move(int sourceIndex, int targetIndex)
+        public void Move(int sourceIndex, int targetIndex)
         {
-            MoveDescendant(sourceIndex, targetIndex);
+            if (AssertIndexIsMovable(sourceIndex) && AssertIndexIsMovable(targetIndex))
+            {
+                MoveDescendant(sourceIndex, targetIndex);
+            }
         }
 
         /// <summary>Get the element at the specified index as an IElement.</summary>
@@ -281,6 +302,10 @@ namespace NextLevelSeven.Building.Elements
             }
         }
 
+        /// <summary>
+        ///     Get an element's internal cache.
+        /// </summary>
+        /// <returns></returns>
         protected abstract IIndexedElementCache<Builder> GetCache();
 
         /// <summary>
