@@ -292,6 +292,30 @@ namespace NextLevelSeven.Test.Building
         }
 
         [TestMethod]
+        public void FieldBuilder_CanSetNullValues()
+        {
+            var builder = Message.Build(Mock.Message())[1][3];
+            builder.Values = null;
+            Assert.IsFalse(builder.Exists);
+        }
+
+        [TestMethod]
+        public void FieldBuilder_CanSetNullFieldRepetitions()
+        {
+            var builder = Message.Build(Mock.Message())[1][3];
+            builder.SetFieldRepetitions(null);
+            Assert.IsFalse(builder.Exists);
+        }
+
+        [TestMethod]
+        public void FieldBuilder_SettingNullFieldRepetitionsAtIndexDoesNothing()
+        {
+            var builder = Message.Build(Mock.Message())[1][3];
+            builder.SetFieldRepetitions(null);
+            Assert.IsFalse(builder.Exists);
+        }
+
+        [TestMethod]
         public void FieldBuilder_CanBeCloned()
         {
             var builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}",

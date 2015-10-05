@@ -39,7 +39,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get the number of components in this field repetition, including components with no content.</summary>
         public override int ValueCount
         {
-            get { return _components.Max<KeyValuePair<int, ComponentBuilder>, int>(kv => kv.Key); }
+            get { return _components.MaxKey; }
         }
 
         /// <summary>Get or set component content within this field repetition.</summary>
@@ -69,7 +69,7 @@ namespace NextLevelSeven.Building.Elements
                 var index = 1;
                 var result = new StringBuilder();
 
-                foreach (var component in _components.OrderBy<KeyValuePair<int, ComponentBuilder>, int>(i => i.Key))
+                foreach (var component in _components.OrderedByKey)
                 {
                     while (index < component.Key)
                     {
@@ -240,7 +240,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>If true, the element is considered to exist.</summary>
         public override bool Exists
         {
-            get { return _components.Any<KeyValuePair<int, ComponentBuilder>>(s => s.Value.Exists); }
+            get { return _components.AnyExists; }
         }
 
         /// <summary>Get this element's heirarchy-specific ancestor.</summary>

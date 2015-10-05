@@ -10,6 +10,45 @@ namespace NextLevelSeven.Test.Building
     public sealed class SegmentBuilderUnitTests : BuildingTestFixture
     {
         [TestMethod]
+        public void SegmentBuilder_CanBuildSubcomponentsViaParams()
+        {
+            var builder = Message.Build(Mock.Message());
+            var segment = builder[builder.NextIndex];
+            var val0 = Mock.StringCaps(3);
+            var val1 = Mock.String();
+            var val2 = Mock.String();
+            segment.Type = val0;
+            segment.SetSubcomponents(1, 1, 1, val1, val2);
+            Assert.AreEqual(string.Format("{0}|{1}&{2}", val0, val1, val2), segment.Value);
+        }
+
+        [TestMethod]
+        public void SegmentBuilder_CanBuildComponentsViaParams()
+        {
+            var builder = Message.Build(Mock.Message());
+            var segment = builder[builder.NextIndex];
+            var val0 = Mock.StringCaps(3);
+            var val1 = Mock.String();
+            var val2 = Mock.String();
+            segment.Type = val0;
+            segment.SetComponents(1, 1, 2, val1, val2);
+            Assert.AreEqual(string.Format("{0}|^{1}^{2}", val0, val1, val2), segment.Value);
+        }
+
+        [TestMethod]
+        public void SegmentBuilder_CanBuildRepetitionsViaParams()
+        {
+            var builder = Message.Build(Mock.Message());
+            var segment = builder[builder.NextIndex];
+            var val0 = Mock.StringCaps(3);
+            var val1 = Mock.String();
+            var val2 = Mock.String();
+            segment.Type = val0;
+            segment.SetFieldRepetitions(1, 2, val1, val2);
+            Assert.AreEqual(string.Format("{0}|~{1}~{2}", val0, val1, val2), segment.Value);
+        }
+
+        [TestMethod]
         public void SegmentBuilder_ThrowsOnNegativeIndexMove()
         {
             var segment = Message.Build(Mock.Message())[1];

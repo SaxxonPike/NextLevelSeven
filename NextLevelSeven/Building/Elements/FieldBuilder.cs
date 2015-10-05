@@ -42,7 +42,7 @@ namespace NextLevelSeven.Building.Elements
             get
             {
                 return (_repetitions.Count > 0)
-                    ? _repetitions.Max<KeyValuePair<int, RepetitionBuilder>, int>(kv => kv.Key)
+                    ? _repetitions.MaxKey
                     : 0;
             }
         }
@@ -58,7 +58,7 @@ namespace NextLevelSeven.Building.Elements
                     yield return _repetitions[i].Value;
                 }
             }
-            set { SetFieldRepetitions(value.ToArray()); }
+            set { SetFieldRepetitions((value ?? Enumerable.Empty<string>()).ToArray()); }
         }
 
         /// <summary>Get or set the field string.</summary>
@@ -74,7 +74,7 @@ namespace NextLevelSeven.Building.Elements
                 var index = 1;
                 var result = new StringBuilder();
 
-                foreach (var repetition in _repetitions.OrderBy<KeyValuePair<int, RepetitionBuilder>, int>(i => i.Key))
+                foreach (var repetition in _repetitions.OrderedByKey)
                 {
                     while (index < repetition.Key)
                     {
@@ -154,14 +154,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This FieldBuilder, for chaining purposes.</returns>
         public virtual IFieldBuilder SetFieldRepetition(int repetition, string value)
         {
-            if (repetition < 1)
-            {
-                _repetitions.Clear();
-            }
-            else if (_repetitions.Contains(repetition))
-            {
-                _repetitions.Remove(repetition);
-            }
+            _repetitions.Remove(repetition);
             _repetitions[repetition].SetFieldRepetition(value);
             return this;
         }
@@ -296,7 +289,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>If true, the element is considered to exist.</summary>
         public override bool Exists
         {
-            get { return _repetitions.Any<KeyValuePair<int, RepetitionBuilder>>(s => s.Value.Exists); }
+            get { return _repetitions.AnyExists; }
         }
 
         /// <summary>Get this element's heirarchy-specific ancestor.</summary>

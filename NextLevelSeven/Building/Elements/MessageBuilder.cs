@@ -41,7 +41,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get the number of segments in the message.</summary>
         public override int ValueCount
         {
-            get { return _segments.Max<KeyValuePair<int, SegmentBuilder>, int>(kv => kv.Key); }
+            get { return _segments.MaxKey; }
         }
 
         /// <summary>Get or set segment content within this message.</summary>
@@ -63,13 +63,8 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                if (_segments.Count == 0)
-                {
-                    return null;
-                }
-
                 var result = string.Join(ReadOnlyEncodingConfiguration.SegmentDelimiterString,
-                    _segments.OrderBy<KeyValuePair<int, SegmentBuilder>, int>(i => i.Key)
+                    _segments.OrderedByKey
                         .Select(i => i.Value.Value ?? string.Empty));
 
                 return (result.Length == 0)
@@ -378,7 +373,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>If true, the element is considered to exist.</summary>
         public override bool Exists
         {
-            get { return _segments.Any<KeyValuePair<int, SegmentBuilder>>(s => s.Value.Exists); }
+            get { return _segments.AnyExists; }
         }
 
         /// <summary>Deep clone the message.</summary>

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using NextLevelSeven.Core;
 
 namespace NextLevelSeven.Utility
@@ -77,6 +78,7 @@ namespace NextLevelSeven.Utility
 
         /// <summary>Get an enumerator for the cache.</summary>
         /// <returns>Enumerator.</returns>
+        [ExcludeFromCodeCoverage]
         IEnumerator IEnumerable.GetEnumerator()
         {
             return Cache.GetEnumerator();
