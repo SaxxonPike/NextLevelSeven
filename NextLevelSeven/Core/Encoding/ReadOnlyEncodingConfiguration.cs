@@ -24,21 +24,6 @@
         /// <summary>Get the delimiter character used to split subcomponents.</summary>
         public abstract char SubcomponentDelimiter { get; protected set; }
 
-        /// <summary>Initialize defaults.</summary>
-        /// <param name="field"></param>
-        /// <param name="repetition"></param>
-        /// <param name="component"></param>
-        /// <param name="subcomponent"></param>
-        /// <param name="escape"></param>
-        protected void InitializeWith(char field, char repetition, char component, char subcomponent, char escape)
-        {
-            FieldDelimiter = field;
-            RepetitionDelimiter = repetition;
-            ComponentDelimiter = component;
-            SubcomponentDelimiter = subcomponent;
-            EscapeCharacter = escape;
-        }
-
         /// <summary>Clone defaults from another configuration.</summary>
         /// <param name="other">Source configuration.</param>
         protected void CopyFrom(IReadOnlyEncoding other)

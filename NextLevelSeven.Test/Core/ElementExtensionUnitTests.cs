@@ -58,6 +58,20 @@ namespace NextLevelSeven.Test.Core
         }
 
         [TestMethod]
+        public void ElementExtensions_FieldDelimiter_HasNoSignificantDescendants()
+        {
+            var message = Message.Parse(Mock.Message());
+            Assert.IsFalse(message[1][1].HasSignificantDescendants());
+        }
+
+        [TestMethod]
+        public void ElementExtensions_EncodingCharacterField_HasNoSignificantDescendants()
+        {
+            var message = Message.Parse(Mock.Message());
+            Assert.IsFalse(message[1][2].HasSignificantDescendants());
+        }
+
+        [TestMethod]
         public void ElementExtensions_Element_AddsOtherElements()
         {
             var val0 = Mock.String();

@@ -36,19 +36,5 @@ namespace NextLevelSeven.Core
                 yield return currentSegments;
             }
         }
-
-        /// <summary>
-        ///     Get segments that start with any of the specified segment types, and include all segments below until the next
-        ///     split.
-        /// </summary>
-        /// <param name="message">Message to get segments from.</param>
-        /// <param name="segmentTypes">Segment types to split by.</param>
-        /// <param name="includeExtras">If true, include the extra split data at the beginning.</param>
-        /// <returns>Segment sets that start with one of the specified segment types.</returns>
-        public static IEnumerable<IEnumerable<ISegment>> SplitSegments(this IMessage message,
-            IEnumerable<string> segmentTypes, bool includeExtras = false)
-        {
-            return segmentTypes.SelectMany(s => SplitSegments(message, s, includeExtras));
-        }
     }
 }

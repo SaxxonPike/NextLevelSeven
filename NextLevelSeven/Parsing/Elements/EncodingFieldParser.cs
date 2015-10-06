@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Parsing.Elements
 {
@@ -18,27 +19,14 @@ namespace NextLevelSeven.Parsing.Elements
         public override string Value
         {
             get { return Ancestor.DescendantDivider[1]; }
-            set
-            {
-                // we are assuming MSH + MSH-1 are configured
-                var s = Ancestor.DescendantDivider.Value;
-                var length = s.IndexOf(EncodingConfiguration.FieldDelimiter, 4) - 4;
-                var builder = new StringBuilder();
-                builder.Append(s.Substring(0, 4));
-                builder.Append(value);
-                if (length > 0)
-                {
-                    builder.Append(s.Substring(4 + length));
-                }
-                Ancestor.DescendantDivider.Value = builder.ToString();
-            }
+            set { throw new ParserException(ErrorCode.ElementValueCannotBeChanged); }
         }
 
         /// <summary>Get or set this field's encoding characters.</summary>
         public override IEnumerable<string> Values
         {
             get { return Value.Select(c => new string(c, 1)); }
-            set { Value = string.Concat(value); }
+            set { throw new ParserException(ErrorCode.ElementValueCannotBeChanged); }
         }
     }
 }

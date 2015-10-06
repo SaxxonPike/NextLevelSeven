@@ -19,16 +19,7 @@ namespace NextLevelSeven.Parsing.Elements
         public override string Value
         {
             get { return new string(Ancestor.DescendantDivider.Value[3], 1); }
-            set
-            {
-                var s = Ancestor.DescendantDivider.Value;
-                if (HL7.NullValues.Contains(value))
-                {
-                    throw new ParserException(ErrorCode.FieldCannotBeNull);
-                }
-                var newValue = string.Concat(s.Substring(0, 3), value, (s.Length > 3 ? s.Substring(4) : string.Empty));
-                Ancestor.DescendantDivider.Value = newValue;
-            }
+            set { throw new ParserException(ErrorCode.ElementValueCannotBeChanged); }
         }
 
         /// <summary>
@@ -37,7 +28,7 @@ namespace NextLevelSeven.Parsing.Elements
         public override IEnumerable<string> Values
         {
             get { yield return Value; }
-            set { Value = value.First(); }
+            set { throw new ParserException(ErrorCode.ElementValueCannotBeChanged); }
         }
     }
 }

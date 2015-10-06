@@ -28,6 +28,8 @@ namespace NextLevelSeven.Diagnostics
                         return "Element index must be zero or greater.";
                     case ErrorCode.ElementsMustShareDirectAncestors:
                         return "Elements must all share a direct ancestor.";
+                    case ErrorCode.ElementValueCannotBeChanged:
+                        return "Element value cannot be changed.";
                     case ErrorCode.EncodingElementCannotBeMoved:
                         return "Encoding element cannot be moved.";
                     case ErrorCode.FieldCannotBeNull:

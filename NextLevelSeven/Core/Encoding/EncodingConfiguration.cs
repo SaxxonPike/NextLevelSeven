@@ -14,17 +14,6 @@
             CopyFrom(other);
         }
 
-        /// <summary>Create an encoding configuration with the specified characters.</summary>
-        /// <param name="field">Field delimiter.</param>
-        /// <param name="repetition">Repetition delimiter.</param>
-        /// <param name="component">Component delimiter.</param>
-        /// <param name="subcomponent">Subcomponent delimiter.</param>
-        /// <param name="escape">Escape character.</param>
-        public EncodingConfiguration(char field, char repetition, char component, char subcomponent, char escape)
-        {
-            InitializeWith(field, repetition, component, subcomponent, escape);
-        }
-
         /// <summary>Get the component delimiter.</summary>
         public override char ComponentDelimiter { get; protected set; }
 

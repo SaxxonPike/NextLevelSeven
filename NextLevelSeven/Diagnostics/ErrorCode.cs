@@ -60,6 +60,8 @@
         /* 0025 */
         SegmentDataMustNotBeNull,
         /* 0026 */
-        ElementIndexMustBeGreaterThanZero
+        ElementIndexMustBeGreaterThanZero,
+        /* 0027 */
+        ElementValueCannotBeChanged,
     }
 }

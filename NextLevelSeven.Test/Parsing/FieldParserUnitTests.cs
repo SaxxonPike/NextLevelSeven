@@ -58,12 +58,11 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [TestMethod]
-        public void Field_Encoding_CanSetValues()
+        public void Field_Encoding_CanNotSetValues()
         {
             var field = Message.Parse(ExampleMessages.Minimum)[1][2];
             var values = new[] {"^", "~", "\\", "&"};
-            field.Values = values;
-            Assert.AreEqual(string.Concat(values), field.Value);
+            AssertAction.Throws<ElementException>(() => field.Values = values);
         }
 
         [TestMethod]
@@ -104,12 +103,11 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [TestMethod]
-        public void Field_Delimiter_SetsOnlyFirstValue()
+        public void Field_Delimiter_CanNotChangeValues()
         {
             var field = Message.Parse(ExampleMessages.Minimum)[1][1];
             var values = new[] {"$", "@"};
-            field.Values = values;
-            Assert.AreEqual(values.First(), field.Value);
+            AssertAction.Throws<ElementException>(() => field.Values = values);
         }
 
         [TestMethod]

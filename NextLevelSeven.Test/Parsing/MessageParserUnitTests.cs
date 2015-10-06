@@ -12,6 +12,20 @@ namespace NextLevelSeven.Test.Parsing
     public class MessageParserUnitTests : ParsingTestFixture
     {
         [TestMethod]
+        public void Message_CanProcessMessageWithShortEncoding()
+        {
+            var field31 = Mock.String();
+            var field32 = Mock.String();
+            var field41 = Mock.String();
+            var field42 = Mock.String();
+            var message = Message.Parse(string.Format("MSH|^|{0}^{1}|{2}^{3}", field31, field32, field41, field42));
+            Assert.AreEqual(field31, message[1][3][1][1].Value);
+            Assert.AreEqual(field32, message[1][3][1][2].Value);
+            Assert.AreEqual(field41, message[1][4][1][1].Value);
+            Assert.AreEqual(field42, message[1][4][1][2].Value);
+        }
+
+        [TestMethod]
         public void Message_IsEquivalentWhenReferencesMatch()
         {
             var message = Message.Parse(ExampleMessages.Standard);
@@ -161,54 +175,17 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [TestMethod]
-        public void Message_CanSetMsh1()
+        public void Message_CanNotSetMsh1()
         {
             var message = Message.Parse(ExampleMessages.Minimum);
-            message[1][1].Value = ":";
-            Assert.AreEqual(':', message.Encoding.FieldDelimiter);
+            AssertAction.Throws<ElementException>(() => message[1][1].Value = ":");
         }
 
         [TestMethod]
-        public void Message_CanSetMsh2Component()
+        public void Message_CanNotSetMsh2()
         {
             var message = Message.Parse(ExampleMessages.Minimum);
-            message[1][2].Value = "$~\\&";
-            Assert.AreEqual('$', message.Encoding.ComponentDelimiter);
-        }
-
-        [TestMethod]
-        public void Message_CanSetMsh2Escape()
-        {
-            var message = Message.Parse(ExampleMessages.Minimum);
-            message[1][2].Value = "^~$&";
-            Assert.AreEqual('$', message.Encoding.EscapeCharacter);
-        }
-
-        [TestMethod]
-        public void Message_CanSetMsh2Repetition()
-        {
-            var message = Message.Parse(ExampleMessages.Minimum);
-            message[1][2].Value = "^$\\&";
-            Assert.AreEqual('$', message.Encoding.RepetitionDelimiter);
-        }
-
-        [TestMethod]
-        public void Message_CanSetMsh2Subcomponent()
-        {
-            var message = Message.Parse(ExampleMessages.Minimum);
-            message[1][2].Value = "^~\\$";
-            Assert.AreEqual('$', message.Encoding.SubcomponentDelimiter);
-        }
-
-        [TestMethod]
-        public void Message_CanSetMsh2Partially()
-        {
-            var parser = Message.Parse(ExampleMessages.Minimum + "|");
-            parser[1][2].Value = "$";
-            Assert.AreEqual("MSH|$|", parser.Value);
-            Assert.AreEqual(parser.Encoding.EscapeCharacter, '\0');
-            Assert.AreEqual(parser.Encoding.RepetitionDelimiter, '\0');
-            Assert.AreEqual(parser.Encoding.SubcomponentDelimiter, '\0');
+            AssertAction.Throws<ElementException>(() => message[1][2].Value = "!@#$");
         }
 
         [TestMethod]
