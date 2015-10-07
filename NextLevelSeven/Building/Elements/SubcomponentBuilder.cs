@@ -134,7 +134,7 @@ namespace NextLevelSeven.Building.Elements
         ///     Shouldn't be reachable, but is required as part of being derived from Builder.
         /// </summary>
         [ExcludeFromCodeCoverage]
-        protected override IIndexedElementCache<Builder> GetCache()
+        protected override IIndexedCache<Builder> GetCache()
         {
             throw new NotImplementedException();
         }

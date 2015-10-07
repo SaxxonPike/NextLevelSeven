@@ -246,7 +246,7 @@ namespace NextLevelSeven.Building.Elements
             return _subcomponents[index];
         }
 
-        protected override IIndexedElementCache<Builder> GetCache()
+        protected override IIndexedCache<Builder> GetCache()
         {
             return _subcomponents;
         }

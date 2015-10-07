@@ -324,7 +324,7 @@ namespace NextLevelSeven.Building.Elements
             return _repetitions[index];
         }
 
-        protected override IIndexedElementCache<Builder> GetCache()
+        protected override IIndexedCache<Builder> GetCache()
         {
             return _repetitions;
         }

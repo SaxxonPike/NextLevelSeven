@@ -85,7 +85,7 @@
     <Compile Include="Parsing\Elements\DescendantParser.cs" />
     <Compile Include="Parsing\ParserException.cs" />
     <Compile Include="Utility\EnumerableExtensions.cs" />
-    <Compile Include="Utility\IIndexedElementCache.cs" />
+    <Compile Include="Utility\IIndexedCache.cs" />
     <Compile Include="Utility\ProxyDelegates.cs" />
     <Compile Include="Core\Codec\EncodedTypeConverter.cs" />
     <Compile Include="Core\Codec\IndexedEncodedTypeConverter.cs" />
@@ -131,7 +131,9 @@
     <Compile Include="Diagnostics\ErrorMessages.English.cs" />
     <Compile Include="Diagnostics\ErrorCode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utility\IndexedElementCache.cs" />
+    <Compile Include="Utility\IndexedCache.cs" />
+    <Compile Include="Utility\StrongReferenceCache.cs" />
+    <Compile Include="Utility\WeakReferenceCache.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

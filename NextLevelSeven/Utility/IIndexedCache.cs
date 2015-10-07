@@ -4,7 +4,7 @@ namespace NextLevelSeven.Utility
 {
     /// <summary>Interface to an indexed cache.</summary>
     /// <typeparam name="TValue">Type of value.</typeparam>
-    public interface IIndexedElementCache<TValue> : IEnumerable<KeyValuePair<int, TValue>>
+    public interface IIndexedCache<TValue> : IEnumerable<KeyValuePair<int, TValue>>
         where TValue : class
     {
         /// <summary>Get or set an item with the specified key.</summary>

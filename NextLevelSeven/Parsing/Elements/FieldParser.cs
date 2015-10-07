@@ -10,7 +10,7 @@ namespace NextLevelSeven.Parsing.Elements
     internal class FieldParser : DescendantParser, IFieldParser
     {
         /// <summary>Internal repetition cache.</summary>
-        private readonly IndexedElementCache<RepetitionParser> _repetitions;
+        private readonly IndexedCache<RepetitionParser> _repetitions;
 
         /// <summary>Create a field with the specified ancestor and indices.</summary>
         /// <param name="ancestor">Ancestor element.</param>
@@ -19,7 +19,7 @@ namespace NextLevelSeven.Parsing.Elements
         public FieldParser(Parser ancestor, int parentIndex, int externalIndex)
             : base(ancestor, parentIndex, externalIndex)
         {
-            _repetitions = new IndexedElementCache<RepetitionParser>(CreateRepetition);
+            _repetitions = new WeakReferenceCache<RepetitionParser>(CreateRepetition);
         }
 
         /// <summary>Create a detached field with the specified initial value and configuration.</summary>
@@ -27,7 +27,7 @@ namespace NextLevelSeven.Parsing.Elements
         public FieldParser(ReadOnlyEncodingConfiguration config)
             : base(config)
         {
-            _repetitions = new IndexedElementCache<RepetitionParser>(CreateRepetition);
+            _repetitions = new WeakReferenceCache<RepetitionParser>(CreateRepetition);
         }
 
         /// <summary>Field repetition delimiter.</summary>

@@ -5,10 +5,10 @@ using NextLevelSeven.Utility;
 namespace NextLevelSeven.Building.Elements
 {
     /// <summary>
-    ///     A cache wrapper that takes a typed IndexedElementCache and can interpret items as Builder.
+    ///     A cache wrapper that takes a typed IndexedCache and can interpret items as Builder.
     /// </summary>
     /// <typeparam name="TValue">Preferred type.</typeparam>
-    internal class BuilderElementCache<TValue> : IndexedElementCache<TValue>, IIndexedElementCache<Builder>
+    internal class BuilderElementCache<TValue> : StrongReferenceCache<TValue>, IIndexedCache<Builder>
         where TValue : Builder
     {
         /// <summary>
@@ -57,7 +57,7 @@ namespace NextLevelSeven.Building.Elements
         /// </summary>
         /// <param name="index">Index to get or set.</param>
         /// <returns>Element at the specified index.</returns>
-        Builder IIndexedElementCache<Builder>.this[int index]
+        Builder IIndexedCache<Builder>.this[int index]
         {
             get { return base[index]; }
             set { base[index] = (TValue) value; }

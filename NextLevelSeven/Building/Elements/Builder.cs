@@ -242,7 +242,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Move indices forward in preparation for insert.</summary>
         /// <param name="cache">Cache to modify.</param>
         /// <param name="index">Descendant index.</param>
-        private static void ShiftForInsert(IIndexedElementCache<Builder> cache, int index)
+        private static void ShiftForInsert(IIndexedCache<Builder> cache, int index)
         {
             var values = cache.ToList();
             foreach (var builder in values.Where(v => v.Key >= index).Select(value => value.Value))
@@ -313,6 +313,6 @@ namespace NextLevelSeven.Building.Elements
         ///     Get an element's internal cache.
         /// </summary>
         /// <returns></returns>
-        protected abstract IIndexedElementCache<Builder> GetCache();
+        protected abstract IIndexedCache<Builder> GetCache();
     }
 }

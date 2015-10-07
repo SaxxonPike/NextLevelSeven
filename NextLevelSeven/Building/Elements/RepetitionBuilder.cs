@@ -279,7 +279,7 @@ namespace NextLevelSeven.Building.Elements
             return _components[index];
         }
 
-        protected override IIndexedElementCache<Builder> GetCache()
+        protected override IIndexedCache<Builder> GetCache()
         {
             return _components;
         }
