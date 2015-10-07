@@ -44,9 +44,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Building\BuilderElementCache.cs" />
     <Compile Include="Building\Elements\Builder.cs" />
-    <None Include="Building\Elements\BuilderElementCache.cs" />
+    <Compile Include="Building\Elements\BuilderElementCache.cs" />
     <Compile Include="Building\Elements\DescendantBuilder.cs" />
     <Compile Include="Building\BuilderException.cs" />
     <Compile Include="Building\Elements\BuilderEncodingConfiguration.cs" />
