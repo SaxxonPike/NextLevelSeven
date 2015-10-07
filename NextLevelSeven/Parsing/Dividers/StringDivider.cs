@@ -3,6 +3,8 @@ using System.Linq;
 
 namespace NextLevelSeven.Parsing.Dividers
 {
+    // NOTE: use List instead of Dictionary, it's faster.
+
     /// <summary>Base class for string dividers.</summary>
     internal abstract class StringDivider
     {
@@ -24,7 +26,7 @@ namespace NextLevelSeven.Parsing.Dividers
         public char Delimiter { get; protected set; }
 
         /// <summary>Get the list of subdivisions.</summary>
-        protected abstract IReadOnlyList<StringDivision> Divisions { get; }
+        protected abstract List<StringDivision> Divisions { get; }
 
         /// <summary>Index inside the parent.</summary>
         protected int Index { get; set; }

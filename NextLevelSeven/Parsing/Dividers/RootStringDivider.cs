@@ -55,7 +55,7 @@ namespace NextLevelSeven.Parsing.Dividers
         }
 
         /// <summary>Get the division offsets in the string.</summary>
-        protected override IReadOnlyList<StringDivision> Divisions
+        protected override List<StringDivision> Divisions
         {
             get
             {
@@ -103,7 +103,7 @@ namespace NextLevelSeven.Parsing.Dividers
         /// <param name="value">New value.</param>
         private void SetValue(int index, string value)
         {
-            Pad(Delimiter, index, 0, _valueChars.Length, (List<StringDivision>)Divisions);
+            Pad(Delimiter, index, 0, _valueChars.Length, Divisions);
             var d = Divisions[index];
             Replace(d.Offset, d.Length, StringDividerOperations.GetChars(value));
         }
@@ -200,7 +200,7 @@ namespace NextLevelSeven.Parsing.Dividers
 
         public override void PadSubDivider(int index)
         {
-            Pad(Delimiter, index, 0, _valueChars.Length, (List<StringDivision>)Divisions);
+            Pad(Delimiter, index, 0, _valueChars.Length, Divisions);
         }
     }
 }
