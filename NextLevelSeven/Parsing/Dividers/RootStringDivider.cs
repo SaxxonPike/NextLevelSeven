@@ -200,7 +200,7 @@ namespace NextLevelSeven.Parsing.Dividers
 
         public override void PadSubDivider(int index)
         {
-            Pad(Delimiter, index, 0, _valueChars.Length, _divisions);
+            Pad(Delimiter, index, 0, _valueChars.Length, (List<StringDivision>)Divisions);
         }
     }
 }

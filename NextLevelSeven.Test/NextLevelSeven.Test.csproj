@@ -57,6 +57,9 @@
   <ItemGroup>
     <Compile Include="Core\Codec\CodecTestFixture.cs" />
     <Compile Include="Core\Codec\EncodedTypeConverterUnitTests.cs" />
+    <Compile Include="Parsing\Dividers\DescendantStringDividerUnitTests.cs" />
+    <Compile Include="Parsing\Dividers\DividersUnitTestFixture.cs" />
+    <Compile Include="Parsing\Dividers\RootStringDividerUnitTests.cs" />
     <Compile Include="Parsing\ParserBaseUnitTests.cs" />
     <Compile Include="Testing\AssertArray.cs" />
     <Compile Include="Testing\AssertEnumerable.cs" />

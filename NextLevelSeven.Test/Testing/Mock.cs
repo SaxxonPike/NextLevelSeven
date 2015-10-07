@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 
 namespace NextLevelSeven.Test.Testing
@@ -74,6 +76,11 @@ namespace NextLevelSeven.Test.Testing
             return Rng.NextDouble().ToString(CultureInfo.InvariantCulture);
         }
 
+        public static string DelimitedString(string delimiter, int count = 5)
+        {
+            return string.Join(delimiter, StringSequence(count));
+        }
+
         public static string PaddedNumber(int minInclusive, int maxExclusive, int padLength)
         {
             var result = Number(minInclusive, maxExclusive).ToString();
@@ -135,6 +142,15 @@ namespace NextLevelSeven.Test.Testing
             return builder.ToString().Substring(0, length);
         }
 
+        public static IEnumerable<string> StringSequence(int count)
+        {
+            while (count > 0)
+            {
+                yield return StringLetters();
+                count--;
+            }
+        }
+
         public static string StringCaps()
         {
             return String().ToUpperInvariant().Replace('-', 'A');
@@ -164,5 +180,18 @@ namespace NextLevelSeven.Test.Testing
             }
             return builder.ToString();
         }
+
+        public static string Symbol()
+        {
+            // exclude minus character because String() generates it
+            return new string(OneOf("|!@#$%^&*()=_+[]{};':\"/?,.<>`~".ToCharArray()), 1);
+        }
+
+        static public T OneOf<T>(IEnumerable<T> values)
+        {
+            var valueArray = values.ToArray();
+            return valueArray[Rng.Next(valueArray.Length)];
+        }
+
     }
 }
