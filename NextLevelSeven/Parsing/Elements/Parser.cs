@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Codec;
 using NextLevelSeven.Core.Encoding;
@@ -11,21 +12,24 @@ namespace NextLevelSeven.Parsing.Elements
     internal abstract class Parser : IElementParser
     {
         /// <summary>String divider used to split the element's raw value.</summary>
-        private StringDivider _descendantDivider;
+        private readonly Lazy<StringDivider> _descendantDivider;
 
         /// <summary>Base encoding configuration.</summary>
-        private ReadOnlyEncodingConfiguration _encodingConfiguration;
+        private readonly Lazy<ReadOnlyEncodingConfiguration> _encodingConfiguration;
 
         /// <summary>Create a root element.</summary>
         protected Parser()
         {
+            _descendantDivider = new Lazy<StringDivider>(GetDescendantDivider);
+            _encodingConfiguration = new Lazy<ReadOnlyEncodingConfiguration>(GetEncodingConfiguration);
         }
 
         /// <summary>Create a root element with the specified encoding configuration.</summary>
         /// <param name="config"></param>
         protected Parser(ReadOnlyEncodingConfiguration config)
+            : this()
         {
-            _encodingConfiguration = config;
+            _encodingConfiguration = new Lazy<ReadOnlyEncodingConfiguration>(() => config);
         }
 
         /// <summary>Ancestor element. Root elements return null.</summary>
@@ -37,47 +41,25 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Get the string divider used to find descendant values.</summary>
         public StringDivider DescendantDivider
         {
-            get
-            {
-                if (_descendantDivider != null)
-                {
-                    return _descendantDivider;
-                }
-                _descendantDivider = GetDescendantDivider();
-                return _descendantDivider;
-            }
+            get { return _descendantDivider.Value; }
         }
 
         /// <summary>Get the deliminter internally being used by the descendant divider.</summary>
         protected char DescendantDividerDelimiter
         {
-            get { return _descendantDivider.Delimiter; }
+            get { return _descendantDivider.Value.Delimiter; }
         }
 
         /// <summary>Returns true if the descendant divider has been initialized.</summary>
         protected bool DescendantDividerInitialized
         {
-            get { return _descendantDivider != null; }
+            get { return _descendantDivider.IsValueCreated; }
         }
 
         /// <summary>Get the encoding configuration.</summary>
         protected ReadOnlyEncodingConfiguration EncodingConfiguration
         {
-            get
-            {
-                if (_encodingConfiguration != null)
-                {
-                    return _encodingConfiguration;
-                }
-                if (Ancestor != null)
-                {
-                    return Ancestor.EncodingConfiguration;
-                }
-                _encodingConfiguration = (this is MessageParser)
-                    ? new ParserEncodingConfiguration((ISegment) this[1])
-                    : null;
-                return _encodingConfiguration;
-            }
+            get { return _encodingConfiguration.Value; }
         }
 
         /// <summary>Get the descendant element at the specified index.</summary>
@@ -265,6 +247,17 @@ namespace NextLevelSeven.Parsing.Elements
         public override sealed string ToString()
         {
             return Value ?? string.Empty;
+        }
+
+        /// <summary>
+        /// Get the encoding configuration or, if it doesn't exist and the class is a message element, create one.
+        /// </summary>
+        /// <returns>Encoding configuration.</returns>
+        private ReadOnlyEncodingConfiguration GetEncodingConfiguration()
+        {
+            return (this is IMessage)
+                ? new ParserEncodingConfiguration((ISegment)this[1])
+                : ((Ancestor != null) ? Ancestor.EncodingConfiguration : null);
         }
 
         /// <summary>Get a string divider for this descendant element.</summary>

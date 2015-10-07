@@ -5,7 +5,7 @@ using NextLevelSeven.Test.Testing;
 namespace NextLevelSeven.Test.Core.Codec
 {
     [TestClass]
-    public class EncodedTypeConverterUnitTests : CodecTestFixture
+    public class EncodedTypeConverterFunctionalTests : CodecTestFixture
     {
         [TestMethod]
         public void Codec_CanGetDate()

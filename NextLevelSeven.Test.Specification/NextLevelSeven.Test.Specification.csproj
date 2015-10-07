@@ -63,10 +63,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NextLevelSeven.Specification\NextLevelSeven.Specification.csproj">
-      <Project>{6bd62ee0-1254-4517-b5cc-978ed66c300a}</Project>
-      <Name>NextLevelSeven.Specification</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NextLevelSeven.Test\NextLevelSeven.Test.csproj">
       <Project>{93328b56-4fea-4ac2-b9a5-66547b0c7cc7}</Project>
       <Name>NextLevelSeven.Test</Name>

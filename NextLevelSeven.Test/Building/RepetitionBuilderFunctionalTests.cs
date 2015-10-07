@@ -5,7 +5,7 @@ using NextLevelSeven.Test.Testing;
 namespace NextLevelSeven.Test.Building
 {
     [TestClass]
-    public sealed class RepetitionBuilderUnitTests : BuildingTestFixture
+    public sealed class RepetitionBuilderFunctionalTests : BuildingTestFixture
     {
         [TestMethod]
         public void RepetitionBuilder_CanSetAllSubcomponents()

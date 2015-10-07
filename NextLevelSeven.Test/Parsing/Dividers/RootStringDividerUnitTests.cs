@@ -7,7 +7,7 @@ using NextLevelSeven.Test.Testing;
 namespace NextLevelSeven.Test.Parsing.Dividers
 {
     [TestClass]
-    public class RootStringDividerUnitTests
+    public class RootStringDividerUnitTests : DividersUnitTestFixture
     {
         [TestMethod]
         public void HasCorrectNumberOfDivisions()
@@ -34,6 +34,14 @@ namespace NextLevelSeven.Test.Parsing.Dividers
             {
                 AssertEnumerable.AreEqual(data.Split(':')[i], divider[i]);                
             }
+        }
+
+        [TestMethod]
+        public void IsIndexablePastEnd()
+        {
+            var data = Mock.DelimitedString(":", 4);
+            var divider = new RootStringDivider(data, ':');
+            Assert.AreEqual(string.Empty, divider[5]);
         }
 
         [TestMethod]
@@ -186,15 +194,69 @@ namespace NextLevelSeven.Test.Parsing.Dividers
         }
 
         [TestMethod]
-        public void Moves()
+        public void MovesToBeginning()
         {
-            
+            var delimiter = Mock.Symbol();
+            var data0 = Mock.String();
+            var data1 = Mock.String();
+            var data2 = Mock.String();
+            var data = string.Join(delimiter, data0, data1, data2);
+            var divider = new RootStringDivider(data, delimiter[0]);
+            divider.Move(2, 0);
+            Assert.AreEqual(string.Join(delimiter, data2, data0, data1), divider.Value);
         }
 
         [TestMethod]
-        public void Inserts()
+        public void MovesToEnd()
         {
-            
+            var delimiter = Mock.Symbol();
+            var data0 = Mock.String();
+            var data1 = Mock.String();
+            var data2 = Mock.String();
+            var data = string.Join(delimiter, data0, data1, data2);
+            var divider = new RootStringDivider(data, delimiter[0]);
+            divider.Move(1, 2);
+            Assert.AreEqual(string.Join(delimiter, data0, data2, data1), divider.Value);
         }
+
+        [TestMethod]
+        public void InsertsAtBeginning()
+        {
+            var delimiter = Mock.Symbol();
+            var data0 = Mock.String();
+            var data1 = Mock.String();
+            var data2 = Mock.String();
+            var data = string.Join(delimiter, data0, data1);
+            var divider = new RootStringDivider(data, delimiter[0]);
+            divider.Insert(0, data2);
+            Assert.AreEqual(string.Join(delimiter, data2, data0, data1), divider.Value);            
+        }
+
+        [TestMethod]
+        public void InsertsAtMiddle()
+        {
+            var delimiter = Mock.Symbol();
+            var data0 = Mock.String();
+            var data1 = Mock.String();
+            var data2 = Mock.String();
+            var data = string.Join(delimiter, data0, data1);
+            var divider = new RootStringDivider(data, delimiter[0]);
+            divider.Insert(1, data2);
+            Assert.AreEqual(string.Join(delimiter, data0, data2, data1), divider.Value);
+        }
+
+        [TestMethod]
+        public void InsertsAtEnd()
+        {
+            var delimiter = Mock.Symbol();
+            var data0 = Mock.String();
+            var data1 = Mock.String();
+            var data2 = Mock.String();
+            var data = string.Join(delimiter, data0, data1);
+            var divider = new RootStringDivider(data, delimiter[0]);
+            divider.Insert(2, data2);
+            Assert.AreEqual(string.Join(delimiter, data0, data1, data2), divider.Value);
+        }
+
     }
 }

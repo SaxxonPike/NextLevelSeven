@@ -7,7 +7,7 @@ using NextLevelSeven.Test.Testing;
 namespace NextLevelSeven.Test.Parsing
 {
     [TestClass]
-    public class SubcomponentParserUnitTests : ParsingTestFixture
+    public class SubcomponentParserFunctionalTests : ParsingTestFixture
     {
         [TestMethod]
         public void Subcomponent_CanGetKey()

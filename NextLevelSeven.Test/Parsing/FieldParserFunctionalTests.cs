@@ -8,7 +8,7 @@ using NextLevelSeven.Test.Testing;
 namespace NextLevelSeven.Test.Parsing
 {
     [TestClass]
-    public class FieldParserUnitTests : ParsingTestFixture
+    public class FieldParserFunctionalTests : ParsingTestFixture
     {
         [TestMethod]
         public void Field_Delimiter_CanBeCloned()

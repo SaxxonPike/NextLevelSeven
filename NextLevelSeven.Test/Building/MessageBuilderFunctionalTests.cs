@@ -8,7 +8,7 @@ using NextLevelSeven.Test.Testing;
 namespace NextLevelSeven.Test.Building
 {
     [TestClass]
-    public sealed class MessageBuilderUnitTests : BuildingTestFixture
+    public sealed class MessageBuilderFunctionalTests : BuildingTestFixture
     {
         [TestMethod]
         public void MessageBuilder_RetrievalMethodsAreIdentical()

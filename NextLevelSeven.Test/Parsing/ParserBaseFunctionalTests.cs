@@ -5,7 +5,7 @@ using NextLevelSeven.Test.Testing;
 namespace NextLevelSeven.Test.Parsing
 {
     [TestClass]
-    public class ParserBaseUnitTests : ParsingTestFixture
+    public class ParserBaseFunctionalTests : ParsingTestFixture
     {
         [TestMethod]
         public void Parser_CanFormat()

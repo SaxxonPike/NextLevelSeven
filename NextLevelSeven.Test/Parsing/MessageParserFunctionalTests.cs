@@ -9,7 +9,7 @@ using NextLevelSeven.Test.Testing;
 namespace NextLevelSeven.Test.Parsing
 {
     [TestClass]
-    public class MessageParserUnitTests : ParsingTestFixture
+    public class MessageParserFunctionalTests : ParsingTestFixture
     {
         [TestMethod]
         public void Message_CanProcessMessageWithShortEncoding()

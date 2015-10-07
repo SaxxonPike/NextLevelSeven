@@ -6,7 +6,7 @@ using NextLevelSeven.Test.Testing;
 namespace NextLevelSeven.Test.Core
 {
     [TestClass]
-    public class ElementExtensionUnitTests : CoreTestFixture
+    public class ElementExtensionFunctionalTests : CoreTestFixture
     {
         [TestMethod]
         public void ElementExtensions_SimplifiesSegment()

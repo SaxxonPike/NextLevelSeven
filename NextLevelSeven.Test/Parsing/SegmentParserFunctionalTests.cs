@@ -7,7 +7,7 @@ using NextLevelSeven.Test.Testing;
 namespace NextLevelSeven.Test.Parsing
 {
     [TestClass]
-    public class SegmentParserUnitTests : ParsingTestFixture
+    public class SegmentParserFunctionalTests : ParsingTestFixture
     {
         [TestMethod]
         public void Segment_CloneCanGetDelimiter()

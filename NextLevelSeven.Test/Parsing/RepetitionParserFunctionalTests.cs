@@ -7,7 +7,7 @@ using NextLevelSeven.Test.Testing;
 namespace NextLevelSeven.Test.Parsing
 {
     [TestClass]
-    public class RepetitionParserUnitTests : ParsingTestFixture
+    public class RepetitionParserFunctionalTests : ParsingTestFixture
     {
         [TestMethod]
         public void Repetition_HasFieldAncestor()

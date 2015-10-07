@@ -5,7 +5,7 @@ using NextLevelSeven.Test.Testing;
 namespace NextLevelSeven.Test.Building
 {
     [TestClass]
-    public sealed class BuilderBaseUnitTests : BuildingTestFixture
+    public sealed class BuilderBaseFunctionalTests : BuildingTestFixture
     {
         [TestMethod]
         public void Builder_ImplementsEncodingAndReadOnlyEncodingIdentically()

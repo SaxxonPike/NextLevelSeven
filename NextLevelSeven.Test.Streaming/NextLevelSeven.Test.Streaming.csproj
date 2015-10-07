@@ -60,10 +60,6 @@
     <Compile Include="StreamingTestFixture.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NextLevelSeven.Streaming\NextLevelSeven.Streaming.csproj">
-      <Project>{e08ceaa1-3fbe-4b70-a4cd-66fecb81e87d}</Project>
-      <Name>NextLevelSeven.Streaming</Name>
-    </ProjectReference>
     <ProjectReference Include="..\NextLevelSeven.Test\NextLevelSeven.Test.csproj">
       <Project>{93328b56-4fea-4ac2-b9a5-66547b0c7cc7}</Project>
       <Name>NextLevelSeven.Test</Name>

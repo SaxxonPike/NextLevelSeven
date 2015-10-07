@@ -7,7 +7,7 @@ using NextLevelSeven.Test.Testing;
 namespace NextLevelSeven.Test.Building
 {
     [TestClass]
-    public sealed class SubcomponentBuilderUnitTests : BuildingTestFixture
+    public sealed class SubcomponentBuilderFunctionalTests : BuildingTestFixture
     {
         [TestMethod]
         public void SubcomponentBuilder_ExistsWithNonNullValue()

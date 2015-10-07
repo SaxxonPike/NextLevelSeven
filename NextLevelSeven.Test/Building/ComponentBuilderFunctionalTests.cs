@@ -6,7 +6,7 @@ using NextLevelSeven.Test.Testing;
 namespace NextLevelSeven.Test.Building
 {
     [TestClass]
-    public sealed class ComponentBuilderUnitTests : BuildingTestFixture
+    public sealed class ComponentBuilderFunctionalTests : BuildingTestFixture
     {
         [TestMethod]
         public void ComponentBuilder_CanMoveDescendants()

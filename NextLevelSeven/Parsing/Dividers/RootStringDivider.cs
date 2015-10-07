@@ -32,12 +32,12 @@ namespace NextLevelSeven.Parsing.Dividers
             get
             {
                 var divisions = Divisions;
-                if (index < divisions.Count)
+                if (index >= divisions.Count)
                 {
-                    var d = Divisions[index];
-                    return new string(ValueChars, d.Offset, d.Length);
+                    return string.Empty;
                 }
-                return string.Empty;
+                var d = Divisions[index];
+                return new string(ValueChars, d.Offset, d.Length);
             }
             set { SetValue(index, value); }
         }
@@ -103,7 +103,7 @@ namespace NextLevelSeven.Parsing.Dividers
         /// <param name="value">New value.</param>
         private void SetValue(int index, string value)
         {
-            Pad(Delimiter, index, 0, _valueChars.Length, _divisions);
+            Pad(Delimiter, index, 0, _valueChars.Length, (List<StringDivision>)Divisions);
             var d = Divisions[index];
             Replace(d.Offset, d.Length, StringDividerOperations.GetChars(value));
         }

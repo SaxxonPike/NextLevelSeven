@@ -83,12 +83,20 @@ namespace NextLevelSeven.Parsing.Dividers
 
         public void Insert(int index, string value)
         {
-            this[index] = string.Concat(value, new string(Delimiter, 1), this[index] ?? string.Empty);
+            if (index >= Count)
+            {
+                this[index] = value;
+            }
+            else
+            {
+                this[index] = string.Concat(value, new string(Delimiter, 1), this[index] ?? string.Empty);                
+            }
         }
 
         public void Move(int sourceIndex, int targetIndex)
         {
             var value = this[sourceIndex];
+
             Delete(sourceIndex);
             Insert(targetIndex, value);
         }

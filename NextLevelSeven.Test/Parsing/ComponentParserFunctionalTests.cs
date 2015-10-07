@@ -7,7 +7,7 @@ using NextLevelSeven.Test.Testing;
 namespace NextLevelSeven.Test.Parsing
 {
     [TestClass]
-    public class ComponentParserUnitTests : ParsingTestFixture
+    public class ComponentParserFunctionalTests : ParsingTestFixture
     {
         [TestMethod]
         public void Component_HasRepetitionAncestor()

@@ -7,7 +7,7 @@ using NextLevelSeven.Test.Testing;
 namespace NextLevelSeven.Test.Building
 {
     [TestClass]
-    public sealed class FieldBuilderUnitTests : BuildingTestFixture
+    public sealed class FieldBuilderFunctionalTests : BuildingTestFixture
     {
         [TestMethod]
         public void FieldBuilder_Type_CannotMoveDescendants()

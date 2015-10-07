@@ -7,7 +7,7 @@ using NextLevelSeven.Test.Testing;
 namespace NextLevelSeven.Test.Building
 {
     [TestClass]
-    public sealed class SegmentBuilderUnitTests : BuildingTestFixture
+    public sealed class SegmentBuilderFunctionalTests : BuildingTestFixture
     {
         [TestMethod]
         public void SegmentBuilder_CanBuildSubcomponentsViaParams()
