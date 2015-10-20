@@ -79,7 +79,7 @@ namespace NextLevelSeven.Test.Building
         public void MessageBuilder_HasCodec()
         {
             var builder = Message.Build();
-            Assert.IsNotNull(builder.Codec);
+            Assert.IsNotNull(builder.Converter);
         }
 
         [TestMethod]

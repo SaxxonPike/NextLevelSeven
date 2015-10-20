@@ -51,8 +51,8 @@ namespace NextLevelSeven.Core.Properties
         /// <summary>Get or set the date/time of the message.</summary>
         public DateTimeOffset? Time
         {
-            get { return _message[1][7].Codec.AsDateTime; }
-            set { _message[1][7].Codec.AsDateTime = value; }
+            get { return _message[1][7].Converter.AsDateTime; }
+            set { _message[1][7].Converter.AsDateTime = value; }
         }
 
         /// <summary>Get or set the 3-character trigger event.</summary>

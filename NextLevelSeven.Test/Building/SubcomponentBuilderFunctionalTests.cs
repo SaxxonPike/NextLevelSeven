@@ -37,7 +37,7 @@ namespace NextLevelSeven.Test.Building
         public void SubcomponentBuilder_GetsCodec()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
-            var codec = builder.Codec;
+            var codec = builder.Converter;
             var value = Mock.Number();
             codec.AsInt = value;
             Assert.AreEqual(value.ToString(CultureInfo.InvariantCulture), builder.Value);

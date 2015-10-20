@@ -12,7 +12,7 @@ namespace NextLevelSeven.Test.Core.Codec
         {
             var message = Message.Parse(Mock.Message());
             message[1][3].Value = Mock.DateTimeMillisecondsWithTimeZone();
-            Assert.IsNotNull(message[1][3].Codec.AsDate);
+            Assert.IsNotNull(message[1][3].Converter.AsDate);
         }
 
         [TestMethod]
@@ -21,7 +21,7 @@ namespace NextLevelSeven.Test.Core.Codec
             var message = Message.Parse(Mock.Message());
             message[1][3][1].Value = Mock.DateTimeMillisecondsWithTimeZone();
             message[1][3][2].Value = Mock.DateTimeMillisecondsWithTimeZone();
-            Assert.AreEqual(2, message[1][3].Codec.AsDates.Count);
+            Assert.AreEqual(2, message[1][3].Converter.AsDates.Count);
         }
 
         [TestMethod]
@@ -29,7 +29,7 @@ namespace NextLevelSeven.Test.Core.Codec
         {
             var message = Message.Parse(Mock.Message());
             message[1][3].Value = Mock.DateTimeMillisecondsWithTimeZone();
-            Assert.IsNotNull(message[1][3].Codec.AsDateTime);
+            Assert.IsNotNull(message[1][3].Converter.AsDateTime);
         }
 
         [TestMethod]
@@ -38,7 +38,7 @@ namespace NextLevelSeven.Test.Core.Codec
             var message = Message.Parse(Mock.Message());
             message[1][3][1].Value = Mock.DateTimeMillisecondsWithTimeZone();
             message[1][3][2].Value = Mock.DateTimeMillisecondsWithTimeZone();
-            Assert.AreEqual(2, message[1][3].Codec.AsDateTimes.Count);
+            Assert.AreEqual(2, message[1][3].Converter.AsDateTimes.Count);
         }
 
         [TestMethod]
@@ -46,7 +46,7 @@ namespace NextLevelSeven.Test.Core.Codec
         {
             var message = Message.Parse(Mock.Message());
             message[1][3].Value = Mock.Decimal();
-            Assert.IsNotNull(message[1][3].Codec.AsDecimal);
+            Assert.IsNotNull(message[1][3].Converter.AsDecimal);
         }
     }
 }

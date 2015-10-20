@@ -57,7 +57,7 @@ namespace NextLevelSeven.Building.Elements
         public abstract IEnumerable<string> Values { get; set; }
 
         /// <summary>Get a converter which will interpret this element's value as other types.</summary>
-        public virtual IEncodedTypeConverter Codec
+        public virtual IEncodedTypeConverter Converter
         {
             get { return new EncodedTypeConverter(this); }
         }

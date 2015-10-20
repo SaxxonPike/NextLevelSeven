@@ -16,7 +16,7 @@ namespace NextLevelSeven.Core
         IElement Ancestor { get; }
 
         /// <summary>Get a codec which can be used to interpret the stored value as other types.</summary>
-        IEncodedTypeConverter Codec { get; }
+        IEncodedTypeConverter Converter { get; }
 
         /// <summary>Get the delimiter character of the element. This will be zero if there are no sub-elements.</summary>
         char Delimiter { get; }

@@ -273,7 +273,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var message = Message.Parse("MSH|^~\\&|1|2|3|4|5");
             var segment = message[1];
-            segment.Descendants.Skip(2).Where(i => i.Codec.AsInt%2 == 0).Delete();
+            segment.Descendants.Skip(2).Where(i => i.Converter.AsInt%2 == 0).Delete();
             Assert.AreEqual("MSH|^~\\&|1|3|5", message.Value, @"Message was modified unexpectedly.");
         }
 
