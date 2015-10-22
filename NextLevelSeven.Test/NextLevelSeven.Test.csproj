@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{93328B56-4FEA-4AC2-B9A5-66547B0C7CC7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>NextLevelSeven.Test</RootNamespace>
+    <AssemblyName>NextLevelSeven.Test</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <ReferencePath>$(ProgramFiles)\Common Files\microsoft shared\VSTT\$(VisualStudioVersion)\UITestExtensionPackages</ReferencePath>
+    <IsCodedUITest>False</IsCodedUITest>
+    <TestProjectType>UnitTest</TestProjectType>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <LangVersion>5</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="('$(VisualStudioVersion)' == '10.0' or '$(VisualStudioVersion)' == '') and '$(TargetFrameworkVersion)' == 'v3.5'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+      </ItemGroup>
+    </When>
+    <Otherwise>
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </Otherwise>
+  </Choose>
+  <ItemGroup>
+    <Compile Include="Core\Codec\CodecTestFixture.cs" />
+    <Compile Include="Core\Codec\EncodedTypeConverterFunctionalTests.cs" />
+    <Compile Include="Core\ElementOperationsUnitTests.cs" />
+    <Compile Include="Parsing\Dividers\DescendantStringDividerUnitTests.cs" />
+    <Compile Include="Parsing\Dividers\DividersUnitTestFixture.cs" />
+    <Compile Include="Parsing\Dividers\RootStringDividerUnitTests.cs" />
+    <Compile Include="Parsing\ParserBaseFunctionalTests.cs" />
+    <Compile Include="Testing\AssertArray.cs" />
+    <Compile Include="Testing\AssertEnumerable.cs" />
+    <Compile Include="Building\BuilderBaseFunctionalTests.cs" />
+    <Compile Include="Building\BuildingTestFixture.cs" />
+    <Compile Include="Building\ComponentBuilderFunctionalTests.cs" />
+    <Compile Include="Building\FieldBuilderFunctionalTests.cs" />
+    <Compile Include="Building\RepetitionBuilderFunctionalTests.cs" />
+    <Compile Include="Building\MessageBuilderFunctionalTests.cs" />
+    <Compile Include="Building\SegmentBuilderFunctionalTests.cs" />
+    <Compile Include="Building\SubcomponentBuilderFunctionalTests.cs" />
+    <Compile Include="Conversion\ConversionTestFixture.cs" />
+    <Compile Include="Conversion\DateTimeConverterUnitTests.cs" />
+    <Compile Include="Conversion\NumberConverterUnitTests.cs" />
+    <Compile Include="Core\CoreTestFixture.cs" />
+    <Compile Include="Core\ElementExtensionFunctionalTests.cs" />
+    <Compile Include="Core\ParserComparer.cs" />
+    <Compile Include="Core\BuilderParserEqualityFunctionalTests.cs" />
+    <Compile Include="Diagnostics\DiagnosticsTestFixture.cs" />
+    <Compile Include="Parsing\ComponentParserFunctionalTests.cs" />
+    <Compile Include="Core\EscapeFunctionalTests.cs" />
+    <Compile Include="Diagnostics\ErrorMessageUnitTests.cs" />
+    <Compile Include="Testing\AssertAction.cs" />
+    <Compile Include="Testing\ExampleMessages.cs" />
+    <Compile Include="Parsing\FieldParserFunctionalTests.cs" />
+    <Compile Include="Core\MessageExtensionFunctionalTests.cs" />
+    <Compile Include="Parsing\MessageParserFunctionalTests.cs" />
+    <Compile Include="Testing\Measure.cs" />
+    <Compile Include="Parsing\RepetitionParserFunctionalTests.cs" />
+    <Compile Include="Parsing\SegmentParserFunctionalTests.cs" />
+    <Compile Include="Parsing\SubcomponentParserFunctionalTests.cs" />
+    <Compile Include="Parsing\ParsingTestFixture.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Testing\Mock.cs" />
+    <Compile Include="BaseTestFixture.cs" />
+    <Compile Include="Testing\TestUnitTests.cs" />
+    <Compile Include="Utility\UtilityTestFixture.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NextLevelSeven\NextLevelSeven.csproj">
+      <Project>{ec7fc595-07f4-467f-a51a-25cfa9711310}</Project>
+      <Name>NextLevelSeven</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\Properties\" />
+  </ItemGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
+      <ItemGroup>
+        <Reference Include="Microsoft.VisualStudio.QualityTools.CodedUITestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Common, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITest.Extension, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+        <Reference Include="Microsoft.VisualStudio.TestTools.UITesting, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+          <Private>False</Private>
+        </Reference>
+      </ItemGroup>
+    </When>
+  </Choose>
+  <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
