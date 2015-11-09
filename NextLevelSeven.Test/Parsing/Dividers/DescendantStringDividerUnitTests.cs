@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Parsing.Dividers;
 using NextLevelSeven.Test.Testing;
 using NUnit.Framework;
@@ -15,7 +14,7 @@ namespace NextLevelSeven.Test.Parsing.Dividers
         private string _ancestorData;
         private string _ancestorDelimiter;
 
-        [TestInitialize]
+        [SetUp]
         public void InitializeAncestor()
         {
             _ancestorDelimiter = "\u0001";

@@ -1,5 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NextLevelSeven.Core;
+﻿using NextLevelSeven.Core;
 using NextLevelSeven.Test.Testing;
 using NUnit.Framework;
 
@@ -10,7 +9,7 @@ namespace NextLevelSeven.Test.Core
     {
         private ParserComparer _comparer;
 
-        [TestInitialize]
+        [SetUp]
         public void Initialize()
         {
             _comparer = new ParserComparer(Message.Build(), Message.Parse());
