@@ -18,13 +18,13 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>Delimiter is invalid for a field delimiter field.</summary>
-        public override sealed char Delimiter
+        public sealed override char Delimiter
         {
             get { return '\0'; }
         }
 
         /// <summary>Returns an empty collection.</summary>
-        public override sealed IEnumerable<IElementParser> Descendants
+        public sealed override IEnumerable<IElementParser> Descendants
         {
             get { return Enumerable.Empty<IElementParser>(); }
         }
@@ -46,7 +46,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <param name="component">Not used.</param>
         /// <param name="subcomponent">Not used.</param>
         /// <returns>Field delimiter value.</returns>
-        public override sealed string GetValue(int repetition = -1, int component = -1, int subcomponent = -1)
+        public sealed override string GetValue(int repetition = -1, int component = -1, int subcomponent = -1)
         {
             return Value;
         }
@@ -56,7 +56,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <param name="component">Not used.</param>
         /// <param name="subcomponent">Not used.</param>
         /// <returns>Field delimiter value.</returns>
-        public override sealed IEnumerable<string> GetValues(int repetition = -1, int component = -1,
+        public sealed override IEnumerable<string> GetValues(int repetition = -1, int component = -1,
             int subcomponent = -1)
         {
             return Value.Yield();
@@ -64,14 +64,14 @@ namespace NextLevelSeven.Parsing.Elements
 
         /// <summary>Get a repetition division of this field.</summary>
         /// <returns>Repetition descendant.</returns>
-        protected override sealed RepetitionParser CreateRepetition(int index)
+        protected sealed override RepetitionParser CreateRepetition(int index)
         {
             throw new ParserException(ErrorCode.FixedFieldsCannotBeDivided);
         }
 
         /// <summary>Deep clone this field.</summary>
         /// <returns>Cloned field.</returns>
-        protected override sealed FieldParser CloneField()
+        protected sealed override FieldParser CloneField()
         {
             return new FieldParser(EncodingConfiguration)
             {

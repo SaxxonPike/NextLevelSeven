@@ -35,7 +35,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Returns true if the segment's type field is MSH.</summary>
         private bool IsMsh
         {
-            get { return (string.Equals(Type, "MSH", StringComparison.Ordinal)); }
+            get { return string.Equals(Type, "MSH", StringComparison.Ordinal); }
         }
 
         /// <summary>Get the descendant field parser at the specified index.</summary>

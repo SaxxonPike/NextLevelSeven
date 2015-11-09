@@ -67,7 +67,7 @@ namespace NextLevelSeven.Building.Elements
                     _segments.OrderedByKey
                         .Select(i => i.Value.Value ?? string.Empty));
 
-                return (result.Length == 0)
+                return result.Length == 0
                     ? null
                     : result;
             }
@@ -205,11 +205,25 @@ namespace NextLevelSeven.Building.Elements
                 throw new BuilderException(ErrorCode.MessageDataMustStartWithMsh);
             }
 
-            ComponentDelimiter = (length >= 5) ? value[4] : '^';
-            EscapeCharacter = (length >= 6) ? value[5] : '\\';
-            FieldDelimiter = (length >= 3) ? value[3] : '|';
-            RepetitionDelimiter = (length >= 7) ? value[6] : '~';
-            SubcomponentDelimiter = (length >= 8) ? value[7] : '&';
+            ComponentDelimiter = length >= 5
+                ? value[4]
+                : '^';
+
+            EscapeCharacter = length >= 6 
+                ? value[5]
+                : '\\';
+
+            FieldDelimiter = length >= 3 
+                ? value[3]
+                : '|';
+
+            RepetitionDelimiter = length >= 7 
+                ? value[6]
+                : '~';
+
+            SubcomponentDelimiter = length >= 8 
+                ? value[7]
+                : '&';
 
             _segments.Clear();
             var index = 1;

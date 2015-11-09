@@ -238,7 +238,7 @@ namespace NextLevelSeven.Core
             var segment = target as ISegment;
             if (segment != null)
             {
-                segment.Values = (segment.Type == "MSH")
+                segment.Values = segment.Type == "MSH"
                     ? segment.Values.Take(3).ToList()
                     : segment.Type.Yield();
                 return;

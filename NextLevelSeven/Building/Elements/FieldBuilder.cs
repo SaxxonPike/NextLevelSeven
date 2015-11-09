@@ -41,7 +41,7 @@ namespace NextLevelSeven.Building.Elements
         {
             get
             {
-                return (_repetitions.Count > 0)
+                return _repetitions.Count > 0
                     ? _repetitions.MaxKey
                     : 0;
             }
@@ -88,7 +88,7 @@ namespace NextLevelSeven.Building.Elements
                     }
                 }
 
-                return (result.Length == 0)
+                return result.Length == 0
                     ? null
                     : result.ToString();
             }
@@ -255,7 +255,7 @@ namespace NextLevelSeven.Building.Elements
 
         /// <summary>Deep clone this element.</summary>
         /// <returns>Clone of the element.</returns>
-        public override sealed IElement Clone()
+        public sealed override IElement Clone()
         {
             return CloneField();
         }
@@ -319,7 +319,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get the element at the specified index.</summary>
         /// <param name="index"></param>
         /// <returns></returns>
-        protected override sealed IElement GetGenericElement(int index)
+        protected sealed override IElement GetGenericElement(int index)
         {
             return _repetitions[index];
         }

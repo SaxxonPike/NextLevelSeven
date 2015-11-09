@@ -440,7 +440,7 @@ namespace NextLevelSeven.Test.Building
             var messageString = message.Value;
             var usage = GC.GetTotalMemory(false) - before;
             var overhead = usage - (messageString.Length << 1);
-            var usePerCharacter = (overhead/(messageString.Length << 1));
+            var usePerCharacter = overhead/(messageString.Length << 1);
             usePerCharacter.Should().BeLessThan(10);
         }
 

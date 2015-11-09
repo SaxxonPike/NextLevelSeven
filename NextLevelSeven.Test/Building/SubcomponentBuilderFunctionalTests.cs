@@ -1,11 +1,9 @@
 ﻿using System.Globalization;
-using System.Linq;
 using FluentAssertions;
 using NextLevelSeven.Building;
 using NextLevelSeven.Core;
 using NextLevelSeven.Test.Testing;
 using NUnit.Framework;
-using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace NextLevelSeven.Test.Building
 {

@@ -49,7 +49,9 @@ namespace NextLevelSeven.Parsing.Dividers
         public StringDivision GetSubDivision(int index)
         {
             var d = Divisions;
-            return (index >= d.Count) ? StringDivision.Invalid : d[index];
+            return index >= d.Count
+                ? StringDivision.Invalid
+                : d[index];
         }
 
         public abstract void Replace(int start, int length, char[] value);

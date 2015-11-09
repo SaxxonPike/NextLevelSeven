@@ -81,7 +81,9 @@ namespace NextLevelSeven.Parsing.Dividers
             get
             {
                 var d = _baseDivider.GetSubDivision(Index);
-                return (!d.Valid || d.Length == 0) ? null : new string(BaseValue, d.Offset, d.Length);
+                return !d.Valid || d.Length == 0
+                    ? null
+                    : new string(BaseValue, d.Offset, d.Length);
             }
             set { _baseDivider[Index] = value; }
         }
@@ -92,7 +94,7 @@ namespace NextLevelSeven.Parsing.Dividers
             get
             {
                 var d = _baseDivider.GetSubDivision(Index);
-                return (!d.Valid || d.Length == 0)
+                return !d.Valid || d.Length == 0
                     ? null
                     : StringDividerOperations.CharSubstring(BaseValue, d.Offset, d.Length);
             }
@@ -114,7 +116,12 @@ namespace NextLevelSeven.Parsing.Dividers
                     yield return this[i];
                 }
             }
-            set { Value = (Delimiter == '\0') ? string.Concat(value) : string.Join(new string(Delimiter, 1), value); }
+            set 
+            { 
+                Value = Delimiter == '\0'
+                    ? string.Concat(value)
+                    : string.Join(new string(Delimiter, 1), value);
+            }
         }
 
         /// <summary>Set the value at the specified subdivision index.</summary>

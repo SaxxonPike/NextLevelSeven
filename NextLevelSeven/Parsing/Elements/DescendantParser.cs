@@ -31,16 +31,16 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>Ancestor element.</summary>
-        protected override sealed Parser Ancestor
+        protected sealed override Parser Ancestor
         {
             get { return _ancestor; }
         }
 
         /// <summary>Get a string divider for this descendant element.</summary>
         /// <returns>Descendant string divider.</returns>
-        protected override sealed StringDivider GetDescendantDivider()
+        protected sealed override StringDivider GetDescendantDivider()
         {
-            return (Ancestor == null)
+            return Ancestor == null
                 ? base.GetDescendantDivider()
                 : new DescendantStringDivider(Ancestor.DescendantDivider, Delimiter, _parentIndex);
         }

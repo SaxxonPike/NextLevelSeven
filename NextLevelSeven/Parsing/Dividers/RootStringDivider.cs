@@ -95,7 +95,12 @@ namespace NextLevelSeven.Parsing.Dividers
                     yield return this[i];
                 }
             }
-            set { Value = (Delimiter == '\0') ? string.Concat(value) : string.Join(new string(Delimiter, 1), value); }
+            set
+            {
+                Value = Delimiter == '\0'
+                    ? string.Concat(value) 
+                    : string.Join(new string(Delimiter, 1), value);
+            }
         }
 
         /// <summary>Set the string value at the specified index.</summary>
@@ -140,7 +145,7 @@ namespace NextLevelSeven.Parsing.Dividers
                 }
             }
 
-            var delimitersToAdd = (index - delimiterCount);
+            var delimitersToAdd = index - delimiterCount;
             var oldLength = _valueChars.Length;
 
             Array.Resize(ref _valueChars, oldLength + delimitersToAdd);

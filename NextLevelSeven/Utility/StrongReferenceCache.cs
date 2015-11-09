@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace NextLevelSeven.Utility
 {
@@ -23,7 +17,7 @@ namespace NextLevelSeven.Utility
         /// <summary>Get or set an item in the cache.</summary>
         /// <param name="index">Desired index.</param>
         /// <returns>Item in the cache.</returns>
-        override public TValue this[int index]
+        public override TValue this[int index]
         {
             get
             {
@@ -42,19 +36,19 @@ namespace NextLevelSeven.Utility
         /// <summary>Returns true if the specified key exists in the cache.</summary>
         /// <param name="index">Index to search for.</param>
         /// <returns></returns>
-        override public bool Contains(int index)
+        public override bool Contains(int index)
         {
             return Cache.ContainsKey(index);
         }
 
         /// <summary>Get the number of items in the cache.</summary>
-        override public int Count
+        public override int Count
         {
             get { return Cache.Count; }
         }
 
         /// <summary>Clear the cache.</summary>
-        override public void Clear()
+        public override void Clear()
         {
             Cache.Clear();
         }
@@ -62,14 +56,14 @@ namespace NextLevelSeven.Utility
         /// <summary>Remove an item from the cache.</summary>
         /// <param name="index">Index of the item to remove.</param>
         /// <returns>True, if removal was successful.</returns>
-        override public bool Remove(int index)
+        public override bool Remove(int index)
         {
             return Cache.Remove(index);
         }
 
         /// <summary>Get an enumerator for the cache.</summary>
         /// <returns>Enumerator.</returns>
-        override public IEnumerator<KeyValuePair<int, TValue>> GetEnumerator()
+        public override IEnumerator<KeyValuePair<int, TValue>> GetEnumerator()
         {
             return Cache.GetEnumerator();
         }

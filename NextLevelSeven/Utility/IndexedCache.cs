@@ -6,7 +6,7 @@ namespace NextLevelSeven.Utility
 {
     /// <summary>A cache that wraps around a dictionary, auto-requesting items that don't exist already.</summary>
     /// <typeparam name="TValue"></typeparam>
-    abstract internal class IndexedCache<TValue> : IIndexedCache<TValue> where TValue : class
+    internal abstract class IndexedCache<TValue> : IIndexedCache<TValue> where TValue : class
     {
         /// <summary>Factory method to generate keys that don't exist already.</summary>
         protected readonly ProxyFactory<int, TValue> Factory;
@@ -21,18 +21,18 @@ namespace NextLevelSeven.Utility
         /// <summary>Get or set an item in the cache.</summary>
         /// <param name="index">Desired index.</param>
         /// <returns>Item in the cache.</returns>
-        abstract public TValue this[int index] { get; set; }
+        public abstract TValue this[int index] { get; set; }
 
         /// <summary>Returns true if the specified key exists in the cache.</summary>
         /// <param name="index">Index to search for.</param>
         /// <returns></returns>
-        abstract public bool Contains(int index);
+        public abstract bool Contains(int index);
 
         /// <summary>Get the number of items in the cache.</summary>
-        abstract public int Count { get; }
+        public abstract int Count { get; }
 
         /// <summary>Clear the cache.</summary>
-        abstract public void Clear();
+        public abstract void Clear();
 
         /// <summary>Remove an item from the cache.</summary>
         /// <param name="index">Index of the item to remove.</param>

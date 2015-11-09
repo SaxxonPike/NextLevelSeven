@@ -187,7 +187,7 @@ namespace NextLevelSeven.Test.Testing
             return new string(OneOf("|!@#$%^&*()=_+[]{};':\"/?,.<>`~".ToCharArray()), 1);
         }
 
-        static public T OneOf<T>(IEnumerable<T> values)
+        public static T OneOf<T>(IEnumerable<T> values)
         {
             var valueArray = values.ToArray();
             return valueArray[Rng.Next(valueArray.Length)];

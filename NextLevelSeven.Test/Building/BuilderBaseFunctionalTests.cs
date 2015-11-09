@@ -1,5 +1,4 @@
 ﻿using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
 using NextLevelSeven.Test.Testing;
 using NUnit.Framework;

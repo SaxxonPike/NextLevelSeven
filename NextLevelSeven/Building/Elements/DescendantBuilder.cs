@@ -29,35 +29,35 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>Get or set the component delimiter character.</summary>
-        public override sealed char ComponentDelimiter
+        public sealed override char ComponentDelimiter
         {
             get { return Encoding.ComponentDelimiter; }
             set { Encoding.ComponentDelimiter = value; }
         }
 
         /// <summary>Get or set the escape delimiter character.</summary>
-        public override sealed char EscapeCharacter
+        public sealed override char EscapeCharacter
         {
             get { return Encoding.EscapeCharacter; }
             set { Encoding.EscapeCharacter = value; }
         }
 
         /// <summary>Get or set the field delimiter character.</summary>
-        public override sealed char FieldDelimiter
+        public sealed override char FieldDelimiter
         {
             get { return Encoding.FieldDelimiter; }
             set { Encoding.FieldDelimiter = value; }
         }
 
         /// <summary>Get or set the repetition delimiter character.</summary>
-        public override sealed char RepetitionDelimiter
+        public sealed override char RepetitionDelimiter
         {
             get { return Encoding.RepetitionDelimiter; }
             set { Encoding.RepetitionDelimiter = value; }
         }
 
         /// <summary>Get or set the subcomponent delimiter character.</summary>
-        public override sealed char SubcomponentDelimiter
+        public sealed override char SubcomponentDelimiter
         {
             get { return Encoding.SubcomponentDelimiter; }
             set { Encoding.SubcomponentDelimiter = value; }

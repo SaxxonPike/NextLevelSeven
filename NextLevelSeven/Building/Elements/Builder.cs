@@ -199,7 +199,7 @@ namespace NextLevelSeven.Building.Elements
 
         /// <summary>Get this builder's contents as a string.</summary>
         /// <returns>Builder's contents.</returns>
-        public override sealed string ToString()
+        public sealed override string ToString()
         {
             return Value ?? string.Empty;
         }

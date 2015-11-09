@@ -66,7 +66,7 @@ namespace NextLevelSeven.Parsing.Elements
 
         /// <summary>Deep clone this field.</summary>
         /// <returns>Clone of the field.</returns>
-        public override sealed IElement Clone()
+        public sealed override IElement Clone()
         {
             return CloneField();
         }

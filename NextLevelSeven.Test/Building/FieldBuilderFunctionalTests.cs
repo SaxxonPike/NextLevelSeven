@@ -11,7 +11,7 @@ namespace NextLevelSeven.Test.Building
     public sealed class FieldBuilderFunctionalTests : BuildingTestFixture
     {
         [Test]
-        [ExpectedException(typeof(ElementException))]
+        [ExpectedException(typeof(BuilderException))]
         public void FieldBuilder_Type_CannotMoveDescendants()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][0];
@@ -33,7 +33,7 @@ namespace NextLevelSeven.Test.Building
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
+        [ExpectedException(typeof(BuilderException))]
         public void FieldBuilder_Type_ThrowsOnIndex()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][0];
@@ -50,7 +50,7 @@ namespace NextLevelSeven.Test.Building
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
+        [ExpectedException(typeof(BuilderException))]
         public void FieldBuilder_Type_ThrowsOnSettingRepetitionsOtherThanOne([Values(0, 2)] int index)
         {
             var builder = Message.Build(ExampleMessages.Standard)[2][0];
@@ -128,11 +128,11 @@ namespace NextLevelSeven.Test.Building
         }
 
         [Test]
-        public void Fieldbuilder_Encoding_ContainsCorrectDelimitersWithOversizedValue()
+        public void FieldBuilder_Encoding_ContainsCorrectDelimitersWithOversizedValue()
         {
             var message = Message.Build(ExampleMessages.Standard);
             var builder = message[1][2];
-            var value = "!@#$%";
+            const string value = "!@#$%";
             builder.Value = value;
             message.Encoding.ComponentDelimiter.Should().Be('!');
             message.Encoding.RepetitionDelimiter.Should().Be('@');

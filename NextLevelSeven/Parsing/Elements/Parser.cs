@@ -110,7 +110,12 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Get or set the raw value of this element.</summary>
         public virtual string Value
         {
-            get { return (DescendantDivider == null) ? string.Empty : DescendantDivider.Value; }
+            get
+            {
+                return DescendantDivider == null 
+                    ? string.Empty 
+                    : DescendantDivider.Value;
+            }
             set { DescendantDivider.Value = value; }
         }
 
@@ -244,7 +249,7 @@ namespace NextLevelSeven.Parsing.Elements
 
         /// <summary>Copy the contents of this element to a string.</summary>
         /// <returns>Copied string.</returns>
-        public override sealed string ToString()
+        public sealed override string ToString()
         {
             return Value ?? string.Empty;
         }
@@ -255,9 +260,11 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Encoding configuration.</returns>
         private ReadOnlyEncodingConfiguration GetEncodingConfiguration()
         {
-            return (this is IMessage)
+            return this is IMessage
                 ? new ParserEncodingConfiguration((ISegment)this[1])
-                : ((Ancestor != null) ? Ancestor.EncodingConfiguration : null);
+                : (Ancestor != null
+                    ? Ancestor.EncodingConfiguration
+                    : null);
         }
 
         /// <summary>Get a string divider for this descendant element.</summary>

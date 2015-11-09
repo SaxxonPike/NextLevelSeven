@@ -31,13 +31,13 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>Returns zero. Static fields cannot be divided any further. Therefore, they have no useful delimiter.</summary>
-        public override sealed char Delimiter
+        public sealed override char Delimiter
         {
             get { return '\0'; }
         }
 
         /// <summary>If true, the element is considered to exist.</summary>
-        public override sealed bool Exists
+        public sealed override bool Exists
         {
             get { return Value != null; }
         }
@@ -50,7 +50,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Static fields cannot have repetitions; this method throws unconditionally.</summary>
         /// <param name="index">Not used.</param>
         /// <returns>Nothing.</returns>
-        protected override sealed RepetitionBuilder CreateRepetitionBuilder(int index)
+        protected sealed override RepetitionBuilder CreateRepetitionBuilder(int index)
         {
             throw new BuilderException(ErrorCode.FixedFieldsCannotBeDivided);
         }
@@ -58,7 +58,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Set the contents of this field.</summary>
         /// <param name="value">New value.</param>
         /// <returns>This StaticValueFieldBuilder.</returns>
-        public override sealed IFieldBuilder SetField(string value)
+        public sealed override IFieldBuilder SetField(string value)
         {
             Value = value;
             return this;
@@ -68,7 +68,7 @@ namespace NextLevelSeven.Building.Elements
         /// <param name="repetition"></param>
         /// <param name="value"></param>
         /// <returns></returns>
-        public override sealed IFieldBuilder SetFieldRepetition(int repetition, string value)
+        public sealed override IFieldBuilder SetFieldRepetition(int repetition, string value)
         {
             if (repetition != 1)
             {
@@ -80,7 +80,7 @@ namespace NextLevelSeven.Building.Elements
 
         /// <summary>Get descendant elements.</summary>
         /// <returns>Descendant elements.</returns>
-        protected override sealed IEnumerable<IElement> GetDescendants()
+        protected sealed override IEnumerable<IElement> GetDescendants()
         {
             return Enumerable.Empty<IElement>();
         }

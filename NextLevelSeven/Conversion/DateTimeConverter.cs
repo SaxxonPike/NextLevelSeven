@@ -68,8 +68,15 @@ namespace NextLevelSeven.Conversion
             }
 
             var year = int.Parse(input.Substring(0, 4));
-            var month = (length >= 6) ? int.Parse(input.Substring(4, 2)) : 1;
-            var day = (length >= 8) ? int.Parse(input.Substring(6, 2)) : 1;
+
+            var month = length >= 6
+                ? int.Parse(input.Substring(4, 2))
+                : 1;
+
+            var day = length >= 8
+                ? int.Parse(input.Substring(6, 2))
+                : 1;
+
             var timeZoneLength = 0;
             TimeSpan? timeZone = null;
 
@@ -85,11 +92,11 @@ namespace NextLevelSeven.Conversion
                 }
             }
 
-            var time = (length >= 10 + timeZoneLength)
+            var time = length >= 10 + timeZoneLength
                 ? (ConvertToTime(input.Substring(8, input.Length - timeZoneLength - 8)) ?? TimeSpan.Zero)
                 : TimeSpan.Zero;
 
-            return (timeZone.HasValue)
+            return timeZone.HasValue
                 ? new DateTimeOffset(year, month, day, time.Hours, time.Minutes, time.Seconds, time.Milliseconds,
                     timeZone.Value)
                 : new DateTime(year, month, day, time.Hours, time.Minutes, time.Seconds, time.Milliseconds);
@@ -106,9 +113,19 @@ namespace NextLevelSeven.Conversion
             }
 
             var length = input.Length;
-            var hour = (length >= 2) ? int.Parse(input.Substring(0, 2)) : 0;
-            var minute = (length >= 4) ? int.Parse(input.Substring(2, 2)) : 0;
-            var second = (length >= 6) ? decimal.Parse(input.Substring(4)) : 0;
+
+            var hour = length >= 2
+                ? int.Parse(input.Substring(0, 2))
+                : 0;
+
+            var minute = length >= 4
+                ? int.Parse(input.Substring(2, 2))
+                : 0;
+
+            var second = length >= 6
+                ? decimal.Parse(input.Substring(4))
+                : 0;
+
             var secondValue = (int) Math.Round(second);
             var millisecond = (int) (second - secondValue);
 

@@ -74,6 +74,7 @@
   <ItemGroup>
     <Compile Include="Core\Codec\CodecTestFixture.cs" />
     <Compile Include="Core\Codec\EncodedTypeConverterFunctionalTests.cs" />
+    <Compile Include="Core\ElementOperationsUnitTests.cs" />
     <Compile Include="Parsing\Dividers\DescendantStringDividerUnitTests.cs" />
     <Compile Include="Parsing\Dividers\DividersUnitTestFixture.cs" />
     <Compile Include="Parsing\Dividers\RootStringDividerUnitTests.cs" />

@@ -83,7 +83,7 @@ namespace NextLevelSeven.Building.Elements
                     }
                 }
 
-                return (result.Length == 0)
+                return result.Length == 0
                     ? null
                     : result.ToString();
             }

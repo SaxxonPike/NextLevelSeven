@@ -15,12 +15,9 @@ namespace NextLevelSeven.Parsing.Dividers
         /// <returns>Extracted characters.</returns>
         public static char[] CharSubstring(char[] s, int offset, int length)
         {
-            unchecked
-            {
-                var result = new char[length];
-                Array.Copy(s, offset, result, 0, length);
-                return result;
-            }
+            var result = new char[length];
+            Array.Copy(s, offset, result, 0, length);
+            return result;
         }
 
         /// <summary>Attempts to convert a string to characters, or returns null if not possible.</summary>
@@ -28,10 +25,9 @@ namespace NextLevelSeven.Parsing.Dividers
         /// <returns>Converted characters.</returns>
         public static char[] GetChars(string s)
         {
-            unchecked
-            {
-                return (s == null) ? null : s.ToCharArray();
-            }
+            return s == null
+                ? null
+                : s.ToCharArray();
         }
 
         /// <summary>Get divisions without bounds.</summary>
@@ -40,12 +36,9 @@ namespace NextLevelSeven.Parsing.Dividers
         /// <returns>Divisions.</returns>
         public static List<StringDivision> GetDivisions(char[] s, char delimiter)
         {
-            unchecked
-            {
-                return (s == null)
-                    ? new List<StringDivision>()
-                    : GetDivisions(s, delimiter, new StringDivision(0, s.Length));
-            }
+            return s == null
+                ? new List<StringDivision>()
+                : GetDivisions(s, delimiter, new StringDivision(0, s.Length));
         }
 
         /// <summary>Get divisions within the specified division bounds.</summary>
@@ -60,8 +53,13 @@ namespace NextLevelSeven.Parsing.Dividers
                 var divisions = new List<StringDivision>();
                 var length = 0;
 
-                var offset = (!parent.Valid) ? 0 : parent.Offset;
-                var inputLength = (!parent.Valid) ? s.Length : parent.Length;
+                var offset = !parent.Valid
+                    ? 0
+                    : parent.Offset;
+
+                var inputLength = !parent.Valid
+                    ? s.Length
+                    : parent.Length;
 
                 var endIndex = offset + inputLength;
                 for (var index = offset; index < endIndex; index++)

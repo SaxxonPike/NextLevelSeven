@@ -68,7 +68,7 @@ namespace NextLevelSeven.Building.Elements
                     result.Append(_value.Substring(4));
                 }
 
-                return (HL7.NullValues.Contains(result.ToString()))
+                return HL7.NullValues.Contains(result.ToString())
                     ? null
                     : result.ToString();
             }

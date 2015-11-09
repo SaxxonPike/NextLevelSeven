@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Parsing.Elements

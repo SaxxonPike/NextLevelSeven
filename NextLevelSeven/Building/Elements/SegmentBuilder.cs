@@ -54,7 +54,12 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get the number of fields in this segment, including fields with no content.</summary>
         public override int ValueCount
         {
-            get { return (_fields.Count > 0) ? (_fields.MaxKey + 1) : 0; }
+            get 
+            { 
+                return _fields.Count > 0
+                    ? _fields.MaxKey + 1
+                    : 0; 
+            }
         }
 
         /// <summary>Get or set the three-letter type field of this segment.</summary>
@@ -111,7 +116,7 @@ namespace NextLevelSeven.Building.Elements
                     }
                 }
 
-                return (result.Length == 0)
+                return result.Length == 0
                     ? null
                     : result.ToString();
             }
@@ -449,7 +454,9 @@ namespace NextLevelSeven.Building.Elements
                 return new DelimiterFieldBuilder(this, index);
             }
 
-            return (index == 2) ? new EncodingFieldBuilder(this, index) : new FieldBuilder(this, index);
+            return index == 2
+                ? new EncodingFieldBuilder(this, index)
+                : new FieldBuilder(this, index);
         }
 
         /// <summary>Method that is called when a descendant type field has changed.</summary>
