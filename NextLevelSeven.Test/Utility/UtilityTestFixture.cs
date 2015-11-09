@@ -1,8 +1,8 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace NextLevelSeven.Test.Utility
 {
-    [TestClass]
     public class UtilityTestFixture : BaseTestFixture
     {
     }

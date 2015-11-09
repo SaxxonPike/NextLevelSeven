@@ -1,8 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace NextLevelSeven.Test.Parsing
 {
-    [TestClass]
+    [TestFixture]
     public class ParsingTestFixture : BaseTestFixture
     {
     }

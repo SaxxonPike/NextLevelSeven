@@ -1,55 +1,56 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using NextLevelSeven.Core;
+﻿using NextLevelSeven.Core;
 using NextLevelSeven.Test.Testing;
+using NUnit.Framework;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace NextLevelSeven.Test.Parsing
 {
-    [TestClass]
+    [TestFixture]
     public class ParserBaseFunctionalTests : ParsingTestFixture
     {
-        [TestMethod]
+        [Test]
         public void Parser_CanFormat()
         {
-            var param = Mock.String();
+            var param = MockFactory.String();
             const string message = "{0}|{1}";
             Assert.AreEqual(Message.ParseFormat(message, ExampleMessages.Minimum, param).Value,
                 string.Format(message, ExampleMessages.Minimum, param));
         }
 
-        [TestMethod]
+        [Test]
         public void Parser_DeleteThrowsIfInvalidIndex()
         {
-            var message = Message.Parse(Mock.Message())[2][1];
+            var message = Message.Parse(MockFactory.Message())[2][1];
             AssertAction.Throws<ElementException>(() => message.Delete(-1));
         }
 
-        [TestMethod]
+        [Test]
         public void Parser_MoveThrowsIfInvalidIndex()
         {
-            var message = Message.Parse(Mock.Message())[2][1];
+            var message = Message.Parse(MockFactory.Message())[2][1];
             AssertAction.Throws<ElementException>(() => message.Move(2, -1));
             AssertAction.Throws<ElementException>(() => message.Move(-1, 2));
         }
 
-        [TestMethod]
+        [Test]
         public void Parser_InsertThrowsIfInvalidIndex()
         {
-            var message = Message.Parse(Mock.Message())[2][1];
-            AssertAction.Throws<ElementException>(() => message.Insert(-1, Mock.String())); 
+            var message = Message.Parse(MockFactory.Message())[2][1];
+            AssertAction.Throws<ElementException>(() => message.Insert(-1, MockFactory.String())); 
         }
 
-        [TestMethod]
+        [Test]
         public void Parser_InsertElementThrowsIfInvalidIndex()
         {
-            var message = Message.Parse(Mock.Message())[2][1];
+            var message = Message.Parse(MockFactory.Message())[2][1];
             var element = message[1];
             AssertAction.Throws<ElementException>(() => message.Insert(-1, element));
         }
 
-        [TestMethod]
+        [Test]
         public void Parser_GetsNextIndex()
         {
-            var message = Message.Parse(Mock.Message());
+            var message = Message.Parse(MockFactory.Message());
             Assert.AreEqual(message.ValueCount + 1, message.NextIndex);
         }
     }

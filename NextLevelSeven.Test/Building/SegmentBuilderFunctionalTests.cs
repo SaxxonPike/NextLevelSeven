@@ -1,404 +1,402 @@
 ﻿using System.Configuration;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using FluentAssertions;
+using NextLevelSeven.Building;
 using NextLevelSeven.Core;
 using NextLevelSeven.Test.Testing;
+using NUnit.Framework;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace NextLevelSeven.Test.Building
 {
-    [TestClass]
+    [TestFixture]
     public sealed class SegmentBuilderFunctionalTests : BuildingTestFixture
     {
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_CanBuildSubcomponentsViaParams()
         {
-            var builder = Message.Build(Mock.Message());
+            var builder = Message.Build(MockFactory.Message());
             var segment = builder[builder.NextIndex];
-            var val0 = Mock.StringCaps(3);
-            var val1 = Mock.String();
-            var val2 = Mock.String();
+            var val0 = MockFactory.StringCaps(3);
+            var val1 = MockFactory.String();
+            var val2 = MockFactory.String();
             segment.Type = val0;
             segment.SetSubcomponents(1, 1, 1, val1, val2);
-            Assert.AreEqual(string.Format("{0}|{1}&{2}", val0, val1, val2), segment.Value);
+            segment.Value.Should().Be(string.Format("{0}|{1}&{2}", val0, val1, val2));
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_CanBuildComponentsViaParams()
         {
-            var builder = Message.Build(Mock.Message());
+            var builder = Message.Build(MockFactory.Message());
             var segment = builder[builder.NextIndex];
-            var val0 = Mock.StringCaps(3);
-            var val1 = Mock.String();
-            var val2 = Mock.String();
+            var val0 = MockFactory.StringCaps(3);
+            var val1 = MockFactory.String();
+            var val2 = MockFactory.String();
             segment.Type = val0;
             segment.SetComponents(1, 1, 2, val1, val2);
-            Assert.AreEqual(string.Format("{0}|^{1}^{2}", val0, val1, val2), segment.Value);
+            segment.Value.Should().Be(string.Format("{0}|^{1}^{2}", val0, val1, val2));
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_CanBuildRepetitionsViaParams()
         {
-            var builder = Message.Build(Mock.Message());
+            var builder = Message.Build(MockFactory.Message());
             var segment = builder[builder.NextIndex];
-            var val0 = Mock.StringCaps(3);
-            var val1 = Mock.String();
-            var val2 = Mock.String();
+            var val0 = MockFactory.StringCaps(3);
+            var val1 = MockFactory.String();
+            var val2 = MockFactory.String();
             segment.Type = val0;
             segment.SetFieldRepetitions(1, 2, val1, val2);
-            Assert.AreEqual(string.Format("{0}|~{1}~{2}", val0, val1, val2), segment.Value);
+            segment.Value.Should().Be(string.Format("{0}|~{1}~{2}", val0, val1, val2));
         }
 
-        [TestMethod]
-        public void SegmentBuilder_ThrowsOnNegativeIndexMove()
+        [Test]
+        [TestCase(3, -1)]
+        [TestCase(-1, 3)]
+        [TestCase(-2, -4)]
+        [ExpectedException(typeof(BuilderException))]
+        public void SegmentBuilder_ThrowsOnNegativeIndexMove(int from, int to)
         {
-            var segment = Message.Build(Mock.Message())[1];
-            AssertAction.Throws<ElementException>(() => segment.Move(3, -1));
-            AssertAction.Throws<ElementException>(() => segment.Move(-1, 3));
-            AssertAction.Throws<ElementException>(() => segment.Move(-1, -2));
+            var segment = Message.Build(MockFactory.Message())[1];
+            segment.Move(from, to);
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_HasCorrectNextIndex()
         {
-            var message = Message.Build(Mock.Message());
+            var message = Message.Build(MockFactory.Message());
             var segment = message[1];
-            Assert.AreEqual(segment.Fields.Last().Index + 1, segment.NextIndex);
+            segment.NextIndex.Should().Be(segment.Fields.Last().Index + 1);
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_HasNoValueWhenSettingEmptyValues()
         {
-            var message = Message.Build(Mock.Message());
+            var message = Message.Build(MockFactory.Message());
             var builder = message[message.NextIndex];
             builder.Values = Enumerable.Empty<string>();
-            Assert.IsNull(builder.Value);
+            builder.Value.Should().BeNull();
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_NewSegmentHasNullValue()
         {
-            var message = Message.Build(Mock.Message());
+            var message = Message.Build(MockFactory.Message());
             var builder = message[message.NextIndex];
-            Assert.IsNull(builder.Value);
+            builder.Value.Should().BeNull();
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_NewSegmentHasNoValues()
         {
-            var message = Message.Build(Mock.Message());
+            var message = Message.Build(MockFactory.Message());
             var builder = message[message.NextIndex];
-            Assert.AreEqual(0, builder.Values.Count());
+            builder.Values.Should().BeEmpty();
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_HasDelimiter()
         {
-            var builder = Message.Build(Mock.Message());
-            Assert.AreEqual('|', builder[1].Delimiter);
+            var builder = Message.Build(MockFactory.Message());
+            builder[1].Delimiter.Should().Be('|');
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_CanMoveFields()
         {
             var builder = Message.Build(ExampleMessages.Standard);
-            var val0 = Mock.String();
+            var val0 = MockFactory.String();
             builder[1][3].Value = val0;
             builder[1][3].Move(4);
-            Assert.AreEqual(val0, builder[1][4].Value);
+            builder[1][4].Value.Should().Be(val0);
         }
 
-        [TestMethod]
-        public void SegmentBuilder_Throws_WhenDataIsTooShort()
+        [Test]
+        [TestCase("")]
+        [TestCase("M")]
+        [TestCase("MS")]
+        [ExpectedException(typeof(BuilderException))]
+        public void SegmentBuilder_Throws_WhenDataIsTooShort(string value)
         {
             var builder = Message.Build(ExampleMessages.Standard)[1];
-            AssertAction.Throws<ElementException>(() => builder.Value = "M");
+            builder.Value = value;
         }
 
-        [TestMethod]
+        [Test]
+        [ExpectedException(typeof(BuilderException))]
         public void SegmentBuilder_Throws_WhenMshDataIsNull()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1];
-            AssertAction.Throws<ElementException>(() => builder.Value = null);
+            builder.Value = null;
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_CanNullifyNonMshSegment()
         {
             var builder = Message.Build(ExampleMessages.Standard)[2];
             builder.Value = null;
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_MapsBuilderAncestor()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1];
-            Assert.AreSame(builder, builder.Ancestor[1]);
+            builder.Should().BeSameAs(builder.Ancestor[1]);
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_MapsGenericBuilderAncestor()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1] as ISegment;
-            Assert.AreSame(builder, builder.Ancestor[1]);
+            builder.Should().BeSameAs(builder.Ancestor[1]);
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_MapsGenericAncestor()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1] as IElement;
-            Assert.AreSame(builder, builder.Ancestor[1]);
+            builder.Should().BeSameAs(builder.Ancestor[1]);
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_CanGetField()
         {
             var builder = Message.Build(ExampleMessages.Variety);
-            Assert.IsNotNull(builder[1][3].Value);
-            Assert.AreEqual(builder[1][3].Value, builder.Segment(1).Field(3).Value, "Fields returned differ.");
+            builder[1][3].Value.Should().Be(builder.Segment(1).Field(3).Value)
+                .And.NotBeNull();
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_CanGetFields()
         {
             var builder = Message.Build(ExampleMessages.Variety)[1];
             // +1 is added because this is an MSH segment
-            Assert.AreEqual(builder.Value.Split('|').Length + 1, builder.Fields.Count());
+            builder.Fields.Count().Should().Be(builder.Value.Split('|').Length + 1);
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_CanBeCloned()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1];
             var clone = builder.Clone();
-            Assert.AreNotSame(builder, clone, "Builder and its clone must not refer to the same object.");
-            Assert.AreEqual(builder.ToString(), clone.ToString(), "Clone data doesn't match source data.");
+            builder.Should().NotBeSameAs(clone);
+            builder.ToString().Should().Be(clone.ToString());
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_CanBeClonedGenerically()
         {
             IElement builder = Message.Build(ExampleMessages.Standard)[1];
             var clone = builder.Clone();
-            Assert.AreNotSame(builder, clone, "Builder and its clone must not refer to the same object.");
-            Assert.AreEqual(builder.ToString(), clone.ToString(), "Clone data doesn't match source data.");
+            builder.Should().NotBeSameAs(clone);
+            builder.ToString().Should().Be(clone.ToString());
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_CanGetValue()
         {
             var builder = Message.Build("MSH|^~\\&\rPID|1234")[1];
-            Assert.AreEqual(builder.Value, "MSH|^~\\&");
+            builder.Value.Should().Be("MSH|^~\\&");
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_CanGetValues()
         {
             var builder = Message.Build("MSH|^~\\&")[1];
-            AssertEnumerable.AreEqual(builder.Values, new[] {"MSH", "|", "^~\\&"});
+            builder.Values.Should().Equal("MSH", "|", "^~\\&");
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_CanBuildFields_Individually()
         {
             var builder = Message.Build()[1];
-            var field3 = Mock.String();
-            var field5 = Mock.String();
+            var field3 = MockFactory.String();
+            var field5 = MockFactory.String();
 
             builder
                 .SetField(3, field3)
                 .SetField(5, field5);
-            Assert.AreEqual(string.Format("MSH|^~\\&|{0}||{1}", field3, field5), builder.Value,
-                @"Unexpected result.");
+            builder.Value.Should().Be(string.Format("MSH|^~\\&|{0}||{1}", field3, field5));
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_CanBuildFields_OutOfOrder()
         {
             var builder = Message.Build()[1];
-            var field3 = Mock.String();
-            var field5 = Mock.String();
+            var field3 = MockFactory.String();
+            var field5 = MockFactory.String();
 
             builder
                 .SetField(5, field5)
                 .SetField(3, field3);
-            Assert.AreEqual(string.Format("MSH|^~\\&|{0}||{1}", field3, field5), builder.Value,
-                @"Unexpected result.");
+            builder.Value.Should().Be(string.Format("MSH|^~\\&|{0}||{1}", field3, field5));
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_CanBuildFields_Sequentially()
         {
             var builder = Message.Build()[1];
-            var field3 = Mock.String();
-            var field5 = Mock.String();
+            var field3 = MockFactory.String();
+            var field5 = MockFactory.String();
 
             builder
                 .SetFields(3, field3, null, field5);
-            Assert.AreEqual(string.Format("MSH|^~\\&|{0}||{1}", field3, field5), builder.Value,
-                @"Unexpected result.");
+            builder.Value.Should().Be(string.Format("MSH|^~\\&|{0}||{1}", field3, field5));
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_CanBuildRepetitions_Individually()
         {
             var builder = Message.Build()[1];
-            var repetition1 = Mock.String();
-            var repetition2 = Mock.String();
+            var repetition1 = MockFactory.String();
+            var repetition2 = MockFactory.String();
 
             builder
                 .SetFieldRepetition(3, 1, repetition1)
                 .SetFieldRepetition(3, 2, repetition2);
-            Assert.AreEqual(string.Format("MSH|^~\\&|{0}~{1}", repetition1, repetition2), builder.Value,
-                @"Unexpected result.");
+            builder.Value.Should().Be(string.Format("MSH|^~\\&|{0}~{1}", repetition1, repetition2));
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_CanBuildRepetitions_OutOfOrder()
         {
             var builder = Message.Build()[1];
-            var repetition1 = Mock.String();
-            var repetition2 = Mock.String();
+            var repetition1 = MockFactory.String();
+            var repetition2 = MockFactory.String();
 
             builder
                 .SetFieldRepetition(3, 2, repetition2)
                 .SetFieldRepetition(3, 1, repetition1);
-            Assert.AreEqual(string.Format("MSH|^~\\&|{0}~{1}", repetition1, repetition2), builder.Value,
-                @"Unexpected result.");
+            builder.Value.Should().Be(string.Format("MSH|^~\\&|{0}~{1}", repetition1, repetition2));
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_CanBuildRepetitions_Sequentially()
         {
             var builder = Message.Build()[1];
-            var repetition1 = Mock.String();
-            var repetition2 = Mock.String();
+            var repetition1 = MockFactory.String();
+            var repetition2 = MockFactory.String();
 
             builder
                 .SetFieldRepetitions(3, repetition1, repetition2);
-            Assert.AreEqual(string.Format("MSH|^~\\&|{0}~{1}", repetition1, repetition2), builder.Value,
-                @"Unexpected result.");
+            builder.Value.Should().Be(string.Format("MSH|^~\\&|{0}~{1}", repetition1, repetition2));
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_CanBuildComponents_Individually()
         {
             var builder = Message.Build()[1];
-            var component1 = Mock.String();
-            var component2 = Mock.String();
+            var component1 = MockFactory.String();
+            var component2 = MockFactory.String();
 
             builder
                 .SetComponent(3, 1, 1, component1)
                 .SetComponent(3, 1, 2, component2);
-            Assert.AreEqual(string.Format("MSH|^~\\&|{0}^{1}", component1, component2), builder.Value,
-                @"Unexpected result.");
+            builder.Value.Should().Be(string.Format("MSH|^~\\&|{0}^{1}", component1, component2));
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_CanBuildComponents_OutOfOrder()
         {
             var builder = Message.Build()[1];
-            var component1 = Mock.String();
-            var component2 = Mock.String();
+            var component1 = MockFactory.String();
+            var component2 = MockFactory.String();
 
             builder
                 .SetComponent(3, 1, 2, component2)
                 .SetComponent(3, 1, 1, component1);
-            Assert.AreEqual(string.Format("MSH|^~\\&|{0}^{1}", component1, component2), builder.Value,
-                @"Unexpected result.");
+            builder.Value.Should().Be(string.Format("MSH|^~\\&|{0}^{1}", component1, component2));
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_CanBuildComponents_Sequentially()
         {
             var builder = Message.Build()[1];
-            var component1 = Mock.String();
-            var component2 = Mock.String();
+            var component1 = MockFactory.String();
+            var component2 = MockFactory.String();
 
             builder
                 .SetComponents(3, 1, component1, component2);
-            Assert.AreEqual(string.Format("MSH|^~\\&|{0}^{1}", component1, component2), builder.Value,
-                @"Unexpected result.");
+            builder.Value.Should().Be(string.Format("MSH|^~\\&|{0}^{1}", component1, component2));
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_CanBuildSubcomponents_Individually()
         {
             var builder = Message.Build()[1];
-            var subcomponent1 = Mock.String();
-            var subcomponent2 = Mock.String();
+            var subcomponent1 = MockFactory.String();
+            var subcomponent2 = MockFactory.String();
 
             builder
                 .SetSubcomponent(3, 1, 1, 1, subcomponent1)
                 .SetSubcomponent(3, 1, 1, 2, subcomponent2);
-            Assert.AreEqual(string.Format("MSH|^~\\&|{0}&{1}", subcomponent1, subcomponent2), builder.Value,
-                @"Unexpected result.");
+            builder.Value.Should().Be(string.Format("MSH|^~\\&|{0}&{1}", subcomponent1, subcomponent2));
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_CanBuildSubcomponents_OutOfOrder()
         {
             var builder = Message.Build()[1];
-            var subcomponent1 = Mock.String();
-            var subcomponent2 = Mock.String();
+            var subcomponent1 = MockFactory.String();
+            var subcomponent2 = MockFactory.String();
 
             builder
                 .SetSubcomponent(3, 1, 1, 2, subcomponent2)
                 .SetSubcomponent(3, 1, 1, 1, subcomponent1);
-            Assert.AreEqual(string.Format("MSH|^~\\&|{0}&{1}", subcomponent1, subcomponent2), builder.Value,
-                @"Unexpected result.");
+            builder.Value.Should().Be(string.Format("MSH|^~\\&|{0}&{1}", subcomponent1, subcomponent2));
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_CanBuildSubcomponents_Sequentially()
         {
             var builder = Message.Build()[1];
-            var subcomponent1 = Mock.String();
-            var subcomponent2 = Mock.String();
+            var subcomponent1 = MockFactory.String();
+            var subcomponent2 = MockFactory.String();
 
             builder
                 .SetSubcomponents(3, 1, 1, 1, subcomponent1, subcomponent2);
-            Assert.AreEqual(string.Format("MSH|^~\\&|{0}&{1}", subcomponent1, subcomponent2), builder.Value,
-                @"Unexpected result.");
+            builder.Value.Should().Be(string.Format("MSH|^~\\&|{0}&{1}", subcomponent1, subcomponent2));
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_ChangesEncodingCharactersIfMessageChanges()
         {
             var messageBuilder = Message.Build();
             var builder = messageBuilder[1];
-            Assert.AreEqual(builder.Encoding.FieldDelimiter, '|');
+            builder.Encoding.FieldDelimiter.Should().Be('|');
             messageBuilder.Encoding.FieldDelimiter = ':';
-            Assert.AreEqual(builder.Encoding.FieldDelimiter, ':');
+            builder.Encoding.FieldDelimiter.Should().Be(':');
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_ChangesEncodingCharactersIfMshSegmentChanges()
         {
             var messageBuilder = Message.Build();
             var builder = messageBuilder[1];
-            Assert.AreEqual(builder.Encoding.FieldDelimiter, '|');
+            builder.Encoding.FieldDelimiter.Should().Be('|');
             builder.SetField(1, ":");
-            Assert.AreEqual(builder.Encoding.FieldDelimiter, ':');
+            builder.Encoding.FieldDelimiter.Should().Be(':');
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_CanGetType()
         {
             var messageBuilder = Message.Build();
             var builder = messageBuilder[2];
-            var type = Mock.StringCaps(3);
+            var type = MockFactory.StringCaps(3);
             builder[0].Value = type;
-            Assert.AreEqual(builder.Type, type);
+            builder.Type.Should().Be(type);
         }
 
-        [TestMethod]
+        [Test]
         public void SegmentBuilder_CanSetType()
         {
             var messageBuilder = Message.Build();
             var builder = messageBuilder[2];
-            var type = Mock.StringCaps(3);
+            var type = MockFactory.StringCaps(3);
             builder.Type = type;
-            Assert.AreEqual(builder[0].Value, type);
+            builder[0].Value.Should().Be(type);
         }
     }
 }

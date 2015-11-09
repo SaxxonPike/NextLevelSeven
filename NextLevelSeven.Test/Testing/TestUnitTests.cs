@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Diagnostics;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace NextLevelSeven.Test.Testing
 {
-    [TestClass]
+    [TestFixture]
     public class TestUnitTests
     {
-        [TestMethod]
+        [Test]
         public void Measure_ExecutionTime_InvokesAction()
         {
             var invoked = false;
@@ -16,7 +17,7 @@ namespace NextLevelSeven.Test.Testing
             Assert.IsTrue(invoked);
         }
 
-        [TestMethod]
+        [Test]
         public void Measure_ExecutionTime_InvokesActionWithIterations()
         {
             var invokedTimes = 0;
@@ -25,10 +26,10 @@ namespace NextLevelSeven.Test.Testing
             Assert.AreEqual(5, invokedTimes);
         }
 
-        [TestMethod]
+        [Test]
         public void Measure_ExecutionTime_InvokesActionWithIterationsAndData()
         {
-            var data = Mock.String();
+            var data = MockFactory.String();
             var invokedTimes = 0;
             Action<string> action = d =>
             {

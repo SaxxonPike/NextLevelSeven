@@ -1,10 +1,12 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Test.Testing;
+using NUnit.Framework;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace NextLevelSeven.Test.Diagnostics
 {
-    [TestClass]
+    [TestFixture]
     public class ErrorMessageUnitTests : DiagnosticsTestFixture
     {
         [TestInitialize]
@@ -19,14 +21,14 @@ namespace NextLevelSeven.Test.Diagnostics
             ErrorMessages.SetLanguage();
         }
 
-        [TestMethod]
+        [Test]
         public void ErrorMessages_ReturnsMessagesWithErrorCodes()
         {
             var message = ErrorMessages.Get(ErrorCode.DoNotTranslateThisMessageForTestingPurposes);
             Assert.IsTrue(message.EndsWith("(NL7-1)"), @"Error code is not properly returned in the error string.");
         }
 
-        [TestMethod]
+        [Test]
         public void ErrorMessages_FallsBack_WhenUntranslatedError()
         {
             var message = ErrorMessages.Get(ErrorCode.DoNotTranslateThisMessageForTestingPurposes);
@@ -37,17 +39,17 @@ namespace NextLevelSeven.Test.Diagnostics
                 @"German and English returned the same error string.");
         }
 
-        [TestMethod]
+        [Test]
         public void ErrorMessages_SetsLanguageToDefault_WhenPassingGarbage()
         {
             ErrorMessages.SetLanguage("de");
             var message = ErrorMessages.Get(ErrorCode.Unspecified);
-            ErrorMessages.SetLanguage(Mock.String());
+            ErrorMessages.SetLanguage(MockFactory.String());
             Assert.AreNotEqual(message, ErrorMessages.Get(ErrorCode.Unspecified),
                 @"German and English returned the same error string.");
         }
 
-        [TestMethod]
+        [Test]
         public void ErrorMessages_SetsLanguageToDefault_WhenPassingEmpty()
         {
             ErrorMessages.SetLanguage("de");
@@ -57,7 +59,7 @@ namespace NextLevelSeven.Test.Diagnostics
                 @"German and English returned the same error string.");
         }
 
-        [TestMethod]
+        [Test]
         public void ErrorMessages_SetsLanguageToDefault_WhenPassingNull()
         {
             ErrorMessages.SetLanguage("de");
@@ -67,7 +69,7 @@ namespace NextLevelSeven.Test.Diagnostics
                 @"German and English returned the same error string.");
         }
 
-        [TestMethod]
+        [Test]
         public void ErrorMessages_InvalidCodeReturnsGenericMessage()
         {
             var message = ErrorMessages.Get((ErrorCode) int.MaxValue);

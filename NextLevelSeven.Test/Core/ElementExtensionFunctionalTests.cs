@@ -1,81 +1,82 @@
 ﻿using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
 using NextLevelSeven.Test.Testing;
+using NUnit.Framework;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace NextLevelSeven.Test.Core
 {
-    [TestClass]
+    [TestFixture]
     public class ElementExtensionFunctionalTests : CoreTestFixture
     {
-        [TestMethod]
+        [Test]
         public void ElementExtensions_SimplifiesSegment()
         {
-            var message = Message.Parse(Mock.Message());
+            var message = Message.Parse(MockFactory.Message());
             var segment = message.Segment(1);
             var fieldCount = segment.ValueCount;
             segment.Field(3).Nullify();
             Assert.AreEqual(fieldCount - 1, segment.Simplified().Count());
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_ThrowsWhenInsertingWithoutAncestor()
         {
             var message = Message.Parse();
             var segment = message[1].Clone();
-            AssertAction.Throws<ElementException>(() => segment.Insert(Mock.String()));
+            AssertAction.Throws<ElementException>(() => segment.Insert(MockFactory.String()));
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_ThrowsWhenInsertingElementWithoutHavingAncestor()
         {
-            var message = Message.Parse(Mock.Message());
+            var message = Message.Parse(MockFactory.Message());
             var segment = message[1].Clone();
             AssertAction.Throws<ElementException>(() => segment.Insert(message[2]));
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_ThrowsWhenNullifyingMessage()
         {
-            var message = Message.Parse(Mock.Message());
+            var message = Message.Parse(MockFactory.Message());
             AssertAction.Throws<ElementException>(message.Nullify);
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_NullifiesMshSegment()
         {
-            var message = Message.Parse(Mock.Message());
+            var message = Message.Parse(MockFactory.Message());
             message[1].Nullify();
             Assert.AreEqual(3, message[1].ValueCount);
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_NullifiesSegment()
         {
-            var message = Message.Parse(Mock.Message());
+            var message = Message.Parse(MockFactory.Message());
             message[2].Nullify();
             Assert.AreEqual(1, message[2].ValueCount);
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_FieldDelimiter_HasNoSignificantDescendants()
         {
-            var message = Message.Parse(Mock.Message());
+            var message = Message.Parse(MockFactory.Message());
             Assert.IsFalse(message[1][1].HasSignificantDescendants());
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_EncodingCharacterField_HasNoSignificantDescendants()
         {
-            var message = Message.Parse(Mock.Message());
+            var message = Message.Parse(MockFactory.Message());
             Assert.IsFalse(message[1][2].HasSignificantDescendants());
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_Element_AddsOtherElements()
         {
-            var val0 = Mock.String();
-            var val1 = Mock.String();
+            var val0 = MockFactory.String();
+            var val1 = MockFactory.String();
             var message0 = Message.Build(ExampleMessages.Standard);
             var message1 = message0.Clone();
             message0[1][3].Value = val0;
@@ -85,35 +86,35 @@ namespace NextLevelSeven.Test.Core
             Assert.AreEqual(message0[message1.ValueCount + 1].Value, message1[3].Value);
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_Element_ThrowsWhenEncodingFieldIsMoved()
         {
             var message = Message.Build(ExampleMessages.Standard);
             AssertAction.Throws<ElementException>(() => message[1][2].Move(1));
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_Element_ThrowsWhenFieldDelimiterIsMoved()
         {
             var message = Message.Build(ExampleMessages.Standard);
             AssertAction.Throws<ElementException>(() => message[1][1].Move(2));
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_Element_ThrowsWhenSegmentTypeIsMoved()
         {
             var message = Message.Build(ExampleMessages.Standard);
             AssertAction.Throws<ElementException>(() => message[2][0].Move(2));
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_Element_DoesNotMoveWhenMovedToSameIndex()
         {
             var message = Message.Build(ExampleMessages.Standard);
             message[2].Move(2);
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_Builder_CanBeDeletedFromAncestor()
         {
             var message = Message.Build(ExampleMessages.Standard);
@@ -122,34 +123,34 @@ namespace NextLevelSeven.Test.Core
             Assert.AreEqual(message[3].Value, newMessage[2].Value);
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_Message_CannotBeDeletedFromAncestor()
         {
             var message = Message.Parse(ExampleMessages.Standard);
             AssertAction.Throws<ElementException>(message.Delete);
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_Message_CannotBeMoved()
         {
             var message = Message.Parse(ExampleMessages.Standard);
             AssertAction.Throws<ElementException>(() => message.Move(2));
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_Element_ThrowsWhenMoveIndexIsBelowMinimum()
         {
             var message = Message.Parse(ExampleMessages.Standard);
             AssertAction.Throws<ElementException>(() => message[2].Move(-1));
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_Element_DoesNotThrowWhenDeletingZeroElements()
         {
             AssertAction.DoesNotThrow(Enumerable.Empty<IElement>().Delete);
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_Element_ThrowsWhenDeletingElementsFromDifferentAncestors()
         {
             var message0 = Message.Parse(ExampleMessages.Standard);
@@ -157,7 +158,7 @@ namespace NextLevelSeven.Test.Core
             AssertAction.Throws<ElementException>(() => new[] {message0[2], message1[2]}.Delete());
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_Parser_CanBeDeletedFromAncestor()
         {
             var message = Message.Parse(ExampleMessages.Standard);
@@ -166,7 +167,7 @@ namespace NextLevelSeven.Test.Core
             Assert.AreEqual(message[3].Value, newMessage[2].Value);
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_CanCreateNewEmptyMessageFromZeroSegments()
         {
             var message = Message.Build(ExampleMessages.Standard);
@@ -175,7 +176,7 @@ namespace NextLevelSeven.Test.Core
             Assert.AreEqual("MSH", message[1].Type);
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_Parser_CanCreateNewMessageFromSegments()
         {
             var message = Message.Build(ExampleMessages.Standard);
@@ -185,7 +186,7 @@ namespace NextLevelSeven.Test.Core
             Assert.AreEqual(message.Segments.OfType("PID").First().Value, parser[2].Value);
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_Parser_CanGetMultipleSegmentTypes()
         {
             var message = Message.Build(ExampleMessages.Standard);
@@ -193,7 +194,7 @@ namespace NextLevelSeven.Test.Core
             Assert.AreEqual(3, segments.Count());
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_Parser_CanGetMultipleSegmentTypesAsEnumerable()
         {
             var message = Message.Build(ExampleMessages.Standard);
@@ -201,7 +202,7 @@ namespace NextLevelSeven.Test.Core
             Assert.AreEqual(3, segments.Count());
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_Parser_CanGetSegment()
         {
             var parser = Message.Parse(ExampleMessages.Variety);
@@ -209,7 +210,7 @@ namespace NextLevelSeven.Test.Core
             Assert.AreEqual(parser[1].Value, parser.Segment(1).Value, "Segments returned differ.");
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_Parser_CanGetField()
         {
             var parser = Message.Parse(ExampleMessages.Variety);
@@ -217,7 +218,7 @@ namespace NextLevelSeven.Test.Core
             Assert.AreEqual(parser[1][3].Value, parser.Segment(1).Field(3).Value, "Fields returned differ.");
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_Parser_CanGetRepetition()
         {
             var parser = Message.Parse(ExampleMessages.Variety);
@@ -226,7 +227,7 @@ namespace NextLevelSeven.Test.Core
                 "Repetitions returned differ.");
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_Parser_CanGetComponent()
         {
             var parser = Message.Parse(ExampleMessages.Variety);
@@ -235,7 +236,7 @@ namespace NextLevelSeven.Test.Core
                 "Components returned differ.");
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_Parser_CanGetComponent_ThroughField()
         {
             var parser = Message.Parse(ExampleMessages.Variety);
@@ -244,7 +245,7 @@ namespace NextLevelSeven.Test.Core
                 "Components returned differ.");
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_Parser_CanGetSubcomponent()
         {
             var parser = Message.Parse(ExampleMessages.Variety);
@@ -264,13 +265,13 @@ namespace NextLevelSeven.Test.Core
             Assert.AreEqual(modifiedElement[3].Value, element[4].Value);
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_Builder_CanDelete()
         {
             ElementExtensions_CanDelete(Message.Build(ExampleMessages.Standard));
         }
 
-        [TestMethod]
+        [Test]
         public void ElementExtensions_Parser_CanDelete()
         {
             ElementExtensions_CanDelete(Message.Parse(ExampleMessages.Standard));

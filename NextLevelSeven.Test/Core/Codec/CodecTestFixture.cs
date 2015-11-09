@@ -1,8 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace NextLevelSeven.Test.Core.Codec
 {
-    [TestClass]
+    [TestFixture]
     public class CodecTestFixture : CoreTestFixture
     {
     }

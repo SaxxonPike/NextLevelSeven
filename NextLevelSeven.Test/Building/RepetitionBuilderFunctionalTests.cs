@@ -1,194 +1,188 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FluentAssertions;
 using NextLevelSeven.Core;
 using NextLevelSeven.Test.Testing;
+using NUnit.Framework;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace NextLevelSeven.Test.Building
 {
-    [TestClass]
+    [TestFixture]
     public sealed class RepetitionBuilderFunctionalTests : BuildingTestFixture
     {
-        [TestMethod]
+        [Test]
         public void RepetitionBuilder_CanSetAllSubcomponents()
         {
             var builder = Message.Build()[1][3][1];
-            var val0 = Mock.String();
-            var val1 = Mock.String();
-            var val2 = Mock.String();
+            var val0 = MockFactory.String();
+            var val1 = MockFactory.String();
+            var val2 = MockFactory.String();
             builder.SetSubcomponents(1, 1, val0, val1, val2);
-            Assert.AreEqual(string.Join("&", val0, val1, val2), builder.Value);
+            builder.Value.Should().Be(string.Join("&", val0, val1, val2));
         }
 
-        [TestMethod]
+        [Test]
         public void RepetitionBuilder_CanSetAllComponents()
         {
             var builder = Message.Build()[1][3][1];
-            var val0 = Mock.String();
-            var val1 = Mock.String();
-            var val2 = Mock.String();
+            var val0 = MockFactory.String();
+            var val1 = MockFactory.String();
+            var val2 = MockFactory.String();
             builder.SetComponents(1, val0, val1, val2);
-            Assert.AreEqual(string.Join("^", val0, val1, val2), builder.Value);
+            builder.Value.Should().Be(string.Join("^", val0, val1, val2));
         }
 
-        [TestMethod]
+        [Test]
         public void RepetitionBuilder_MapsBuilderAncestor()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][3][1];
-            Assert.AreSame(builder, builder.Ancestor[1]);
+            builder.Ancestor[1].Should().BeSameAs(builder);
         }
 
-        [TestMethod]
+        [Test]
         public void RepetitionBuilder_MapsGenericBuilderAncestor()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][3][1] as IRepetition;
-            Assert.AreSame(builder, builder.Ancestor[1]);
+            builder.Ancestor[1].Should().BeSameAs(builder);
         }
 
-        [TestMethod]
+        [Test]
         public void RepetitionBuilder_MapsGenericAncestor()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][3][1] as IElement;
-            Assert.AreSame(builder, builder.Ancestor[1]);
+            builder.Ancestor[1].Should().BeSameAs(builder);
         }
 
-        [TestMethod]
+        [Test]
         public void RepetitionBuilder_CanGetComponent_ThroughField()
         {
             var builder = Message.Build(ExampleMessages.Variety);
-            Assert.IsNotNull(builder[1][3][1][2].Value);
-            Assert.AreEqual(builder[1][3][1][2].Value, builder.Segment(1).Field(3).Component(2).Value,
-                "Components returned differ.");
+            builder[1][3][1][2].Value.Should().Be(builder.Segment(1).Field(3).Component(2).Value)
+                .And.NotBeNull();
         }
 
-        [TestMethod]
+        [Test]
         public void RepetitionBuilder_CanGetComponent()
         {
             var builder = Message.Build(ExampleMessages.Variety);
-            Assert.IsNotNull(builder[1][3][2][2].Value);
-            Assert.AreEqual(builder[1][3][2][2].Value, builder.Segment(1).Field(3).Repetition(2).Component(2).Value,
-                "Components returned differ.");
+            builder[1][3][2][2].Value.Should().Be(builder.Segment(1).Field(3).Repetition(2).Component(2).Value)
+                .And.NotBeNull();
         }
 
-        [TestMethod]
+        [Test]
         public void RepetitionBuilder_CanGetValue()
         {
-            var val0 = Mock.String();
-            var val1 = Mock.String();
+            var val0 = MockFactory.String();
+            var val1 = MockFactory.String();
             var builder =
-                Message.Build(string.Format("MSH|^~\\&|{2}~{0}^{1}", val0, val1, Mock.String()))[1][3][2];
-            Assert.AreEqual(builder.Value, string.Format("{0}^{1}", val0, val1));
+                Message.Build(string.Format("MSH|^~\\&|{2}~{0}^{1}", val0, val1, MockFactory.String()))[1][3][2];
+            builder.Value.Should().Be(string.Format("{0}^{1}", val0, val1));
         }
 
-        [TestMethod]
+        [Test]
         public void RepetitionBuilder_CanGetValues()
         {
-            var val1 = Mock.String();
-            var val2 = Mock.String();
-            var val3 = Mock.String();
+            var val1 = MockFactory.String();
+            var val2 = MockFactory.String();
+            var val3 = MockFactory.String();
             var builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}",
-                Mock.String(), val1, val2, val3))[1][3][2];
-            AssertEnumerable.AreEqual(builder.Values, new[] {val1, string.Format("{0}&{1}", val2, val3)});
+                MockFactory.String(), val1, val2, val3))[1][3][2];
+            builder.Values.Should().Equal(val1, string.Format("{0}&{1}", val2, val3));
         }
 
-        [TestMethod]
+        [Test]
         public void RepetitionBuilder_CanBeCloned()
         {
             var builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}",
-                Mock.String(), Mock.String(), Mock.String(), Mock.String()))[1][3][2];
+                MockFactory.String(), MockFactory.String(), MockFactory.String(), MockFactory.String()))[1][3][2];
             var clone = builder.Clone();
-            Assert.AreNotSame(builder, clone, "Builder and its clone must not refer to the same object.");
-            Assert.AreEqual(builder.ToString(), clone.ToString(), "Clone data doesn't match source data.");
+            builder.Should().NotBeSameAs(clone);
+            builder.ToString().Should().Be(clone.ToString());
         }
 
-        [TestMethod]
+        [Test]
         public void RepetitionBuilder_CanBuildComponents_Individually()
         {
             var builder = Message.Build()[1][3][1];
-            var component1 = Mock.String();
-            var component2 = Mock.String();
+            var component1 = MockFactory.String();
+            var component2 = MockFactory.String();
 
             builder
                 .SetComponent(1, component1)
                 .SetComponent(2, component2);
-            Assert.AreEqual(string.Format("{0}^{1}", component1, component2), builder.Value,
-                @"Unexpected result.");
+            builder.Value.Should().Be(string.Format("{0}^{1}", component1, component2));
         }
 
-        [TestMethod]
+        [Test]
         public void RepetitionBuilder_CanBuildComponents_OutOfOrder()
         {
             var builder = Message.Build()[1][3][1];
-            var component1 = Mock.String();
-            var component2 = Mock.String();
+            var component1 = MockFactory.String();
+            var component2 = MockFactory.String();
 
             builder
                 .SetComponent(2, component2)
                 .SetComponent(1, component1);
-            Assert.AreEqual(string.Format("{0}^{1}", component1, component2), builder.Value,
-                @"Unexpected result.");
+            builder.Value.Should().Be(string.Format("{0}^{1}", component1, component2));
         }
 
-        [TestMethod]
+        [Test]
         public void RepetitionBuilder_CanBuildComponents_Sequentially()
         {
             var builder = Message.Build()[1][3][1];
-            var component1 = Mock.String();
-            var component2 = Mock.String();
+            var component1 = MockFactory.String();
+            var component2 = MockFactory.String();
 
             builder
                 .SetComponents(3, component1, component2);
-            Assert.AreEqual(string.Format("^^{0}^{1}", component1, component2), builder.Value,
-                @"Unexpected result.");
+            builder.Value.Should().Be(string.Format("^^{0}^{1}", component1, component2));
         }
 
-        [TestMethod]
+        [Test]
         public void RepetitionBuilder_CanBuildSubcomponents_Individually()
         {
             var builder = Message.Build()[1][3][1];
-            var subcomponent1 = Mock.String();
-            var subcomponent2 = Mock.String();
+            var subcomponent1 = MockFactory.String();
+            var subcomponent2 = MockFactory.String();
 
             builder
                 .SetSubcomponent(1, 1, subcomponent1)
                 .SetSubcomponent(1, 2, subcomponent2);
-            Assert.AreEqual(string.Format("{0}&{1}", subcomponent1, subcomponent2), builder.Value,
-                @"Unexpected result.");
+            builder.Value.Should().Be(string.Format("{0}&{1}", subcomponent1, subcomponent2));
         }
 
-        [TestMethod]
+        [Test]
         public void RepetitionBuilder_CanBuildSubcomponents_OutOfOrder()
         {
             var builder = Message.Build()[1][3][1];
-            var subcomponent1 = Mock.String();
-            var subcomponent2 = Mock.String();
+            var subcomponent1 = MockFactory.String();
+            var subcomponent2 = MockFactory.String();
 
             builder
                 .SetSubcomponent(1, 2, subcomponent2)
                 .SetSubcomponent(1, 1, subcomponent1);
-            Assert.AreEqual(string.Format("{0}&{1}", subcomponent1, subcomponent2), builder.Value,
-                @"Unexpected result.");
+            builder.Value.Should().Be(string.Format("{0}&{1}", subcomponent1, subcomponent2));
         }
 
-        [TestMethod]
+        [Test]
         public void RepetitionBuilder_CanBuildSubcomponents_Sequentially()
         {
             var builder = Message.Build()[1][3][1];
-            var subcomponent1 = Mock.String();
-            var subcomponent2 = Mock.String();
+            var subcomponent1 = MockFactory.String();
+            var subcomponent2 = MockFactory.String();
 
             builder
                 .SetSubcomponents(3, 1, subcomponent1, subcomponent2);
-            Assert.AreEqual(string.Format("^^{0}&{1}", subcomponent1, subcomponent2), builder.Value,
-                @"Unexpected result.");
+            builder.Value.Should().Be(string.Format("^^{0}&{1}", subcomponent1, subcomponent2));
         }
 
-        [TestMethod]
+        [Test]
         public void RepetitionBuilder_ChangesEncodingCharactersIfMessageChanges()
         {
             var messageBuilder = Message.Build();
             var builder = messageBuilder[1][3][1];
-            Assert.AreEqual(builder.Encoding.FieldDelimiter, '|');
+            builder.Encoding.FieldDelimiter.Should().Be('|');
             messageBuilder.Encoding.FieldDelimiter = ':';
-            Assert.AreEqual(builder.Encoding.FieldDelimiter, ':');
+            builder.Encoding.FieldDelimiter.Should().Be(':');
         }
     }
 }

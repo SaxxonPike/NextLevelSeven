@@ -1,189 +1,197 @@
 ﻿using System.Globalization;
 using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using FluentAssertions;
+using NextLevelSeven.Building;
 using NextLevelSeven.Core;
 using NextLevelSeven.Test.Testing;
+using NUnit.Framework;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace NextLevelSeven.Test.Building
 {
-    [TestClass]
+    [TestFixture]
     public sealed class SubcomponentBuilderFunctionalTests : BuildingTestFixture
     {
-        [TestMethod]
+        [Test]
         public void SubcomponentBuilder_ExistsWithNonNullValue()
         {
-            var builder = Message.Build(Mock.Message())[1][3][1][1][1];
-            builder.Value = Mock.String();
-            Assert.IsTrue(builder.Exists);
+            var builder = Message.Build(MockFactory.Message())[1][3][1][1][1];
+            builder.Value = MockFactory.String();
+            builder.Exists.Should().BeTrue();
         }
 
-        [TestMethod]
+        [Test]
         public void SubcomponentBuilder_ExistsWithNullPresentValue()
         {
-            var builder = Message.Build(Mock.Message())[1][3][1][1][1];
+            var builder = Message.Build(MockFactory.Message())[1][3][1][1][1];
             builder.Value = HL7.Null;
-            Assert.IsTrue(builder.Exists);
+            builder.Exists.Should().BeTrue();
         }
 
-        [TestMethod]
+        [Test]
         public void SubcomponentBuilder_DoesNotExistWithNullValue()
         {
-            var builder = Message.Build(Mock.Message())[1][3][1][1][1];
+            var builder = Message.Build(MockFactory.Message())[1][3][1][1][1];
             builder.Value = null;
-            Assert.IsFalse(builder.Exists);
+            builder.Exists.Should().BeFalse();
         }
 
-        [TestMethod]
+        [Test]
         public void SubcomponentBuilder_GetsCodec()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
             var codec = builder.Converter;
-            var value = Mock.Number();
+            var value = MockFactory.Number();
             codec.AsInt = value;
-            Assert.AreEqual(value.ToString(CultureInfo.InvariantCulture), builder.Value);
+            builder.Value.Should().Be(value.ToString(CultureInfo.InvariantCulture));
         }
 
-        [TestMethod]
+        [Test]
         public void SubcomponentBuilder_HasNoDescendants()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
-            Assert.AreEqual(0, builder.Descendants.Count());
+            builder.Descendants.Should().BeEmpty();
         }
 
-        [TestMethod]
+        [Test]
         public void SubcomponentBuilder_HasNoDelimiter()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
-            Assert.AreEqual('\0', builder.Delimiter);
+            builder.Delimiter.Should().Be('\0');
         }
 
-        [TestMethod]
+        [Test]
+        [ExpectedException(typeof(BuilderException))]
         public void SubcomponentBuilder_ThrowsOnIndex()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
-            AssertAction.Throws<ElementException>(() => Assert.Inconclusive(builder[1].Value));
+            builder[1].Value.Should().BeNull();
         }
 
-        [TestMethod]
+        [Test]
+        [ExpectedException(typeof(BuilderException))]
         public void SubcomponentBuilder_ThrowsOnDelete()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
-            AssertAction.Throws<ElementException>(() => builder.Delete(1));
+            builder.Delete(1);
         }
 
-        [TestMethod]
+        [Test]
+        [ExpectedException(typeof(BuilderException))]
         public void SubcomponentBuilder_ThrowsOnMove()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
-            AssertAction.Throws<ElementException>(() => builder.Move(1, 2));
+            builder.Move(1, 2);
         }
 
-        [TestMethod]
+        [Test]
+        [ExpectedException(typeof(BuilderException))]
         public void SubcomponentBuilder_ThrowsOnInsertString()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
-            AssertAction.Throws<ElementException>(() => builder.Insert(1, Mock.String()));
+            builder.Insert(1, MockFactory.String()).Should().BeNull();
         }
 
-        [TestMethod]
+        [Test]
+        [ExpectedException(typeof(BuilderException))]
         public void SubcomponentBuilder_ThrowsOnInsertElement()
         {
             var builder0 = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
             var builder1 = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
-            AssertAction.Throws<ElementException>(() => builder0.Insert(1, builder1));
+            builder0.Insert(1, builder1).Should().BeNull();
         }
 
-        [TestMethod]
+        [Test]
         public void SubcomponentBuilder_SetsValuesWithConcatenation()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
             builder.Values = new[] {"a", "b", "c", "d"};
-            Assert.AreEqual(builder.Value, "abcd");
+            builder.Value.Should().Be("abcd");
         }
 
-        [TestMethod]
+        [Test]
         public void SubcomponentBuilder_MapsBuilderAncestor()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
-            Assert.AreSame(builder, builder.Ancestor[1]);
+            builder.Should().BeSameAs(builder.Ancestor[1]);
         }
 
-        [TestMethod]
+        [Test]
         public void SubcomponentBuilder_MapsGenericBuilderAncestor()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1] as ISubcomponent;
-            Assert.AreSame(builder, builder.Ancestor[1]);
+            builder.Should().BeSameAs(builder.Ancestor[1]);
         }
 
-        [TestMethod]
+        [Test]
         public void SubcomponentBuilder_MapsGenericAncestor()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1] as IElement;
-            Assert.AreSame(builder, builder.Ancestor[1]);
+            builder.Should().BeSameAs(builder.Ancestor[1]);
         }
 
-        [TestMethod]
+        [Test]
         public void SubcomponentBuilder_CanGetMessage()
         {
-            var message = Message.Build(Mock.Message());
+            var message = Message.Build(MockFactory.Message());
             var builder = message[1][3][1][1][1];
-            Assert.AreSame(message, builder.Message);
+            message.Should().BeSameAs(builder.Message);
         }
 
-        [TestMethod]
+        [Test]
         public void SubcomponentBuilder_CloneHasNullMessage()
         {
-            var message = Message.Build(Mock.Message());
+            var message = Message.Build(MockFactory.Message());
             var builder = message[1][3][1][1][1].Clone();
-            Assert.IsNull(builder.Message);
+            builder.Message.Should().BeNull();
         }
 
-        [TestMethod]
+        [Test]
         public void SubcomponentBuilder_CanGetValue()
         {
-            var val0 = Mock.String();
-            var val1 = Mock.String();
+            var val0 = MockFactory.String();
+            var val1 = MockFactory.String();
             var builder =
-                Message.Build(string.Format("MSH|^~\\&|{0}&{1}&{2}", val0, val1, Mock.String()))[1][3][1][1][2];
-            Assert.AreEqual(builder.Value, val1);
+                Message.Build(string.Format("MSH|^~\\&|{0}&{1}&{2}", val0, val1, MockFactory.String()))[1][3][1][1][2];
+            builder.Value.Should().Be(val1);
         }
 
-        [TestMethod]
+        [Test]
         public void SubcomponentBuilder_CanGetValues()
         {
-            var val1 = Mock.String();
-            var val2 = Mock.String();
-            var val3 = Mock.String();
+            var val1 = MockFactory.String();
+            var val2 = MockFactory.String();
+            var val3 = MockFactory.String();
             var builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}",
-                Mock.String(), val1, val2, val3))[1][3][2][2][2];
-            AssertEnumerable.AreEqual(builder.Values, new[] {val3});
+                MockFactory.String(), val1, val2, val3))[1][3][2][2][2];
+            builder.Values.Should().Equal(val3);
         }
 
-        [TestMethod]
+        [Test]
         public void SubcomponentBuilder_CanBeCloned()
         {
             var builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}",
-                Mock.String(), Mock.String(), Mock.String(), Mock.String()))[1][3][2][2][2];
+                MockFactory.String(), MockFactory.String(), MockFactory.String(), MockFactory.String()))[1][3][2][2][2];
             var clone = builder.Clone();
-            Assert.AreNotSame(builder, clone, "Builder and its clone must not refer to the same object.");
-            Assert.AreEqual(builder.ToString(), clone.ToString(), "Clone data doesn't match source data.");
+            builder.Should().NotBeSameAs(clone);
+            builder.ToString().Should().Be(clone.ToString());
         }
 
-        [TestMethod]
+        [Test]
         public void SubcomponentBuilder_CanBeCloned_Generic()
         {
             IElement builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}",
-                Mock.String(), Mock.String(), Mock.String(), Mock.String()))[1][3][2][2][2];
+                MockFactory.String(), MockFactory.String(), MockFactory.String(), MockFactory.String()))[1][3][2][2][2];
             var clone = builder.Clone();
-            Assert.AreNotSame(builder, clone, "Builder and its clone must not refer to the same object.");
-            Assert.AreEqual(builder.ToString(), clone.ToString(), "Clone data doesn't match source data.");
+            builder.Should().NotBeSameAs(clone);
+            builder.ToString().Should().Be(clone.ToString());
         }
 
-        [TestMethod]
+        [Test]
         public void SubcomponentBuilder_HasOneValue()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
-            Assert.AreEqual(1, builder.ValueCount);
+            builder.ValueCount.Should().Be(1);
         }
     }
 }

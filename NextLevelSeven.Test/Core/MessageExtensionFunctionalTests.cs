@@ -1,15 +1,16 @@
 ﻿using System.Linq;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
 using NextLevelSeven.Test.Parsing;
 using NextLevelSeven.Test.Testing;
+using NUnit.Framework;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace NextLevelSeven.Test.Core
 {
-    [TestClass]
+    [TestFixture]
     public class MessageExtensionFunctionalTests : ParsingTestFixture
     {
-        [TestMethod]
+        [Test]
         public void MessageExtensions_Builder_CanFilterPid_FromMessage()
         {
             var message = Message.Build(ExampleMessages.MultiplePid);
@@ -18,7 +19,7 @@ namespace NextLevelSeven.Test.Core
                 "PIDs were not completely filtered.");
         }
 
-        [TestMethod]
+        [Test]
         public void MessageExtensions_Parser_CanFilterPid_FromMessage()
         {
             var message = Message.Parse(ExampleMessages.MultiplePid);
@@ -27,7 +28,7 @@ namespace NextLevelSeven.Test.Core
                 "PIDs were not completely filtered.");
         }
 
-        [TestMethod]
+        [Test]
         public void MessageExtensions_Builder_CanFilterPidAndObx_FromMessage()
         {
             var message = Message.Build(ExampleMessages.MultiplePid);
@@ -36,7 +37,7 @@ namespace NextLevelSeven.Test.Core
                 "PIDs and OBXs were not completely filtered.");
         }
 
-        [TestMethod]
+        [Test]
         public void MessageExtensions_Parser_CanFilterPidAndObx_FromMessage()
         {
             var message = Message.Parse(ExampleMessages.MultiplePid);
@@ -45,7 +46,7 @@ namespace NextLevelSeven.Test.Core
                 "PIDs and OBXs were not completely filtered.");
         }
 
-        [TestMethod]
+        [Test]
         public void MessageExtensions_Builder_CanGetObrSplitsWithoutExtras()
         {
             var message = Message.Build(ExampleMessages.MultipleObr);
@@ -54,7 +55,7 @@ namespace NextLevelSeven.Test.Core
                 "OBR split count doesn't match number of OBR segments.");
         }
 
-        [TestMethod]
+        [Test]
         public void MessageExtensions_Parser_CanGetObrSplitsWithoutExtras()
         {
             var message = Message.Parse(ExampleMessages.MultipleObr);
@@ -63,7 +64,7 @@ namespace NextLevelSeven.Test.Core
                 "OBR split count doesn't match number of OBR segments.");
         }
 
-        [TestMethod]
+        [Test]
         public void MessageExtensions_Builder_CanGetObrSplitsWithExtras()
         {
             var message = Message.Build(ExampleMessages.MultipleObr);
@@ -72,7 +73,7 @@ namespace NextLevelSeven.Test.Core
                 "OBR split count (with extras) doesn't match number of OBR segments + 1.");
         }
 
-        [TestMethod]
+        [Test]
         public void MessageExtensions_Parser_CanGetObrSplitsWithExtras()
         {
             var message = Message.Parse(ExampleMessages.MultipleObr);

@@ -1,66 +1,69 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using FluentAssertions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
 using NextLevelSeven.Test.Testing;
+using NUnit.Framework;
 
 namespace NextLevelSeven.Test.Building
 {
-    [TestClass]
+    [TestFixture]
     public sealed class BuilderBaseFunctionalTests : BuildingTestFixture
     {
-        [TestMethod]
+        [Test]
         public void Builder_ImplementsEncodingAndReadOnlyEncodingIdentically()
         {
             var builder = Message.Build();
-            Assert.AreSame(builder.Encoding, ((IElement) builder).Encoding);
+            builder.Encoding.Should().BeSameAs(((IElement) builder).Encoding);
         }
 
-        [TestMethod]
+        [Test]
         public void Builder_CanBeErased()
         {
-            var builder = Message.Build(Mock.Message())[1][3];
-            var value = Mock.String();
+            var builder = Message.Build(MockFactory.Message())[1][3];
+            var value = MockFactory.String();
             builder.Value = value;
             builder.Erase();
-            Assert.IsNull(builder.Value);
-            Assert.IsFalse(builder.Exists);
+            builder.Value.Should().BeNull();
+            builder.Exists.Should().BeFalse();
         }
 
-        [TestMethod]
+        [Test]
         public void Builder_DefaultsToNonExistant()
         {
-            var builder = Message.Build(Mock.Message())[1][3];
-            Assert.IsFalse(builder[2].Exists);
+            var builder = Message.Build(MockFactory.Message())[1][3];
+            builder[2].Exists.Should().BeFalse();
         }
 
-        [TestMethod]
+        [Test]
         public void Builder_ConvertsHl7NullToExistingNull()
         {
-            var builder = Message.Build(Mock.Message());
+            var builder = Message.Build(MockFactory.Message());
             builder[1][3].Value = "\"\"";
-            Assert.IsNull(builder[1][3].Value);
+            builder[1][3].Value.Should().BeNull();
         }
 
-        [TestMethod]
+        [Test]
         public void Builder_ShouldEqualItself()
         {
-            var builder = (object)Message.Build(Mock.Message());
+            var builder = (object)Message.Build(MockFactory.Message());
             var builder2 = builder;
-            Assert.IsTrue(builder.Equals(builder2));
+            builder.ShouldBeEquivalentTo(builder2);
         }
 
-        [TestMethod]
+        [Test]
         public void Builder_ShouldHaveHashCode()
         {
-            Assert.AreNotEqual(0, Message.Build(Mock.Message()).GetHashCode());
+            Message.Build(MockFactory.Message()).GetHashCode().Should().NotBe(0);
         }
 
-        [TestMethod]
+        [Test]
         public void Builder_CanFormat()
         {
-            var param = Mock.String();
+            var param = MockFactory.String();
             const string message = "{0}|{1}";
-            Assert.AreEqual(Message.BuildFormat(message, ExampleMessages.Minimum, param).Value,
-                string.Format(message, ExampleMessages.Minimum, param));
+            Message.BuildFormat(message, ExampleMessages.Minimum, param)
+                .Value.Should()
+                .Be(string.Format(message, ExampleMessages.Minimum, param));
         }
     }
 }

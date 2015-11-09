@@ -1,9 +1,10 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace NextLevelSeven.Test.Parsing.Dividers
 {
-    [TestClass]
+    [TestFixture]
     public class DividersUnitTestFixture : ParsingTestFixture
     {
     }

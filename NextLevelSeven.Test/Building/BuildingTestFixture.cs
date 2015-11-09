@@ -1,8 +1,9 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace NextLevelSeven.Test.Building
 {
-    [TestClass]
+    [TestFixture]
     public abstract class BuildingTestFixture : BaseTestFixture
     {
     }
