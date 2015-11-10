@@ -215,6 +215,11 @@ namespace NextLevelSeven.Core
         /// <returns>Element in its new place.</returns>
         public static IElement Move(this IElement target, int targetIndex)
         {
+            if (target.Index == targetIndex)
+            {
+                return target;
+            }
+
             var ancestor = target.Ancestor;
             if (ancestor == null)
             {

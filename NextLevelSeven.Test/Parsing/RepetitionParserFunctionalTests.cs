@@ -35,7 +35,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Repetition_CanMoveComponents()
         {
             var element = Message.Parse(ExampleMessages.Minimum)[1][3][1];
-            element.Values = new[] {MockFactory.String(), MockFactory.String(), MockFactory.String(), MockFactory.String()};
+            element.Values = new[] {Any.String(), Any.String(), Any.String(), Any.String()};
             var newMessage = element.Clone();
             newMessage[2].Move(3);
             Assert.AreEqual(element[2].Value, newMessage[3].Value);
@@ -46,7 +46,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var element = Message.Parse(ExampleMessages.Standard)[1][3][1];
             string value = null;
-            AssertAction.Throws<ParserException>(() => { value = element[0].Value; });
+            AssertAction.Throws<ElementException>(() => { value = element[0].Value; });
             Assert.IsNull(value);
         }
 
@@ -73,7 +73,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var repetition = Message.Parse(ExampleMessages.Standard)[2][3][4];
             var count = repetition.ValueCount;
-            var id = MockFactory.String();
+            var id = Any.String();
             repetition[count + 1].Value = id;
             Assert.AreEqual(count + 1, repetition.ValueCount,
                 @"Number of elements after appending at the end of a repetition is incorrect.");
@@ -113,7 +113,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Repetition_CanWriteStringValue()
         {
             var repetition = Message.Parse(ExampleMessages.Standard)[1][3][1];
-            var value = MockFactory.String();
+            var value = Any.String();
             repetition.Value = value;
             Assert.AreEqual(value, repetition.Value, "Value mismatch after write.");
         }
@@ -122,7 +122,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Repetition_CanWriteNullValue()
         {
             var repetition = Message.Parse(ExampleMessages.Standard)[1][3][1];
-            var value = MockFactory.String();
+            var value = Any.String();
             repetition.Value = value;
             repetition.Value = null;
             Assert.IsNull(repetition.Value, "Value mismatch after write.");

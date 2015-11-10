@@ -74,7 +74,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns></returns>
         protected override IElementParser GetDescendant(int index)
         {
-            throw new ParserException(ErrorCode.SubcomponentCannotHaveDescendants);
+            throw new ElementException(ErrorCode.SubcomponentCannotHaveDescendants);
         }
 
         /// <summary>Deep clone this subcomponent.</summary>

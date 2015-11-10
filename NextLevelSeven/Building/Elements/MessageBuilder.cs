@@ -190,19 +190,19 @@ namespace NextLevelSeven.Building.Elements
         {
             if (value == null)
             {
-                throw new BuilderException(ErrorCode.MessageDataMustNotBeNull);
+                throw new ElementException(ErrorCode.MessageDataMustNotBeNull);
             }
             value = SanitizeLineEndings(value);
 
             var length = value.Length;
             if (length < 8)
             {
-                throw new BuilderException(ErrorCode.MessageDataIsTooShort);
+                throw new ElementException(ErrorCode.MessageDataIsTooShort);
             }
 
             if (!value.StartsWith("MSH"))
             {
-                throw new BuilderException(ErrorCode.MessageDataMustStartWithMsh);
+                throw new ElementException(ErrorCode.MessageDataMustStartWithMsh);
             }
 
             ComponentDelimiter = length >= 5

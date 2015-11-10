@@ -1,4 +1,5 @@
 ﻿using System;
+using FluentAssertions;
 using NextLevelSeven.Conversion;
 using NextLevelSeven.Test.Testing;
 using NUnit.Framework;
@@ -10,114 +11,126 @@ namespace NextLevelSeven.Test.Conversion
     public class DateTimeConverterUnitTests : ConversionTestFixture
     {
         [Test]
+        [ExpectedException(typeof(ConversionException))]
         public void DateTimeConverter_ThrowsWithInvalidYear()
         {
-            AssertAction.Throws<ConversionException>(() => DateTimeConverter.ConvertToDate("1"));
+            DateTimeConverter.ConvertToDate("1").Should().NotHaveValue();
         }
 
         [Test]
         public void DateTimeConverter_DecodesTime()
         {
-            Assert.AreEqual(new TimeSpan(6, 8, 10), DateTimeConverter.ConvertToTime("060810"));
+            DateTimeConverter.ConvertToTime("060810").Should()
+                .Be(new TimeSpan(6, 8, 10));
         }
 
         [Test]
         public void DateTimeConverter_DecodesNullTime()
         {
-            Assert.AreEqual(null, DateTimeConverter.ConvertToTime(null));
+            DateTimeConverter.ConvertToTime(null).Should().NotHaveValue();
         }
 
         [Test]
         public void DateTimeConverter_DecodesDate()
         {
-            Assert.AreEqual(new DateTime(2013, 05, 28), DateTimeConverter.ConvertToDate("20130528"));
+            DateTimeConverter.ConvertToDate("20130528").Should()
+                .Be(new DateTime(2013, 05, 28));
         }
 
         [Test]
         public void DateTimeConverter_DecodesNullDate()
         {
-            Assert.AreEqual(null, DateTimeConverter.ConvertToDate(null));
+            DateTimeConverter.ConvertToDate(null).Should().NotHaveValue();
         }
 
         [Test]
         public void DateTimeConverter_DecodesDateTime()
         {
-            Assert.AreEqual(new DateTime(2013, 05, 28, 07, 38, 29),
-                DateTimeConverter.ConvertToDateTime("20130528073829"));
+            DateTimeConverter.ConvertToDateTime("20130528073829").Should()
+                .Be(new DateTime(2013, 05, 28, 07, 38, 29));
         }
 
         [Test]
         public void DateTimeConverter_DecodesDateTimeWithNegativeTimeZoneOffset()
         {
-            Assert.AreEqual(new DateTimeOffset(2013, 05, 28, 07, 38, 29, new TimeSpan(-5, 30, 0)),
-                DateTimeConverter.ConvertToDateTime("20130528073829-0530"));
+            DateTimeConverter.ConvertToDateTime("20130528073829-0530").Should()
+                .Be(new DateTimeOffset(2013, 05, 28, 07, 38, 29, new TimeSpan(-5, 30, 0)));
         }
 
         [Test]
         public void DateTimeConverter_DecodesDateTimeWithPositiveTimeZoneOffset()
         {
-            Assert.AreEqual(new DateTimeOffset(2013, 05, 28, 07, 38, 29, new TimeSpan(5, 30, 0)),
-                DateTimeConverter.ConvertToDateTime("20130528073829+0530"));
+            DateTimeConverter.ConvertToDateTime("20130528073829+0530").Should()
+                .Be(new DateTimeOffset(2013, 05, 28, 07, 38, 29, new TimeSpan(5, 30, 0)));
         }
 
         [Test]
         public void DateTimeConverter_DecodesNullDateTime()
         {
-            Assert.AreEqual(null, DateTimeConverter.ConvertToDateTime(null));
+            DateTimeConverter.ConvertToDateTime(null).Should().NotHaveValue();
         }
 
         [Test]
         public void DateTimeConverter_DecodesDateTimeWithOnlyYear()
         {
-            Assert.AreEqual(new DateTime(2015, 01, 01, 00, 00, 00), DateTimeConverter.ConvertToDateTime("2015"));
+            DateTimeConverter.ConvertToDateTime("2015").Should()
+                .Be(new DateTime(2015, 01, 01, 00, 00, 00));
         }
 
         [Test]
         public void DateTimeConverter_DecodesDateTimeWithOnlyYearMonth()
         {
-            Assert.AreEqual(new DateTime(2015, 07, 01, 00, 00, 00), DateTimeConverter.ConvertToDateTime("201507"));
+            DateTimeConverter.ConvertToDateTime("201507").Should()
+                .Be(new DateTime(2015, 07, 01, 00, 00, 00));
         }
 
         [Test]
         public void DateTimeConverter_DecodesDateTimeWithOnlyDate()
         {
-            Assert.AreEqual(new DateTime(2015, 07, 08, 00, 00, 00), DateTimeConverter.ConvertToDateTime("20150708"));
+            DateTimeConverter.ConvertToDateTime("20150708").Should()
+                .Be(new DateTime(2015, 07, 08, 00, 00, 00));
         }
 
         [Test]
         public void DateTimeConverter_DecodesDateTimeWithOnlyDateHour()
         {
-            Assert.AreEqual(new DateTime(2015, 07, 08, 18, 00, 00), DateTimeConverter.ConvertToDateTime("2015070818"));
+            DateTimeConverter.ConvertToDateTime("2015070818").Should()
+                .Be(new DateTime(2015, 07, 08, 18, 00, 00));
         }
 
         [Test]
         public void DateTimeConverter_DecodesDateTimeWithOnlyDateHourMinute()
         {
-            Assert.AreEqual(new DateTime(2015, 07, 08, 18, 52, 00), DateTimeConverter.ConvertToDateTime("201507081852"));
+            DateTimeConverter.ConvertToDateTime("201507081852").Should()
+                .Be(new DateTime(2015, 07, 08, 18, 52, 00));
         }
 
         [Test]
         public void DateTimeConverter_DecodesDateWithOnlyYear()
         {
-            Assert.AreEqual(new DateTime(2015, 01, 01), DateTimeConverter.ConvertToDate("2015"));
+            DateTimeConverter.ConvertToDate("2015").Should()
+                .Be(new DateTime(2015, 01, 01));
         }
 
         [Test]
         public void DateTimeConverter_DecodesDateWithOnlyYearMonth()
         {
-            Assert.AreEqual(new DateTime(2015, 07, 01), DateTimeConverter.ConvertToDate("201507"));
+            DateTimeConverter.ConvertToDate("201507").Should()
+                .Be(new DateTime(2015, 07, 01));
         }
 
         [Test]
         public void DateTimeConverter_DecodesTimeWithOnlyDateHour()
         {
-            Assert.AreEqual(new TimeSpan(13, 00, 00), DateTimeConverter.ConvertToTime("13"));
+            DateTimeConverter.ConvertToTime("13").Should()
+                .Be(new TimeSpan(13, 00, 00));
         }
 
         [Test]
         public void DateTimeConverter_DecodesTimeWithOnlyDateHourMinute()
         {
-            Assert.AreEqual(new TimeSpan(13, 35, 00), DateTimeConverter.ConvertToTime("1335"));
+            DateTimeConverter.ConvertToTime("1335").Should()
+                .Be(new TimeSpan(13, 35, 00));
         }
     }
 }

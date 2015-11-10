@@ -122,7 +122,7 @@ namespace NextLevelSeven.Parsing.Elements
         {
             if (index < 1)
             {
-                throw new ParserException(ErrorCode.ComponentIndexMustBeGreaterThanZero);
+                throw new ElementException(ErrorCode.ComponentIndexMustBeGreaterThanZero);
             }
 
             var result = new ComponentParser(this, index - 1, index);

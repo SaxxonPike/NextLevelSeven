@@ -19,9 +19,9 @@ namespace NextLevelSeven.Test.Core
 
         private static void Test_SingleDelimiterEscape(string delimiter, string escapeCode)
         {
-            var leftString = MockFactory.String();
-            var middleString = MockFactory.String();
-            var rightString = MockFactory.String();
+            var leftString = Any.String();
+            var middleString = Any.String();
+            var rightString = Any.String();
             var test = String.Format("{0}{3}{1}{3}{2}", leftString, middleString, rightString, delimiter);
             var expected = string.Format("{0}{3}{1}{3}{2}", leftString, middleString, rightString, escapeCode);
             Test_Escape(expected, test);
@@ -68,42 +68,42 @@ namespace NextLevelSeven.Test.Core
         [Test]
         public void Escape_DoesNotConvert_HighlightTextMarker()
         {
-            var message = String.Format("{0}\\H\\{1}", MockFactory.String(), MockFactory.String());
+            var message = String.Format("{0}\\H\\{1}", Any.String(), Any.String());
             Test_Escape(message, message);
         }
 
         [Test]
         public void Escape_DoesNotConvert_NormalTextMarker()
         {
-            var message = String.Format("{0}\\N\\{1}", MockFactory.String(), MockFactory.String());
+            var message = String.Format("{0}\\N\\{1}", Any.String(), Any.String());
             Test_Escape(message, message);
         }
 
         [Test]
         public void Escape_DoesNotConvert_MultiByteCharacterSetLongEscapeSequence()
         {
-            var message = String.Format("{0}\\MABCDEF\\{1}", MockFactory.String(), MockFactory.String());
+            var message = String.Format("{0}\\MABCDEF\\{1}", Any.String(), Any.String());
             Test_Escape(message, message);
         }
 
         [Test]
         public void Escape_DoesNotConvert_MultiByteCharacterSetShortEscapeSequence()
         {
-            var message = String.Format("{0}\\MABCD\\{1}", MockFactory.String(), MockFactory.String());
+            var message = String.Format("{0}\\MABCD\\{1}", Any.String(), Any.String());
             Test_Escape(message, message);
         }
 
         [Test]
         public void Escape_DoesNotConvert_LocallyDefinedEscapeSequence()
         {
-            var message = String.Format("{0}\\Z{2}\\{1}", MockFactory.String(), MockFactory.String(), MockFactory.String());
+            var message = String.Format("{0}\\Z{2}\\{1}", Any.String(), Any.String(), Any.String());
             Test_Escape(message, message);
         }
 
         [Test]
         public void Escape_DoesNotConvert_SingleByteCharacterSetEscapeSequence()
         {
-            var message = String.Format("{0}\\CABCD\\{1}", MockFactory.String(), MockFactory.String());
+            var message = String.Format("{0}\\CABCD\\{1}", Any.String(), Any.String());
             Test_Escape(message, message);
         }
     }

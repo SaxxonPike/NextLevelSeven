@@ -1,85 +1,54 @@
 ﻿using System.Linq;
+using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using NextLevelSeven.Core;
 using NextLevelSeven.Test.Testing;
+using NUnit.Framework;
+using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
 
 namespace NextLevelSeven.Test.Core
 {
-    [TestClass]
+    [TestFixture]
     public class ElementOperationsUnitTests : CoreTestFixture
     {
-        [TestMethod]
-        public void HasEncodingCharacters_ReturnsTrue_OnMsh1()
+        [Test]
+        [TestCase(1)]
+        [TestCase(2)]
+        public void HasEncodingCharacters_ReturnsTrue_OnEncodingFields(int fieldIndex)
         {
-            var element = Message.Build(MockFactory.Message());
-            Assert.IsTrue(ElementOperations.HasEncodingCharacters(element[1][1]));
+            var element = Message.Build(Any.Message());
+            ElementOperations.HasEncodingCharacters(element[1][fieldIndex]).Should().BeTrue();
         }
 
-        [TestMethod]
-        public void HasEncodingCharacters_ReturnsTrue_OnMsh2()
-        {
-            var element = Message.Build(MockFactory.Message());
-            Assert.IsTrue(ElementOperations.HasEncodingCharacters(element[1][2]));
-        }
-
-        [TestMethod]
+        [Test]
         public void HasEncodingCharacters_ReturnsFalse_OnNonEncodingFields()
         {
-            var element = Message.Build(MockFactory.Message());
+            var element = Message.Build(Any.Message());
             foreach (var field in element[1].Fields.Skip(3)) //skip type, msh1, msh2
             {
-                Assert.IsFalse(ElementOperations.HasEncodingCharacters(field));
+                ElementOperations.HasEncodingCharacters(field).Should().BeFalse();
             }
         }
 
-        [TestMethod]
+        [Test]
         public void HasEncodingCharacters_ReturnsFalse_OnSegmentContainingFieldsWithEncodingCharacters()
         {
-            var element = Message.Build(MockFactory.Message());
-            Assert.IsFalse(ElementOperations.HasEncodingCharacters(element[1]));
+            var element = Message.Build(Any.Message());
+            ElementOperations.HasEncodingCharacters(element[1]).Should().BeFalse();
         }
 
-        [TestMethod]
-        public void GetKey_ReturnsRootKey_WhenCalledWithRootElement()
+        [Test]
+        [TestCase(null, Result = "*")]
+        [TestCase(new[] { 1 }, Result = "MSH1")]
+        [TestCase(new[] { 1, 3 }, Result = "MSH1.3")]
+        [TestCase(new[] { 1, 3, 1 }, Result = "MSH1.3.1")]
+        [TestCase(new[] { 1, 3, 1, 1 }, Result = "MSH1.3.1.1")]
+        [TestCase(new[] { 1, 3, 1, 1, 1 }, Result = "MSH1.3.1.1.1")]
+        public string GetKey_ReturnsKey(int[] descendants)
         {
-            var element = Message.Build(MockFactory.Message());
-            Assert.AreEqual(ElementDefaults.RootElementKey, ElementOperations.GetKey(element));
+            IElement element = Message.Build(Any.Message());
+            element = (descendants ?? new int[]{}).Aggregate(element, (current, index) => current[index]);
+            return ElementOperations.GetKey(element);
         }
-
-        [TestMethod]
-        public void GetKey_ReturnsKey_WhenCalledOnSegment()
-        {
-            var element = Message.Build(MockFactory.Message());
-            Assert.AreEqual("MSH1", ElementOperations.GetKey(element[1]));
-        }
-
-        [TestMethod]
-        public void GetKey_ReturnsKey_WhenCalledOnField()
-        {
-            var element = Message.Build(MockFactory.Message());
-            Assert.AreEqual("MSH1.3", ElementOperations.GetKey(element[1][3]));
-        }
-
-        [TestMethod]
-        public void GetKey_ReturnsKey_WhenCalledOnRepetition()
-        {
-            var element = Message.Build(MockFactory.Message());
-            Assert.AreEqual("MSH1.3.1", ElementOperations.GetKey(element[1][3][1]));
-        }
-
-        [TestMethod]
-        public void GetKey_ReturnsKey_WhenCalledOnComponent()
-        {
-            var element = Message.Build(MockFactory.Message());
-            Assert.AreEqual("MSH1.3.1.1", ElementOperations.GetKey(element[1][3][1][1]));
-        }
-
-        [TestMethod]
-        public void GetKey_ReturnsKey_WhenCalledOnSubcomponent()
-        {
-            var element = Message.Build(MockFactory.Message());
-            Assert.AreEqual("MSH1.3.1.1.1", ElementOperations.GetKey(element[1][3][1][1][1]));
-        }
-
     }
 }

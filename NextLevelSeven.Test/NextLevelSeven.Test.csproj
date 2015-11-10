@@ -111,7 +111,7 @@
     <Compile Include="Parsing\SubcomponentParserFunctionalTests.cs" />
     <Compile Include="Parsing\ParsingTestFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Testing\MockFactory.cs" />
+    <Compile Include="Testing\Any.cs" />
     <Compile Include="BaseTestFixture.cs" />
     <Compile Include="Testing\TestUnitTests.cs" />
     <Compile Include="Utility\UtilityTestFixture.cs" />

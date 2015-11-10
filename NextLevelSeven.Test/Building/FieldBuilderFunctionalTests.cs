@@ -11,7 +11,7 @@ namespace NextLevelSeven.Test.Building
     public sealed class FieldBuilderFunctionalTests : BuildingTestFixture
     {
         [Test]
-        [ExpectedException(typeof(BuilderException))]
+        [ExpectedException(typeof(ElementException))]
         public void FieldBuilder_Type_CannotMoveDescendants()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][0];
@@ -33,7 +33,7 @@ namespace NextLevelSeven.Test.Building
         }
 
         [Test]
-        [ExpectedException(typeof(BuilderException))]
+        [ExpectedException(typeof(ElementException))]
         public void FieldBuilder_Type_ThrowsOnIndex()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][0];
@@ -44,17 +44,17 @@ namespace NextLevelSeven.Test.Building
         public void FieldBuilder_Type_SetsRepetitionOne()
         {
             var builder = Message.Build(ExampleMessages.Standard)[2][0];
-            var value = MockFactory.String();
+            var value = Any.String();
             builder.SetFieldRepetition(1, value);
             builder.Value.Should().Be(value);
         }
 
         [Test]
-        [ExpectedException(typeof(BuilderException))]
+        [ExpectedException(typeof(ElementException))]
         public void FieldBuilder_Type_ThrowsOnSettingRepetitionsOtherThanOne([Values(0, 2)] int index)
         {
             var builder = Message.Build(ExampleMessages.Standard)[2][0];
-            var value = MockFactory.String();
+            var value = Any.String();
             builder.SetFieldRepetition(index, value);
         }
 
@@ -112,7 +112,7 @@ namespace NextLevelSeven.Test.Building
         }
 
         [Test]
-        [ExpectedException(typeof(BuilderException))]
+        [ExpectedException(typeof(ElementException))]
         public void FieldBuilder_Encoding_ThrowsOnSubdivision()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][2];
@@ -120,7 +120,7 @@ namespace NextLevelSeven.Test.Building
         }
 
         [Test]
-        [ExpectedException(typeof(BuilderException))]
+        [ExpectedException(typeof(ElementException))]
         public void FieldBuilder_Encoding_ThrowsOnIndirectSubdivision()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][2];
@@ -216,7 +216,7 @@ namespace NextLevelSeven.Test.Building
         }
 
         [Test]
-        [ExpectedException(typeof(BuilderException))]
+        [ExpectedException(typeof(ElementException))]
         public void FieldBuilder_Delimiter_ThrowsOnSubdivision()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][1];
@@ -224,7 +224,7 @@ namespace NextLevelSeven.Test.Building
         }
 
         [Test]
-        [ExpectedException(typeof(BuilderException))]
+        [ExpectedException(typeof(ElementException))]
         public void FieldBuilder_Delimiter_ThrowsOnIndirectSubdivision()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][1];
@@ -271,8 +271,8 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void FieldBuilder_CanGetValue()
         {
-            var val0 = MockFactory.String();
-            var val1 = MockFactory.String();
+            var val0 = Any.String();
+            var val1 = Any.String();
             var builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}", val0, val1))[1][3];
             builder.Value.Should().Be(string.Format("{0}~{1}", val0, val1));
         }
@@ -280,10 +280,10 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void FieldBuilder_CanGetValues()
         {
-            var val0 = MockFactory.String();
-            var val1 = MockFactory.String();
-            var val2 = MockFactory.String();
-            var val3 = MockFactory.String();
+            var val0 = Any.String();
+            var val1 = Any.String();
+            var val2 = Any.String();
+            var val3 = Any.String();
             var builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}",
                 val0, val1, val2, val3))[1][3];
             builder.Values.Should().Equal(val0, string.Format("{0}^{1}&{2}", val1, val2, val3));
@@ -292,7 +292,7 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void FieldBuilder_CanSetNullValues()
         {
-            var builder = Message.Build(MockFactory.Message())[1][3];
+            var builder = Message.Build(Any.Message())[1][3];
             builder.Values = null;
             builder.Exists.Should().BeFalse();
         }
@@ -300,7 +300,7 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void FieldBuilder_CanSetNullFieldRepetitions()
         {
-            var builder = Message.Build(MockFactory.Message())[1][3];
+            var builder = Message.Build(Any.Message())[1][3];
             builder.SetFieldRepetitions(null);
             builder.Exists.Should().BeFalse();
         }
@@ -308,7 +308,7 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void FieldBuilder_SettingNullFieldRepetitionsAtIndexDoesNothing()
         {
-            var builder = Message.Build(MockFactory.Message())[1][3];
+            var builder = Message.Build(Any.Message())[1][3];
             builder.SetFieldRepetitions(null);
             builder.Exists.Should().BeFalse();
         }
@@ -317,7 +317,7 @@ namespace NextLevelSeven.Test.Building
         public void FieldBuilder_CanBeCloned()
         {
             var builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}",
-                MockFactory.String(), MockFactory.String(), MockFactory.String(), MockFactory.String()))[1][3];
+                Any.String(), Any.String(), Any.String(), Any.String()))[1][3];
             var clone = builder.Clone();
             builder.Should().NotBeSameAs(clone);
             builder.ToString().Should().Be(clone.ToString());
@@ -327,8 +327,8 @@ namespace NextLevelSeven.Test.Building
         public void FieldBuilder_CanBuildRepetitions_Individually()
         {
             var builder = Message.Build()[1][3];
-            var repetition1 = MockFactory.String();
-            var repetition2 = MockFactory.String();
+            var repetition1 = Any.String();
+            var repetition2 = Any.String();
 
             builder
                 .SetFieldRepetition(1, repetition1)
@@ -340,8 +340,8 @@ namespace NextLevelSeven.Test.Building
         public void FieldBuilder_CanBuildRepetitions_OutOfOrder()
         {
             var builder = Message.Build()[1][3];
-            var repetition1 = MockFactory.String();
-            var repetition2 = MockFactory.String();
+            var repetition1 = Any.String();
+            var repetition2 = Any.String();
 
             builder
                 .SetFieldRepetition(2, repetition2)
@@ -353,8 +353,8 @@ namespace NextLevelSeven.Test.Building
         public void FieldBuilder_CanBuildRepetitions_Sequentially()
         {
             var builder = Message.Build()[1][3];
-            var repetition1 = MockFactory.String();
-            var repetition2 = MockFactory.String();
+            var repetition1 = Any.String();
+            var repetition2 = Any.String();
 
             builder
                 .SetFieldRepetitions(3, repetition1, repetition2);
@@ -365,8 +365,8 @@ namespace NextLevelSeven.Test.Building
         public void FieldBuilder_CanBuildComponents_Individually()
         {
             var builder = Message.Build()[1][3];
-            var component1 = MockFactory.String();
-            var component2 = MockFactory.String();
+            var component1 = Any.String();
+            var component2 = Any.String();
 
             builder
                 .SetComponent(1, 1, component1)
@@ -378,8 +378,8 @@ namespace NextLevelSeven.Test.Building
         public void FieldBuilder_CanBuildComponents_OutOfOrder()
         {
             var builder = Message.Build()[1][3];
-            var component1 = MockFactory.String();
-            var component2 = MockFactory.String();
+            var component1 = Any.String();
+            var component2 = Any.String();
 
             builder
                 .SetComponent(1, 2, component2)
@@ -391,8 +391,8 @@ namespace NextLevelSeven.Test.Building
         public void FieldBuilder_CanBuildComponents_Sequentially()
         {
             var builder = Message.Build()[1][3];
-            var component1 = MockFactory.String();
-            var component2 = MockFactory.String();
+            var component1 = Any.String();
+            var component2 = Any.String();
 
             builder
                 .SetComponents(1, component1, component2);
@@ -403,8 +403,8 @@ namespace NextLevelSeven.Test.Building
         public void FieldBuilder_CanBuildSubcomponents_Individually()
         {
             var builder = Message.Build()[1][3];
-            var subcomponent1 = MockFactory.String();
-            var subcomponent2 = MockFactory.String();
+            var subcomponent1 = Any.String();
+            var subcomponent2 = Any.String();
 
             builder
                 .SetSubcomponent(1, 1, 1, subcomponent1)
@@ -416,8 +416,8 @@ namespace NextLevelSeven.Test.Building
         public void FieldBuilder_CanBuildSubcomponents_OutOfOrder()
         {
             var builder = Message.Build()[1][3];
-            var subcomponent1 = MockFactory.String();
-            var subcomponent2 = MockFactory.String();
+            var subcomponent1 = Any.String();
+            var subcomponent2 = Any.String();
 
             builder
                 .SetSubcomponent(1, 1, 2, subcomponent2)
@@ -429,8 +429,8 @@ namespace NextLevelSeven.Test.Building
         public void FieldBuilder_CanBuildSubcomponents_Sequentially()
         {
             var builder = Message.Build()[1][3];
-            var subcomponent1 = MockFactory.String();
-            var subcomponent2 = MockFactory.String();
+            var subcomponent1 = Any.String();
+            var subcomponent2 = Any.String();
 
             builder
                 .SetSubcomponents(1, 1, 1, subcomponent1, subcomponent2);
@@ -441,9 +441,9 @@ namespace NextLevelSeven.Test.Building
         public void FieldBuilder_CanSetAllSubcomponents()
         {
             var builder = Message.Build()[1][3];
-            var val0 = MockFactory.String();
-            var val1 = MockFactory.String();
-            var val2 = MockFactory.String();
+            var val0 = Any.String();
+            var val1 = Any.String();
+            var val2 = Any.String();
             builder.SetSubcomponents(1, 1, 1, val0, val1, val2);
             builder.Value.Should().Be(string.Join("&", val0, val1, val2));
         }
@@ -452,9 +452,9 @@ namespace NextLevelSeven.Test.Building
         public void FieldBuilder_CanSetAllComponents()
         {
             var builder = Message.Build()[1][3];
-            var val0 = MockFactory.String();
-            var val1 = MockFactory.String();
-            var val2 = MockFactory.String();
+            var val0 = Any.String();
+            var val1 = Any.String();
+            var val2 = Any.String();
             builder.SetComponents(1, 1, val0, val1, val2);
             builder.Value.Should().Be(string.Join("^", val0, val1, val2));
         }
@@ -463,9 +463,9 @@ namespace NextLevelSeven.Test.Building
         public void FieldBuilder_CanSetAllRepetitions()
         {
             var builder = Message.Build()[1][3];
-            var val0 = MockFactory.String();
-            var val1 = MockFactory.String();
-            var val2 = MockFactory.String();
+            var val0 = Any.String();
+            var val1 = Any.String();
+            var val2 = Any.String();
             builder.SetFieldRepetitions(1, val0, val1, val2);
             builder.Value.Should().Be(string.Join("~", val0, val1, val2));
         }

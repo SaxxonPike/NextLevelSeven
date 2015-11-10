@@ -260,7 +260,7 @@ namespace NextLevelSeven.Parsing.Elements
         {
             if (index < 0)
             {
-                throw new ParserException(ErrorCode.FieldIndexMustBeZeroOrGreater);
+                throw new ElementException(ErrorCode.FieldIndexMustBeZeroOrGreater);
             }
 
             if (IsMsh)
@@ -306,7 +306,7 @@ namespace NextLevelSeven.Parsing.Elements
         {
             if (indices.Any(index => index <= 2))
             {
-                throw new ParserException(ErrorCode.EncodingElementCannotBeMoved);
+                throw new ElementException(ErrorCode.EncodingElementCannotBeMoved);
             }
         }
     }

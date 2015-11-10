@@ -44,7 +44,7 @@ namespace NextLevelSeven.Building.Elements
 
         protected override bool AssertIndexIsMovable(int index)
         {
-            throw new BuilderException(ErrorCode.EncodingElementCannotBeMoved);
+            throw new ElementException(ErrorCode.EncodingElementCannotBeMoved);
         }
 
         /// <summary>Static fields cannot have repetitions; this method throws unconditionally.</summary>
@@ -52,7 +52,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Nothing.</returns>
         protected sealed override RepetitionBuilder CreateRepetitionBuilder(int index)
         {
-            throw new BuilderException(ErrorCode.FixedFieldsCannotBeDivided);
+            throw new ElementException(ErrorCode.FixedFieldsCannotBeDivided);
         }
 
         /// <summary>Set the contents of this field.</summary>
@@ -72,7 +72,7 @@ namespace NextLevelSeven.Building.Elements
         {
             if (repetition != 1)
             {
-                throw new BuilderException(ErrorCode.FixedFieldsCannotBeDivided);
+                throw new ElementException(ErrorCode.FixedFieldsCannotBeDivided);
             }
             Value = value;
             return this;

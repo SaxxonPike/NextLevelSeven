@@ -47,7 +47,6 @@
     <Compile Include="Building\Elements\Builder.cs" />
     <Compile Include="Building\Elements\BuilderElementCache.cs" />
     <Compile Include="Building\Elements\DescendantBuilder.cs" />
-    <Compile Include="Building\BuilderException.cs" />
     <Compile Include="Building\Elements\BuilderEncodingConfiguration.cs" />
     <Compile Include="Building\Elements\ComponentBuilder.cs" />
     <Compile Include="Building\Elements\DelimiterFieldBuilder.cs" />
@@ -83,7 +82,6 @@
     <Compile Include="Core\Properties\IMessageDetails.cs" />
     <Compile Include="Core\Properties\MessageDetails.cs" />
     <Compile Include="Parsing\Elements\DescendantParser.cs" />
-    <Compile Include="Parsing\ParserException.cs" />
     <Compile Include="Utility\EnumerableExtensions.cs" />
     <Compile Include="Utility\IIndexedCache.cs" />
     <Compile Include="Utility\ProxyDelegates.cs" />

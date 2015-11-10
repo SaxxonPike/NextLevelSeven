@@ -13,11 +13,11 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void SegmentBuilder_CanBuildSubcomponentsViaParams()
         {
-            var builder = Message.Build(MockFactory.Message());
+            var builder = Message.Build(Any.Message());
             var segment = builder[builder.NextIndex];
-            var val0 = MockFactory.StringCaps(3);
-            var val1 = MockFactory.String();
-            var val2 = MockFactory.String();
+            var val0 = Any.StringCaps(3);
+            var val1 = Any.String();
+            var val2 = Any.String();
             segment.Type = val0;
             segment.SetSubcomponents(1, 1, 1, val1, val2);
             segment.Value.Should().Be(string.Format("{0}|{1}&{2}", val0, val1, val2));
@@ -26,11 +26,11 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void SegmentBuilder_CanBuildComponentsViaParams()
         {
-            var builder = Message.Build(MockFactory.Message());
+            var builder = Message.Build(Any.Message());
             var segment = builder[builder.NextIndex];
-            var val0 = MockFactory.StringCaps(3);
-            var val1 = MockFactory.String();
-            var val2 = MockFactory.String();
+            var val0 = Any.StringCaps(3);
+            var val1 = Any.String();
+            var val2 = Any.String();
             segment.Type = val0;
             segment.SetComponents(1, 1, 2, val1, val2);
             segment.Value.Should().Be(string.Format("{0}|^{1}^{2}", val0, val1, val2));
@@ -39,11 +39,11 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void SegmentBuilder_CanBuildRepetitionsViaParams()
         {
-            var builder = Message.Build(MockFactory.Message());
+            var builder = Message.Build(Any.Message());
             var segment = builder[builder.NextIndex];
-            var val0 = MockFactory.StringCaps(3);
-            var val1 = MockFactory.String();
-            var val2 = MockFactory.String();
+            var val0 = Any.StringCaps(3);
+            var val1 = Any.String();
+            var val2 = Any.String();
             segment.Type = val0;
             segment.SetFieldRepetitions(1, 2, val1, val2);
             segment.Value.Should().Be(string.Format("{0}|~{1}~{2}", val0, val1, val2));
@@ -53,17 +53,17 @@ namespace NextLevelSeven.Test.Building
         [TestCase(3, -1)]
         [TestCase(-1, 3)]
         [TestCase(-2, -4)]
-        [ExpectedException(typeof(BuilderException))]
+        [ExpectedException(typeof(ElementException))]
         public void SegmentBuilder_ThrowsOnNegativeIndexMove(int from, int to)
         {
-            var segment = Message.Build(MockFactory.Message())[1];
+            var segment = Message.Build(Any.Message())[1];
             segment.Move(from, to);
         }
 
         [Test]
         public void SegmentBuilder_HasCorrectNextIndex()
         {
-            var message = Message.Build(MockFactory.Message());
+            var message = Message.Build(Any.Message());
             var segment = message[1];
             segment.NextIndex.Should().Be(segment.Fields.Last().Index + 1);
         }
@@ -71,7 +71,7 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void SegmentBuilder_HasNoValueWhenSettingEmptyValues()
         {
-            var message = Message.Build(MockFactory.Message());
+            var message = Message.Build(Any.Message());
             var builder = message[message.NextIndex];
             builder.Values = Enumerable.Empty<string>();
             builder.Value.Should().BeNull();
@@ -80,7 +80,7 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void SegmentBuilder_NewSegmentHasNullValue()
         {
-            var message = Message.Build(MockFactory.Message());
+            var message = Message.Build(Any.Message());
             var builder = message[message.NextIndex];
             builder.Value.Should().BeNull();
         }
@@ -88,7 +88,7 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void SegmentBuilder_NewSegmentHasNoValues()
         {
-            var message = Message.Build(MockFactory.Message());
+            var message = Message.Build(Any.Message());
             var builder = message[message.NextIndex];
             builder.Values.Should().BeEmpty();
         }
@@ -96,7 +96,7 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void SegmentBuilder_HasDelimiter()
         {
-            var builder = Message.Build(MockFactory.Message());
+            var builder = Message.Build(Any.Message());
             builder[1].Delimiter.Should().Be('|');
         }
 
@@ -104,7 +104,7 @@ namespace NextLevelSeven.Test.Building
         public void SegmentBuilder_CanMoveFields()
         {
             var builder = Message.Build(ExampleMessages.Standard);
-            var val0 = MockFactory.String();
+            var val0 = Any.String();
             builder[1][3].Value = val0;
             builder[1][3].Move(4);
             builder[1][4].Value.Should().Be(val0);
@@ -114,7 +114,7 @@ namespace NextLevelSeven.Test.Building
         [TestCase("")]
         [TestCase("M")]
         [TestCase("MS")]
-        [ExpectedException(typeof(BuilderException))]
+        [ExpectedException(typeof(ElementException))]
         public void SegmentBuilder_Throws_WhenDataIsTooShort(string value)
         {
             var builder = Message.Build(ExampleMessages.Standard)[1];
@@ -122,7 +122,7 @@ namespace NextLevelSeven.Test.Building
         }
 
         [Test]
-        [ExpectedException(typeof(BuilderException))]
+        [ExpectedException(typeof(ElementException))]
         public void SegmentBuilder_Throws_WhenMshDataIsNull()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1];
@@ -209,8 +209,8 @@ namespace NextLevelSeven.Test.Building
         public void SegmentBuilder_CanBuildFields_Individually()
         {
             var builder = Message.Build()[1];
-            var field3 = MockFactory.String();
-            var field5 = MockFactory.String();
+            var field3 = Any.String();
+            var field5 = Any.String();
 
             builder
                 .SetField(3, field3)
@@ -222,8 +222,8 @@ namespace NextLevelSeven.Test.Building
         public void SegmentBuilder_CanBuildFields_OutOfOrder()
         {
             var builder = Message.Build()[1];
-            var field3 = MockFactory.String();
-            var field5 = MockFactory.String();
+            var field3 = Any.String();
+            var field5 = Any.String();
 
             builder
                 .SetField(5, field5)
@@ -235,8 +235,8 @@ namespace NextLevelSeven.Test.Building
         public void SegmentBuilder_CanBuildFields_Sequentially()
         {
             var builder = Message.Build()[1];
-            var field3 = MockFactory.String();
-            var field5 = MockFactory.String();
+            var field3 = Any.String();
+            var field5 = Any.String();
 
             builder
                 .SetFields(3, field3, null, field5);
@@ -247,8 +247,8 @@ namespace NextLevelSeven.Test.Building
         public void SegmentBuilder_CanBuildRepetitions_Individually()
         {
             var builder = Message.Build()[1];
-            var repetition1 = MockFactory.String();
-            var repetition2 = MockFactory.String();
+            var repetition1 = Any.String();
+            var repetition2 = Any.String();
 
             builder
                 .SetFieldRepetition(3, 1, repetition1)
@@ -260,8 +260,8 @@ namespace NextLevelSeven.Test.Building
         public void SegmentBuilder_CanBuildRepetitions_OutOfOrder()
         {
             var builder = Message.Build()[1];
-            var repetition1 = MockFactory.String();
-            var repetition2 = MockFactory.String();
+            var repetition1 = Any.String();
+            var repetition2 = Any.String();
 
             builder
                 .SetFieldRepetition(3, 2, repetition2)
@@ -273,8 +273,8 @@ namespace NextLevelSeven.Test.Building
         public void SegmentBuilder_CanBuildRepetitions_Sequentially()
         {
             var builder = Message.Build()[1];
-            var repetition1 = MockFactory.String();
-            var repetition2 = MockFactory.String();
+            var repetition1 = Any.String();
+            var repetition2 = Any.String();
 
             builder
                 .SetFieldRepetitions(3, repetition1, repetition2);
@@ -285,8 +285,8 @@ namespace NextLevelSeven.Test.Building
         public void SegmentBuilder_CanBuildComponents_Individually()
         {
             var builder = Message.Build()[1];
-            var component1 = MockFactory.String();
-            var component2 = MockFactory.String();
+            var component1 = Any.String();
+            var component2 = Any.String();
 
             builder
                 .SetComponent(3, 1, 1, component1)
@@ -298,8 +298,8 @@ namespace NextLevelSeven.Test.Building
         public void SegmentBuilder_CanBuildComponents_OutOfOrder()
         {
             var builder = Message.Build()[1];
-            var component1 = MockFactory.String();
-            var component2 = MockFactory.String();
+            var component1 = Any.String();
+            var component2 = Any.String();
 
             builder
                 .SetComponent(3, 1, 2, component2)
@@ -311,8 +311,8 @@ namespace NextLevelSeven.Test.Building
         public void SegmentBuilder_CanBuildComponents_Sequentially()
         {
             var builder = Message.Build()[1];
-            var component1 = MockFactory.String();
-            var component2 = MockFactory.String();
+            var component1 = Any.String();
+            var component2 = Any.String();
 
             builder
                 .SetComponents(3, 1, component1, component2);
@@ -323,8 +323,8 @@ namespace NextLevelSeven.Test.Building
         public void SegmentBuilder_CanBuildSubcomponents_Individually()
         {
             var builder = Message.Build()[1];
-            var subcomponent1 = MockFactory.String();
-            var subcomponent2 = MockFactory.String();
+            var subcomponent1 = Any.String();
+            var subcomponent2 = Any.String();
 
             builder
                 .SetSubcomponent(3, 1, 1, 1, subcomponent1)
@@ -336,8 +336,8 @@ namespace NextLevelSeven.Test.Building
         public void SegmentBuilder_CanBuildSubcomponents_OutOfOrder()
         {
             var builder = Message.Build()[1];
-            var subcomponent1 = MockFactory.String();
-            var subcomponent2 = MockFactory.String();
+            var subcomponent1 = Any.String();
+            var subcomponent2 = Any.String();
 
             builder
                 .SetSubcomponent(3, 1, 1, 2, subcomponent2)
@@ -349,8 +349,8 @@ namespace NextLevelSeven.Test.Building
         public void SegmentBuilder_CanBuildSubcomponents_Sequentially()
         {
             var builder = Message.Build()[1];
-            var subcomponent1 = MockFactory.String();
-            var subcomponent2 = MockFactory.String();
+            var subcomponent1 = Any.String();
+            var subcomponent2 = Any.String();
 
             builder
                 .SetSubcomponents(3, 1, 1, 1, subcomponent1, subcomponent2);
@@ -382,7 +382,7 @@ namespace NextLevelSeven.Test.Building
         {
             var messageBuilder = Message.Build();
             var builder = messageBuilder[2];
-            var type = MockFactory.StringCaps(3);
+            var type = Any.StringCaps(3);
             builder[0].Value = type;
             builder.Type.Should().Be(type);
         }
@@ -392,7 +392,7 @@ namespace NextLevelSeven.Test.Building
         {
             var messageBuilder = Message.Build();
             var builder = messageBuilder[2];
-            var type = MockFactory.StringCaps(3);
+            var type = Any.StringCaps(3);
             builder.Type = type;
             builder[0].Value.Should().Be(type);
         }

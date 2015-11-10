@@ -34,10 +34,10 @@ namespace NextLevelSeven.Test.Building
         }
 
         [Test]
-        [ExpectedException(typeof(BuilderException))]
+        [ExpectedException(typeof(ElementException))]
         public void MessageBuilder_ThrowsWithIncorrectFirstSegment()
         {
-            Message.Build(MockFactory.String());
+            Message.Build(Any.String());
         }
 
         [Test]
@@ -89,7 +89,7 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void MessageBuilder_HasDetails()
         {
-            var val0 = MockFactory.String();
+            var val0 = Any.String();
             var message = string.Format("MSH|^~\\&\r{0}", val0);
             var builder = Message.Build(message);
             builder.Details.Should().NotBeNull();
@@ -100,8 +100,8 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void MessageBuilder_CanInsertElementBeforeDescendant()
         {
-            var val0 = MockFactory.StringCaps(3) + "|" + MockFactory.String();
-            var val1 = MockFactory.StringCaps(3) + "|" + MockFactory.String();
+            var val0 = Any.StringCaps(3) + "|" + Any.String();
+            var val1 = Any.StringCaps(3) + "|" + Any.String();
             var message0 = string.Format("MSH|^~\\&\r{0}", val0);
             var message1 = string.Format("MSH|^~\\&\r{0}", val1);
             var builder0 = Message.Build(message0);
@@ -115,8 +115,8 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void MessageBuilder_CanInsertStringBeforeDescendant()
         {
-            var val0 = MockFactory.StringCaps(3) + "|" + MockFactory.String();
-            var val1 = MockFactory.StringCaps(3) + "|" + MockFactory.String();
+            var val0 = Any.StringCaps(3) + "|" + Any.String();
+            var val1 = Any.StringCaps(3) + "|" + Any.String();
             var message = string.Format("MSH|^~\\&\r{0}", val0);
             var builder = Message.Build(message);
             builder.Insert(2, val1);
@@ -127,8 +127,8 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void MessageBuilder_CanInsertElementBeforeSelf()
         {
-            var val0 = MockFactory.StringCaps(3) + "|" + MockFactory.String();
-            var val1 = MockFactory.StringCaps(3) + "|" + MockFactory.String();
+            var val0 = Any.StringCaps(3) + "|" + Any.String();
+            var val1 = Any.StringCaps(3) + "|" + Any.String();
             var message0 = string.Format("MSH|^~\\&\r{0}", val0);
             var message1 = string.Format("MSH|^~\\&\r{0}", val1);
             var builder0 = Message.Build(message0);
@@ -142,8 +142,8 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void MessageBuilder_CanInsertStringBeforeSelf()
         {
-            var val0 = MockFactory.StringCaps(3) + "|" + MockFactory.String();
-            var val1 = MockFactory.StringCaps(3) + "|" + MockFactory.String();
+            var val0 = Any.StringCaps(3) + "|" + Any.String();
+            var val1 = Any.StringCaps(3) + "|" + Any.String();
             var message = string.Format("MSH|^~\\&\r{0}", val0);
             var builder = Message.Build(message);
             builder[2].Insert(val1);
@@ -154,8 +154,8 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void MessageBuilder_CanAddValue()
         {
-            var val0 = MockFactory.StringCaps(3) + "|" + MockFactory.String();
-            var val1 = MockFactory.StringCaps(3) + "|" + MockFactory.String();
+            var val0 = Any.StringCaps(3) + "|" + Any.String();
+            var val1 = Any.StringCaps(3) + "|" + Any.String();
             var message = string.Format("MSH|^~\\&\r{0}", val0);
             var builder = Message.Build(message);
             builder.Add(val1);
@@ -166,8 +166,8 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void MessageBuilder_CanAddValues()
         {
-            var val0 = MockFactory.StringCaps(3) + "|" + MockFactory.String();
-            var val1 = MockFactory.StringCaps(3) + "|" + MockFactory.String();
+            var val0 = Any.StringCaps(3) + "|" + Any.String();
+            var val1 = Any.StringCaps(3) + "|" + Any.String();
             const string message = "MSH|^~\\&";
             var builder = Message.Build(message);
             builder.AddRange(val0, val1);
@@ -178,8 +178,8 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void MessageBuilder_CanAddValuesWithEnumerable()
         {
-            var val0 = MockFactory.StringCaps(3) + "|" + MockFactory.String();
-            var val1 = MockFactory.StringCaps(3) + "|" + MockFactory.String();
+            var val0 = Any.StringCaps(3) + "|" + Any.String();
+            var val1 = Any.StringCaps(3) + "|" + Any.String();
             const string message = "MSH|^~\\&";
             var builder = Message.Build(message);
             builder.AddRange(new[] {val0, val1}.AsEnumerable());
@@ -190,8 +190,8 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void MessageBuilder_CanGetValue()
         {
-            var val0 = MockFactory.StringCaps(3) + "|" + MockFactory.String();
-            var val1 = MockFactory.StringCaps(3) + "|" + MockFactory.String();
+            var val0 = Any.StringCaps(3) + "|" + Any.String();
+            var val1 = Any.StringCaps(3) + "|" + Any.String();
             var message = string.Format("MSH|^~\\&\r{0}\r{1}", val0, val1);
             var builder = Message.Build(message);
             builder.Value.Should().Be(message);
@@ -200,8 +200,8 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void MessageBuilder_CanGetValues()
         {
-            var val0 = MockFactory.StringCaps(3) + "|" + MockFactory.String();
-            var val1 = MockFactory.StringCaps(3) + "|" + MockFactory.String();
+            var val0 = Any.StringCaps(3) + "|" + Any.String();
+            var val1 = Any.StringCaps(3) + "|" + Any.String();
             var builder = Message.Build(string.Format("MSH|^~\\&\r{0}\r{1}",
                 val0, val1));
             builder.Values.Should().Equal("MSH|^~\\&", val0, val1);
@@ -220,8 +220,8 @@ namespace NextLevelSeven.Test.Building
         public void MessageBuilder_CanBuildFields_Individually()
         {
             var builder = Message.Build();
-            var field3 = MockFactory.String();
-            var field5 = MockFactory.String();
+            var field3 = Any.String();
+            var field5 = Any.String();
 
             builder
                 .SetField(1, 3, field3)
@@ -233,8 +233,8 @@ namespace NextLevelSeven.Test.Building
         public void MessageBuilder_CanBuildFields_OutOfOrder()
         {
             var builder = Message.Build();
-            var field3 = MockFactory.String();
-            var field5 = MockFactory.String();
+            var field3 = Any.String();
+            var field5 = Any.String();
 
             builder
                 .SetField(1, 5, field5)
@@ -246,8 +246,8 @@ namespace NextLevelSeven.Test.Building
         public void MessageBuilder_CanBuildFields_Sequentially()
         {
             var builder = Message.Build();
-            var field3 = MockFactory.String();
-            var field5 = MockFactory.String();
+            var field3 = Any.String();
+            var field5 = Any.String();
 
             builder
                 .SetFields(1, 3, field3, null, field5);
@@ -258,8 +258,8 @@ namespace NextLevelSeven.Test.Building
         public void MessageBuilder_CanBuildRepetitions_Individually()
         {
             var builder = Message.Build();
-            var repetition1 = MockFactory.String();
-            var repetition2 = MockFactory.String();
+            var repetition1 = Any.String();
+            var repetition2 = Any.String();
 
             builder
                 .SetFieldRepetition(1, 3, 1, repetition1)
@@ -271,8 +271,8 @@ namespace NextLevelSeven.Test.Building
         public void MessageBuilder_CanBuildRepetitions_OutOfOrder()
         {
             var builder = Message.Build();
-            var repetition1 = MockFactory.String();
-            var repetition2 = MockFactory.String();
+            var repetition1 = Any.String();
+            var repetition2 = Any.String();
 
             builder
                 .SetFieldRepetition(1, 3, 2, repetition2)
@@ -284,8 +284,8 @@ namespace NextLevelSeven.Test.Building
         public void MessageBuilder_CanBuildRepetitions_Sequentially()
         {
             var builder = Message.Build();
-            var repetition1 = MockFactory.String();
-            var repetition2 = MockFactory.String();
+            var repetition1 = Any.String();
+            var repetition2 = Any.String();
 
             builder
                 .SetFieldRepetitions(1, 3, repetition1, repetition2);
@@ -296,8 +296,8 @@ namespace NextLevelSeven.Test.Building
         public void MessageBuilder_CanBuildSegments_Individually()
         {
             var builder = Message.Build();
-            var segment2 = "ZZZ|" + MockFactory.String();
-            var segment3 = "ZAA|" + MockFactory.String();
+            var segment2 = "ZZZ|" + Any.String();
+            var segment3 = "ZAA|" + Any.String();
 
             builder
                 .SetSegment(2, segment2)
@@ -309,8 +309,8 @@ namespace NextLevelSeven.Test.Building
         public void MessageBuilder_CanBuildSegments_OutOfOrder()
         {
             var builder = Message.Build();
-            var segment2 = "ZOT|" + MockFactory.String();
-            var segment3 = "ZED|" + MockFactory.String();
+            var segment2 = "ZOT|" + Any.String();
+            var segment3 = "ZED|" + Any.String();
 
             builder
                 .SetSegment(4, segment3)
@@ -322,8 +322,8 @@ namespace NextLevelSeven.Test.Building
         public void MessageBuilder_CanBuildSegments_Sequentially()
         {
             var builder = Message.Build();
-            var segment2 = "ZIP|" + MockFactory.String();
-            var segment3 = "ZAP|" + MockFactory.String();
+            var segment2 = "ZIP|" + Any.String();
+            var segment3 = "ZAP|" + Any.String();
 
             builder
                 .SetSegments(2, segment2, segment3);
@@ -334,8 +334,8 @@ namespace NextLevelSeven.Test.Building
         public void MessageBuilder_CanBuildComponents_Individually()
         {
             var builder = Message.Build();
-            var component1 = MockFactory.String();
-            var component2 = MockFactory.String();
+            var component1 = Any.String();
+            var component2 = Any.String();
 
             builder
                 .SetComponent(1, 3, 1, 1, component1)
@@ -347,8 +347,8 @@ namespace NextLevelSeven.Test.Building
         public void MessageBuilder_CanBuildComponents_OutOfOrder()
         {
             var builder = Message.Build();
-            var component1 = MockFactory.String();
-            var component2 = MockFactory.String();
+            var component1 = Any.String();
+            var component2 = Any.String();
 
             builder
                 .SetComponent(1, 3, 1, 2, component2)
@@ -360,8 +360,8 @@ namespace NextLevelSeven.Test.Building
         public void MessageBuilder_CanBuildComponents_Sequentially()
         {
             var builder = Message.Build();
-            var component1 = MockFactory.String();
-            var component2 = MockFactory.String();
+            var component1 = Any.String();
+            var component2 = Any.String();
 
             builder
                 .SetComponents(1, 3, 1, component1, component2);
@@ -372,8 +372,8 @@ namespace NextLevelSeven.Test.Building
         public void MessageBuilder_CanBuildSubcomponents_Individually()
         {
             var builder = Message.Build();
-            var subcomponent1 = MockFactory.String();
-            var subcomponent2 = MockFactory.String();
+            var subcomponent1 = Any.String();
+            var subcomponent2 = Any.String();
 
             builder
                 .SetSubcomponent(1, 3, 1, 1, 1, subcomponent1)
@@ -385,8 +385,8 @@ namespace NextLevelSeven.Test.Building
         public void MessageBuilder_CanBuildSubcomponents_OutOfOrder()
         {
             var builder = Message.Build();
-            var subcomponent1 = MockFactory.String();
-            var subcomponent2 = MockFactory.String();
+            var subcomponent1 = Any.String();
+            var subcomponent2 = Any.String();
 
             builder
                 .SetSubcomponent(1, 3, 1, 1, 2, subcomponent2)
@@ -398,8 +398,8 @@ namespace NextLevelSeven.Test.Building
         public void MessageBuilder_CanBuildSubcomponents_Sequentially()
         {
             var builder = Message.Build();
-            var subcomponent1 = MockFactory.String();
-            var subcomponent2 = MockFactory.String();
+            var subcomponent1 = Any.String();
+            var subcomponent2 = Any.String();
 
             builder
                 .SetSubcomponents(1, 3, 1, 1, 1, subcomponent1, subcomponent2);
@@ -436,7 +436,7 @@ namespace NextLevelSeven.Test.Building
         {
             var before = GC.GetTotalMemory(true);
             var message = Message.Build();
-            message.SetField(1000000, 1000000, MockFactory.String());
+            message.SetField(1000000, 1000000, Any.String());
             var messageString = message.Value;
             var usage = GC.GetTotalMemory(false) - before;
             var overhead = usage - (messageString.Length << 1);
@@ -489,8 +489,8 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void MessageBuilder_ReturnsSegmentValues()
         {
-            var id1 = MockFactory.String();
-            var id2 = MockFactory.String();
+            var id1 = Any.String();
+            var id2 = Any.String();
             var builder = Message.Build(string.Format("MSH|^~\\&|{0}\xDPID|{1}", id1, id2));
             var builderValues = builder.Values.ToList();
             builderValues[0].Should().Be(string.Format("MSH|^~\\&|{0}", id1));
@@ -500,8 +500,8 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void MessageBuilder_ReturnsSegmentValuesAsArray()
         {
-            var id1 = MockFactory.String();
-            var id2 = MockFactory.String();
+            var id1 = Any.String();
+            var id2 = Any.String();
             var builder = Message.Build(string.Format("MSH|^~\\&|{0}\xDPID|{1}", id1, id2));
             var builderValues = builder.Values.ToArray();
             builderValues[0].Should().Be(string.Format("MSH|^~\\&|{0}", id1));
@@ -533,7 +533,7 @@ namespace NextLevelSeven.Test.Building
         }
 
         [Test]
-        [ExpectedException(typeof(BuilderException))]
+        [ExpectedException(typeof(ElementException))]
         public void MessageBuilder_CanNotChangeTypeFromMsh()
         {
             var builder = Message.Build();
@@ -541,7 +541,7 @@ namespace NextLevelSeven.Test.Building
         }
 
         [Test]
-        [ExpectedException(typeof(BuilderException))]
+        [ExpectedException(typeof(ElementException))]
         public void MessageBuilder_CanNotChangeTypeToMsh()
         {
             // NOTE: by design.
@@ -554,8 +554,8 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void MessageBuilder_CanSetMsh2Component()
         {
-            var id1 = MockFactory.String();
-            var id2 = MockFactory.String();
+            var id1 = Any.String();
+            var id2 = Any.String();
             var builder = Message.Build(string.Format("MSH|^~\\&|{0}^{1}", id1, id2));
             builder.SetField(1, 2, "$~\\&");
             builder.Value.Should().Be(string.Format("MSH|$~\\&|{0}${1}", id1, id2));
@@ -564,8 +564,8 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void MessageBuilder_CanSetMsh2Repetition()
         {
-            var id1 = MockFactory.String();
-            var id2 = MockFactory.String();
+            var id1 = Any.String();
+            var id2 = Any.String();
             var builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}", id1, id2));
             builder.SetField(1, 2, "^$\\&");
             builder.Value.Should().Be(string.Format("MSH|^$\\&|{0}${1}", id1, id2));
@@ -576,8 +576,8 @@ namespace NextLevelSeven.Test.Building
         {
             // NOTE: changing escape code does not affect anything but MSH-2 for design reasons.
             // (change this message if the functionality is ever added and this test updated.)
-            var id1 = MockFactory.String();
-            var id2 = MockFactory.String();
+            var id1 = Any.String();
+            var id2 = Any.String();
             var builder = Message.Build(string.Format("MSH|^~\\&|\\H\\{0}\\N\\{1}", id1, id2));
             builder.SetField(1, 2, "^~$&");
             builder.Value.Should().Be(string.Format("MSH|^~$&|\\H\\{0}\\N\\{1}", id1, id2));
@@ -586,8 +586,8 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void MessageBuilder_CanSetMsh2Subcomponent()
         {
-            var id1 = MockFactory.String();
-            var id2 = MockFactory.String();
+            var id1 = Any.String();
+            var id2 = Any.String();
             var builder = Message.Build(string.Format("MSH|^~\\&|{0}&{1}", id1, id2));
             builder.SetField(1, 2, "^~\\$");
             builder.Value.Should().Be(string.Format("MSH|^~\\$|{0}${1}", id1, id2));
@@ -607,7 +607,7 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void MessageBuilder_CanUseDifferentFieldDelimiter()
         {
-            var id = MockFactory.String();
+            var id = Any.String();
             const char delimiter = ':';
             var builder = Message.Build(string.Format("MSH{0}^~\\&{0}{1}", delimiter, id));
             builder.Encoding.FieldDelimiter.Should().Be(delimiter);
@@ -617,7 +617,7 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void MessageBuilder_CanChangeFieldDelimiter()
         {
-            var id = MockFactory.String();
+            var id = Any.String();
             const char delimiter = ':';
             var builder = Message.Build(string.Format("MSH|^~\\&|{0}", id));
             builder.Encoding.FieldDelimiter = delimiter;
@@ -628,7 +628,7 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void MessageBuilder_CanUseDifferentEscapeDelimiter()
         {
-            var id = MockFactory.String();
+            var id = Any.String();
             const char delimiter = ':';
             var builder = Message.Build(string.Format("MSH|^~{0}&|{1}", delimiter, id));
             builder.Encoding.EscapeCharacter.Should().Be(delimiter);
@@ -638,7 +638,7 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void MessageBuilder_CanChangeEscapeDelimiter()
         {
-            var id = MockFactory.String();
+            var id = Any.String();
             const char delimiter = ':';
             var builder = Message.Build(string.Format("MSH|^~\\&|{0}", id));
             builder.Encoding.FieldDelimiter = delimiter;
@@ -649,7 +649,7 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void MessageBuilder_CanMapSegments()
         {
-            var id = MockFactory.String();
+            var id = Any.String();
             IMessage tree = Message.Build(string.Format("MSH|^~\\&|{0}", id));
             tree.GetValue(1).Should().Be(string.Format("MSH|^~\\&|{0}", id));
         }
@@ -657,7 +657,7 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void MessageBuilder_CanMapFields()
         {
-            var id = MockFactory.String();
+            var id = Any.String();
             IMessage tree = Message.Build(string.Format("MSH|^~\\&|{0}", id));
             tree.GetValue(1, 3).Should().Be(id);
         }
@@ -665,8 +665,8 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void MessageBuilder_CanMapRepetitions()
         {
-            var id1 = MockFactory.String();
-            var id2 = MockFactory.String();
+            var id1 = Any.String();
+            var id2 = Any.String();
             IMessage tree = Message.Build(string.Format("MSH|^~\\&|{0}~{1}", id1, id2));
             tree.GetValue(1, 3, 1).Should().Be(id1);
             tree.GetValue(1, 3, 2).Should().Be(id2);
@@ -675,8 +675,8 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void MessageBuilder_CanMapComponents()
         {
-            var id1 = MockFactory.String();
-            var id2 = MockFactory.String();
+            var id1 = Any.String();
+            var id2 = Any.String();
             IMessage tree = Message.Build(string.Format("MSH|^~\\&|{0}^{1}", id1, id2));
             tree.GetValue(1, 3, 1, 1).Should().Be(id1);
             tree.GetValue(1, 3, 1, 2).Should().Be(id2);
@@ -685,8 +685,8 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void MessageBuilder_CanMapSubcomponents()
         {
-            var id1 = MockFactory.String();
-            var id2 = MockFactory.String();
+            var id1 = Any.String();
+            var id2 = Any.String();
             IMessage tree = Message.Build(string.Format("MSH|^~\\&|{0}&{1}", id1, id2));
             tree.GetValue(1, 3, 1, 1, 1).Should().Be(id1);
             tree.GetValue(1, 3, 1, 1, 2).Should().Be(id2);

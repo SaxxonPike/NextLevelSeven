@@ -35,7 +35,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Component_CanMoveSubcomponents()
         {
             var element = Message.Parse(ExampleMessages.Minimum)[1][3][1][1];
-            element.Values = new[] {MockFactory.String(), MockFactory.String(), MockFactory.String(), MockFactory.String()};
+            element.Values = new[] {Any.String(), Any.String(), Any.String(), Any.String()};
             var newMessage = element.Clone();
             newMessage[2].Move(3);
             Assert.AreEqual(element[2].Value, newMessage[3].Value);
@@ -46,7 +46,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var component = Message.Parse(ExampleMessages.Standard)[1][3][1][1];
             string value = null;
-            AssertAction.Throws<ParserException>(() => { value = component[0].Value; });
+            AssertAction.Throws<ElementException>(() => { value = component[0].Value; });
             Assert.IsNull(value);
         }
 
@@ -73,7 +73,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var component = Message.Parse(ExampleMessages.Standard)[2][3][4][1];
             var count = component.ValueCount;
-            var id = MockFactory.String();
+            var id = Any.String();
             component[count + 1].Value = id;
             Assert.AreEqual(count + 1, component.ValueCount,
                 @"Number of elements after appending at the end of a component is incorrect.");
@@ -82,10 +82,10 @@ namespace NextLevelSeven.Test.Parsing
         [Test]
         public void Component_CanGetSubcomponents()
         {
-            var id1 = MockFactory.String();
-            var id2 = MockFactory.String();
-            var id3 = MockFactory.String();
-            var id4 = MockFactory.String();
+            var id1 = Any.String();
+            var id2 = Any.String();
+            var id3 = Any.String();
+            var id4 = Any.String();
             var component =
                 Message.Parse(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}", id1, id2, id3, id4))[1][3][2][2];
             Assert.AreEqual(2, component.Subcomponents.Count());
@@ -94,10 +94,10 @@ namespace NextLevelSeven.Test.Parsing
         [Test]
         public void Component_CanGetSubcomponentsGenerically()
         {
-            var id1 = MockFactory.String();
-            var id2 = MockFactory.String();
-            var id3 = MockFactory.String();
-            var id4 = MockFactory.String();
+            var id1 = Any.String();
+            var id2 = Any.String();
+            var id3 = Any.String();
+            var id4 = Any.String();
             IComponent component =
                 Message.Parse(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}", id1, id2, id3, id4))[1][3][2][2];
             Assert.AreEqual(2, component.Subcomponents.Count());
@@ -106,10 +106,10 @@ namespace NextLevelSeven.Test.Parsing
         [Test]
         public void Component_CanGetSubcomponentsByIndexer()
         {
-            var id1 = MockFactory.String();
-            var id2 = MockFactory.String();
-            var id3 = MockFactory.String();
-            var id4 = MockFactory.String();
+            var id1 = Any.String();
+            var id2 = Any.String();
+            var id3 = Any.String();
+            var id4 = Any.String();
             var component =
                 Message.Parse(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}", id1, id2, id3, id4))[1][3][2][2][2];
             Assert.AreEqual(id4, component.Value);
@@ -128,7 +128,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Component_CanWriteStringValue()
         {
             var component = Message.Parse(ExampleMessages.Standard)[1][3][1][1];
-            var value = MockFactory.String();
+            var value = Any.String();
             component.Value = value;
             Assert.AreEqual(value, component.Value, "Value mismatch after write.");
         }
@@ -137,7 +137,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Component_CanWriteNullValue()
         {
             var component = Message.Parse(ExampleMessages.Standard)[1][3][1][1];
-            var value = MockFactory.String();
+            var value = Any.String();
             component.Value = value;
             component.Value = null;
             Assert.IsNull(component.Value, "Value mismatch after write.");

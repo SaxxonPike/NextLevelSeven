@@ -160,15 +160,15 @@ namespace NextLevelSeven.Parsing.Elements
             {
                 if (value == null)
                 {
-                    throw new ParserException(ErrorCode.MessageDataMustNotBeNull);
+                    throw new ElementException(ErrorCode.MessageDataMustNotBeNull);
                 }
                 if (value.Length < 8)
                 {
-                    throw new ParserException(ErrorCode.MessageDataIsTooShort);
+                    throw new ElementException(ErrorCode.MessageDataIsTooShort);
                 }
                 if (!value.StartsWith("MSH"))
                 {
-                    throw new ParserException(ErrorCode.MessageDataMustStartWithMsh);
+                    throw new ElementException(ErrorCode.MessageDataMustStartWithMsh);
                 }
                 base.Value = SanitizeLineEndings(value);
             }
@@ -189,7 +189,7 @@ namespace NextLevelSeven.Parsing.Elements
         {
             if (index < 1)
             {
-                throw new ParserException(ErrorCode.SegmentIndexMustBeGreaterThanZero);
+                throw new ElementException(ErrorCode.SegmentIndexMustBeGreaterThanZero);
             }
 
             var result = new SegmentParser(this, index - 1, index);
@@ -224,7 +224,7 @@ namespace NextLevelSeven.Parsing.Elements
         {
             if (indices.Any(index => index <= 1))
             {
-                throw new ParserException(ErrorCode.EncodingElementCannotBeMoved);
+                throw new ElementException(ErrorCode.EncodingElementCannotBeMoved);
             }
         }
     }

@@ -180,7 +180,7 @@ namespace NextLevelSeven.Parsing.Elements
         {
             if (index < 1)
             {
-                throw new ParserException(ErrorCode.ElementIndexMustBeZeroOrGreater);
+                throw new ElementException(ErrorCode.ElementIndexMustBeZeroOrGreater);
             }
             DescendantDivider.Delete(index - 1);
         }
@@ -192,7 +192,7 @@ namespace NextLevelSeven.Parsing.Elements
         {
             if (index < 1)
             {
-                throw new ParserException(ErrorCode.ElementIndexMustBeZeroOrGreater);
+                throw new ElementException(ErrorCode.ElementIndexMustBeZeroOrGreater);
             }
             return Insert(index, element.Value);
         }
@@ -204,7 +204,7 @@ namespace NextLevelSeven.Parsing.Elements
         {
             if (index < 1)
             {
-                throw new ParserException(ErrorCode.ElementIndexMustBeZeroOrGreater);
+                throw new ElementException(ErrorCode.ElementIndexMustBeZeroOrGreater);
             }
             DescendantDivider.Insert(index - 1, value);
             return GetDescendant(index);
@@ -217,7 +217,7 @@ namespace NextLevelSeven.Parsing.Elements
         {
             if (sourceIndex < 1 || targetIndex < 1)
             {
-                throw new ParserException(ErrorCode.ElementIndexMustBeZeroOrGreater);
+                throw new ElementException(ErrorCode.ElementIndexMustBeZeroOrGreater);
             }
             DescendantDivider.Move(sourceIndex - 1, targetIndex - 1);
         }

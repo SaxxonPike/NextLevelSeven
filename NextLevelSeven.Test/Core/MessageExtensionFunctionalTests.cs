@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using FluentAssertions;
 using NextLevelSeven.Core;
 using NextLevelSeven.Test.Parsing;
 using NextLevelSeven.Test.Testing;
@@ -14,36 +15,32 @@ namespace NextLevelSeven.Test.Core
         public void MessageExtensions_Builder_CanFilterPid_FromMessage()
         {
             var message = Message.Build(ExampleMessages.MultiplePid);
-            Assert.IsTrue(message.Segments.ExceptType("PID").Any(), "Only PIDs are to be filtered.");
-            Assert.IsTrue(message.Segments.ExceptType("PID").All(s => s.Type != "PID"),
-                "PIDs were not completely filtered.");
+            message.Segments.ExceptType("PID").Should().NotBeEmpty()
+                .And.OnlyContain(s => s.Type != "PID");
         }
 
         [Test]
         public void MessageExtensions_Parser_CanFilterPid_FromMessage()
         {
             var message = Message.Parse(ExampleMessages.MultiplePid);
-            Assert.IsTrue(message.Segments.ExceptType("PID").Any(), "Only PIDs are to be filtered.");
-            Assert.IsTrue(message.Segments.ExceptType("PID").All(s => s.Type != "PID"),
-                "PIDs were not completely filtered.");
+            message.Segments.ExceptType("PID").Should().NotBeEmpty()
+                .And.OnlyContain(s => s.Type != "PID");
         }
 
         [Test]
         public void MessageExtensions_Builder_CanFilterPidAndObx_FromMessage()
         {
             var message = Message.Build(ExampleMessages.MultiplePid);
-            Assert.IsTrue(message.Segments.ExceptTypes("PID", "OBX").Any(), "Only PIDs and OBXs are to be filtered.");
-            Assert.IsTrue(message.Segments.ExceptTypes("PID", "OBX").All(s => s.Type != "PID" && s.Type != "OBX"),
-                "PIDs and OBXs were not completely filtered.");
+            message.Segments.ExceptTypes("PID", "OBX").Should().NotBeEmpty()
+                .And.OnlyContain(s => s.Type != "PID" && s.Type != "OBX");
         }
 
         [Test]
         public void MessageExtensions_Parser_CanFilterPidAndObx_FromMessage()
         {
             var message = Message.Parse(ExampleMessages.MultiplePid);
-            Assert.IsTrue(message.Segments.ExceptTypes(new [] {"PID", "OBX"}.AsEnumerable()).Any(), "Only PIDs and OBXs are to be filtered.");
-            Assert.IsTrue(message.Segments.ExceptTypes(new[] { "PID", "OBX" }.AsEnumerable()).All(s => s.Type != "PID" && s.Type != "OBX"),
-                "PIDs and OBXs were not completely filtered.");
+            message.Segments.ExceptTypes("PID", "OBX").Should().NotBeEmpty()
+                .And.OnlyContain(s => s.Type != "PID" && s.Type != "OBX");
         }
 
         [Test]
@@ -51,8 +48,7 @@ namespace NextLevelSeven.Test.Core
         {
             var message = Message.Build(ExampleMessages.MultipleObr);
             var splits = message.SplitSegments("OBR");
-            Assert.AreEqual(message.Segments.OfType("OBR").Count(), splits.Count(),
-                "OBR split count doesn't match number of OBR segments.");
+            splits.Count().Should().Be(message.Segments.OfType("OBR").Count());
         }
 
         [Test]
@@ -60,8 +56,7 @@ namespace NextLevelSeven.Test.Core
         {
             var message = Message.Parse(ExampleMessages.MultipleObr);
             var splits = message.SplitSegments("OBR");
-            Assert.AreEqual(message.Segments.OfType("OBR").Count(), splits.Count(),
-                "OBR split count doesn't match number of OBR segments.");
+            splits.Count().Should().Be(message.Segments.OfType("OBR").Count());
         }
 
         [Test]

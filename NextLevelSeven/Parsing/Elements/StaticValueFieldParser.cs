@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NextLevelSeven.Core;
 using NextLevelSeven.Diagnostics;
 using NextLevelSeven.Utility;
 
@@ -66,7 +67,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Repetition descendant.</returns>
         protected sealed override RepetitionParser CreateRepetition(int index)
         {
-            throw new ParserException(ErrorCode.FixedFieldsCannotBeDivided);
+            throw new ElementException(ErrorCode.FixedFieldsCannotBeDivided);
         }
 
         /// <summary>Deep clone this field.</summary>

@@ -44,7 +44,7 @@ namespace NextLevelSeven.Test.Diagnostics
         {
             ErrorMessages.SetLanguage("de");
             var message = ErrorMessages.Get(ErrorCode.Unspecified);
-            ErrorMessages.SetLanguage(MockFactory.String());
+            ErrorMessages.SetLanguage(Any.String());
             Assert.AreNotEqual(message, ErrorMessages.Get(ErrorCode.Unspecified),
                 @"German and English returned the same error string.");
         }

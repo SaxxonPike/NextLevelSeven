@@ -13,15 +13,15 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void SubcomponentBuilder_ExistsWithNonNullValue()
         {
-            var builder = Message.Build(MockFactory.Message())[1][3][1][1][1];
-            builder.Value = MockFactory.String();
+            var builder = Message.Build(Any.Message())[1][3][1][1][1];
+            builder.Value = Any.String();
             builder.Exists.Should().BeTrue();
         }
 
         [Test]
         public void SubcomponentBuilder_ExistsWithNullPresentValue()
         {
-            var builder = Message.Build(MockFactory.Message())[1][3][1][1][1];
+            var builder = Message.Build(Any.Message())[1][3][1][1][1];
             builder.Value = HL7.Null;
             builder.Exists.Should().BeTrue();
         }
@@ -29,7 +29,7 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void SubcomponentBuilder_DoesNotExistWithNullValue()
         {
-            var builder = Message.Build(MockFactory.Message())[1][3][1][1][1];
+            var builder = Message.Build(Any.Message())[1][3][1][1][1];
             builder.Value = null;
             builder.Exists.Should().BeFalse();
         }
@@ -39,7 +39,7 @@ namespace NextLevelSeven.Test.Building
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
             var codec = builder.Converter;
-            var value = MockFactory.Number();
+            var value = Any.Number();
             codec.AsInt = value;
             builder.Value.Should().Be(value.ToString(CultureInfo.InvariantCulture));
         }
@@ -59,7 +59,7 @@ namespace NextLevelSeven.Test.Building
         }
 
         [Test]
-        [ExpectedException(typeof(BuilderException))]
+        [ExpectedException(typeof(ElementException))]
         public void SubcomponentBuilder_ThrowsOnIndex()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
@@ -67,7 +67,7 @@ namespace NextLevelSeven.Test.Building
         }
 
         [Test]
-        [ExpectedException(typeof(BuilderException))]
+        [ExpectedException(typeof(ElementException))]
         public void SubcomponentBuilder_ThrowsOnDelete()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
@@ -75,7 +75,7 @@ namespace NextLevelSeven.Test.Building
         }
 
         [Test]
-        [ExpectedException(typeof(BuilderException))]
+        [ExpectedException(typeof(ElementException))]
         public void SubcomponentBuilder_ThrowsOnMove()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
@@ -83,15 +83,15 @@ namespace NextLevelSeven.Test.Building
         }
 
         [Test]
-        [ExpectedException(typeof(BuilderException))]
+        [ExpectedException(typeof(ElementException))]
         public void SubcomponentBuilder_ThrowsOnInsertString()
         {
             var builder = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
-            builder.Insert(1, MockFactory.String()).Should().BeNull();
+            builder.Insert(1, Any.String()).Should().BeNull();
         }
 
         [Test]
-        [ExpectedException(typeof(BuilderException))]
+        [ExpectedException(typeof(ElementException))]
         public void SubcomponentBuilder_ThrowsOnInsertElement()
         {
             var builder0 = Message.Build(ExampleMessages.Standard)[1][3][1][1][1];
@@ -131,7 +131,7 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void SubcomponentBuilder_CanGetMessage()
         {
-            var message = Message.Build(MockFactory.Message());
+            var message = Message.Build(Any.Message());
             var builder = message[1][3][1][1][1];
             message.Should().BeSameAs(builder.Message);
         }
@@ -139,7 +139,7 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void SubcomponentBuilder_CloneHasNullMessage()
         {
-            var message = Message.Build(MockFactory.Message());
+            var message = Message.Build(Any.Message());
             var builder = message[1][3][1][1][1].Clone();
             builder.Message.Should().BeNull();
         }
@@ -147,21 +147,21 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void SubcomponentBuilder_CanGetValue()
         {
-            var val0 = MockFactory.String();
-            var val1 = MockFactory.String();
+            var val0 = Any.String();
+            var val1 = Any.String();
             var builder =
-                Message.Build(string.Format("MSH|^~\\&|{0}&{1}&{2}", val0, val1, MockFactory.String()))[1][3][1][1][2];
+                Message.Build(string.Format("MSH|^~\\&|{0}&{1}&{2}", val0, val1, Any.String()))[1][3][1][1][2];
             builder.Value.Should().Be(val1);
         }
 
         [Test]
         public void SubcomponentBuilder_CanGetValues()
         {
-            var val1 = MockFactory.String();
-            var val2 = MockFactory.String();
-            var val3 = MockFactory.String();
+            var val1 = Any.String();
+            var val2 = Any.String();
+            var val3 = Any.String();
             var builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}",
-                MockFactory.String(), val1, val2, val3))[1][3][2][2][2];
+                Any.String(), val1, val2, val3))[1][3][2][2][2];
             builder.Values.Should().Equal(val3);
         }
 
@@ -169,7 +169,7 @@ namespace NextLevelSeven.Test.Building
         public void SubcomponentBuilder_CanBeCloned()
         {
             var builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}",
-                MockFactory.String(), MockFactory.String(), MockFactory.String(), MockFactory.String()))[1][3][2][2][2];
+                Any.String(), Any.String(), Any.String(), Any.String()))[1][3][2][2][2];
             var clone = builder.Clone();
             builder.Should().NotBeSameAs(clone);
             builder.ToString().Should().Be(clone.ToString());
@@ -179,7 +179,7 @@ namespace NextLevelSeven.Test.Building
         public void SubcomponentBuilder_CanBeCloned_Generic()
         {
             IElement builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}",
-                MockFactory.String(), MockFactory.String(), MockFactory.String(), MockFactory.String()))[1][3][2][2][2];
+                Any.String(), Any.String(), Any.String(), Any.String()))[1][3][2][2][2];
             var clone = builder.Clone();
             builder.Should().NotBeSameAs(clone);
             builder.ToString().Should().Be(clone.ToString());

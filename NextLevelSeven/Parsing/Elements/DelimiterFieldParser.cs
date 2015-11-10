@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NextLevelSeven.Core;
 using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Parsing.Elements
@@ -17,7 +18,7 @@ namespace NextLevelSeven.Parsing.Elements
         public override string Value
         {
             get { return new string(Ancestor.DescendantDivider.Value[3], 1); }
-            set { throw new ParserException(ErrorCode.ElementValueCannotBeChanged); }
+            set { throw new ElementException(ErrorCode.ElementValueCannotBeChanged); }
         }
 
         /// <summary>
@@ -26,7 +27,7 @@ namespace NextLevelSeven.Parsing.Elements
         public override IEnumerable<string> Values
         {
             get { yield return Value; }
-            set { throw new ParserException(ErrorCode.ElementValueCannotBeChanged); }
+            set { throw new ElementException(ErrorCode.ElementValueCannotBeChanged); }
         }
     }
 }

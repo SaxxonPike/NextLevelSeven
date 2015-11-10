@@ -112,7 +112,7 @@ namespace NextLevelSeven.Building.Elements
 
         protected override bool AssertIndexIsMovable(int index)
         {
-            throw new BuilderException(ErrorCode.SubcomponentCannotHaveDescendants);
+            throw new ElementException(ErrorCode.SubcomponentCannotHaveDescendants);
         }
 
         /// <summary>Throws. Subcomponents cannot be divided any further.</summary>
@@ -120,7 +120,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns></returns>
         protected override IElement GetGenericElement(int index)
         {
-            throw new BuilderException(ErrorCode.SubcomponentCannotHaveDescendants);
+            throw new ElementException(ErrorCode.SubcomponentCannotHaveDescendants);
         }
 
         /// <summary>Returns an empty enumerable. Subcomponents cannot be divided any further.</summary>

@@ -242,12 +242,12 @@ namespace NextLevelSeven.Building.Elements
 
             if (value == null)
             {
-                throw new BuilderException(ErrorCode.SegmentDataMustNotBeNull);
+                throw new ElementException(ErrorCode.SegmentDataMustNotBeNull);
             }
 
             if (value.Length <= 3)
             {
-                throw new BuilderException(ErrorCode.SegmentDataIsTooShort);
+                throw new ElementException(ErrorCode.SegmentDataIsTooShort);
             }
 
             var isMsh = value.Substring(0, 3) == "MSH";
@@ -408,15 +408,15 @@ namespace NextLevelSeven.Building.Elements
         {
             if (index < 0)
             {
-                throw new BuilderException(ErrorCode.ElementIndexMustBeZeroOrGreater);
+                throw new ElementException(ErrorCode.ElementIndexMustBeZeroOrGreater);
             }
             if (index == 0)
             {
-                throw new BuilderException(ErrorCode.SegmentTypeCannotBeMoved);
+                throw new ElementException(ErrorCode.SegmentTypeCannotBeMoved);
             }
             if (index >= 1 && index <= 2 && IsMsh)
             {
-                throw new BuilderException(ErrorCode.EncodingElementCannotBeMoved);
+                throw new ElementException(ErrorCode.EncodingElementCannotBeMoved);
             }
             return true;
         }
@@ -466,7 +466,7 @@ namespace NextLevelSeven.Building.Elements
         {
             if (oldValue != null && oldValue != newValue && (newValue == "MSH" || oldValue == "MSH"))
             {
-                throw new BuilderException(ErrorCode.ChangingSegmentTypesToAndFromMshIsNotSupported);
+                throw new ElementException(ErrorCode.ChangingSegmentTypesToAndFromMshIsNotSupported);
             }
         }
 

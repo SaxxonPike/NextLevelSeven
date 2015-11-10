@@ -18,8 +18,8 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void Builder_CanBeErased()
         {
-            var builder = Message.Build(MockFactory.Message())[1][3];
-            var value = MockFactory.String();
+            var builder = Message.Build(Any.Message())[1][3];
+            var value = Any.String();
             builder.Value = value;
             builder.Erase();
             builder.Value.Should().BeNull();
@@ -29,14 +29,14 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void Builder_DefaultsToNonExistant()
         {
-            var builder = Message.Build(MockFactory.Message())[1][3];
+            var builder = Message.Build(Any.Message())[1][3];
             builder[2].Exists.Should().BeFalse();
         }
 
         [Test]
         public void Builder_ConvertsHl7NullToExistingNull()
         {
-            var builder = Message.Build(MockFactory.Message());
+            var builder = Message.Build(Any.Message());
             builder[1][3].Value = "\"\"";
             builder[1][3].Value.Should().BeNull();
         }
@@ -44,7 +44,7 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void Builder_ShouldEqualItself()
         {
-            var builder = (object)Message.Build(MockFactory.Message());
+            var builder = (object)Message.Build(Any.Message());
             var builder2 = builder;
             builder.ShouldBeEquivalentTo(builder2);
         }
@@ -52,13 +52,13 @@ namespace NextLevelSeven.Test.Building
         [Test]
         public void Builder_ShouldHaveHashCode()
         {
-            Message.Build(MockFactory.Message()).GetHashCode().Should().NotBe(0);
+            Message.Build(Any.Message()).GetHashCode().Should().NotBe(0);
         }
 
         [Test]
         public void Builder_CanFormat()
         {
-            var param = MockFactory.String();
+            var param = Any.String();
             const string message = "{0}|{1}";
             Message.BuildFormat(message, ExampleMessages.Minimum, param)
                 .Value.Should()

@@ -13,7 +13,7 @@ namespace NextLevelSeven.Test.Parsing.Dividers
         [Test]
         public void HasCorrectNumberOfDivisions()
         {
-            var data = MockFactory.DelimitedString(":", 4);
+            var data = Any.DelimitedString(":", 4);
             var divider = new RootStringDivider(data, ':');
             Assert.AreEqual(4, divider.Count);
         }
@@ -21,7 +21,7 @@ namespace NextLevelSeven.Test.Parsing.Dividers
         [Test]
         public void HasCorrectDivisions()
         {
-            var data = MockFactory.DelimitedString(":", 4);
+            var data = Any.DelimitedString(":", 4);
             var divider = new RootStringDivider(data, ':');
             AssertEnumerable.AreEqual(data.Split(':'), divider.Values);
         }
@@ -29,7 +29,7 @@ namespace NextLevelSeven.Test.Parsing.Dividers
         [Test]
         public void IsIndexable()
         {
-            var data = MockFactory.DelimitedString(":", 4);
+            var data = Any.DelimitedString(":", 4);
             var divider = new RootStringDivider(data, ':');
             for (var i = 0; i < 4; i++)
             {
@@ -40,7 +40,7 @@ namespace NextLevelSeven.Test.Parsing.Dividers
         [Test]
         public void IsIndexablePastEnd()
         {
-            var data = MockFactory.DelimitedString(":", 4);
+            var data = Any.DelimitedString(":", 4);
             var divider = new RootStringDivider(data, ':');
             Assert.AreEqual(string.Empty, divider[5]);
         }
@@ -48,7 +48,7 @@ namespace NextLevelSeven.Test.Parsing.Dividers
         [Test]
         public void HasBaseValue()
         {
-            var data = MockFactory.DelimitedString(":", 4);
+            var data = Any.DelimitedString(":", 4);
             var divider = new RootStringDivider(data, ':');
             Assert.AreEqual(data.Length, divider.BaseValue.Length);
         }
@@ -58,24 +58,24 @@ namespace NextLevelSeven.Test.Parsing.Dividers
         {
             var divider = new RootStringDivider(null, '\0');
             Assert.IsTrue(divider.IsNull);
-            divider.Value = MockFactory.String();
+            divider.Value = Any.String();
             Assert.IsFalse(divider.IsNull);
         }
 
         [Test]
         public void StoresDelimiter()
         {
-            var delimiter = MockFactory.Symbol()[0];
-            var divider = new RootStringDivider(MockFactory.String(), delimiter);
+            var delimiter = Any.Symbol()[0];
+            var divider = new RootStringDivider(Any.String(), delimiter);
             Assert.AreEqual(delimiter, divider.Delimiter);
         }
 
         [Test]
         public void StoresValue()
         {
-            var delimiter = MockFactory.Symbol()[0];
-            var dataBefore = MockFactory.String();
-            var dataAfter = MockFactory.String();
+            var delimiter = Any.Symbol()[0];
+            var dataBefore = Any.String();
+            var dataAfter = Any.String();
             var divider = new RootStringDivider(dataBefore, delimiter);
             Assert.AreEqual(dataBefore, divider.Value);
             divider.Value = dataAfter;
@@ -85,9 +85,9 @@ namespace NextLevelSeven.Test.Parsing.Dividers
         [Test]
         public void StoresValues()
         {
-            var delimiter = MockFactory.Symbol();
-            var dataBefore = new[] { MockFactory.String(), MockFactory.String() };
-            var dataAfter = new[] { MockFactory.String(), MockFactory.String() };
+            var delimiter = Any.Symbol();
+            var dataBefore = new[] { Any.String(), Any.String() };
+            var dataAfter = new[] { Any.String(), Any.String() };
             var divider = new RootStringDivider(string.Join(delimiter, dataBefore), delimiter[0]);
             AssertEnumerable.AreEqual(dataBefore, divider.Values);
             divider.Values = dataAfter;
@@ -97,18 +97,18 @@ namespace NextLevelSeven.Test.Parsing.Dividers
         [Test]
         public void ChangesVersionWhenValueIsChanged()
         {
-            var divider = new RootStringDivider(MockFactory.String(), MockFactory.Symbol()[0]);
+            var divider = new RootStringDivider(Any.String(), Any.Symbol()[0]);
             var oldVersion = divider.Version;
-            divider.Value = MockFactory.String();
+            divider.Value = Any.String();
             Assert.AreNotEqual(oldVersion, divider.Version);
         }
 
         [Test]
         public void GetsSubdivision()
         {
-            var delimiter = MockFactory.Symbol();
-            var value0 = MockFactory.String();
-            var value1 = MockFactory.String();
+            var delimiter = Any.Symbol();
+            var value0 = Any.String();
+            var value1 = Any.String();
             var value = string.Join(delimiter, value0, value1);
             var divider = new RootStringDivider(value, delimiter[0]);
             var delimiterOffset = value.IndexOf(delimiter, StringComparison.Ordinal);
@@ -127,8 +127,8 @@ namespace NextLevelSeven.Test.Parsing.Dividers
         [Test]
         public void PadsDivider()
         {
-            var delimiter = MockFactory.Symbol();
-            var data = MockFactory.String();
+            var delimiter = Any.Symbol();
+            var data = Any.String();
             var divider = new RootStringDivider(data, delimiter[0]);
             var divisions = new List<StringDivision>{ new StringDivision(0, data.Length) };
             divider.Pad(delimiter[0], 2, 0, data.Length, divisions);
@@ -138,8 +138,8 @@ namespace NextLevelSeven.Test.Parsing.Dividers
         [Test]
         public void PadsSubDivider()
         {
-            var delimiter = MockFactory.Symbol();
-            var data = MockFactory.String();
+            var delimiter = Any.Symbol();
+            var data = Any.String();
             var divider = new RootStringDivider(data, delimiter[0]);
             divider.PadSubDivider(2);
             Assert.AreEqual(string.Join(delimiter, data, string.Empty, string.Empty), divider.Value);            
@@ -148,9 +148,9 @@ namespace NextLevelSeven.Test.Parsing.Dividers
         [Test]
         public void Replaces()
         {
-            var delimiter = MockFactory.Symbol()[0];
-            var data = MockFactory.String();
-            var insertedData = MockFactory.String();
+            var delimiter = Any.Symbol()[0];
+            var data = Any.String();
+            var insertedData = Any.String();
             var expectedData = string.Concat(data.Substring(0, 3), insertedData, data.Substring(6));
             var divider = new RootStringDivider(data, delimiter);
             divider.Replace(3, 3, insertedData.ToCharArray());
@@ -160,9 +160,9 @@ namespace NextLevelSeven.Test.Parsing.Dividers
         [Test]
         public void DeletesAtBeginning()
         {
-            var delimiter = MockFactory.Symbol();
-            var data0 = MockFactory.String();
-            var data1 = MockFactory.String();
+            var delimiter = Any.Symbol();
+            var data0 = Any.String();
+            var data1 = Any.String();
             var data = string.Join(delimiter, data0, data1);
             var divider = new RootStringDivider(data, delimiter[0]);
             divider.Delete(0);
@@ -172,10 +172,10 @@ namespace NextLevelSeven.Test.Parsing.Dividers
         [Test]
         public void DeletesAtMiddle()
         {
-            var delimiter = MockFactory.Symbol();
-            var data0 = MockFactory.String();
-            var data1 = MockFactory.String();
-            var data2 = MockFactory.String();
+            var delimiter = Any.Symbol();
+            var data0 = Any.String();
+            var data1 = Any.String();
+            var data2 = Any.String();
             var data = string.Join(delimiter, data0, data1, data2);
             var divider = new RootStringDivider(data, delimiter[0]);
             divider.Delete(1);
@@ -185,9 +185,9 @@ namespace NextLevelSeven.Test.Parsing.Dividers
         [Test]
         public void DeletesAtEnd()
         {
-            var delimiter = MockFactory.Symbol();
-            var data0 = MockFactory.String();
-            var data1 = MockFactory.String();
+            var delimiter = Any.Symbol();
+            var data0 = Any.String();
+            var data1 = Any.String();
             var data = string.Join(delimiter, data0, data1);
             var divider = new RootStringDivider(data, delimiter[0]);
             divider.Delete(1);
@@ -197,10 +197,10 @@ namespace NextLevelSeven.Test.Parsing.Dividers
         [Test]
         public void MovesToBeginning()
         {
-            var delimiter = MockFactory.Symbol();
-            var data0 = MockFactory.String();
-            var data1 = MockFactory.String();
-            var data2 = MockFactory.String();
+            var delimiter = Any.Symbol();
+            var data0 = Any.String();
+            var data1 = Any.String();
+            var data2 = Any.String();
             var data = string.Join(delimiter, data0, data1, data2);
             var divider = new RootStringDivider(data, delimiter[0]);
             divider.Move(2, 0);
@@ -210,10 +210,10 @@ namespace NextLevelSeven.Test.Parsing.Dividers
         [Test]
         public void MovesToEnd()
         {
-            var delimiter = MockFactory.Symbol();
-            var data0 = MockFactory.String();
-            var data1 = MockFactory.String();
-            var data2 = MockFactory.String();
+            var delimiter = Any.Symbol();
+            var data0 = Any.String();
+            var data1 = Any.String();
+            var data2 = Any.String();
             var data = string.Join(delimiter, data0, data1, data2);
             var divider = new RootStringDivider(data, delimiter[0]);
             divider.Move(1, 2);
@@ -223,10 +223,10 @@ namespace NextLevelSeven.Test.Parsing.Dividers
         [Test]
         public void InsertsAtBeginning()
         {
-            var delimiter = MockFactory.Symbol();
-            var data0 = MockFactory.String();
-            var data1 = MockFactory.String();
-            var data2 = MockFactory.String();
+            var delimiter = Any.Symbol();
+            var data0 = Any.String();
+            var data1 = Any.String();
+            var data2 = Any.String();
             var data = string.Join(delimiter, data0, data1);
             var divider = new RootStringDivider(data, delimiter[0]);
             divider.Insert(0, data2);
@@ -236,10 +236,10 @@ namespace NextLevelSeven.Test.Parsing.Dividers
         [Test]
         public void InsertsAtMiddle()
         {
-            var delimiter = MockFactory.Symbol();
-            var data0 = MockFactory.String();
-            var data1 = MockFactory.String();
-            var data2 = MockFactory.String();
+            var delimiter = Any.Symbol();
+            var data0 = Any.String();
+            var data1 = Any.String();
+            var data2 = Any.String();
             var data = string.Join(delimiter, data0, data1);
             var divider = new RootStringDivider(data, delimiter[0]);
             divider.Insert(1, data2);
@@ -249,10 +249,10 @@ namespace NextLevelSeven.Test.Parsing.Dividers
         [Test]
         public void InsertsAtEnd()
         {
-            var delimiter = MockFactory.Symbol();
-            var data0 = MockFactory.String();
-            var data1 = MockFactory.String();
-            var data2 = MockFactory.String();
+            var delimiter = Any.Symbol();
+            var data0 = Any.String();
+            var data1 = Any.String();
+            var data2 = Any.String();
             var data = string.Join(delimiter, data0, data1);
             var divider = new RootStringDivider(data, delimiter[0]);
             divider.Insert(2, data2);

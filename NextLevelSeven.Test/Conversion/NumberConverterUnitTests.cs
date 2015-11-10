@@ -1,4 +1,7 @@
-﻿using NextLevelSeven.Conversion;
+﻿using System.Globalization;
+using System.Runtime.InteropServices;
+using FluentAssertions;
+using NextLevelSeven.Conversion;
 using NextLevelSeven.Test.Testing;
 using NUnit.Framework;
 using Assert = Microsoft.VisualStudio.TestTools.UnitTesting.Assert;
@@ -9,93 +12,53 @@ namespace NextLevelSeven.Test.Conversion
     public class NumberConverterUnitTests : ConversionTestFixture
     {
         [Test]
-        public void NumberConverter_CanDecodeIntegerWithDecimalPoint()
+        [TestCase("2", Result = 2)]
+        [TestCase("2.4", Result = 2)]
+        [TestCase("-2.4", Result = -2)]
+        [TestCase("-2", Result = -2)]
+        [TestCase("+2", Result = 2)]
+        [TestCase("Invalid", Result = null)]
+        [TestCase(null, Result = null)]
+        public int? NumberConverter_CanDecodeInteger(string value)
         {
-            Assert.AreEqual(NumberConverter.ConvertToInt("2.4"), 2);
+            return NumberConverter.ConvertToInt(value);
         }
 
         [Test]
-        public void NumberConverter_CanDecodeIntegerWithNegative()
+        [TestCase(2, Result = "2")]
+        [TestCase(-2, Result = "-2")]
+        [TestCase(null, Result = null)]
+        public string NumberConverter_CanEncodeInteger(int? value)
         {
-            Assert.AreEqual(NumberConverter.ConvertToInt("-2"), -2);
+            return NumberConverter.ConvertFromInt(value);
+        }
+
+        // Decimal is not a core CLR type, so it cannot be used for the following tests.
+        // String values are parsed into Decimal type instead.
+
+        [Test]
+        [TestCase("-2.3", Result = "-2.3")]
+        [TestCase("2.7", Result = "2.7")]
+        [TestCase("+2.5", Result = "2.5")]
+        [TestCase("Invalid", Result = null)]
+        [TestCase(null, Result = null)]
+        public string NumberConverter_CanDecodeDecimal(string value)
+        {
+            var result = NumberConverter.ConvertToDecimal(value);
+            return result == null
+                ? null
+                : result.Value.ToString(CultureInfo.InvariantCulture);
         }
 
         [Test]
-        public void NumberConverter_CanDecodeIntegerWithPositive()
+        [TestCase("-2.3", Result = "-2.3")]
+        [TestCase("2.7", Result = "2.7")]
+        [TestCase(null, Result = null)]
+        public string NumberConverter_CanEncodeDecimal(string value)
         {
-            Assert.AreEqual(NumberConverter.ConvertToInt("+2"), 2);
-        }
-
-        [Test]
-        public void NumberConverter_CanDecodeNullInteger()
-        {
-            Assert.AreEqual(NumberConverter.ConvertToInt(null), null);
-        }
-
-        [Test]
-        public void NumberConverter_CanDecodeValidInteger()
-        {
-            Assert.AreEqual(NumberConverter.ConvertToInt("2"), 2);
-        }
-
-        [Test]
-        public void NumberConverter_CanEncodeNullInteger()
-        {
-            Assert.AreEqual(NumberConverter.ConvertFromInt(null), null);
-        }
-
-        [Test]
-        public void NumberConverter_CanEncodeValidInteger()
-        {
-            Assert.AreEqual(NumberConverter.ConvertFromInt(2), "2");
-        }
-
-        [Test]
-        public void NumberConverter_ReturnsNullForInvalidInteger()
-        {
-            Assert.AreEqual(NumberConverter.ConvertToInt(MockFactory.String()), null);
-        }
-
-        [Test]
-        public void NumberConverter_CanDecodeDecimalWithNegative()
-        {
-            Assert.AreEqual(NumberConverter.ConvertToDecimal("-2.357"), -2.357M);
-        }
-
-        [Test]
-        public void NumberConverter_CanDecodeDecimalWithPositive()
-        {
-            Assert.AreEqual(NumberConverter.ConvertToDecimal("+2.579"), 2.579M);
-        }
-
-        [Test]
-        public void NumberConverter_CanDecodeNullDecimal()
-        {
-            Assert.AreEqual(NumberConverter.ConvertToDecimal(null), null);
-        }
-
-        [Test]
-        public void NumberConverter_CanDecodeValidDecimal()
-        {
-            Assert.AreEqual(NumberConverter.ConvertToDecimal("3.1415927"), 3.1415927M);
-        }
-
-        [Test]
-        public void NumberConverter_CanEncodeNullDecimal()
-        {
-            Assert.AreEqual(NumberConverter.ConvertFromDecimal(null), null);
-        }
-
-        [Test]
-        public void NumberConverter_CanEncodeValidDecimal()
-        {
-            Assert.AreEqual(NumberConverter.ConvertFromDecimal(1.1235813M), "1.1235813");
-        }
-
-        [Test]
-        public void NumberConverter_ReturnsNullForInvalidDecimal()
-        {
-            Assert.AreEqual(NumberConverter.ConvertToDecimal(MockFactory.String()), null);
+            return value == null
+                ? NumberConverter.ConvertFromDecimal(null)
+                : NumberConverter.ConvertFromDecimal(decimal.Parse(value));
         }
     }
 }

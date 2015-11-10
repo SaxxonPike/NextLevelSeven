@@ -85,7 +85,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var field = Message.Parse(ExampleMessages.Minimum)[1][2];
             string result = null;
-            AssertAction.Throws<ParserException>(() => result = field[2].Value);
+            AssertAction.Throws<ElementException>(() => result = field[2].Value);
             Assert.IsNull(result);
         }
 
@@ -116,7 +116,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var field = Message.Parse(ExampleMessages.Minimum)[1][1];
             string result = null;
-            AssertAction.Throws<ParserException>(() => result = field[2].Value);
+            AssertAction.Throws<ElementException>(() => result = field[2].Value);
             Assert.IsNull(result);
         }
 
@@ -125,7 +125,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             IElementParser field = Message.Parse(ExampleMessages.Minimum)[1][1];
             IElementParser result = null;
-            AssertAction.Throws<ParserException>(() => result = field[2]);
+            AssertAction.Throws<ElementException>(() => result = field[2]);
             Assert.IsNull(result);
         }
 
@@ -151,7 +151,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Field_CanGetIsolatedValue()
         {
             var field = Message.Parse(ExampleMessages.Minimum)[1][3];
-            var val0 = MockFactory.String();
+            var val0 = Any.String();
             field.Value = val0;
             var newField = field.Clone();
             Assert.AreEqual(field.Value, newField.Value);
@@ -170,8 +170,8 @@ namespace NextLevelSeven.Test.Parsing
         public void Field_CanInsertRepetitions()
         {
             var element = Message.Parse(ExampleMessages.Minimum)[1][3];
-            element.Values = new[] { MockFactory.String(), MockFactory.String(), MockFactory.String(), MockFactory.String() };
-            var value = MockFactory.String();
+            element.Values = new[] { Any.String(), Any.String(), Any.String(), Any.String() };
+            var value = Any.String();
             element.Insert(1, value);
             Assert.AreEqual(5, element.ValueCount);
             Assert.AreEqual(value, element[1].Value);
@@ -180,9 +180,9 @@ namespace NextLevelSeven.Test.Parsing
         [Test]
         public void Field_CanInsertElementRepetitions()
         {
-            var otherElement = Message.Parse(MockFactory.Message())[1][3][1];
-            var element = Message.Parse(MockFactory.Message())[1][3];
-            element.Values = new[] { MockFactory.String(), MockFactory.String(), MockFactory.String(), MockFactory.String() };
+            var otherElement = Message.Parse(Any.Message())[1][3][1];
+            var element = Message.Parse(Any.Message())[1][3];
+            element.Values = new[] { Any.String(), Any.String(), Any.String(), Any.String() };
             element.Insert(1, otherElement);
             Assert.AreEqual(5, element.ValueCount);
             Assert.AreEqual(otherElement.Value, element[1].Value);
@@ -192,7 +192,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Field_CanMoveRepetitions()
         {
             var element = Message.Parse(ExampleMessages.Minimum)[1][3];
-            element.Values = new[] {MockFactory.String(), MockFactory.String(), MockFactory.String(), MockFactory.String()};
+            element.Values = new[] {Any.String(), Any.String(), Any.String(), Any.String()};
             var newMessage = element.Clone();
             newMessage[2].Move(3);
             Assert.AreEqual(element[2].Value, newMessage[3].Value);
@@ -203,7 +203,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var element = Message.Parse(ExampleMessages.Standard)[1][3];
             string value = null;
-            AssertAction.Throws<ParserException>(() => { value = element[0].Value; });
+            AssertAction.Throws<ElementException>(() => { value = element[0].Value; });
             Assert.IsNull(value);
         }
 
@@ -252,7 +252,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var field = Message.Parse(ExampleMessages.Standard)[2][3];
             var count = field.ValueCount;
-            var id = MockFactory.String();
+            var id = Any.String();
             field[count + 1].Value = id;
             Assert.AreEqual(count + 1, field.ValueCount,
                 @"Number of elements after appending at the end of a field is incorrect.");
@@ -291,11 +291,11 @@ namespace NextLevelSeven.Test.Parsing
         [Test]
         public void Field_WillPointToCorrectValue_WhenOtherFieldChanges()
         {
-            var message = Message.Parse(String.Format(@"MSH|^~\&|{0}|{1}", MockFactory.String(), MockFactory.String()));
+            var message = Message.Parse(String.Format(@"MSH|^~\&|{0}|{1}", Any.String(), Any.String()));
             var msh3 = message[1][3];
             var msh4 = message[1][4];
-            var newMsh3Value = MockFactory.String();
-            var newMsh4Value = MockFactory.String();
+            var newMsh3Value = Any.String();
+            var newMsh4Value = Any.String();
 
             message.Value = String.Format(@"MSH|^~\&|{0}|{1}", newMsh3Value, newMsh4Value);
             Assert.AreEqual(newMsh3Value, msh3.Value, @"MSH-3 was not the expected value after changing MSH.");
@@ -323,7 +323,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Field_CanWriteStringValue()
         {
             var field = Message.Parse(ExampleMessages.Standard)[1][3];
-            var value = MockFactory.String();
+            var value = Any.String();
             field.Value = value;
             Assert.AreEqual(value, field.Value, "Value mismatch after write.");
         }
@@ -332,7 +332,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Field_CanWriteNullValue()
         {
             var field = Message.Parse(ExampleMessages.Standard)[1][3];
-            var value = MockFactory.String();
+            var value = Any.String();
             field.Value = value;
             field.Value = null;
             Assert.IsNull(field.Value, "Value mismatch after write.");

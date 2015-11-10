@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using NextLevelSeven.Core;
 using NextLevelSeven.Diagnostics;
 
 namespace NextLevelSeven.Parsing.Elements
@@ -18,14 +19,14 @@ namespace NextLevelSeven.Parsing.Elements
         public override string Value
         {
             get { return Ancestor.DescendantDivider[1]; }
-            set { throw new ParserException(ErrorCode.ElementValueCannotBeChanged); }
+            set { throw new ElementException(ErrorCode.ElementValueCannotBeChanged); }
         }
 
         /// <summary>Get or set this field's encoding characters.</summary>
         public override IEnumerable<string> Values
         {
             get { return Value.Select(c => new string(c, 1)); }
-            set { throw new ParserException(ErrorCode.ElementValueCannotBeChanged); }
+            set { throw new ElementException(ErrorCode.ElementValueCannotBeChanged); }
         }
     }
 }

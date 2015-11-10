@@ -21,7 +21,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Segment_CanGetAndSetType()
         {
             var element = Message.Parse(ExampleMessages.Standard)[2];
-            var newType = MockFactory.StringCaps(3);
+            var newType = Any.StringCaps(3);
             element.Type = newType;
             Assert.AreEqual(newType, element.Type);
             Assert.AreEqual(newType, element[0].Value);
@@ -31,9 +31,9 @@ namespace NextLevelSeven.Test.Parsing
         public void Segment_CanMoveMshFields()
         {
             var element = Message.Parse(ExampleMessages.Minimum)[1];
-            element[3].Value = MockFactory.String();
-            element[4].Value = MockFactory.String();
-            element[5].Value = MockFactory.String();
+            element[3].Value = Any.String();
+            element[4].Value = Any.String();
+            element[5].Value = Any.String();
             var newMessage = element.Clone();
             newMessage[3].Move(4);
             Assert.AreEqual(element[3].Value, newMessage[4].Value);
@@ -42,10 +42,10 @@ namespace NextLevelSeven.Test.Parsing
         [Test]
         public void Segment_CanMoveFields()
         {
-            var element = Message.Parse(MockFactory.Message())[2];
-            element[3].Value = MockFactory.String();
-            element[4].Value = MockFactory.String();
-            element[5].Value = MockFactory.String();
+            var element = Message.Parse(Any.Message())[2];
+            element[3].Value = Any.String();
+            element[4].Value = Any.String();
+            element[5].Value = Any.String();
             var newMessage = element.Clone();
             newMessage[3].Move(4);
             Assert.AreEqual(element[3].Value, newMessage[4].Value);
@@ -55,8 +55,8 @@ namespace NextLevelSeven.Test.Parsing
         public void Segment_CanSetValues()
         {
             var message = Message.Parse(ExampleMessages.Standard);
-            var type = MockFactory.StringCaps(3);
-            var data = MockFactory.String();
+            var type = Any.StringCaps(3);
+            var data = Any.String();
             message[2].Values = new[] { type, data };
             Assert.AreEqual(string.Format("{0}|{1}", type, data), message[2].Value);
         }
@@ -65,7 +65,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Segment_CanSetValuesOnMsh()
         {
             var message = Message.Parse(ExampleMessages.Standard);
-            var data = MockFactory.String();
+            var data = Any.String();
             var delimiter = "$";
             message[1].Values = new[] { "MSH", delimiter, data };
             Assert.AreEqual(string.Format("MSH{0}{1}", delimiter, data), message[1].Value);
@@ -76,7 +76,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var message = Message.Parse(ExampleMessages.Standard);
             var segment = message[2];
-            var data = MockFactory.String();
+            var data = Any.String();
             segment.Insert(1, data);
             Assert.AreEqual(data, segment[1].Value);
         }
@@ -86,7 +86,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var message = Message.Parse(ExampleMessages.Standard);
             var segment = message[2];
-            var data = Message.Parse(MockFactory.Message())[2][1];
+            var data = Message.Parse(Any.Message())[2][1];
             segment.Insert(1, data);
             Assert.AreEqual(data.Value, segment[1].Value);
         }
@@ -96,14 +96,14 @@ namespace NextLevelSeven.Test.Parsing
         {
             var message = Message.Parse(ExampleMessages.Standard);
             var segment = message[1];
-            var data = Message.Parse(MockFactory.Message())[2][1];
+            var data = Message.Parse(Any.Message())[2][1];
             AssertAction.Throws<ElementException>(() => segment.Insert(1, data));
         }
 
         [Test]
         public void Segment_GetsNextIndex()
         {
-            var message = Message.Parse(MockFactory.Message());
+            var message = Message.Parse(Any.Message());
             var segment = message[2];
             Assert.AreEqual(segment.ValueCount, segment.NextIndex);
         }
@@ -113,7 +113,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var message = Message.Parse(ExampleMessages.Standard);
             var segment = message[1];
-            var data = MockFactory.String();
+            var data = Any.String();
             segment.Insert(3, data);
             Assert.AreEqual(data, segment[3].Value);
         }
@@ -123,7 +123,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var element = Message.Parse(ExampleMessages.Standard)[1];
             string value = null;
-            AssertAction.Throws<ParserException>(() => { value = element[-1].Value; });
+            AssertAction.Throws<ElementException>(() => { value = element[-1].Value; });
             Assert.IsNull(value);
         }
 
@@ -194,7 +194,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var segment = Message.Parse(ExampleMessages.Standard)[2];
             var fieldCount = segment.ValueCount;
-            var id = MockFactory.String();
+            var id = Any.String();
             segment[fieldCount].Value = id;
             Assert.AreEqual(fieldCount + 1, segment.ValueCount,
                 @"Number of elements after appending at the end is incorrect.");
@@ -284,10 +284,10 @@ namespace NextLevelSeven.Test.Parsing
             var message = Message.Parse();
             var msh3 = message[1][3];
             var msh4 = message[1][4];
-            var expected = MockFactory.String().Substring(0, 5);
+            var expected = Any.String().Substring(0, 5);
 
             msh4.Value = expected;
-            msh3.Value = MockFactory.String();
+            msh3.Value = Any.String();
             Assert.AreEqual(msh4.Value, expected);
         }
 
@@ -310,7 +310,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Segment_CanWriteStringValue()
         {
             var segment = Message.Parse(ExampleMessages.Standard)[2];
-            var value = MockFactory.String();
+            var value = Any.String();
             segment.Value = value;
             Assert.AreEqual(value, segment.Value, "Value mismatch after write.");
         }
@@ -319,7 +319,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Segment_CanWriteNullValue()
         {
             var segment = Message.Parse(ExampleMessages.Standard)[2];
-            var value = MockFactory.String();
+            var value = Any.String();
             segment.Value = value;
             segment.Value = null;
             Assert.IsNull(segment.Value, "Value mismatch after write.");

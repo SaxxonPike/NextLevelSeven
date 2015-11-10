@@ -29,7 +29,7 @@ namespace NextLevelSeven.Test.Testing
         [Test]
         public void Measure_ExecutionTime_InvokesActionWithIterationsAndData()
         {
-            var data = MockFactory.String();
+            var data = Any.String();
             var invokedTimes = 0;
             Action<string> action = d =>
             {

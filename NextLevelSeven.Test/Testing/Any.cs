@@ -6,7 +6,7 @@ using System.Text;
 
 namespace NextLevelSeven.Test.Testing
 {
-    public static class MockFactory
+    public static class Any
     {
         private static readonly Random Rng = new Random();
 

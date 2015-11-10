@@ -124,7 +124,7 @@ namespace NextLevelSeven.Parsing.Elements
         {
             if (index <= 0)
             {
-                throw new ParserException(ErrorCode.RepetitionIndexMustBeGreaterThanZero);
+                throw new ElementException(ErrorCode.RepetitionIndexMustBeGreaterThanZero);
             }
 
             return new RepetitionParser(this, index - 1, index);

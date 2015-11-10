@@ -15,10 +15,10 @@ namespace NextLevelSeven.Test.Parsing
         [Test]
         public void Message_CanProcessMessageWithShortEncoding()
         {
-            var field31 = MockFactory.String();
-            var field32 = MockFactory.String();
-            var field41 = MockFactory.String();
-            var field42 = MockFactory.String();
+            var field31 = Any.String();
+            var field32 = Any.String();
+            var field41 = Any.String();
+            var field42 = Any.String();
             var message = Message.Parse(string.Format("MSH|^|{0}^{1}|{2}^{3}", field31, field32, field41, field42));
             Assert.AreEqual(field31, message[1][3][1][1].Value);
             Assert.AreEqual(field32, message[1][3][1][2].Value);
@@ -44,7 +44,7 @@ namespace NextLevelSeven.Test.Parsing
         [Test]
         public void Message_ToStringGetsValue()
         {
-            var content = MockFactory.Message();
+            var content = Any.Message();
             var message = Message.Parse(content);
             Assert.AreEqual(content, message.ToString());
         }
@@ -52,7 +52,7 @@ namespace NextLevelSeven.Test.Parsing
         [Test]
         public void Message_ToStringGetsEmptyWhenFieldIsNull()
         {
-            var content = MockFactory.Message();
+            var content = Any.Message();
             var field = Message.Parse(content)[1][3];
             field.Value = null;
             Assert.AreEqual(string.Empty, field.ToString());
@@ -76,7 +76,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Message_InsertsElement()
         {
             var message = Message.Parse(ExampleMessages.Minimum);
-            var segment = Message.Parse(MockFactory.Message())[2];
+            var segment = Message.Parse(Any.Message())[2];
             message.Insert(2, segment);
             Assert.AreEqual(message[2].Value, segment.Value);
         }
@@ -85,7 +85,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Message_InsertsString()
         {
             var message = Message.Parse(ExampleMessages.Minimum);
-            var segment = MockFactory.Segment();
+            var segment = Any.Segment();
             message.Insert(2, segment);        
             Assert.AreEqual(message[2].Value, segment);
         }
@@ -94,7 +94,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Message_ThrowsOnInsertingNegativeIndex()
         {
             var message = Message.Parse(ExampleMessages.Minimum);
-            AssertAction.Throws<ElementException>(() => message.Insert(-2, MockFactory.String()));
+            AssertAction.Throws<ElementException>(() => message.Insert(-2, Any.String()));
         }
 
         [Test]
@@ -132,7 +132,7 @@ namespace NextLevelSeven.Test.Parsing
         [Test]
         public void Message_ThrowsWithIncorrectFirstSegment()
         {
-            AssertAction.Throws<ElementException>(() => Message.Parse(MockFactory.String()));
+            AssertAction.Throws<ElementException>(() => Message.Parse(Any.String()));
         }
 
         [Test]
@@ -171,7 +171,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var element = Message.Parse(ExampleMessages.Standard);
             string value = null;
-            AssertAction.Throws<ParserException>(() => { value = element[0].Value; });
+            AssertAction.Throws<ElementException>(() => { value = element[0].Value; });
             Assert.IsNull(value);
         }
 
@@ -345,7 +345,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var before = GC.GetTotalMemory(true);
             var message = Message.Parse();
-            message[1000000][1000000].Value = MockFactory.String();
+            message[1000000][1000000].Value = Any.String();
             var messageString = message.Value;
             var usage = GC.GetTotalMemory(false) - before;
             var overhead = usage - (messageString.Length << 1);
@@ -356,7 +356,7 @@ namespace NextLevelSeven.Test.Parsing
         [Test]
         public void Message_CanMapSegments()
         {
-            var id = MockFactory.String();
+            var id = Any.String();
             IMessage tree = Message.Parse(string.Format("MSH|^~\\&|{0}", id));
             Assert.AreEqual(string.Format("MSH|^~\\&|{0}", id), tree.GetValue(1));
         }
@@ -364,7 +364,7 @@ namespace NextLevelSeven.Test.Parsing
         [Test]
         public void Message_CanMapFields()
         {
-            var id = MockFactory.String();
+            var id = Any.String();
             IMessage tree = Message.Parse(string.Format("MSH|^~\\&|{0}", id));
             Assert.AreEqual(id, tree.GetValue(1, 3));
         }
@@ -372,8 +372,8 @@ namespace NextLevelSeven.Test.Parsing
         [Test]
         public void Message_CanMapRepetitions()
         {
-            var id1 = MockFactory.String();
-            var id2 = MockFactory.String();
+            var id1 = Any.String();
+            var id2 = Any.String();
             IMessage tree = Message.Parse(string.Format("MSH|^~\\&|{0}~{1}", id1, id2));
             Assert.AreEqual(id1, tree.GetValue(1, 3, 1));
             Assert.AreEqual(id2, tree.GetValue(1, 3, 2));
@@ -382,8 +382,8 @@ namespace NextLevelSeven.Test.Parsing
         [Test]
         public void Message_CanMapComponents()
         {
-            var id1 = MockFactory.String();
-            var id2 = MockFactory.String();
+            var id1 = Any.String();
+            var id2 = Any.String();
             IMessage tree = Message.Parse(string.Format("MSH|^~\\&|{0}^{1}", id1, id2));
             Assert.AreEqual(id1, tree.GetValue(1, 3, 1, 1));
             Assert.AreEqual(id2, tree.GetValue(1, 3, 1, 2));
@@ -392,8 +392,8 @@ namespace NextLevelSeven.Test.Parsing
         [Test]
         public void Message_CanMapSubcomponents()
         {
-            var id1 = MockFactory.String();
-            var id2 = MockFactory.String();
+            var id1 = Any.String();
+            var id2 = Any.String();
             IMessage tree = Message.Parse(string.Format("MSH|^~\\&|{0}&{1}", id1, id2));
             Assert.AreEqual(id1, tree.GetValue(1, 3, 1, 1, 1));
             Assert.AreEqual(id2, tree.GetValue(1, 3, 1, 1, 2));
@@ -405,7 +405,7 @@ namespace NextLevelSeven.Test.Parsing
             var message = Message.Parse(ExampleMessages.Standard);
             var nextIndex = message.NextIndex;
             var count = message.ValueCount;
-            var id = MockFactory.String();
+            var id = Any.String();
             message[nextIndex].Value = id;
             Assert.AreEqual(count + 1, message.ValueCount,
                 @"Number of elements after appending at the end of a message is incorrect.");

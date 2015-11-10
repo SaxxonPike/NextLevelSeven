@@ -120,7 +120,7 @@ namespace NextLevelSeven.Parsing.Elements
         {
             if (index < 1)
             {
-                throw new ParserException(ErrorCode.SubcomponentIndexMustBeGreaterThanZero);
+                throw new ElementException(ErrorCode.SubcomponentIndexMustBeGreaterThanZero);
             }
 
             return new SubcomponentParser(this, index - 1, index);
