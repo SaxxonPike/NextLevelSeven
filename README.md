@@ -21,7 +21,9 @@ developers and maintainers of the HL7 v2 standard
 This library was designed to have a small footprint and rely on the smallest
 number of external resources. Including it in your own project is easy. Include
 `NextLevelSeven` as a project reference. You'll also want to include
-`using NextLevelSeven.Core` in your code file. That's it!
+`using NextLevelSeven.Core` in your code file. You'll also want to be sure to
+import NuGet packages (which Visual Studio should take care of for you.)
+That's it!
 
 ### Element Heirarchy
 
@@ -98,6 +100,9 @@ var mshSegment = message[1];
 // alternate way to get first segment (returns ISegment)
 var mshSegment = message.Segment(1);
 
+// LINQ works on just about everything
+var mshSegment = message.Segments.First();
+
 // 1st segment, 9th field, 1st repetition, 2nd component (returns IElement)
 var messageTriggerEvent = message[1][9][1][2];
 
@@ -129,15 +134,42 @@ var dateTime = message[1][7].Converter.AsDateTime;
 var sequenceNumber = message.Segment(1).Field(13).Converter.AsDecimal;
 ```
 
+## Manipulation
+
+Sometimes, you might want to modify an existing message. Using either a Builder
+or Parser, you can do just that. This functionality works on any `IElement`!
+
+```csharp
+// make a field null
+message.Segment(1).Field(3).Nullify();
+
+// delete the second segment of a message
+message.Segment(2).Delete();
+
+// insert a component value at the beginning of MSH.18
+message.Segment(1).Field(18).Component(1).Insert("ASCII");
+
+// move the third segment before the second segment
+message.Segment(3).Move(2);
+
+// an alternative way to move a segment within a message
+message.Move(3, 2);
+```
+
 ## Development
 
 Any help is greatly appreciated! Here's what you need to know...
 
 ### Testing
 
-There are a few hundred tests written purely using Microsoft's testing
-framework. Check your work against these tests and write new ones to support any
-additions or bug fixes. A plan to move to NUnit is being considered.
+The project has successfully been moved to [NUnit][http://nunit.org]. Currently,
+version 2 is being used. The tests do use `ExpectedExceptionAttribute` which is
+not supported in version 3. [FluentAssertions][http://www.fluentassertions.com/]
+is also used for testing. [Moq][https://github.com/Moq/moq4] is included as a
+reference, but is not used for anything just yet.
+
+There are over 600 tests for this project and over 90% code coverage for the
+most used functionality. Hopefully, the project will reach 100% coverage soon.
 
 ### Pull Requests
 
