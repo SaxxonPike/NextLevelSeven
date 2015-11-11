@@ -175,7 +175,7 @@ namespace NextLevelSeven.Core
             }
 
             // check for field delimiter and encoding character fields
-            if (ElementOperations.HasEncodingCharacters(element))
+            if (ElementOperations.IsEncodingCharacterField(element))
             {
                 return false;
             }

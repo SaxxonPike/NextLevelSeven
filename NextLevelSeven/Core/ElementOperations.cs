@@ -34,7 +34,7 @@ namespace NextLevelSeven.Core
         /// <summary>Determine if the element is a field that contains encoding characters of some kind. (MSH-1, MSH-2)</summary>
         /// <param name="element">Element to check.</param>
         /// <returns>True, if the element contains encoding characters of some kind.</returns>
-        public static bool HasEncodingCharacters(IElement element)
+        public static bool IsEncodingCharacterField(IElement element)
         {
             return element is IField && element.Ancestor != null && ((IField) element).Ancestor.Type == "MSH" &&
                    element.Index >= 1 && element.Index <= 2;
