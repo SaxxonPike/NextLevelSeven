@@ -1,16 +1,17 @@
 ﻿using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace NextLevelSeven.Test
 {
     [ExcludeFromCodeCoverage]
+    [TestFixture]
     public abstract class BaseTestFixture
     {
         private long _frequency;
         private Stopwatch _stopwatch;
 
-        [TestInitialize]
+        [SetUp]
         public void Fixture_Initialize()
         {
             _frequency = Stopwatch.Frequency;
@@ -19,7 +20,7 @@ namespace NextLevelSeven.Test
             _stopwatch.Start();
         }
 
-        [TestCleanup]
+        [TearDown]
         public void Fixture_Cleanup()
         {
             _stopwatch.Stop();

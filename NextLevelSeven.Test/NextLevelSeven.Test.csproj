@@ -54,7 +54,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <Choose>
@@ -63,57 +63,46 @@
         <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
       </ItemGroup>
     </When>
-    <Otherwise>
-      <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
-          <Private>False</Private>
-        </Reference>
-      </ItemGroup>
-    </Otherwise>
+    <Otherwise />
   </Choose>
   <ItemGroup>
-    <Compile Include="Core\Codec\CodecTestFixture.cs" />
-    <Compile Include="Core\Codec\EncodedTypeConverterFunctionalTests.cs" />
-    <Compile Include="Core\ElementOperationsUnitTests.cs" />
-    <Compile Include="Parsing\Dividers\DescendantStringDividerUnitTests.cs" />
-    <Compile Include="Parsing\Dividers\DividersUnitTestFixture.cs" />
-    <Compile Include="Parsing\Dividers\RootStringDividerUnitTests.cs" />
+    <Compile Include="Core\Codec\CodecBaseTestFixture.cs" />
+    <Compile Include="Core\Codec\EncodedTypeConverterFunctionalTestFixture.cs" />
+    <Compile Include="Core\ElementOperationsUnitTestFixture.cs" />
+    <Compile Include="Parsing\Dividers\DescendantStringDividerUnitTestFixture.cs" />
+    <Compile Include="Parsing\Dividers\DividersBaseTestFixture.cs" />
+    <Compile Include="Parsing\Dividers\RootStringDividerUnitTestFixture.cs" />
     <Compile Include="Parsing\ParserBaseFunctionalTests.cs" />
-    <Compile Include="Testing\AssertArray.cs" />
-    <Compile Include="Testing\AssertEnumerable.cs" />
-    <Compile Include="Building\BuilderBaseFunctionalTests.cs" />
-    <Compile Include="Building\BuildingTestFixture.cs" />
-    <Compile Include="Building\ComponentBuilderFunctionalTests.cs" />
-    <Compile Include="Building\FieldBuilderFunctionalTests.cs" />
-    <Compile Include="Building\RepetitionBuilderFunctionalTests.cs" />
-    <Compile Include="Building\MessageBuilderFunctionalTests.cs" />
-    <Compile Include="Building\SegmentBuilderFunctionalTests.cs" />
-    <Compile Include="Building\SubcomponentBuilderFunctionalTests.cs" />
-    <Compile Include="Conversion\ConversionTestFixture.cs" />
-    <Compile Include="Conversion\DateTimeConverterUnitTests.cs" />
-    <Compile Include="Conversion\NumberConverterUnitTests.cs" />
-    <Compile Include="Core\CoreTestFixture.cs" />
-    <Compile Include="Core\ElementExtensionFunctionalTests.cs" />
-    <Compile Include="Core\ParserComparer.cs" />
-    <Compile Include="Core\BuilderParserEqualityFunctionalTests.cs" />
-    <Compile Include="Diagnostics\DiagnosticsTestFixture.cs" />
-    <Compile Include="Parsing\ComponentParserFunctionalTests.cs" />
-    <Compile Include="Core\EscapeFunctionalTests.cs" />
-    <Compile Include="Diagnostics\ErrorMessageUnitTests.cs" />
-    <Compile Include="Testing\AssertAction.cs" />
-    <Compile Include="Testing\ExampleMessages.cs" />
-    <Compile Include="Parsing\FieldParserFunctionalTests.cs" />
-    <Compile Include="Core\MessageExtensionFunctionalTests.cs" />
-    <Compile Include="Parsing\MessageParserFunctionalTests.cs" />
-    <Compile Include="Testing\Measure.cs" />
-    <Compile Include="Parsing\RepetitionParserFunctionalTests.cs" />
-    <Compile Include="Parsing\SegmentParserFunctionalTests.cs" />
-    <Compile Include="Parsing\SubcomponentParserFunctionalTests.cs" />
-    <Compile Include="Parsing\ParsingTestFixture.cs" />
+    <Compile Include="Building\BuilderFunctionalTestFixture.cs" />
+    <Compile Include="Building\BuildingBaseTestFixture.cs" />
+    <Compile Include="Building\ComponentBuilderFunctionalTestFixture.cs" />
+    <Compile Include="Building\FieldBuilderFunctionalTestFixture.cs" />
+    <Compile Include="Building\RepetitionBuilderFunctionalTestFixture.cs" />
+    <Compile Include="Building\MessageBuilderFunctionalTestFixture.cs" />
+    <Compile Include="Building\SegmentBuilderFunctionalTestFixture.cs" />
+    <Compile Include="Building\SubcomponentBuilderFunctionalTestFixture.cs" />
+    <Compile Include="Conversion\ConversionBaseTestFixture.cs" />
+    <Compile Include="Conversion\DateTimeConverterUnitTestFixture.cs" />
+    <Compile Include="Conversion\NumberConverterUnitTestFixture.cs" />
+    <Compile Include="Core\CoreBaseTestFixture.cs" />
+    <Compile Include="Core\ElementExtensionFunctionalTestFixture.cs" />
+    <Compile Include="Testing\ParserComparer.cs" />
+    <Compile Include="Core\BuilderParserEqualityFunctionalTestFixture.cs" />
+    <Compile Include="Diagnostics\DiagnosticsBaseTestFixture.cs" />
+    <Compile Include="Parsing\ComponentParserFunctionalTestFixture.cs" />
+    <Compile Include="Core\EscapeFunctionalTestFixture.cs" />
+    <Compile Include="Diagnostics\ErrorMessageUnitTestFixture.cs" />
+    <Compile Include="Testing\ExampleMessageRepository.cs" />
+    <Compile Include="Parsing\FieldParserFunctionalTestFixture.cs" />
+    <Compile Include="Core\MessageExtensionFunctionalTestFixture.cs" />
+    <Compile Include="Parsing\MessageParserFunctionalTestFixture.cs" />
+    <Compile Include="Parsing\RepetitionParserFunctionalTestFixture.cs" />
+    <Compile Include="Parsing\SegmentParserFunctionalTestFixture.cs" />
+    <Compile Include="Parsing\SubcomponentParserFunctionalTestFixture.cs" />
+    <Compile Include="Parsing\ParsingBaseTestFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Testing\Any.cs" />
     <Compile Include="BaseTestFixture.cs" />
-    <Compile Include="Testing\TestUnitTests.cs" />
     <Compile Include="Utility\UtilityTestFixture.cs" />
   </ItemGroup>
   <ItemGroup>

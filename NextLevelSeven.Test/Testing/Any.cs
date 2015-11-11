@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Text;
 
 namespace NextLevelSeven.Test.Testing
 {
+    [ExcludeFromCodeCoverage]
     public static class Any
     {
         private static readonly Random Rng = new Random();
@@ -90,7 +92,7 @@ namespace NextLevelSeven.Test.Testing
         public static string Message()
         {
             return string.Join("\r", string.Join("|",
-                ExampleMessages.Minimum,
+                ExampleMessageRepository.Minimum,
                 String(), String(), // receiver
                 String(), String(), // sender
                 DateTime(), // message date/time
