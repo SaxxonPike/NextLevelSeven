@@ -162,10 +162,10 @@ Any help is greatly appreciated! Here's what you need to know...
 
 ### Testing
 
-The project has successfully been moved to [NUnit][http://nunit.org]. Currently,
+The project has successfully been moved to [NUnit](http://nunit.org). Currently,
 version 2 is being used. The tests do use `ExpectedExceptionAttribute` which is
-not supported in version 3. [FluentAssertions][http://www.fluentassertions.com/]
-is also used for testing. [Moq][https://github.com/Moq/moq4] is included as a
+not supported in version 3. [FluentAssertions](http://www.fluentassertions.com/)
+is also used for testing. [Moq](https://github.com/Moq/moq4) is included as a
 reference, but is not used for anything just yet.
 
 There are over 600 tests for this project and over 90% code coverage for the
