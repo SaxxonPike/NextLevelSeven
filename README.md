@@ -16,6 +16,12 @@ developers and maintainers of the HL7 v2 standard
 	- Plans to move to VS2015 which supports C# 6 features are in the works, but
 	it's too new yet
 
+### License
+
+**NextLevelSeven** is available under the [ISC license](LICENSE). It would be
+greatly appreciated (but certainly not required) to link back to this repository
+if you use this in a project.
+
 ## Usage
 
 This library was designed to have a small footprint and rely on the smallest
