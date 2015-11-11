@@ -8,27 +8,11 @@ using NUnit.Framework;
 namespace NextLevelSeven.Test.Parsing
 {
     [TestFixture]
-    public class RepetitionParserFunctionalTestFixture : ParsingBaseTestFixture
+    public class RepetitionParserFunctionalTestFixture : DescendantElementParserBaseTestFixture<IRepetitionParser, IRepetition>
     {
-        [Test]
-        public void Repetition_HasFieldAncestor()
+        protected override IRepetitionParser BuildParser()
         {
-            var element = Message.Parse(ExampleMessageRepository.Minimum)[1][3][1];
-            Assert.IsNotNull(element.Ancestor);
-        }
-
-        [Test]
-        public void Repetition_HasGenericFieldAncestor()
-        {
-            var element = Message.Parse(ExampleMessageRepository.Minimum)[1][3][1] as IRepetition;
-            Assert.IsNotNull(element.Ancestor);
-        }
-
-        [Test]
-        public void Repetition_HasGenericAncestor()
-        {
-            var element = Message.Parse(ExampleMessageRepository.Minimum)[1][3][1] as IElementParser;
-            Assert.IsNotNull(element.Ancestor as IField);
+            return Message.Parse(ExampleMessageRepository.Minimum)[1][3][1];
         }
 
         [Test]
@@ -38,7 +22,7 @@ namespace NextLevelSeven.Test.Parsing
             element.Values = new[] {Any.String(), Any.String(), Any.String(), Any.String()};
             var newMessage = element.Clone();
             newMessage[2].Move(3);
-            Assert.AreEqual(element[2].Value, newMessage[3].Value);
+            newMessage[3].Value.Should().Be(element[2].Value);
         }
 
         [Test]
@@ -50,53 +34,34 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [Test]
-        public void Repetition_CanBeCloned()
-        {
-            var repetition = Message.Parse(ExampleMessageRepository.Standard)[1][3][1];
-            var clone = repetition.Clone();
-            Assert.AreNotSame(repetition, clone, "Cloned repetition is the same referenced object.");
-            Assert.AreEqual(repetition.Value, clone.Value, "Cloned repetition has different contents.");
-        }
-
-        [Test]
-        public void Repetition_CanBeClonedGenerically()
-        {
-            IElement repetition = Message.Parse(ExampleMessageRepository.Standard)[1][3][1];
-            var clone = repetition.Clone();
-            Assert.AreNotSame(repetition, clone, "Cloned repetition is the same referenced object.");
-            Assert.AreEqual(repetition.Value, clone.Value, "Cloned repetition has different contents.");
-        }
-
-        [Test]
         public void Repetition_CanAddDescendantsAtEnd()
         {
             var repetition = Message.Parse(ExampleMessageRepository.Standard)[2][3][4];
             var count = repetition.ValueCount;
             var id = Any.String();
             repetition[count + 1].Value = id;
-            Assert.AreEqual(count + 1, repetition.ValueCount,
-                @"Number of elements after appending at the end of a repetition is incorrect.");
+            repetition.ValueCount.Should().Be(count + 1);
         }
 
         [Test]
         public void Repetition_CanGetComponents()
         {
             var repetition = Message.Parse(ExampleMessageRepository.Standard)[8][13][2];
-            Assert.AreEqual(3, repetition.Components.Count());
+            repetition.Components.Count().Should().Be(3);
         }
 
         [Test]
         public void Repetition_CanGetComponentsGenerically()
         {
             IRepetition repetition = Message.Parse(ExampleMessageRepository.Standard)[8][13][2];
-            Assert.AreEqual(3, repetition.Components.Count());
+            repetition.Components.Count().Should().Be(3);
         }
 
         [Test]
         public void Repetition_CanGetComponentsByIndexer()
         {
             var component = Message.Parse(ExampleMessageRepository.Standard)[8][13][2][2];
-            Assert.AreEqual(@"ORN", component.Value);
+            component.Value.Should().Be("ORN");
         }
 
         [Test]
@@ -105,7 +70,7 @@ namespace NextLevelSeven.Test.Parsing
             var message = Message.Parse("MSH|^~\\&|\rTST|123^456~789^012");
             var component = message[2][1][2];
             ElementExtensions.Delete(component, 1);
-            Assert.AreEqual("MSH|^~\\&|\rTST|123^456~012", message.Value, @"Message was modified unexpectedly.");
+            message.Value.Should().Be("MSH|^~\\&|\rTST|123^456~012");
         }
 
         [Test]
@@ -114,7 +79,7 @@ namespace NextLevelSeven.Test.Parsing
             var repetition = Message.Parse(ExampleMessageRepository.Standard)[1][3][1];
             var value = Any.String();
             repetition.Value = value;
-            Assert.AreEqual(value, repetition.Value, "Value mismatch after write.");
+            repetition.Value.Should().Be(value);
         }
 
         [Test]
@@ -124,7 +89,7 @@ namespace NextLevelSeven.Test.Parsing
             var value = Any.String();
             repetition.Value = value;
             repetition.Value = null;
-            Assert.IsNull(repetition.Value, "Value mismatch after write.");
+            repetition.Value.Should().BeNull();
         }
     }
 }

@@ -1,9 +1,12 @@
-﻿using NUnit.Framework;
+﻿using FluentAssertions;
+using NextLevelSeven.Core;
+using NextLevelSeven.Parsing;
+using NUnit.Framework;
 
 namespace NextLevelSeven.Test.Parsing
 {
     [TestFixture]
-    public class ParsingBaseTestFixture : BaseTestFixture
+    public abstract class ParsingBaseTestFixture : BaseTestFixture
     {
     }
 }

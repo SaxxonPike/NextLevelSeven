@@ -1,19 +1,20 @@
-﻿using NextLevelSeven.Core;
+﻿using FluentAssertions;
+using NextLevelSeven.Core;
 using NextLevelSeven.Test.Testing;
 using NUnit.Framework;
 
 namespace NextLevelSeven.Test.Parsing
 {
     [TestFixture]
-    public class ParserBaseFunctionalTests : ParsingBaseTestFixture
+    public class ParserBaseFunctionalTestFixture : ParsingBaseTestFixture
     {
         [Test]
         public void Parser_CanFormat()
         {
             var param = Any.String();
             const string message = "{0}|{1}";
-            Assert.AreEqual(Message.ParseFormat(message, ExampleMessageRepository.Minimum, param).Value,
-                string.Format(message, ExampleMessageRepository.Minimum, param));
+            Message.ParseFormat(message, ExampleMessageRepository.Minimum, param).Value
+                .Should().Be(string.Format(message, ExampleMessageRepository.Minimum, param));
         }
 
         [Test]
@@ -55,7 +56,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Parser_GetsNextIndex()
         {
             var message = Message.Parse(Any.Message());
-            Assert.AreEqual(message.ValueCount + 1, message.NextIndex);
+            message.NextIndex.Should().Be(message.ValueCount + 1);
         }
     }
 }

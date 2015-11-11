@@ -220,6 +220,12 @@ namespace NextLevelSeven.Building.Elements
             get { return Ancestor as IRepetition; }
         }
 
+        /// <summary>Get this element's heirarchy-specific ancestor builder.</summary>
+        IRepetitionBuilder IComponentBuilder.Ancestor
+        {
+            get { return Ancestor as IRepetitionBuilder; }
+        }
+
         /// <summary>Deep clone this component.</summary>
         /// <returns>Clone of the component.</returns>
         private ComponentBuilder CloneComponent()

@@ -8,8 +8,13 @@ using NUnit.Framework;
 namespace NextLevelSeven.Test.Building
 {
     [TestFixture]
-    public sealed class FieldBuilderFunctionalTestFixture : BuildingBaseTestFixture
+    public sealed class FieldBuilderFunctionalTestFixture : DescendantElementBuilderBaseTestFixture<IFieldBuilder, IField>
     {
+        protected override IFieldBuilder BuildBuilder()
+        {
+            return Message.Build(ExampleMessageRepository.Standard)[1][3];
+        }
+
         [Test]
         [ExpectedException(typeof(ElementException))]
         public void FieldBuilder_Type_CannotMoveDescendants()
@@ -311,16 +316,6 @@ namespace NextLevelSeven.Test.Building
             var builder = Message.Build(Any.Message())[1][3];
             builder.SetFieldRepetitions(null);
             builder.Exists.Should().BeFalse();
-        }
-
-        [Test]
-        public void FieldBuilder_CanBeCloned()
-        {
-            var builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}",
-                Any.String(), Any.String(), Any.String(), Any.String()))[1][3];
-            var clone = builder.Clone();
-            builder.Should().NotBeSameAs(clone);
-            builder.ToString().Should().Be(clone.ToString());
         }
 
         [Test]

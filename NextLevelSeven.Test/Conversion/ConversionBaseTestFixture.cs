@@ -3,7 +3,7 @@
 namespace NextLevelSeven.Test.Conversion
 {
     [TestFixture]
-    public class ConversionBaseTestFixture : BaseTestFixture
+    public abstract class ConversionBaseTestFixture : BaseTestFixture
     {
     }
 }

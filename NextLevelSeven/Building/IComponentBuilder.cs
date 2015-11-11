@@ -5,6 +5,9 @@ namespace NextLevelSeven.Building
     /// <summary>Interface for a component element builder.</summary>
     public interface IComponentBuilder : IElementBuilder, IComponent
     {
+        /// <summary>Get the ancestor builder. Null if the element is an orphan.</summary>
+        new IRepetitionBuilder Ancestor { get; }
+
         /// <summary>Get a descendant subcomponent builder.</summary>
         /// <param name="index">Index within the component to get the builder from.</param>
         /// <returns>Subcomponent builder for the specified index.</returns>

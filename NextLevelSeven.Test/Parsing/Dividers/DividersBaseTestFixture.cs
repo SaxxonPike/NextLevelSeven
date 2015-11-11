@@ -3,7 +3,7 @@
 namespace NextLevelSeven.Test.Parsing.Dividers
 {
     [TestFixture]
-    public class DividersBaseTestFixture : ParsingBaseTestFixture
+    public abstract class DividersBaseTestFixture : ParsingBaseTestFixture
     {
     }
 }

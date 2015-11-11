@@ -3,14 +3,20 @@ using System.Diagnostics;
 using System.Linq;
 using FluentAssertions;
 using NextLevelSeven.Core;
+using NextLevelSeven.Parsing;
 using NextLevelSeven.Test.Testing;
 using NUnit.Framework;
 
 namespace NextLevelSeven.Test.Parsing
 {
     [TestFixture]
-    public class MessageParserFunctionalTestFixture : ParsingBaseTestFixture
+    public class MessageParserFunctionalTestFixture : ElementParserBaseTestFixture<IMessageParser, IMessage>
     {
+        protected override IMessageParser BuildParser()
+        {
+            return Message.Parse(ExampleMessageRepository.Standard);
+        }
+
         [Test]
         public void Message_CanProcessMessageWithShortEncoding()
         {
@@ -19,10 +25,10 @@ namespace NextLevelSeven.Test.Parsing
             var field41 = Any.String();
             var field42 = Any.String();
             var message = Message.Parse(string.Format("MSH|^|{0}^{1}|{2}^{3}", field31, field32, field41, field42));
-            Assert.AreEqual(field31, message[1][3][1][1].Value);
-            Assert.AreEqual(field32, message[1][3][1][2].Value);
-            Assert.AreEqual(field41, message[1][4][1][1].Value);
-            Assert.AreEqual(field42, message[1][4][1][2].Value);
+            message[1][3][1][1].Value.Should().Be(field31);
+            message[1][3][1][2].Value.Should().Be(field32);
+            message[1][4][1][1].Value.Should().Be(field41);
+            message[1][4][1][2].Value.Should().Be(field42);
         }
 
         [Test]
@@ -30,14 +36,14 @@ namespace NextLevelSeven.Test.Parsing
         {
             var message = Message.Parse(ExampleMessageRepository.Standard);
             var generic = (object)message;
-            Assert.IsTrue(message.Equals(generic));
+            message.Should().Be(generic);
         }
 
         [Test]
         public void Message_IsNotEquivalentWhenNull()
         {
             var message = Message.Parse(ExampleMessageRepository.Standard);
-            Assert.IsFalse(message.Equals(null));
+            message.Should().NotBe(null);
         }
 
         [Test]
@@ -45,7 +51,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var content = Any.Message();
             var message = Message.Parse(content);
-            Assert.AreEqual(content, message.ToString());
+            message.ToString().Should().Be(content);
         }
 
         [Test]
@@ -54,21 +60,23 @@ namespace NextLevelSeven.Test.Parsing
             var content = Any.Message();
             var field = Message.Parse(content)[1][3];
             field.Value = null;
-            Assert.AreEqual(string.Empty, field.ToString());
+            field.ToString().Should().BeEmpty();
         }
 
         [Test]
         public void Message_Validates()
         {
             var message = Message.Parse(ExampleMessageRepository.Minimum);
-            Assert.IsTrue(message.Validate());
+            message.Validate().Should().BeTrue();
         }
 
         [Test]
         public void Message_DeletesOutOfRangeIndex()
         {
-            var message = Message.Parse(ExampleMessageRepository.Minimum);
+            var content = ExampleMessageRepository.Minimum;
+            var message = Message.Parse(content);
             message.Delete(2);
+            message.Value.Should().Be(content);
         }
 
         [Test]
@@ -77,7 +85,7 @@ namespace NextLevelSeven.Test.Parsing
             var message = Message.Parse(ExampleMessageRepository.Minimum);
             var segment = Message.Parse(Any.Message())[2];
             message.Insert(2, segment);
-            Assert.AreEqual(message[2].Value, segment.Value);
+            message[2].Value.Should().Be(segment.Value);
         }
 
         [Test]
@@ -85,8 +93,8 @@ namespace NextLevelSeven.Test.Parsing
         {
             var message = Message.Parse(ExampleMessageRepository.Minimum);
             var segment = Any.Segment();
-            message.Insert(2, segment);        
-            Assert.AreEqual(message[2].Value, segment);
+            message.Insert(2, segment);
+            message[2].Value.Should().Be(segment);
         }
 
         [Test]
@@ -118,7 +126,7 @@ namespace NextLevelSeven.Test.Parsing
             var builder = Message.Parse(ExampleMessageRepository.Standard);
             var beforeMessageString = builder.Value;
             var message = builder.ToBuilder();
-            Assert.AreEqual(beforeMessageString, message.Value, "Conversion from parser to builder failed.");
+            message.Value.Should().Be(beforeMessageString);
         }
 
         [Test]
@@ -127,7 +135,7 @@ namespace NextLevelSeven.Test.Parsing
             var message = Message.Build(ExampleMessageRepository.Standard);
             var beforeBuilderString = message.Value;
             var afterBuilder = Message.Parse(message);
-            Assert.AreEqual(beforeBuilderString, afterBuilder.Value, "Conversion from builder to parser failed.");
+            afterBuilder.Value.Should().Be(beforeBuilderString);
         }
 
         [Test]
@@ -141,7 +149,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Message_CanGetValues()
         {
             var message = Message.Parse(ExampleMessageRepository.Minimum);
-            Assert.AreEqual(ExampleMessageRepository.Minimum, message.Values.First());
+            message.Values.First().Should().Be(ExampleMessageRepository.Minimum);
         }
 
         [Test]
@@ -149,14 +157,14 @@ namespace NextLevelSeven.Test.Parsing
         {
             var message = Message.Parse(ExampleMessageRepository.Minimum);
             message.Values = new[] {ExampleMessageRepository.Minimum, ExampleMessageRepository.Minimum, ExampleMessageRepository.Minimum};
-            Assert.AreEqual(3, message.ValueCount);
+            message.ValueCount.Should().Be(3);
         }
 
         [Test]
         public void Message_CanIndexPastEnd()
         {
             var message = Message.Parse(ExampleMessageRepository.Minimum);
-            Assert.IsNull(message[5].Value);
+            message[5].Value.Should().BeNull();
         }
 
         [Test]
@@ -165,7 +173,7 @@ namespace NextLevelSeven.Test.Parsing
             var message = Message.Parse(ExampleMessageRepository.Standard);
             var newMessage = message.Clone();
             newMessage[2].Move(3);
-            Assert.AreEqual(message[2].Value, newMessage[3].Value);
+            newMessage[3].Value.Should().Be(message[2].Value);
         }
 
         [Test]
@@ -196,19 +204,17 @@ namespace NextLevelSeven.Test.Parsing
         public void Message_ConvertsMshCorrectly()
         {
             var message = Message.Parse(ExampleMessageRepository.MshOnly);
-            Assert.AreEqual(ExampleMessageRepository.MshOnly, message.Value, "MSH conversion back to string did not match.");
+            message.Value.Should().Be(ExampleMessageRepository.MshOnly);
         }
 
         [Test]
         public void Message_ReturnsBasicMessage()
         {
             var message = Message.Parse();
-            Assert.AreEqual(1, message.ValueCount, @"Default message should not contain multiple segments.");
-            Assert.AreEqual("MSH", message[1].Type, @"Default message should create an MSH segment.");
-            Assert.AreEqual(@"^~\&", message[1][2].Value,
-                @"Default message should use standard HL7 encoding characters.");
-            Assert.AreEqual("|", message[1][1].Value,
-                @"Default message should use standard HL7 field delimiter character.");
+            message.ValueCount.Should().Be(1);
+            message[1].Type.Should().Be("MSH");
+            message[1][2].Value.Should().Be(@"^~\&");
+            message[1][1].Value.Should().Be("|");
         }
 
         [Test]
@@ -236,31 +242,22 @@ namespace NextLevelSeven.Test.Parsing
         public void Message_CanRetrieveMessageTypeAndTriggerEvent()
         {
             var message = Message.Parse(ExampleMessageRepository.Standard);
-            Assert.AreEqual("ADT", message.Details.Type, "Message type is incorrect.");
-            Assert.AreEqual("A17", message.Details.TriggerEvent, "Message trigger event is incorrect.");
-        }
-
-        [Test]
-        public void Message_CanParseMessageDate()
-        {
-            var message = Message.Parse(ExampleMessageRepository.Standard);
-            Assert.IsTrue(message.Details.Time.HasValue, "Parsed message date is incorrect.");
-            Assert.AreEqual(new DateTime(2013, 05, 28), message.Details.Time.Value.Date);
+            message.Details.Type.Should().Be("ADT");
+            message.Details.TriggerEvent.Should().Be("A17");
         }
 
         [Test]
         public void Message_CanParseMessageDateTime()
         {
             var message = Message.Parse(ExampleMessageRepository.Standard);
-            Assert.IsTrue(message.Details.Time.HasValue, "Parsed message date/time is incorrect.");
-            Assert.AreEqual(new DateTime(2013, 05, 28, 07, 38, 29), message.Details.Time.Value.DateTime);
+            message.Details.Time.Should().Be(new DateTime(2013, 05, 28, 07, 38, 29));
         }
 
         [Test]
         public void Message_CanRetrieveMessageVersion()
         {
             var message = Message.Parse(ExampleMessageRepository.Standard);
-            Assert.AreEqual("2.3", message.Details.Version, "Message version is incorrect.");
+            message.Details.Version.Should().Be("2.3");
         }
 
         [Test]
@@ -268,14 +265,14 @@ namespace NextLevelSeven.Test.Parsing
         {
             var message = Message.Parse(ExampleMessageRepository.Standard);
             var pid = message.Segments.OfType("PID").First();
-            Assert.AreEqual("Colon", pid[5][1][1].Value, "Patient name is incorrect.");
+            pid[5][1][1].Value.Should().Be("Colon");
         }
 
         [Test]
         public void Message_CanRetrieveMultipleSegments()
         {
             var message = Message.Parse(ExampleMessageRepository.Standard);
-            Assert.AreEqual(3, message.Segments.OfType("OBX").Count(), "Incorrect number of segments were found.");
+            message.Segments.OfType("OBX").Count().Should().Be(3);
         }
 
         [Test]
@@ -283,25 +280,20 @@ namespace NextLevelSeven.Test.Parsing
         {
             var message = Message.Parse(ExampleMessageRepository.RepeatingName);
             var pid = message.Segments.OfType("PID").First();
-            Assert.AreEqual("Lincoln^Abe", pid[5][1].Value, "Retrieving first repetition returned incorrect data.");
-            Assert.AreEqual("Bro", pid[5][2].Value, "Retrieving second repetition returned incorrect data.");
-            Assert.AreEqual("Dude", pid[5][3].Value, "Retrieving third repetition returned incorrect data.");
+            pid[5][1].Value.Should().Be("Lincoln^Abe");
+            pid[5][2].Value.Should().Be("Bro");
+            pid[5][3].Value.Should().Be("Dude");
         }
 
         [Test]
         public void Message_RetrievalMethodsAreIdentical()
         {
             var message = Message.Parse(ExampleMessageRepository.Standard);
-            Assert.AreEqual(message.GetValue(1), message[1].Value,
-                "Retrieval methods differ at the segment level.");
-            Assert.AreEqual(message.GetValue(1, 3), message[1][3].Value,
-                "Retrieval methods differ at the field level.");
-            Assert.AreEqual(message.GetValue(1, 3, 1), message[1][3][1].Value,
-                "Retrieval methods differ at the repetition level.");
-            Assert.AreEqual(message.GetValue(1, 3, 1, 1), message[1][3][1][1].Value,
-                "Retrieval methods differ at the component level.");
-            Assert.AreEqual(message.GetValue(1, 3, 1, 1, 1), message[1][3][1][1][1].Value,
-                "Retrieval methods differ at the component level.");
+            message.GetValue(1).Should().Be(message[1].Value);
+            message.GetValue(1, 3).Should().Be(message[1][3].Value);
+            message.GetValue(1, 3, 1).Should().Be(message[1][3][1].Value);
+            message.GetValue(1, 3, 1, 1).Should().Be(message[1][3][1][1].Value);
+            message.GetValue(1, 3, 1, 1, 1).Should().Be(message[1][3][1][1][1].Value);
         }
 
         [Test]
@@ -321,50 +313,23 @@ namespace NextLevelSeven.Test.Parsing
             var message = Message.Parse(ExampleMessageRepository.Standard);
             var keys = message.Segments.Select(s => s.Key).ToList();
             var distinctKeys = keys.Distinct();
-
-            foreach (var key in keys)
-            {
-                Debug.WriteLine(key);
-            }
-            Assert.AreEqual(distinctKeys.Count(), message.Segments.Count(), "Segments don't have entirely unique keys.");
-        }
-
-        [Test]
-        public void Message_CanBeCloned()
-        {
-            var message = Message.Parse(ExampleMessageRepository.Standard);
-            var clone = message.Clone();
-            Assert.AreNotSame(message, clone, "Cloned message is the same referenced object.");
-            Assert.AreEqual(message.Value, clone.Value, "Cloned message has different contents.");
+            distinctKeys.Count().Should().Be(message.Segments.Count());
         }
 
         [Test]
         public void Message_WithOnlyOneSegment_WillClaimToHaveSignificantDescendants()
         {
             var message = Message.Parse();
-            Assert.IsTrue(message.HasSignificantDescendants(),
-                @"Message should claim to have significant descendants if any segments do.");
-        }
-
-        [Test]
-        public void Message_UsesReasonableMemory_WhenParsingLargeMessages()
-        {
-            var before = GC.GetTotalMemory(true);
-            var message = Message.Parse();
-            message[1000000][1000000].Value = Any.String();
-            var messageString = message.Value;
-            var usage = GC.GetTotalMemory(false) - before;
-            var overhead = usage - (messageString.Length << 1);
-            var usePerCharacter = overhead/(messageString.Length << 1);
-            Assert.IsTrue(usePerCharacter < 20);
+            message.HasSignificantDescendants().Should().BeTrue();
         }
 
         [Test]
         public void Message_CanMapSegments()
         {
             var id = Any.String();
-            IMessage tree = Message.Parse(string.Format("MSH|^~\\&|{0}", id));
-            Assert.AreEqual(string.Format("MSH|^~\\&|{0}", id), tree.GetValue(1));
+            var content = string.Format("MSH|^~\\&|{0}", id);
+            IMessage tree = Message.Parse(content);
+            tree.GetValue(1).Should().Be(content);
         }
 
         [Test]
@@ -372,7 +337,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var id = Any.String();
             IMessage tree = Message.Parse(string.Format("MSH|^~\\&|{0}", id));
-            Assert.AreEqual(id, tree.GetValue(1, 3));
+            tree.GetValue(1, 3).Should().Be(id);
         }
 
         [Test]
@@ -381,8 +346,8 @@ namespace NextLevelSeven.Test.Parsing
             var id1 = Any.String();
             var id2 = Any.String();
             IMessage tree = Message.Parse(string.Format("MSH|^~\\&|{0}~{1}", id1, id2));
-            Assert.AreEqual(id1, tree.GetValue(1, 3, 1));
-            Assert.AreEqual(id2, tree.GetValue(1, 3, 2));
+            tree.GetValue(1, 3, 1).Should().Be(id1);
+            tree.GetValue(1, 3, 2).Should().Be(id2);
         }
 
         [Test]
@@ -391,8 +356,8 @@ namespace NextLevelSeven.Test.Parsing
             var id1 = Any.String();
             var id2 = Any.String();
             IMessage tree = Message.Parse(string.Format("MSH|^~\\&|{0}^{1}", id1, id2));
-            Assert.AreEqual(id1, tree.GetValue(1, 3, 1, 1));
-            Assert.AreEqual(id2, tree.GetValue(1, 3, 1, 2));
+            tree.GetValue(1, 3, 1, 1).Should().Be(id1);
+            tree.GetValue(1, 3, 1, 2).Should().Be(id2);
         }
 
         [Test]
@@ -401,8 +366,8 @@ namespace NextLevelSeven.Test.Parsing
             var id1 = Any.String();
             var id2 = Any.String();
             IMessage tree = Message.Parse(string.Format("MSH|^~\\&|{0}&{1}", id1, id2));
-            Assert.AreEqual(id1, tree.GetValue(1, 3, 1, 1, 1));
-            Assert.AreEqual(id2, tree.GetValue(1, 3, 1, 1, 2));
+            tree.GetValue(1, 3, 1, 1, 1).Should().Be(id1);
+            tree.GetValue(1, 3, 1, 1, 2).Should().Be(id2);
         }
 
         [Test]
@@ -413,8 +378,7 @@ namespace NextLevelSeven.Test.Parsing
             var count = message.ValueCount;
             var id = Any.String();
             message[nextIndex].Value = id;
-            Assert.AreEqual(count + 1, message.ValueCount,
-                @"Number of elements after appending at the end of a message is incorrect.");
+            message.ValueCount.Should().Be(count + 1);
         }
 
         [Test]
@@ -422,8 +386,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var message = Message.Parse(ExampleMessageRepository.Standard);
             var segment = message[1];
-            Assert.AreEqual(@"MSH|^~\&|SENDER|DEV|RECEIVER|SYSTEM|20130528073829||ADT^A17|14150278|P|2.3|",
-                segment.Value);
+            segment.Value.Should().Be(message.Values.First());
         }
 
         [Test]
@@ -434,25 +397,16 @@ namespace NextLevelSeven.Test.Parsing
             var segment3 = message[3].Value;
             var segment4 = message[4].Value;
             ElementExtensions.Delete(message, 2);
-            Assert.AreEqual(segment1, message[1].Value, @"Expected message[1] to remain the same after delete.");
-            Assert.AreEqual(segment3, message[2].Value, @"Expected message[3] to become message[2].");
-            Assert.AreEqual(segment4, message[3].Value, @"Expected message[4] to become message[3].");
+            message[1].Value.Should().Be(segment1);
+            message[2].Value.Should().Be(segment3);
+            message[3].Value.Should().Be(segment4);
         }
 
         [Test]
         public void Message_ValuesReturnsProperlySplitData()
         {
             var message = Message.Parse(ExampleMessageRepository.Standard);
-            var segmentStrings = message.Value.Split('\xD');
-            var segments = message.Values.ToList();
-
-            Assert.AreEqual(segmentStrings.Length, segments.Count,
-                @"Splitting main value and calling Values returns different element counts.");
-
-            for (var i = 0; i < segments.Count; i++)
-            {
-                Assert.AreEqual(segments[i], segmentStrings[i], @"Values are not equal.");
-            }
+            message.Values.Should().Equal(message.Value.Split('\xD'));
         }
     }
 }

@@ -3,7 +3,7 @@
 namespace NextLevelSeven.Test.Core
 {
     [TestFixture]
-    public class CoreBaseTestFixture : BaseTestFixture
+    public abstract class CoreBaseTestFixture : BaseTestFixture
     {
     }
 }

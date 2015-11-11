@@ -298,6 +298,12 @@ namespace NextLevelSeven.Building.Elements
             get { return Ancestor as ISegment; }
         }
 
+        /// <summary>Get this element's heirarchy-specific ancestor builder.</summary>
+        ISegmentBuilder IFieldBuilder.Ancestor
+        {
+            get { return Ancestor as ISegmentBuilder; }
+        }
+
         /// <summary>Deep clone this field.</summary>
         /// <returns>Clone of the field.</returns>
         private FieldBuilder CloneField()

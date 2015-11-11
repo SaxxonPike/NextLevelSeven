@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using FluentAssertions;
+using NextLevelSeven.Building;
 using NextLevelSeven.Core;
 using NextLevelSeven.Test.Testing;
 using NUnit.Framework;
@@ -7,8 +8,13 @@ using NUnit.Framework;
 namespace NextLevelSeven.Test.Building
 {
     [TestFixture]
-    public sealed class ComponentBuilderFunctionalTestFixture : BuildingBaseTestFixture
+    public sealed class ComponentBuilderFunctionalTestFixture : DescendantElementBuilderBaseTestFixture<IComponentBuilder, IComponent>
     {
+        protected override IComponentBuilder BuildBuilder()
+        {
+            return Message.Build(ExampleMessageRepository.Standard)[1][3][1][1];
+        }
+
         [Test]
         public void ComponentBuilder_CanMoveDescendants()
         {
@@ -179,24 +185,6 @@ namespace NextLevelSeven.Test.Building
             var builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}",
                 Any.String(), val1, val2, val3))[1][3][2][2];
             builder.Values.Should().Equal(val2, val3);
-        }
-
-        [Test]
-        public void ComponentBuilder_CanBeCloned()
-        {
-            var builder = Message.Build(Any.Message())[1][3][2][2];
-            var clone = builder.Clone();
-            builder.Should().NotBeSameAs(clone);
-            builder.ToString().Should().Be(clone.ToString());
-        }
-
-        [Test]
-        public void ComponentBuilder_CanBeClonedGenerically()
-        {
-            IElement builder = Message.Build(Any.Message())[1][3][2][2];
-            var clone = builder.Clone();
-            builder.Should().NotBeSameAs(clone);
-            builder.ToString().Should().Be(clone.ToString());
         }
 
         [Test]

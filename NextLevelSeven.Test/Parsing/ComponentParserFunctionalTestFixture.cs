@@ -8,27 +8,11 @@ using NUnit.Framework;
 namespace NextLevelSeven.Test.Parsing
 {
     [TestFixture]
-    public class ComponentParserFunctionalTestFixture : ParsingBaseTestFixture
+    public class ComponentParserFunctionalTestFixture : DescendantElementParserBaseTestFixture<IComponentParser, IComponent>
     {
-        [Test]
-        public void Component_HasRepetitionAncestor()
+        protected override IComponentParser BuildParser()
         {
-            var element = Message.Parse(ExampleMessageRepository.Minimum)[1][3][1][1];
-            element.Ancestor.Should().NotBeNull();
-        }
-
-        [Test]
-        public void Component_HasGenericRepetitionAncestor()
-        {
-            var element = Message.Parse(ExampleMessageRepository.Minimum)[1][3][1][1] as IComponent;
-            element.Ancestor.Should().NotBeNull();
-        }
-
-        [Test]
-        public void Component_HasGenericAncestor()
-        {
-            var element = Message.Parse(ExampleMessageRepository.Minimum)[1][3][1][1] as IElementParser;
-            (element.Ancestor as IRepetition).Should().NotBeNull();
+            return Message.Parse(ExampleMessageRepository.Standard)[1][3][1][1];
         }
 
         [Test]
@@ -47,24 +31,6 @@ namespace NextLevelSeven.Test.Parsing
         {
             var component = Message.Parse(ExampleMessageRepository.Standard)[1][3][1][1];
             component[0].Value.Should().BeNull();
-        }
-
-        [Test]
-        public void Component_CanBeCloned()
-        {
-            var component = Message.Parse(ExampleMessageRepository.Standard)[1][3][1][1];
-            var clone = component.Clone();
-            component.Should().NotBeSameAs(clone);
-            component.Value.Should().Be(clone.Value);
-        }
-
-        [Test]
-        public void Component_CanBeClonedGenerically()
-        {
-            IElement component = Message.Parse(ExampleMessageRepository.Standard)[1][3][1][1];
-            var clone = component.Clone();
-            component.Should().NotBeSameAs(clone);
-            component.Value.Should().Be(clone.Value);
         }
 
         [Test]

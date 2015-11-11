@@ -3,7 +3,7 @@
 namespace NextLevelSeven.Test.Utility
 {
     [TestFixture]
-    public class UtilityTestFixture : BaseTestFixture
+    public abstract class UtilityBaseTestFixture : BaseTestFixture
     {
     }
 }

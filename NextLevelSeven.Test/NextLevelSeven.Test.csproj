@@ -66,13 +66,17 @@
     <Otherwise />
   </Choose>
   <ItemGroup>
+    <Compile Include="Building\DescendantElementBuilderBaseTestFixture.cs" />
+    <Compile Include="Building\ElementBuilderBaseTestFixture.cs" />
     <Compile Include="Core\Codec\CodecBaseTestFixture.cs" />
     <Compile Include="Core\Codec\EncodedTypeConverterFunctionalTestFixture.cs" />
     <Compile Include="Core\ElementOperationsUnitTestFixture.cs" />
+    <Compile Include="Parsing\DescendantElementParserBaseTestFixture.cs" />
     <Compile Include="Parsing\Dividers\DescendantStringDividerUnitTestFixture.cs" />
     <Compile Include="Parsing\Dividers\DividersBaseTestFixture.cs" />
     <Compile Include="Parsing\Dividers\RootStringDividerUnitTestFixture.cs" />
-    <Compile Include="Parsing\ParserBaseFunctionalTests.cs" />
+    <Compile Include="Parsing\ElementParserBaseTestFixture.cs" />
+    <Compile Include="Parsing\ParserBaseFunctionalTestFixture.cs" />
     <Compile Include="Building\BuilderFunctionalTestFixture.cs" />
     <Compile Include="Building\BuildingBaseTestFixture.cs" />
     <Compile Include="Building\ComponentBuilderFunctionalTestFixture.cs" />
@@ -103,7 +107,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Testing\Any.cs" />
     <Compile Include="BaseTestFixture.cs" />
-    <Compile Include="Utility\UtilityTestFixture.cs" />
+    <Compile Include="Utility\UtilityBaseTestFixture.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\NextLevelSeven\NextLevelSeven.csproj">

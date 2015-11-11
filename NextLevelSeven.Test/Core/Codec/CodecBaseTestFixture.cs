@@ -3,7 +3,7 @@
 namespace NextLevelSeven.Test.Core.Codec
 {
     [TestFixture]
-    public class CodecBaseTestFixture : CoreBaseTestFixture
+    public abstract class CodecBaseTestFixture : CoreBaseTestFixture
     {
     }
 }

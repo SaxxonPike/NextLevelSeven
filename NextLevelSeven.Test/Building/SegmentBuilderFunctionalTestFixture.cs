@@ -8,8 +8,13 @@ using NUnit.Framework;
 namespace NextLevelSeven.Test.Building
 {
     [TestFixture]
-    public sealed class SegmentBuilderFunctionalTestFixture : BuildingBaseTestFixture
+    public sealed class SegmentBuilderFunctionalTestFixture : DescendantElementBuilderBaseTestFixture<ISegmentBuilder, ISegment>
     {
+        protected override ISegmentBuilder BuildBuilder()
+        {
+            return Message.Build(ExampleMessageRepository.Standard)[2];
+        }
+
         [Test]
         public void SegmentBuilder_CanBuildSubcomponentsViaParams()
         {
@@ -171,24 +176,6 @@ namespace NextLevelSeven.Test.Building
             var builder = Message.Build(ExampleMessageRepository.Variety)[1];
             // +1 is added because this is an MSH segment
             builder.Fields.Count().Should().Be(builder.Value.Split('|').Length + 1);
-        }
-
-        [Test]
-        public void SegmentBuilder_CanBeCloned()
-        {
-            var builder = Message.Build(ExampleMessageRepository.Standard)[1];
-            var clone = builder.Clone();
-            builder.Should().NotBeSameAs(clone);
-            builder.ToString().Should().Be(clone.ToString());
-        }
-
-        [Test]
-        public void SegmentBuilder_CanBeClonedGenerically()
-        {
-            IElement builder = Message.Build(ExampleMessageRepository.Standard)[1];
-            var clone = builder.Clone();
-            builder.Should().NotBeSameAs(clone);
-            builder.ToString().Should().Be(clone.ToString());
         }
 
         [Test]

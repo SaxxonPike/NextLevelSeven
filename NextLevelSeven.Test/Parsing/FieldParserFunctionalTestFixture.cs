@@ -8,8 +8,13 @@ using NUnit.Framework;
 namespace NextLevelSeven.Test.Parsing
 {
     [TestFixture]
-    public class FieldParserFunctionalTestFixture : ParsingBaseTestFixture
+    public class FieldParserFunctionalTestFixture : DescendantElementParserBaseTestFixture<IFieldParser, IField>
     {
+        protected override IFieldParser BuildParser()
+        {
+            return Message.Parse(ExampleMessageRepository.Standard)[1][3];
+        }
+
         [Test]
         public void Field_Delimiter_CanBeCloned()
         {
@@ -217,24 +222,6 @@ namespace NextLevelSeven.Test.Parsing
         {
             var field = Message.Parse(ExampleMessageRepository.Standard)[1].Field(3);
             field.Index.Should().Be(3);
-        }
-
-        [Test]
-        public void Field_CanBeCloned()
-        {
-            var field = Message.Parse(ExampleMessageRepository.Standard)[1][3];
-            var clone = field.Clone();
-            clone.Should().NotBeSameAs(field);
-            clone.Value.Should().Be(field.Value);
-        }
-
-        [Test]
-        public void Field_CanBeClonedGenerically()
-        {
-            var field = (IElement)Message.Parse(ExampleMessageRepository.Standard)[1][3];
-            var clone = field.Clone();
-            clone.Should().NotBeSameAs(field);
-            clone.Value.Should().Be(field.Value);
         }
 
         [Test]

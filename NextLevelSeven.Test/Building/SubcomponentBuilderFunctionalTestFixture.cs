@@ -8,8 +8,13 @@ using NUnit.Framework;
 namespace NextLevelSeven.Test.Building
 {
     [TestFixture]
-    public sealed class SubcomponentBuilderFunctionalTestFixture : BuildingBaseTestFixture
+    public sealed class SubcomponentBuilderFunctionalTestFixture : DescendantElementBuilderBaseTestFixture<ISubcomponentBuilder, ISubcomponent>
     {
+        protected override ISubcomponentBuilder BuildBuilder()
+        {
+            return Message.Build(ExampleMessageRepository.Standard)[1][3][1][1][1];
+        }
+
         [Test]
         public void SubcomponentBuilder_ExistsWithNonNullValue()
         {
@@ -163,26 +168,6 @@ namespace NextLevelSeven.Test.Building
             var builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}",
                 Any.String(), val1, val2, val3))[1][3][2][2][2];
             builder.Values.Should().Equal(val3);
-        }
-
-        [Test]
-        public void SubcomponentBuilder_CanBeCloned()
-        {
-            var builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}",
-                Any.String(), Any.String(), Any.String(), Any.String()))[1][3][2][2][2];
-            var clone = builder.Clone();
-            builder.Should().NotBeSameAs(clone);
-            builder.ToString().Should().Be(clone.ToString());
-        }
-
-        [Test]
-        public void SubcomponentBuilder_CanBeCloned_Generic()
-        {
-            IElement builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}",
-                Any.String(), Any.String(), Any.String(), Any.String()))[1][3][2][2][2];
-            var clone = builder.Clone();
-            builder.Should().NotBeSameAs(clone);
-            builder.ToString().Should().Be(clone.ToString());
         }
 
         [Test]

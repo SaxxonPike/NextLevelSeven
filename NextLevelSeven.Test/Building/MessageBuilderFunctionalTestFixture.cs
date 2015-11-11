@@ -9,8 +9,13 @@ using NUnit.Framework;
 namespace NextLevelSeven.Test.Building
 {
     [TestFixture]
-    public sealed class MessageBuilderFunctionalTestFixture : BuildingBaseTestFixture
+    public sealed class MessageBuilderFunctionalTestFixture : ElementBuilderBaseTestFixture<IMessageBuilder, IMessage>
     {
+        protected override IMessageBuilder BuildBuilder()
+        {
+            return Message.Build(ExampleMessageRepository.Standard);
+        }
+
         [Test]
         public void MessageBuilder_RetrievalMethodsAreIdentical()
         {
@@ -205,15 +210,6 @@ namespace NextLevelSeven.Test.Building
             var builder = Message.Build(string.Format("MSH|^~\\&\r{0}\r{1}",
                 val0, val1));
             builder.Values.Should().Equal("MSH|^~\\&", val0, val1);
-        }
-
-        [Test]
-        public void MessageBuilder_CanBeCloned()
-        {
-            var builder = Message.Build(ExampleMessageRepository.Standard);
-            var clone = builder.Clone();
-            builder.Should().NotBeSameAs(clone);
-            builder.ToString().Should().Be(clone.ToString());
         }
 
         [Test]
