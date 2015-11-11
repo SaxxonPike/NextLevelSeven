@@ -28,6 +28,12 @@ namespace NextLevelSeven.Test.Core
         }
 
         [Test]
+        public void Escape_Converts_Null()
+        {
+            Test_Escape(null, null);
+        }
+
+        [Test]
         public void Escape_Converts_ComponentCharacters()
         {
             Test_SingleDelimiterEscape("^", "\\S\\");

@@ -274,6 +274,13 @@ namespace NextLevelSeven.Test.Building
         }
 
         [Test]
+        public void FieldBuilder_CanGetRepetitions()
+        {
+            var builder = Message.Build(ExampleMessageRepository.Variety);
+            builder[1][3].Repetitions.Count().Should().Be(builder[1][3].ValueCount);
+        }
+
+        [Test]
         public void FieldBuilder_CanGetValue()
         {
             var val0 = Any.String();
@@ -466,6 +473,24 @@ namespace NextLevelSeven.Test.Building
         }
 
         [Test]
+        public void FieldBuilder_SettingNullRepetitionsDoesNothing()
+        {
+            var builder = Message.Build()[1][3];
+            var value = builder.Value;
+            builder.SetFieldRepetitions(null);
+            builder.Value.Should().Be(value);
+        }
+
+        [Test]
+        public void FieldBuilder_SettingNullRepetitionsAtIndexDoesNothing()
+        {
+            var builder = Message.Build()[1][3];
+            var value = builder.Value;
+            builder.SetFieldRepetitions(0, null);
+            builder.Value.Should().Be(value);
+        }
+
+        [Test]
         public void FieldBuilder_ChangesEncodingCharactersIfMessageChanges()
         {
             var messageBuilder = Message.Build();
@@ -481,6 +506,14 @@ namespace NextLevelSeven.Test.Building
             var builder = Message.Build()[1][2];
             builder.SetField("$~\\&");
             builder.Encoding.ComponentDelimiter.Should().Be('$');
+        }
+
+        [Test]
+        public void FieldBuilder_HasDelimiterFromMessage()
+        {
+            var message = Message.Build();
+            var builder = message[1][3];
+            builder.Delimiter.Should().Be(message.Encoding.RepetitionDelimiter);
         }
     }
 }

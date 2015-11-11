@@ -71,6 +71,8 @@
     <Compile Include="Core\Codec\CodecBaseTestFixture.cs" />
     <Compile Include="Core\Codec\EncodedTypeConverterFunctionalTestFixture.cs" />
     <Compile Include="Core\ElementOperationsUnitTestFixture.cs" />
+    <Compile Include="Core\Encoding\EncodingBaseTestFixture.cs" />
+    <Compile Include="Core\Encoding\EncodingConfigurationUnitTestFixture.cs" />
     <Compile Include="Parsing\DescendantElementParserBaseTestFixture.cs" />
     <Compile Include="Parsing\Dividers\DescendantStringDividerUnitTestFixture.cs" />
     <Compile Include="Parsing\Dividers\DividersBaseTestFixture.cs" />
