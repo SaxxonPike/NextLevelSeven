@@ -170,7 +170,7 @@ namespace NextLevelSeven.Parsing.Elements
                 {
                     throw new ElementException(ErrorCode.MessageDataMustStartWithMsh);
                 }
-                base.Value = SanitizeLineEndings(value);
+                base.Value = NormalizeLineEndings(value);
             }
         }
 
@@ -198,12 +198,10 @@ namespace NextLevelSeven.Parsing.Elements
 
         /// <summary>Change all system line endings to HL7 line endings.</summary>
         /// <param name="message">String to transform.</param>
-        /// <returns>Sanitized string.</returns>
-        private static string SanitizeLineEndings(string message)
+        /// <returns>Normalized string.</returns>
+        private static string NormalizeLineEndings(string message)
         {
-            return message == null
-                ? null
-                : message.Replace(Environment.NewLine, ReadOnlyEncodingConfiguration.SegmentDelimiterString);
+            return Hl7StringOperations.NormalizeLineEndings(message, ReadOnlyEncodingConfiguration.SegmentDelimiter);
         }
 
         /// <summary>Deep clone this message.</summary>

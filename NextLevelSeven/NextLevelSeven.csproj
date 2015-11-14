@@ -79,6 +79,7 @@
     <Compile Include="Core\Properties\MessageDetails.cs" />
     <Compile Include="Parsing\Elements\DescendantParser.cs" />
     <Compile Include="Utility\EnumerableExtensions.cs" />
+    <Compile Include="Utility\Hl7StringOperations.cs" />
     <Compile Include="Utility\IIndexedCache.cs" />
     <Compile Include="Utility\ProxyDelegates.cs" />
     <Compile Include="Core\Codec\EncodedTypeConverter.cs" />

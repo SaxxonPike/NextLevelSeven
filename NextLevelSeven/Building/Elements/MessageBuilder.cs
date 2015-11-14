@@ -192,7 +192,7 @@ namespace NextLevelSeven.Building.Elements
             {
                 throw new ElementException(ErrorCode.MessageDataMustNotBeNull);
             }
-            value = SanitizeLineEndings(value);
+            value = NormalizeLineEndings(value);
 
             var length = value.Length;
             if (length < 8)
@@ -402,12 +402,10 @@ namespace NextLevelSeven.Building.Elements
 
         /// <summary>Change all system line endings to HL7 line endings.</summary>
         /// <param name="message">String to transform.</param>
-        /// <returns>Sanitized string.</returns>
-        private string SanitizeLineEndings(string message)
+        /// <returns>Normalized string.</returns>
+        private static string NormalizeLineEndings(string message)
         {
-            return message == null
-                ? null
-                : message.Replace(Environment.NewLine, ReadOnlyEncodingConfiguration.SegmentDelimiterString);
+            return Hl7StringOperations.NormalizeLineEndings(message, ReadOnlyEncodingConfiguration.SegmentDelimiter);
         }
 
         /// <summary>Create a segment builder object.</summary>
