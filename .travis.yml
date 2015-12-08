@@ -1,9 +1,11 @@
 language: csharp
 solution: NextLevelSeven.sln
+addons:
+  apt:
+    packages:
+    - nunit-console
 script:
   - xbuild /p:Configuration=Debug NextLevelSeven.sln
-before_install:
-  - sudo apt-get install nunit-console
 before_script:
   - nuget restore NextLevelSeven.sln
 after_script:
