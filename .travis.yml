@@ -1,5 +1,6 @@
 language: csharp
 solution: NextLevelSeven.sln
+sudo: false
 addons:
   apt:
     packages:
