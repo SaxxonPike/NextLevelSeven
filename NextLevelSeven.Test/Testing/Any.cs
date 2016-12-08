@@ -144,6 +144,16 @@ namespace NextLevelSeven.Test.Testing
             return builder.ToString().Substring(0, length);
         }
 
+        public static IEnumerable<string> Strings()
+        {
+            return Strings(Number(2, 10));
+        }
+
+        public static IEnumerable<string> Strings(int count)
+        {
+            return Enumerable.Range(0, count).Select(x => String()).ToArray();
+        }
+
         public static IEnumerable<string> StringSequence(int count)
         {
             while (count > 0)

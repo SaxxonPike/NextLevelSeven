@@ -63,6 +63,8 @@
     <Compile Include="Building\Elements\TypeFieldBuilder.cs" />
     <Compile Include="Conversion\ConversionException.cs" />
     <Compile Include="Conversion\DateTimeConverter.cs" />
+    <Compile Include="Conversion\FormattedTextBlock.cs" />
+    <Compile Include="Conversion\FormattedTextChar.cs" />
     <Compile Include="Conversion\NumberConverter.cs" />
     <Compile Include="Conversion\TextConverter.cs" />
     <Compile Include="Core\ElementExtensions.cs" />

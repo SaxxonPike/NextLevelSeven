@@ -97,5 +97,45 @@ namespace NextLevelSeven.Test.Core.Codec
             message[1][3].Converter.AsDecimal = input;
             message[1][3].Value.Should().Be(input.ToString());
         }
+
+        [Test]
+        public void Codec_CanGetDecimals()
+        {
+            var message = Message.Parse(Any.Message());
+            var values = new[] {Any.Decimal(), Any.Decimal()};
+            message[1][3][1].Value = values[0];
+            message[1][3][2].Value = values[1];
+            message[1][3].Converter.AsDecimals.Items.Should().BeEquivalentTo(values.Select(decimal.Parse));
+        }
+
+        [Test]
+        public void Codec_CanSetDecimals()
+        {
+            var message = Message.Parse(Any.Message());
+            var values = new decimal?[] { decimal.Parse(Any.Decimal()), decimal.Parse(Any.Decimal()) };
+            message[1][3].Converter.AsDecimals.Items = values;
+            message[1][3].Values.Should().BeEquivalentTo(values.Select(NumberConverter.ConvertFromDecimal));
+        }
+
+        [Test]
+        public void Codec_CanGetFormattedText()
+        {
+            var message = Message.Parse(Any.Message());
+            var lines = Any.Strings(Any.Number(2, 10)).ToList();
+            var input = TextConverter.ConvertFromFormattedText(lines, message.Encoding.ComponentDelimiter, message.Encoding);
+            message[1][3].Value = input;
+            message[1][3].Converter.AsFormattedText.Should().BeEquivalentTo(TextConverter.ConvertToFormattedText(input, message.Encoding.ComponentDelimiter, message.Encoding));
+        }
+
+        [Test]
+        public void Codec_CanSetFormattedText()
+        {
+            var message = Message.Parse(Any.Message());
+            var lines = Any.Strings(Any.Number(2, 10)).ToList();
+            var expected = TextConverter.ConvertFromFormattedText(lines, message.Encoding.ComponentDelimiter, message.Encoding);
+            message[1][3].Converter.AsFormattedText = lines;
+            message[1][3].Value.Should().Be(expected);
+        }
+
     }
 }
