@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using NextLevelSeven.Utility;
 
 namespace NextLevelSeven.Core.Codec
@@ -36,7 +38,7 @@ namespace NextLevelSeven.Core.Codec
             get { return _baseElement.ValueCount; }
         }
 
-        /// <summary>Get the items in the element as a collection.</summary>
+        /// <summary>Get or set the items in the element as a collection.</summary>
         public IEnumerable<TDecoded> Items
         {
             get
@@ -46,6 +48,10 @@ namespace NextLevelSeven.Core.Codec
                 {
                     yield return this[i];
                 }
+            }
+            set
+            {
+                _baseElement.Values = value.Select(v => _encoder(v));
             }
         }
 

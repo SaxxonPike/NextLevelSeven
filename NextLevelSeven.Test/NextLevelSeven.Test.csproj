@@ -26,7 +26,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <LangVersion>5</LangVersion>
+    <LangVersion>6</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -109,6 +109,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Testing\Any.cs" />
     <Compile Include="BaseTestFixture.cs" />
+    <Compile Include="Utility\EnumerableExtensionsTestFixture.cs" />
+    <Compile Include="Utility\Hl7StringOperationsTestFixture.cs" />
     <Compile Include="Utility\UtilityBaseTestFixture.cs" />
   </ItemGroup>
   <ItemGroup>
