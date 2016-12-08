@@ -1,6 +1,7 @@
 ﻿using System;
 using FluentAssertions;
 using NextLevelSeven.Core;
+using NextLevelSeven.Core.Encoding;
 using NextLevelSeven.Test.Testing;
 using NUnit.Framework;
 

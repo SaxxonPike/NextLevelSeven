@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using FluentAssertions;
+using NextLevelSeven.Conversion;
 using NextLevelSeven.Core;
 using NextLevelSeven.Test.Testing;
 using NUnit.Framework;
@@ -24,7 +25,7 @@ namespace NextLevelSeven.Test.Core.Codec
             var message = Message.Parse(Any.Message());
             var date = DateTime.Now;
             message[1][3].Converter.AsDate = date;
-            message[1][3].Value.Should().Be(date.ToString("yyyyMMdd"));
+            message[1][3].Value.Should().Be(DateTimeConverter.ConvertFromDate(date));
         }
 
         [Test]
@@ -42,7 +43,7 @@ namespace NextLevelSeven.Test.Core.Codec
             var message = Message.Parse(Any.Message());
             var dates = new DateTime?[] { DateTime.Now, DateTime.Now.AddDays(-1) };
             message[1][3].Converter.AsDates.Items = dates;
-            message[1][3].Values.Should().BeEquivalentTo(dates.Select(d => d?.ToString("yyyyMMdd")));
+            message[1][3].Values.Should().BeEquivalentTo(dates.Select(DateTimeConverter.ConvertFromDate));
         }
 
         [Test]
@@ -51,6 +52,15 @@ namespace NextLevelSeven.Test.Core.Codec
             var message = Message.Parse(Any.Message());
             message[1][3].Value = Any.DateTimeMillisecondsWithTimeZone();
             message[1][3].Converter.AsDateTime.Should().HaveValue();
+        }
+
+        [Test]
+        public void Codec_CanSetDateTime()
+        {
+            var message = Message.Parse(Any.Message());
+            var dateTime = DateTimeOffset.Now;
+            message[1][3].Converter.AsDateTime = dateTime;
+            message[1][3].Value.Should().Be(DateTimeConverter.ConvertFromDateTime(dateTime));
         }
 
         [Test]
@@ -63,11 +73,29 @@ namespace NextLevelSeven.Test.Core.Codec
         }
 
         [Test]
+        public void Codec_CanSetDateTimes()
+        {
+            var message = Message.Parse(Any.Message());
+            var dateTimes = new DateTimeOffset?[] { DateTimeOffset.Now, DateTimeOffset.Now.AddDays(-1) };
+            message[1][3].Converter.AsDateTimes.Items = dateTimes;
+            message[1][3].Values.Should().BeEquivalentTo(dateTimes.Select(DateTimeConverter.ConvertFromDateTime));
+        }
+
+        [Test]
         public void Codec_CanGetDecimal()
         {
             var message = Message.Parse(Any.Message());
             message[1][3].Value = Any.Decimal();
             message[1][3].Converter.AsDecimal.Should().HaveValue();
+        }
+
+        [Test]
+        public void Codec_CanSetDecimal()
+        {
+            var input = NumberConverter.ConvertToDecimal(Any.Decimal());
+            var message = Message.Parse(Any.Message());
+            message[1][3].Converter.AsDecimal = input;
+            message[1][3].Value.Should().Be(input.ToString());
         }
     }
 }

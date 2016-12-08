@@ -68,7 +68,7 @@
     <Compile Include="Core\ElementExtensions.cs" />
     <Compile Include="Core\ElementOperations.cs" />
     <Compile Include="Core\Encoding\EncodingConfiguration.cs" />
-    <Compile Include="Core\EncodingExtensions.cs" />
+    <Compile Include="Core\Encoding\EncodingExtensions.cs" />
     <Compile Include="Core\Encoding\EncodingOperations.cs" />
     <Compile Include="Core\HL7.cs" />
     <Compile Include="Core\Encoding\IReadOnlyEncoding.cs" />

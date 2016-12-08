@@ -1,6 +1,4 @@
-﻿using NextLevelSeven.Core.Encoding;
-
-namespace NextLevelSeven.Core
+﻿namespace NextLevelSeven.Core.Encoding
 {
     public static class EncodingExtensions
     {
