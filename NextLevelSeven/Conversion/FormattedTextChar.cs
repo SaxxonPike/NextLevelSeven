@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NextLevelSeven.Conversion
 {
-    public class FormattedTextChar
+    public struct FormattedTextChar
     {
         public char Character { get; set; }
         public bool Highlighted { get; set; }
