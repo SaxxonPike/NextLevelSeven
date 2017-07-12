@@ -19,13 +19,17 @@ Teardown(context =>
 
 Task("Build").Does(() =>
 {
-    MSBuild("./NextLevelSeven.sln", settings => 
+    MSBuild("./NextLevelSeven/NextLevelSeven.csproj", settings => 
     {
         settings.SetConfiguration(configuration).SetPlatformTarget(PlatformTarget.MSIL);
         if (needOutput)
         {
             settings.WithProperty("OutDir", buildDir);
         }
+    });
+    MSBuild("./NextLevelSeven.Test/NextLevelSeven.Test.csproj", settings => 
+    {
+        settings.SetConfiguration(configuration).SetPlatformTarget(PlatformTarget.MSIL);
     });
 });
 
