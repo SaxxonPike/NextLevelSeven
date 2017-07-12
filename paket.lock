@@ -1,0 +1,10 @@
+RESTRICTION: >= net40
+NUGET
+  remote: https://api.nuget.org/v3/index.json
+    Cake (0.20)
+    Castle.Core (4.1.1) - restriction: || (&& (>= net40) (>= netstandard1.3)) (>= net45)
+    FluentAssertions (4.19.3)
+    GitInfo (1.1.71)
+    Moq (4.7.63)
+      Castle.Core (>= 4.1) - restriction: || (&& (>= net40) (>= netstandard1.3)) (>= net45)
+    NUnit (2.6.2)
