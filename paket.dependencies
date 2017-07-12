@@ -1,0 +1,8 @@
+source https://api.nuget.org/v3/index.json
+framework: >= net40
+nuget Cake
+nuget GitInfo
+
+nuget NUnit == 2.6.2
+nuget Moq
+nuget FluentAssertions

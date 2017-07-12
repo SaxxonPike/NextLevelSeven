@@ -141,4 +141,5 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <Import Project="..\packages\GitInfo\build\GitInfo.targets" Condition="Exists('..\packages\GitInfo\build\GitInfo.targets')" Label="Paket" />
 </Project>

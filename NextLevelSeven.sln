@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NextLevelSeven", "NextLevelSeven\NextLevelSeven.csproj", "{EC7FC595-07F4-467F-A51A-25CFA9711310}"
 EndProject
@@ -10,6 +10,18 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Library", "Library", "{9ECA6C16-85D9-4D67-95DD-90A91D8CC55D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{83F1BAF6-66DA-40C1-8384-19FE227C194D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2188985F-465D-46EF-825C-08A4D1BE2BC2}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		.travis.yml = .travis.yml
+		build.bat = build.bat
+		build.cake = build.cake
+		GitInfo.txt = GitInfo.txt
+		paket.dependencies = paket.dependencies
+		paket.lock = paket.lock
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

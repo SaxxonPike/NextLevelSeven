@@ -196,3 +196,13 @@ FakesAssemblies/
 *.opt
 *.ncrunchproject
 *.ncrunchsolution
+
+# Paket dependency manager
+.paket/paket.exe
+/paket-files
+
+# Cake
+/tools
+
+/build
+/nuget
