@@ -114,16 +114,16 @@
     <Compile Include="Utility\UtilityBaseTestFixture.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\NextLevelSeven\NextLevelSeven.csproj">
-      <Project>{ec7fc595-07f4-467f-a51a-25cfa9711310}</Project>
-      <Name>NextLevelSeven</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Core\Properties\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\NextLevelSeven\NextLevelSeven.csproj">
+      <Project>{ec7fc595-07f4-467f-a51a-25cfa9711310}</Project>
+      <Name>NextLevelSeven</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
