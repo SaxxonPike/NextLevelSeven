@@ -25,7 +25,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get or set the field type value.</summary>
         public override string Value
         {
-            get { return _value; }
+            get => _value;
             set
             {
                 var oldValue = _value;

@@ -40,26 +40,20 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get or set the component string.</summary>
         public override string Value
         {
-            get
-            {
-                return HL7.NullValues.Contains(_value)
-                    ? null
-                    : _value;
-            }
-            set { SetSubcomponent(value); }
+            get => HL7.NullValues.Contains(_value)
+                ? null
+                : _value;
+            set => SetSubcomponent(value);
         }
 
         /// <summary>Returns 0 if null, and 1 otherwise.</summary>
-        public override int ValueCount
-        {
-            get { return 1; }
-        }
+        public override int ValueCount => 1;
 
         /// <summary>Return an enumerable with the content inside.</summary>
         public override IEnumerable<string> Values
         {
             get { yield return _value; }
-            set { _value = string.Concat(value); }
+            set => _value = string.Concat(value);
         }
 
         /// <summary>Deep clone this element.</summary>
@@ -77,28 +71,16 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>Returns zero. Subcomponents cannot be divided any further. Therefore, they have no useful delimiter.</summary>
-        public override char Delimiter
-        {
-            get { return '\0'; }
-        }
+        public override char Delimiter => '\0';
 
         /// <summary>If true, the element is considered to exist.</summary>
-        public override bool Exists
-        {
-            get { return _value != null; }
-        }
+        public override bool Exists => _value != null;
 
         /// <summary>Get this element's heirarchy-specific ancestor.</summary>
-        IComponent ISubcomponent.Ancestor
-        {
-            get { return Ancestor as IComponent; }
-        }
+        IComponent ISubcomponent.Ancestor => Ancestor as IComponent;
 
         /// <summary>Get this element's heirarchy-specific ancestor builder.</summary>
-        IComponentBuilder ISubcomponentBuilder.Ancestor
-        {
-            get { return Ancestor as IComponentBuilder; }
-        }
+        IComponentBuilder ISubcomponentBuilder.Ancestor => Ancestor as IComponentBuilder;
 
         /// <summary>Deep clone this subcomponent.</summary>
         /// <returns></returns>

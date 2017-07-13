@@ -33,57 +33,33 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>Ancestor element. Root elements return null.</summary>
-        protected virtual Parser Ancestor
-        {
-            get { return null; }
-        }
+        protected virtual Parser Ancestor => null;
 
         /// <summary>Get the string divider used to find descendant values.</summary>
-        public StringDivider DescendantDivider
-        {
-            get { return _descendantDivider.Value; }
-        }
+        public StringDivider DescendantDivider => _descendantDivider.Value;
 
         /// <summary>Get the deliminter internally being used by the descendant divider.</summary>
-        protected char DescendantDividerDelimiter
-        {
-            get { return _descendantDivider.Value.Delimiter; }
-        }
+        protected char DescendantDividerDelimiter => _descendantDivider.Value.Delimiter;
 
         /// <summary>Returns true if the descendant divider has been initialized.</summary>
-        protected bool DescendantDividerInitialized
-        {
-            get { return _descendantDivider.IsValueCreated; }
-        }
+        protected bool DescendantDividerInitialized => _descendantDivider.IsValueCreated;
 
         /// <summary>Get the encoding configuration.</summary>
-        protected ReadOnlyEncodingConfiguration EncodingConfiguration
-        {
-            get { return _encodingConfiguration.Value; }
-        }
+        protected ReadOnlyEncodingConfiguration EncodingConfiguration => _encodingConfiguration.Value;
 
         /// <summary>Get the descendant element at the specified index.</summary>
         /// <param name="index">Index of the desired element.</param>
         /// <returns>Element at the specified index.</returns>
-        public IElementParser this[int index]
-        {
-            get { return GetDescendant(index); }
-        }
+        public IElementParser this[int index] => GetDescendant(index);
 
         /// <summary>Get the codec used to convert values in this element.</summary>
-        public IEncodedTypeConverter Converter
-        {
-            get { return new EncodedTypeConverter(this); }
-        }
+        public IEncodedTypeConverter Converter => new EncodedTypeConverter(this);
 
         /// <summary>Delimiter character to be used when locating sub-elements.</summary>
         public abstract char Delimiter { get; }
 
         /// <summary>Number of descendant values.</summary>
-        public virtual int ValueCount
-        {
-            get { return DescendantDivider.Count; }
-        }
+        public virtual int ValueCount => DescendantDivider.Count;
 
         /// <summary>Get descendant elements as an enumerable set.</summary>
         public virtual IEnumerable<IElementParser> Descendants
@@ -99,10 +75,7 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>If true, the element is considered to exist.</summary>
-        public bool Exists
-        {
-            get { return DescendantDivider != null && !string.IsNullOrEmpty(DescendantDivider.Value); }
-        }
+        public bool Exists => !string.IsNullOrEmpty(DescendantDivider?.Value);
 
         /// <summary>Get or set the exposed index.</summary>
         public int Index { get; set; }
@@ -110,20 +83,17 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Get or set the raw value of this element.</summary>
         public virtual string Value
         {
-            get
-            {
-                return DescendantDivider == null 
-                    ? string.Empty 
-                    : DescendantDivider.Value;
-            }
-            set { DescendantDivider.Value = value; }
+            get => DescendantDivider == null 
+                ? string.Empty 
+                : DescendantDivider.Value;
+            set => DescendantDivider.Value = value;
         }
 
         /// <summary>Get or set the descendant raw values of this element.</summary>
         public virtual IEnumerable<string> Values
         {
-            get { return DescendantDivider.Values; }
-            set { DescendantDivider.Values = value; }
+            get => DescendantDivider.Values;
+            set => DescendantDivider.Values = value;
         }
 
         /// <summary>Create a deep clone of the element.</summary>
@@ -133,34 +103,19 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Get the descendant element at the specified index.</summary>
         /// <param name="index">Index of the desired element.</param>
         /// <returns>Descendant element.</returns>
-        IElement IElement.this[int index]
-        {
-            get { return GetDescendant(index); }
-        }
+        IElement IElement.this[int index] => GetDescendant(index);
 
         /// <summary>Get the generic type ancestor element.</summary>
-        IElement IElement.Ancestor
-        {
-            get { return Ancestor; }
-        }
+        IElement IElement.Ancestor => Ancestor;
 
         /// <summary>Get the generic type descendant collection.</summary>
-        IEnumerable<IElement> IElement.Descendants
-        {
-            get { return Descendants; }
-        }
+        IEnumerable<IElement> IElement.Descendants => Descendants;
 
         /// <summary>Unique key of the element within the message.</summary>
-        public string Key
-        {
-            get { return ElementOperations.GetKey(this); }
-        }
+        public string Key => ElementOperations.GetKey(this);
 
         /// <summary>Get the next available index.</summary>
-        public virtual int NextIndex
-        {
-            get { return ValueCount + 1; }
-        }
+        public virtual int NextIndex => ValueCount + 1;
 
         /// <summary>Erase an element from existence.</summary>
         public void Erase()
@@ -169,10 +124,7 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>Get the encoding configuration being used for this parser.</summary>
-        public IReadOnlyEncoding Encoding
-        {
-            get { return EncodingConfiguration; }
-        }
+        public IReadOnlyEncoding Encoding => EncodingConfiguration;
 
         /// <summary>Delete a descendant element.</summary>
         /// <param name="index">Index to insert at.</param>
@@ -262,9 +214,7 @@ namespace NextLevelSeven.Parsing.Elements
         {
             return this is IMessage
                 ? new ParserEncodingConfiguration((ISegment)this[1])
-                : (Ancestor != null
-                    ? Ancestor.EncodingConfiguration
-                    : null);
+                : Ancestor?.EncodingConfiguration;
         }
 
         /// <summary>Get a string divider for this descendant element.</summary>

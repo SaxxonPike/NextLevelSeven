@@ -31,10 +31,7 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>Field repetition delimiter.</summary>
-        public override char Delimiter
-        {
-            get { return EncodingConfiguration.RepetitionDelimiter; }
-        }
+        public override char Delimiter => EncodingConfiguration.RepetitionDelimiter;
 
         /// <summary>Get the value at the specified indices.</summary>
         /// <param name="repetition">Repetition index.</param>
@@ -59,10 +56,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Get a descendant field repetition.</summary>
         /// <param name="index">Index of the repetition.</param>
         /// <returns>Desired field repetition.</returns>
-        public new IRepetitionParser this[int index]
-        {
-            get { return _repetitions[index]; }
-        }
+        public new IRepetitionParser this[int index] => _repetitions[index];
 
         /// <summary>Deep clone this field.</summary>
         /// <returns>Clone of the field.</returns>
@@ -92,22 +86,13 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>Get all field repetitions.</summary>
-        IEnumerable<IRepetition> IField.Repetitions
-        {
-            get { return Repetitions; }
-        }
+        IEnumerable<IRepetition> IField.Repetitions => Repetitions;
 
         /// <summary>Get this element's heirarchy-specific ancestor.</summary>
-        ISegment IField.Ancestor
-        {
-            get { return Ancestor as ISegment; }
-        }
+        ISegment IField.Ancestor => Ancestor as ISegment;
 
         /// <summary>Get this element's heirarchy-specific ancestor parser.</summary>
-        ISegmentParser IFieldParser.Ancestor
-        {
-            get { return Ancestor as ISegmentParser; }
-        }
+        ISegmentParser IFieldParser.Ancestor => Ancestor as ISegmentParser;
 
         /// <summary>Get the descendant element at the specified index.</summary>
         /// <param name="index">Desired index.</param>

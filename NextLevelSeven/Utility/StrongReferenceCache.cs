@@ -30,7 +30,7 @@ namespace NextLevelSeven.Utility
                 Cache[index] = value;
                 return value;
             }
-            set { Cache[index] = value; }
+            set => Cache[index] = value;
         }
 
         /// <summary>Returns true if the specified key exists in the cache.</summary>
@@ -42,10 +42,7 @@ namespace NextLevelSeven.Utility
         }
 
         /// <summary>Get the number of items in the cache.</summary>
-        public override int Count
-        {
-            get { return Cache.Count; }
-        }
+        public override int Count => Cache.Count;
 
         /// <summary>Clear the cache.</summary>
         public override void Clear()

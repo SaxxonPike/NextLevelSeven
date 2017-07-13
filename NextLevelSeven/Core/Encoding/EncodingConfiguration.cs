@@ -31,32 +31,32 @@
 
         char IEncoding.ComponentDelimiter
         {
-            get { return ComponentDelimiter; }
-            set { ComponentDelimiter = value; }
+            get => ComponentDelimiter;
+            set => ComponentDelimiter = value;
         }
 
         char IEncoding.EscapeCharacter
         {
-            get { return EscapeCharacter; }
-            set { EscapeCharacter = value; }
+            get => EscapeCharacter;
+            set => EscapeCharacter = value;
         }
 
         char IEncoding.FieldDelimiter
         {
-            get { return FieldDelimiter; }
-            set { FieldDelimiter = value; }
+            get => FieldDelimiter;
+            set => FieldDelimiter = value;
         }
 
         char IEncoding.RepetitionDelimiter
         {
-            get { return RepetitionDelimiter; }
-            set { RepetitionDelimiter = value; }
+            get => RepetitionDelimiter;
+            set => RepetitionDelimiter = value;
         }
 
         char IEncoding.SubcomponentDelimiter
         {
-            get { return SubcomponentDelimiter; }
-            set { SubcomponentDelimiter = value; }
+            get => SubcomponentDelimiter;
+            set => SubcomponentDelimiter = value;
         }
     }
 }

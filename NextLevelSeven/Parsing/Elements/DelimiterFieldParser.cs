@@ -17,8 +17,8 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Get or set the value of the field delimiter.</summary>
         public override string Value
         {
-            get { return new string(Ancestor.DescendantDivider.Value[3], 1); }
-            set { throw new ElementException(ErrorCode.ElementValueCannotBeChanged); }
+            get => new string(Ancestor.DescendantDivider.Value[3], 1);
+            set => throw new ElementException(ErrorCode.ElementValueCannotBeChanged);
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace NextLevelSeven.Parsing.Elements
         public override IEnumerable<string> Values
         {
             get { yield return Value; }
-            set { throw new ElementException(ErrorCode.ElementValueCannotBeChanged); }
+            set => throw new ElementException(ErrorCode.ElementValueCannotBeChanged);
         }
     }
 }

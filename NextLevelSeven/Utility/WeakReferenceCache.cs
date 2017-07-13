@@ -21,8 +21,8 @@ namespace NextLevelSeven.Utility
         /// <returns>Item in the cache.</returns>
         public override TValue this[int index]
         {
-            get { return GetValue(index); }
-            set { SetValue(index, value); }
+            get => GetValue(index);
+            set => SetValue(index, value);
         }
 
         private TValue GetValue(int index)
@@ -66,10 +66,7 @@ namespace NextLevelSeven.Utility
         }
 
         /// <summary>Get the number of items in the cache.</summary>
-        public override int Count
-        {
-            get { return _cache.Count; }
-        }
+        public override int Count => _cache.Count;
 
         /// <summary>Clear the cache.</summary>
         public override void Clear()

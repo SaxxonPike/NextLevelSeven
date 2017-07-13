@@ -42,25 +42,16 @@ namespace NextLevelSeven.Parsing.Dividers
                 var split = Divisions[index];
                 return split.Length == 0 ? null : new string(BaseValue, split.Offset, split.Length);
             }
-            set { SetValue(index, value); }
+            set => SetValue(index, value);
         }
 
-        public override bool IsNull
-        {
-            get { return _baseDivider.IsNull || ValueChars == null || ValueChars.Length == 0; }
-        }
+        public override bool IsNull => _baseDivider.IsNull || ValueChars == null || ValueChars.Length == 0;
 
         /// <summary>String that is operated upon, as a character array. This points to the parent divider's BaseValue.</summary>
-        public override char[] BaseValue
-        {
-            get { return _baseDivider.BaseValue; }
-        }
+        public override char[] BaseValue => _baseDivider.BaseValue;
 
         /// <summary>Get the number of divisions.</summary>
-        public override int Count
-        {
-            get { return Divisions.Count; }
-        }
+        public override int Count => Divisions.Count;
 
         /// <summary>Get the division offsets in the string.</summary>
         protected override List<StringDivision> Divisions
@@ -85,7 +76,7 @@ namespace NextLevelSeven.Parsing.Dividers
                     ? null
                     : new string(BaseValue, d.Offset, d.Length);
             }
-            set { _baseDivider[Index] = value; }
+            set => _baseDivider[Index] = value;
         }
 
         /// <summary>Calculated value of all divisions separated by delimiters, as characters.</summary>
@@ -116,12 +107,9 @@ namespace NextLevelSeven.Parsing.Dividers
                     yield return this[i];
                 }
             }
-            set 
-            { 
-                Value = Delimiter == '\0'
-                    ? string.Concat(value)
-                    : string.Join(new string(Delimiter, 1), value);
-            }
+            set => Value = Delimiter == '\0'
+                ? string.Concat(value)
+                : string.Join(new string(Delimiter, 1), value);
         }
 
         /// <summary>Set the value at the specified subdivision index.</summary>

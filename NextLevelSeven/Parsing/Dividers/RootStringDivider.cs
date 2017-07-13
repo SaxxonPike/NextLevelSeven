@@ -39,20 +39,14 @@ namespace NextLevelSeven.Parsing.Dividers
                 var d = Divisions[index];
                 return new string(ValueChars, d.Offset, d.Length);
             }
-            set { SetValue(index, value); }
+            set => SetValue(index, value);
         }
 
         /// <summary>String that is operated upon, as a character array.</summary>
-        public override char[] BaseValue
-        {
-            get { return ValueChars; }
-        }
+        public override char[] BaseValue => ValueChars;
 
         /// <summary>Get the number of divisions.</summary>
-        public override int Count
-        {
-            get { return Divisions.Count; }
-        }
+        public override int Count => Divisions.Count;
 
         /// <summary>Get the division offsets in the string.</summary>
         protected override List<StringDivision> Divisions
@@ -67,22 +61,19 @@ namespace NextLevelSeven.Parsing.Dividers
         /// <summary>Calculated value of all divisions separated by delimiters.</summary>
         public override string Value
         {
-            get { return IsNull ? null : new string(ValueChars); }
-            set { ValueChars = StringDividerOperations.GetChars(value); }
+            get => IsNull ? null : new string(ValueChars);
+            set => ValueChars = StringDividerOperations.GetChars(value);
         }
 
         /// <summary>Calculated value of all divisions separated by delimiters, as chars.</summary>
         public override char[] ValueChars
         {
-            get { return _valueChars; }
-            protected set { Initialize(value); }
+            get => _valueChars;
+            protected set => Initialize(value);
         }
 
         /// <summary>Returns true if the divider base value is null.</summary>
-        public override bool IsNull
-        {
-            get { return _isNull; }
-        }
+        public override bool IsNull => _isNull;
 
         /// <summary>Get the internal values.</summary>
         public override IEnumerable<string> Values
@@ -95,12 +86,9 @@ namespace NextLevelSeven.Parsing.Dividers
                     yield return this[i];
                 }
             }
-            set
-            {
-                Value = Delimiter == '\0'
-                    ? string.Concat(value) 
-                    : string.Join(new string(Delimiter, 1), value);
-            }
+            set => Value = Delimiter == '\0'
+                ? string.Concat(value) 
+                : string.Join(new string(Delimiter, 1), value);
         }
 
         /// <summary>Set the string value at the specified index.</summary>

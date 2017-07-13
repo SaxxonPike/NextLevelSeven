@@ -33,18 +33,12 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>Returns true if the segment's type field is MSH.</summary>
-        private bool IsMsh
-        {
-            get { return string.Equals(Type, "MSH", StringComparison.Ordinal); }
-        }
+        private bool IsMsh => string.Equals(Type, "MSH", StringComparison.Ordinal);
 
         /// <summary>Get the descendant field parser at the specified index.</summary>
         /// <param name="index">Index of the field.</param>
         /// <returns>Field parser at the specified index.</returns>
-        IFieldParser ISegmentParser.this[int index]
-        {
-            get { return _fields[index]; }
-        }
+        IFieldParser ISegmentParser.this[int index] => _fields[index];
 
         /// <summary>Delete a descendant element.</summary>
         /// <param name="index">Index to insert at.</param>
@@ -148,8 +142,8 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Get the segment type from index 0.</summary>
         public string Type
         {
-            get { return DescendantDivider[0]; }
-            set { DescendantDivider[0] = value; }
+            get => DescendantDivider[0];
+            set => DescendantDivider[0] = value;
         }
 
         /// <summary>Get the value at the specified indices.</summary>
@@ -222,28 +216,16 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>Get all components.</summary>
-        IEnumerable<IField> ISegment.Fields
-        {
-            get { return Fields; }
-        }
+        IEnumerable<IField> ISegment.Fields => Fields;
 
         /// <summary>Get the next available index.</summary>
-        public override int NextIndex
-        {
-            get { return ValueCount; }
-        }
+        public override int NextIndex => ValueCount;
 
         /// <summary>Get this element's heirarchy-specific ancestor.</summary>
-        IMessage ISegment.Ancestor
-        {
-            get { return Ancestor as IMessage; }
-        }
+        IMessage ISegment.Ancestor => Ancestor as IMessage;
 
         /// <summary>Get this element's heirarchy-specific ancestor parser.</summary>
-        IMessageParser ISegmentParser.Ancestor
-        {
-            get { return Ancestor as IMessageParser; }
-        }
+        IMessageParser ISegmentParser.Ancestor => Ancestor as IMessageParser;
 
         /// <summary>Get the descendant element at the specified index.</summary>
         /// <param name="index">Index of the descendant element.</param>

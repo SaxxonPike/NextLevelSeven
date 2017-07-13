@@ -59,8 +59,8 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Element at the specified index.</returns>
         Builder IIndexedCache<Builder>.this[int index]
         {
-            get { return base[index]; }
-            set { base[index] = (TValue) value; }
+            get => base[index];
+            set => base[index] = (TValue) value;
         }
     }
 }

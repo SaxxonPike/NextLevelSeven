@@ -6,9 +6,6 @@ namespace NextLevelSeven.Parsing.Elements
     /// <summary>Represents a generic HL7 descendant element with an ancestor.</summary>
     internal abstract class DescendantParser : Parser
     {
-        /// <summary>Internal backing store for Ancestor.</summary>
-        private readonly Parser _ancestor;
-
         /// <summary>Zero-based index within the parent element's raw data.</summary>
         private readonly int _parentIndex;
 
@@ -25,16 +22,13 @@ namespace NextLevelSeven.Parsing.Elements
         /// <param name="externalIndex">Index exposed externally.</param>
         protected DescendantParser(Parser ancestor, int parentIndex, int externalIndex)
         {
-            _ancestor = ancestor;
+            Ancestor = ancestor;
             _parentIndex = parentIndex;
             Index = externalIndex;
         }
 
         /// <summary>Ancestor element.</summary>
-        protected sealed override Parser Ancestor
-        {
-            get { return _ancestor; }
-        }
+        protected sealed override Parser Ancestor { get; }
 
         /// <summary>Get a string divider for this descendant element.</summary>
         /// <returns>Descendant string divider.</returns>

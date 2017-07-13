@@ -180,7 +180,7 @@ namespace NextLevelSeven.Core
                 return false;
             }
 
-            return (element.ValueCount > 1) || element.Descendants.Any(HasSignificantDescendants);
+            return element.ValueCount > 1 || element.Descendants.Any(HasSignificantDescendants);
         }
 
         /// <summary>Insert element data before the specified element.</summary>

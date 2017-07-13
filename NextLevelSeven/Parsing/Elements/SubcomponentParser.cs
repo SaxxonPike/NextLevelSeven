@@ -26,22 +26,13 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>Returns an empty list since there are no descendants in a subcomponent.</summary>
-        public override IEnumerable<IElementParser> Descendants
-        {
-            get { return Enumerable.Empty<IElementParser>(); }
-        }
+        public override IEnumerable<IElementParser> Descendants => Enumerable.Empty<IElementParser>();
 
         /// <summary>Delimiter is invalid for subcomponents.</summary>
-        public override char Delimiter
-        {
-            get { return '\0'; }
-        }
+        public override char Delimiter => '\0';
 
         /// <summary>Returns 1, since subcomponents can't be divided further.</summary>
-        public override int ValueCount
-        {
-            get { return 1; }
-        }
+        public override int ValueCount => 1;
 
         /// <summary>Deep clone this element.</summary>
         /// <returns>Clone of the element.</returns>
@@ -58,16 +49,10 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>Get this element's heirarchy-specific ancestor.</summary>
-        IComponent ISubcomponent.Ancestor
-        {
-            get { return Ancestor as IComponent; }
-        }
+        IComponent ISubcomponent.Ancestor => Ancestor as IComponent;
 
         /// <summary>Get this element's heirarchy-specific ancestor parser.</summary>
-        IComponentParser ISubcomponentParser.Ancestor
-        {
-            get { return Ancestor as IComponentParser; }
-        }
+        IComponentParser ISubcomponentParser.Ancestor => Ancestor as IComponentParser;
 
         /// <summary>Throws. Subcomponents have no descendants.</summary>
         /// <param name="index"></param>

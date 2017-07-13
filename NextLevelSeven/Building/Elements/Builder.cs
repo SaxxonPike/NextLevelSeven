@@ -57,10 +57,7 @@ namespace NextLevelSeven.Building.Elements
         public abstract IEnumerable<string> Values { get; set; }
 
         /// <summary>Get a converter which will interpret this element's value as other types.</summary>
-        public virtual IEncodedTypeConverter Converter
-        {
-            get { return new EncodedTypeConverter(this); }
-        }
+        public virtual IEncodedTypeConverter Converter => new EncodedTypeConverter(this);
 
         /// <summary>Get the number of sub-values in this element.</summary>
         public abstract int ValueCount { get; }
@@ -71,28 +68,16 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get the descendant builder at the specified index.</summary>
         /// <param name="index">Index to reference.</param>
         /// <returns>Descendant builder.</returns>
-        public IElement this[int index]
-        {
-            get { return GetGenericElement(index); }
-        }
+        public IElement this[int index] => GetGenericElement(index);
 
         /// <summary>Get the ancestor element. Null if it's a root element.</summary>
-        IElement IElement.Ancestor
-        {
-            get { return GetAncestor(); }
-        }
+        IElement IElement.Ancestor => GetAncestor();
 
         /// <summary>Get descendant elements. For subcomponents, this will be empty.</summary>
-        IEnumerable<IElement> IElement.Descendants
-        {
-            get { return GetDescendants(); }
-        }
+        IEnumerable<IElement> IElement.Descendants => GetDescendants();
 
         /// <summary>Unique key of the element within the message.</summary>
-        public string Key
-        {
-            get { return ElementOperations.GetKey(this); }
-        }
+        public string Key => ElementOperations.GetKey(this);
 
         /// <summary>Get the next available index.</summary>
         public virtual int NextIndex
@@ -110,16 +95,10 @@ namespace NextLevelSeven.Building.Elements
         public abstract bool Exists { get; }
 
         /// <summary>Get the encoding used by this builder.</summary>
-        IReadOnlyEncoding IElement.Encoding
-        {
-            get { return Encoding; }
-        }
+        IReadOnlyEncoding IElement.Encoding => Encoding;
 
         /// <summary>Get the encoding used by this builder.</summary>
-        IEncoding IElementBuilder.Encoding
-        {
-            get { return Encoding; }
-        }
+        IEncoding IElementBuilder.Encoding => Encoding;
 
         /// <summary>Delete a descendant at the specified index.</summary>
         /// <param name="index">Index to delete at.</param>

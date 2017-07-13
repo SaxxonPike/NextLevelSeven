@@ -25,15 +25,15 @@
         /// <summary>Get or set the application name.</summary>
         public string Application
         {
-            get { return _element[_applicationIndex].Value; }
-            set { _element[_applicationIndex].Value = value; }
+            get => _element[_applicationIndex].Value;
+            set => _element[_applicationIndex].Value = value;
         }
 
         /// <summary>Get or set the facility name.</summary>
         public string Facility
         {
-            get { return _element[_facilityIndex].Value; }
-            set { _element[_facilityIndex].Value = value; }
+            get => _element[_facilityIndex].Value;
+            set => _element[_facilityIndex].Value = value;
         }
     }
 }

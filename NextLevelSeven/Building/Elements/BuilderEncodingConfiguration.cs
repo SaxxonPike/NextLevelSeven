@@ -18,32 +18,32 @@ namespace NextLevelSeven.Building.Elements
 
         char IEncoding.ComponentDelimiter
         {
-            get { return _builder.ComponentDelimiter; }
-            set { _builder.ComponentDelimiter = value; }
+            get => _builder.ComponentDelimiter;
+            set => _builder.ComponentDelimiter = value;
         }
 
         char IEncoding.EscapeCharacter
         {
-            get { return _builder.EscapeCharacter; }
-            set { _builder.EscapeCharacter = value; }
+            get => _builder.EscapeCharacter;
+            set => _builder.EscapeCharacter = value;
         }
 
         char IEncoding.FieldDelimiter
         {
-            get { return _builder.FieldDelimiter; }
-            set { _builder.FieldDelimiter = value; }
+            get => _builder.FieldDelimiter;
+            set => _builder.FieldDelimiter = value;
         }
 
         char IEncoding.RepetitionDelimiter
         {
-            get { return _builder.RepetitionDelimiter; }
-            set { _builder.RepetitionDelimiter = value; }
+            get => _builder.RepetitionDelimiter;
+            set => _builder.RepetitionDelimiter = value;
         }
 
         char IEncoding.SubcomponentDelimiter
         {
-            get { return _builder.SubcomponentDelimiter; }
-            set { _builder.SubcomponentDelimiter = value; }
+            get => _builder.SubcomponentDelimiter;
+            set => _builder.SubcomponentDelimiter = value;
         }
 
         public override char ComponentDelimiter
