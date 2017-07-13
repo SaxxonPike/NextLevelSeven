@@ -1,6 +1,6 @@
 # NextLevelSeven
 
-[![Build Status](https://travis-ci.org/SaxxonPike/NextLevelSeven.svg?branch=master)](https://travis-ci.org/SaxxonPike/NextLevelSeven)
+[![Build status](https://ci.appveyor.com/api/projects/status/rsckwoeg84r9wmph?svg=true)](https://ci.appveyor.com/project/SaxxonPike/nextlevelseven)
 
 A class library for parsing and manipulating HL7 v2 messages, designed to be
 fast and easy to use. There's a few things you should know:
