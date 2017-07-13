@@ -7,4 +7,4 @@ before_build:
   - cmd: nuget restore NextLevelSeven.sln
 
 build:
-  project: RefactoringEssentials.2017.sln
+  project: NextLevelSeven.sln
