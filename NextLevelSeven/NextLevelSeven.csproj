@@ -10,7 +10,7 @@
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<PackageReleaseNotes>See Project URL for usage instructions.</PackageReleaseNotes>
 		<Copyright>(c) 2017 Tony Konzel</Copyright>
-		<PackageTags>automatic auto mocking moq testing test</PackageTags>
+		<PackageTags>hl7 message builder parser</PackageTags>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<PackageLicenseUrl>https://github.com/SaxxonPike/NextLevelSeven/blob/master/LICENSE</PackageLicenseUrl>
 		<PackageProjectUrl>https://github.com/SaxxonPike/NextLevelSeven</PackageProjectUrl>
