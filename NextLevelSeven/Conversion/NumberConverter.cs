@@ -10,9 +10,7 @@ namespace NextLevelSeven.Conversion
         /// <returns>Converted decimal value.</returns>
         public static string ConvertFromDecimal(decimal? input)
         {
-            return input.HasValue
-                ? input.Value.ToString(CultureInfo.InvariantCulture)
-                : null;
+            return input?.ToString(CultureInfo.InvariantCulture);
         }
 
         /// <summary>Convert from integer value to HL7 integer.</summary>
@@ -20,9 +18,7 @@ namespace NextLevelSeven.Conversion
         /// <returns>Converted integer value.</returns>
         public static string ConvertFromInt(int? input)
         {
-            return input.HasValue
-                ? input.Value.ToString(CultureInfo.InvariantCulture)
-                : null;
+            return input?.ToString(CultureInfo.InvariantCulture);
         }
 
         /// <summary>Convert HL7 number to decimal value.</summary>

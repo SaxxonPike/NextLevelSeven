@@ -11,7 +11,7 @@ namespace NextLevelSeven.Conversion
         /// <returns>Converted date.</returns>
         public static string ConvertFromDate(DateTime? input)
         {
-            return !input.HasValue ? null : input.Value.ToString("yyyyMMdd");
+            return input?.ToString("yyyyMMdd");
         }
 
         /// <summary>Convert from date/time to HL7 date/time.</summary>
@@ -35,7 +35,7 @@ namespace NextLevelSeven.Conversion
         /// <returns>Converted time.</returns>
         public static string ConvertFromTime(TimeSpan? input)
         {
-            return !input.HasValue ? null : input.Value.ToString("HHmmss");
+            return input?.ToString("HHmmss");
         }
 
         /// <summary>Convert from HL7 date to .NET date.</summary>
@@ -44,11 +44,7 @@ namespace NextLevelSeven.Conversion
         public static DateTime? ConvertToDate(string input)
         {
             var dto = ConvertToDateTime(input);
-            if (dto.HasValue)
-            {
-                return dto.Value.Date;
-            }
-            return null;
+            return dto?.Date;
         }
 
         /// <summary>Convert from HL7 date/time to .NET date/time.</summary>

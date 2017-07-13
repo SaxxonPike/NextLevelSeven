@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Encoding;
@@ -68,16 +67,10 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>Get the segment delimiter.</summary>
-        public override char Delimiter
-        {
-            get { return '\xD'; }
-        }
+        public override char Delimiter => '\xD';
 
         /// <summary>Get the root message for this element.</summary>
-        ISegmentParser IMessageParser.this[int index]
-        {
-            get { return _segments[index]; }
-        }
+        ISegmentParser IMessageParser.this[int index] => _segments[index];
 
         /// <summary>Check for validity of the message. Returns true if the message can reasonably be parsed.</summary>
         /// <returns>True if the message can be parsed, false otherwise.</returns>
@@ -128,10 +121,7 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>Access message details as a property set.</summary>
-        public IMessageDetails Details
-        {
-            get { return new MessageDetails(this); }
-        }
+        public IMessageDetails Details => new MessageDetails(this);
 
         /// <summary>Get all segments.</summary>
         public IEnumerable<ISegmentParser> Segments
@@ -147,15 +137,12 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>Get all segments.</summary>
-        IEnumerable<ISegment> IMessage.Segments
-        {
-            get { return Segments; }
-        }
+        IEnumerable<ISegment> IMessage.Segments => Segments;
 
         /// <summary>Get or set the value of this message.</summary>
         public override string Value
         {
-            get { return base.Value; }
+            get => base.Value;
             set
             {
                 if (value == null)

@@ -31,10 +31,7 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>Delimiter to use for descendants.</summary>
-        public override char Delimiter
-        {
-            get { return EncodingConfiguration.SubcomponentDelimiter; }
-        }
+        public override char Delimiter => EncodingConfiguration.SubcomponentDelimiter;
 
         /// <summary>Get the value at the specified index.</summary>
         /// <param name="subcomponent">Optional: Subcomponent index.</param>
@@ -55,10 +52,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Get a descendant element at the specified index.</summary>
         /// <param name="index">Index of the desired element.</param>
         /// <returns>Element at the specified index.</returns>
-        public new ISubcomponentParser this[int index]
-        {
-            get { return _subcomponents[index]; }
-        }
+        public new ISubcomponentParser this[int index] => _subcomponents[index];
 
         /// <summary>Create a deep clone of the element.</summary>
         /// <returns>The cloned element.</returns>
@@ -88,22 +82,13 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>Get all subcomponents.</summary>
-        IEnumerable<ISubcomponent> IComponent.Subcomponents
-        {
-            get { return Subcomponents; }
-        }
+        IEnumerable<ISubcomponent> IComponent.Subcomponents => Subcomponents;
 
         /// <summary>Get this element's heirarchy-specific ancestor.</summary>
-        IRepetition IComponent.Ancestor
-        {
-            get { return Ancestor as IRepetition; }
-        }
+        IRepetition IComponent.Ancestor => Ancestor as IRepetition;
 
         /// <summary>Get this element's heirarchy-specific ancestor parser.</summary>
-        IRepetitionParser IComponentParser.Ancestor
-        {
-            get { return Ancestor as IRepetitionParser; }
-        }
+        IRepetitionParser IComponentParser.Ancestor => Ancestor as IRepetitionParser;
 
         /// <summary>Get the descendant element at the specified index.</summary>
         /// <param name="index">Index of the desired element.</param>

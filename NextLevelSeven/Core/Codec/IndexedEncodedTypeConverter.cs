@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using NextLevelSeven.Utility;
 
@@ -33,10 +32,7 @@ namespace NextLevelSeven.Core.Codec
         /// <summary>
         ///     Get the number of items in the collection.
         /// </summary>
-        public int Count
-        {
-            get { return _baseElement.ValueCount; }
-        }
+        public int Count => _baseElement.ValueCount;
 
         /// <summary>Get or set the items in the element as a collection.</summary>
         public IEnumerable<TDecoded> Items
@@ -60,8 +56,8 @@ namespace NextLevelSeven.Core.Codec
         /// <returns>Element descendant's value.</returns>
         public TDecoded this[int index]
         {
-            get { return _decoder(_baseElement[index].Value); }
-            set { _baseElement[index].Value = _encoder(value); }
+            get => _decoder(_baseElement[index].Value);
+            set => _baseElement[index].Value = _encoder(value);
         }
     }
 }

@@ -31,21 +31,12 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get a descendant field repetition builder.</summary>
         /// <param name="index">Index within the field to get the builder from.</param>
         /// <returns>Field repetition builder for the specified index.</returns>
-        public new IRepetitionBuilder this[int index]
-        {
-            get { return _repetitions[index]; }
-        }
+        public new IRepetitionBuilder this[int index] => _repetitions[index];
 
         /// <summary>Get the number of field repetitions in this field, including field repetitions with no content.</summary>
-        public override int ValueCount
-        {
-            get
-            {
-                return _repetitions.Count > 0
-                    ? _repetitions.MaxKey
-                    : 0;
-            }
-        }
+        public override int ValueCount => _repetitions.Count > 0
+            ? _repetitions.MaxKey
+            : 0;
 
         /// <summary>Get or set field repetition content within this field.</summary>
         public override IEnumerable<string> Values
@@ -58,7 +49,7 @@ namespace NextLevelSeven.Building.Elements
                     yield return _repetitions[i].Value;
                 }
             }
-            set { SetFieldRepetitions((value ?? Enumerable.Empty<string>()).ToArray()); }
+            set => SetFieldRepetitions((value ?? Enumerable.Empty<string>()).ToArray());
         }
 
         /// <summary>Get or set the field string.</summary>
@@ -92,7 +83,7 @@ namespace NextLevelSeven.Building.Elements
                     ? null
                     : result.ToString();
             }
-            set { SetField(value); }
+            set => SetField(value);
         }
 
         /// <summary>Set a component's content.</summary>
@@ -268,10 +259,7 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>Get this element's value delimiter.</summary>
-        public override char Delimiter
-        {
-            get { return RepetitionDelimiter; }
-        }
+        public override char Delimiter => RepetitionDelimiter;
 
         /// <summary>Get this element's field repetitions.</summary>
         IEnumerable<IRepetition> IField.Repetitions
@@ -287,22 +275,13 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>If true, the element is considered to exist.</summary>
-        public override bool Exists
-        {
-            get { return _repetitions.AnyExists; }
-        }
+        public override bool Exists => _repetitions.AnyExists;
 
         /// <summary>Get this element's heirarchy-specific ancestor.</summary>
-        ISegment IField.Ancestor
-        {
-            get { return Ancestor as ISegment; }
-        }
+        ISegment IField.Ancestor => Ancestor as ISegment;
 
         /// <summary>Get this element's heirarchy-specific ancestor builder.</summary>
-        ISegmentBuilder IFieldBuilder.Ancestor
-        {
-            get { return Ancestor as ISegmentBuilder; }
-        }
+        ISegmentBuilder IFieldBuilder.Ancestor => Ancestor as ISegmentBuilder;
 
         /// <summary>Deep clone this field.</summary>
         /// <returns>Clone of the field.</returns>

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Encoding;
@@ -33,16 +32,10 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get a descendant segment builder.</summary>
         /// <param name="index">Index within the message to get the builder from.</param>
         /// <returns>Segment builder for the specified index.</returns>
-        public new ISegmentBuilder this[int index]
-        {
-            get { return _segments[index]; }
-        }
+        public new ISegmentBuilder this[int index] => _segments[index];
 
         /// <summary>Get the number of segments in the message.</summary>
-        public override int ValueCount
-        {
-            get { return _segments.MaxKey; }
-        }
+        public override int ValueCount => _segments.MaxKey;
 
         /// <summary>Get or set segment content within this message.</summary>
         public override IEnumerable<string> Values
@@ -55,7 +48,7 @@ namespace NextLevelSeven.Building.Elements
                     yield return _segments[i].Value;
                 }
             }
-            set { SetSegments(value.ToArray()); }
+            set => SetSegments(value.ToArray());
         }
 
         /// <summary>Get or set the message string.</summary>
@@ -71,7 +64,7 @@ namespace NextLevelSeven.Building.Elements
                     ? null
                     : result;
             }
-            set { SetMessage(value); }
+            set => SetMessage(value);
         }
 
         /// <summary>Set a component's content.</summary>
@@ -360,16 +353,10 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>Get the message delimiter.</summary>
-        public override char Delimiter
-        {
-            get { return ReadOnlyEncodingConfiguration.SegmentDelimiter; }
-        }
+        public override char Delimiter => ReadOnlyEncodingConfiguration.SegmentDelimiter;
 
         /// <summary>Get a wrapper which can manipulate message details.</summary>
-        public IMessageDetails Details
-        {
-            get { return new MessageDetails(this); }
-        }
+        public IMessageDetails Details => new MessageDetails(this);
 
         /// <summary>Get the message's segments.</summary>
         IEnumerable<ISegment> IMessage.Segments
@@ -385,10 +372,7 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>If true, the element is considered to exist.</summary>
-        public override bool Exists
-        {
-            get { return _segments.AnyExists; }
-        }
+        public override bool Exists => _segments.AnyExists;
 
         /// <summary>Deep clone the message.</summary>
         /// <returns>Clone of the message.</returns>

@@ -46,27 +46,18 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get a descendant field builder.</summary>
         /// <param name="index">Index within the segment to get the builder from.</param>
         /// <returns>Field builder for the specified index.</returns>
-        public new IFieldBuilder this[int index]
-        {
-            get { return _fields[index]; }
-        }
+        public new IFieldBuilder this[int index] => _fields[index];
 
         /// <summary>Get the number of fields in this segment, including fields with no content.</summary>
-        public override int ValueCount
-        {
-            get 
-            { 
-                return _fields.Count > 0
-                    ? _fields.MaxKey + 1
-                    : 0; 
-            }
-        }
+        public override int ValueCount => _fields.Count > 0
+            ? _fields.MaxKey + 1
+            : 0;
 
         /// <summary>Get or set the three-letter type field of this segment.</summary>
         public string Type
         {
-            get { return _fields[0].Value; }
-            set { SetField(0, value); }
+            get => _fields[0].Value;
+            set => SetField(0, value);
         }
 
         /// <summary>Get or set field content within this segment.</summary>
@@ -80,7 +71,7 @@ namespace NextLevelSeven.Building.Elements
                     yield return _fields[i].Value;
                 }
             }
-            set { SetFields(value.ToArray()); }
+            set => SetFields(value.ToArray());
         }
 
         /// <summary>Get or set the segment string.</summary>
@@ -120,7 +111,7 @@ namespace NextLevelSeven.Building.Elements
                     ? null
                     : result.ToString();
             }
-            set { SetSegment(value); }
+            set => SetSegment(value);
         }
 
         /// <summary>Set a component's content.</summary>
@@ -348,10 +339,7 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>Get this segment's data delimiter.</summary>
-        public override char Delimiter
-        {
-            get { return FieldDelimiter; }
-        }
+        public override char Delimiter => FieldDelimiter;
 
         /// <summary>Get this element's fields.</summary>
         IEnumerable<IField> ISegment.Fields
@@ -367,28 +355,16 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>Get the next available index.</summary>
-        public override int NextIndex
-        {
-            get { return ValueCount; }
-        }
+        public override int NextIndex => ValueCount;
 
         /// <summary>If true, the element is considered to exist.</summary>
-        public override bool Exists
-        {
-            get { return _fields.AnyExists; }
-        }
+        public override bool Exists => _fields.AnyExists;
 
         /// <summary>Get this element's heirarchy-specific ancestor.</summary>
-        IMessage ISegment.Ancestor
-        {
-            get { return Ancestor as IMessage; }
-        }
+        IMessage ISegment.Ancestor => Ancestor as IMessage;
 
         /// <summary>Get this element's heirarchy-specific ancestor builder.</summary>
-        IMessageBuilder ISegmentBuilder.Ancestor
-        {
-            get { return Ancestor as IMessageBuilder; }
-        }
+        IMessageBuilder ISegmentBuilder.Ancestor => Ancestor as IMessageBuilder;
 
         /// <summary>Deep clone this segment.</summary>
         /// <returns>Clone of the segment.</returns>

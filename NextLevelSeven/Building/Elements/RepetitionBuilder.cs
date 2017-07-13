@@ -31,16 +31,10 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get a descendant component builder.</summary>
         /// <param name="index">Index within the field repetition to get the builder from.</param>
         /// <returns>Component builder for the specified index.</returns>
-        public new IComponentBuilder this[int index]
-        {
-            get { return _components[index]; }
-        }
+        public new IComponentBuilder this[int index] => _components[index];
 
         /// <summary>Get the number of components in this field repetition, including components with no content.</summary>
-        public override int ValueCount
-        {
-            get { return _components.MaxKey; }
-        }
+        public override int ValueCount => _components.MaxKey;
 
         /// <summary>Get or set component content within this field repetition.</summary>
         public override IEnumerable<string> Values
@@ -53,7 +47,7 @@ namespace NextLevelSeven.Building.Elements
                     yield return _components[i].Value;
                 }
             }
-            set { SetComponents(value.ToArray()); }
+            set => SetComponents(value.ToArray());
         }
 
         /// <summary>Get or set the field repetition string.</summary>
@@ -87,7 +81,7 @@ namespace NextLevelSeven.Building.Elements
                     ? null
                     : result.ToString();
             }
-            set { SetFieldRepetition(value); }
+            set => SetFieldRepetition(value);
         }
 
         /// <summary>Set a component's content.</summary>
@@ -219,10 +213,7 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>Get this element's value delimiter.</summary>
-        public override char Delimiter
-        {
-            get { return ComponentDelimiter; }
-        }
+        public override char Delimiter => ComponentDelimiter;
 
         /// <summary>Get this element's components.</summary>
         IEnumerable<IComponent> IRepetition.Components
@@ -238,22 +229,13 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>If true, the element is considered to exist.</summary>
-        public override bool Exists
-        {
-            get { return _components.AnyExists; }
-        }
+        public override bool Exists => _components.AnyExists;
 
         /// <summary>Get this element's heirarchy-specific ancestor.</summary>
-        IField IRepetition.Ancestor
-        {
-            get { return Ancestor as IField; }
-        }
+        IField IRepetition.Ancestor => Ancestor as IField;
 
         /// <summary>Get this element's heirarchy-specific ancestor builder.</summary>
-        IFieldBuilder IRepetitionBuilder.Ancestor
-        {
-            get { return Ancestor as IFieldBuilder; }
-        }
+        IFieldBuilder IRepetitionBuilder.Ancestor => Ancestor as IFieldBuilder;
 
         private RepetitionBuilder CloneRepetition()
         {

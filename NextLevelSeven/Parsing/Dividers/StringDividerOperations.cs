@@ -25,9 +25,7 @@ namespace NextLevelSeven.Parsing.Dividers
         /// <returns>Converted characters.</returns>
         public static char[] GetChars(string s)
         {
-            return s == null
-                ? null
-                : s.ToCharArray();
+            return s?.ToCharArray();
         }
 
         /// <summary>Get divisions without bounds.</summary>

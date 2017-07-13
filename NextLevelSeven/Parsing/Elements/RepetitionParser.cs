@@ -31,10 +31,7 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>Component delimiter.</summary>
-        public override char Delimiter
-        {
-            get { return EncodingConfiguration.ComponentDelimiter; }
-        }
+        public override char Delimiter => EncodingConfiguration.ComponentDelimiter;
 
         /// <summary>Get the value at the specified indices.</summary>
         /// <param name="component">Component index.</param>
@@ -57,10 +54,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Get the descendant component at the specified index.</summary>
         /// <param name="index">Desired index.</param>
         /// <returns>Descendant component at the specified index.</returns>
-        public new IComponentParser this[int index]
-        {
-            get { return _components[index]; }
-        }
+        public new IComponentParser this[int index] => _components[index];
 
         /// <summary>Deep clone this repetition.</summary>
         /// <returns>Clone of this repetition.</returns>
@@ -90,22 +84,13 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>Get all components.</summary>
-        IEnumerable<IComponent> IRepetition.Components
-        {
-            get { return Components; }
-        }
+        IEnumerable<IComponent> IRepetition.Components => Components;
 
         /// <summary>Get this element's heirarchy-specific ancestor.</summary>
-        IField IRepetition.Ancestor
-        {
-            get { return Ancestor as IField; }
-        }
+        IField IRepetition.Ancestor => Ancestor as IField;
 
         /// <summary>Get this element's heirarchy-specific ancestor parser.</summary>
-        IFieldParser IRepetitionParser.Ancestor
-        {
-            get { return Ancestor as IFieldParser; }
-        }
+        IFieldParser IRepetitionParser.Ancestor => Ancestor as IFieldParser;
 
         /// <summary>Get the descendant element at the specified index.</summary>
         /// <param name="index">Desired index.</param>

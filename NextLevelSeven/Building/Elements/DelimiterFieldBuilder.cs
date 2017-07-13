@@ -17,7 +17,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get or set the field type value.</summary>
         public override string Value
         {
-            get { return FieldDelimiter == '\0' ? null : new string(FieldDelimiter, 1); }
+            get => FieldDelimiter == '\0' ? null : new string(FieldDelimiter, 1);
             set
             {
                 if (string.IsNullOrEmpty(value) || HL7.NullValues.Contains(value))

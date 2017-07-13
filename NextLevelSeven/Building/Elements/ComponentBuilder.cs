@@ -31,16 +31,10 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get a descendant subcomponent builder.</summary>
         /// <param name="index">Index within the component to get the builder from.</param>
         /// <returns>Subcomponent builder for the specified index.</returns>
-        public new ISubcomponentBuilder this[int index]
-        {
-            get { return _subcomponents[index]; }
-        }
+        public new ISubcomponentBuilder this[int index] => _subcomponents[index];
 
         /// <summary>Get the number of subcomponents in this component, including subcomponents with no content.</summary>
-        public override int ValueCount
-        {
-            get { return _subcomponents.MaxKey; }
-        }
+        public override int ValueCount => _subcomponents.MaxKey;
 
         /// <summary>Get or set subcomponent content within this component.</summary>
         public override IEnumerable<string> Values
@@ -53,7 +47,7 @@ namespace NextLevelSeven.Building.Elements
                     yield return _subcomponents[i].Value;
                 }
             }
-            set { SetSubcomponents(value.ToArray()); }
+            set => SetSubcomponents(value.ToArray());
         }
 
         /// <summary>Get or set the component string.</summary>
@@ -87,7 +81,7 @@ namespace NextLevelSeven.Building.Elements
                     ? null
                     : result.ToString();
             }
-            set { SetComponent(value); }
+            set => SetComponent(value);
         }
 
         /// <summary>Set this component's content.</summary>
@@ -190,10 +184,7 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>Get the subcomponent delimiter.</summary>
-        public override char Delimiter
-        {
-            get { return SubcomponentDelimiter; }
-        }
+        public override char Delimiter => SubcomponentDelimiter;
 
         /// <summary>Get this element's subcomponents.</summary>
         IEnumerable<ISubcomponent> IComponent.Subcomponents
@@ -209,22 +200,13 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>If true, the element is considered to exist.</summary>
-        public override bool Exists
-        {
-            get { return _subcomponents.AnyExists; }
-        }
+        public override bool Exists => _subcomponents.AnyExists;
 
         /// <summary>Get this element's heirarchy-specific ancestor.</summary>
-        IRepetition IComponent.Ancestor
-        {
-            get { return Ancestor as IRepetition; }
-        }
+        IRepetition IComponent.Ancestor => Ancestor as IRepetition;
 
         /// <summary>Get this element's heirarchy-specific ancestor builder.</summary>
-        IRepetitionBuilder IComponentBuilder.Ancestor
-        {
-            get { return Ancestor as IRepetitionBuilder; }
-        }
+        IRepetitionBuilder IComponentBuilder.Ancestor => Ancestor as IRepetitionBuilder;
 
         /// <summary>Deep clone this component.</summary>
         /// <returns>Clone of the component.</returns>
