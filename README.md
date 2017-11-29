@@ -14,9 +14,6 @@ need at least Windows Vista with Service Pack 2.
 developers and maintainers of the HL7 v2 standard
 	- Their website is located at
 	[https://hl7.org/](https://hl7.org/ "Health Level Seven International website")
-1. The source code is compatible with Visual Studio 2013 and later.
-	- Plans to move to VS2015 which supports C# 6 features are in the works, but
-	it's too new yet
 
 ### License
 
@@ -27,11 +24,7 @@ if you use this in a project.
 ## Usage
 
 This library was designed to have a small footprint and rely on the smallest
-number of external resources. Including it in your own project is easy. Include
-`NextLevelSeven` as a project reference. You'll also want to include
-`using NextLevelSeven.Core` in your code file. You'll also want to be sure to
-import NuGet packages (which Visual Studio should take care of for you.)
-That's it!
+number of external resources.
 
 ### Element Heirarchy
 
