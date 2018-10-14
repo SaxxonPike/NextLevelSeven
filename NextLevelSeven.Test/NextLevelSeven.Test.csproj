@@ -3,11 +3,11 @@
 	<PropertyGroup>
 		<TargetFrameworks>net45</TargetFrameworks>
 		<PackageId>NextLevelSeven.Test</PackageId>
-		<PackageVersion>1.0.0</PackageVersion>
+		<PackageVersion>0.0.2</PackageVersion>
 		<Title>NextLevelSeven.Test</Title>
 		<Authors>Tony Konzel</Authors>
 		<Description></Description>
-		<Copyright>(c) 2017 Tony Konzel</Copyright>
+		<Copyright>(c) 2017-2018 Tony Konzel</Copyright>
 	</PropertyGroup>
 	<ItemGroup>
       <PackageReference Include="FluentAssertions" Version="4.0.1" />

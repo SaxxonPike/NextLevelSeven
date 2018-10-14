@@ -1,19 +1,20 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>net45</TargetFrameworks>
+		<TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
 		<PackageId>NextLevelSeven</PackageId>
-		<PackageVersion>0.0.1</PackageVersion>
+		<PackageVersion>0.0.2</PackageVersion>
 		<Title>NextLevelSeven</Title>
 		<Authors>Tony Konzel</Authors>
 		<Description>HL7v2 message builder and parser.</Description>
 		<PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
 		<PackageReleaseNotes>See Project URL for usage instructions.</PackageReleaseNotes>
-		<Copyright>(c) 2017 Tony Konzel</Copyright>
+		<Copyright>(c) 2017-2018 Tony Konzel</Copyright>
 		<PackageTags>hl7 message builder parser</PackageTags>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 		<PackageLicenseUrl>https://github.com/SaxxonPike/NextLevelSeven/blob/master/LICENSE</PackageLicenseUrl>
 		<PackageProjectUrl>https://github.com/SaxxonPike/NextLevelSeven</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/SaxxonPike/NextLevelSeven</RepositoryUrl>
+		<LangVersion>latest</LangVersion>
 	</PropertyGroup>
 </Project>
