@@ -12,7 +12,7 @@
 	<ItemGroup>
       <PackageReference Include="FluentAssertions" Version="4.0.1" />
 	  <PackageReference Include="Moq" Version="4.2.1510.2205" />
-	  <PackageReference Include="NUnit" Version="2.6.4" />
+	  <PackageReference Include="NUnit" Version="3.11.0" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\NextLevelSeven\NextLevelSeven.csproj" />

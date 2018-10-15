@@ -8,22 +8,22 @@ namespace NextLevelSeven.Test.Conversion
     public class NumberConverterUnitTestFixture : ConversionBaseTestFixture
     {
         [Test]
-        [TestCase("2", Result = 2)]
-        [TestCase("2.4", Result = 2)]
-        [TestCase("-2.4", Result = -2)]
-        [TestCase("-2", Result = -2)]
-        [TestCase("+2", Result = 2)]
-        [TestCase("Invalid", Result = null)]
-        [TestCase(null, Result = null)]
+        [TestCase("2", ExpectedResult = 2)]
+        [TestCase("2.4", ExpectedResult = 2)]
+        [TestCase("-2.4", ExpectedResult = -2)]
+        [TestCase("-2", ExpectedResult = -2)]
+        [TestCase("+2", ExpectedResult = 2)]
+        [TestCase("Invalid", ExpectedResult = null)]
+        [TestCase(null, ExpectedResult = null)]
         public int? NumberConverter_CanDecodeInteger(string value)
         {
             return NumberConverter.ConvertToInt(value);
         }
 
         [Test]
-        [TestCase(2, Result = "2")]
-        [TestCase(-2, Result = "-2")]
-        [TestCase(null, Result = null)]
+        [TestCase(2, ExpectedResult = "2")]
+        [TestCase(-2, ExpectedResult = "-2")]
+        [TestCase(null, ExpectedResult = null)]
         public string NumberConverter_CanEncodeInteger(int? value)
         {
             return NumberConverter.ConvertFromInt(value);
@@ -33,11 +33,11 @@ namespace NextLevelSeven.Test.Conversion
         // String values are parsed into Decimal type instead.
 
         [Test]
-        [TestCase("-2.3", Result = "-2.3")]
-        [TestCase("2.7", Result = "2.7")]
-        [TestCase("+2.5", Result = "2.5")]
-        [TestCase("Invalid", Result = null)]
-        [TestCase(null, Result = null)]
+        [TestCase("-2.3", ExpectedResult = "-2.3")]
+        [TestCase("2.7", ExpectedResult = "2.7")]
+        [TestCase("+2.5", ExpectedResult = "2.5")]
+        [TestCase("Invalid", ExpectedResult = null)]
+        [TestCase(null, ExpectedResult = null)]
         public string NumberConverter_CanDecodeDecimal(string value)
         {
             var result = NumberConverter.ConvertToDecimal(value);
@@ -47,9 +47,9 @@ namespace NextLevelSeven.Test.Conversion
         }
 
         [Test]
-        [TestCase("-2.3", Result = "-2.3")]
-        [TestCase("2.7", Result = "2.7")]
-        [TestCase(null, Result = null)]
+        [TestCase("-2.3", ExpectedResult = "-2.3")]
+        [TestCase("2.7", ExpectedResult = "2.7")]
+        [TestCase(null, ExpectedResult = null)]
         public string NumberConverter_CanEncodeDecimal(string value)
         {
             return value == null

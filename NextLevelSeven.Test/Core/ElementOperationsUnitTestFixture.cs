@@ -10,10 +10,10 @@ namespace NextLevelSeven.Test.Core
     public class ElementOperationsUnitTestFixture : CoreBaseTestFixture
     {
         [Test]
-        [TestCase(0, Result = false)]
-        [TestCase(1, Result = true)]
-        [TestCase(2, Result = true)]
-        [TestCase(3, Result = false)]
+        [TestCase(0, ExpectedResult = false)]
+        [TestCase(1, ExpectedResult = true)]
+        [TestCase(2, ExpectedResult = true)]
+        [TestCase(3, ExpectedResult = false)]
         public bool IsEncodingCharacterField_ReturnsTrue_OnlyOnEncodingFields(int fieldIndex)
         {
             var element = Message.Build(Any.Message());
@@ -51,12 +51,12 @@ namespace NextLevelSeven.Test.Core
         }
 
         [Test]
-        [TestCase(null, Result = "*")]
-        [TestCase(new[] { 1 }, Result = "MSH1")]
-        [TestCase(new[] { 1, 3 }, Result = "MSH1.3")]
-        [TestCase(new[] { 1, 3, 1 }, Result = "MSH1.3.1")]
-        [TestCase(new[] { 1, 3, 1, 1 }, Result = "MSH1.3.1.1")]
-        [TestCase(new[] { 1, 3, 1, 1, 1 }, Result = "MSH1.3.1.1.1")]
+        [TestCase(null, ExpectedResult = "*")]
+        [TestCase(new[] { 1 }, ExpectedResult = "MSH1")]
+        [TestCase(new[] { 1, 3 }, ExpectedResult = "MSH1.3")]
+        [TestCase(new[] { 1, 3, 1 }, ExpectedResult = "MSH1.3.1")]
+        [TestCase(new[] { 1, 3, 1, 1 }, ExpectedResult = "MSH1.3.1.1")]
+        [TestCase(new[] { 1, 3, 1, 1, 1 }, ExpectedResult = "MSH1.3.1.1.1")]
         public string GetKey_ReturnsKey(int[] descendants)
         {
             IElement element = Message.Build(Any.Message());
