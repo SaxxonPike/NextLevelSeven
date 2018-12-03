@@ -161,7 +161,27 @@ namespace NextLevelSeven.Core.Encoding
         /// <returns>Unescaped string.</returns>
         public static string UnEscape(IReadOnlyEncoding config, string s)
         {
-            throw new NotImplementedException();
+            if (s == null)
+            {
+                return null;
+            }
+
+            var componentDelimiter = config.ComponentDelimiter;
+            var escapeDelimiter = config.EscapeCharacter;
+            var fieldDelimiter = config.FieldDelimiter;
+            var repetitionDelimiter = config.RepetitionDelimiter;
+            var subcomponentDelimiter = config.SubcomponentDelimiter;
+
+            var data = s.ToCharArray();
+            var length = data.Length;
+            var output = new StringBuilder();
+
+            for (var index = 0; index < length; index++)
+            {
+                
+            }
+
+            return output.ToString();
         }
     }
 }

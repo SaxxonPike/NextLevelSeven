@@ -23,9 +23,27 @@ namespace NextLevelSeven.Test.Core
             var leftString = Any.String();
             var middleString = Any.String();
             var rightString = Any.String();
-            var test = String.Format("{0}{3}{1}{3}{2}", leftString, middleString, rightString, delimiter);
-            var expected = string.Format("{0}{3}{1}{3}{2}", leftString, middleString, rightString, escapeCode);
+            var test = $"{leftString}{delimiter}{middleString}{delimiter}{rightString}";
+            var expected = $"{leftString}{escapeCode}{middleString}{escapeCode}{rightString}";
             Test_Escape(expected, test);
+        }
+
+        private static void Test_UnEscape(string expected, string test)
+        {
+            var messageParser = Message.Parse();
+            var messageBuilder = Message.Build();
+            messageParser.Encoding.UnEscape(test).Should().Be(expected);
+            messageBuilder.Encoding.UnEscape(test).Should().Be(expected);
+        }
+
+        private static void Test_SingleDelimiterUnEscape(string delimiter, string escapeCode)
+        {
+            var leftString = Any.String();
+            var middleString = Any.String();
+            var rightString = Any.String();
+            var test = $"{leftString}{escapeCode}{middleString}{escapeCode}{rightString}";
+            var expected = $"{leftString}{delimiter}{middleString}{delimiter}{rightString}";
+            Test_UnEscape(expected, test);
         }
 
         [Test]
@@ -75,43 +93,123 @@ namespace NextLevelSeven.Test.Core
         [Test]
         public void Escape_DoesNotConvert_HighlightTextMarker()
         {
-            var message = String.Format("{0}\\H\\{1}", Any.String(), Any.String());
+            var message = $"{Any.String()}\\H\\{Any.String()}";
             Test_Escape(message, message);
         }
 
         [Test]
         public void Escape_DoesNotConvert_NormalTextMarker()
         {
-            var message = String.Format("{0}\\N\\{1}", Any.String(), Any.String());
+            var message = $"{Any.String()}\\N\\{Any.String()}";
             Test_Escape(message, message);
         }
 
         [Test]
         public void Escape_DoesNotConvert_MultiByteCharacterSetLongEscapeSequence()
         {
-            var message = String.Format("{0}\\MABCDEF\\{1}", Any.String(), Any.String());
+            var message = $"{Any.String()}\\MABCDEF\\{Any.String()}";
             Test_Escape(message, message);
         }
 
         [Test]
         public void Escape_DoesNotConvert_MultiByteCharacterSetShortEscapeSequence()
         {
-            var message = String.Format("{0}\\MABCD\\{1}", Any.String(), Any.String());
+            var message = $"{Any.String()}\\MABCD\\{Any.String()}";
             Test_Escape(message, message);
         }
 
         [Test]
         public void Escape_DoesNotConvert_LocallyDefinedEscapeSequence()
         {
-            var message = String.Format("{0}\\Z{2}\\{1}", Any.String(), Any.String(), Any.String());
+            var message = $"{Any.String()}\\Z{Any.String()}\\{Any.String()}";
             Test_Escape(message, message);
         }
 
         [Test]
         public void Escape_DoesNotConvert_SingleByteCharacterSetEscapeSequence()
         {
-            var message = String.Format("{0}\\CABCD\\{1}", Any.String(), Any.String());
+            var message = $"{Any.String()}\\CABCD\\{Any.String()}";
             Test_Escape(message, message);
+        }
+        
+        [Test]
+        public void UnEscape_Converts_ComponentCharacters()
+        {
+            Test_SingleDelimiterUnEscape("^", "\\S\\");
+        }
+
+        [Test]
+        public void UnEscape_Converts_EscapeCharacters()
+        {
+            Test_SingleDelimiterUnEscape("\\", "\\E\\");
+        }
+
+        [Test]
+        public void UnEscape_Converts_FieldCharacters()
+        {
+            Test_SingleDelimiterUnEscape("|", "\\F\\");
+        }
+
+        [Test]
+        public void UnEscape_Converts_PartialEscapeSequences()
+        {
+            // this contains what looks like the start of a variable length
+            // locally defined sequence but is only partially existing.
+            Test_UnEscape("\\E\\Zork", "\\Zork");
+        }
+
+        [Test]
+        public void UnEscape_Converts_RepetitionCharacters()
+        {
+            Test_SingleDelimiterUnEscape("~", "\\R\\");
+        }
+
+        [Test]
+        public void UnEscape_Converts_SubcomponentCharacters()
+        {
+            Test_SingleDelimiterUnEscape("&", "\\T\\");
+        }
+
+        [Test]
+        public void UnEscape_DoesNotConvert_HighlightTextMarker()
+        {
+            var message = $"{Any.String()}\\H\\{Any.String()}";
+            Test_UnEscape(message, message);
+        }
+
+        [Test]
+        public void UnEscape_DoesNotConvert_NormalTextMarker()
+        {
+            var message = $"{Any.String()}\\N\\{Any.String()}";
+            Test_UnEscape(message, message);
+        }
+
+        [Test]
+        public void UnEscape_DoesNotConvert_MultiByteCharacterSetLongEscapeSequence()
+        {
+            var message = $"{Any.String()}\\MABCDEF\\{Any.String()}";
+            Test_UnEscape(message, message);
+        }
+
+        [Test]
+        public void UnEscape_DoesNotConvert_MultiByteCharacterSetShortEscapeSequence()
+        {
+            var message = $"{Any.String()}\\MABCD\\{Any.String()}";
+            Test_UnEscape(message, message);
+        }
+
+        [Test]
+        public void UnEscape_DoesNotConvert_LocallyDefinedEscapeSequence()
+        {
+            var message = $"{Any.String()}\\Z{Any.String()}\\{Any.String()}";
+            Test_UnEscape(message, message);
+        }
+
+        [Test]
+        public void UnEscape_DoesNotConvert_SingleByteCharacterSetEscapeSequence()
+        {
+            var message = $"{Any.String()}\\CABCD\\{Any.String()}";
+            Test_UnEscape(message, message);
         }
     }
 }
