@@ -39,10 +39,5 @@ namespace NextLevelSeven.Core.Encoding
                     return System.Text.Encoding.UTF8;
             }
         }
-
-        public static string GetName(System.Text.Encoding encoding)
-        {
-            throw new NotImplementedException();
-        }
     }
 }
