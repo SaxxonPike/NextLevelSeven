@@ -167,7 +167,7 @@ namespace NextLevelSeven.Core.Encoding
         }
 
         /// <summary>
-        /// Escapes an X sequence. This currently assumes a UTF-8 encoding. TODO: other encodings
+        /// Escapes an X sequence.
         /// </summary>
         /// <param name="encoding">Encoding configuration.</param>
         /// <param name="value">Value to escape.</param>
@@ -187,7 +187,7 @@ namespace NextLevelSeven.Core.Encoding
         }
 
         /// <summary>
-        /// Unescapes an X sequence. This currently assumes a UTF-8 encoding. TODO: other encodings
+        /// Unescapes an X sequence.
         /// </summary>
         /// <param name="value">Value to unescape.</param>
         /// <param name="encoding">Encoding to use for the converted output.</param>
