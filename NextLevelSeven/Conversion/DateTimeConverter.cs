@@ -89,7 +89,7 @@ namespace NextLevelSeven.Conversion
             }
 
             var time = length >= 10 + timeZoneLength
-                ? (ConvertToTime(input.Substring(8, input.Length - timeZoneLength - 8)) ?? TimeSpan.Zero)
+                ? ConvertToTime(input.Substring(8, input.Length - timeZoneLength - 8)) ?? TimeSpan.Zero
                 : TimeSpan.Zero;
 
             return timeZone.HasValue

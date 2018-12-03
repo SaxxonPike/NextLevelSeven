@@ -24,13 +24,13 @@ OBR|1|542354^PCM|5432543^LA01|1048^CULTURE WOUND^LA01^1048^CULTURE WOUND^LA01|1|
             @"MSH|^~\&|SENDER|DEV|RECEIVER|SYSTEM|201310091028||ORU^R01|1424734.1|P|2.3";
 
         public static readonly string MultipleMessagesAsMlp =
-            String.Format("{0}{1}1{2}{0}{1}2{2}{0}{1}3{2}", "\xB", "MSH|^~\\&|", "\x1C\xD");
+            string.Format("{0}{1}1{2}{0}{1}2{2}{0}{1}3{2}", "\xB", "MSH|^~\\&|", "\x1C\xD");
 
         public static readonly string MultipleMessagesWithMultipleLinesAsMlp =
-            String.Format("{0}{1}1{2}{0}{1}2{2}{0}{1}3{2}", "\xB", "MSH|^~\\&|\xDPID|1234", "\x1C\xD");
+            string.Format("{0}{1}1{2}{0}{1}2{2}{0}{1}3{2}", "\xB", "MSH|^~\\&|\xDPID|1234", "\x1C\xD");
 
         public static readonly string MultipleMessagesSeparatedByLines =
-            String.Format("{0}1{1}{1}{1}{1}{0}2{1}{1}{0}3", "MSH|^~\\&|", "\r\n");
+            string.Format("{0}1{1}{1}{1}{1}{0}2{1}{1}{0}3", "MSH|^~\\&|", "\r\n");
 
         public static readonly string MultipleObr =
             @"MSH|^~\&|SENDER|DEV|RECEIVER|SYSTEM|201003150118||ORU^R01|5101|P|2.3|||NE|NE|

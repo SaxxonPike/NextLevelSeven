@@ -232,22 +232,21 @@ namespace NextLevelSeven.Core
         /// <param name="target">Element to nullify.</param>
         public static void Nullify(this IElement target)
         {
-            // messages can't be nullified.
-            if (target is IMessage)
+            switch (target)
             {
-                throw new ElementException(ErrorCode.MessageDataMustNotBeNull);
+                case IMessage _:
+                    // messages can't be nullified.
+                    throw new ElementException(ErrorCode.MessageDataMustNotBeNull);
+                case ISegment segment:
+                    // segment nullability doesn't work well, so we just clear out all fields.
+                    segment.Values = segment.Type == "MSH"
+                        ? segment.Values.Take(3).ToList()
+                        : segment.Type.Yield();
+                    return;
+                default:
+                    target.Value = HL7.Null;
+                    break;
             }
-
-            // segment nullability doesn't work well, so we just clear out all fields.
-            if (target is ISegment segment)
-            {
-                segment.Values = segment.Type == "MSH"
-                    ? segment.Values.Take(3).ToList()
-                    : segment.Type.Yield();
-                return;
-            }
-
-            target.Value = HL7.Null;
         }
 
         /// <summary>Get only segments that match the specified segment type.</summary>
