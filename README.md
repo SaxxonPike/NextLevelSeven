@@ -5,7 +5,7 @@
 A class library for parsing and manipulating HL7 v2 messages, designed to be
 fast and easy to use. There's a few things you should know:
 
-1. This library targets Microsoft .NET Framework version 4.5 or .NET Standard 2.0
+1. This library targets Microsoft .NET Framework version 4.6.1 or .NET Standard 2.0
 1. This project is not affiliated with Health Level Seven International, the
 developers and maintainers of the HL7 v2 standard
 	- Their website is located at
@@ -159,11 +159,8 @@ Any help is greatly appreciated! Here's what you need to know...
 
 ### Testing
 
-The project has successfully been moved to [NUnit](http://nunit.org). Currently,
-version 2 is being used. The tests do use `ExpectedExceptionAttribute` which is
-not supported in version 3. [FluentAssertions](http://www.fluentassertions.com/)
-is also used for testing. [Moq](https://github.com/Moq/moq4) is planned to be
-used for mocking in the test framework.
+[NUnit](http://nunit.org) is being used as the test framework. Use the test runner of your choice that is
+NUnit compatible - it should work in NUnit's own test runner, JetBrains Rider or ReSharper.
 
 ### Pull Requests
 
