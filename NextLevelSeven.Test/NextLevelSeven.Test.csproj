@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFrameworks>net45</TargetFrameworks>
+		<TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
 		<PackageId>NextLevelSeven.Test</PackageId>
 		<PackageVersion>0.0.2</PackageVersion>
 		<Title>NextLevelSeven.Test</Title>
@@ -10,8 +10,8 @@
 		<Copyright>(c) 2017-2018 Tony Konzel</Copyright>
 	</PropertyGroup>
 	<ItemGroup>
-      <PackageReference Include="FluentAssertions" Version="4.0.1" />
-	  <PackageReference Include="Moq" Version="4.2.1510.2205" />
+      <PackageReference Include="FluentAssertions" Version="5.5.3" />
+	  <PackageReference Include="Moq" Version="4.10.1" />
 	  <PackageReference Include="NUnit" Version="3.11.0" />
 	</ItemGroup>
 	<ItemGroup>

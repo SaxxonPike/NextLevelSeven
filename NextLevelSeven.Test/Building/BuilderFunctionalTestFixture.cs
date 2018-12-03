@@ -46,7 +46,7 @@ namespace NextLevelSeven.Test.Building
         {
             var builder = (object)Message.Build(Any.Message());
             var builder2 = builder;
-            builder.ShouldBeEquivalentTo(builder2);
+            builder.Should().BeEquivalentTo(builder2);
         }
 
         [Test]

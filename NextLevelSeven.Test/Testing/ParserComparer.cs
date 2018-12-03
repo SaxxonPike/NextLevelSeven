@@ -45,7 +45,7 @@ namespace NextLevelSeven.Test.Testing
             // verify contents are identical
             foreach (var parser in _parsers.Skip(1))
             {
-                parser.Values.ShouldAllBeEquivalentTo(_parsers.First().Values);
+                parser.Values.Should().BeEquivalentTo(_parsers.First().Values);
                 parser.Value.Should().Be(_parsers.First().Value);
             }
 
