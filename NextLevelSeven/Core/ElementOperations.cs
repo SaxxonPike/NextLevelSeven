@@ -17,8 +17,7 @@ namespace NextLevelSeven.Core
             }
 
             // anything more precise than segment?
-            var segment = target as ISegment;
-            if (segment == null)
+            if (!(target is ISegment segment))
             {
                 return string.Concat(GetKey(ancestor), ".", target.Index.ToString(CultureInfo.InvariantCulture));
             }
@@ -36,8 +35,8 @@ namespace NextLevelSeven.Core
         /// <returns>True, if the element contains encoding characters of some kind.</returns>
         public static bool IsEncodingCharacterField(IElement element)
         {
-            return element is IField && element.Ancestor != null && ((IField) element).Ancestor.Type == "MSH" &&
-                   element.Index >= 1 && element.Index <= 2;
+            return element is IField field && element.Ancestor != null && field.Ancestor.Type == "MSH" &&
+                   field.Index >= 1 && field.Index <= 2;
         }
     }
 }

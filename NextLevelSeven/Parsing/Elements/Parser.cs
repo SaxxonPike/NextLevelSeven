@@ -184,10 +184,9 @@ namespace NextLevelSeven.Parsing.Elements
                 var ancestor = Ancestor;
                 while (ancestor != null)
                 {
-                    if (ancestor is IMessage)
-                    {
-                        return ancestor as IMessage;
-                    }
+                    if (ancestor is IMessage message)
+                        return message;
+                    
                     ancestor = ancestor.Ancestor;
                 }
                 return null;
