@@ -3,8 +3,9 @@
     internal sealed class EncodingConfiguration : ReadOnlyEncodingConfiguration, IEncoding
     {
         /// <summary>Create an encoding configuration with the default characters.</summary>
-        public EncodingConfiguration()
+        public EncodingConfiguration(System.Text.Encoding encoding = null)
         {
+            CharacterEncoding = encoding ?? System.Text.Encoding.UTF8;
         }
 
         /// <summary>Clone an existing encoding configuration.</summary>
@@ -28,6 +29,9 @@
 
         /// <summary>Get the subcomponent delimiter.</summary>
         public override char SubcomponentDelimiter { get; protected set; }
+        
+        /// <summary>Get the current character encoding.</summary>
+        public override System.Text.Encoding CharacterEncoding { get; protected set; }
 
         char IEncoding.ComponentDelimiter
         {

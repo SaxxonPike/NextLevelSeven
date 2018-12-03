@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Text;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Encoding;
 
@@ -50,6 +51,12 @@ namespace NextLevelSeven.Parsing.Elements
         public override char SubcomponentDelimiter
         {
             get { return TryGetChar(_segment[2].Value, 3); }
+            [ExcludeFromCodeCoverage] protected set { }
+        }
+
+        public override Encoding CharacterEncoding
+        {
+            get => Msh18EncodingMap.GetEncoding(_segment[18]?.Value?.ToLowerInvariant());
             [ExcludeFromCodeCoverage] protected set { }
         }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -8,6 +9,8 @@ namespace NextLevelSeven.Core.Encoding
     /// <summary>Contains operations for escaping and unescaping HL7 strings.</summary>
     internal static class EncodingOperations
     {
+        private static string HexValues = "0123456789ABCDEF";
+        
         /// <summary>Add HL7 escape codes where necessary, according to this encoding configuration.</summary>
         /// <param name="config">Encoding configuration.</param>
         /// <param name="s">String to escape.</param>
@@ -157,13 +160,52 @@ namespace NextLevelSeven.Core.Encoding
             return output.ToString();
         }
 
+        /// <summary>
+        /// Escapes an X sequence. This currently assumes a UTF-8 encoding. TODO: other encodings
+        /// </summary>
+        /// <param name="value">Value to escape.</param>
+        /// <returns>Unescaped string.</returns>
+        private static string EscapeHexUtf8(IReadOnlyEncoding encoding, string value)
+        {
+            var output = new StringBuilder();
+
+            return $"{encoding.EscapeCharacter}X{output}{encoding.EscapeCharacter}";
+        }
+
+        /// <summary>
+        /// Unescapes an X sequence. This currently assumes a UTF-8 encoding. TODO: other encodings
+        /// </summary>
+        /// <param name="value">Value to unescape.</param>
+        /// <param name="encoding">Encoding to use for the converted output.</param>
+        /// <returns>Unescaped string.</returns>
+        private static string UnEscapeHexUtf8(string value, System.Text.Encoding encoding)
+        {
+            var bytes = new List<byte>();
+            for (var i = 0; i < value.Length - 1; i++)
+            {
+                var high = HexValues.IndexOf(value[i++]);
+                var low = HexValues.IndexOf(value[i]);
+                if (high < 0 || low < 0)
+                {
+                    bytes.Add(0);
+                    continue;
+                }
+                
+                bytes.Add(unchecked((byte)((high << 4) | low)));
+            }
+
+            return encoding.GetString(bytes.ToArray());
+        }
+
         /// <summary>Remove HL7 escape codes, using this encoding configuration for special characters.</summary>
         /// <param name="config">Encoding configuration.</param>
         /// <param name="s">String to unescape.</param>
         /// <returns>Unescaped string.</returns>
         public static string UnEscape(IReadOnlyEncoding config, string s)
         {
-            var escapeRegex = new Regex($"\\{config.EscapeCharacter}(E|F|R|S|T)*.\\{config.EscapeCharacter}");
+            var escapeCharacter = config.EscapeCharacter;
+            var escapeRegex = new Regex($"(\\{escapeCharacter}(E|F|R|S|T)\\{escapeCharacter}|" +
+                                        $"\\{escapeCharacter}X*.\\{escapeCharacter})");
             
             if (s == null)
             {
@@ -175,6 +217,7 @@ namespace NextLevelSeven.Core.Encoding
             var fieldDelimiter = new string(config.FieldDelimiter, 1);
             var repetitionDelimiter = new string(config.RepetitionDelimiter, 1);
             var subcomponentDelimiter = new string(config.SubcomponentDelimiter, 1);
+            var characterEncoding = config.CharacterEncoding;
 
             var output = new StringBuilder(s);
             var matches = escapeRegex.Matches(s);
@@ -200,6 +243,9 @@ namespace NextLevelSeven.Core.Encoding
                         break;
                     case 'T':
                         value = subcomponentDelimiter;
+                        break;
+                    case 'X':
+                        value = UnEscapeHexUtf8(matchValue.Substring(2, matchValue.Length - 3), characterEncoding);
                         break;
                 }
 

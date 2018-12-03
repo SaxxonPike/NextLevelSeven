@@ -23,6 +23,9 @@
 
         /// <summary>Get the delimiter character used to split subcomponents.</summary>
         public abstract char SubcomponentDelimiter { get; protected set; }
+        
+        /// <summary>Get the current character encoding.</summary>
+        public abstract System.Text.Encoding CharacterEncoding { get; protected set; }
 
         /// <summary>Clone defaults from another configuration.</summary>
         /// <param name="other">Source configuration.</param>

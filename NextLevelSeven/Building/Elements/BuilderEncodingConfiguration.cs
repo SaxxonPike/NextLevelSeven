@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Text;
 using NextLevelSeven.Core.Encoding;
 
 namespace NextLevelSeven.Building.Elements
@@ -46,33 +47,39 @@ namespace NextLevelSeven.Building.Elements
             set => _builder.SubcomponentDelimiter = value;
         }
 
+        public override Encoding CharacterEncoding
+        {
+            get => Msh18EncodingMap.GetEncoding(_builder.Message[18]?.Value);
+            [ExcludeFromCodeCoverage] protected set { }
+        }
+
         public override char ComponentDelimiter
         {
-            get { return _builder.ComponentDelimiter; }
+            get => _builder.ComponentDelimiter;
             [ExcludeFromCodeCoverage] protected set { }
         }
 
         public override char EscapeCharacter
         {
-            get { return _builder.EscapeCharacter; }
+            get => _builder.EscapeCharacter;
             [ExcludeFromCodeCoverage] protected set { }
         }
 
         public override char FieldDelimiter
         {
-            get { return _builder.FieldDelimiter; }
+            get => _builder.FieldDelimiter;
             [ExcludeFromCodeCoverage] protected set { }
         }
 
         public override char RepetitionDelimiter
         {
-            get { return _builder.RepetitionDelimiter; }
+            get => _builder.RepetitionDelimiter;
             [ExcludeFromCodeCoverage] protected set { }
         }
 
         public override char SubcomponentDelimiter
         {
-            get { return _builder.SubcomponentDelimiter; }
+            get => _builder.SubcomponentDelimiter;
             [ExcludeFromCodeCoverage] protected set { }
         }
     }
