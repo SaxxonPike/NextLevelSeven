@@ -1,7 +1,4 @@
-﻿using FluentAssertions;
-using NextLevelSeven.Core;
-using NextLevelSeven.Parsing;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 
 namespace NextLevelSeven.Test.Parsing
 {

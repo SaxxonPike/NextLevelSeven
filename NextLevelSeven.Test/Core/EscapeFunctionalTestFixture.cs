@@ -1,5 +1,4 @@
-﻿using System;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Encoding;
 using NextLevelSeven.Test.Testing;

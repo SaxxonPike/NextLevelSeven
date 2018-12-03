@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
 using FluentAssertions;
 using NextLevelSeven.Building;
 using NextLevelSeven.Core;
-using NextLevelSeven.Parsing;
 using NUnit.Framework;
 
 namespace NextLevelSeven.Test.Building
