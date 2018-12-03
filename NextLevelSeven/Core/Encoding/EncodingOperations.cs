@@ -176,8 +176,6 @@ namespace NextLevelSeven.Core.Encoding
             var repetitionDelimiter = new string(config.RepetitionDelimiter, 1);
             var subcomponentDelimiter = new string(config.SubcomponentDelimiter, 1);
 
-            var data = s.ToCharArray();
-            var length = data.Length;
             var output = new StringBuilder(s);
             var matches = escapeRegex.Matches(s);
 
