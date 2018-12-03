@@ -155,7 +155,7 @@ namespace NextLevelSeven.Test.Core
         {
             // this contains what looks like the start of a variable length
             // locally defined sequence but is only partially existing.
-            Test_UnEscape("\\E\\Zork", "\\Zork");
+            Test_UnEscape("\\Zork", "\\E\\Zork");
         }
 
         [Test]

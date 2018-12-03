@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace NextLevelSeven.Core.Encoding
 {
@@ -161,26 +163,55 @@ namespace NextLevelSeven.Core.Encoding
         /// <returns>Unescaped string.</returns>
         public static string UnEscape(IReadOnlyEncoding config, string s)
         {
+            var escapeRegex = new Regex($"\\{config.EscapeCharacter}(E|F|R|S|T)*.\\{config.EscapeCharacter}");
+            
             if (s == null)
             {
                 return null;
             }
 
-            var componentDelimiter = config.ComponentDelimiter;
-            var escapeDelimiter = config.EscapeCharacter;
-            var fieldDelimiter = config.FieldDelimiter;
-            var repetitionDelimiter = config.RepetitionDelimiter;
-            var subcomponentDelimiter = config.SubcomponentDelimiter;
+            var componentDelimiter = new string(config.ComponentDelimiter, 1);
+            var escapeDelimiter = new string(config.EscapeCharacter, 1);
+            var fieldDelimiter = new string(config.FieldDelimiter, 1);
+            var repetitionDelimiter = new string(config.RepetitionDelimiter, 1);
+            var subcomponentDelimiter = new string(config.SubcomponentDelimiter, 1);
 
             var data = s.ToCharArray();
             var length = data.Length;
-            var output = new StringBuilder();
+            var output = new StringBuilder(s);
+            var matches = escapeRegex.Matches(s);
 
-            for (var index = 0; index < length; index++)
+            foreach (var match in matches.Cast<Match>().OrderByDescending(m => m.Index))
             {
+                var matchValue = match.Value;
+                var value = match.Value;
                 
-            }
+                switch (matchValue[1])
+                {
+                    case 'E':
+                        value = escapeDelimiter;
+                        break;
+                    case 'F':
+                        value = fieldDelimiter;
+                        break;
+                    case 'R':
+                        value = repetitionDelimiter;
+                        break;
+                    case 'S':
+                        value = componentDelimiter;
+                        break;
+                    case 'T':
+                        value = subcomponentDelimiter;
+                        break;
+                }
 
+                if (value != matchValue)
+                {
+                    output.Remove(match.Index, matchValue.Length);
+                    output.Insert(match.Index, value);
+                }
+            }
+            
             return output.ToString();
         }
     }
