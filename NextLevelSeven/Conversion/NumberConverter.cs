@@ -31,8 +31,7 @@ namespace NextLevelSeven.Conversion
                 return null;
             }
 
-            decimal output;
-            if (!decimal.TryParse(input.Trim(), out output))
+            if (!decimal.TryParse(input.Trim(), out var output))
             {
                 return null;
             }
@@ -50,8 +49,7 @@ namespace NextLevelSeven.Conversion
                 return null;
             }
 
-            int output;
-            if (!int.TryParse(input.Trim(), out output))
+            if (!int.TryParse(input.Trim(), out var output))
             {
                 var decimalValue = ConvertToDecimal(input);
                 if (decimalValue.HasValue)

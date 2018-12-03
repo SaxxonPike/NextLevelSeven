@@ -65,8 +65,7 @@ namespace NextLevelSeven.Core
         /// <param name="target"></param>
         public static void CopyTo(this IElement source, IElement target)
         {
-            var segment = target as ISegment;
-            if (segment != null && segment.Type == "MSH")
+            if (target is ISegment segment && segment.Type == "MSH")
             {
                 target.Value = string.Join(source[1].Value,
                     source.Descendants.Where(d => d.Index != 1).Select(d => d.Value));
@@ -240,8 +239,7 @@ namespace NextLevelSeven.Core
             }
 
             // segment nullability doesn't work well, so we just clear out all fields.
-            var segment = target as ISegment;
-            if (segment != null)
+            if (target is ISegment segment)
             {
                 segment.Values = segment.Type == "MSH"
                     ? segment.Values.Take(3).ToList()

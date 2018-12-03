@@ -41,9 +41,7 @@ namespace NextLevelSeven.Test.Conversion
         public string NumberConverter_CanDecodeDecimal(string value)
         {
             var result = NumberConverter.ConvertToDecimal(value);
-            return result == null
-                ? null
-                : result.Value.ToString(CultureInfo.InvariantCulture);
+            return result?.ToString(CultureInfo.InvariantCulture);
         }
 
         [Test]

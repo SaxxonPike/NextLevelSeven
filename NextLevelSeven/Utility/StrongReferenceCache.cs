@@ -21,8 +21,7 @@ namespace NextLevelSeven.Utility
         {
             get
             {
-                TValue value;
-                if (Cache.TryGetValue(index, out value))
+                if (Cache.TryGetValue(index, out var value))
                 {
                     return value;
                 }

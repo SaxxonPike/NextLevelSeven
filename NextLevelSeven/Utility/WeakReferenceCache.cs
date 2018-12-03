@@ -27,9 +27,8 @@ namespace NextLevelSeven.Utility
 
         private TValue GetValue(int index)
         {
-            WeakReference<TValue> reference;
             TValue cachedValue;
-            if (_cache.TryGetValue(index, out reference))
+            if (_cache.TryGetValue(index, out var reference))
             {
                 if (reference.TryGetTarget(out cachedValue))
                 {
