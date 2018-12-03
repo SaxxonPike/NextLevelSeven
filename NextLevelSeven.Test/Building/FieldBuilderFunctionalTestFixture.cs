@@ -286,8 +286,8 @@ namespace NextLevelSeven.Test.Building
         {
             var val0 = Any.String();
             var val1 = Any.String();
-            var builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}", val0, val1))[1][3];
-            builder.Value.Should().Be(string.Format("{0}~{1}", val0, val1));
+            var builder = Message.Build($"MSH|^~\\&|{val0}~{val1}")[1][3];
+            builder.Value.Should().Be($"{val0}~{val1}");
         }
 
         [Test]
@@ -297,9 +297,8 @@ namespace NextLevelSeven.Test.Building
             var val1 = Any.String();
             var val2 = Any.String();
             var val3 = Any.String();
-            var builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}",
-                val0, val1, val2, val3))[1][3];
-            builder.Values.Should().Equal(val0, string.Format("{0}^{1}&{2}", val1, val2, val3));
+            var builder = Message.Build($"MSH|^~\\&|{val0}~{val1}^{val2}&{val3}")[1][3];
+            builder.Values.Should().Equal(val0, $"{val1}^{val2}&{val3}");
         }
 
         [Test]
@@ -336,7 +335,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetFieldRepetition(1, repetition1)
                 .SetFieldRepetition(2, repetition2);
-            builder.Value.Should().Be(string.Format("{0}~{1}", repetition1, repetition2));
+            builder.Value.Should().Be($"{repetition1}~{repetition2}");
         }
 
         [Test]
@@ -349,7 +348,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetFieldRepetition(2, repetition2)
                 .SetFieldRepetition(1, repetition1);
-            builder.Value.Should().Be(string.Format("{0}~{1}", repetition1, repetition2));
+            builder.Value.Should().Be($"{repetition1}~{repetition2}");
         }
 
         [Test]
@@ -361,7 +360,7 @@ namespace NextLevelSeven.Test.Building
 
             builder
                 .SetFieldRepetitions(3, repetition1, repetition2);
-            builder.Value.Should().Be(string.Format("~~{0}~{1}", repetition1, repetition2));
+            builder.Value.Should().Be($"~~{repetition1}~{repetition2}");
         }
 
         [Test]
@@ -374,7 +373,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetComponent(1, 1, component1)
                 .SetComponent(1, 2, component2);
-            builder.Value.Should().Be(string.Format("{0}^{1}", component1, component2));
+            builder.Value.Should().Be($"{component1}^{component2}");
         }
 
         [Test]
@@ -387,7 +386,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetComponent(1, 2, component2)
                 .SetComponent(1, 1, component1);
-            builder.Value.Should().Be(string.Format("{0}^{1}", component1, component2));
+            builder.Value.Should().Be($"{component1}^{component2}");
         }
 
         [Test]
@@ -399,7 +398,7 @@ namespace NextLevelSeven.Test.Building
 
             builder
                 .SetComponents(1, component1, component2);
-            builder.Value.Should().Be(string.Format("{0}^{1}", component1, component2));
+            builder.Value.Should().Be($"{component1}^{component2}");
         }
 
         [Test]
@@ -412,7 +411,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetSubcomponent(1, 1, 1, subcomponent1)
                 .SetSubcomponent(1, 1, 2, subcomponent2);
-            builder.Value.Should().Be(string.Format("{0}&{1}", subcomponent1, subcomponent2));
+            builder.Value.Should().Be($"{subcomponent1}&{subcomponent2}");
         }
 
         [Test]
@@ -425,7 +424,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetSubcomponent(1, 1, 2, subcomponent2)
                 .SetSubcomponent(1, 1, 1, subcomponent1);
-            builder.Value.Should().Be(string.Format("{0}&{1}", subcomponent1, subcomponent2));
+            builder.Value.Should().Be($"{subcomponent1}&{subcomponent2}");
         }
 
         [Test]
@@ -437,7 +436,7 @@ namespace NextLevelSeven.Test.Building
 
             builder
                 .SetSubcomponents(1, 1, 1, subcomponent1, subcomponent2);
-            builder.Value.Should().Be(string.Format("{0}&{1}", subcomponent1, subcomponent2));
+            builder.Value.Should().Be($"{subcomponent1}&{subcomponent2}");
         }
 
         [Test]

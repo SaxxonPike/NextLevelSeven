@@ -83,7 +83,7 @@ namespace NextLevelSeven.Test.Building
             var val1 = Any.String();
             builder.Values = new[] { val0, val1 };
             builder.SetSubcomponents(1);
-            builder.Value.Should().Be(string.Format("{0}&{1}", val0, val1));
+            builder.Value.Should().Be($"{val0}&{val1}");
         }
 
         [Test]
@@ -101,7 +101,7 @@ namespace NextLevelSeven.Test.Building
             var builder = Message.Build()[1][3][1][1];
             var val0 = Any.String();
             builder.SetSubcomponent(2, val0);
-            builder.Value.Should().Be(string.Format("&{0}", val0));
+            builder.Value.Should().Be($"&{val0}");
         }
 
         [Test]
@@ -112,7 +112,7 @@ namespace NextLevelSeven.Test.Building
             var val1 = Any.String();
             var val2 = Any.String();
             builder.SetSubcomponents(val0, val1, val2);
-            builder.Value.Should().Be(string.Format("{0}&{1}&{2}", val0, val1, val2));
+            builder.Value.Should().Be($"{val0}&{val1}&{val2}");
         }
 
         [Test]
@@ -134,7 +134,7 @@ namespace NextLevelSeven.Test.Building
             var val1 = Any.String();
             var val2 = Any.String();
             builder.Values = new[] {val0, val1, val2};
-            builder.Value.Should().Be(string.Format("{0}&{1}&{2}", val0, val1, val2));
+            builder.Value.Should().Be($"{val0}&{val1}&{val2}");
         }
 
         [Test]
@@ -173,7 +173,7 @@ namespace NextLevelSeven.Test.Building
             var val1 = Any.String();
             var builder =
                 Message.Build(string.Format("MSH|^~\\&|{2}^{0}&{1}", val0, val1, Any.String()))[1][3][1][2];
-            builder.Value.Should().Be(string.Format("{0}&{1}", val0, val1));
+            builder.Value.Should().Be($"{val0}&{val1}");
         }
 
         [Test]
@@ -182,8 +182,7 @@ namespace NextLevelSeven.Test.Building
             var val1 = Any.String();
             var val2 = Any.String();
             var val3 = Any.String();
-            var builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}",
-                Any.String(), val1, val2, val3))[1][3][2][2];
+            var builder = Message.Build($"MSH|^~\\&|{Any.String()}~{val1}^{val2}&{val3}")[1][3][2][2];
             builder.Values.Should().Equal(val2, val3);
         }
 
@@ -197,7 +196,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetSubcomponent(1, subcomponent1)
                 .SetSubcomponent(2, subcomponent2);
-            builder.Value.Should().Be(string.Format("{0}&{1}", subcomponent1, subcomponent2));
+            builder.Value.Should().Be($"{subcomponent1}&{subcomponent2}");
         }
 
         [Test]
@@ -210,7 +209,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetSubcomponent(2, subcomponent2)
                 .SetSubcomponent(1, subcomponent1);
-            builder.Value.Should().Be(string.Format("{0}&{1}", subcomponent1, subcomponent2));
+            builder.Value.Should().Be($"{subcomponent1}&{subcomponent2}");
         }
 
         [Test]
@@ -222,7 +221,7 @@ namespace NextLevelSeven.Test.Building
 
             builder
                 .SetSubcomponents(3, subcomponent1, subcomponent2);
-            builder.Value.Should().Be(string.Format("&&{0}&{1}", subcomponent1, subcomponent2));
+            builder.Value.Should().Be($"&&{subcomponent1}&{subcomponent2}");
         }
 
         [Test]

@@ -64,7 +64,7 @@ namespace NextLevelSeven.Test.Parsing
             var type = Any.StringCaps(3);
             var data = Any.String();
             message[2].Values = new[] { type, data };
-            message[2].Value.Should().Be(string.Format("{0}|{1}", type, data));
+            message[2].Value.Should().Be($"{type}|{data}");
         }
 
         [Test]
@@ -74,7 +74,7 @@ namespace NextLevelSeven.Test.Parsing
             var data = Any.String();
             const string delimiter = "$";
             message[1].Values = new[] { "MSH", delimiter, data };
-            message[1].Value.Should().Be(string.Format("MSH{0}{1}", delimiter, data));
+            message[1].Value.Should().Be($"MSH{delimiter}{data}");
         }
 
         [Test]

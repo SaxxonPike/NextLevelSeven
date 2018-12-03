@@ -156,7 +156,7 @@ namespace NextLevelSeven.Test.Building
             var val0 = Any.String();
             var val1 = Any.String();
             var builder =
-                Message.Build(string.Format("MSH|^~\\&|{0}&{1}&{2}", val0, val1, Any.String()))[1][3][1][1][2];
+                Message.Build($"MSH|^~\\&|{val0}&{val1}&{Any.String()}")[1][3][1][1][2];
             builder.Value.Should().Be(val1);
         }
 
@@ -166,8 +166,7 @@ namespace NextLevelSeven.Test.Building
             var val1 = Any.String();
             var val2 = Any.String();
             var val3 = Any.String();
-            var builder = Message.Build(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}",
-                Any.String(), val1, val2, val3))[1][3][2][2][2];
+            var builder = Message.Build($"MSH|^~\\&|{Any.String()}~{val1}^{val2}&{val3}")[1][3][2][2][2];
             builder.Values.Should().Equal(val3);
         }
 

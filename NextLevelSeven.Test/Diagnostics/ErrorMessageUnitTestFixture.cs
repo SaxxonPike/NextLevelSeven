@@ -69,7 +69,7 @@ namespace NextLevelSeven.Test.Diagnostics
         {
             var message = ErrorMessages.Get((ErrorCode) int.MaxValue);
             message.Should().Contain("Unknown error");
-            message.Should().Contain(string.Format("(NL7-{0})", int.MaxValue));
+            message.Should().Contain($"(NL7-{int.MaxValue})");
         }
     }
 }

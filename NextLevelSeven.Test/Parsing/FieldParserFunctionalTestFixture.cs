@@ -276,13 +276,13 @@ namespace NextLevelSeven.Test.Parsing
         [Test]
         public void Field_WillPointToCorrectValue_WhenOtherFieldChanges()
         {
-            var message = Message.Parse(string.Format(@"MSH|^~\&|{0}|{1}", Any.String(), Any.String()));
+            var message = Message.Parse($@"MSH|^~\&|{Any.String()}|{Any.String()}");
             var msh3 = message[1][3];
             var msh4 = message[1][4];
             var newMsh3Value = Any.String();
             var newMsh4Value = Any.String();
 
-            message.Value = string.Format(@"MSH|^~\&|{0}|{1}", newMsh3Value, newMsh4Value);
+            message.Value = $@"MSH|^~\&|{newMsh3Value}|{newMsh4Value}";
             msh3.Value.Should().Be(newMsh3Value);
             msh4.Value.Should().Be(newMsh4Value);
         }

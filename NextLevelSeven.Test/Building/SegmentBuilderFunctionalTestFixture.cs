@@ -26,7 +26,7 @@ namespace NextLevelSeven.Test.Building
             var val2 = Any.String();
             segment.Type = val0;
             segment.SetSubcomponents(1, 1, 1, val1, val2);
-            segment.Value.Should().Be(string.Format("{0}|{1}&{2}", val0, val1, val2));
+            segment.Value.Should().Be($"{val0}|{val1}&{val2}");
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace NextLevelSeven.Test.Building
             var val2 = Any.String();
             segment.Type = val0;
             segment.SetComponents(1, 1, 2, val1, val2);
-            segment.Value.Should().Be(string.Format("{0}|^{1}^{2}", val0, val1, val2));
+            segment.Value.Should().Be($"{val0}|^{val1}^{val2}");
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace NextLevelSeven.Test.Building
             var val2 = Any.String();
             segment.Type = val0;
             segment.SetFieldRepetitions(1, 2, val1, val2);
-            segment.Value.Should().Be(string.Format("{0}|~{1}~{2}", val0, val1, val2));
+            segment.Value.Should().Be($"{val0}|~{val1}~{val2}");
         }
 
         [Test]
@@ -203,7 +203,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetField(3, field3)
                 .SetField(5, field5);
-            builder.Value.Should().Be(string.Format("MSH|^~\\&|{0}||{1}", field3, field5));
+            builder.Value.Should().Be($"MSH|^~\\&|{field3}||{field5}");
         }
 
         [Test]
@@ -216,7 +216,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetField(5, field5)
                 .SetField(3, field3);
-            builder.Value.Should().Be(string.Format("MSH|^~\\&|{0}||{1}", field3, field5));
+            builder.Value.Should().Be($"MSH|^~\\&|{field3}||{field5}");
         }
 
         [Test]
@@ -228,7 +228,7 @@ namespace NextLevelSeven.Test.Building
 
             builder
                 .SetFields(3, field3, null, field5);
-            builder.Value.Should().Be(string.Format("MSH|^~\\&|{0}||{1}", field3, field5));
+            builder.Value.Should().Be($"MSH|^~\\&|{field3}||{field5}");
         }
 
         [Test]
@@ -241,7 +241,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetFieldRepetition(3, 1, repetition1)
                 .SetFieldRepetition(3, 2, repetition2);
-            builder.Value.Should().Be(string.Format("MSH|^~\\&|{0}~{1}", repetition1, repetition2));
+            builder.Value.Should().Be($"MSH|^~\\&|{repetition1}~{repetition2}");
         }
 
         [Test]
@@ -254,7 +254,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetFieldRepetition(3, 2, repetition2)
                 .SetFieldRepetition(3, 1, repetition1);
-            builder.Value.Should().Be(string.Format("MSH|^~\\&|{0}~{1}", repetition1, repetition2));
+            builder.Value.Should().Be($"MSH|^~\\&|{repetition1}~{repetition2}");
         }
 
         [Test]
@@ -266,7 +266,7 @@ namespace NextLevelSeven.Test.Building
 
             builder
                 .SetFieldRepetitions(3, repetition1, repetition2);
-            builder.Value.Should().Be(string.Format("MSH|^~\\&|{0}~{1}", repetition1, repetition2));
+            builder.Value.Should().Be($"MSH|^~\\&|{repetition1}~{repetition2}");
         }
 
         [Test]
@@ -279,7 +279,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetComponent(3, 1, 1, component1)
                 .SetComponent(3, 1, 2, component2);
-            builder.Value.Should().Be(string.Format("MSH|^~\\&|{0}^{1}", component1, component2));
+            builder.Value.Should().Be($"MSH|^~\\&|{component1}^{component2}");
         }
 
         [Test]
@@ -292,7 +292,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetComponent(3, 1, 2, component2)
                 .SetComponent(3, 1, 1, component1);
-            builder.Value.Should().Be(string.Format("MSH|^~\\&|{0}^{1}", component1, component2));
+            builder.Value.Should().Be($"MSH|^~\\&|{component1}^{component2}");
         }
 
         [Test]
@@ -304,7 +304,7 @@ namespace NextLevelSeven.Test.Building
 
             builder
                 .SetComponents(3, 1, component1, component2);
-            builder.Value.Should().Be(string.Format("MSH|^~\\&|{0}^{1}", component1, component2));
+            builder.Value.Should().Be($"MSH|^~\\&|{component1}^{component2}");
         }
 
         [Test]
@@ -317,7 +317,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetSubcomponent(3, 1, 1, 1, subcomponent1)
                 .SetSubcomponent(3, 1, 1, 2, subcomponent2);
-            builder.Value.Should().Be(string.Format("MSH|^~\\&|{0}&{1}", subcomponent1, subcomponent2));
+            builder.Value.Should().Be($"MSH|^~\\&|{subcomponent1}&{subcomponent2}");
         }
 
         [Test]
@@ -330,7 +330,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetSubcomponent(3, 1, 1, 2, subcomponent2)
                 .SetSubcomponent(3, 1, 1, 1, subcomponent1);
-            builder.Value.Should().Be(string.Format("MSH|^~\\&|{0}&{1}", subcomponent1, subcomponent2));
+            builder.Value.Should().Be($"MSH|^~\\&|{subcomponent1}&{subcomponent2}");
         }
 
         [Test]
@@ -342,7 +342,7 @@ namespace NextLevelSeven.Test.Building
 
             builder
                 .SetSubcomponents(3, 1, 1, 1, subcomponent1, subcomponent2);
-            builder.Value.Should().Be(string.Format("MSH|^~\\&|{0}&{1}", subcomponent1, subcomponent2));
+            builder.Value.Should().Be($"MSH|^~\\&|{subcomponent1}&{subcomponent2}");
         }
 
         [Test]

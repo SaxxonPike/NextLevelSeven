@@ -24,7 +24,7 @@ namespace NextLevelSeven.Test.Parsing
             var field32 = Any.String();
             var field41 = Any.String();
             var field42 = Any.String();
-            var message = Message.Parse(string.Format("MSH|^|{0}^{1}|{2}^{3}", field31, field32, field41, field42));
+            var message = Message.Parse($"MSH|^|{field31}^{field32}|{field41}^{field42}");
             message[1][3][1][1].Value.Should().Be(field31);
             message[1][3][1][2].Value.Should().Be(field32);
             message[1][4][1][1].Value.Should().Be(field41);
@@ -327,7 +327,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Message_CanMapSegments()
         {
             var id = Any.String();
-            var content = string.Format("MSH|^~\\&|{0}", id);
+            var content = $"MSH|^~\\&|{id}";
             IMessage tree = Message.Parse(content);
             tree.GetValue(1).Should().Be(content);
         }
@@ -336,7 +336,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Message_CanMapFields()
         {
             var id = Any.String();
-            IMessage tree = Message.Parse(string.Format("MSH|^~\\&|{0}", id));
+            IMessage tree = Message.Parse($"MSH|^~\\&|{id}");
             tree.GetValue(1, 3).Should().Be(id);
         }
 
@@ -345,7 +345,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var id1 = Any.String();
             var id2 = Any.String();
-            IMessage tree = Message.Parse(string.Format("MSH|^~\\&|{0}~{1}", id1, id2));
+            IMessage tree = Message.Parse($"MSH|^~\\&|{id1}~{id2}");
             tree.GetValue(1, 3, 1).Should().Be(id1);
             tree.GetValue(1, 3, 2).Should().Be(id2);
         }
@@ -355,7 +355,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var id1 = Any.String();
             var id2 = Any.String();
-            IMessage tree = Message.Parse(string.Format("MSH|^~\\&|{0}^{1}", id1, id2));
+            IMessage tree = Message.Parse($"MSH|^~\\&|{id1}^{id2}");
             tree.GetValue(1, 3, 1, 1).Should().Be(id1);
             tree.GetValue(1, 3, 1, 2).Should().Be(id2);
         }
@@ -365,7 +365,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var id1 = Any.String();
             var id2 = Any.String();
-            IMessage tree = Message.Parse(string.Format("MSH|^~\\&|{0}&{1}", id1, id2));
+            IMessage tree = Message.Parse($"MSH|^~\\&|{id1}&{id2}");
             tree.GetValue(1, 3, 1, 1, 1).Should().Be(id1);
             tree.GetValue(1, 3, 1, 1, 2).Should().Be(id2);
         }

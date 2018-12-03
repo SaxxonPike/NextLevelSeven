@@ -52,7 +52,7 @@ namespace NextLevelSeven.Test.Parsing
             var id3 = Any.String();
             var id4 = Any.String();
             var component =
-                Message.Parse(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}", id1, id2, id3, id4))[1][3][2][2];
+                Message.Parse($"MSH|^~\\&|{id1}~{id2}^{id3}&{id4}")[1][3][2][2];
             component.Subcomponents.Count().Should().Be(2);
         }
 
@@ -64,7 +64,7 @@ namespace NextLevelSeven.Test.Parsing
             var id3 = Any.String();
             var id4 = Any.String();
             IComponent component =
-                Message.Parse(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}", id1, id2, id3, id4))[1][3][2][2];
+                Message.Parse($"MSH|^~\\&|{id1}~{id2}^{id3}&{id4}")[1][3][2][2];
             component.Subcomponents.Count().Should().Be(2);
         }
 
@@ -76,7 +76,7 @@ namespace NextLevelSeven.Test.Parsing
             var id3 = Any.String();
             var id4 = Any.String();
             var component =
-                Message.Parse(string.Format("MSH|^~\\&|{0}~{1}^{2}&{3}", id1, id2, id3, id4))[1][3][2][2][2];
+                Message.Parse($"MSH|^~\\&|{id1}~{id2}^{id3}&{id4}")[1][3][2][2][2];
             component.Value.Should().Be(id4);
         }
 
