@@ -36,13 +36,13 @@ namespace NextLevelSeven.Test.Core
             messageBuilder.Encoding.UnEscape(test).Should().Be(expected);
         }
 
-        private static void Test_SingleDelimiterUnEscape(string delimiter, string escapeCode)
+        private static void Test_SingleDelimiterUnEscape(string expectedCode, string sourceCode)
         {
             var leftString = Any.String();
             var middleString = Any.String();
             var rightString = Any.String();
-            var test = $"{leftString}{escapeCode}{middleString}{escapeCode}{rightString}";
-            var expected = $"{leftString}{delimiter}{middleString}{delimiter}{rightString}";
+            var test = $"{leftString}{sourceCode}{middleString}{sourceCode}{rightString}";
+            var expected = $"{leftString}{expectedCode}{middleString}{expectedCode}{rightString}";
             Test_UnEscape(expected, test);
         }
 
@@ -133,6 +133,12 @@ namespace NextLevelSeven.Test.Core
         }
         
         [Test]
+        public void Escape_Converts_BinaryData()
+        {
+            Test_SingleDelimiterEscape("\x0D\x0A", "\\X0D\\\\X0A\\");
+        }
+
+        [Test]
         public void UnEscape_Converts_ComponentCharacters()
         {
             Test_SingleDelimiterUnEscape("^", "\\S\\");
@@ -168,6 +174,12 @@ namespace NextLevelSeven.Test.Core
         public void UnEscape_Converts_SubcomponentCharacters()
         {
             Test_SingleDelimiterUnEscape("&", "\\T\\");
+        }
+
+        [Test]
+        public void UnEscape_Converts_BinaryData()
+        {
+            Test_SingleDelimiterUnEscape("\x0D\x0A", "\\X0D\\\\X0A\\");
         }
 
         [Test]

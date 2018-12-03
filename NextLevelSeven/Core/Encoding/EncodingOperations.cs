@@ -154,6 +154,12 @@ namespace NextLevelSeven.Core.Encoding
                     continue;
                 }
 
+                if (char.IsControl(c))
+                {
+                    output.Append(EscapeHexUtf8(config, new string(c, 1)));
+                    continue;
+                }
+
                 output.Append(c);
             }
 
@@ -163,11 +169,19 @@ namespace NextLevelSeven.Core.Encoding
         /// <summary>
         /// Escapes an X sequence. This currently assumes a UTF-8 encoding. TODO: other encodings
         /// </summary>
+        /// <param name="encoding">Encoding configuration.</param>
         /// <param name="value">Value to escape.</param>
         /// <returns>Unescaped string.</returns>
         private static string EscapeHexUtf8(IReadOnlyEncoding encoding, string value)
         {
             var output = new StringBuilder();
+            var enc = encoding.CharacterEncoding;
+
+            foreach (var c in enc.GetBytes(value))
+            {
+                output.Append(HexValues[c >> 4]);
+                output.Append(HexValues[c & 15]);
+            }
 
             return $"{encoding.EscapeCharacter}X{output}{encoding.EscapeCharacter}";
         }
@@ -205,7 +219,7 @@ namespace NextLevelSeven.Core.Encoding
         {
             var escapeCharacter = config.EscapeCharacter;
             var escapeRegex = new Regex($"(\\{escapeCharacter}(E|F|R|S|T)\\{escapeCharacter}|" +
-                                        $"\\{escapeCharacter}X*.\\{escapeCharacter})");
+                                        $"\\{escapeCharacter}X[^\\{escapeCharacter}]*\\{escapeCharacter})");
             
             if (s == null)
             {
