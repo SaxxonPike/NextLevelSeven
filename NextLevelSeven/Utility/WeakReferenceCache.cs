@@ -46,8 +46,7 @@ namespace NextLevelSeven.Utility
 
         private void SetValue(int index, TValue value)
         {
-            WeakReference<TValue> reference;
-            if (_cache.TryGetValue(index, out reference))
+            if (_cache.TryGetValue(index, out _))
             {
                 _cache[index].SetTarget(value);
             }

@@ -3,6 +3,7 @@ using FluentAssertions;
 using NextLevelSeven.Core;
 using NextLevelSeven.Parsing;
 using NextLevelSeven.Test.Testing;
+using NextLevelSeven.Test.Utility;
 using NUnit.Framework;
 
 namespace NextLevelSeven.Test.Parsing

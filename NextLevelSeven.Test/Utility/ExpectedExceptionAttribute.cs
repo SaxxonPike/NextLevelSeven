@@ -1,14 +1,15 @@
-﻿using NUnit.Framework.Interfaces;
+﻿using System;
+using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 using NUnit.Framework.Internal;
 using NUnit.Framework.Internal.Commands;
-using System;
 
-namespace NUnit.Framework
+namespace NextLevelSeven.Test.Utility
 {
     /// <summary>
     /// A simple ExpectedExceptionAttribute shim from https://github.com/nunit/nunit/issues/799#issuecomment-137893339
     /// </summary>
-    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Method, Inherited = false)]
     public class ExpectedExceptionAttribute : NUnitAttribute, IWrapTestMethod
     {
         private readonly Type _expectedExceptionType;
@@ -52,10 +53,10 @@ namespace NUnit.Framework
                     context.CurrentResult.SetResult(ResultState.Success);
                 else if (caughtType != null)
                     context.CurrentResult.SetResult(ResultState.Failure,
-                        string.Format("Expected {0} but got {1}", _expectedType.Name, caughtType.Name));
+                        $"Expected {_expectedType.Name} but got {caughtType.Name}");
                 else
                     context.CurrentResult.SetResult(ResultState.Failure,
-                        string.Format("Expected {0} but no exception was thrown", _expectedType.Name));
+                        $"Expected {_expectedType.Name} but no exception was thrown");
 
                 return context.CurrentResult;
             }

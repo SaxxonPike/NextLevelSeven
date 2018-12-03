@@ -2,6 +2,7 @@
 using FluentAssertions;
 using NextLevelSeven.Core;
 using NextLevelSeven.Test.Testing;
+using NextLevelSeven.Test.Utility;
 using NUnit.Framework;
 
 namespace NextLevelSeven.Test.Core

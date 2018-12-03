@@ -1,6 +1,7 @@
 ﻿using System;
 using FluentAssertions;
 using NextLevelSeven.Conversion;
+using NextLevelSeven.Test.Utility;
 using NUnit.Framework;
 
 namespace NextLevelSeven.Test.Conversion
