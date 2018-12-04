@@ -107,14 +107,31 @@ namespace NextLevelSeven.Test.Core.Codec
             message[1][3].RawValues = values;
             message[1][3].As.Decimals.Should().BeEquivalentTo(values.Select(decimal.Parse));
         }
+        
+        [Test]
+        public void Codec_CanGetInteger()
+        {
+            var message = Message.Parse(Any.Message());
+            message[1][3].RawValue = Any.Number().ToString();
+            message[1][3].As.Integer.Should().HaveValue();
+        }
 
         [Test]
-        public void Codec_CanSetDecimals()
+        public void Codec_CanSetInteger()
         {
-            var input = NumberConverter.ConvertToDecimal(Any.Decimal());
+            var input = Any.Number();
             var message = Message.Parse(Any.Message());
-            message[1][3].As.Decimal = input;
+            message[1][3].As.Integer = input;
             message[1][3].RawValue.Should().Be(input.ToString());
+        }
+        
+        [Test]
+        public void Codec_CanGetIntegers()
+        {
+            var message = Message.Parse(Any.Message());
+            var values = Enumerable.Range(0, 3).Select(i => Any.Number()).ToList();
+            message[1][3].RawValues = values.Select(v => v.ToString());
+            message[1][3].As.Integers.Should().BeEquivalentTo(values);
         }
     }
 }
