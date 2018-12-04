@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using NextLevelSeven.Utility;
 
@@ -59,5 +60,8 @@ namespace NextLevelSeven.Core.Codec
             get => _decoder(_baseElement[index].Value);
             set => _baseElement[index].Value = _encoder(value);
         }
+
+        public IEnumerator<TDecoded> GetEnumerator() => Items.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

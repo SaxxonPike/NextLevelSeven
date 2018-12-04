@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using FluentAssertions;
+using Moq;
 using NextLevelSeven.Conversion;
 using NextLevelSeven.Core;
 using NextLevelSeven.Test.Testing;
@@ -91,6 +92,24 @@ namespace NextLevelSeven.Test.Core.Codec
 
         [Test]
         public void Codec_CanSetDecimal()
+        {
+            var input = NumberConverter.ConvertToDecimal(Any.Decimal());
+            var message = Message.Parse(Any.Message());
+            message[1][3].As.Decimal = input;
+            message[1][3].RawValue.Should().Be(input.ToString());
+        }
+        
+        [Test]
+        public void Codec_CanGetDecimals()
+        {
+            var message = Message.Parse(Any.Message());
+            var values = Enumerable.Range(0, 3).Select(i => Any.Decimal()).ToList();
+            message[1][3].RawValues = values;
+            message[1][3].As.Decimals.Should().BeEquivalentTo(values.Select(decimal.Parse));
+        }
+
+        [Test]
+        public void Codec_CanSetDecimals()
         {
             var input = NumberConverter.ConvertToDecimal(Any.Decimal());
             var message = Message.Parse(Any.Message());
