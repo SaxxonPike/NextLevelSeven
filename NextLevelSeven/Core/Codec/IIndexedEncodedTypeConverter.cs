@@ -11,10 +11,5 @@ namespace NextLevelSeven.Core.Codec
 
         /// <summary>Get or set the items in the element as a collection.</summary>
         IEnumerable<TDecoded> Items { get; set; }
-
-        /// <summary>
-        ///     Get the number of items in the collection.
-        /// </summary>
-        int Count { get; }
     }
 }
