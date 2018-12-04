@@ -20,6 +20,8 @@ namespace NextLevelSeven.Diagnostics
                         return "Component index must be greater than zero.";
                     case ErrorCode.DataIsInvalidForType:
                         return "Data is invalid for type: {0}";
+                    case ErrorCode.DataTypeIsTooLong:
+                        return "Data type is too long.";
                     case ErrorCode.DoNotTranslateThisMessageForTestingPurposes:
                         return "This message is not to be translated to any other language for testing purposes.";
                     case ErrorCode.ElementIndexMustBeGreaterThanZero:
