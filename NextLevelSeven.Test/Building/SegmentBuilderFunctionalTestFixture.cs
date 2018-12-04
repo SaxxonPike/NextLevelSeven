@@ -59,11 +59,10 @@ namespace NextLevelSeven.Test.Building
         [TestCase(3, -1)]
         [TestCase(-1, 3)]
         [TestCase(-2, -4)]
-        [ExpectedException(typeof(ElementException))]
         public void SegmentBuilder_ThrowsOnNegativeIndexMove(int from, int to)
         {
             var segment = Message.Build(Any.Message())[1];
-            segment.Move(from, to);
+            segment.Invoking(s => s.Move(from, to)).Should().Throw<ElementException>();
         }
 
         [Test]
@@ -120,19 +119,17 @@ namespace NextLevelSeven.Test.Building
         [TestCase("")]
         [TestCase("M")]
         [TestCase("MS")]
-        [ExpectedException(typeof(ElementException))]
         public void SegmentBuilder_Throws_WhenDataIsTooShort(string value)
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[1];
-            builder.RawValue = value;
+            builder.Invoking(b => b.RawValue = value).Should().Throw<ElementException>();
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void SegmentBuilder_Throws_WhenMshDataIsNull()
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[1];
-            builder.RawValue = null;
+            builder.Invoking(b => b.RawValue = null).Should().Throw<ElementException>();
         }
 
         [Test]

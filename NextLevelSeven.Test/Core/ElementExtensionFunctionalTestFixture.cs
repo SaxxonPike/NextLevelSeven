@@ -21,29 +21,26 @@ namespace NextLevelSeven.Test.Core
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Insert_Throws_WhenAncestorIsNotPresentInsertingString()
         {
             var message = Message.Parse();
             var segment = message[1].Clone();
-            segment.Insert(Any.String());
+            segment.Invoking(s => s.Insert(Any.String())).Should().Throw<ElementException>();
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Insert_Throws_WhenAncestorIsNotPresentInsertingElement()
         {
             var message = Message.Parse(Any.Message());
             var segment = message[1].Clone();
-            segment.Insert(message[2]);
+            segment.Invoking(s => s.Insert(message[2])).Should().Throw<ElementException>();
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Nullify_Throws_WhenNullifyingMessage()
         {
             var message = Message.Parse(Any.Message());
-            message.Nullify();
+            message.Invoking(m => m.Nullify()).Should().Throw<ElementException>();
         }
 
         [Test]
@@ -103,11 +100,10 @@ namespace NextLevelSeven.Test.Core
         [TestCase(3, 0)]
         [TestCase(3, 1)]
         [TestCase(3, 2)]
-        [ExpectedException(typeof(ElementException))]
         public void Move_Throws_WhenMovingEncodingFields(int from, int to)
         {
             var message = Message.Build(ExampleMessageRepository.Standard);
-            message[1][from].Move(to);
+            message.Invoking(m => m[1][from].Move(to)).Should().Throw<ElementException>();
         }
 
         [Test]
@@ -131,29 +127,26 @@ namespace NextLevelSeven.Test.Core
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Delete_Throws_WhenDeletingMessage()
         {
             var message = Message.Parse(ExampleMessageRepository.Standard);
-            message.Delete();
+            message.Invoking(m => m.Delete()).Should().Throw<ElementException>();
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Move_Throws_WhenMovingMessage()
         {
             var message = Message.Parse(ExampleMessageRepository.Standard);
-            message.Move(2);
+            message.Invoking(m => m.Move(2)).Should().Throw<ElementException>();
         }
 
         [Test]
         [TestCase(-1)]
         [TestCase(0)]
-        [ExpectedException(typeof(ElementException))]
         public void Move_Throws_WhenMovingToInvalidIndices(int index)
         {
             var message = Message.Parse(ExampleMessageRepository.Standard);
-            message[2].Move(index);
+            message.Invoking(m => m[2].Move(index)).Should().Throw<ElementException>();
         }
 
         [Test]
@@ -163,13 +156,12 @@ namespace NextLevelSeven.Test.Core
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Delete_Throws_WhenDeletingElementsFromDifferentAncestors()
         {
             var message0 = Message.Parse(ExampleMessageRepository.Standard);
             var message1 = Message.Parse(ExampleMessageRepository.Standard);
             var messageGroup = new[] {message0[2], message1[2]};
-            messageGroup.Delete();
+            messageGroup.Invoking(m => m.Delete()).Should().Throw<ElementException>();
         }
 
         [Test]

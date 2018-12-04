@@ -65,44 +65,39 @@ namespace NextLevelSeven.Test.Building
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void SubcomponentBuilder_ThrowsOnIndex()
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[1][3][1][1][1];
-            builder[1].RawValue.Should().BeNull();
+            builder.Invoking(b => b[1].RawValue.Ignore()).Should().Throw<ElementException>();
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void SubcomponentBuilder_ThrowsOnDelete()
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[1][3][1][1][1];
-            builder.Delete(1);
+            builder.Invoking(b => b.Delete(1)).Should().Throw<ElementException>();
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void SubcomponentBuilder_ThrowsOnMove()
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[1][3][1][1][1];
-            builder.Move(1, 2);
+            builder.Invoking(b => b.Move(1, 2)).Should().Throw<ElementException>();
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void SubcomponentBuilder_ThrowsOnInsertString()
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[1][3][1][1][1];
-            builder.Insert(1, Any.String()).Should().BeNull();
+            builder.Invoking(b => b.Insert(1, Any.String())).Should().Throw<ElementException>();
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void SubcomponentBuilder_ThrowsOnInsertElement()
         {
             var builder0 = Message.Build(ExampleMessageRepository.Standard)[1][3][1][1][1];
             var builder1 = Message.Build(ExampleMessageRepository.Standard)[1][3][1][1][1];
-            builder0.Insert(1, builder1).Should().BeNull();
+            builder0.Invoking(b => b.Insert(1, builder1)).Should().Throw<ElementException>();
         }
 
         [Test]

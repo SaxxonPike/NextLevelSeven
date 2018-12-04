@@ -19,38 +19,34 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Parser_DeleteThrowsIfInvalidIndex()
         {
             var message = Message.Parse(Any.Message())[2][1];
-            message.Delete(-1);
+            message.Invoking(m => m.Delete(-1)).Should().Throw<ElementException>();
         }
 
         [Test]
         [TestCase(2, -1)]
         [TestCase(-1, 2)]
-        [ExpectedException(typeof(ElementException))]
         public void Parser_MoveThrowsIfInvalidIndex(int from, int to)
         {
             var message = Message.Parse(Any.Message())[2][1];
-            message.Move(from, to);
+            message.Invoking(m => m.Move(from, to)).Should().Throw<ElementException>();
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Parser_InsertThrowsIfInvalidIndex()
         {
             var message = Message.Parse(Any.Message())[2][1];
-            message.Insert(-1, Any.String()); 
+            message.Invoking(m => m.Insert(-1, Any.String())).Should().Throw<ElementException>(); 
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Parser_InsertElementThrowsIfInvalidIndex()
         {
             var message = Message.Parse(Any.Message())[2][1];
             var element = message[1];
-            message.Insert(-1, element);
+            message.Invoking(m => m.Insert(-1, element)).Should().Throw<ElementException>();
         }
 
         [Test]

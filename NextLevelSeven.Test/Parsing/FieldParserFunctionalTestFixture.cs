@@ -40,12 +40,11 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Field_Delimiter_CanNotSetNullSegmentValue()
         {
             var message = Message.Parse(ExampleMessageRepository.Minimum);
             var field = message[1][1];
-            field.RawValue = null;
+            field.Invoking(f => f.RawValue = null).Should().Throw<ElementException>();
         }
 
         [Test]
@@ -65,12 +64,11 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Field_Encoding_CanNotSetValues()
         {
             var field = Message.Parse(ExampleMessageRepository.Minimum)[1][2];
             var values = new[] {"^", "~", "\\", "&"};
-            field.RawValues = values;
+            field.Invoking(f => f.RawValues = values).Should().Throw<ElementException>();
         }
 
         [Test]
@@ -88,11 +86,10 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Field_Encoding_ThrowsOnDescendantAccess()
         {
             var field = Message.Parse(ExampleMessageRepository.Minimum)[1][2];
-            field[2].RawValue.Should().BeNull();
+            field.Invoking(f => f[2].RawValue.Ignore()).Should().Throw<ElementException>();
         }
 
         [Test]
@@ -110,28 +107,25 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Field_Delimiter_CanNotChangeValues()
         {
             var field = Message.Parse(ExampleMessageRepository.Minimum)[1][1];
             var values = new[] {"$", "@"};
-            field.RawValues = values;
+            field.Invoking(f => f.RawValues = values).Should().Throw<ElementException>();
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Field_Delimiter_ThrowsOnDescendantAccess()
         {
             var field = Message.Parse(ExampleMessageRepository.Minimum)[1][1];
-            field[2].RawValue.Should().BeNull();
+            field.Invoking(f => f[2].RawValue.Ignore()).Should().Throw<ElementException>();
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Field_Delimiter_ThrowsOnGenericDescendantAccess()
         {
             IElementParser field = Message.Parse(ExampleMessageRepository.Minimum)[1][1];
-            field[2].Should().BeNull();
+            field.Invoking(f => f[2].Ignore()).Should().Throw<ElementException>();
         }
 
         [Test]
@@ -204,11 +198,10 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Field_Throws_WhenIndexedBelowOne()
         {
             var element = Message.Parse(ExampleMessageRepository.Standard)[1][3];
-            element[0].RawValue.Should().BeNull();
+            element.Invoking(e => e[0].RawValue.Ignore()).Should().Throw<ElementException>();
         }
 
         [Test]

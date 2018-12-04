@@ -27,11 +27,10 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Component_Throws_WhenIndexedBelowOne()
         {
             var component = Message.Parse(ExampleMessageRepository.Standard)[1][3][1][1];
-            component[0].RawValue.Should().BeNull();
+            component.Invoking(c => c[0].RawValue.Ignore()).Should().Throw<ElementException>();
         }
 
         [Test]

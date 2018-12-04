@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq.Expressions;
 using FluentAssertions;
 using FluentAssertions.Common;
 using NextLevelSeven.Core;
@@ -10,6 +11,7 @@ namespace NextLevelSeven.Test
 {
     [ExcludeFromCodeCoverage]
     [TestFixture]
+    [DebuggerStepThrough]
     public abstract class BaseTestFixture
     {
         private long _frequency;
@@ -52,6 +54,12 @@ namespace NextLevelSeven.Test
         {
             var method = type.GetMethod(methodName);
             return method.Invoke(instance, parameters);
+        }
+
+        protected void ExpectException<T>(Action act, string because = "", params object[] becauseArgs) 
+            where T : Exception
+        {
+            act.Should().Throw<T>(because, becauseArgs);
         }
     }
 }

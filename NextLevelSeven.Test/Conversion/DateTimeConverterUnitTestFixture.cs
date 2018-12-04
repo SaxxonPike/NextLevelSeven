@@ -10,10 +10,10 @@ namespace NextLevelSeven.Test.Conversion
     public class DateTimeConverterUnitTestFixture : ConversionBaseTestFixture
     {
         [Test]
-        [ExpectedException(typeof(ConversionException))]
         public void DateTimeConverter_ThrowsWithInvalidYear()
         {
-            DateTimeConverter.ConvertToDate("1").Should().NotHaveValue();
+            Action act = () => DateTimeConverter.ConvertToDate("1");
+            act.Should().Throw<ConversionException>();
         }
 
         [Test]

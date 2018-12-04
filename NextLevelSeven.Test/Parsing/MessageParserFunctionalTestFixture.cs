@@ -98,19 +98,17 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Message_ThrowsOnInsertingNegativeIndex()
         {
             var message = Message.Parse(ExampleMessageRepository.Minimum);
-            message.Insert(-2, Any.String());
+            message.Invoking(m => m.Insert(-2, Any.String())).Should().Throw<ElementException>();
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Message_ThrowsOnDeletingNegativeIndex()
         {
             var message = Message.Parse(ExampleMessageRepository.Minimum);
-            message.Delete(-2);
+            message.Invoking(m => m.Delete(-2)).Should().Throw<ElementException>();
         }
 
         [Test]
@@ -139,10 +137,10 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Message_ThrowsWithIncorrectFirstSegment()
         {
-            Message.Parse(Any.String());
+            Action act = () => Message.Parse(Any.String());
+            act.Should().Throw<ElementException>();
         }
 
         [Test]
@@ -177,27 +175,24 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Message_Throws_WhenIndexedBelowOne()
         {
             var element = Message.Parse(ExampleMessageRepository.Standard);
-            element[0].RawValue.Should().BeNull();
+            element.Invoking(e => e[0].RawValue.Ignore()).Should().Throw<ElementException>();
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Message_CanNotSetMsh1()
         {
             var message = Message.Parse(ExampleMessageRepository.Minimum);
-            message[1][1].RawValue = ":";
+            message.Invoking(m => m[1][1].RawValue = ":").Should().Throw<ElementException>();
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Message_CanNotSetMsh2()
         {
             var message = Message.Parse(ExampleMessageRepository.Minimum);
-            message[1][2].RawValue = "!@#$";
+            message.Invoking(m => m[1][2].RawValue = "!@#$").Should().Throw<ElementException>();
         }
 
         [Test]
@@ -218,24 +213,24 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Message_ThrowsOnNullData()
         {
-            Message.Parse((string) null);
+            Action act = () => Message.Parse((string) null);
+            act.Should().Throw<ElementException>();
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Message_ThrowsOnEmptyData()
         {
-            Message.Parse(string.Empty);
+            Action act = () => Message.Parse(string.Empty);
+            act.Should().Throw<ElementException>();
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Message_ThrowsOnShortData()
         {
-            Message.Parse("MSH|123");
+            Action act = () => Message.Parse("MSH|123");
+            act.Should().Throw<ElementException>();
         }
 
         [Test]

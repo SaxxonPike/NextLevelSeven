@@ -88,21 +88,19 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Subcomponent_ThrowsWhenMovingElements()
         {
             var element = Message.Parse(ExampleMessageRepository.Minimum)[1][3][1][1][1];
             element.RawValue = Any.String();
             var newMessage = element.Clone();
-            newMessage[2].Move(3);
+            newMessage.Invoking(m => m[2].Move(3)).Should().Throw<ElementException>();
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Subcomponent_Throws_WhenIndexed()
         {
             var element = Message.Parse(ExampleMessageRepository.Standard)[1][3][1][1][1];
-            element[1].RawValue.Should().BeNull();
+            element.Invoking(e => e[1].RawValue.Ignore()).Should().Throw<ElementException>();
         }
 
         [Test]

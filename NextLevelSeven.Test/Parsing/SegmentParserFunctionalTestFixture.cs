@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using FluentAssertions;
 using NextLevelSeven.Core;
 using NextLevelSeven.Parsing;
@@ -98,13 +99,12 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Segment_CanNotInsertMshElement()
         {
             var message = Message.Parse(ExampleMessageRepository.Standard);
             var segment = message[1];
             var data = Message.Parse(Any.Message())[2][1];
-            segment.Insert(1, data);
+            segment.Invoking(s => s.Insert(1, data)).Should().Throw<ElementException>();
         }
 
         [Test]
@@ -126,11 +126,10 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Segment_Throws_WhenIndexedBelowZero()
         {
             var element = Message.Parse(ExampleMessageRepository.Standard)[1];
-            element[-1].RawValue.Should().BeNull();
+            element.Invoking(e => e[-1].RawValue.Ignore()).Should().Throw<ElementException>();
         }
 
         [Test]
@@ -231,12 +230,12 @@ namespace NextLevelSeven.Test.Parsing
         [Test]
         [TestCase(1)]
         [TestCase(2)]
-        [ExpectedException(typeof(ElementException))]
         public void Segment_CanNotDeleteMshEncodingFields(int index)
         {
             var message = Message.Parse(ExampleMessageRepository.Standard);
             var segment = message[1];
-            ElementExtensions.Delete(segment, index);
+            Action act = () => ElementExtensions.Delete(segment, index);
+            act.Should().Throw<ElementException>();
         }
 
         [Test]

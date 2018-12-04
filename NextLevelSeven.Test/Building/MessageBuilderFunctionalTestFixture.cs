@@ -40,10 +40,10 @@ namespace NextLevelSeven.Test.Building
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void MessageBuilder_ThrowsWithIncorrectFirstSegment()
         {
-            Message.Build(Any.String());
+            Action act = () => Message.Build(Any.String());
+            act.Should().Throw<ElementException>();
         }
 
         [Test]
@@ -529,22 +529,20 @@ namespace NextLevelSeven.Test.Building
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void MessageBuilder_CanNotChangeTypeFromMsh()
         {
             var builder = Message.Build();
-            builder.SetField(1, 0, "PID").Should().BeNull();
+            builder.Invoking(b => b.SetField(1, 0, "PID")).Should().Throw<ElementException>();
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void MessageBuilder_CanNotChangeTypeToMsh()
         {
             // NOTE: by design.
             // (change this test if the design changes.)
             var builder = Message.Build();
             builder.SetField(2, 0, "PID");
-            builder.SetField(2, 0, "MSH").Should().BeNull();
+            builder.Invoking(b => b.SetField(2, 0, "MSH")).Should().Throw<ElementException>();
         }
 
         [Test]

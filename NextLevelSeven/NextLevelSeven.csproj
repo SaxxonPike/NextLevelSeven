@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
 		<PackageId>NextLevelSeven</PackageId>
-		<PackageVersion>0.0.2</PackageVersion>
+		<PackageVersion>2.0.0</PackageVersion>
 		<Title>NextLevelSeven</Title>
 		<Authors>Tony Konzel</Authors>
 		<Description>HL7v2 message builder and parser.</Description>

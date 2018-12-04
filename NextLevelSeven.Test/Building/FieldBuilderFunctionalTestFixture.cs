@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using FluentAssertions;
 using NextLevelSeven.Building;
 using NextLevelSeven.Core;
@@ -17,11 +18,10 @@ namespace NextLevelSeven.Test.Building
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void FieldBuilder_Type_CannotMoveDescendants()
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[1][0];
-            builder.Move(1, 2);
+            builder.Invoking(b => b.Move(1, 2)).Should().Throw<ElementException>();
         }
 
         [Test]
@@ -39,11 +39,10 @@ namespace NextLevelSeven.Test.Building
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void FieldBuilder_Type_ThrowsOnIndex()
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[1][0];
-            builder[1].RawValue.Should().BeNull();
+            builder.Invoking(b => builder[1].RawValue.Ignore()).Should().Throw<ElementException>();
         }
 
         [Test]
@@ -56,12 +55,11 @@ namespace NextLevelSeven.Test.Building
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void FieldBuilder_Type_ThrowsOnSettingRepetitionsOtherThanOne([Values(0, 2)] int index)
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[2][0];
             var value = Any.String();
-            builder.SetFieldRepetition(index, value);
+            builder.Invoking(b => b.SetFieldRepetition(index, value)).Should().Throw<ElementException>();
         }
 
         [Test]
@@ -118,19 +116,17 @@ namespace NextLevelSeven.Test.Building
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void FieldBuilder_Encoding_ThrowsOnSubdivision()
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[1][2];
-            builder[1].Should().BeNull();
+            builder.Invoking(b => b[1].Ignore()).Should().Throw<ElementException>();
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void FieldBuilder_Encoding_ThrowsOnIndirectSubdivision()
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[1][2];
-            builder.SetFieldRepetition(0, "~@#$").Should().BeNull();
+            builder.Invoking(b => b.SetFieldRepetition(0, "~@#$").Ignore()).Should().Throw<ElementException>();
         }
 
         [Test]
@@ -222,19 +218,17 @@ namespace NextLevelSeven.Test.Building
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void FieldBuilder_Delimiter_ThrowsOnSubdivision()
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[1][1];
-            builder[1].Should().BeNull();
+            builder.Invoking(b => b[1].Ignore()).Should().Throw<ElementException>();
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void FieldBuilder_Delimiter_ThrowsOnIndirectSubdivision()
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[1][1];
-            builder.SetFieldRepetition(0, "$").Should().BeNull();
+            builder.Invoking(b => b.SetFieldRepetition(0, "$")).Should().Throw<ElementException>();
         }
 
         [Test]

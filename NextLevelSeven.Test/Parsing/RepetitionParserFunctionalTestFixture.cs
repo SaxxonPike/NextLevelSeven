@@ -27,11 +27,10 @@ namespace NextLevelSeven.Test.Parsing
         }
 
         [Test]
-        [ExpectedException(typeof(ElementException))]
         public void Repetition_Throws_WhenIndexedBelowOne()
         {
             var element = Message.Parse(ExampleMessageRepository.Standard)[1][3][1];
-            element[0].RawValue.Should().BeNull();
+            element.Invoking(e => e[0].RawValue.Ignore()).Should().Throw<ElementException>();
         }
 
         [Test]
