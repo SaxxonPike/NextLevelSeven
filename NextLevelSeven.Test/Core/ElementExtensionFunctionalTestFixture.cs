@@ -83,11 +83,11 @@ namespace NextLevelSeven.Test.Core
             var val1 = Any.String();
             var message0 = Message.Build(ExampleMessageRepository.Standard);
             var message1 = message0.Clone();
-            message0[1][3].Value = val0;
-            message1[1][3].Value = val1;
+            message0[1][3].RawValue = val0;
+            message1[1][3].RawValue = val1;
             message0.AddRange(message1.Segments.Skip(2));
             message0.ValueCount.Should().Be(message1.ValueCount * 2 - 2);
-            message0[message1.ValueCount + 1].Value.Should().Be(message1[3].Value);
+            message0[message1.ValueCount + 1].RawValue.Should().Be(message1[3].RawValue);
         }
 
         [Test]
@@ -127,7 +127,7 @@ namespace NextLevelSeven.Test.Core
             var message = Message.Build(ExampleMessageRepository.Standard);
             var newMessage = message.Clone();
             newMessage[2].Delete();
-            newMessage[2].Value.Should().Be(message[3].Value);
+            newMessage[2].RawValue.Should().Be(message[3].RawValue);
         }
 
         [Test]
@@ -187,8 +187,8 @@ namespace NextLevelSeven.Test.Core
             var message = Message.Build(ExampleMessageRepository.Standard);
             var parser = message.Segments.OfType("PID").ToNewParser();
             parser.ValueCount.Should().Be(3);
-            parser[1].Value.Should().Be(message[1].Value);
-            parser[2].Value.Should().Be(message.Segments.OfType("PID").First().Value);
+            parser[1].RawValue.Should().Be(message[1].RawValue);
+            parser[2].RawValue.Should().Be(message.Segments.OfType("PID").First().RawValue);
         }
 
         [Test]
@@ -211,7 +211,7 @@ namespace NextLevelSeven.Test.Core
         public void Segment_CanGetSegment()
         {
             var parser = Message.Parse(ExampleMessageRepository.Variety);
-            parser.Segment(1).Value.Should().Be(parser[1].Value)
+            parser.Segment(1).RawValue.Should().Be(parser[1].RawValue)
                 .And.Should().NotBeNull();
         }
 
@@ -219,7 +219,7 @@ namespace NextLevelSeven.Test.Core
         public void Field_CanGetField()
         {
             var parser = Message.Parse(ExampleMessageRepository.Variety);
-            parser.Segment(1).Field(3).Value.Should().Be(parser[1][3].Value)
+            parser.Segment(1).Field(3).RawValue.Should().Be(parser[1][3].RawValue)
                 .And.Should().NotBeNull();
         }
 
@@ -227,7 +227,7 @@ namespace NextLevelSeven.Test.Core
         public void Repetition_CanGetRepetition()
         {
             var parser = Message.Parse(ExampleMessageRepository.Variety);
-            parser.Segment(1).Field(3).Repetition(2).Value.Should().Be(parser[1][3][2].Value)
+            parser.Segment(1).Field(3).Repetition(2).RawValue.Should().Be(parser[1][3][2].RawValue)
                 .And.Should().NotBeNull();
         }
 
@@ -235,7 +235,7 @@ namespace NextLevelSeven.Test.Core
         public void Component_CanGetComponent()
         {
             var parser = Message.Parse(ExampleMessageRepository.Variety);
-            parser.Segment(1).Field(3).Repetition(2).Component(2).Value.Should().Be(parser[1][3][2][2].Value)
+            parser.Segment(1).Field(3).Repetition(2).Component(2).RawValue.Should().Be(parser[1][3][2][2].RawValue)
                 .And.Should().NotBeNull();
         }
 
@@ -243,7 +243,7 @@ namespace NextLevelSeven.Test.Core
         public void Component_CanGetComponentThroughField()
         {
             var parser = Message.Parse(ExampleMessageRepository.Variety);
-            parser.Segment(1).Field(3).Component(2).Value.Should().Be(parser[1][3][1][2].Value)
+            parser.Segment(1).Field(3).Component(2).RawValue.Should().Be(parser[1][3][1][2].RawValue)
                 .And.Should().NotBeNull();
         }
 
@@ -251,8 +251,8 @@ namespace NextLevelSeven.Test.Core
         public void Subcomponent_CanGetSubcomponent()
         {
             var parser = Message.Parse(ExampleMessageRepository.Variety);
-            parser.Segment(1).Field(3).Repetition(2).Component(2).Subcomponent(2).Value
-                .Should().Be(parser[1][3][2][2][2].Value)
+            parser.Segment(1).Field(3).Repetition(2).Component(2).Subcomponent(2).RawValue
+                .Should().Be(parser[1][3][2][2][2].RawValue)
                 .And.Should().NotBeNull();
         }
 
@@ -262,8 +262,8 @@ namespace NextLevelSeven.Test.Core
             var element = Message.Build(ExampleMessageRepository.Standard);
             var modifiedElement = element.Clone() as IElement;
             modifiedElement.Delete(2);
-            modifiedElement[2].Value.Should().Be(element[3].Value);
-            modifiedElement[3].Value.Should().Be(element[4].Value);
+            modifiedElement[2].RawValue.Should().Be(element[3].RawValue);
+            modifiedElement[3].RawValue.Should().Be(element[4].RawValue);
         }
     }
 }

@@ -20,10 +20,10 @@ namespace NextLevelSeven.Test.Parsing
         public void Repetition_CanMoveComponents()
         {
             var element = Message.Parse(ExampleMessageRepository.Minimum)[1][3][1];
-            element.Values = new[] {Any.String(), Any.String(), Any.String(), Any.String()};
+            element.RawValues = new[] {Any.String(), Any.String(), Any.String(), Any.String()};
             var newMessage = element.Clone();
             newMessage[2].Move(3);
-            newMessage[3].Value.Should().Be(element[2].Value);
+            newMessage[3].RawValue.Should().Be(element[2].RawValue);
         }
 
         [Test]
@@ -31,7 +31,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Repetition_Throws_WhenIndexedBelowOne()
         {
             var element = Message.Parse(ExampleMessageRepository.Standard)[1][3][1];
-            element[0].Value.Should().BeNull();
+            element[0].RawValue.Should().BeNull();
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace NextLevelSeven.Test.Parsing
             var repetition = Message.Parse(ExampleMessageRepository.Standard)[2][3][4];
             var count = repetition.ValueCount;
             var id = Any.String();
-            repetition[count + 1].Value = id;
+            repetition[count + 1].RawValue = id;
             repetition.ValueCount.Should().Be(count + 1);
         }
 
@@ -62,7 +62,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Repetition_CanGetComponentsByIndexer()
         {
             var component = Message.Parse(ExampleMessageRepository.Standard)[8][13][2][2];
-            component.Value.Should().Be("ORN");
+            component.RawValue.Should().Be("ORN");
         }
 
         [Test]
@@ -71,7 +71,7 @@ namespace NextLevelSeven.Test.Parsing
             var message = Message.Parse("MSH|^~\\&|\rTST|123^456~789^012");
             var component = message[2][1][2];
             ElementExtensions.Delete(component, 1);
-            message.Value.Should().Be("MSH|^~\\&|\rTST|123^456~012");
+            message.RawValue.Should().Be("MSH|^~\\&|\rTST|123^456~012");
         }
 
         [Test]
@@ -79,8 +79,8 @@ namespace NextLevelSeven.Test.Parsing
         {
             var repetition = Message.Parse(ExampleMessageRepository.Standard)[1][3][1];
             var value = Any.String();
-            repetition.Value = value;
-            repetition.Value.Should().Be(value);
+            repetition.RawValue = value;
+            repetition.RawValue.Should().Be(value);
         }
 
         [Test]
@@ -88,9 +88,9 @@ namespace NextLevelSeven.Test.Parsing
         {
             var repetition = Message.Parse(ExampleMessageRepository.Standard)[1][3][1];
             var value = Any.String();
-            repetition.Value = value;
-            repetition.Value = null;
-            repetition.Value.Should().BeNull();
+            repetition.RawValue = value;
+            repetition.RawValue = null;
+            repetition.RawValue.Should().BeNull();
         }
     }
 }

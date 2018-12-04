@@ -49,7 +49,7 @@ namespace NextLevelSeven.Building.Elements
 
         public override Encoding CharacterEncoding
         {
-            get => Msh18EncodingMap.GetEncoding(_builder?.Message?[18]?.Value);
+            get => Msh18EncodingMap.GetEncoding(_builder?.Message?[18]?.RawValue);
             [ExcludeFromCodeCoverage] protected set { }
         }
 

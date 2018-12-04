@@ -38,7 +38,7 @@ namespace NextLevelSeven.Test
             var clone = (IElement)InvokeMethod(type, "Clone", source);
             clone.Should().NotBeNull();
             clone.Should().NotBeSameAs(source);
-            clone.Value.Should().Be(source.Value);
+            clone.RawValue.Should().Be(source.RawValue);
             return clone;
         }
 

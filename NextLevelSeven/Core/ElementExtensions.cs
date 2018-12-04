@@ -18,7 +18,7 @@ namespace NextLevelSeven.Core
         /// <returns>The newly added element.</returns>
         public static void Add(this IElement target, string elementToAdd)
         {
-            target[target.NextIndex].Value = elementToAdd;
+            target[target.NextIndex].RawValue = elementToAdd;
         }
 
         /// <summary>Add an element as a descendant.</summary>
@@ -67,8 +67,8 @@ namespace NextLevelSeven.Core
         {
             if (target is ISegment segment && segment.Type == "MSH")
             {
-                target.Value = string.Join(source[1].Value,
-                    source.Descendants.Where(d => d.Index != 1).Select(d => d.Value));
+                target.RawValue = string.Join(source[1].RawValue,
+                    source.Descendants.Where(d => d.Index != 1).Select(d => d.RawValue));
                 return;
             }
 
@@ -81,7 +81,7 @@ namespace NextLevelSeven.Core
             }
             else
             {
-                target.Value = source.Value;
+                target.RawValue = source.RawValue;
             }
         }
 
@@ -162,7 +162,7 @@ namespace NextLevelSeven.Core
         /// <summary>Get meaningful content from descendants, excluding null/empty fields and segment type.</summary>
         public static IEnumerable<IElement> Simplified(this IElement element)
         {
-            return element.Descendants.Where(d => d.Index > 0 && !string.IsNullOrEmpty(d.Value));
+            return element.Descendants.Where(d => d.Index > 0 && !string.IsNullOrEmpty(d.RawValue));
         }
 
         /// <summary>If true, the element has meaningful descendants (not necessarily direct ones.)</summary>
@@ -239,12 +239,12 @@ namespace NextLevelSeven.Core
                     throw new ElementException(ErrorCode.MessageDataMustNotBeNull);
                 case ISegment segment:
                     // segment nullability doesn't work well, so we just clear out all fields.
-                    segment.Values = segment.Type == "MSH"
-                        ? segment.Values.Take(3).ToList()
+                    segment.RawValues = segment.Type == "MSH"
+                        ? segment.RawValues.Take(3).ToList()
                         : segment.Type.Yield();
                     return;
                 default:
-                    target.Value = HL7.Null;
+                    target.RawValue = HL7.Null;
                     break;
             }
         }
@@ -283,7 +283,7 @@ namespace NextLevelSeven.Core
         /// <returns>Converted message.</returns>
         public static IMessageBuilder ToBuilder(this IMessage message)
         {
-            return Message.Build(message.Value);
+            return Message.Build(message.RawValue);
         }
 
         /// <summary>Copy the contents of this message to a new HL7 message parser.</summary>
@@ -291,7 +291,7 @@ namespace NextLevelSeven.Core
         /// <returns>Converted message.</returns>
         public static IMessageParser ToParser(this IMessage message)
         {
-            return Message.Parse(message.Value);
+            return Message.Parse(message.RawValue);
         }
 
         /// <summary>Get the segment at the specified index.</summary>

@@ -38,7 +38,7 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>Get or set the component string.</summary>
-        public override string Value
+        public override string RawValue
         {
             get => HL7.NullValues.Contains(_value)
                 ? null
@@ -50,7 +50,7 @@ namespace NextLevelSeven.Building.Elements
         public override int ValueCount => 1;
 
         /// <summary>Return an enumerable with the content inside.</summary>
-        public override IEnumerable<string> Values
+        public override IEnumerable<string> RawValues
         {
             get { yield return _value; }
             set => _value = string.Concat(value);
@@ -88,7 +88,7 @@ namespace NextLevelSeven.Building.Elements
         {
             return new SubcomponentBuilder(new EncodingConfiguration(Encoding), Index)
             {
-                Value = Value
+                RawValue = RawValue
             };
         }
 

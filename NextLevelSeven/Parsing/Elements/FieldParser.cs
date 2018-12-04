@@ -40,7 +40,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Value at the specified indices.</returns>
         public virtual string GetValue(int repetition = -1, int component = -1, int subcomponent = -1)
         {
-            return repetition < 0 ? Value : _repetitions[repetition].GetValue(component, subcomponent);
+            return repetition < 0 ? RawValue : _repetitions[repetition].GetValue(component, subcomponent);
         }
 
         /// <summary>Get the values at the specified indices.</summary>
@@ -50,7 +50,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Values at the specified indices.</returns>
         public virtual IEnumerable<string> GetValues(int repetition = -1, int component = -1, int subcomponent = -1)
         {
-            return repetition < 0 ? Values : _repetitions[repetition].GetValues(component, subcomponent);
+            return repetition < 0 ? RawValues : _repetitions[repetition].GetValues(component, subcomponent);
         }
 
         /// <summary>Get a descendant field repetition.</summary>
@@ -122,7 +122,7 @@ namespace NextLevelSeven.Parsing.Elements
             return new FieldParser(EncodingConfiguration)
             {
                 Index = Index,
-                Value = Value
+                RawValue = RawValue
             };
         }
     }

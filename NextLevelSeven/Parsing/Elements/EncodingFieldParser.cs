@@ -16,16 +16,16 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>Get or set encoding characters.</summary>
-        public override string Value
+        public override string RawValue
         {
             get => Ancestor.DescendantDivider[1];
             set => throw new ElementException(ErrorCode.ElementValueCannotBeChanged);
         }
 
         /// <summary>Get or set this field's encoding characters.</summary>
-        public override IEnumerable<string> Values
+        public override IEnumerable<string> RawValues
         {
-            get { return Value.Select(c => new string(c, 1)); }
+            get { return RawValue.Select(c => new string(c, 1)); }
             set => throw new ElementException(ErrorCode.ElementValueCannotBeChanged);
         }
     }

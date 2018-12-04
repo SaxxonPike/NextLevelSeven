@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using NextLevelSeven.Core;
 using NextLevelSeven.Core.Codec;
 using NextLevelSeven.Core.Encoding;
@@ -53,10 +54,17 @@ namespace NextLevelSeven.Parsing.Elements
         public IElementParser this[int index] => GetDescendant(index);
 
         /// <summary>Get the codec used to convert values in this element.</summary>
-        public IEncodedTypeConverter Converter => new EncodedTypeConverter(this);
+        public IEncodedTypeConverter As => new EncodedTypeConverter(this);
 
         /// <summary>Delimiter character to be used when locating sub-elements.</summary>
         public abstract char Delimiter { get; }
+
+        /// <inheritdoc />
+        public string Value
+        {
+            get => Encoding.UnEscape(RawValue);
+            set => RawValue = Encoding.Escape(value);
+        }
 
         /// <summary>Number of descendant values.</summary>
         public virtual int ValueCount => DescendantDivider.Count;
@@ -81,7 +89,7 @@ namespace NextLevelSeven.Parsing.Elements
         public int Index { get; set; }
 
         /// <summary>Get or set the raw value of this element.</summary>
-        public virtual string Value
+        public virtual string RawValue
         {
             get => DescendantDivider == null 
                 ? string.Empty 
@@ -90,10 +98,17 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>Get or set the descendant raw values of this element.</summary>
-        public virtual IEnumerable<string> Values
+        public virtual IEnumerable<string> RawValues
         {
             get => DescendantDivider.Values;
             set => DescendantDivider.Values = value;
+        }
+
+        /// <inheritdoc />
+        public IEnumerable<string> Values
+        {
+            get => RawValues.Select(Encoding.UnEscape);
+            set => RawValues = value.Select(Encoding.Escape);
         }
 
         /// <summary>Create a deep clone of the element.</summary>
@@ -120,7 +135,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>Erase an element from existence.</summary>
         public void Erase()
         {
-            Value = null;
+            RawValue = null;
         }
 
         /// <summary>Get the encoding configuration being used for this parser.</summary>
@@ -146,7 +161,7 @@ namespace NextLevelSeven.Parsing.Elements
             {
                 throw new ElementException(ErrorCode.ElementIndexMustBeZeroOrGreater);
             }
-            return Insert(index, element.Value);
+            return Insert(index, element.RawValue);
         }
 
         /// <summary>Insert a descendant element.</summary>
@@ -202,7 +217,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Copied string.</returns>
         public sealed override string ToString()
         {
-            return Value ?? string.Empty;
+            return RawValue ?? string.Empty;
         }
 
         /// <summary>

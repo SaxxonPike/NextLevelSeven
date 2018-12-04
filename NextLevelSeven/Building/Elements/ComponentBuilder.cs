@@ -37,21 +37,21 @@ namespace NextLevelSeven.Building.Elements
         public override int ValueCount => _subcomponents.MaxKey;
 
         /// <summary>Get or set subcomponent content within this component.</summary>
-        public override IEnumerable<string> Values
+        public override IEnumerable<string> RawValues
         {
             get
             {
                 var count = ValueCount;
                 for (var i = 1; i <= count; i++)
                 {
-                    yield return _subcomponents[i].Value;
+                    yield return _subcomponents[i].RawValue;
                 }
             }
             set => SetSubcomponents(value.ToArray());
         }
 
         /// <summary>Get or set the component string.</summary>
-        public override string Value
+        public override string RawValue
         {
             get
             {
@@ -158,7 +158,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Value at index. Null if not present.</returns>
         public string GetValue(int subcomponent = -1)
         {
-            return subcomponent < 0 ? Value : _subcomponents[subcomponent].Value;
+            return subcomponent < 0 ? RawValue : _subcomponents[subcomponent].RawValue;
         }
 
         /// <summary>Get the values at the specified index.</summary>
@@ -166,7 +166,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Value at index. Empty if not present.</returns>
         public IEnumerable<string> GetValues(int subcomponent = -1)
         {
-            return subcomponent < 0 ? Values : _subcomponents[subcomponent].Value.Yield();
+            return subcomponent < 0 ? RawValues : _subcomponents[subcomponent].RawValue.Yield();
         }
 
         /// <summary>Deep clone this element.</summary>
@@ -214,7 +214,7 @@ namespace NextLevelSeven.Building.Elements
         {
             return new ComponentBuilder(new EncodingConfiguration(Encoding), Index)
             {
-                Value = Value
+                RawValue = RawValue
             };
         }
 

@@ -64,10 +64,10 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>Get or set the builder's value.</summary>
-        public abstract override string Value { get; set; }
+        public abstract override string RawValue { get; set; }
 
         /// <summary>Get or set the builder's sub-values.</summary>
-        public abstract override IEnumerable<string> Values { get; set; }
+        public abstract override IEnumerable<string> RawValues { get; set; }
 
         /// <summary>Get the ancestor element.</summary>
         /// <returns></returns>

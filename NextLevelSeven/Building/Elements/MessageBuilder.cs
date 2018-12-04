@@ -38,27 +38,27 @@ namespace NextLevelSeven.Building.Elements
         public override int ValueCount => _segments.MaxKey;
 
         /// <summary>Get or set segment content within this message.</summary>
-        public override IEnumerable<string> Values
+        public override IEnumerable<string> RawValues
         {
             get
             {
                 var count = ValueCount;
                 for (var i = 1; i <= count; i++)
                 {
-                    yield return _segments[i].Value;
+                    yield return _segments[i].RawValue;
                 }
             }
             set => SetSegments(value.ToArray());
         }
 
         /// <summary>Get or set the message string.</summary>
-        public override string Value
+        public override string RawValue
         {
             get
             {
                 var result = string.Join(ReadOnlyEncodingConfiguration.SegmentDelimiterString,
                     _segments.OrderedByKey
-                        .Select(i => i.Value.Value ?? string.Empty));
+                        .Select(i => i.Value.RawValue ?? string.Empty));
 
                 return result.Length == 0
                     ? null
@@ -322,7 +322,7 @@ namespace NextLevelSeven.Building.Elements
         public IEnumerable<string> GetValues(int segment = -1, int field = -1, int repetition = -1, int component = -1,
             int subcomponent = -1)
         {
-            return segment < 0 ? Values : _segments[segment].GetValues(field, repetition, component, subcomponent);
+            return segment < 0 ? RawValues : _segments[segment].GetValues(field, repetition, component, subcomponent);
         }
 
         /// <summary>Get the value at the specific location in the message.</summary>
@@ -335,7 +335,7 @@ namespace NextLevelSeven.Building.Elements
         public string GetValue(int segment = -1, int field = -1, int repetition = -1, int component = -1,
             int subcomponent = -1)
         {
-            return segment < 0 ? Value : _segments[segment].GetValue(field, repetition, component, subcomponent);
+            return segment < 0 ? RawValue : _segments[segment].GetValue(field, repetition, component, subcomponent);
         }
 
         /// <summary>Deep clone the message builder.</summary>
@@ -380,7 +380,7 @@ namespace NextLevelSeven.Building.Elements
         {
             return new MessageBuilder
             {
-                Value = Value
+                RawValue = RawValue
             };
         }
 

@@ -81,10 +81,10 @@ namespace NextLevelSeven.Test.Parsing
         {
             var element = Message.Parse(ExampleMessageRepository.Minimum)[1][3][1][1][1];
             var val0 = Any.String();
-            element.Value = val0;
+            element.RawValue = val0;
             Assert.AreEqual(1, element.ValueCount);
-            Assert.AreEqual(element.Value, val0);
-            Assert.AreEqual(1, element.Values.Count());
+            Assert.AreEqual(element.RawValue, val0);
+            Assert.AreEqual(1, element.RawValues.Count());
         }
 
         [Test]
@@ -92,7 +92,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Subcomponent_ThrowsWhenMovingElements()
         {
             var element = Message.Parse(ExampleMessageRepository.Minimum)[1][3][1][1][1];
-            element.Value = Any.String();
+            element.RawValue = Any.String();
             var newMessage = element.Clone();
             newMessage[2].Move(3);
         }
@@ -102,7 +102,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Subcomponent_Throws_WhenIndexed()
         {
             var element = Message.Parse(ExampleMessageRepository.Standard)[1][3][1][1][1];
-            element[1].Value.Should().BeNull();
+            element[1].RawValue.Should().BeNull();
         }
 
         [Test]
@@ -111,7 +111,7 @@ namespace NextLevelSeven.Test.Parsing
             var subcomponent = Message.Parse(ExampleMessageRepository.Standard)[2][3][4][1];
             var count = subcomponent.ValueCount;
             var id = Any.String();
-            subcomponent[count + 1].Value = id;
+            subcomponent[count + 1].RawValue = id;
             Assert.AreEqual(count + 1, subcomponent.ValueCount,
                 @"Number of elements after appending at the end of a subcomponent is incorrect.");
         }
@@ -121,8 +121,8 @@ namespace NextLevelSeven.Test.Parsing
         {
             var subcomponent = Message.Parse(ExampleMessageRepository.Standard)[1][3][1][1][1];
             var value = Any.String();
-            subcomponent.Value = value;
-            Assert.AreEqual(value, subcomponent.Value, "Value mismatch after write.");
+            subcomponent.RawValue = value;
+            Assert.AreEqual(value, subcomponent.RawValue, "Value mismatch after write.");
         }
 
         [Test]
@@ -130,9 +130,9 @@ namespace NextLevelSeven.Test.Parsing
         {
             var subcomponent = Message.Parse(ExampleMessageRepository.Standard)[1][3][1][1][1];
             var value = Any.String();
-            subcomponent.Value = value;
-            subcomponent.Value = null;
-            Assert.IsNull(subcomponent.Value, "Value mismatch after write.");
+            subcomponent.RawValue = value;
+            subcomponent.RawValue = null;
+            Assert.IsNull(subcomponent.RawValue, "Value mismatch after write.");
         }
     }
 }

@@ -14,7 +14,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var param = Any.String();
             const string message = "{0}|{1}";
-            Message.ParseFormat(message, ExampleMessageRepository.Minimum, param).Value
+            Message.ParseFormat(message, ExampleMessageRepository.Minimum, param).RawValue
                 .Should().Be(string.Format(message, ExampleMessageRepository.Minimum, param));
         }
 

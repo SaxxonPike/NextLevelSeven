@@ -43,7 +43,7 @@ namespace NextLevelSeven.Test.Building
         public void FieldBuilder_Type_ThrowsOnIndex()
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[1][0];
-            builder[1].Value.Should().BeNull();
+            builder[1].RawValue.Should().BeNull();
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace NextLevelSeven.Test.Building
             var builder = Message.Build(ExampleMessageRepository.Standard)[2][0];
             var value = Any.String();
             builder.SetFieldRepetition(1, value);
-            builder.Value.Should().Be(value);
+            builder.RawValue.Should().Be(value);
         }
 
         [Test]
@@ -89,24 +89,24 @@ namespace NextLevelSeven.Test.Building
         public void FieldBuilder_Encoding_GetsValues()
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[1][2];
-            builder.Value = "$%^&";
-            builder.Values.Should().BeEquivalentTo("$", "%", "^", "&");
+            builder.RawValue = "$%^&";
+            builder.RawValues.Should().BeEquivalentTo("$", "%", "^", "&");
         }
 
         [Test]
         public void FieldBuilder_Encoding_SetsValue()
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[1][2];
-            builder.Value = "$%^&";
-            builder.Value.Should().Be("$%^&");
+            builder.RawValue = "$%^&";
+            builder.RawValue.Should().Be("$%^&");
         }
 
         [Test]
         public void FieldBuilder_Encoding_SetsValues()
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[1][2];
-            builder.Values = new[] {"$", "#", "~", "@"};
-            builder.Value.Should().Be("$#~@");
+            builder.RawValues = new[] {"$", "#", "~", "@"};
+            builder.RawValue.Should().Be("$#~@");
         }
 
         [Test]
@@ -114,7 +114,7 @@ namespace NextLevelSeven.Test.Building
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[1][2];
             builder.Nullify();
-            builder.Value.Should().BeNull();
+            builder.RawValue.Should().BeNull();
         }
 
         [Test]
@@ -139,12 +139,12 @@ namespace NextLevelSeven.Test.Building
             var message = Message.Build(ExampleMessageRepository.Standard);
             var builder = message[1][2];
             const string value = "!@#$%";
-            builder.Value = value;
+            builder.RawValue = value;
             message.Encoding.ComponentDelimiter.Should().Be('!');
             message.Encoding.RepetitionDelimiter.Should().Be('@');
             message.Encoding.EscapeCharacter.Should().Be('#');
             message.Encoding.SubcomponentDelimiter.Should().Be('$');
-            builder.Value.Should().Be(value);
+            builder.RawValue.Should().Be(value);
         }
 
         [Test]
@@ -152,7 +152,7 @@ namespace NextLevelSeven.Test.Building
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[1][2];
             builder.SetFieldRepetition(1, "~@#$");
-            builder.Value.Should().Be("~@#$");
+            builder.RawValue.Should().Be("~@#$");
         }
 
         [Test]
@@ -187,30 +187,30 @@ namespace NextLevelSeven.Test.Building
         public void FieldBuilder_Delimiter_GetsValue()
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[1][1];
-            builder.Value.Should().Be("|");
+            builder.RawValue.Should().Be("|");
         }
 
         [Test]
         public void FieldBuilder_Delimiter_GetsValues()
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[1][1];
-            builder.Values.Count().Should().Be(1);
+            builder.RawValues.Count().Should().Be(1);
         }
 
         [Test]
         public void FieldBuilder_Delimiter_SetsSingleValueFromOnlyFirstCharacter()
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[1][1];
-            builder.Value = "$%^&";
-            builder.Value.Should().Be("$");
+            builder.RawValue = "$%^&";
+            builder.RawValue.Should().Be("$");
         }
 
         [Test]
         public void FieldBuilder_Delimiter_SetsValuesFromOnlyFirstCharacter()
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[1][1];
-            builder.Values = new[] {"$", "#"};
-            builder.Value.Should().Be("$");
+            builder.RawValues = new[] {"$", "#"};
+            builder.RawValue.Should().Be("$");
         }
 
         [Test]
@@ -218,7 +218,7 @@ namespace NextLevelSeven.Test.Building
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[1][1];
             builder.Nullify();
-            builder.Value.Should().BeNull();
+            builder.RawValue.Should().BeNull();
         }
 
         [Test]
@@ -242,7 +242,7 @@ namespace NextLevelSeven.Test.Building
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[1][1];
             builder.SetFieldRepetition(1, "$");
-            builder.Value.Should().Be("$");
+            builder.RawValue.Should().Be("$");
         }
 
         [Test]
@@ -270,8 +270,8 @@ namespace NextLevelSeven.Test.Building
         public void FieldBuilder_CanGetRepetition()
         {
             var builder = Message.Build(ExampleMessageRepository.Variety);
-            builder[1][3][2].Value.Should().NotBeNull();
-            builder[1][3][2].Value.Should().Be(builder.Segment(1).Field(3).Repetition(2).Value);
+            builder[1][3][2].RawValue.Should().NotBeNull();
+            builder[1][3][2].RawValue.Should().Be(builder.Segment(1).Field(3).Repetition(2).RawValue);
         }
 
         [Test]
@@ -287,7 +287,7 @@ namespace NextLevelSeven.Test.Building
             var val0 = Any.String();
             var val1 = Any.String();
             var builder = Message.Build($"MSH|^~\\&|{val0}~{val1}")[1][3];
-            builder.Value.Should().Be($"{val0}~{val1}");
+            builder.RawValue.Should().Be($"{val0}~{val1}");
         }
 
         [Test]
@@ -298,14 +298,14 @@ namespace NextLevelSeven.Test.Building
             var val2 = Any.String();
             var val3 = Any.String();
             var builder = Message.Build($"MSH|^~\\&|{val0}~{val1}^{val2}&{val3}")[1][3];
-            builder.Values.Should().Equal(val0, $"{val1}^{val2}&{val3}");
+            builder.RawValues.Should().Equal(val0, $"{val1}^{val2}&{val3}");
         }
 
         [Test]
         public void FieldBuilder_CanSetNullValues()
         {
             var builder = Message.Build(Any.Message())[1][3];
-            builder.Values = null;
+            builder.RawValues = null;
             builder.Exists.Should().BeFalse();
         }
 
@@ -335,7 +335,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetFieldRepetition(1, repetition1)
                 .SetFieldRepetition(2, repetition2);
-            builder.Value.Should().Be($"{repetition1}~{repetition2}");
+            builder.RawValue.Should().Be($"{repetition1}~{repetition2}");
         }
 
         [Test]
@@ -348,7 +348,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetFieldRepetition(2, repetition2)
                 .SetFieldRepetition(1, repetition1);
-            builder.Value.Should().Be($"{repetition1}~{repetition2}");
+            builder.RawValue.Should().Be($"{repetition1}~{repetition2}");
         }
 
         [Test]
@@ -360,7 +360,7 @@ namespace NextLevelSeven.Test.Building
 
             builder
                 .SetFieldRepetitions(3, repetition1, repetition2);
-            builder.Value.Should().Be($"~~{repetition1}~{repetition2}");
+            builder.RawValue.Should().Be($"~~{repetition1}~{repetition2}");
         }
 
         [Test]
@@ -373,7 +373,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetComponent(1, 1, component1)
                 .SetComponent(1, 2, component2);
-            builder.Value.Should().Be($"{component1}^{component2}");
+            builder.RawValue.Should().Be($"{component1}^{component2}");
         }
 
         [Test]
@@ -386,7 +386,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetComponent(1, 2, component2)
                 .SetComponent(1, 1, component1);
-            builder.Value.Should().Be($"{component1}^{component2}");
+            builder.RawValue.Should().Be($"{component1}^{component2}");
         }
 
         [Test]
@@ -398,7 +398,7 @@ namespace NextLevelSeven.Test.Building
 
             builder
                 .SetComponents(1, component1, component2);
-            builder.Value.Should().Be($"{component1}^{component2}");
+            builder.RawValue.Should().Be($"{component1}^{component2}");
         }
 
         [Test]
@@ -411,7 +411,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetSubcomponent(1, 1, 1, subcomponent1)
                 .SetSubcomponent(1, 1, 2, subcomponent2);
-            builder.Value.Should().Be($"{subcomponent1}&{subcomponent2}");
+            builder.RawValue.Should().Be($"{subcomponent1}&{subcomponent2}");
         }
 
         [Test]
@@ -424,7 +424,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetSubcomponent(1, 1, 2, subcomponent2)
                 .SetSubcomponent(1, 1, 1, subcomponent1);
-            builder.Value.Should().Be($"{subcomponent1}&{subcomponent2}");
+            builder.RawValue.Should().Be($"{subcomponent1}&{subcomponent2}");
         }
 
         [Test]
@@ -436,7 +436,7 @@ namespace NextLevelSeven.Test.Building
 
             builder
                 .SetSubcomponents(1, 1, 1, subcomponent1, subcomponent2);
-            builder.Value.Should().Be($"{subcomponent1}&{subcomponent2}");
+            builder.RawValue.Should().Be($"{subcomponent1}&{subcomponent2}");
         }
 
         [Test]
@@ -447,7 +447,7 @@ namespace NextLevelSeven.Test.Building
             var val1 = Any.String();
             var val2 = Any.String();
             builder.SetSubcomponents(1, 1, 1, val0, val1, val2);
-            builder.Value.Should().Be(string.Join("&", val0, val1, val2));
+            builder.RawValue.Should().Be(string.Join("&", val0, val1, val2));
         }
 
         [Test]
@@ -458,7 +458,7 @@ namespace NextLevelSeven.Test.Building
             var val1 = Any.String();
             var val2 = Any.String();
             builder.SetComponents(1, 1, val0, val1, val2);
-            builder.Value.Should().Be(string.Join("^", val0, val1, val2));
+            builder.RawValue.Should().Be(string.Join("^", val0, val1, val2));
         }
 
         [Test]
@@ -469,25 +469,25 @@ namespace NextLevelSeven.Test.Building
             var val1 = Any.String();
             var val2 = Any.String();
             builder.SetFieldRepetitions(1, val0, val1, val2);
-            builder.Value.Should().Be(string.Join("~", val0, val1, val2));
+            builder.RawValue.Should().Be(string.Join("~", val0, val1, val2));
         }
 
         [Test]
         public void FieldBuilder_SettingNullRepetitionsDoesNothing()
         {
             var builder = Message.Build()[1][3];
-            var value = builder.Value;
+            var value = builder.RawValue;
             builder.SetFieldRepetitions(null);
-            builder.Value.Should().Be(value);
+            builder.RawValue.Should().Be(value);
         }
 
         [Test]
         public void FieldBuilder_SettingNullRepetitionsAtIndexDoesNothing()
         {
             var builder = Message.Build()[1][3];
-            var value = builder.Value;
+            var value = builder.RawValue;
             builder.SetFieldRepetitions(0, null);
-            builder.Value.Should().Be(value);
+            builder.RawValue.Should().Be(value);
         }
 
         [Test]

@@ -15,7 +15,7 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>Get or set the value of the field delimiter.</summary>
-        public override string Value
+        public override string RawValue
         {
             get => new string(Ancestor.DescendantDivider.Value[3], 1);
             set => throw new ElementException(ErrorCode.ElementValueCannotBeChanged);
@@ -24,9 +24,9 @@ namespace NextLevelSeven.Parsing.Elements
         /// <summary>
         ///     Get or set the value of the field delimiter. Only the first value is considered.
         /// </summary>
-        public override IEnumerable<string> Values
+        public override IEnumerable<string> RawValues
         {
-            get { yield return Value; }
+            get { yield return RawValue; }
             set => throw new ElementException(ErrorCode.ElementValueCannotBeChanged);
         }
     }

@@ -18,7 +18,7 @@ namespace NextLevelSeven.Parsing.Elements
         public MessageParser()
         {
             _segments = new WeakReferenceCache<SegmentParser>(CreateSegment);
-            Value = @"MSH|^~\&|";
+            RawValue = @"MSH|^~\&|";
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>True if the message can be parsed, false otherwise.</returns>
         public bool Validate()
         {
-            var value = Value;
+            var value = RawValue;
             return value != null && value.StartsWith("MSH");
         }
 
@@ -90,7 +90,7 @@ namespace NextLevelSeven.Parsing.Elements
         public IEnumerable<string> GetValues(int segment = -1, int field = -1, int repetition = -1, int component = -1,
             int subcomponent = -1)
         {
-            return segment < 0 ? Values : _segments[segment].GetValues(field, repetition, component, subcomponent);
+            return segment < 0 ? RawValues : _segments[segment].GetValues(field, repetition, component, subcomponent);
         }
 
         /// <summary>Get data from a specific place in the message. Depth is determined by how many indices are specified.</summary>
@@ -103,7 +103,7 @@ namespace NextLevelSeven.Parsing.Elements
         public string GetValue(int segment = -1, int field = -1, int repetition = -1, int component = -1,
             int subcomponent = -1)
         {
-            return segment < 0 ? Value : _segments[segment].GetValue(field, repetition, component, subcomponent);
+            return segment < 0 ? RawValue : _segments[segment].GetValue(field, repetition, component, subcomponent);
         }
 
         /// <summary>Deep clone this message.</summary>
@@ -140,9 +140,9 @@ namespace NextLevelSeven.Parsing.Elements
         IEnumerable<ISegment> IMessage.Segments => Segments;
 
         /// <summary>Get or set the value of this message.</summary>
-        public override string Value
+        public override string RawValue
         {
-            get => base.Value;
+            get => base.RawValue;
             set
             {
                 if (value == null)
@@ -157,7 +157,7 @@ namespace NextLevelSeven.Parsing.Elements
                 {
                     throw new ElementException(ErrorCode.MessageDataMustStartWithMsh);
                 }
-                base.Value = NormalizeLineEndings(value);
+                base.RawValue = NormalizeLineEndings(value);
             }
         }
 
@@ -197,7 +197,7 @@ namespace NextLevelSeven.Parsing.Elements
         {
             return new MessageParser
             {
-                Value = Value,
+                RawValue = RawValue,
                 Index = Index
             };
         }

@@ -20,14 +20,14 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>Get the number of field repetitions in this field, including field repetitions with no content.</summary>
-        public override int ValueCount => Value.Length;
+        public override int ValueCount => RawValue.Length;
 
         /// <summary>Get or set field repetition content within this field.</summary>
-        public override IEnumerable<string> Values
+        public override IEnumerable<string> RawValues
         {
             get
             {
-                var count = Value.Length;
+                var count = RawValue.Length;
                 for (var i = 0; i < count; i++)
                 {
                     yield return new string(_value[i], 1);
@@ -37,7 +37,7 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>Get or set this fixed field's value.</summary>
-        public override string Value
+        public override string RawValue
         {
             get
             {

@@ -18,41 +18,41 @@ namespace NextLevelSeven.Core.Codec
         }
 
         /// <summary>Get or set the element's value as a date.</summary>
-        public DateTime? AsDate
+        public DateTime? Date
         {
             get => DateTimeConverter.ConvertToDate(_baseElement.Value);
             set => _baseElement.Value = DateTimeConverter.ConvertFromDate(value);
         }
 
         /// <summary>Get the element's values as dates.</summary>
-        public IIndexedEncodedTypeConverter<DateTime?> AsDates => new IndexedEncodedTypeConverter<DateTime?>(_baseElement, DateTimeConverter.ConvertToDate,
+        public IIndexedEncodedTypeConverter<DateTime?> Dates => new IndexedEncodedTypeConverter<DateTime?>(_baseElement, DateTimeConverter.ConvertToDate,
             DateTimeConverter.ConvertFromDate);
 
         /// <summary>Get or set the element's value as a date/time.</summary>
-        public DateTimeOffset? AsDateTime
+        public DateTimeOffset? DateTime
         {
             get => DateTimeConverter.ConvertToDateTime(_baseElement.Value);
             set => _baseElement.Value = DateTimeConverter.ConvertFromDateTime(value);
         }
 
         /// <summary>Get the element's values as date/times.</summary>
-        public IIndexedEncodedTypeConverter<DateTimeOffset?> AsDateTimes => new IndexedEncodedTypeConverter<DateTimeOffset?>(_baseElement,
+        public IIndexedEncodedTypeConverter<DateTimeOffset?> DateTimes => new IndexedEncodedTypeConverter<DateTimeOffset?>(_baseElement,
             DateTimeConverter.ConvertToDateTime,
             DateTimeConverter.ConvertFromDateTime);
 
         /// <summary>Get or set the element's value as a decimal.</summary>
-        public decimal? AsDecimal
+        public decimal? Decimal
         {
             get => NumberConverter.ConvertToDecimal(_baseElement.Value);
             set => _baseElement.Value = NumberConverter.ConvertFromDecimal(value);
         }
 
         /// <summary>Get the element's values as decimals.</summary>
-        public IIndexedEncodedTypeConverter<decimal?> AsDecimals => new IndexedEncodedTypeConverter<decimal?>(_baseElement, NumberConverter.ConvertToDecimal,
+        public IIndexedEncodedTypeConverter<decimal?> Decimals => new IndexedEncodedTypeConverter<decimal?>(_baseElement, NumberConverter.ConvertToDecimal,
             NumberConverter.ConvertFromDecimal);
 
         /// <summary>Get or set the element's value as formatted text.</summary>
-        public IEnumerable<string> AsFormattedText
+        public IEnumerable<string> FormattedText
         {
             get => TextConverter.ConvertToFormattedText(_baseElement.Value, _baseElement.Delimiter,
                 _baseElement.Encoding);
@@ -61,29 +61,29 @@ namespace NextLevelSeven.Core.Codec
         }
 
         /// <summary>Get or set the element's value as an integer.</summary>
-        public int? AsInt
+        public int? Integer
         {
             get => NumberConverter.ConvertToInt(_baseElement.Value);
             set => _baseElement.Value = NumberConverter.ConvertFromInt(value);
         }
 
         /// <summary>Get the element's values as integers.</summary>
-        public IIndexedEncodedTypeConverter<int?> AsInts => new IndexedEncodedTypeConverter<int?>(_baseElement, NumberConverter.ConvertToInt,
+        public IIndexedEncodedTypeConverter<int?> Integers => new IndexedEncodedTypeConverter<int?>(_baseElement, NumberConverter.ConvertToInt,
             NumberConverter.ConvertFromInt);
 
         /// <summary>Get or set the element's value as a string.</summary>
-        public string AsString
+        public string String
         {
             get => TextConverter.ConvertToString(_baseElement.Value);
             set => _baseElement.Value = TextConverter.ConvertFromString(value);
         }
 
         /// <summary>Get the element's values as strings.</summary>
-        public IIndexedEncodedTypeConverter<string> AsStrings => new IndexedEncodedTypeConverter<string>(_baseElement, TextConverter.ConvertToString,
+        public IIndexedEncodedTypeConverter<string> Strings => new IndexedEncodedTypeConverter<string>(_baseElement, TextConverter.ConvertToString,
             TextConverter.ConvertFromString);
 
         /// <summary>Get or set the element's value as a text field.</summary>
-        public string AsTextField
+        public string TextField
         {
             get => string.Join(Environment.NewLine,
                 TextConverter.ConvertToFormattedText(_baseElement.Value, _baseElement.Delimiter,
@@ -94,14 +94,14 @@ namespace NextLevelSeven.Core.Codec
         }
 
         /// <summary>Get or set the element's value as a time.</summary>
-        public TimeSpan? AsTime
+        public TimeSpan? Time
         {
             get => DateTimeConverter.ConvertToTime(_baseElement.Value);
             set => _baseElement.Value = DateTimeConverter.ConvertFromTime(value);
         }
 
         /// <summary>Get the element's values as times.</summary>
-        public IIndexedEncodedTypeConverter<TimeSpan?> AsTimes => new IndexedEncodedTypeConverter<TimeSpan?>(_baseElement, DateTimeConverter.ConvertToTime,
+        public IIndexedEncodedTypeConverter<TimeSpan?> Times => new IndexedEncodedTypeConverter<TimeSpan?>(_baseElement, DateTimeConverter.ConvertToTime,
             DateTimeConverter.ConvertFromTime);
     }
 }

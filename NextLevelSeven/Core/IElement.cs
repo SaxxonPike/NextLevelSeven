@@ -16,7 +16,7 @@ namespace NextLevelSeven.Core
         IElement Ancestor { get; }
 
         /// <summary>Get a codec which can be used to interpret the stored value as other types.</summary>
-        IEncodedTypeConverter Converter { get; }
+        IEncodedTypeConverter As { get; }
 
         /// <summary>Get the delimiter character of the element. This will be zero if there are no sub-elements.</summary>
         char Delimiter { get; }
@@ -39,11 +39,17 @@ namespace NextLevelSeven.Core
         /// <summary>Next available index for adding elements.</summary>
         int NextIndex { get; }
 
+        /// <summary>Get or set the complete raw value of the element. This bypasses encoding characters.</summary>
+        string RawValue { get; set; }
+
         /// <summary>Get or set the complete value of the element.</summary>
         string Value { get; set; }
 
         /// <summary>Get the number of subvalues in the element.</summary>
         int ValueCount { get; }
+
+        /// <summary>Get or set the subvalues of the element. This bypasses encoding characters.</summary>
+        IEnumerable<string> RawValues { get; set; }
 
         /// <summary>Get or set the subvalues of the element.</summary>
         IEnumerable<string> Values { get; set; }

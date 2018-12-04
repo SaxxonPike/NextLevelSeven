@@ -37,21 +37,21 @@ namespace NextLevelSeven.Building.Elements
         public override int ValueCount => _components.MaxKey;
 
         /// <summary>Get or set component content within this field repetition.</summary>
-        public override IEnumerable<string> Values
+        public override IEnumerable<string> RawValues
         {
             get
             {
                 var count = ValueCount;
                 for (var i = 1; i <= count; i++)
                 {
-                    yield return _components[i].Value;
+                    yield return _components[i].RawValue;
                 }
             }
             set => SetComponents(value.ToArray());
         }
 
         /// <summary>Get or set the field repetition string.</summary>
-        public override string Value
+        public override string RawValue
         {
             get
             {
@@ -186,7 +186,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Data.</returns>
         public string GetValue(int component = -1, int subcomponent = -1)
         {
-            return component < 0 ? Value : _components[component].GetValue(subcomponent);
+            return component < 0 ? RawValue : _components[component].GetValue(subcomponent);
         }
 
         /// <summary>Get the values at the specified indices.</summary>
@@ -195,7 +195,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>All occurrences.</returns>
         public IEnumerable<string> GetValues(int component = -1, int subcomponent = -1)
         {
-            return component < 0 ? Values : _components[component].GetValues(subcomponent);
+            return component < 0 ? RawValues : _components[component].GetValues(subcomponent);
         }
 
         /// <summary>Deep clone this element.</summary>
@@ -241,7 +241,7 @@ namespace NextLevelSeven.Building.Elements
         {
             return new RepetitionBuilder(new EncodingConfiguration(Encoding), Index)
             {
-                Value = Value
+                RawValue = RawValue
             };
         }
 

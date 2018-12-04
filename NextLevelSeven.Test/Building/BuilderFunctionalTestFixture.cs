@@ -20,9 +20,9 @@ namespace NextLevelSeven.Test.Building
         {
             var builder = Message.Build(Any.Message())[1][3];
             var value = Any.String();
-            builder.Value = value;
+            builder.RawValue = value;
             builder.Erase();
-            builder.Value.Should().BeNull();
+            builder.RawValue.Should().BeNull();
             builder.Exists.Should().BeFalse();
         }
 
@@ -37,8 +37,8 @@ namespace NextLevelSeven.Test.Building
         public void Builder_ConvertsHl7NullToExistingNull()
         {
             var builder = Message.Build(Any.Message());
-            builder[1][3].Value = "\"\"";
-            builder[1][3].Value.Should().BeNull();
+            builder[1][3].RawValue = "\"\"";
+            builder[1][3].RawValue.Should().BeNull();
         }
 
         [Test]
@@ -61,7 +61,7 @@ namespace NextLevelSeven.Test.Building
             var param = Any.String();
             const string message = "{0}|{1}";
             Message.BuildFormat(message, ExampleMessageRepository.Minimum, param)
-                .Value.Should()
+                .RawValue.Should()
                 .Be(string.Format(message, ExampleMessageRepository.Minimum, param));
         }
     }

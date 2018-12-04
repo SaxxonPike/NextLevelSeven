@@ -38,7 +38,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Value at the specified index.</returns>
         public string GetValue(int subcomponent = -1)
         {
-            return subcomponent < 0 ? Value : _subcomponents[subcomponent].Value;
+            return subcomponent < 0 ? RawValue : _subcomponents[subcomponent].RawValue;
         }
 
         /// <summary>Get the values at the specified index.</summary>
@@ -46,7 +46,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Values at the specified index.</returns>
         public IEnumerable<string> GetValues(int subcomponent = -1)
         {
-            return subcomponent < 0 ? Values : _subcomponents[subcomponent].Value.Yield();
+            return subcomponent < 0 ? RawValues : _subcomponents[subcomponent].RawValue.Yield();
         }
 
         /// <summary>Get a descendant element at the specified index.</summary>
@@ -118,7 +118,7 @@ namespace NextLevelSeven.Parsing.Elements
             return new ComponentParser(EncodingConfiguration)
             {
                 Index = Index,
-                Value = Value
+                RawValue = RawValue
             };
         }
     }

@@ -15,23 +15,23 @@ namespace NextLevelSeven.Building.Elements
         {
         }
 
-        public abstract override string Value { get; set; }
+        public abstract override string RawValue { get; set; }
 
         /// <summary>Get the number of field repetitions in this field, including field repetitions with no content.</summary>
         public override int ValueCount => 1;
 
         /// <summary>Get or set field repetition content within this field.</summary>
-        public override IEnumerable<string> Values
+        public override IEnumerable<string> RawValues
         {
-            get { yield return Value; }
-            set => Value = string.Concat(value);
+            get { yield return RawValue; }
+            set => RawValue = string.Concat(value);
         }
 
         /// <summary>Returns zero. Static fields cannot be divided any further. Therefore, they have no useful delimiter.</summary>
         public sealed override char Delimiter => '\0';
 
         /// <summary>If true, the element is considered to exist.</summary>
-        public sealed override bool Exists => Value != null;
+        public sealed override bool Exists => RawValue != null;
 
         protected override bool AssertIndexIsMovable(int index)
         {
@@ -51,7 +51,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>This StaticValueFieldBuilder.</returns>
         public sealed override IFieldBuilder SetField(string value)
         {
-            Value = value;
+            RawValue = value;
             return this;
         }
 
@@ -65,7 +65,7 @@ namespace NextLevelSeven.Building.Elements
             {
                 throw new ElementException(ErrorCode.FixedFieldsCannotBeDivided);
             }
-            Value = value;
+            RawValue = value;
             return this;
         }
 

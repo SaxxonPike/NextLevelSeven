@@ -30,31 +30,31 @@ namespace NextLevelSeven.Test.Parsing
             var newType = Any.StringCaps(3);
             element.Type = newType;
             element.Type.Should().Be(newType);
-            element[0].Value.Should().Be(newType);
+            element[0].RawValue.Should().Be(newType);
         }
 
         [Test]
         public void Segment_CanMoveMshFields()
         {
             var element = Message.Parse(ExampleMessageRepository.Minimum)[1];
-            element[3].Value = Any.String();
-            element[4].Value = Any.String();
-            element[5].Value = Any.String();
+            element[3].RawValue = Any.String();
+            element[4].RawValue = Any.String();
+            element[5].RawValue = Any.String();
             var newMessage = element.Clone();
             newMessage[3].Move(4);
-            newMessage[4].Value.Should().Be(element[3].Value);
+            newMessage[4].RawValue.Should().Be(element[3].RawValue);
         }
 
         [Test]
         public void Segment_CanMoveFields()
         {
             var element = Message.Parse(Any.Message())[2];
-            element[3].Value = Any.String();
-            element[4].Value = Any.String();
-            element[5].Value = Any.String();
+            element[3].RawValue = Any.String();
+            element[4].RawValue = Any.String();
+            element[5].RawValue = Any.String();
             var newMessage = element.Clone();
             newMessage[3].Move(4);
-            newMessage[4].Value.Should().Be(element[3].Value);
+            newMessage[4].RawValue.Should().Be(element[3].RawValue);
         }
 
         [Test]
@@ -63,8 +63,8 @@ namespace NextLevelSeven.Test.Parsing
             var message = Message.Parse(ExampleMessageRepository.Standard);
             var type = Any.StringCaps(3);
             var data = Any.String();
-            message[2].Values = new[] { type, data };
-            message[2].Value.Should().Be($"{type}|{data}");
+            message[2].RawValues = new[] { type, data };
+            message[2].RawValue.Should().Be($"{type}|{data}");
         }
 
         [Test]
@@ -73,8 +73,8 @@ namespace NextLevelSeven.Test.Parsing
             var message = Message.Parse(ExampleMessageRepository.Standard);
             var data = Any.String();
             const string delimiter = "$";
-            message[1].Values = new[] { "MSH", delimiter, data };
-            message[1].Value.Should().Be($"MSH{delimiter}{data}");
+            message[1].RawValues = new[] { "MSH", delimiter, data };
+            message[1].RawValue.Should().Be($"MSH{delimiter}{data}");
         }
 
         [Test]
@@ -84,7 +84,7 @@ namespace NextLevelSeven.Test.Parsing
             var segment = message[2];
             var data = Any.String();
             segment.Insert(1, data);
-            segment[1].Value.Should().Be(data);
+            segment[1].RawValue.Should().Be(data);
         }
 
         [Test]
@@ -94,7 +94,7 @@ namespace NextLevelSeven.Test.Parsing
             var segment = message[2];
             var data = Message.Parse(Any.Message())[2][1];
             segment.Insert(1, data);
-            segment[1].Value.Should().Be(data.Value);
+            segment[1].RawValue.Should().Be(data.RawValue);
         }
 
         [Test]
@@ -122,7 +122,7 @@ namespace NextLevelSeven.Test.Parsing
             var segment = message[1];
             var data = Any.String();
             segment.Insert(3, data);
-            segment[3].Value.Should().Be(data);
+            segment[3].RawValue.Should().Be(data);
         }
 
         [Test]
@@ -130,7 +130,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Segment_Throws_WhenIndexedBelowZero()
         {
             var element = Message.Parse(ExampleMessageRepository.Standard)[1];
-            element[-1].Value.Should().BeNull();
+            element[-1].RawValue.Should().BeNull();
         }
 
         [Test]
@@ -138,7 +138,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var segment1 = Message.Parse(ExampleMessageRepository.Standard)[1];
             var segment2 = Message.Parse(ExampleMessageRepository.Standard)[1];
-            segment2.Value.Should().Be(segment1.Value);
+            segment2.RawValue.Should().Be(segment1.RawValue);
         }
 
         [Test]
@@ -183,7 +183,7 @@ namespace NextLevelSeven.Test.Parsing
             var segment = Message.Parse(ExampleMessageRepository.Standard)[2];
             var fieldCount = segment.ValueCount;
             var id = Any.String();
-            segment[fieldCount].Value = id;
+            segment[fieldCount].RawValue = id;
             segment.ValueCount.Should().Be(fieldCount + 1);
         }
 
@@ -209,7 +209,7 @@ namespace NextLevelSeven.Test.Parsing
             var message = Message.Parse(ExampleMessageRepository.Standard);
             var segment = message[2];
             var field = segment[2];
-            field.Value.Should().Be("20130528073829");
+            field.RawValue.Should().Be("20130528073829");
         }
 
         [Test]
@@ -219,13 +219,13 @@ namespace NextLevelSeven.Test.Parsing
         {
             var message = Message.Parse(ExampleMessageRepository.Standard);
             var segment = message[segmentIndex];
-            var field3 = segment[3].Value;
-            var field5 = segment[5].Value;
-            var field6 = segment[6].Value;
+            var field3 = segment[3].RawValue;
+            var field5 = segment[5].RawValue;
+            var field6 = segment[6].RawValue;
             ElementExtensions.Delete(segment, 4);
-            segment[3].Value.Should().Be(field3);
-            segment[4].Value.Should().Be(field5);
-            segment[5].Value.Should().Be(field6);
+            segment[3].RawValue.Should().Be(field3);
+            segment[4].RawValue.Should().Be(field5);
+            segment[5].RawValue.Should().Be(field6);
         }
 
         [Test]
@@ -244,8 +244,8 @@ namespace NextLevelSeven.Test.Parsing
         {
             var message = Message.Parse("MSH|^~\\&|1|2|3|4|5");
             var segment = message[1];
-            segment.Descendants.Skip(2).Where(i => i.Converter.AsInt%2 == 0).Delete();
-            message.Value.Should().Be("MSH|^~\\&|1|3|5");
+            segment.Descendants.Skip(2).Where(i => i.As.Integer%2 == 0).Delete();
+            message.RawValue.Should().Be("MSH|^~\\&|1|3|5");
         }
 
         [Test]
@@ -256,9 +256,9 @@ namespace NextLevelSeven.Test.Parsing
             var msh4 = message[1][4];
             var expected = Any.String().Substring(0, 5);
 
-            msh4.Value = expected;
-            msh3.Value = Any.String();
-            msh4.Value.Should().Be(expected);
+            msh4.RawValue = expected;
+            msh3.RawValue = Any.String();
+            msh4.RawValue.Should().Be(expected);
         }
 
         [Test]
@@ -280,8 +280,8 @@ namespace NextLevelSeven.Test.Parsing
         {
             var segment = Message.Parse(ExampleMessageRepository.Standard)[2];
             var value = Any.String();
-            segment.Value = value;
-            segment.Value.Should().Be(value);
+            segment.RawValue = value;
+            segment.RawValue.Should().Be(value);
         }
 
         [Test]
@@ -289,9 +289,9 @@ namespace NextLevelSeven.Test.Parsing
         {
             var segment = Message.Parse(ExampleMessageRepository.Standard)[2];
             var value = Any.String();
-            segment.Value = value;
-            segment.Value = null;
-            segment.Value.Should().BeNull();
+            segment.RawValue = value;
+            segment.RawValue = null;
+            segment.RawValue.Should().BeNull();
         }
     }
 }

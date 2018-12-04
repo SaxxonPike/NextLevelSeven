@@ -20,10 +20,10 @@ namespace NextLevelSeven.Test.Parsing
         public void Component_CanMoveSubcomponents()
         {
             var element = Message.Parse(ExampleMessageRepository.Minimum)[1][3][1][1];
-            element.Values = new[] {Any.String(), Any.String(), Any.String(), Any.String()};
+            element.RawValues = new[] {Any.String(), Any.String(), Any.String(), Any.String()};
             var newMessage = element.Clone();
             newMessage[2].Move(3);
-            newMessage[3].Value.Should().Be(element[2].Value);
+            newMessage[3].RawValue.Should().Be(element[2].RawValue);
         }
 
         [Test]
@@ -31,7 +31,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Component_Throws_WhenIndexedBelowOne()
         {
             var component = Message.Parse(ExampleMessageRepository.Standard)[1][3][1][1];
-            component[0].Value.Should().BeNull();
+            component[0].RawValue.Should().BeNull();
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace NextLevelSeven.Test.Parsing
             var component = Message.Parse(ExampleMessageRepository.Standard)[2][3][4][1];
             var count = component.ValueCount;
             var id = Any.String();
-            component[count + 1].Value = id;
+            component[count + 1].RawValue = id;
             component.ValueCount.Should().Be(count + 1);
         }
 
@@ -77,7 +77,7 @@ namespace NextLevelSeven.Test.Parsing
             var id4 = Any.String();
             var component =
                 Message.Parse($"MSH|^~\\&|{id1}~{id2}^{id3}&{id4}")[1][3][2][2][2];
-            component.Value.Should().Be(id4);
+            component.RawValue.Should().Be(id4);
         }
 
         [Test]
@@ -86,7 +86,7 @@ namespace NextLevelSeven.Test.Parsing
             var message = Message.Parse("MSH|^~\\&|\rTST|123^456&ABC~789^012");
             var component = message[2][1][1][2];
             ElementExtensions.Delete(component, 1);
-            message.Value.Should().Be("MSH|^~\\&|\rTST|123^ABC~789^012");
+            message.RawValue.Should().Be("MSH|^~\\&|\rTST|123^ABC~789^012");
         }
 
         [Test]
@@ -94,8 +94,8 @@ namespace NextLevelSeven.Test.Parsing
         {
             var component = Message.Parse(ExampleMessageRepository.Standard)[1][3][1][1];
             var value = Any.String();
-            component.Value = value;
-            component.Value.Should().Be(value);
+            component.RawValue = value;
+            component.RawValue.Should().Be(value);
         }
 
         [Test]
@@ -103,9 +103,9 @@ namespace NextLevelSeven.Test.Parsing
         {
             var component = Message.Parse(ExampleMessageRepository.Standard)[1][3][1][1];
             var value = Any.String();
-            component.Value = value;
-            component.Value = null;
-            component.Value.Should().BeNull();
+            component.RawValue = value;
+            component.RawValue = null;
+            component.RawValue.Should().BeNull();
         }
     }
 }

@@ -69,7 +69,7 @@ namespace NextLevelSeven.Parsing.Elements
             return new SubcomponentParser(EncodingConfiguration)
             {
                 Index = Index,
-                Value = Value
+                RawValue = RawValue
             };
         }
     }

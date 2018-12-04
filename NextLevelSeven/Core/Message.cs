@@ -22,7 +22,7 @@ namespace NextLevelSeven.Core
         {
             return new MessageBuilder
             {
-                Value = message
+                RawValue = message
             };
         }
 
@@ -33,7 +33,7 @@ namespace NextLevelSeven.Core
         {
             return new MessageBuilder
             {
-                Value = message.Value
+                RawValue = message.RawValue
             };
         }
 
@@ -45,7 +45,7 @@ namespace NextLevelSeven.Core
         {
             return new MessageBuilder
             {
-                Value = string.Format(message, args)
+                RawValue = string.Format(message, args)
             };
         }
 
@@ -63,7 +63,7 @@ namespace NextLevelSeven.Core
         {
             return new MessageParser
             {
-                Value = message
+                RawValue = message
             };
         }
 
@@ -74,7 +74,7 @@ namespace NextLevelSeven.Core
         {
             return new MessageParser
             {
-                Value = message.Value
+                RawValue = message.RawValue
             };
         }
 
@@ -86,7 +86,7 @@ namespace NextLevelSeven.Core
         {
             return new MessageParser
             {
-                Value = string.Format(message, args)
+                RawValue = string.Format(message, args)
             };
         }
     }

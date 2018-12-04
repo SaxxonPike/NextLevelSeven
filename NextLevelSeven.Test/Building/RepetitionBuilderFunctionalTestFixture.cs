@@ -22,7 +22,7 @@ namespace NextLevelSeven.Test.Building
             var val1 = Any.String();
             var val2 = Any.String();
             builder.SetSubcomponents(1, 1, val0, val1, val2);
-            builder.Value.Should().Be(string.Join("&", val0, val1, val2));
+            builder.RawValue.Should().Be(string.Join("&", val0, val1, val2));
         }
 
         [Test]
@@ -33,7 +33,7 @@ namespace NextLevelSeven.Test.Building
             var val1 = Any.String();
             var val2 = Any.String();
             builder.SetComponents(1, val0, val1, val2);
-            builder.Value.Should().Be(string.Join("^", val0, val1, val2));
+            builder.RawValue.Should().Be(string.Join("^", val0, val1, val2));
         }
 
         [Test]
@@ -61,7 +61,7 @@ namespace NextLevelSeven.Test.Building
         public void RepetitionBuilder_CanGetComponent_ThroughField()
         {
             var builder = Message.Build(ExampleMessageRepository.Variety);
-            builder[1][3][1][2].Value.Should().Be(builder.Segment(1).Field(3).Component(2).Value)
+            builder[1][3][1][2].RawValue.Should().Be(builder.Segment(1).Field(3).Component(2).RawValue)
                 .And.NotBeNull();
         }
 
@@ -69,7 +69,7 @@ namespace NextLevelSeven.Test.Building
         public void RepetitionBuilder_CanGetComponent()
         {
             var builder = Message.Build(ExampleMessageRepository.Variety);
-            builder[1][3][2][2].Value.Should().Be(builder.Segment(1).Field(3).Repetition(2).Component(2).Value)
+            builder[1][3][2][2].RawValue.Should().Be(builder.Segment(1).Field(3).Repetition(2).Component(2).RawValue)
                 .And.NotBeNull();
         }
 
@@ -80,7 +80,7 @@ namespace NextLevelSeven.Test.Building
             var val1 = Any.String();
             var builder =
                 Message.Build(string.Format("MSH|^~\\&|{2}~{0}^{1}", val0, val1, Any.String()))[1][3][2];
-            builder.Value.Should().Be($"{val0}^{val1}");
+            builder.RawValue.Should().Be($"{val0}^{val1}");
         }
 
         [Test]
@@ -90,7 +90,7 @@ namespace NextLevelSeven.Test.Building
             var val2 = Any.String();
             var val3 = Any.String();
             var builder = Message.Build($"MSH|^~\\&|{Any.String()}~{val1}^{val2}&{val3}")[1][3][2];
-            builder.Values.Should().Equal(val1, $"{val2}&{val3}");
+            builder.RawValues.Should().Equal(val1, $"{val2}&{val3}");
         }
 
         [Test]
@@ -103,7 +103,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetComponent(1, component1)
                 .SetComponent(2, component2);
-            builder.Value.Should().Be($"{component1}^{component2}");
+            builder.RawValue.Should().Be($"{component1}^{component2}");
         }
 
         [Test]
@@ -116,7 +116,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetComponent(2, component2)
                 .SetComponent(1, component1);
-            builder.Value.Should().Be($"{component1}^{component2}");
+            builder.RawValue.Should().Be($"{component1}^{component2}");
         }
 
         [Test]
@@ -128,7 +128,7 @@ namespace NextLevelSeven.Test.Building
 
             builder
                 .SetComponents(3, component1, component2);
-            builder.Value.Should().Be($"^^{component1}^{component2}");
+            builder.RawValue.Should().Be($"^^{component1}^{component2}");
         }
 
         [Test]
@@ -141,7 +141,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetSubcomponent(1, 1, subcomponent1)
                 .SetSubcomponent(1, 2, subcomponent2);
-            builder.Value.Should().Be($"{subcomponent1}&{subcomponent2}");
+            builder.RawValue.Should().Be($"{subcomponent1}&{subcomponent2}");
         }
 
         [Test]
@@ -154,7 +154,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetSubcomponent(1, 2, subcomponent2)
                 .SetSubcomponent(1, 1, subcomponent1);
-            builder.Value.Should().Be($"{subcomponent1}&{subcomponent2}");
+            builder.RawValue.Should().Be($"{subcomponent1}&{subcomponent2}");
         }
 
         [Test]
@@ -166,7 +166,7 @@ namespace NextLevelSeven.Test.Building
 
             builder
                 .SetSubcomponents(3, 1, subcomponent1, subcomponent2);
-            builder.Value.Should().Be($"^^{subcomponent1}&{subcomponent2}");
+            builder.RawValue.Should().Be($"^^{subcomponent1}&{subcomponent2}");
         }
 
         [Test]

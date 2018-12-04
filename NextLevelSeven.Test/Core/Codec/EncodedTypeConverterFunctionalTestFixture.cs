@@ -15,8 +15,8 @@ namespace NextLevelSeven.Test.Core.Codec
         public void Codec_CanGetDate()
         {
             var message = Message.Parse(Any.Message());
-            message[1][3].Value = Any.DateTimeMillisecondsWithTimeZone();
-            message[1][3].Converter.AsDate.Should().HaveValue();
+            message[1][3].RawValue = Any.DateTimeMillisecondsWithTimeZone();
+            message[1][3].As.Date.Should().HaveValue();
         }
 
         [Test]
@@ -24,17 +24,17 @@ namespace NextLevelSeven.Test.Core.Codec
         {
             var message = Message.Parse(Any.Message());
             var date = DateTime.Now;
-            message[1][3].Converter.AsDate = date;
-            message[1][3].Value.Should().Be(DateTimeConverter.ConvertFromDate(date));
+            message[1][3].As.Date = date;
+            message[1][3].RawValue.Should().Be(DateTimeConverter.ConvertFromDate(date));
         }
 
         [Test]
         public void Codec_CanGetDates()
         {
             var message = Message.Parse(Any.Message());
-            message[1][3][1].Value = Any.DateTimeMillisecondsWithTimeZone();
-            message[1][3][2].Value = Any.DateTimeMillisecondsWithTimeZone();
-            message[1][3].Converter.AsDates.Count.Should().Be(2);
+            message[1][3][1].RawValue = Any.DateTimeMillisecondsWithTimeZone();
+            message[1][3][2].RawValue = Any.DateTimeMillisecondsWithTimeZone();
+            message[1][3].As.Dates.Count.Should().Be(2);
         }
 
         [Test]
@@ -42,16 +42,16 @@ namespace NextLevelSeven.Test.Core.Codec
         {
             var message = Message.Parse(Any.Message());
             var dates = new DateTime?[] { DateTime.Now, DateTime.Now.AddDays(-1) };
-            message[1][3].Converter.AsDates.Items = dates;
-            message[1][3].Values.Should().BeEquivalentTo(dates.Select(DateTimeConverter.ConvertFromDate));
+            message[1][3].As.Dates.Items = dates;
+            message[1][3].RawValues.Should().BeEquivalentTo(dates.Select(DateTimeConverter.ConvertFromDate));
         }
 
         [Test]
         public void Codec_CanGetDateTime()
         {
             var message = Message.Parse(Any.Message());
-            message[1][3].Value = Any.DateTimeMillisecondsWithTimeZone();
-            message[1][3].Converter.AsDateTime.Should().HaveValue();
+            message[1][3].RawValue = Any.DateTimeMillisecondsWithTimeZone();
+            message[1][3].As.DateTime.Should().HaveValue();
         }
 
         [Test]
@@ -59,17 +59,17 @@ namespace NextLevelSeven.Test.Core.Codec
         {
             var message = Message.Parse(Any.Message());
             var dateTime = DateTimeOffset.Now;
-            message[1][3].Converter.AsDateTime = dateTime;
-            message[1][3].Value.Should().Be(DateTimeConverter.ConvertFromDateTime(dateTime));
+            message[1][3].As.DateTime = dateTime;
+            message[1][3].RawValue.Should().Be(DateTimeConverter.ConvertFromDateTime(dateTime));
         }
 
         [Test]
         public void Codec_CanGetDateTimes()
         {
             var message = Message.Parse(Any.Message());
-            message[1][3][1].Value = Any.DateTimeMillisecondsWithTimeZone();
-            message[1][3][2].Value = Any.DateTimeMillisecondsWithTimeZone();
-            message[1][3].Converter.AsDateTimes.Count.Should().Be(2);
+            message[1][3][1].RawValue = Any.DateTimeMillisecondsWithTimeZone();
+            message[1][3][2].RawValue = Any.DateTimeMillisecondsWithTimeZone();
+            message[1][3].As.DateTimes.Count.Should().Be(2);
         }
 
         [Test]
@@ -77,16 +77,16 @@ namespace NextLevelSeven.Test.Core.Codec
         {
             var message = Message.Parse(Any.Message());
             var dateTimes = new DateTimeOffset?[] { DateTimeOffset.Now, DateTimeOffset.Now.AddDays(-1) };
-            message[1][3].Converter.AsDateTimes.Items = dateTimes;
-            message[1][3].Values.Should().BeEquivalentTo(dateTimes.Select(DateTimeConverter.ConvertFromDateTime));
+            message[1][3].As.DateTimes.Items = dateTimes;
+            message[1][3].RawValues.Should().BeEquivalentTo(dateTimes.Select(DateTimeConverter.ConvertFromDateTime));
         }
 
         [Test]
         public void Codec_CanGetDecimal()
         {
             var message = Message.Parse(Any.Message());
-            message[1][3].Value = Any.Decimal();
-            message[1][3].Converter.AsDecimal.Should().HaveValue();
+            message[1][3].RawValue = Any.Decimal();
+            message[1][3].As.Decimal.Should().HaveValue();
         }
 
         [Test]
@@ -94,8 +94,8 @@ namespace NextLevelSeven.Test.Core.Codec
         {
             var input = NumberConverter.ConvertToDecimal(Any.Decimal());
             var message = Message.Parse(Any.Message());
-            message[1][3].Converter.AsDecimal = input;
-            message[1][3].Value.Should().Be(input.ToString());
+            message[1][3].As.Decimal = input;
+            message[1][3].RawValue.Should().Be(input.ToString());
         }
     }
 }

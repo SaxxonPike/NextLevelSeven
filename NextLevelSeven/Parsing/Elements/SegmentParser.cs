@@ -60,7 +60,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <param name="index">Index to insert at.</param>
         public override IElement Insert(int index, IElement element)
         {
-            Insert(index, element.Value);
+            Insert(index, element.RawValue);
             return GetDescendant(index);
         }
 
@@ -154,7 +154,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Value at the specified indices.</returns>
         public string GetValue(int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
         {
-            return field < 0 ? Value : _fields[field].GetValue(repetition, component, subcomponent);
+            return field < 0 ? RawValue : _fields[field].GetValue(repetition, component, subcomponent);
         }
 
         /// <summary>Get all values at the specified indices.</summary>
@@ -166,7 +166,7 @@ namespace NextLevelSeven.Parsing.Elements
         public IEnumerable<string> GetValues(int field = -1, int repetition = -1, int component = -1,
             int subcomponent = -1)
         {
-            return field < 0 ? Values : _fields[field].GetValues(repetition, component, subcomponent);
+            return field < 0 ? RawValues : _fields[field].GetValues(repetition, component, subcomponent);
         }
 
         /// <summary>Deep clone this element.</summary>
@@ -184,9 +184,9 @@ namespace NextLevelSeven.Parsing.Elements
         }
 
         /// <summary>Get or set all field values in this segment.</summary>
-        public override IEnumerable<string> Values
+        public override IEnumerable<string> RawValues
         {
-            get { return Descendants.Select(d => d.Value); }
+            get { return Descendants.Select(d => d.RawValue); }
             set
             {
                 if (IsMsh)
@@ -198,7 +198,7 @@ namespace NextLevelSeven.Parsing.Elements
                     DescendantDivider.Value = string.Join(delimiter, values);
                     return;
                 }
-                base.Values = value;
+                base.RawValues = value;
             }
         }
 
@@ -277,7 +277,7 @@ namespace NextLevelSeven.Parsing.Elements
             return new SegmentParser(EncodingConfiguration)
             {
                 Index = Index,
-                Value = Value
+                RawValue = RawValue
             };
         }
 

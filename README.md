@@ -121,14 +121,30 @@ ability to change MSH-1 or MSH-2 for some reason, you must use a builder.
 ### Type Conversion
 
 If you need to access an element in a message of a type other than a string,
-built-in conversion methods are very easy to access.
+use the `As` property. A number of .NET types are already supported, such as numbers,
+dates and times.
 
 ```csharp
 // get the message timestamp (returns DateTimeOffset? type)
-var dateTime = message[1][7].Converter.AsDateTime;
+var dateTime = message[1][7].As.DateTime;
 
 // get the message sequence number (returns decimal)
-var sequenceNumber = message.Segment(1).Field(13).Converter.AsDecimal;
+var sequenceNumber = message.Segment(1).Field(13).As.Decimal;
+
+// set the message sequence number
+message.Segment(1).Field(13).As.Integer = 1234;
+```
+
+### Raw Values
+
+By default, values accessed via the `Value` or `Values` properties as well as
+ones accessed via the `As` converter above will automatically escape and unescape
+characters in the message. If you want access to the raw value instead, use the `RawValue` and
+`RawValues` properties.
+
+```csharp
+// get the raw value of the continuation pointer field
+var rawValue = message[1][14].RawValue;
 ```
 
 ## Manipulation

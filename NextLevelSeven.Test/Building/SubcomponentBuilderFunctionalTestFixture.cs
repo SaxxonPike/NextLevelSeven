@@ -20,7 +20,7 @@ namespace NextLevelSeven.Test.Building
         public void SubcomponentBuilder_ExistsWithNonNullValue()
         {
             var builder = Message.Build(Any.Message())[1][3][1][1][1];
-            builder.Value = Any.String();
+            builder.RawValue = Any.String();
             builder.Exists.Should().BeTrue();
         }
 
@@ -28,7 +28,7 @@ namespace NextLevelSeven.Test.Building
         public void SubcomponentBuilder_ExistsWithNullPresentValue()
         {
             var builder = Message.Build(Any.Message())[1][3][1][1][1];
-            builder.Value = HL7.Null;
+            builder.RawValue = HL7.Null;
             builder.Exists.Should().BeTrue();
         }
 
@@ -36,7 +36,7 @@ namespace NextLevelSeven.Test.Building
         public void SubcomponentBuilder_DoesNotExistWithNullValue()
         {
             var builder = Message.Build(Any.Message())[1][3][1][1][1];
-            builder.Value = null;
+            builder.RawValue = null;
             builder.Exists.Should().BeFalse();
         }
 
@@ -44,10 +44,10 @@ namespace NextLevelSeven.Test.Building
         public void SubcomponentBuilder_GetsCodec()
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[1][3][1][1][1];
-            var codec = builder.Converter;
+            var codec = builder.As;
             var value = Any.Number();
-            codec.AsInt = value;
-            builder.Value.Should().Be(value.ToString(CultureInfo.InvariantCulture));
+            codec.Integer = value;
+            builder.RawValue.Should().Be(value.ToString(CultureInfo.InvariantCulture));
         }
 
         [Test]
@@ -69,7 +69,7 @@ namespace NextLevelSeven.Test.Building
         public void SubcomponentBuilder_ThrowsOnIndex()
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[1][3][1][1][1];
-            builder[1].Value.Should().BeNull();
+            builder[1].RawValue.Should().BeNull();
         }
 
         [Test]
@@ -109,8 +109,8 @@ namespace NextLevelSeven.Test.Building
         public void SubcomponentBuilder_SetsValuesWithConcatenation()
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[1][3][1][1][1];
-            builder.Values = new[] {"a", "b", "c", "d"};
-            builder.Value.Should().Be("abcd");
+            builder.RawValues = new[] {"a", "b", "c", "d"};
+            builder.RawValue.Should().Be("abcd");
         }
 
         [Test]
@@ -157,7 +157,7 @@ namespace NextLevelSeven.Test.Building
             var val1 = Any.String();
             var builder =
                 Message.Build($"MSH|^~\\&|{val0}&{val1}&{Any.String()}")[1][3][1][1][2];
-            builder.Value.Should().Be(val1);
+            builder.RawValue.Should().Be(val1);
         }
 
         [Test]
@@ -167,7 +167,7 @@ namespace NextLevelSeven.Test.Building
             var val2 = Any.String();
             var val3 = Any.String();
             var builder = Message.Build($"MSH|^~\\&|{Any.String()}~{val1}^{val2}&{val3}")[1][3][2][2][2];
-            builder.Values.Should().Equal(val3);
+            builder.RawValues.Should().Equal(val3);
         }
 
         [Test]

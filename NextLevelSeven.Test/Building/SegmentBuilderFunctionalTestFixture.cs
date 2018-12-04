@@ -26,7 +26,7 @@ namespace NextLevelSeven.Test.Building
             var val2 = Any.String();
             segment.Type = val0;
             segment.SetSubcomponents(1, 1, 1, val1, val2);
-            segment.Value.Should().Be($"{val0}|{val1}&{val2}");
+            segment.RawValue.Should().Be($"{val0}|{val1}&{val2}");
         }
 
         [Test]
@@ -39,7 +39,7 @@ namespace NextLevelSeven.Test.Building
             var val2 = Any.String();
             segment.Type = val0;
             segment.SetComponents(1, 1, 2, val1, val2);
-            segment.Value.Should().Be($"{val0}|^{val1}^{val2}");
+            segment.RawValue.Should().Be($"{val0}|^{val1}^{val2}");
         }
 
         [Test]
@@ -52,7 +52,7 @@ namespace NextLevelSeven.Test.Building
             var val2 = Any.String();
             segment.Type = val0;
             segment.SetFieldRepetitions(1, 2, val1, val2);
-            segment.Value.Should().Be($"{val0}|~{val1}~{val2}");
+            segment.RawValue.Should().Be($"{val0}|~{val1}~{val2}");
         }
 
         [Test]
@@ -79,8 +79,8 @@ namespace NextLevelSeven.Test.Building
         {
             var message = Message.Build(Any.Message());
             var builder = message[message.NextIndex];
-            builder.Values = Enumerable.Empty<string>();
-            builder.Value.Should().BeNull();
+            builder.RawValues = Enumerable.Empty<string>();
+            builder.RawValue.Should().BeNull();
         }
 
         [Test]
@@ -88,7 +88,7 @@ namespace NextLevelSeven.Test.Building
         {
             var message = Message.Build(Any.Message());
             var builder = message[message.NextIndex];
-            builder.Value.Should().BeNull();
+            builder.RawValue.Should().BeNull();
         }
 
         [Test]
@@ -96,7 +96,7 @@ namespace NextLevelSeven.Test.Building
         {
             var message = Message.Build(Any.Message());
             var builder = message[message.NextIndex];
-            builder.Values.Should().BeEmpty();
+            builder.RawValues.Should().BeEmpty();
         }
 
         [Test]
@@ -111,9 +111,9 @@ namespace NextLevelSeven.Test.Building
         {
             var builder = Message.Build(ExampleMessageRepository.Standard);
             var val0 = Any.String();
-            builder[1][3].Value = val0;
+            builder[1][3].RawValue = val0;
             builder[1][3].Move(4);
-            builder[1][4].Value.Should().Be(val0);
+            builder[1][4].RawValue.Should().Be(val0);
         }
 
         [Test]
@@ -124,7 +124,7 @@ namespace NextLevelSeven.Test.Building
         public void SegmentBuilder_Throws_WhenDataIsTooShort(string value)
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[1];
-            builder.Value = value;
+            builder.RawValue = value;
         }
 
         [Test]
@@ -132,14 +132,14 @@ namespace NextLevelSeven.Test.Building
         public void SegmentBuilder_Throws_WhenMshDataIsNull()
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[1];
-            builder.Value = null;
+            builder.RawValue = null;
         }
 
         [Test]
         public void SegmentBuilder_CanNullifyNonMshSegment()
         {
             var builder = Message.Build(ExampleMessageRepository.Standard)[2];
-            builder.Value = null;
+            builder.RawValue = null;
         }
 
         [Test]
@@ -167,7 +167,7 @@ namespace NextLevelSeven.Test.Building
         public void SegmentBuilder_CanGetField()
         {
             var builder = Message.Build(ExampleMessageRepository.Variety);
-            builder[1][3].Value.Should().Be(builder.Segment(1).Field(3).Value)
+            builder[1][3].RawValue.Should().Be(builder.Segment(1).Field(3).RawValue)
                 .And.NotBeNull();
         }
 
@@ -176,21 +176,21 @@ namespace NextLevelSeven.Test.Building
         {
             var builder = Message.Build(ExampleMessageRepository.Variety)[1];
             // +1 is added because this is an MSH segment
-            builder.Fields.Count().Should().Be(builder.Value.Split('|').Length + 1);
+            builder.Fields.Count().Should().Be(builder.RawValue.Split('|').Length + 1);
         }
 
         [Test]
         public void SegmentBuilder_CanGetValue()
         {
             var builder = Message.Build("MSH|^~\\&\rPID|1234")[1];
-            builder.Value.Should().Be("MSH|^~\\&");
+            builder.RawValue.Should().Be("MSH|^~\\&");
         }
 
         [Test]
         public void SegmentBuilder_CanGetValues()
         {
             var builder = Message.Build("MSH|^~\\&")[1];
-            builder.Values.Should().Equal("MSH", "|", "^~\\&");
+            builder.RawValues.Should().Equal("MSH", "|", "^~\\&");
         }
 
         [Test]
@@ -203,7 +203,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetField(3, field3)
                 .SetField(5, field5);
-            builder.Value.Should().Be($"MSH|^~\\&|{field3}||{field5}");
+            builder.RawValue.Should().Be($"MSH|^~\\&|{field3}||{field5}");
         }
 
         [Test]
@@ -216,7 +216,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetField(5, field5)
                 .SetField(3, field3);
-            builder.Value.Should().Be($"MSH|^~\\&|{field3}||{field5}");
+            builder.RawValue.Should().Be($"MSH|^~\\&|{field3}||{field5}");
         }
 
         [Test]
@@ -228,7 +228,7 @@ namespace NextLevelSeven.Test.Building
 
             builder
                 .SetFields(3, field3, null, field5);
-            builder.Value.Should().Be($"MSH|^~\\&|{field3}||{field5}");
+            builder.RawValue.Should().Be($"MSH|^~\\&|{field3}||{field5}");
         }
 
         [Test]
@@ -241,7 +241,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetFieldRepetition(3, 1, repetition1)
                 .SetFieldRepetition(3, 2, repetition2);
-            builder.Value.Should().Be($"MSH|^~\\&|{repetition1}~{repetition2}");
+            builder.RawValue.Should().Be($"MSH|^~\\&|{repetition1}~{repetition2}");
         }
 
         [Test]
@@ -254,7 +254,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetFieldRepetition(3, 2, repetition2)
                 .SetFieldRepetition(3, 1, repetition1);
-            builder.Value.Should().Be($"MSH|^~\\&|{repetition1}~{repetition2}");
+            builder.RawValue.Should().Be($"MSH|^~\\&|{repetition1}~{repetition2}");
         }
 
         [Test]
@@ -266,7 +266,7 @@ namespace NextLevelSeven.Test.Building
 
             builder
                 .SetFieldRepetitions(3, repetition1, repetition2);
-            builder.Value.Should().Be($"MSH|^~\\&|{repetition1}~{repetition2}");
+            builder.RawValue.Should().Be($"MSH|^~\\&|{repetition1}~{repetition2}");
         }
 
         [Test]
@@ -279,7 +279,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetComponent(3, 1, 1, component1)
                 .SetComponent(3, 1, 2, component2);
-            builder.Value.Should().Be($"MSH|^~\\&|{component1}^{component2}");
+            builder.RawValue.Should().Be($"MSH|^~\\&|{component1}^{component2}");
         }
 
         [Test]
@@ -292,7 +292,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetComponent(3, 1, 2, component2)
                 .SetComponent(3, 1, 1, component1);
-            builder.Value.Should().Be($"MSH|^~\\&|{component1}^{component2}");
+            builder.RawValue.Should().Be($"MSH|^~\\&|{component1}^{component2}");
         }
 
         [Test]
@@ -304,7 +304,7 @@ namespace NextLevelSeven.Test.Building
 
             builder
                 .SetComponents(3, 1, component1, component2);
-            builder.Value.Should().Be($"MSH|^~\\&|{component1}^{component2}");
+            builder.RawValue.Should().Be($"MSH|^~\\&|{component1}^{component2}");
         }
 
         [Test]
@@ -317,7 +317,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetSubcomponent(3, 1, 1, 1, subcomponent1)
                 .SetSubcomponent(3, 1, 1, 2, subcomponent2);
-            builder.Value.Should().Be($"MSH|^~\\&|{subcomponent1}&{subcomponent2}");
+            builder.RawValue.Should().Be($"MSH|^~\\&|{subcomponent1}&{subcomponent2}");
         }
 
         [Test]
@@ -330,7 +330,7 @@ namespace NextLevelSeven.Test.Building
             builder
                 .SetSubcomponent(3, 1, 1, 2, subcomponent2)
                 .SetSubcomponent(3, 1, 1, 1, subcomponent1);
-            builder.Value.Should().Be($"MSH|^~\\&|{subcomponent1}&{subcomponent2}");
+            builder.RawValue.Should().Be($"MSH|^~\\&|{subcomponent1}&{subcomponent2}");
         }
 
         [Test]
@@ -342,7 +342,7 @@ namespace NextLevelSeven.Test.Building
 
             builder
                 .SetSubcomponents(3, 1, 1, 1, subcomponent1, subcomponent2);
-            builder.Value.Should().Be($"MSH|^~\\&|{subcomponent1}&{subcomponent2}");
+            builder.RawValue.Should().Be($"MSH|^~\\&|{subcomponent1}&{subcomponent2}");
         }
 
         [Test]
@@ -371,7 +371,7 @@ namespace NextLevelSeven.Test.Building
             var messageBuilder = Message.Build();
             var builder = messageBuilder[2];
             var type = Any.StringCaps(3);
-            builder[0].Value = type;
+            builder[0].RawValue = type;
             builder.Type.Should().Be(type);
         }
 
@@ -382,7 +382,7 @@ namespace NextLevelSeven.Test.Building
             var builder = messageBuilder[2];
             var type = Any.StringCaps(3);
             builder.Type = type;
-            builder[0].Value.Should().Be(type);
+            builder[0].RawValue.Should().Be(type);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace NextLevelSeven.Building.Elements
         }
 
         /// <summary>Get or set the field type value.</summary>
-        public override string Value
+        public override string RawValue
         {
             get => _value;
             set

@@ -39,7 +39,7 @@ namespace NextLevelSeven.Building.Elements
                 {
                     return false;
                 }
-                return _fields[0].Value == "MSH";
+                return _fields[0].RawValue == "MSH";
             }
         }
 
@@ -56,26 +56,26 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Get or set the three-letter type field of this segment.</summary>
         public string Type
         {
-            get => _fields[0].Value;
+            get => _fields[0].RawValue;
             set => SetField(0, value);
         }
 
         /// <summary>Get or set field content within this segment.</summary>
-        public override IEnumerable<string> Values
+        public override IEnumerable<string> RawValues
         {
             get
             {
                 var count = ValueCount;
                 for (var i = 0; i < count; i++)
                 {
-                    yield return _fields[i].Value;
+                    yield return _fields[i].RawValue;
                 }
             }
             set => SetFields(value.ToArray());
         }
 
         /// <summary>Get or set the segment string.</summary>
-        public override string Value
+        public override string RawValue
         {
             get
             {
@@ -309,7 +309,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns></returns>
         public string GetValue(int field = -1, int repetition = -1, int component = -1, int subcomponent = -1)
         {
-            return field < 0 ? Value : _fields[field].GetValue(repetition, component, subcomponent);
+            return field < 0 ? RawValue : _fields[field].GetValue(repetition, component, subcomponent);
         }
 
         /// <summary>Get the values at the specified indices.</summary>
@@ -321,7 +321,7 @@ namespace NextLevelSeven.Building.Elements
         public IEnumerable<string> GetValues(int field = -1, int repetition = -1, int component = -1,
             int subcomponent = -1)
         {
-            return field < 0 ? Values : _fields[field].GetValues(repetition, component, subcomponent);
+            return field < 0 ? RawValues : _fields[field].GetValues(repetition, component, subcomponent);
         }
 
         /// <summary>Deep clone this element.</summary>
@@ -372,7 +372,7 @@ namespace NextLevelSeven.Building.Elements
         {
             return new SegmentBuilder(new EncodingConfiguration(Encoding), Index)
             {
-                Value = Value
+                RawValue = RawValue
             };
         }
 

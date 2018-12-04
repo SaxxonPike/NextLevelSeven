@@ -22,21 +22,21 @@ namespace NextLevelSeven.Test.Parsing
             var field = Message.Parse(ExampleMessageRepository.Minimum)[1][1];
             var clone = field.Clone();
             clone.Should().NotBeSameAs(field);
-            clone.Value.Should().Be(field.Value);
+            clone.RawValue.Should().Be(field.RawValue);
         }
 
         [Test]
         public void Field_Delimiter_CanGetValue()
         {
             var field = Message.Parse(ExampleMessageRepository.Minimum)[1][1];
-            field.Value.Should().Be("|");
+            field.RawValue.Should().Be("|");
         }
 
         [Test]
         public void Field_Delimiter_CanGetNullSegmentValue()
         {
             var field = Message.Parse(ExampleMessageRepository.Minimum)[2][1];
-            field.Value.Should().BeNull();
+            field.RawValue.Should().BeNull();
         }
 
         [Test]
@@ -45,7 +45,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var message = Message.Parse(ExampleMessageRepository.Minimum);
             var field = message[1][1];
-            field.Value = null;
+            field.RawValue = null;
         }
 
         [Test]
@@ -54,14 +54,14 @@ namespace NextLevelSeven.Test.Parsing
             var field = Message.Parse(ExampleMessageRepository.Minimum)[1][2];
             var clone = field.Clone();
             clone.Should().NotBeSameAs(field);
-            clone.Value.Should().Be(field.Value);
+            clone.RawValue.Should().Be(field.RawValue);
         }
 
         [Test]
         public void Field_Encoding_CanGetValues()
         {
             var field = Message.Parse(ExampleMessageRepository.Minimum)[1][2];
-            field.Values.Should().Equal("^", "~", "\\", "&");
+            field.RawValues.Should().Equal("^", "~", "\\", "&");
         }
 
         [Test]
@@ -70,7 +70,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var field = Message.Parse(ExampleMessageRepository.Minimum)[1][2];
             var values = new[] {"^", "~", "\\", "&"};
-            field.Values = values;
+            field.RawValues = values;
         }
 
         [Test]
@@ -92,7 +92,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Field_Encoding_ThrowsOnDescendantAccess()
         {
             var field = Message.Parse(ExampleMessageRepository.Minimum)[1][2];
-            field[2].Value.Should().BeNull();
+            field[2].RawValue.Should().BeNull();
         }
 
         [Test]
@@ -115,7 +115,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var field = Message.Parse(ExampleMessageRepository.Minimum)[1][1];
             var values = new[] {"$", "@"};
-            field.Values = values;
+            field.RawValues = values;
         }
 
         [Test]
@@ -123,7 +123,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Field_Delimiter_ThrowsOnDescendantAccess()
         {
             var field = Message.Parse(ExampleMessageRepository.Minimum)[1][1];
-            field[2].Value.Should().BeNull();
+            field[2].RawValue.Should().BeNull();
         }
 
         [Test]
@@ -139,8 +139,8 @@ namespace NextLevelSeven.Test.Parsing
         {
             var field = Message.Parse(ExampleMessageRepository.Minimum)[1][1];
             field.ValueCount.Should().Be(1);
-            field.Value.Should().Be(field.GetValue());
-            field.Values.Count().Should().Be(1);
+            field.RawValue.Should().Be(field.GetValue());
+            field.RawValues.Count().Should().Be(1);
             field.GetValues().Count().Should().Be(1);
         }
 
@@ -157,10 +157,10 @@ namespace NextLevelSeven.Test.Parsing
         {
             var field = Message.Parse(ExampleMessageRepository.Minimum)[1][3];
             var val0 = Any.String();
-            field.Value = val0;
+            field.RawValue = val0;
             var newField = field.Clone();
-            newField.Value.Should().Be(field.Value);
-            field.Values.Count().Should().Be(1);
+            newField.RawValue.Should().Be(field.RawValue);
+            field.RawValues.Count().Should().Be(1);
         }
 
         [Test]
@@ -168,18 +168,18 @@ namespace NextLevelSeven.Test.Parsing
         {
             var field = Message.Parse(ExampleMessageRepository.Minimum)[1][3];
             var newField = field.Clone();
-            newField.Value.Should().BeNull();
+            newField.RawValue.Should().BeNull();
         }
 
         [Test]
         public void Field_CanInsertRepetitions()
         {
             var element = Message.Parse(ExampleMessageRepository.Minimum)[1][3];
-            element.Values = new[] { Any.String(), Any.String(), Any.String(), Any.String() };
+            element.RawValues = new[] { Any.String(), Any.String(), Any.String(), Any.String() };
             var value = Any.String();
             element.Insert(1, value);
             element.ValueCount.Should().Be(5);
-            element[1].Value.Should().Be(value);
+            element[1].RawValue.Should().Be(value);
         }
 
         [Test]
@@ -187,20 +187,20 @@ namespace NextLevelSeven.Test.Parsing
         {
             var otherElement = Message.Parse(Any.Message())[1][3][1];
             var element = Message.Parse(Any.Message())[1][3];
-            element.Values = new[] { Any.String(), Any.String(), Any.String(), Any.String() };
+            element.RawValues = new[] { Any.String(), Any.String(), Any.String(), Any.String() };
             element.Insert(1, otherElement);
             element.ValueCount.Should().Be(5);
-            element[1].Value.Should().Be(otherElement.Value);
+            element[1].RawValue.Should().Be(otherElement.RawValue);
         }
 
         [Test]
         public void Field_CanMoveRepetitions()
         {
             var element = Message.Parse(ExampleMessageRepository.Minimum)[1][3];
-            element.Values = new[] {Any.String(), Any.String(), Any.String(), Any.String()};
+            element.RawValues = new[] {Any.String(), Any.String(), Any.String(), Any.String()};
             var newMessage = element.Clone();
             newMessage[2].Move(3);
-            newMessage[3].Value.Should().Be(element[2].Value);
+            newMessage[3].RawValue.Should().Be(element[2].RawValue);
         }
 
         [Test]
@@ -208,7 +208,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Field_Throws_WhenIndexedBelowOne()
         {
             var element = Message.Parse(ExampleMessageRepository.Standard)[1][3];
-            element[0].Value.Should().BeNull();
+            element[0].RawValue.Should().BeNull();
         }
 
         [Test]
@@ -230,7 +230,7 @@ namespace NextLevelSeven.Test.Parsing
         {
             var field = (IElement)Message.Parse(ExampleMessageRepository.Standard)[1][3];
             field.Erase();
-            field.Value.Should().BeNull();
+            field.RawValue.Should().BeNull();
         }
 
         [Test]
@@ -239,7 +239,7 @@ namespace NextLevelSeven.Test.Parsing
             var field = Message.Parse(ExampleMessageRepository.Standard)[2][3];
             var count = field.ValueCount;
             var id = Any.String();
-            field[count + 1].Value = id;
+            field[count + 1].RawValue = id;
             field.ValueCount.Should().Be(count + 1);
         }
 
@@ -261,7 +261,7 @@ namespace NextLevelSeven.Test.Parsing
         public void Field_CanGetRepetitionsByIndexer()
         {
             var repetition = Message.Parse(ExampleMessageRepository.Standard)[8][13][2];
-            repetition.Value.Should().Be("^ORN^CP");
+            repetition.RawValue.Should().Be("^ORN^CP");
         }
 
         [Test]
@@ -270,7 +270,7 @@ namespace NextLevelSeven.Test.Parsing
             var message = Message.Parse("MSH|^~\\&|\rTST|123~456|789~012");
             var field = message[2][1];
             ElementExtensions.Delete(field, 1);
-            message.Value.Should().Be("MSH|^~\\&|\rTST|456|789~012");
+            message.RawValue.Should().Be("MSH|^~\\&|\rTST|456|789~012");
         }
 
         [Test]
@@ -282,9 +282,9 @@ namespace NextLevelSeven.Test.Parsing
             var newMsh3Value = Any.String();
             var newMsh4Value = Any.String();
 
-            message.Value = $@"MSH|^~\&|{newMsh3Value}|{newMsh4Value}";
-            msh3.Value.Should().Be(newMsh3Value);
-            msh4.Value.Should().Be(newMsh4Value);
+            message.RawValue = $@"MSH|^~\&|{newMsh3Value}|{newMsh4Value}";
+            msh3.RawValue.Should().Be(newMsh3Value);
+            msh4.RawValue.Should().Be(newMsh4Value);
         }
 
         [Test]
@@ -298,8 +298,8 @@ namespace NextLevelSeven.Test.Parsing
         public void Field_WillHaveValuesInterpretedAsDoubleQuotes()
         {
             var message = Message.Parse();
-            message[1][3].Value = HL7.Null;
-            message[1][3].Value.Should().Be(HL7.Null);
+            message[1][3].RawValue = HL7.Null;
+            message[1][3].RawValue.Should().Be(HL7.Null);
             message[1][3].Exists.Should().BeTrue();
         }
 
@@ -308,8 +308,8 @@ namespace NextLevelSeven.Test.Parsing
         {
             var field = Message.Parse(ExampleMessageRepository.Standard)[1][3];
             var value = Any.String();
-            field.Value = value;
-            field.Value.Should().Be(value);
+            field.RawValue = value;
+            field.RawValue.Should().Be(value);
         }
 
         [Test]
@@ -317,9 +317,9 @@ namespace NextLevelSeven.Test.Parsing
         {
             var field = Message.Parse(ExampleMessageRepository.Standard)[1][3];
             var value = Any.String();
-            field.Value = value;
-            field.Value = null;
-            field.Value.Should().BeNull();
+            field.RawValue = value;
+            field.RawValue = null;
+            field.RawValue.Should().BeNull();
         }
     }
 }

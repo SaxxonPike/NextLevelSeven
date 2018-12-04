@@ -28,10 +28,10 @@ namespace NextLevelSeven.Parsing.Elements
         public override int ValueCount => 1;
 
         /// <summary>Get or set the value of this field.</summary>
-        public abstract override string Value { get; set; }
+        public abstract override string RawValue { get; set; }
 
         /// <summary>Get or set the value of this field wrapped in an enumerable.</summary>
-        public abstract override IEnumerable<string> Values { get; set; }
+        public abstract override IEnumerable<string> RawValues { get; set; }
 
         /// <summary>Get the field delimiter value.</summary>
         /// <param name="repetition">Not used.</param>
@@ -40,7 +40,7 @@ namespace NextLevelSeven.Parsing.Elements
         /// <returns>Field delimiter value.</returns>
         public sealed override string GetValue(int repetition = -1, int component = -1, int subcomponent = -1)
         {
-            return Value;
+            return RawValue;
         }
 
         /// <summary>Get the field delimiter value.</summary>
@@ -51,7 +51,7 @@ namespace NextLevelSeven.Parsing.Elements
         public sealed override IEnumerable<string> GetValues(int repetition = -1, int component = -1,
             int subcomponent = -1)
         {
-            return Value.Yield();
+            return RawValue.Yield();
         }
 
         /// <summary>Get a repetition division of this field.</summary>
@@ -68,7 +68,7 @@ namespace NextLevelSeven.Parsing.Elements
             return new FieldParser(EncodingConfiguration)
             {
                 Index = Index,
-                Value = Value
+                RawValue = RawValue
             };
         }
     }

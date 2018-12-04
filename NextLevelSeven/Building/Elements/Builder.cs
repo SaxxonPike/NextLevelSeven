@@ -51,13 +51,27 @@ namespace NextLevelSeven.Building.Elements
         public abstract IElement Clone();
 
         /// <summary>Get or set this element's value.</summary>
-        public abstract string Value { get; set; }
+        public abstract string RawValue { get; set; }
+
+        /// <inheritdoc />
+        public string Value
+        {
+            get => Encoding.UnEscape(RawValue);
+            set => RawValue = Encoding.Escape(value);
+        }
 
         /// <summary>Get or set this element's sub-values.</summary>
-        public abstract IEnumerable<string> Values { get; set; }
+        public abstract IEnumerable<string> RawValues { get; set; }
+
+        /// <inheritdoc />
+        public IEnumerable<string> Values 
+        { 
+            get => RawValues.Select(Encoding.UnEscape);
+            set => RawValues = value.Select(Encoding.Escape);
+        }
 
         /// <summary>Get a converter which will interpret this element's value as other types.</summary>
-        public virtual IEncodedTypeConverter Converter => new EncodedTypeConverter(this);
+        public virtual IEncodedTypeConverter As => new EncodedTypeConverter(this);
 
         /// <summary>Get the number of sub-values in this element.</summary>
         public abstract int ValueCount { get; }
@@ -88,7 +102,7 @@ namespace NextLevelSeven.Building.Elements
         /// <summary>Erase this element's content and mark it non-existant.</summary>
         public void Erase()
         {
-            Value = null;
+            RawValue = null;
         }
 
         /// <summary>True, if the element is considered to exist.</summary>
@@ -179,7 +193,7 @@ namespace NextLevelSeven.Building.Elements
         /// <returns>Builder's contents.</returns>
         public sealed override string ToString()
         {
-            return Value ?? string.Empty;
+            return RawValue ?? string.Empty;
         }
 
         /// <summary>Get the ancestor element.</summary>
@@ -242,7 +256,7 @@ namespace NextLevelSeven.Building.Elements
         {
             var cache = GetCache();
             ShiftForInsert(cache, index);
-            cache[index].Value = value;
+            cache[index].RawValue = value;
             return cache[index];
         }
 
