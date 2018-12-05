@@ -22,7 +22,7 @@ namespace NextLevelSeven.Parsing.Dividers
         public RootStringDivider(IEnumerable<char> s, char delimiter)
         {
             Delimiter = delimiter;
-            ValueChars = s.ToArray();
+            ValueChars = s?.ToArray() ?? new ReadOnlyMemory<char>();
         }
 
         /// <summary>Get or set the substring at the specified index.</summary>
