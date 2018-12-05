@@ -14,6 +14,7 @@
       <PackageReference Include="FluentAssertions" Version="5.5.3" />
 	  <PackageReference Include="Moq" Version="4.10.1" />
 	  <PackageReference Include="NUnit" Version="3.11.0" />
+	  <PackageReference Include="System.Memory" Version="4.5.1" />
 	</ItemGroup>
 	<ItemGroup>
 	  <ProjectReference Include="..\NextLevelSeven\NextLevelSeven.csproj" />

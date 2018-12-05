@@ -18,4 +18,7 @@
 		<RepositoryUrl>https://github.com/SaxxonPike/NextLevelSeven</RepositoryUrl>
 		<LangVersion>latest</LangVersion>
 	</PropertyGroup>
+	<ItemGroup>
+	  <PackageReference Include="System.Memory" Version="4.5.1" />
+	</ItemGroup>
 </Project>

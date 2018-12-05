@@ -44,7 +44,7 @@ namespace NextLevelSeven.Parsing.Dividers
         /// <param name="delimiter">Delimiter to search for.</param>
         /// <param name="parent">Bounds within which to search.</param>
         /// <returns>Divisions within the bounds specified.</returns>
-        public static List<StringDivision> GetDivisions(char[] s, char delimiter, StringDivision parent)
+        public static List<StringDivision> GetDivisions(Span<char> s, char delimiter, StringDivision parent)
         {
             unchecked
             {
