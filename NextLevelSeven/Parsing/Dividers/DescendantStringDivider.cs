@@ -87,7 +87,7 @@ namespace NextLevelSeven.Parsing.Dividers
                 var d = _baseDivider.GetSubDivision(Index);
                 return !d.Valid || d.Length == 0
                     ? null
-                    : StringDividerOperations.CharSubstring(BaseValue, d.Offset, d.Length);
+                    : StringDividerOperations.CharSubstring(BaseValue, d.Offset, d.Length).ToArray();
             }
             [ExcludeFromCodeCoverage]
             protected set

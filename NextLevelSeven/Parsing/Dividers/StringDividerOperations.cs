@@ -13,11 +13,9 @@ namespace NextLevelSeven.Parsing.Dividers
         /// <param name="offset">Offset to start.</param>
         /// <param name="length">Length of characters.</param>
         /// <returns>Extracted characters.</returns>
-        public static char[] CharSubstring(char[] s, int offset, int length)
+        public static ReadOnlySpan<char> CharSubstring(ReadOnlySpan<char> s, int offset, int length)
         {
-            var result = new char[length];
-            Array.Copy(s, offset, result, 0, length);
-            return result;
+            return s.Slice(offset, length);
         }
 
         /// <summary>Attempts to convert a string to characters, or returns null if not possible.</summary>
@@ -32,7 +30,7 @@ namespace NextLevelSeven.Parsing.Dividers
         /// <param name="s">Characters to parse.</param>
         /// <param name="delimiter">Delimiter to search for.</param>
         /// <returns>Divisions.</returns>
-        public static List<StringDivision> GetDivisions(char[] s, char delimiter)
+        public static List<StringDivision> GetDivisions(ReadOnlySpan<char> s, char delimiter)
         {
             return s == null
                 ? new List<StringDivision>()
@@ -44,7 +42,7 @@ namespace NextLevelSeven.Parsing.Dividers
         /// <param name="delimiter">Delimiter to search for.</param>
         /// <param name="parent">Bounds within which to search.</param>
         /// <returns>Divisions within the bounds specified.</returns>
-        public static List<StringDivision> GetDivisions(Span<char> s, char delimiter, StringDivision parent)
+        public static List<StringDivision> GetDivisions(ReadOnlySpan<char> s, char delimiter, StringDivision parent)
         {
             unchecked
             {
