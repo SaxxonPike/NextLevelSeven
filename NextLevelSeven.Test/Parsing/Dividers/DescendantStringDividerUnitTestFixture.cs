@@ -62,7 +62,7 @@ namespace NextLevelSeven.Test.Parsing.Dividers
         {
             var data = Any.DelimitedString(":", 4);
             var divider = new DescendantStringDivider(_ancestorDivider, ':', 0) { Value = data };
-            divider.BaseValue.Should().BeSameAs(_ancestorDivider.BaseValue);
+            divider.BaseValue.Should().BeEquivalentTo(_ancestorDivider.BaseValue);
         }
 
         [Test]

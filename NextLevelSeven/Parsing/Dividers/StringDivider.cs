@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace NextLevelSeven.Parsing.Dividers
@@ -14,7 +15,7 @@ namespace NextLevelSeven.Parsing.Dividers
         public abstract string this[int index] { get; set; }
 
         /// <summary>Base value which cursors will operate on.</summary>
-        public abstract char[] BaseValue { get; }
+        public abstract ReadOnlyMemory<char> BaseValue { get; }
 
         /// <summary>Returns true if the base value is null.</summary>
         public abstract bool IsNull { get; }
@@ -35,7 +36,7 @@ namespace NextLevelSeven.Parsing.Dividers
         public abstract string Value { get; set; }
 
         /// <summary>Get the value as a character array.</summary>
-        public abstract char[] ValueChars { get; protected set; }
+        public abstract ReadOnlyMemory<char> ValueChars { get; protected set; }
 
         /// <summary>Get the version number of the divider, which is incremented each time it changes.</summary>
         public int Version { get; protected set; }
@@ -54,7 +55,7 @@ namespace NextLevelSeven.Parsing.Dividers
                 : d[index];
         }
 
-        public abstract void Replace(int start, int length, char[] value);
+        public abstract void Replace(int start, int length, ReadOnlySpan<char> value);
 
         public abstract void Pad(char delimiter, int index, int start, int length, List<StringDivision> divisions);
 

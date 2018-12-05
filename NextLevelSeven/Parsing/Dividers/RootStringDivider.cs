@@ -13,7 +13,7 @@ namespace NextLevelSeven.Parsing.Dividers
         private bool _isNull;
 
         /// <summary>Internal character store.</summary>
-        private char[] _valueChars;
+        private Memory<char> _valueChars;
 
         /// <summary>Create a divider for a specified string.</summary>
         /// <param name="s">String to divide.</param>
@@ -37,13 +37,13 @@ namespace NextLevelSeven.Parsing.Dividers
                     return string.Empty;
                 }
                 var d = Divisions[index];
-                return new string(ValueChars, d.Offset, d.Length);
+                return new string(ValueChars.Slice(d.Offset, d.Length).ToArray());
             }
             set => SetValue(index, value);
         }
 
         /// <summary>String that is operated upon, as a character array.</summary>
-        public override char[] BaseValue => ValueChars;
+        public override ReadOnlyMemory<char> BaseValue => ValueChars;
 
         /// <summary>Get the number of divisions.</summary>
         public override int Count => Divisions.Count;
@@ -53,7 +53,7 @@ namespace NextLevelSeven.Parsing.Dividers
         {
             get
             {
-                _divisions = _divisions ?? StringDividerOperations.GetDivisions(ValueChars, Delimiter);
+                _divisions = _divisions ?? StringDividerOperations.GetDivisions(ValueChars.Span, Delimiter);
                 return _divisions;
             }
         }
@@ -61,15 +61,15 @@ namespace NextLevelSeven.Parsing.Dividers
         /// <summary>Calculated value of all divisions separated by delimiters.</summary>
         public override string Value
         {
-            get => IsNull ? null : new string(ValueChars);
+            get => IsNull ? null : new string(ValueChars.ToArray());
             set => ValueChars = StringDividerOperations.GetChars(value);
         }
 
         /// <summary>Calculated value of all divisions separated by delimiters, as chars.</summary>
-        public override char[] ValueChars
+        public override ReadOnlyMemory<char> ValueChars
         {
             get => _valueChars;
-            protected set => Initialize(value);
+            protected set => Initialize(value.ToArray());
         }
 
         /// <summary>Returns true if the divider base value is null.</summary>
@@ -103,11 +103,11 @@ namespace NextLevelSeven.Parsing.Dividers
 
         /// <summary>Initialize the divider's value with the specified characters.</summary>
         /// <param name="s">Characters to set the value to.</param>
-        private void Initialize(char[] s)
+        private void Initialize(Memory<char> s)
         {
             _divisions = null;
             _valueChars = s;
-            _isNull = s == null || s.Length == 0;
+            _isNull = s.Length == 0;
             Version++;
         }
 
@@ -120,9 +120,11 @@ namespace NextLevelSeven.Parsing.Dividers
 
             var delimiterCount = 0;
             var end = start + length;
+            var valueChars = _valueChars.Span;
+            
             for (var i = start; i < end; i++)
             {
-                if (_valueChars[i] != delimiter)
+                if (valueChars[i] != delimiter)
                 {
                     continue;
                 }
@@ -134,59 +136,61 @@ namespace NextLevelSeven.Parsing.Dividers
             }
 
             var delimitersToAdd = index - delimiterCount;
+            if (delimitersToAdd <= 0)
+                return;
+            
             var oldLength = _valueChars.Length;
+            var newLength = oldLength + delimitersToAdd;
+            if (oldLength != newLength)
+            {
+                var newChars = new char[oldLength + delimitersToAdd];
+                var newMemory = new Memory<char>(newChars);
+                _valueChars.Slice(0, end).CopyTo(newMemory);
+                _valueChars.Slice(end).CopyTo(newMemory.Slice(end + delimitersToAdd));
+                _valueChars = newMemory;                
+                valueChars = _valueChars.Span;
+            }
 
-            Array.Resize(ref _valueChars, oldLength + delimitersToAdd);
-            if (oldLength > end)
-            {
-                Array.Copy(_valueChars, end, _valueChars, end + delimitersToAdd, oldLength - end);
-            }
             if (divisions.Capacity < divisions.Count + delimitersToAdd)
-            {
                 divisions.Capacity = divisions.Count + delimitersToAdd;
-            }
+            
             while (delimitersToAdd > 0)
             {
                 delimitersToAdd--;
-                _valueChars[end++] = delimiter;
+                valueChars[end++] = delimiter;
                 divisions.Add(new StringDivision(end, 0));
             }
         }
 
-        public override void Replace(int start, int length, char[] value)
+        public override void Replace(int start, int length, ReadOnlySpan<char> value)
         {
             if (value == null)
-            {
                 value = StringDividerOperations.EmptyChars;
-            }
 
             var charsLength = _valueChars.Length;
             var valueLength = value.Length;
             var newLength = charsLength + (valueLength - length);
             var postLength = charsLength - (start + length);
 
-            if (start >= charsLength)
+            if (length != value.Length)
             {
-                newLength = start + valueLength;
-                Array.Resize(ref _valueChars, newLength);
-            }
-            else if (length > valueLength)
-            {
+                var newChars = new char[newLength];
+                var newMemory = new Memory<char>(newChars);
+            
+                if (start > 0)
+                    _valueChars.Slice(0, start).CopyTo(newMemory);
+            
                 if (postLength > 0)
-                {
-                    Array.Copy(_valueChars, start + length, _valueChars, start + valueLength, postLength);
-                }
-                Array.Resize(ref _valueChars, newLength);
+                    _valueChars.Slice(start + length).CopyTo(newMemory.Slice(start + valueLength));
+                
+                value.CopyTo(newMemory.Slice(start).Span);
+                _valueChars = newMemory;
             }
-            else if (length < valueLength)
+            else
             {
-                Array.Resize(ref _valueChars, newLength);
-                if (postLength > 0)
-                {
-                    Array.Copy(_valueChars, start + length, _valueChars, start + valueLength, postLength);
-                }
+                value.CopyTo(_valueChars.Span.Slice(start, length));
             }
-            Array.Copy(value, 0, _valueChars, start, valueLength);
+            
             _divisions = null;
             Version++;
         }

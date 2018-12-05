@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace NextLevelSeven.Parsing.Dividers
@@ -40,15 +41,15 @@ namespace NextLevelSeven.Parsing.Dividers
                 }
 
                 var split = Divisions[index];
-                return split.Length == 0 ? null : new string(BaseValue, split.Offset, split.Length);
+                return split.Length == 0 ? null : new string(BaseValue.Slice(split.Offset, split.Length).ToArray());
             }
             set => SetValue(index, value);
         }
 
-        public override bool IsNull => _baseDivider.IsNull || ValueChars == null || ValueChars.Length == 0;
+        public override bool IsNull => _baseDivider.IsNull || ValueChars.Length == 0;
 
         /// <summary>String that is operated upon, as a character array. This points to the parent divider's BaseValue.</summary>
-        public override char[] BaseValue => _baseDivider.BaseValue;
+        public override ReadOnlyMemory<char> BaseValue => _baseDivider.BaseValue;
 
         /// <summary>Get the number of divisions.</summary>
         public override int Count => Divisions.Count;
@@ -74,20 +75,20 @@ namespace NextLevelSeven.Parsing.Dividers
                 var d = _baseDivider.GetSubDivision(Index);
                 return !d.Valid || d.Length == 0
                     ? null
-                    : new string(BaseValue, d.Offset, d.Length);
+                    : new string(BaseValue.Slice(d.Offset, d.Length).ToArray());
             }
             set => _baseDivider[Index] = value;
         }
 
         /// <summary>Calculated value of all divisions separated by delimiters, as characters.</summary>
-        public override char[] ValueChars
+        public override ReadOnlyMemory<char> ValueChars
         {
             get
             {
                 var d = _baseDivider.GetSubDivision(Index);
                 return !d.Valid || d.Length == 0
                     ? null
-                    : StringDividerOperations.CharSubstring(BaseValue, d.Offset, d.Length).ToArray();
+                    : BaseValue.Slice(d.Offset, d.Length);
             }
             [ExcludeFromCodeCoverage]
             protected set
@@ -129,7 +130,7 @@ namespace NextLevelSeven.Parsing.Dividers
             var baseDivision = _baseDivider.GetSubDivision(Index);
             if (baseDivision.Valid)
             {
-                _divisions = StringDividerOperations.GetDivisions(BaseValue, Delimiter,
+                _divisions = StringDividerOperations.GetDivisions(BaseValue.Span, Delimiter,
                     _baseDivider.GetSubDivision(Index));
             }
             else
@@ -138,7 +139,7 @@ namespace NextLevelSeven.Parsing.Dividers
             }
         }
 
-        public override void Replace(int start, int length, char[] value)
+        public override void Replace(int start, int length, ReadOnlySpan<char> value)
         {
             _baseDivider.Replace(start, length, value);
             _divisions = null;
