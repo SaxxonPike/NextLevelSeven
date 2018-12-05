@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 
 namespace NextLevelSeven.Parsing.Dividers
 {
@@ -81,7 +80,7 @@ namespace NextLevelSeven.Parsing.Dividers
         }
 
         /// <summary>Calculated value of all divisions separated by delimiters, as characters.</summary>
-        public override ReadOnlyMemory<char> ValueChars
+        private ReadOnlyMemory<char> ValueChars
         {
             get
             {
@@ -89,11 +88,6 @@ namespace NextLevelSeven.Parsing.Dividers
                 return !d.Valid || d.Length == 0
                     ? null
                     : BaseValue.Slice(d.Offset, d.Length);
-            }
-            [ExcludeFromCodeCoverage]
-            protected set
-            {
-                /* should not be called */
             }
         }
 

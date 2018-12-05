@@ -35,9 +35,6 @@ namespace NextLevelSeven.Parsing.Dividers
         /// <summary>Get the value of all subdivisions stitched together with the delimiter.</summary>
         public abstract string Value { get; set; }
 
-        /// <summary>Get the value as a character array.</summary>
-        public abstract ReadOnlyMemory<char> ValueChars { get; protected set; }
-
         /// <summary>Get the version number of the divider, which is incremented each time it changes.</summary>
         public int Version { get; protected set; }
 

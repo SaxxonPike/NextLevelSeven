@@ -67,10 +67,10 @@ namespace NextLevelSeven.Parsing.Dividers
         }
 
         /// <summary>Calculated value of all divisions separated by delimiters, as chars.</summary>
-        public override ReadOnlyMemory<char> ValueChars
+        private ReadOnlyMemory<char> ValueChars
         {
             get => _valueChars;
-            protected set => Initialize(value.ToArray());
+            set => Initialize(value.ToArray());
         }
 
         /// <summary>Returns true if the divider base value is null.</summary>
