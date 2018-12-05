@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -12,22 +13,16 @@ namespace NextLevelSeven.Core.Encoding
         
         /// <summary>Add HL7 escape codes where necessary, according to this encoding configuration.</summary>
         /// <param name="config">Encoding configuration.</param>
-        /// <param name="s">String to escape.</param>
+        /// <param name="data">String to escape.</param>
         /// <returns>Escaped string.</returns>
-        public static string Escape(IReadOnlyEncoding config, string s)
+        public static string Escape(IReadOnlyEncoding config, ReadOnlySpan<char> data)
         {
-            if (s == null)
-            {
-                return null;
-            }
-
             var componentDelimiter = config.ComponentDelimiter;
             var escapeDelimiter = config.EscapeCharacter;
             var fieldDelimiter = config.FieldDelimiter;
             var repetitionDelimiter = config.RepetitionDelimiter;
             var subcomponentDelimiter = config.SubcomponentDelimiter;
 
-            var data = s.ToCharArray();
             var length = data.Length;
             var output = new StringBuilder();
 
@@ -69,7 +64,7 @@ namespace NextLevelSeven.Core.Encoding
                                 case 'C': // single byte character set escape
                                     if (length - index >= 7 && data[index + 6] == escapeDelimiter)
                                     {
-                                        output.Append(new string(data, index, 7));
+                                        output.Append(new string(data.Slice(index, 7).ToArray()));
                                         index += 6;
                                         continue;
                                     }
@@ -78,14 +73,14 @@ namespace NextLevelSeven.Core.Encoding
                                     if (length - index >= 7 && data[index + 6] == escapeDelimiter)
                                     {
                                         // without optional third pair
-                                        output.Append(new string(data, index, 7));
+                                        output.Append(new string(data.Slice(index, 7).ToArray()));
                                         index += 6;
                                         continue;
                                     }
                                     if (length - index >= 9 && data[index + 8] == escapeDelimiter)
                                     {
                                         // with optional third pair
-                                        output.Append(new string(data, index, 9));
+                                        output.Append(new string(data.Slice(index, 9).ToArray()));
                                         index += 8;
                                         continue;
                                     }
@@ -109,7 +104,7 @@ namespace NextLevelSeven.Core.Encoding
 
                                     if (zEscapeEndFound)
                                     {
-                                        output.Append(new string(data, index, zEscapeLength));
+                                        output.Append(new string(data.Slice(index, zEscapeLength).ToArray()));
                                         index += zEscapeLength - 1;
                                         continue;
                                     }
