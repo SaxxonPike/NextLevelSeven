@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace NextLevelSeven.Parsing.Dividers
 {
@@ -18,10 +19,10 @@ namespace NextLevelSeven.Parsing.Dividers
         /// <summary>Create a divider for a specified string.</summary>
         /// <param name="s">String to divide.</param>
         /// <param name="delimiter">Delimiter to search for.</param>
-        public RootStringDivider(string s, char delimiter)
+        public RootStringDivider(IEnumerable<char> s, char delimiter)
         {
             Delimiter = delimiter;
-            ValueChars = StringDividerOperations.GetChars(s);
+            ValueChars = s.ToArray();
         }
 
         /// <summary>Get or set the substring at the specified index.</summary>
