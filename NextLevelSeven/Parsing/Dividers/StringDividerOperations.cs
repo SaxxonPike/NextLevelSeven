@@ -8,24 +8,6 @@ namespace NextLevelSeven.Parsing.Dividers
     {
         public static readonly char[] EmptyChars = new char[0];
 
-        /// <summary>Get a subset of a character array.</summary>
-        /// <param name="s">Characters.</param>
-        /// <param name="offset">Offset to start.</param>
-        /// <param name="length">Length of characters.</param>
-        /// <returns>Extracted characters.</returns>
-        public static ReadOnlySpan<char> CharSubstring(ReadOnlySpan<char> s, int offset, int length)
-        {
-            return s.Slice(offset, length);
-        }
-
-        /// <summary>Attempts to convert a string to characters, or returns null if not possible.</summary>
-        /// <param name="s">String to convert.</param>
-        /// <returns>Converted characters.</returns>
-        public static char[] GetChars(string s)
-        {
-            return s?.ToCharArray();
-        }
-
         /// <summary>Get divisions without bounds.</summary>
         /// <param name="s">Characters to parse.</param>
         /// <param name="delimiter">Delimiter to search for.</param>
@@ -46,7 +28,6 @@ namespace NextLevelSeven.Parsing.Dividers
         {
             unchecked
             {
-                var divisions = new List<StringDivision>();
                 var length = 0;
 
                 var offset = !parent.Valid
@@ -58,6 +39,15 @@ namespace NextLevelSeven.Parsing.Dividers
                     : parent.Length;
 
                 var endIndex = offset + inputLength;
+
+                // Precalculate the number of delimiters (perf)
+                var delimiterCount = 0;
+                for (var index = offset; index < endIndex; index++)
+                    if (s[index] == delimiter)
+                        delimiterCount++;
+                
+                var divisions = new List<StringDivision>(delimiterCount);
+
                 for (var index = offset; index < endIndex; index++)
                 {
                     if (s[index] == delimiter)

@@ -22,7 +22,7 @@ namespace NextLevelSeven.Parsing.Dividers
         public RootStringDivider(IEnumerable<char> s, char delimiter)
         {
             Delimiter = delimiter;
-            ValueChars = s?.ToArray() ?? new ReadOnlyMemory<char>();
+            ValueChars = s?.ToArray() ?? new Memory<char>();
         }
 
         /// <summary>Get or set the substring at the specified index.</summary>
@@ -63,14 +63,14 @@ namespace NextLevelSeven.Parsing.Dividers
         public override string Value
         {
             get => IsNull ? null : new string(ValueChars.ToArray());
-            set => ValueChars = StringDividerOperations.GetChars(value);
+            set => ValueChars = new Memory<char>((value ?? string.Empty).ToCharArray());
         }
 
         /// <summary>Calculated value of all divisions separated by delimiters, as chars.</summary>
-        private ReadOnlyMemory<char> ValueChars
+        private Memory<char> ValueChars
         {
             get => _valueChars;
-            set => Initialize(value.ToArray());
+            set => Initialize(value);
         }
 
         /// <summary>Returns true if the divider base value is null.</summary>
@@ -99,7 +99,7 @@ namespace NextLevelSeven.Parsing.Dividers
         {
             Pad(Delimiter, index, 0, _valueChars.Length, Divisions);
             var d = Divisions[index];
-            Replace(d.Offset, d.Length, StringDividerOperations.GetChars(value));
+            Replace(d.Offset, d.Length, value.AsSpan());
         }
 
         /// <summary>Initialize the divider's value with the specified characters.</summary>

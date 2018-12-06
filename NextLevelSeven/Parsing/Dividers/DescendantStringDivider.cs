@@ -114,7 +114,7 @@ namespace NextLevelSeven.Parsing.Dividers
         {
             PadSubDivider(index);
             var d = Divisions[index];
-            Replace(d.Offset, d.Length, StringDividerOperations.GetChars(value));
+            Replace(d.Offset, d.Length, value.AsSpan());
         }
 
         /// <summary>[PERF] Refresh internal division cache.</summary>
